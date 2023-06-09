@@ -1,0 +1,316 @@
+AI_Workaround = {
+	ai_modifiers = {
+
+		icon = generic_political_discourse
+
+		visible = {
+			is_ai = yes
+		}
+		
+		available = {
+			always = yes
+		}
+
+		remove_trigger = {
+			is_ai = no
+		}
+
+		fire_only_once = no
+		
+		modifier = {
+			army_leader_cost_factor = -0.8
+			research_speed_factor = 0.50
+		}
+
+		days_remove = 3600
+		days_re_enable = 0
+
+		cost = 0
+
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 1000
+				is_ai = yes
+			}
+		}
+	}
+
+
+
+	#Set Min Recruitment to 18
+	set_min_18 = {
+		allowed = {
+		}
+
+		available = {
+			is_ai = yes
+			has_idea = age_19_40
+		}
+
+		visible = {
+			is_ai = yes
+		}
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				add = 1
+				AND = {
+					ROOT = { has_idea = age_19_40}
+					has_war_support > 0.25
+				}
+			}
+
+			modifier = {
+				add = -200
+				OR = {
+					ROOT = { has_idea = age_18_40}
+					ROOT = { has_idea = age_17_50}
+					ROOT = { has_idea = age_16_50}
+					ROOT = { has_idea = age_15_60}
+					ROOT = { has_idea = age_14_60}
+				}
+			}
+		}
+
+		cost = 100
+
+		fire_only_once = no
+
+		complete_effect = {
+			add_ideas = age_18_40
+		}
+	}
+
+	#Set Min Recruitment to 17
+	set_min_17 = {
+		allowed = {
+		}
+		
+		available = {
+			is_ai = yes
+			has_idea = age_18_40
+		}
+		
+		visible = {
+			is_ai = yes
+		}
+		
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				add = 1
+				AND = {
+					ROOT = { has_idea = age_18_40}
+					has_war_support > 0.5
+				}
+			}
+			
+			modifier = {
+				add = -200
+				OR = {
+					ROOT = { has_idea = age_17_50}
+					ROOT = { has_idea = age_16_50}
+					ROOT = { has_idea = age_15_60}
+					ROOT = { has_idea = age_14_60}
+				}
+			}
+		}
+		
+		cost = 100
+		
+		fire_only_once = no
+		
+		complete_effect = {
+			add_ideas = age_17_50
+		}
+	}
+
+	#Set Min Recruitment to 16
+	set_min_16 = {
+		allowed = {
+		}
+		
+		available = {
+			is_ai = yes
+			has_idea = age_17_50
+			NOT = { has_idea = disarmed_nation }
+			NOT = { has_idea = volunteer_only }
+			OR = {
+				AND = {
+					has_war = yes
+					enemies_strength_ratio > 1.5
+				}
+			}
+		}
+		
+		visible = {
+			is_ai = yes
+		}
+		
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				add = 1
+				ROOT = { has_idea = age_16_50}
+			}
+			
+			modifier = {
+				add = 2
+				AND = {
+					has_war = yes
+					enemies_strength_ratio > 2
+				}
+			}
+			
+			modifier = {
+				add = 2
+				threat > 0.75
+			}
+			
+			modifier = {
+				add = -200
+				OR = {
+					ROOT = { has_idea = age_15_60}
+					ROOT = { has_idea = age_14_60}
+				}
+			}
+		}
+		
+		cost = 100
+		
+		fire_only_once = no
+		
+		complete_effect = {
+			add_ideas = age_16_50
+		}
+	}
+
+	#Set Min Recruitment to 15
+	set_min_15 = {
+		allowed = {
+		}
+		
+		available = {
+			is_ai = yes
+			has_idea = age_16_50
+			NOT = { has_idea = disarmed_nation }
+			NOT = { has_idea = volunteer_only }
+			NOT = { has_idea = limited_conscription }
+			AND = {
+				has_war = yes
+				enemies_strength_ratio > 1.5
+			}
+		}
+		
+		visible = {
+			is_ai = yes
+		}
+		
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				add = 1
+				ROOT = { has_idea = age_16_50}
+			}
+			
+			modifier = {
+				add = 2
+				AND = {
+					has_war = yes
+					enemies_strength_ratio > 2
+				}
+			}
+			
+			modifier = {
+				add = 2
+				threat > 0.75
+			}
+			
+			modifier = {
+				add = 2
+				threat > 0.90
+			}
+			
+			modifier = {
+				add = -200
+				OR = {
+					ROOT = { has_idea = age_14_60}
+				}
+			}
+		}
+		
+		cost = 100
+		
+		fire_only_once = no
+		
+		complete_effect = {
+			add_ideas = age_15_60
+		}
+	}
+
+	#Set Min Recruitment to 14
+	set_min_14 = {
+		allowed = {
+		}
+		
+		available = {
+			is_ai = yes
+			has_idea = age_15_60
+			NOT = { has_idea = disarmed_nation }
+			NOT = { has_idea = volunteer_only }
+			NOT = { has_idea = limited_conscription }
+			NOT = { has_idea = extensive_conscription }
+			AND = {
+				has_war = yes
+				enemies_strength_ratio > 1.5
+			}
+		}
+		
+		visible = {
+			is_ai = yes
+		}
+		
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				add = 1
+				ROOT = { has_idea = age_15_60}
+			}
+			
+			modifier = {
+				add = 2
+				AND = {
+					has_war = yes
+					enemies_strength_ratio > 2
+				}
+			}
+			
+			modifier = {
+				add = 2
+				threat > 0.75
+			}
+			
+			modifier = {
+				add = 2
+				threat > 0.90
+			}
+			
+			modifier = {
+				add = -200
+				OR = {
+					ROOT = { has_idea = age_14_60}
+				}
+			}
+		}
+		
+		cost = 100
+		
+		fire_only_once = no
+		
+		complete_effect = {
+			add_ideas = age_14_60
+		}
+	}
+}

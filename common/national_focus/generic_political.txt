@@ -1,0 +1,40 @@
+shared_focus = {
+	id = political_effort
+	icon = GFX_goal_generic_demand_territory
+	x = 20
+	y = 0
+	cost = 10
+
+	search_filters = { FOCUS_FILTER_POLITICAL }
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		add_political_power = 100
+	}
+}
+
+shared_focus = {
+	id = ideological_fanaticism
+	icon = GFX_goal_generic_demand_territory
+	prerequisite = { focus = political_effort }
+	x = 0
+	y = 1
+	relative_position_id = political_effort
+	cost = 10
+
+	search_filters = { FOCUS_FILTER_POLITICAL }
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		add_ideas = ideological_fanaticism_focus
+		set_rule = {
+			can_create_factions = yes
+		}
+		hidden_effect = {
+			set_rule = { can_use_kamikaze_pilots = yes }
+		}
+		custom_effect_tooltip = kamikaze_focus_tooltip
+	}
+}

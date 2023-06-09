@@ -1,0 +1,326 @@
+debug_decisions = {
+	manpower_test = {
+		available = {
+			is_debug = yes
+		}
+		visible = {
+			always = yes
+		}
+		fire_only_once = no
+		cost = 0
+		complete_effect = {
+			add_manpower = 100000
+		}
+	}
+	factory_test = {
+		available = {
+			is_debug = yes
+		}
+		visible = {
+			always = yes
+		}
+		fire_only_once = no
+		cost = 0
+		complete_effect = {
+			add_offsite_building = { type = arms_factory level = 10 }
+			add_offsite_building = { type = industrial_complex level = 10 }
+			add_offsite_building = { type = dockyard level = 10 }
+		}
+	}
+	political_power_test = {
+		available = {
+			is_debug = yes
+		}
+		visible = {
+			always = yes
+		}
+		fire_only_once = no
+		cost = 0
+		complete_effect = {
+			add_political_power = 1000
+		}
+	}
+	hhe_starting_focus_test = { #Starting
+		available = {
+			is_debug = yes
+			tag = HHE
+		}
+		visible = {
+			always = yes
+		}
+		fire_only_once = no
+		cost = 0
+		complete_effect = {
+			load_focus_tree = hhe_starting_focus
+		}
+	}
+	hhe_senate_focus_test = { #Election
+		available = {
+			is_debug = yes
+			tag = HHE
+		}
+		visible = {
+			always = yes
+		}
+		fire_only_once = no
+		cost = 0
+		complete_effect = {
+			load_focus_tree = hhe_election_focus
+		}
+	}
+	hhe_luke_deed_focus_test = { #Luke Deed
+		available = {
+			is_debug = yes
+			tag = HHE
+		}
+		visible = {
+			always = yes
+		}
+		fire_only_once = no
+		cost = 0
+		complete_effect = {
+			load_focus_tree = hhe_luke_deed_focus
+		}
+	}
+	hhe_tradition_focus_test = { #Tradition
+		available = {
+			is_debug = yes
+			tag = HHE
+		}
+		visible = {
+			always = yes
+		}
+		fire_only_once = no
+		cost = 0
+		complete_effect = {
+			load_focus_tree = hhe_tradition_focus
+			set_global_flag = elected_tradition
+			HHE = {
+				create_country_leader = {
+					name = "Gabriel Strongheart"
+					desc = "POLITICS_GABRIEL_DESC"
+					#picture = "Portrait_XXX.dds"
+					expire = "1965.1.1"
+					ideology = sub_harmonainism
+					traits = {
+						silent_workhorse
+					}
+					id = 202
+				}
+			}
+		}
+	}
+	hhe_influencer_focus_test = { #Influencer
+		available = {
+			is_debug = yes
+			tag = HHE
+		}
+		visible = {
+			always = yes
+		}
+		fire_only_once = no
+		cost = 0
+		complete_effect = {
+			set_stability = 0.40
+			set_war_support = 0.30
+			load_focus_tree = hhe_influencer_focus
+			set_global_flag = elected_influencer
+			HHE = {
+				create_country_leader = {
+					name = "XXX"
+					desc = "POLITICS_XXX_DESC"
+					#picture = "Portrait_XXX.dds"
+					expire = "1965.1.1"
+					ideology = sub_harmonainism
+					traits = {
+						political_dancer
+					}
+					id = 203
+				}
+			}
+		}
+	}
+	hhe_authority_focus_test = { #Authority
+		available = {
+			is_debug = yes
+			tag = HHE
+		}
+		visible = {
+			always = yes
+		}
+		fire_only_once = no
+		cost = 0
+		complete_effect = {
+			load_focus_tree = hhe_authority_focus
+			set_global_flag = elected_authority
+			HHE = {
+				create_country_leader = {
+					name = "XXX"
+					desc = "POLITICS_XXX_DESC"
+					#picture = "Portrait_XXX.dds"
+					expire = "1965.1.1"
+					ideology = sub_harmonainism
+					traits = {
+						prince_of_terror
+					}
+					id = 204
+				}
+			}
+		}
+	}
+	hhe_warmonger_focus_test = { #Warmonger
+		available = {
+			is_debug = yes
+			tag = HHE
+		}
+		visible = {
+			always = yes
+		}
+		fire_only_once = no
+		cost = 0
+		complete_effect = {
+			set_stability = 0.14
+			set_war_support = 0.25
+			load_focus_tree = hhe_warmonger_focus
+			set_global_flag = elected_warmonger
+			set_global_flag = HHE_collapse_of_the_nation
+			HHE = {
+				leave_faction  = yes
+				add_ideas = HHE_choas4
+				add_timed_idea = { idea = military_takeover days = 90 }
+				create_country_leader = {
+					name = "Archard Vlad"
+					desc = "POLITICS_XXX_DESC"
+					picture = "gfx/leaders/Europe/portrait_europe_generic_5.dds"
+					expire = "1965.1.1"
+					ideology = sub_harmonainism
+					traits = {
+						warmonger
+						national_integralist
+					}
+					id = 205
+				}
+				create_country_leader = {
+					name = "Archard Vlad"
+					desc = "POLITICS_XXX_DESC"
+					picture = "gfx/leaders/Europe/portrait_europe_generic_5.dds"
+					expire = "1965.1.1"
+					ideology = sub_authoritarian
+					traits = {
+						warmonger
+						national_integralist
+					}
+					id = 206
+				}
+			}
+			# Harmonainus Farmers Region
+			set_autonomy = { target = HBB autonomy_state = autonomy_free }
+			HBB = {
+				leave_faction  = yes
+				drop_cosmetic_tag = yes
+			}
+			# Harmonainus Central Region
+			set_autonomy = { target = HCR autonomy_state = autonomy_free }
+			HCR = {
+				leave_faction  = yes
+				drop_cosmetic_tag = yes
+			}
+			# Harmonainus East Region
+			set_autonomy = { target = HER autonomy_state = autonomy_free }
+			HER = {
+				leave_faction  = yes
+				drop_cosmetic_tag = yes
+			}
+			# Harmonainus Elven Tribes
+			set_autonomy = { target = HET autonomy_state = autonomy_free }
+			HET = {
+				leave_faction  = yes
+				drop_cosmetic_tag = yes
+			}
+			# Harmonainus Laity Federation
+			set_autonomy = { target = HLF autonomy_state = autonomy_free }
+			HLF = {
+				leave_faction  = yes
+				drop_cosmetic_tag = yes
+			}
+			# Harmonainus Nobals Estate Region
+			set_autonomy = { target = HNO autonomy_state = autonomy_free }
+			HNO = {
+				leave_faction  = yes
+				drop_cosmetic_tag = yes
+			}
+			# Harmonainus North River Federation
+			set_autonomy = { target = HRF autonomy_state = autonomy_free }
+			HRF = {
+				leave_faction  = yes
+				drop_cosmetic_tag = yes
+			}
+			# Harmonainus Pearl Sea Protectorate
+			set_autonomy = { target = HPP autonomy_state = autonomy_free }
+			HPP = {
+				leave_faction  = yes
+				drop_cosmetic_tag = yes
+			}
+			# Harmonainus Sea Protectorate
+			set_autonomy = { target = HSP autonomy_state = autonomy_free }
+			HSP = {
+				leave_faction  = yes
+				drop_cosmetic_tag = yes
+			}
+			# Harmonainus Sinus Theocracy
+			set_autonomy = { target = HST autonomy_state = autonomy_free }
+			HST = {
+				leave_faction  = yes
+				drop_cosmetic_tag = yes
+			}
+			# Harmonainus Temerarium Peninsula
+			#set_autonomy = { target = HTP autonomy_state = autonomy_free }
+			HTP = {
+			#	leave_faction  = yes
+			#	drop_cosmetic_tag = yes
+				create_country_leader = {
+					name = "Coccineum Vlad"
+					desc = "POLITICS_XXX_DESC"
+					picture = "gfx/leaders/Europe/portrait_europe_generic_5.dds"
+					expire = "1965.1.1"
+					ideology = sub_harmonainism
+					traits = {
+						warmonger
+						retired_officer
+					}
+					id = 401
+				}
+				create_country_leader = {
+					name = "Coccineum Vlad"
+					desc = "POLITICS_XXX_DESC"
+					picture = "gfx/leaders/Europe/portrait_europe_generic_5.dds"
+					expire = "1965.1.1"
+					ideology = sub_authoritarian
+					traits = {
+						warmonger
+						retired_officer
+					}
+					id = 402
+				}
+			}
+			# Harmonainus Under Mountain Region
+			set_autonomy = { target = HUM autonomy_state = autonomy_free }
+			HUM = {
+				leave_faction  = yes
+				drop_cosmetic_tag = yes
+			}
+			# Harmonainus Upper Peninsula
+			set_autonomy = { target = HUP autonomy_state = autonomy_free }
+			HUP = {
+				leave_faction  = yes
+				drop_cosmetic_tag = yes
+			}
+			# Harmonainus Western Approach
+			set_autonomy = { target = HWA autonomy_state = autonomy_free }
+			HWA = {
+				leave_faction  = yes
+				drop_cosmetic_tag = yes
+			}
+		}
+	}
+}

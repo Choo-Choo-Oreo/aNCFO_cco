@@ -1,0 +1,858 @@
+shared_focus = {
+	id = HHE_first_deed_reform
+	icon = GFX_focus_hol_the_foundations_of_defense
+	x = 0
+	y = 0
+	cost = 10
+
+	available = {
+		NOT = { has_global_flag = death_of_deed }
+	}
+	
+	ai_will_do = {
+		base = 1
+	}
+
+	available_if_capitulated = yes
+	search_filters = { FOCUS_FILTER_POLITICAL }
+
+	completion_reward = {
+		HHE_deed_reform_starter_up = yes
+	}
+}
+
+shared_focus = { #KATASTASI 1
+	id = HHE_the_katastasi_1
+	icon = GFX_focus_ger_reichskommisariats
+	prerequisite = { focus = HHE_first_deed_reform }
+	relative_position_id = HHE_first_deed_reform
+	x = -4
+	y = 1
+	cost = 4
+
+	available = {
+		NOT = { has_global_flag = death_of_deed }
+	}
+	
+	ai_will_do = {
+		base = 3
+		modifier = {
+			factor = 50
+			has_game_rule = {
+				rule = HHE_ai_behavior
+				option = WARMONGER
+			}
+		}
+	}
+
+	available_if_capitulated = yes
+	search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_MANPOWER }
+
+	completion_reward = {
+		set_country_flag = the_katastasi_1
+		custom_effect_tooltip = STARTER_OVEREXERTION_REFORM
+		HLF = {
+			add_opinion_modifier = {
+				target = ROOT
+				modifier = HHE_deed_improve_opinion_modifier
+			}
+		}
+		add_opinion_modifier = {
+			target = HLF
+			modifier = HHE_deed_improve_opinion_modifier
+		}
+		HTP = {
+			add_opinion_modifier = {
+				target = ROOT
+				modifier = HHE_deed_improve_opinion_modifier
+			}
+		}
+		add_opinion_modifier = {
+			target = HTP
+			modifier = HHE_deed_improve_opinion_modifier
+		}
+		HWA = {
+			add_opinion_modifier = {
+				target = ROOT
+				modifier = HHE_deed_improve_opinion_modifier
+			}
+		}
+		add_opinion_modifier = {
+			target = HST
+			modifier = HHE_deed_improve_opinion_modifier
+		}
+		add_manpower = 100000
+		add_political_power = 50
+	}
+}
+
+shared_focus = { # PRIEST 1
+	id = HHE_the_higher_priest_1
+	icon = GFX_focus_rom_royal_dictatorship
+	prerequisite = { focus = HHE_first_deed_reform }
+	relative_position_id = HHE_first_deed_reform
+	x = -2
+	y = 1
+	cost = 4
+
+	available = {
+		NOT = { has_global_flag = death_of_deed }
+	}
+	
+	ai_will_do = {
+		base = 3
+	}
+
+	available_if_capitulated = yes
+	search_filters = { FOCUS_FILTER_STABILITY FOCUS_FILTER_WAR_SUPPORT }
+
+	completion_reward = {
+		set_country_flag = the_higher_priest_1
+		custom_effect_tooltip = STARTER_OVEREXERTION_REFORM
+		add_political_power = 50
+		add_stability = 0.05
+		add_war_support = 0.05
+	}
+}
+
+shared_focus = { # NOBILITY 1
+	id = HHE_the_nobility_1
+	icon = GFX_focus_generic_home_defense
+	prerequisite = { focus = HHE_first_deed_reform }
+	relative_position_id = HHE_first_deed_reform
+	x = 2
+	y = 1
+	cost = 4
+
+	available = {
+		NOT = { has_global_flag = death_of_deed }
+	}
+	
+	ai_will_do = {
+		base = 3
+		modifier = {
+			factor = 50
+			has_game_rule = {
+				rule = HHE_ai_behavior
+				option = INFLUENCER
+			}
+		}
+	}
+
+	available_if_capitulated = yes
+	search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_STABILITY }
+
+	completion_reward = {
+		set_country_flag = the_nobility_1
+		custom_effect_tooltip = STARTER_OVEREXERTION_REFORM
+		random_owned_controlled_state = {
+			limit = {
+				free_building_slots = {
+					building = arms_factory
+					size > 1
+					include_locked = yes
+				}
+				OR = {
+					is_in_home_area = yes
+					NOT = {
+						owner = {
+							any_owned_state = {
+								free_building_slots = {
+									building = arms_factory
+									size > 1
+									include_locked = yes
+								}
+								is_in_home_area = yes
+							}
+						}
+					}
+				}
+			}
+			add_extra_state_shared_building_slots = 1
+			add_building_construction = {
+				type = arms_factory
+				level = 1
+				instant_build = yes
+			}
+		}
+		add_stability = 0.02
+	}
+}
+
+shared_focus = { # PEOPLE 1
+	id = HHE_the_people_1
+	icon = GFX_focus_generic_military_academy
+	prerequisite = { focus = HHE_first_deed_reform }
+	relative_position_id = HHE_first_deed_reform
+	x = 4
+	y = 1
+	cost = 4
+
+	available = {
+		NOT = { has_global_flag = death_of_deed }
+	}
+	
+	ai_will_do = {
+		base = 4
+		modifier = {
+			factor = 50
+			has_game_rule = {
+				rule = HHE_ai_behavior
+				option = INFLUENCER
+			}
+		}
+		modifier = {
+			factor = 50
+			has_game_rule = {
+				rule = HHE_ai_behavior
+				option = WARMONGER
+			}
+		}
+	}
+
+	available_if_capitulated = no
+	search_filters = { FOCUS_FILTER_INDUSTRY }
+
+	completion_reward = {
+		set_country_flag = the_people_1
+		custom_effect_tooltip = STARTER_OVEREXERTION_REFORM
+		random_owned_controlled_state = {
+			limit = {
+				free_building_slots = {
+					building = industrial_complex
+					size > 1
+					include_locked = yes
+				}
+				OR = {
+					is_in_home_area = yes
+					NOT = {
+						owner = {
+							any_owned_state = {
+								free_building_slots = {
+									building = industrial_complex
+									size > 1
+									include_locked = yes
+								}
+								is_in_home_area = yes
+							}
+						}
+					}
+				}
+			}
+			add_extra_state_shared_building_slots = 1
+			add_building_construction = {
+				type = industrial_complex
+				level = 1
+				instant_build = yes
+			}
+		}
+		random_owned_controlled_state = {
+			limit = {
+				free_building_slots = {
+					building = industrial_complex
+					size > 1
+					include_locked = yes
+				}
+				OR = {
+					is_in_home_area = yes
+					NOT = {
+						owner = {
+							any_owned_state = {
+								free_building_slots = {
+									building = industrial_complex
+									size > 1
+									include_locked = yes
+								}
+								is_in_home_area = yes
+							}
+						}
+					}
+				}
+			}
+			add_extra_state_shared_building_slots = 1
+			add_building_construction = {
+				type = industrial_complex
+				level = 1
+				instant_build = yes
+			}
+		}
+	}
+}
+
+shared_focus = {
+	id = HHE_second_deed_reform
+	icon = GFX_focus_hol_the_foundations_of_defense
+	prerequisite = { focus = HHE_first_deed_reform }
+	prerequisite = { focus = HHE_the_katastasi_1 }
+	prerequisite = { focus = HHE_the_higher_priest_1 }
+	prerequisite = { focus = HHE_the_nobility_1 }
+	prerequisite = { focus = HHE_the_people_1 }
+	relative_position_id = HHE_first_deed_reform
+	x = 0
+	y = 2
+	cost = 10
+
+	available = {
+		NOT = { has_global_flag = death_of_deed }
+	}
+	
+	ai_will_do = {
+		base = 5
+	}
+
+	available_if_capitulated = yes
+	search_filters = { FOCUS_FILTER_POLITICAL }
+
+	completion_reward = {
+		HHE_deed_reform_starter_up = yes
+	}
+}
+
+shared_focus = { # KATASTASI 2
+	id = HHE_the_katastasi_2
+	icon = GFX_focus_ger_reichskommisariats
+	prerequisite = { focus = HHE_second_deed_reform focus = HHE_the_katastasi_1 }
+	relative_position_id = HHE_first_deed_reform
+	x = -4
+	y = 3
+	cost = 4
+
+	available = {
+		NOT = { has_global_flag = death_of_deed }
+	}
+	
+	ai_will_do = {
+		base = 2
+	}
+
+	available_if_capitulated = yes
+	search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_MANPOWER }
+
+	completion_reward = {
+		set_country_flag = the_katastasi_2
+		custom_effect_tooltip = STARTER_OVEREXERTION_REFORM
+		HHE_kill_deed_lvl1 = yes
+		HSP = {
+			add_opinion_modifier = {
+				target = ROOT
+				modifier = HHE_deed_improve_opinion_modifier
+			}
+		}
+		add_opinion_modifier = {
+			target = HBB
+			modifier = HHE_deed_improve_opinion_modifier
+		}
+		HRF = {
+			add_opinion_modifier = {
+				target = ROOT
+				modifier = HHE_deed_improve_opinion_modifier
+			}
+		}
+		add_opinion_modifier = {
+			target = HRF
+			modifier = HHE_deed_improve_opinion_modifier
+		}
+		HPP = {
+			add_opinion_modifier = {
+				target = ROOT
+				modifier = HHE_deed_improve_opinion_modifier
+			}
+		}
+		add_opinion_modifier = {
+			target = HPP
+			modifier = HHE_deed_improve_opinion_modifier
+		}
+		add_political_power = 50
+		add_manpower = 50000
+	}
+}
+
+shared_focus = { # PRIEST 2
+	id = HHE_the_higher_priest_2
+	icon = GFX_focus_rom_royal_dictatorship
+	prerequisite = { focus = HHE_second_deed_reform focus = HHE_the_higher_priest_1 }
+	relative_position_id = HHE_first_deed_reform
+	x = -2
+	y = 3
+	cost = 4
+
+	available = {
+		NOT = { has_global_flag = death_of_deed }
+	}
+
+	ai_will_do = {
+		base = 2
+		modifier = {
+			factor = 50
+			has_game_rule = {
+				rule = HHE_ai_behavior
+				option = INFLUENCER
+			}
+		}
+	}
+
+	available_if_capitulated = yes
+	search_filters = { FOCUS_FILTER_STABILITY FOCUS_FILTER_WAR_SUPPORT }
+
+	completion_reward = {
+		set_country_flag = the_higher_priest_2
+		custom_effect_tooltip = STARTER_OVEREXERTION_REFORM
+		HHE_kill_deed_lvl1 = yes
+		add_political_power = 50
+		add_stability = 0.05
+		add_war_support = 0.03
+	}
+}
+
+shared_focus = { # NOBILITY 2
+	id = HHE_the_nobility_2
+	icon = GFX_focus_generic_home_defense
+	prerequisite = { focus = HHE_second_deed_reform focus = HHE_the_nobility_1 }
+	relative_position_id = HHE_first_deed_reform
+	x = 2
+	y = 3
+	cost = 4
+
+	available = {
+		NOT = { has_global_flag = death_of_deed }
+	}
+
+	ai_will_do = {
+		base = 2
+	}
+
+	available_if_capitulated = yes
+	search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_STABILITY }
+
+	completion_reward = {
+		set_country_flag = the_nobility_2
+		custom_effect_tooltip = STARTER_OVEREXERTION_REFORM
+		HHE_kill_deed_lvl1 = yes
+		random_owned_controlled_state = {
+			limit = {
+				free_building_slots = {
+					building = arms_factory
+					size > 1
+					include_locked = yes
+				}
+				OR = {
+					is_in_home_area = yes
+					NOT = {
+						owner = {
+							any_owned_state = {
+								free_building_slots = {
+									building = arms_factory
+									size > 1
+									include_locked = yes
+								}
+								is_in_home_area = yes
+							}
+						}
+					}
+				}
+			}
+			add_extra_state_shared_building_slots = 1
+			add_building_construction = {
+				type = arms_factory
+				level = 1
+				instant_build = yes
+			}
+		}
+		add_stability = 0.02
+	}
+}
+
+shared_focus = { # PEOPLE 2
+	id = HHE_the_people_2
+	icon = GFX_focus_generic_military_academy
+	prerequisite = { focus = HHE_second_deed_reform focus = HHE_the_people_1 }
+	relative_position_id = HHE_first_deed_reform
+	x = 4
+	y = 3
+	cost = 4
+
+	available = {
+		NOT = { has_global_flag = death_of_deed }
+	}
+	
+	ai_will_do = {
+		base = 3
+		modifier = {
+			factor = 10
+			has_game_rule = {
+				rule = HHE_ai_behavior
+				option = WARMONGER
+			}
+		}
+	}
+
+	available_if_capitulated = no
+	search_filters = { FOCUS_FILTER_INDUSTRY }
+
+	completion_reward = {
+		set_country_flag = the_people_2
+		custom_effect_tooltip = STARTER_OVEREXERTION_REFORM
+		HHE_kill_deed_lvl1 = yes
+		random_owned_controlled_state = {
+			limit = {
+				free_building_slots = {
+					building = industrial_complex
+					size > 1
+					include_locked = yes
+				}
+				OR = {
+					is_in_home_area = yes
+					NOT = {
+						owner = {
+							any_owned_state = {
+								free_building_slots = {
+									building = industrial_complex
+									size > 1
+									include_locked = yes
+								}
+								is_in_home_area = yes
+							}
+						}
+					}
+				}
+			}
+			add_extra_state_shared_building_slots = 1
+			add_building_construction = {
+				type = industrial_complex
+				level = 1
+				instant_build = yes
+			}
+		}
+		random_owned_controlled_state = {
+			limit = {
+				free_building_slots = {
+					building = industrial_complex
+					size > 1
+					include_locked = yes
+				}
+				OR = {
+					is_in_home_area = yes
+					NOT = {
+						owner = {
+							any_owned_state = {
+								free_building_slots = {
+									building = industrial_complex
+									size > 1
+									include_locked = yes
+								}
+								is_in_home_area = yes
+							}
+						}
+					}
+				}
+			}
+			add_extra_state_shared_building_slots = 1
+			add_building_construction = {
+				type = industrial_complex
+				level = 1
+				instant_build = yes
+			}
+		}
+	}
+}
+
+shared_focus = {
+	id = HHE_third_deed_reform
+	icon = GFX_focus_hol_the_foundations_of_defense
+	prerequisite = { focus = HHE_second_deed_reform }
+	prerequisite = { focus = HHE_the_katastasi_2 }
+	prerequisite = { focus = HHE_the_higher_priest_2 }
+	prerequisite = { focus = HHE_the_nobility_2 }
+	prerequisite = { focus = HHE_the_people_2 }
+	relative_position_id = HHE_first_deed_reform
+	x = 0
+	y = 4
+	cost = 10
+
+	available = {
+		NOT = { has_global_flag = death_of_deed }
+	}
+
+	ai_will_do = {
+		base = 5
+	}
+
+	available_if_capitulated = yes
+	search_filters = { FOCUS_FILTER_POLITICAL }
+
+	completion_reward = {
+		HHE_deed_reform_starter_up = yes
+	}
+}
+
+shared_focus = { # KATASTASI 3
+	id = HHE_the_katastasi_3
+	icon = GFX_focus_ger_reichskommisariats
+	prerequisite = { focus = HHE_third_deed_reform focus = HHE_the_katastasi_2 }
+	relative_position_id = HHE_first_deed_reform
+	x = -4
+	y = 5
+	cost = 4
+
+	available = {
+		NOT = { has_global_flag = death_of_deed }
+	}
+
+	ai_will_do = {
+		base = 1
+	}
+
+	available_if_capitulated = yes
+	search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_MANPOWER }
+
+	completion_reward = {
+		set_country_flag = the_katastasi_3
+		custom_effect_tooltip = STARTER_OVEREXERTION_REFORM
+		HHE_kill_deed_lvl2 = yes
+		HBB = {
+			add_opinion_modifier = {
+				target = ROOT
+				modifier = HHE_deed_improve_opinion_modifier
+			}
+		}
+		add_opinion_modifier = {
+			target = HSP
+			modifier = HHE_deed_improve_opinion_modifier
+		}
+		HCR = {
+			add_opinion_modifier = {
+				target = ROOT
+				modifier = HHE_deed_improve_opinion_modifier
+			}
+		}
+		add_opinion_modifier = {
+			target = HCR
+			modifier = HHE_deed_improve_opinion_modifier
+		}
+		HWA = {
+			add_opinion_modifier = {
+				target = ROOT
+				modifier = HHE_deed_improve_opinion_modifier
+			}
+		}
+		add_opinion_modifier = {
+			target = HWA
+			modifier = HHE_deed_improve_opinion_modifier
+		}
+		add_manpower = 25000
+		add_political_power = 50
+	}
+}
+
+shared_focus = { # PRIEST 3
+	id = HHE_the_higher_priest_3
+	icon = GFX_focus_rom_royal_dictatorship
+	prerequisite = { focus = HHE_third_deed_reform focus = HHE_the_higher_priest_2 }
+	relative_position_id = HHE_first_deed_reform
+	x = -2
+	y = 5
+	cost = 4
+
+	available = {
+		NOT = { has_global_flag = death_of_deed }
+	}
+
+	ai_will_do = {
+		base = 1
+	}
+
+	available_if_capitulated = yes
+	search_filters = { FOCUS_FILTER_STABILITY }
+
+	completion_reward = {
+		set_country_flag = the_higher_priest_3
+		custom_effect_tooltip = STARTER_OVEREXERTION_REFORM
+		HHE_kill_deed_lvl2 = yes
+		add_political_power = 50
+		add_stability = 0.05
+	}
+}
+
+shared_focus = { # NOBILITY 3
+	id = HHE_the_nobility_3
+	icon = GFX_focus_generic_home_defense
+	prerequisite = { focus = HHE_third_deed_reform focus = HHE_the_nobility_2 }
+	relative_position_id = HHE_first_deed_reform
+	x = 2
+	y = 5
+	cost = 4
+
+	available = {
+		NOT = { has_global_flag = death_of_deed }
+	}
+
+	ai_will_do = {
+		base = 1
+	}
+
+	available_if_capitulated = yes
+	search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_STABILITY }
+
+	completion_reward = {
+		set_country_flag = the_nobility_3
+		custom_effect_tooltip = STARTER_OVEREXERTION_REFORM
+		HHE_kill_deed_lvl2 = yes
+		random_owned_controlled_state = {
+			limit = {
+				free_building_slots = {
+					building = arms_factory
+					size > 1
+					include_locked = yes
+				}
+				OR = {
+					is_in_home_area = yes
+					NOT = {
+						owner = {
+							any_owned_state = {
+								free_building_slots = {
+									building = arms_factory
+									size > 1
+									include_locked = yes
+								}
+								is_in_home_area = yes
+							}
+						}
+					}
+				}
+			}
+			add_extra_state_shared_building_slots = 1
+			add_building_construction = {
+				type = arms_factory
+				level = 1
+				instant_build = yes
+			}
+		}
+		add_stability = 0.02
+	}
+}
+
+shared_focus = { # PEOPLE 3
+	id = HHE_the_people_3
+	icon = GFX_focus_generic_military_academy
+	prerequisite = { focus = HHE_third_deed_reform focus = HHE_the_people_2 }
+	relative_position_id = HHE_first_deed_reform
+	x = 4
+	y = 5
+	cost = 4
+
+	available = {
+		NOT = { has_global_flag = death_of_deed }
+	}
+	
+	ai_will_do = {
+		base = 2
+	}
+
+	available_if_capitulated = no
+	search_filters = { FOCUS_FILTER_INDUSTRY }
+
+	completion_reward = {
+		set_country_flag = the_people_3
+		custom_effect_tooltip = STARTER_OVEREXERTION_REFORM
+		HHE_kill_deed_lvl2 = yes
+		random_owned_controlled_state = {
+			limit = {
+				free_building_slots = {
+					building = industrial_complex
+					size > 1
+					include_locked = yes
+				}
+				OR = {
+					is_in_home_area = yes
+					NOT = {
+						owner = {
+							any_owned_state = {
+								free_building_slots = {
+									building = industrial_complex
+									size > 1
+									include_locked = yes
+								}
+								is_in_home_area = yes
+							}
+						}
+					}
+				}
+			}
+			add_extra_state_shared_building_slots = 1
+			add_building_construction = {
+				type = industrial_complex
+				level = 1
+				instant_build = yes
+			}
+		}
+		random_owned_controlled_state = {
+			limit = {
+				free_building_slots = {
+					building = industrial_complex
+					size > 1
+					include_locked = yes
+				}
+				OR = {
+					is_in_home_area = yes
+					NOT = {
+						owner = {
+							any_owned_state = {
+								free_building_slots = {
+									building = industrial_complex
+									size > 1
+									include_locked = yes
+								}
+								is_in_home_area = yes
+							}
+						}
+					}
+				}
+			}
+			add_extra_state_shared_building_slots = 1
+			add_building_construction = {
+				type = industrial_complex
+				level = 1
+				instant_build = yes
+			}
+		}
+	}
+}
+
+shared_focus = {
+	id = HHE_last_deed_reform
+	icon = GFX_focus_hol_the_foundations_of_defense
+	prerequisite = { focus = HHE_third_deed_reform }
+	prerequisite = { focus = HHE_the_katastasi_3 }
+	prerequisite = { focus = HHE_the_higher_priest_3 }
+	prerequisite = { focus = HHE_the_nobility_3 }
+	prerequisite = { focus = HHE_the_people_3 }
+	relative_position_id = HHE_first_deed_reform
+	x = 0
+	y = 6
+	cost = 10
+
+	available = {
+		NOT = { has_global_flag = death_of_deed }
+	}
+
+	ai_will_do = {
+		base = 5
+	}
+
+	available_if_capitulated = yes
+	search_filters = { FOCUS_FILTER_POLITICAL }
+
+	completion_reward = {
+		hidden_effect = {
+			create_country_leader = {
+				name = "Luke Deed"
+				desc = "POLITICS_XXX_DESC"
+				picture = "gfx/leaders/Europe/Portrait_Europe_Generic_land_2.dds"
+				expire = "1965.1.1"
+				ideology = sub_reformed_harmonainism
+				id = 200
+			}
+		}
+		load_focus_tree = hhe_luke_deed_focus
+	}
+}

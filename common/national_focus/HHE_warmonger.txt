@@ -1,0 +1,1318 @@
+shared_focus = { # Stability in the Choas
+	id = HHE_warmonger_stability_in_choas
+	icon = GFX_focus_unknown
+	#prerequisite = { focus =  }
+	#mutually_exclusive = { focus =  }
+	#relative_position_id = 
+	x = 5
+	y = 0
+	cost = 1
+
+	allow_branch = {
+	}
+	available = {
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		base = 999
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		HHE_political_choas_down = yes
+		add_political_power = 35
+	}
+}
+
+shared_focus = { # Political Restart
+	id = HHE_warmonger_political_restart
+	icon = GFX_focus_unknown
+	#prerequisite = { focus =  }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = HHE_warmonger_stability_in_choas
+	x = -2
+	y = 0
+	cost = 1
+
+	allow_branch = {
+	}
+	available = {
+		has_completed_focus = HHE_warmonger_stability_in_choas
+		NOT = {
+			or = {
+				has_country_flag = HHE_collapse_of_the_nation_country_no_more_failed
+				has_country_flag = HHE_collapse_of_the_nation_country_no_more_fixed
+			}
+		}
+		has_political_power < 1
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		base = 999
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		set_political_power = 0
+	}
+}
+
+shared_focus = { # Force Military Reforms
+	id = HHE_warmonger_force_military_reform
+	icon = GFX_focus_unknown
+	prerequisite = { focus = HHE_warmonger_stability_in_choas }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = HHE_warmonger_stability_in_choas
+	x = 1
+	y = 1
+	cost = 3
+
+	allow_branch = {
+	}
+	available = {
+		or = {
+			has_country_flag = HHE_collapse_of_the_nation_peoples_government_failed
+			has_country_flag = HHE_collapse_of_the_nation_peoples_government_fixed
+		}
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		base = 1000
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		swap_ideas = {
+			remove_idea = disjointed_military
+			add_idea = disjointed_military2
+		}
+	}
+}
+
+shared_focus = { # Militarization of the Nation
+	id = HHE_warmonger_militarization_the_nation
+	icon = GFX_focus_unknown
+	prerequisite = { focus = HHE_warmonger_force_military_reform }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = HHE_warmonger_force_military_reform
+	x = 1
+	y = 1
+	cost = 5
+
+	allow_branch = {
+	}
+	available = {
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		base = 1000
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+ 		hidden_effect = {
+ 			add_threat = 5 # add_named_threat = { threat = 5 name = name.1.t }
+ 		}
+		5={
+			add_extra_state_shared_building_slots = 2
+			add_building_construction = {
+				type = arms_factory
+				level = 2
+				instant_build = yes
+			}
+		}
+		239={
+			add_extra_state_shared_building_slots = 2
+			add_building_construction = {
+				type = arms_factory
+				level = 2
+				instant_build = yes
+			}
+		}
+	}
+}
+
+shared_focus = { # Victory Parade
+	id = HHE_warmonger_victory_parade
+	icon = GFX_focus_unknown
+	prerequisite = { focus = HHE_warmonger_militarization_the_nation }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = HHE_warmonger_militarization_the_nation
+	x = 12
+	y = 1
+	cost = 5
+
+	allow_branch = {
+	}
+	available = {
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		base = 10
+		modifier = {
+			factor = 10
+			ROOT = {
+				has_country_flag = HHE_warmonger_civil_war_regional
+			}
+		}
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		custom_effect_tooltip = WARMONGER_VICTORY_PARADES
+	}
+}
+
+shared_focus = { # VP River's Eye
+	id = HHE_warmonger_vp_riverseye
+	icon = GFX_focus_unknown
+	prerequisite = { focus = HHE_warmonger_victory_parade }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = HHE_warmonger_victory_parade
+	x = -10
+	y = 1
+	cost = 3
+
+	allow_branch = {
+	}
+	available = {
+		ROOT = { controls_state = 11 }
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		base = 10
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		add_stability = 0.03
+		add_war_support = 0.03
+	}
+}
+
+shared_focus = { # VP Crystal Cathedral
+	id = HHE_warmonger_vp_crystalcathedral
+	icon = GFX_focus_unknown
+	prerequisite = { focus = HHE_warmonger_victory_parade }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = HHE_warmonger_victory_parade
+	x = -8
+	y = 1
+	cost = 3
+
+	allow_branch = {
+	}
+	available = {
+		ROOT = { controls_state = 11 }
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		base = 10
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		add_stability = 0.03
+		add_war_support = 0.03
+	}
+}
+
+shared_focus = { # VP Holy Sea
+	id = HHE_warmonger_vp_holysea
+	icon = GFX_focus_unknown
+	prerequisite = { focus = HHE_warmonger_victory_parade }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = HHE_warmonger_victory_parade
+	x = -6
+	y = 1
+	cost = 3
+
+	allow_branch = {
+	}
+	available = {
+		ROOT = { controls_state = 110 }
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		base = 10
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		add_stability = 0.03
+		add_war_support = 0.03
+	}
+}
+
+shared_focus = { # VP Sanctus Bay
+	id = HHE_warmonger_vp_sanctusbay
+	icon = GFX_focus_unknown
+	prerequisite = { focus = HHE_warmonger_victory_parade }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = HHE_warmonger_victory_parade
+	x = -4
+	y = 1
+	cost = 3
+
+	allow_branch = {
+	}
+	available = {
+		ROOT = { controls_state = 106 }
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		base = 10
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		add_stability = 0.03
+		add_war_support = 0.03
+	}
+}
+
+shared_focus = { # VP Laity City
+	id = HHE_warmonger_vp_laitycity
+	icon = GFX_focus_unknown
+	prerequisite = { focus = HHE_warmonger_victory_parade }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = HHE_warmonger_victory_parade
+	x = -2
+	y = 1
+	cost = 3
+
+	allow_branch = {
+	}
+	available = {
+		ROOT = { controls_state = 2 }
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		base = 10
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		add_stability = 0.03
+		add_war_support = 0.03
+	}
+}
+
+shared_focus = { # VP Nobilitas
+	id = HHE_warmonger_vp_nobilitas
+	icon = GFX_focus_unknown
+	prerequisite = { focus = HHE_warmonger_victory_parade }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = HHE_warmonger_victory_parade
+	x = 0
+	y = 1
+	cost = 3
+
+	allow_branch = {
+	}
+	available = {
+		ROOT = { controls_state = 79 }
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		base = 10
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		add_stability = 0.03
+		add_war_support = 0.03
+	}
+}
+
+shared_focus = { # VP Regiusurbs
+	id = HHE_warmonger_vp_regiusurbs
+	icon = GFX_focus_unknown
+	prerequisite = { focus = HHE_warmonger_victory_parade }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = HHE_warmonger_victory_parade
+	x = 2
+	y = 1
+	cost = 3
+
+	allow_branch = {
+	}
+	available = {
+		ROOT = { controls_state = 159 }
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		base = 10
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		add_stability = 0.03
+		add_war_support = 0.03
+	}
+}
+
+shared_focus = { # VP Articulusurbs
+	id = HHE_warmonger_vp_articulusurbs
+	icon = GFX_focus_unknown
+	prerequisite = { focus = HHE_warmonger_victory_parade }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = HHE_warmonger_victory_parade
+	x = 4
+	y = 1
+	cost = 3
+
+	allow_branch = {
+	}
+	available = {
+		ROOT = { controls_state = 410 }
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		base = 10
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		add_stability = 0.03
+		add_war_support = 0.03
+	}
+}
+
+shared_focus = { # VP Aqua Auguis
+	id = HHE_warmonger_vp_aquaauguis
+	icon = GFX_focus_unknown
+	prerequisite = { focus = HHE_warmonger_victory_parade }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = HHE_warmonger_victory_parade
+	x = 6
+	y = 1
+	cost = 3
+
+	allow_branch = {
+	}
+	available = {
+		ROOT = { controls_state = 148 }
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		base = 10
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		add_stability = 0.03
+		add_war_support = 0.03
+	}
+}
+
+shared_focus = { # VP Agricola Midland
+	id = HHE_warmonger_vp_agricolamidland
+	icon = GFX_focus_unknown
+	prerequisite = { focus = HHE_warmonger_victory_parade }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = HHE_warmonger_victory_parade
+	x = 8
+	y = 1
+	cost = 3
+
+	allow_branch = {
+	}
+	available = {
+		ROOT = { controls_state = 18 }
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		base = 10
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		add_stability = 0.03
+		add_war_support = 0.03
+	}
+}
+
+shared_focus = { # VP Urbealta City
+	id = HHE_warmonger_vp_urbealtacity
+	icon = GFX_focus_unknown
+	prerequisite = { focus = HHE_warmonger_victory_parade }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = HHE_warmonger_victory_parade
+	x = 10
+	y = 1
+	cost = 3
+
+	allow_branch = {
+	}
+	available = {
+		ROOT = { controls_state = 271 }
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		base = 10
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		add_stability = 0.03
+		add_war_support = 0.03
+	}
+}
+
+shared_focus = { # Great Victory Parade
+	id = HHE_warmonger_great_victory_parade
+	icon = GFX_focus_unknown
+	prerequisite = { focus = HHE_warmonger_vp_riverseye focus = HHE_warmonger_vp_crystalcathedral focus = HHE_warmonger_vp_holysea focus = HHE_warmonger_vp_sanctusbay focus = HHE_warmonger_vp_laitycity focus = HHE_warmonger_vp_nobilitas focus = HHE_warmonger_vp_articulusurbs focus = HHE_warmonger_vp_regiusurbs focus = HHE_warmonger_vp_aquaauguis focus = HHE_warmonger_vp_agricolamidland focus = HHE_warmonger_vp_urbealtacity }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = HHE_warmonger_victory_parade
+	x = 0
+	y = 3
+	cost = 5
+
+	allow_branch = {
+		is_subject = no
+	}
+	available = {
+		has_war = no
+		has_country_flag = HHE_warmonger_civil_war_fullignition
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		base = 10
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		custom_effect_tooltip = WARMONGER_GREAT_VICTORY_PARADES
+		HHE_political_choas_down = yes
+	}
+}
+
+shared_focus = { # Political Clamp Downs
+	id = HHE_warmonger_clamp_downs
+	icon = GFX_focus_unknown
+	prerequisite = { focus = HHE_warmonger_stability_in_choas }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = HHE_warmonger_stability_in_choas
+	x = -1
+	y = 1
+	cost = 5
+
+	allow_branch = {
+	}
+	available = {
+		or = {
+			has_country_flag = HHE_collapse_of_the_nation_country_no_more_failed
+			has_country_flag = HHE_collapse_of_the_nation_country_no_more_fixed
+		}
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		base = 50
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		HHE_political_choas_down = yes
+	}
+}
+
+shared_focus = { # Repair the role of Harmonia
+	id = HHE_warmonger_repair_role_of_harmonia
+	icon = GFX_focus_unknown
+	prerequisite = { focus = HHE_warmonger_clamp_downs }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = HHE_warmonger_clamp_downs
+	x = 1
+	y = 1
+	cost = 7
+
+	allow_branch = {
+	}
+	available = {
+		or = {
+			has_country_flag = HHE_collapse_of_the_nation_country_no_more_failed
+			has_country_flag = HHE_collapse_of_the_nation_country_no_more_fixed
+		}
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		base = 50
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		HHE_political_choas_down = yes
+	}
+}
+
+shared_focus = { # Mobilize the last of the Nobility
+	id = HHE_warmonger_mobilize_the_nobility
+	icon = GFX_focus_unknown
+	prerequisite = { focus = HHE_warmonger_repair_role_of_harmonia }
+	prerequisite = { focus = HHE_warmonger_militarization_the_nation }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = HHE_warmonger_militarization_the_nation
+	x = 0
+	y = 1
+	cost = 5
+
+	allow_branch = {
+	}
+	available = {
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		base = 99
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		HHE_mobilize_nobility_industry = yes
+	}
+}
+
+shared_focus = { # Removal of the Non-Loyalist
+	id = HHE_warmonger_removal_of_non_loyalist
+	icon = GFX_focus_unknown
+	prerequisite = { focus = HHE_warmonger_repair_role_of_harmonia }
+	prerequisite = { focus = HHE_warmonger_militarization_the_nation }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = HHE_warmonger_militarization_the_nation
+	x = -2
+	y = 1
+	cost = 10
+
+	allow_branch = {
+	}
+	available = {
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		base = 75
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		HHE_political_choas_down = yes
+	}
+}
+
+shared_focus = { # Transfer Industries to Loyalist
+	id = HHE_warmonger_transfer_industries_loyalist
+	icon = GFX_focus_unknown
+	prerequisite = { focus = HHE_warmonger_removal_of_non_loyalist }
+	prerequisite = { focus = HHE_warmonger_mobilize_the_nobility }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = HHE_warmonger_militarization_the_nation
+	x = -1
+	y = 2
+	cost = 10
+
+	allow_branch = {
+	}
+	available = {
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		base = 75
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		HHE_mobilize_nobility_industry = yes
+	}
+}
+
+shared_focus = { # Spark the Machines
+	id = HHE_warmonger_spark_the_machines
+	icon = GFX_focus_unknown
+	prerequisite = { focus = HHE_warmonger_family_united }
+	prerequisite = { focus = HHE_warmonger_transfer_industries_loyalist }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = HHE_warmonger_transfer_industries_loyalist
+	x = -2
+	y = 1
+	cost = 5
+
+	allow_branch = {
+	}
+	available = {
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		base = 10
+		modifier = {
+			factor = 3
+			add = 2.5
+			tag = HHE
+		}
+		modifier = { has_war = yes add = 10 }
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		HHE_mobilize_nobility_industry = yes
+		1 = { add_core_of = ROOT }
+		1 = {
+			add_extra_state_shared_building_slots = 2
+			add_building_construction = {
+				type = steel_complex
+				level = 1
+				instant_build = yes
+			}
+			add_building_construction = {
+				type = arms_factory
+				level = 1
+				instant_build = yes
+			}
+		}
+		94 = { add_core_of = ROOT }
+		94 = {
+			add_extra_state_shared_building_slots = 1
+			add_building_construction = {
+				type = arms_factory
+				level = 1
+				instant_build = yes
+			}
+		}
+		95 = { add_core_of = ROOT }
+		95 = {
+			add_extra_state_shared_building_slots = 1
+			add_building_construction = {
+				type = arms_factory
+				level = 1
+				instant_build = yes
+			}
+		}
+		105 = { add_core_of = ROOT }
+		105 = {
+			add_extra_state_shared_building_slots = 2
+			add_building_construction = {
+				type = steel_complex
+				level = 1
+				instant_build = yes
+			}
+			add_building_construction = {
+				type = arms_factory
+				level = 1
+				instant_build = yes
+			}
+		}
+	}
+}
+
+shared_focus = { # Communalize the Industries
+	id = HHE_warmonger_communalize_industries
+	icon = GFX_focus_unknown
+	prerequisite = { focus = HHE_warmonger_great_victory_parade }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = HHE_warmonger_great_victory_parade
+	x = -2
+	y = 1
+	cost = 5
+
+	allow_branch = {
+	}
+	available = {
+		has_completed_focus = HHE_warmonger_spark_the_machines
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		base = 10
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		HHE_nationalize_state_industry = yes
+	}
+}
+
+shared_focus = { # Communalize the Industries Added 1
+	id = HHE_warmonger_communalize_industries_add0
+	icon = GFX_focus_unknown
+	prerequisite = { focus = HHE_warmonger_communalize_industries }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = HHE_warmonger_great_victory_parade
+	x = -2
+	y = 2
+	cost = 5
+
+	allow_branch = {
+	}
+	available = {
+		has_completed_focus = HHE_warmonger_spark_the_machines
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		base = 10
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		HHE_nationalize_state_industry = yes
+	}
+}
+
+shared_focus = { # Communalize the Industries Added 2
+	id = HHE_warmonger_communalize_industries_add1
+	icon = GFX_focus_unknown
+	prerequisite = { focus = HHE_warmonger_communalize_industries_add0 }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = HHE_warmonger_great_victory_parade
+	x = -2
+	y = 3
+	cost = 5
+
+	allow_branch = {
+	}
+	available = {
+		has_completed_focus = HHE_warmonger_spark_the_machines
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		base = 10
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		HHE_nationalize_state_industry = yes
+	}
+}
+
+shared_focus = { # Connect our Northern Lands
+	id = HHE_warmonger_connect_northern_lands
+	icon = GFX_focus_unknown
+	prerequisite = { focus = HHE_warmonger_great_victory_parade }
+	prerequisite = { focus = HHE_warmonger_communalize_industries_add1 }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = HHE_warmonger_great_victory_parade
+	x = 0
+	y = 4
+	cost = 10
+
+	allow_branch = {
+	}
+	available = {
+		is_subject = no
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		base = 75
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+ 		hidden_effect = {
+ 			add_threat = 5 # add_named_threat = { threat = 10 name = name.1.t }
+ 		}
+		create_wargoal = {
+			type = annex_everything
+			target = DOC
+			expire = 0
+		}
+		declare_war_on = {
+			target = DOC
+			type = annex_everything
+		}
+		create_wargoal = {
+			type = annex_everything
+			target = IHS
+			expire = 0
+		}
+		declare_war_on = {
+			target = IHS
+			type = annex_everything
+		}
+		create_wargoal = {
+			type = annex_everything
+			target = REP
+			expire = 0
+		}
+		declare_war_on = {
+			target = REP
+			type = annex_everything
+		}
+	}
+}
+
+shared_focus = { # Revoke previous Theocratic State Government
+	id = HHE_warmonger_revoke_previous_government
+	icon = GFX_focus_unknown
+	prerequisite = { focus = HHE_warmonger_connect_northern_lands }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = HHE_warmonger_great_victory_parade
+	x = 2
+	y = 5
+	cost = 5
+
+	allow_branch = {
+	}
+	available = {
+		is_subject = no
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		base = 150
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		every_state = {
+			limit = {
+				OR = {
+					is_core_of = HRF
+				}
+			}
+			remove_core_of = HRF
+		}
+	}
+}
+
+shared_focus = { # Revenge of Aktiburg
+	id = HHE_warmonger_revenge_of_aktiburg
+	icon = GFX_focus_unknown
+	prerequisite = { focus = HHE_warmonger_connect_northern_lands }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = HHE_warmonger_great_victory_parade
+	x = 0
+	y = 5
+	cost = 10
+
+	allow_branch = {
+	}
+	available = {
+		is_subject = no
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		base = 75
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+ 		hidden_effect = {
+ 			add_threat = 5 # add_named_threat = { threat = 10 name = name.1.t }
+ 		}
+		create_wargoal = {
+			type = annex_everything
+			target = KGK
+			expire = 0
+		}
+		declare_war_on = {
+			target = KGK
+			type = annex_everything
+		}
+	}
+}
+
+shared_focus = { # Purge the North
+	id = HHE_warmonger_purge_the_north
+	icon = GFX_focus_unknown
+	prerequisite = { focus = HHE_warmonger_revenge_of_aktiburg }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = HHE_warmonger_great_victory_parade
+	x = 0
+	y = 6
+	cost = 10
+
+	allow_branch = {
+	}
+	available = {
+		is_subject = no
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		base = 75
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+ 		hidden_effect = {
+ 			add_threat = 10 # add_named_threat = { threat = 10 name = name.1.t }
+ 		}
+		create_wargoal = {
+			type = annex_everything
+			target = SEK
+			expire = 0
+		}
+		declare_war_on = {
+			target = SEK
+			type = annex_everything
+		}
+		create_wargoal = {
+			type = annex_everything
+			target = FIK
+			expire = 0
+		}
+		declare_war_on = {
+			target = FIK
+			type = annex_everything
+		}
+		create_wargoal = {
+			type = annex_everything
+			target = ERP
+			expire = 0
+		}
+		declare_war_on = {
+			target = ERP
+			type = annex_everything
+		}
+		HPV = {
+			create_wargoal = {
+				type = annex_everything
+				target = GSD
+				expire = 0
+			}
+			#declare_war_on = {
+			#	target = GSD
+			#	type = annex_everything
+			#}
+			create_wargoal = {
+				type = annex_everything
+				target = SSD
+				expire = 0
+			}
+			#declare_war_on = {
+			#	target = SSD
+			#	type = annex_everything
+			#}
+		}
+	}
+}
+
+shared_focus = { # Bring them into the fold
+	id = HHE_warmonger_bring_them_into_fold
+	icon = GFX_focus_unknown
+	prerequisite = { focus = HHE_warmonger_purge_the_north }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = HHE_warmonger_great_victory_parade
+	x = 0
+	y = 7
+	cost = 20
+
+	allow_branch = {
+	}
+	available = {
+		is_subject = no
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		base = 75
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+ 		hidden_effect = {
+ 			add_threat = 10 # add_named_threat = { threat = 10 name = name.1.t }
+ 		}
+		declare_war_on = {
+			target = GSD
+			type = annex_everything
+		}
+		declare_war_on = {
+			target = SSD
+			type = annex_everything
+		}
+ 		ROOT = {
+			puppet = HPV
+ 		}
+ 		HPV = {
+			declare_war_on = {
+				target = GSD
+				type = annex_everything
+			}
+			declare_war_on = {
+				target = SSD
+				type = annex_everything
+			}
+ 		}
+	}
+}
+
+shared_focus = { # It Starts
+	id = HHE_warmonger_it_starts
+	icon = GFX_focus_unknown
+	prerequisite = { focus = HHE_warmonger_bring_them_into_fold }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = HHE_warmonger_great_victory_parade
+	x = 0
+	y = 8
+	cost = 20
+
+	allow_branch = {
+	}
+	available = {
+		is_subject = no
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		base = 75
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+ 		hidden_effect = {
+ 			add_threat = 50 # add_named_threat = { threat = 10 name = name.1.t }
+ 		}
+		create_wargoal = {
+			type = annex_everything
+			target = SFG
+			expire = 0
+		}
+		create_wargoal = {
+			type = annex_everything
+			target = SRA
+			expire = 0
+		}
+		create_wargoal = {
+			type = annex_everything
+			target = UFS
+			expire = 0
+		}
+		declare_war_on = {
+			target = UFS
+			type = annex_everything
+		}
+		create_wargoal = {
+			type = annex_everything
+			target = MJU
+			expire = 0
+		}
+		declare_war_on = {
+			target = MJU
+			type = annex_everything
+		}
+		create_wargoal = {
+			type = annex_everything
+			target = MRC
+			expire = 0
+		}
+		declare_war_on = {
+			target = MRC
+			type = annex_everything
+		}
+		create_wargoal = {
+			type = annex_everything
+			target = CPV
+			expire = 0
+		}
+		create_wargoal = {
+			type = annex_everything
+			target = RVV
+			expire = 0
+		}
+	}
+}
+
+shared_focus = { # A Family 'reunion'
+	id = HHE_warmonger_family_reunion
+	icon = GFX_focus_unknown
+	prerequisite = { focus = HHE_warmonger_clamp_downs }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = HHE_warmonger_clamp_downs
+	x = -1
+	y = 1
+	cost = 10
+
+	allow_branch = {
+	}
+	available = {
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		base = 50
+		modifier = {
+			factor = 25
+			tag = HHE
+		}
+		modifier = { has_war = yes add = 50 }
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		# EVENT
+	}
+}
+
+shared_focus = { # A Family Divided
+	id = HHE_warmonger_family_divided
+	icon = GFX_focus_unknown
+	prerequisite = { focus = HHE_warmonger_family_reunion }
+	mutually_exclusive = { focus = HHE_warmonger_family_united }
+	relative_position_id = HHE_warmonger_family_reunion
+	x = 0
+	y = 1
+	cost = 5
+
+	allow_branch = {
+	}
+	available = {
+		always = no
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		base = 50
+		modifier = {
+			factor = 25
+			tag = HHE
+		}
+		modifier = { has_war = yes add = 50 }
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+ 		hidden_effect = {
+ 			add_threat = 5 # add_named_threat = { threat = 10 name = name.1.t }
+ 		}
+		# EVENT
+		declare_war_on = {
+			target = HTP
+			type = annex_everything
+		}
+	}
+}
+
+shared_focus = { # A Family United
+	id = HHE_warmonger_family_united
+	icon = GFX_focus_unknown
+	prerequisite = { focus = HHE_warmonger_family_reunion }
+	mutually_exclusive = { focus = HHE_warmonger_family_divided }
+	relative_position_id = HHE_warmonger_family_reunion
+	x = -2
+	y = 1
+	cost = 5
+
+	allow_branch = {
+	}
+	available = {
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		base = 50
+		modifier = {
+			factor = 25
+			tag = HHE
+		}
+		modifier = { has_war = yes add = 50 }
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+ 		hidden_effect = {
+ 			add_threat = 5 # add_named_threat = { threat = 10 name = name.1.t }
+ 		}
+		# EVENT
+		annex_country = { target = HTP transfer_troops = yes }
+			hidden_effect = {
+				#848 = { add_core_of = HHE }
+			}
+		}
+	}
+}

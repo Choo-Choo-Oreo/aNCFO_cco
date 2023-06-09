@@ -1,0 +1,643 @@
+shared_focus = { # Assassination
+	id = HHE_assassination_deed
+	icon = GFX_focus_HHE_assassination
+	x = 11
+	y = 0
+	cost = 1
+
+	allow_branch = {
+		has_global_flag = death_of_deed
+	}
+	bypass = {
+		has_global_flag = death_of_deed
+	}
+
+	ai_will_do = {
+		base = 1
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+	}
+}
+
+shared_focus = { # Senate Reforms
+	id = HHE_senate_reforms
+	icon = GFX_focus_generic_treaty
+	prerequisite = { focus = HHE_assassination_deed }
+	x = 11
+	y = 1
+	cost = 5
+
+	ai_will_do = {
+		base = 1
+		modifier = {
+			add = 10
+			factor = 10
+			has_game_rule = {
+				rule = HHE_ai_behavior
+				option = INFLUENCER
+			}
+		}
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		add_political_power = -25
+		add_popularity = { ideology = pluralism popularity = -0.05 }
+		add_popularity = { ideology = semidemocracy popularity = -0.05 }
+	}
+}
+
+shared_focus = { # Halt Reforms
+	id = HHE_halt_reforms
+	icon = GFX_goal_generic_defence
+	mutually_exclusive = { focus = HHE_finish_reforms }
+	prerequisite = { focus = HHE_senate_reforms }
+	relative_position_id = HHE_senate_reforms
+	x = -1
+	y = 1
+	cost = 2
+
+	ai_will_do = {
+		base = 1
+		modifier = {
+			add = 10
+			factor = 10
+			has_game_rule = {
+				rule = HHE_ai_behavior
+				option = WARMONGER
+			}
+		}
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		#add_popularity = { ideology = authoritarianism popularity = 0.1 } # Flipped out for removing the other two
+		add_popularity = { ideology = pluralism popularity = -0.05 }
+		add_popularity = { ideology = semidemocracy popularity = -0.05 }
+		add_political_power = 200
+		#add_stability = -0.1 # To punishing
+		HHE_deed_reform_removal = yes
+		#remove_ideas = HHE_first_deed_reform
+		#remove_ideas = HHE_second_deed_reform
+		#remove_ideas = HHE_third_deed_reform
+		hidden_effect = {
+			set_country_flag = halt_reforms
+		}
+	}
+}
+
+shared_focus = { # Finish Reforms
+	id = HHE_finish_reforms
+	icon = GFX_focus_hol_the_foundations_of_defense
+	mutually_exclusive = { focus = HHE_halt_reforms }
+	prerequisite = { focus = HHE_senate_reforms }
+	relative_position_id = HHE_senate_reforms
+	x = 1
+	y = 1
+	cost = 2
+
+	ai_will_do = {
+		base = 1
+		modifier = {
+			add = 10
+			factor = 10
+			has_game_rule = {
+				rule = HHE_ai_behavior
+				option = INFLUENCER
+			}
+		}
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		add_stability = 0.05
+		hidden_effect = {
+			add_ideas = HHE_deed_reform_senete
+			remove_ideas = HHE_first_deed_reform
+			remove_ideas = HHE_second_deed_reform
+			remove_ideas = HHE_third_deed_reform
+			set_country_flag = finish_reforms
+		}
+		if = {
+			limit = {
+				has_idea = HHE_first_deed_reform
+			}
+			effect_tooltip = {
+				swap_ideas = {
+					remove_idea = HHE_first_deed_reform
+					add_idea = HHE_deed_reform_senete
+				}
+			}
+		}
+		if = {
+			limit = {
+				has_idea = HHE_second_deed_reform
+			}
+			effect_tooltip = {
+				swap_ideas = {
+					remove_idea = HHE_second_deed_reform
+					add_idea = HHE_deed_reform_senete
+				}
+			}
+		}
+		if = {
+			limit = {
+				has_idea = HHE_third_deed_reform
+			}
+			effect_tooltip = {
+				swap_ideas = {
+					remove_idea = HHE_third_deed_reform
+					add_idea = HHE_deed_reform_senete
+				}
+			}
+		}
+	}
+}
+
+shared_focus = { # Assassination Prevention
+	id = HHE_assassination_prevention
+	icon = GFX_focus_focus_fra_national_resistance_council
+	prerequisite = { focus = HHE_halt_reforms focus = HHE_finish_reforms }
+	relative_position_id = HHE_senate_reforms
+	x = 0
+	y = 2
+	cost = 5
+
+	ai_will_do = {
+		base = 1
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		add_political_power = -25
+		add_stability = 0.05
+	}
+}
+
+shared_focus = { # Heavy Prevention
+	id = HHE_heavy_assassination_prevention
+	icon = GFX_focus_generic_little_entente
+	prerequisite = { focus = HHE_assassination_prevention }
+	mutually_exclusive = { focus = HHE_light_assassination_prevention }
+	relative_position_id = HHE_senate_reforms
+	x = -1
+	y = 3
+	cost = 5
+
+	ai_will_do = {
+		base = 1
+		modifier = {
+			add = 10
+			factor = 10
+			has_game_rule = {
+				rule = HHE_ai_behavior
+				option = WARMONGER
+			}
+		}
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		add_ideas = HHE_harmony_guard_h
+		hidden_effect = {
+			set_country_flag = heavy_assassination_prevention
+		}
+	}
+}
+
+shared_focus = { # Light Prevention
+	id = HHE_light_assassination_prevention
+	icon = GFX_focus_generic_military_mission
+	prerequisite = { focus = HHE_assassination_prevention }
+	mutually_exclusive = { focus = HHE_heavy_assassination_prevention }
+	relative_position_id = HHE_senate_reforms
+	x = 1
+	y = 3
+	cost = 5
+
+	ai_will_do = {
+		base = 1
+		modifier = {
+			add = 10
+			factor = 10
+			has_game_rule = {
+				rule = HHE_ai_behavior
+				option = INFLUENCER
+			}
+		}
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		add_ideas = HHE_harmony_guard_l
+		hidden_effect = {
+			set_country_flag = light_assassination_prevention
+		}
+	}
+}
+
+shared_focus = { # Find Culprit
+	id = HHE_find_the_corporate
+	icon = GFX_focus_eng_concessions_to_the_trade_unions
+	prerequisite = { focus = HHE_light_assassination_prevention focus = HHE_heavy_assassination_prevention }
+	relative_position_id = HHE_senate_reforms
+	x = 0
+	y = 4
+	cost = 3
+
+	ai_will_do = {
+		base = 1
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		add_political_power = -25
+		#add_stability = -0.05 # We gave HHE 5% earlier
+	}
+}
+
+shared_focus = { # Blame Merchants
+	id = HHE_blame_merchants
+	icon = GFX_
+	prerequisite = { focus = HHE_find_the_corporate }
+	mutually_exclusive = { focus = HHE_blame_junta focus = HHE_blame_the_people }
+	relative_position_id = HHE_senate_reforms
+	x = -2
+	y = 5
+	cost = 2
+
+	ai_will_do = {
+		base = 1
+		modifier = {
+			add = 10
+			factor = 10
+			has_game_rule = {
+				rule = HHE_ai_behavior
+				option = AUTHORITY
+			}
+		}
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		add_war_support = 0.05
+		add_popularity = { ideology = authoritarianism popularity = 0.05 }
+		hidden_effect = {
+ 			add_threat = 3 # add_named_threat = { threat = 3 name = name.1.t }
+			MRC = {
+				add_popularity = { ideology = theocratism popularity = 0.03 }
+				#country_event = { id = MRC.0 days = 0}
+				add_war_support = 0.1
+			}
+			set_country_flag = blame_merchants
+		}
+		HSP = {
+			add_war_support = 0.05
+		}
+		HTP = {
+			add_war_support = 0.05
+		}
+	}
+}
+
+shared_focus = { # Blame the People
+	id = HHE_blame_the_people
+	icon = GFX_
+	prerequisite = { focus = HHE_find_the_corporate }
+	mutually_exclusive = { focus = HHE_blame_merchants focus = HHE_blame_junta }
+	relative_position_id = HHE_senate_reforms
+	x = 0
+	y = 5
+	cost = 2
+
+	ai_will_do = {
+		base = 1
+		modifier = {
+			add = 10
+			factor = 10
+			has_game_rule = {
+				rule = HHE_ai_behavior
+				option = WARMONGER
+			}
+		}
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		add_stability = -0.10
+		#add_political_power = -50
+		add_popularity = { ideology = pluralism popularity = -0.05 }
+		add_popularity = { ideology = semidemocracy popularity = -0.05 }
+		hidden_effect = {
+			set_country_flag = blame_the_people
+		}
+	}
+}
+
+shared_focus = { # Blame the Junta
+	id = HHE_blame_junta
+	icon = GFX_
+	prerequisite = { focus = HHE_find_the_corporate }
+	mutually_exclusive = { focus = HHE_blame_merchants focus = HHE_blame_the_people }
+	relative_position_id = HHE_senate_reforms
+	x = 2
+	y = 5
+	cost = 2
+
+	ai_will_do = {
+		base = 2
+		modifier = {
+			add = 10
+			factor = 10
+			has_game_rule = {
+				rule = HHE_ai_behavior
+				option = TRADITION
+			}
+		}
+		modifier = {
+			add = 10
+			factor = 10
+			has_game_rule = {
+				rule = HHE_ai_behavior
+				option = INFLUENCER
+			}
+		}
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		add_war_support = 0.025
+		add_popularity = { ideology = authoritarianism popularity = -0.10 }
+		hidden_effect = {
+ 			add_threat = 3 # add_named_threat = { threat = 3 name = name.1.t }
+			MJU = {
+				#country_event = { id = MJU.0 days = 0}
+				add_war_support = 0.1
+			}
+			USA = {
+				add_war_support = 0.01
+			}
+			set_country_flag = blame_junta
+		}
+		HLF = {
+			add_war_support = 0.025
+		}
+		HTP = {
+			add_war_support = 0.025
+		}
+	}
+}
+
+shared_focus = { # The Election
+	id = HHE_the_election
+	icon = GFX_focus_generic_strike_at_democracy2
+	prerequisite = { focus = HHE_blame_merchants focus = HHE_blame_junta focus = HHE_blame_the_people }
+	relative_position_id = HHE_senate_reforms
+	#mutually_exclusive = { focus =  }
+	x = 0
+	y = 6
+	cost = 10
+	
+	ai_will_do = {
+		base = 1
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		add_political_power = -25
+		custom_effect_tooltip = ELECTION_THE_LEADER
+		if = { # Tradition
+			limit = {
+				has_stability > 0.15
+				has_country_flag = halt_reforms
+				has_country_flag = light_assassination_prevention
+			}
+			set_global_flag = elected_tradition
+			hidden_effect = {
+				load_focus_tree = hhe_tradition_focus
+				HHE = {
+					create_country_leader = {
+						name = "Gabriel Strongheart"
+						desc = "POLITICS_GABRIEL_DESC"
+						#picture = "Portrait_XXX.dds"
+						expire = "1965.1.1"
+						ideology = sub_harmonainism
+						traits = {
+							silent_workhorse
+						}
+						id = 202
+					}
+				}
+			}
+		}
+		else_if = { # Influencer
+			limit = {
+				has_stability > 0.10
+				has_country_flag = finish_reforms
+			}
+			set_global_flag = elected_influencer
+			hidden_effect = {
+				load_focus_tree = hhe_influencer_focus
+				HHE = {
+					create_country_leader = {
+						name = "Isabella Delfina"
+						desc = "POLITICS_XXX_DESC"
+						#picture = "Portrait_XXX.dds"
+						expire = "1936.1.1"
+						ideology = sub_reformed_harmonainism
+						traits = {
+							political_dancer
+						}
+						id = 203
+					}
+				}
+			}
+		}
+		else_if = { # Authority
+			limit = {
+				has_stability < 0.15
+				has_stability > 0.05
+				has_country_flag = halt_reforms
+				has_country_flag = heavy_assassination_prevention
+			}
+			set_global_flag = elected_authority
+			hidden_effect = {
+				load_focus_tree = hhe_authority_focus
+				HHE = {
+					create_country_leader = {
+						name = "XXX"
+						desc = "POLITICS_XXX_DESC"
+						#picture = "Portrait_XXX.dds"
+						expire = "1965.1.1"
+						ideology = sub_harmonainism
+						traits = {
+							prince_of_terror
+						}
+						id = 204
+					}
+				}
+			}
+		}
+		else_if = { # Warmonger
+			set_global_flag = elected_warmonger
+			hidden_effect = {
+					load_focus_tree = hhe_warmonger_focus
+					set_global_flag = HHE_collapse_of_the_nation
+					HHE = {
+						leave_faction  = yes
+						add_timed_idea = { idea = military_takeover days = 90 }
+						create_country_leader = {
+							name = "Archard Vlad"
+							desc = "POLITICS_XXX_DESC"
+							picture = "gfx/leaders/Europe/portrait_europe_generic_5.dds"
+							expire = "1965.1.1"
+							ideology = sub_harmonainism
+							traits = {
+								warmonger
+								national_integralist
+							}
+							id = 205
+						}
+						create_country_leader = {
+							name = "Archard Vlad"
+							desc = "POLITICS_XXX_DESC"
+							picture = "gfx/leaders/Europe/portrait_europe_generic_5.dds"
+							expire = "1965.1.1"
+							ideology = sub_authoritarian
+							traits = {
+								warmonger
+								national_integralist
+							}
+							id = 206
+						}
+					}
+					# Harmonainus Farmers Region
+					set_autonomy = { target = HBB autonomy_state = autonomy_free }
+					HBB = {
+						leave_faction  = yes
+						drop_cosmetic_tag = yes
+					}
+					# Harmonainus Central Region
+					set_autonomy = { target = HCR autonomy_state = autonomy_free }
+					HCR = {
+						leave_faction  = yes
+						drop_cosmetic_tag = yes
+					}
+					# Harmonainus East Region
+					set_autonomy = { target = HER autonomy_state = autonomy_free }
+					HER = {
+						leave_faction  = yes
+						drop_cosmetic_tag = yes
+					}
+					# Harmonainus Elven Tribes
+					set_autonomy = { target = HET autonomy_state = autonomy_free }
+					HET = {
+						leave_faction  = yes
+						drop_cosmetic_tag = yes
+					}
+					# Harmonainus Laity Federation
+					set_autonomy = { target = HLF autonomy_state = autonomy_free }
+					HLF = {
+						leave_faction  = yes
+						drop_cosmetic_tag = yes
+					}
+					# Harmonainus Nobals Estate Region
+					set_autonomy = { target = HNO autonomy_state = autonomy_free }
+					HNO = {
+						leave_faction  = yes
+						drop_cosmetic_tag = yes
+					}
+					# Harmonainus North River Federation
+					set_autonomy = { target = HRF autonomy_state = autonomy_free }
+					HRF = {
+						leave_faction  = yes
+						drop_cosmetic_tag = yes
+					}
+					# Harmonainus Pearl Sea Protectorate
+					set_autonomy = { target = HPP autonomy_state = autonomy_free }
+					HPP = {
+						leave_faction  = yes
+						drop_cosmetic_tag = yes
+					}
+					# Harmonainus Sea Protectorate
+					set_autonomy = { target = HSP autonomy_state = autonomy_free }
+					HSP = {
+						leave_faction  = yes
+						drop_cosmetic_tag = yes
+					}
+					# Harmonainus Sinus Theocracy
+					set_autonomy = { target = HST autonomy_state = autonomy_free }
+					HST = {
+						leave_faction  = yes
+						drop_cosmetic_tag = yes
+					}
+					# Harmonainus Temerarium Peninsula
+					#set_autonomy = { target = HTP autonomy_state = autonomy_free }
+					HTP = {
+					#	leave_faction  = yes
+					#	drop_cosmetic_tag = yes
+						create_country_leader = {
+							name = "Coccineum Vlad"
+							desc = "POLITICS_XXX_DESC"
+							picture = "gfx/leaders/Europe/portrait_europe_generic_5.dds"
+							expire = "1965.1.1"
+							ideology = sub_harmonainism
+							traits = {
+								warmonger
+								retired_officer
+							}
+							id = 401
+						}
+						create_country_leader = {
+							name = "Coccineum Vlad"
+							desc = "POLITICS_XXX_DESC"
+							picture = "gfx/leaders/Europe/portrait_europe_generic_5.dds"
+							expire = "1965.1.1"
+							ideology = sub_authoritarian
+							traits = {
+								warmonger
+								retired_officer
+							}
+							id = 402
+						}
+					}
+					# Harmonainus Under Mountain Region
+					set_autonomy = { target = HUM autonomy_state = autonomy_free }
+					HUM = {
+						leave_faction  = yes
+						drop_cosmetic_tag = yes
+					}
+					# Harmonainus Upper Peninsula
+					set_autonomy = { target = HUP autonomy_state = autonomy_free }
+					HUP = {
+						leave_faction  = yes
+						drop_cosmetic_tag = yes
+					}
+					# Harmonainus Western Approach
+					set_autonomy = { target = HWA autonomy_state = autonomy_free }
+					HWA = {
+						leave_faction  = yes
+						drop_cosmetic_tag = yes
+					}
+			}
+		}
+		hidden_effect = {
+			country_event = { id = HHE.1 }
+			remove_ideas = HHE_deed_reform_senete
+		}
+	}
+}

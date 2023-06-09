@@ -1,0 +1,275 @@
+ask_foreign_manpower_as_major = {
+	enable = {
+		is_major = yes
+		garrison_manpower_need > 200000
+	}
+	
+	abort = {
+		garrison_manpower_need < 100000
+	}
+
+	ai_strategy = {
+		type = asking_foreign_garrison
+		value = 100
+	}
+}
+
+do_not_waste_pp_if_saving_for_manpower_laws = {
+
+	enable = {
+		manpower_per_military_factory < 500
+		has_war = yes
+	}
+	abort = {
+		OR = {
+			manpower_per_military_factory > 500
+			has_war = no
+		}
+	}
+
+	ai_strategy = {
+		type = pp_spend_priority
+		id = relation
+		value = -9999
+	}
+
+	ai_strategy = {
+		type = pp_spend_priority
+		id = guarantee
+		value = -9999
+	}
+}
+
+default_garrison_production = {
+	enable = {
+		ai_wants_divisions >  12 #Massively decreasing the amount of garrison and suppression the AI wants
+		is_major = yes
+	}
+	abort = {
+		ai_wants_divisions < 13 #Massively decreasing the amount of garrison and suppression the AI wants
+		is_major = no
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = garrison
+		value = 5
+	}
+}
+
+
+default_unit_production = {
+	enable = {
+		always = yes
+		not = {
+			original_tag = MRC
+		}
+	}
+	
+	ai_strategy = {
+		type = role_ratio
+		id = paratroopers
+		value = 0
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = mountaineers
+		value = 4
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = marines
+		value = 0
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = armor
+		value = 2
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = infantry
+		value = 80
+	}
+	
+	#Air unit factors
+	ai_strategy = {
+		type = unit_ratio
+		id = fighter
+		value = 80
+	}
+	
+	ai_strategy = {
+		type = unit_ratio
+		id = cas
+		value = 5
+	}
+	
+	ai_strategy = {
+		type = unit_ratio
+		id = tactical_bomber
+		value = 5
+	}
+	
+	ai_strategy = {
+		type = unit_ratio
+		id = strategic_bomber
+		value = 5
+	}
+	
+	ai_strategy = {
+		type = unit_ratio
+		id = naval_bomber
+		value = 5
+	}
+
+	ai_strategy = {
+		type = unit_ratio
+		id = convoy
+		value = 15
+	}
+
+	ai_strategy = {
+		type = equipment_production_factor
+		id = fighter
+		value = 35
+	}
+	
+	ai_strategy = {
+		type = equipment_production_factor
+		id = infantry
+		value = 40
+	}
+	
+	ai_strategy = {
+		type = equipment_production_factor
+		id = artillery
+		value = 25
+	}
+}
+
+
+default_paratroopers_production = {
+	enable = {
+		ai_wants_divisions >  12 #Massively decreasing the amount of paratroopers the AI wants
+		not = {
+			original_tag = MRC
+		}
+	}
+	abort = {
+		ai_wants_divisions < 13 #Massively decreasing the amount of paratroopers the AI wants
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = paratroopers
+		value = 0
+	}
+}
+
+default_mountaineers_production = {
+	enable = {
+		ai_wants_divisions > 11 #Decreasing the amount of mountaineers the AI wants
+		not = {
+			original_tag = MRC
+		}
+	}
+	abort = {
+		ai_wants_divisions < 12 #Decreasing the amount of mountaineers the AI wants
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = mountaineers
+		value = 3
+	}
+}
+
+default_marines_production = {
+	enable = {
+		ai_wants_divisions > 47
+		not = {
+			original_tag = MRC
+		}
+	}
+	abort = {
+		ai_wants_divisions < 48
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = marines
+		value = 0
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = infantry
+		value = 0
+	}
+}
+
+default_mobile_production = {
+	enable = {
+		ai_wants_divisions > 11
+		has_tech = motorised_infantry
+		not = {
+			original_tag = MRC
+		}
+	}
+	abort = {
+		ai_wants_divisions < 12
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = mobile
+		value = 2
+	}
+}
+
+default_armored_production = {
+	enable = {
+		ai_wants_divisions > 23
+		not = {
+			original_tag = MRC
+		}
+	}
+	abort = {
+		ai_wants_divisions < 24
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = armor
+		value = 2
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = infantry
+		value = 0
+	}
+}
+
+highered_armored_production = {
+	enable = {
+		num_of_military_factories > 19
+		not = {
+			original_tag = MRC
+		}
+	}
+	abort = {
+		num_of_military_factories < 20
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = armor
+		value = 5
+	}
+}
