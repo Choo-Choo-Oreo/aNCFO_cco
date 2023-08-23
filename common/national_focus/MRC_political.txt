@@ -27,11 +27,11 @@
 #	}
 #}
 
-shared_focus = {
+shared_focus = { # Continue Foreign Intervention
 	id = MRC_continue_foreign_intervention
 	icon = GFX_
 	mutually_exclusive = { focus = MRC_neutrality_focus }
-	x = -1
+	x = 0
 	y = 0
 
 	cost = 20
@@ -55,11 +55,45 @@ shared_focus = {
 	}
 }
 
-shared_focus = {
+shared_focus = { # Southern Financial Assistance
+	id = MRC_southern_financial_help
+	icon = GFX_
+	prerequisite = { focus = MRC_continue_foreign_intervention }
+	relative_position_id = MRC_continue_foreign_intervention
+	x = -3
+	y = 1
+
+	cost = 10
+	cancel_if_invalid = yes
+	continue_if_invalid = no
+	available_if_capitulated = no
+
+	available = {
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		base = 5
+		modifier = {
+			factor = 15
+			is_historical_focus_on = yes
+		}
+	}
+
+	complete_tooltip = {
+	}
+	completion_reward = {
+		add_war_support = 0.05
+		add_political_power = -50
+	}
+}
+
+shared_focus = { # Neutrality Focus Policies
 	id = MRC_neutrality_focus
 	icon = GFX_
 	mutually_exclusive = { focus = MRC_continue_foreign_intervention }
-	x = 3
+	x = 4
 	y = 0
 
 	cost = 20
@@ -88,11 +122,42 @@ shared_focus = {
 	}
 }
 
-shared_focus = {
+shared_focus = { # Southern Military Withdrawal
+	id = MRC_southern_retreat
+	icon = GFX_
+	prerequisite = { focus = MRC_neutrality_focus }
+	relative_position_id = MRC_neutrality_focus
+	x = 3
+	y = 1
+
+	cost = 10
+	cancel_if_invalid = yes
+	continue_if_invalid = no
+	available_if_capitulated = no
+
+	available = {
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		base = 5
+	}
+
+	complete_tooltip = {
+	}
+	completion_reward = {
+		add_war_support = -0.05
+		add_stability = 0.10
+	}
+}
+
+shared_focus = { # Industral Buildup Policies
 	id = MRC_industral_buildup_actions
 	icon = GFX_
 	prerequisite = { focus = MRC_continue_foreign_intervention focus = MRC_neutrality_focus }
-	x = 1
+	relative_position_id = MRC_continue_foreign_intervention
+	x = 2
 	y = 1
 
 	cost = 10
@@ -123,13 +188,14 @@ shared_focus = {
 	}
 }
 
-shared_focus = {
+shared_focus = { # Trade Outpost Buildup
 	id = MRC_merchents_outpost
 	icon = GFX_
 	prerequisite = { focus = MRC_industral_buildup_actions }
 	prerequisite = { focus = MRC_continue_foreign_intervention }
-	x = 0
-	y = 2
+	relative_position_id = MRC_industral_buildup_actions
+	x = -1
+	y = 1
 
 	cost = 20
 	cancel_if_invalid = yes
@@ -177,13 +243,14 @@ shared_focus = {
 	}
 }
 
-shared_focus = {
+shared_focus = { # Home Isle Buildup
 	id = MRC_home_islands_buildup
 	icon = GFX_
 	prerequisite = { focus = MRC_industral_buildup_actions }
 	prerequisite = { focus = MRC_neutrality_focus }
-	x = 2
-	y = 2
+	relative_position_id = MRC_industral_buildup_actions
+	x = 1
+	y = 1
 
 	cost = 20
 	cancel_if_invalid = yes
@@ -249,12 +316,13 @@ shared_focus = {
 	}
 }
 
-shared_focus = {
+shared_focus = { # Foreign Trade Policies
 	id = MRC_foreign_trade
 	icon = GFX_
 	prerequisite = { focus = MRC_merchents_outpost }
 	prerequisite = { focus = MRC_continue_foreign_intervention }
-	x = -1
+	relative_position_id = MRC_continue_foreign_intervention
+	x = 0
 	y = 3
 
 	cost = 10
@@ -281,11 +349,12 @@ shared_focus = {
 	}
 }
 
-shared_focus = {
+shared_focus = { # Secondary Isle Buildup
 	id = MRC_secondary_islands_buildup
 	icon = GFX_
 	prerequisite = { focus = MRC_merchents_outpost focus = MRC_home_islands_buildup }
-	x = 1
+	relative_position_id = MRC_continue_foreign_intervention
+	x = 2
 	y = 3
 
 	cost = 10
@@ -354,12 +423,51 @@ shared_focus = {
 	}
 }
 
-shared_focus = {
+shared_focus = { # TEMP Core Penisula
+	id = MRC_core_peninsula
+	icon = GFX_
+	prerequisite = { focus = MRC_secondary_islands_buildup }
+	relative_position_id = MRC_secondary_islands_buildup
+	x = 0
+	y = 1
+
+	cost = 10
+	cancel_if_invalid = yes
+	continue_if_invalid = no
+	available_if_capitulated = no
+
+	available = {
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		base = 50
+		modifier = {
+			factor = 50
+			is_historical_focus_on = yes
+		}
+	}
+
+	complete_tooltip = {
+	}
+	completion_reward = {
+		12 = { add_core_of = ROOT }
+		74 = { add_core_of = ROOT }
+		76 = { add_core_of = ROOT }
+		336 = { add_core_of = ROOT }
+		337 = { add_core_of = ROOT }
+		338 = { add_core_of = ROOT }
+	}
+}
+
+shared_focus = { # Grand Canal trade Deal
 	id = MRC_canal_trade_deal
 	icon = GFX_
 	prerequisite = { focus = MRC_home_islands_buildup }
 	prerequisite = { focus = MRC_neutrality_focus }
-	x = 3
+	relative_position_id = MRC_neutrality_focus
+	x = 0
 	y = 3
 
 	cost = 10
@@ -607,101 +715,5 @@ shared_focus = { # Art of Neutral Seas
 	}
 	completion_reward = {
 		add_research_slot = 1
-	}
-}
-
-shared_focus = {
-	id = MRC_southern_financial_help
-	icon = GFX_
-	prerequisite = { focus = MRC_continue_foreign_intervention }
-	x = -3
-	y = 1
-
-	cost = 10
-	cancel_if_invalid = yes
-	continue_if_invalid = no
-	available_if_capitulated = no
-
-	available = {
-	}
-	bypass = {
-	}
-
-	ai_will_do = {
-		base = 5
-		modifier = {
-			factor = 15
-			is_historical_focus_on = yes
-		}
-	}
-
-	complete_tooltip = {
-	}
-	completion_reward = {
-	}
-}
-
-shared_focus = {
-	id = MRC_southern_retreat
-	icon = GFX_
-	prerequisite = { focus = MRC_neutrality_focus }
-	x = 5
-	y = 1
-
-	cost = 10
-	cancel_if_invalid = yes
-	continue_if_invalid = no
-	available_if_capitulated = no
-
-	available = {
-	}
-	bypass = {
-	}
-
-	ai_will_do = {
-		base = 5
-	}
-
-	complete_tooltip = {
-	}
-	completion_reward = {
-		add_political_power = -50
-	}
-}
-
-shared_focus = {
-	id = MRC_core_peninsula
-	icon = GFX_
-	prerequisite = { focus = MRC_secondary_islands_buildup }
-	x = 1
-	y = 4
-
-	cost = 10
-	cancel_if_invalid = yes
-	continue_if_invalid = no
-	available_if_capitulated = no
-
-	available = {
-	}
-	bypass = {
-	}
-
-	ai_will_do = {
-		base = 50
-		modifier = {
-			factor = 50
-			is_historical_focus_on = yes
-		}
-	}
-
-	complete_tooltip = {
-	}
-	completion_reward = {
-		12 = { add_core_of = ROOT }
-		74 = { add_core_of = ROOT }
-		76 = { add_core_of = ROOT }
-		336 = { add_core_of = ROOT }
-		337 = { add_core_of = ROOT }
-		338 = { add_core_of = ROOT }
 	}
 }

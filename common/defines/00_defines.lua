@@ -1352,7 +1352,7 @@ NAir = {
 
 	REINFORCEMENT_DISABLING_DURATION_IN_LAND_CARRIER_TRANSFER = 48,	-- The reinforcement disabling duration in hours when transfering from land to carrier and vice versa
 
-	THRUST_WEIGHT_SPEED_FACTOR = 10,								-- For plane designs, additive Km/h max speed bonus per point of thrust exceeding weight
+	THRUST_WEIGHT_SPEED_FACTOR = 3,								-- For plane designs, additive Km/h max speed bonus per point of thrust exceeding weight
 	MAX_QUICK_WING_SELECTION = 3,									-- Max possible selection for airwing quick deploy
 
 	USE_SINGLE_NAVAL_ARMAMENT_CATEGORY = true,						-- If true, only the armament module category that inflicts the greatest damage to naval targets will contribute naval strike and port strike mission specific stats. Only modules with both naval_strike_attack and naval_strike_targetting are considered. This is used to prevent torpedo_mounting and bomb_locks stats from stacking.
@@ -1934,6 +1934,18 @@ NNavy = {
 		0.10,
 		0.00 -- For criticals, you could reduce crit chance unlike damage in army combat, but we do not for now.
 	},
+
+	NAVY_PIERCING_THRESHOLD_DAMAGE_VALUES = {	-- 0 armor will always receive maximum damage (so add overmatching at your own peril). the system expects at least 2 values, with no upper limit.
+		1.00,
+		1.00,
+		0.70,
+		0.40,
+		0.30,
+		0.10 -- 
+	},
+
+	-- all of these NEED to be the same size!!!!
+
 },
 
 NRailwayGun = {
