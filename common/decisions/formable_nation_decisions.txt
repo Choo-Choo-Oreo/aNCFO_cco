@@ -1,25 +1,8 @@
 form_harmonainus_imperious_category = {
-	form_new_harmonainus_imperious = {
+	form_new_harmonainus_imperious = { # Core Region
 		icon = generic_form_nation
 		allowed = {
-			OR = {
-				original_tag = HBB
-				original_tag = HCR
-				original_tag = HER
-				original_tag = HET
-				original_tag = HHE
-				original_tag = HLF
-				original_tag = HNO
-				original_tag = HRF
-				original_tag = HPP
-				original_tag = HSP
-				original_tag = HST
-				original_tag = HTP
-				original_tag = HUM
-				original_tag = HUP
-				original_tag = HWA
-				#has_country_flag = ALLOWED_FORMATION_OF_HARMONAINUS_IMPERIOUS
-			}
+			always = yes
 		}
 		available = {
 			is_subject = no
@@ -105,6 +88,7 @@ form_harmonainus_imperious_category = {
 				controls_state = 154
 				controls_state = 156
 				controls_state = 157
+				controls_state = 160
 			}
 			# Harmonainus Under Mountant Region
 			custom_trigger_tooltip = {
@@ -120,37 +104,73 @@ form_harmonainus_imperious_category = {
 		}
 		visible = {
 			OR = {
-				original_tag = HBB
-				original_tag = HCR
-				original_tag = HER
-				original_tag = HET
-				original_tag = HHE
-				original_tag = HLF
-				original_tag = HNO
-				original_tag = HRF
-				original_tag = HPP
-				original_tag = HSP
-				original_tag = HST
-				original_tag = HTP
-				original_tag = HUM
-				original_tag = HUP
-				original_tag = HWA
-				has_country_flag = ALLOWED_FORMATION_OF_HARMONAINUS_IMPERIOUS
+				AND = {
+					OR = {
+						original_tag = HBB
+						original_tag = HER
+						original_tag = HHE
+						original_tag = HLF
+						original_tag = HNO
+						#original_tag = HRF # They are Northern folks.
+						original_tag = HSP
+						original_tag = HTP
+						original_tag = HUM
+						#original_tag = HUP # They are Northern folks. 
+						has_country_flag = ALLOWED_FORMATION_OF_HARMONAINUS_IMPERIOUS
+					}
+					NOT = {
+						has_country_leader = {
+							character = HTP_archard_vlad
+							ruling_only = yes
+						}
+					}
+					has_government = theocratism
+				}
+				AND = {
+					has_global_flag = elected_warmonger
+					has_country_leader = {
+						character = HTP_archard_vlad
+						ruling_only = yes
+					}
+					#has_completed_focus = HHE_warmonger_
+					#OR = {
+					#	has_government = authoritarianism
+					#	has_government = unitism
+					#}
+				}
+				AND = {
+					has_global_flag = form_harmonainus_imperious_west_flag
+				}
+			}
+			NOT = {
+				has_country_leader = {
+					character = HHE_luke_deed
+					ruling_only = yes
+				}
 			}
 			NOT = { has_global_flag = form_harmonainus_imperious_flag }
 		}
 		complete_effect = {
-			add_research_slot = 1
-			set_cosmetic_tag = HARMONAINUS_IMPERIOUS_UNIFIED
+			if = {
+				limit = {
+					has_global_flag = elected_warmonger
+					has_country_leader = {
+						character = HTP_archard_vlad
+						ruling_only = yes
+					}
+					#has_completed_focus = HHE_warmonger_
+					#OR = {
+					#	has_government = authoritarianism
+					#	has_government = unitism
+					#}
+				}
+				set_cosmetic_tag = VLADS_IMPERIOUS_UNIFIED
+			}
+			else = {
+				set_cosmetic_tag = HARMONAINUS_IMPERIOUS_UNIFIED
+			}
+			#add_research_slot = 1
 			set_capital = { state=239 }
-			#hidden_effect = { 505 = { set_state_name = "City of Harmony" } }
-			#hidden_effect = { 108 = { set_state_name = "Holy See" } }
-			#hidden_effect = { 100 = { set_state_name = "River's Eyes" } }
-			#hidden_effect = { 98 = { set_state_name = "Fiery Cathedral" } }
-			#set_province_name = { id = 3380 name = "Holy See" }
-			#set_province_name = { id = 5100 name = "River's Eyes" }
-			#set_province_name = { id = 2614 name = "Fiery Cathedral" }
-			#set_province_name = { id = 1188 name = "Harmony City" }
 			# Harmonainus Empire
 			custom_effect_tooltip = form_country_hhe_coring_states_tt
 			hidden_effect = {
@@ -233,6 +253,7 @@ form_harmonainus_imperious_category = {
 				154 = { add_core_of = ROOT }
 				156 = { add_core_of = ROOT }
 				157 = { add_core_of = ROOT }
+				160 = { add_core_of = ROOT }
 			}
 			# Harmonainus Under Mountant Region
 			custom_effect_tooltip = form_country_hum1_coring_states_tt
@@ -257,27 +278,10 @@ form_harmonainus_imperious_category = {
 			}
 		}
 	}
-	harmonainus_imperious_triumph_for_western_lands = {
+	harmonainus_imperious_triumph_for_western_lands = { # Western Region
 		icon = generic_form_nation
 		allowed = {
-			OR = {
-				original_tag = HBB
-				original_tag = HCR
-				original_tag = HER
-				original_tag = HET
-				original_tag = HHE
-				original_tag = HLF
-				original_tag = HNO
-				original_tag = HRF
-				original_tag = HPP
-				original_tag = HSP
-				original_tag = HST
-				original_tag = HTP
-				original_tag = HUM
-				original_tag = HUP
-				original_tag = HWA
-				#has_country_flag = ALLOWED_FORMATION_OF_HARMONAINUS_IMPERIOUS
-			}
+			always = yes
 		}
 		available = {
 			is_subject = no
@@ -293,7 +297,6 @@ form_harmonainus_imperious_category = {
 			custom_trigger_tooltip = {
 				tooltip = form_country_het_required_states_tt
 				controls_state = 149
-				controls_state = 160
 				controls_state = 161
 				controls_state = 162
 				controls_state = 271
@@ -373,27 +376,35 @@ form_harmonainus_imperious_category = {
 		}
 		visible = {
 			OR = {
-				original_tag = HBB
-				original_tag = HCR
-				original_tag = HER
-				original_tag = HET
-				original_tag = HHE
-				original_tag = HLF
-				original_tag = HNO
-				original_tag = HRF
-				original_tag = HPP
-				original_tag = HSP
-				original_tag = HST
-				original_tag = HTP
-				original_tag = HUM
-				original_tag = HUP
-				original_tag = HWA
-				has_country_flag = ALLOWED_FORMATION_OF_HARMONAINUS_IMPERIOUS
+				AND = {
+					OR = {
+						original_tag = HCR
+						original_tag = HET
+						#original_tag = HRF # They are Northern folks.
+						original_tag = HPP
+						original_tag = HST
+						#original_tag = HUP # They are Northern folks. 
+						original_tag = HWA
+						has_country_flag = ALLOWED_FORMATION_OF_HARMONAINUS_IMPERIOUS
+					}
+					has_government = theocratism
+				}
+				AND = {
+					has_global_flag = form_harmonainus_imperious_flag
+				}
 			}
-			has_global_flag = form_harmonainus_imperious_flag
-			NOT = { has_global_flag = form_harmonainus_imperious_west1_flag }
+			NOT = { has_global_flag = form_harmonainus_imperious_west_flag }
 		}
 		complete_effect = {
+			if = {
+				limit = {
+					has_global_flag = form_harmonainus_imperious_flag
+				}
+			}
+			else = {
+				set_cosmetic_tag = HARMONAINUS_IMPERIOUS_UNIFIED_WEST
+			}
+			#add_research_slot = 1
 			# Harmonainus Under Mountant Region
 			custom_effect_tooltip = form_country_hum2_coring_states_tt
 			hidden_effect = {
@@ -406,7 +417,6 @@ form_harmonainus_imperious_category = {
 			custom_effect_tooltip = form_country_het_coring_states_tt
 			hidden_effect = {
 				149 = { add_core_of = ROOT }
-				160 = { add_core_of = ROOT }
 				161 = { add_core_of = ROOT }
 				162 = { add_core_of = ROOT }
 				271 = { add_core_of = ROOT }
@@ -484,7 +494,7 @@ form_harmonainus_imperious_category = {
 				405 = { add_core_of = ROOT }
 			}
 			hidden_effect = {
-				set_global_flag = form_harmonainus_imperious_west1_flag
+				set_global_flag = form_harmonainus_imperious_west_flag
 			}
 		}
 		ai_will_do = {
