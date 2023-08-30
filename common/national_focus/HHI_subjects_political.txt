@@ -1,0 +1,126 @@
+#shared_focus = {
+#	id = HHI_subjects_
+#	icon = GFX_focus_unknown
+#	#prerequisite = { focus =  }
+#	#mutually_exclusive = { focus =  }
+#	#relative_position_id = 
+#	x = 0
+#	y = 0
+#	cost = 10
+#
+#	allow_branch = {
+#	}
+#	available = {
+#	}
+#	bypass = {
+#	}
+#
+#	ai_will_do = {
+#		base = 1
+#	}
+#
+#	available_if_capitulated = yes
+#
+#	completion_reward = {
+#	}
+#}
+
+shared_focus = {
+	id = HHI_subjects_clear_sight
+	icon = GFX_goal_generic_demand_territory
+	x = 20
+	y = 0
+	cost = 5
+
+	allow_branch = {
+	}
+	available = {
+		OR = {
+			has_global_flag = elected_tradition
+			has_global_flag = elected_influencer
+			has_global_flag = elected_authority
+			has_global_flag = elected_warmonger
+			has_global_flag = HHE_luke_deeds_good_deeds
+		}
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		base = 100
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		add_political_power = 35
+		remove_ideas = uncertain_future
+		country_lock_all_division_template = no
+	}
+}
+
+shared_focus = {
+	id = HHI_subjects_follow_central_government
+	icon = GFX_focus_unknown
+	prerequisite = { focus = HHI_subjects_clear_sight }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = HHI_subjects_clear_sight
+	x = 3
+	y = 1
+	cost = 10
+
+	allow_branch = {
+		NOT = { has_global_flag = HHE_collapse_of_the_nation }
+	}
+	available = {
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		base = 1
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		remove_ideas = nobility_held_industry #Remove
+		remove_ideas = traditional_bureaucracy #Remove
+		remove_ideas = disjointed_military #Remove
+		remove_ideas = disjointed_navy #Remove
+		remove_ideas = disjointed_airforce #Remove
+	}
+}
+
+shared_focus = {
+	id = HHI_subjects_smite_civil_unrest
+	icon = GFX_focus_unknown
+	prerequisite = { focus = HHI_subjects_clear_sight }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = HHI_subjects_clear_sight
+	x = 3
+	y = 1
+	cost = 10
+
+	allow_branch = {
+		has_global_flag = HHE_collapse_of_the_nation
+	}
+	available = {
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		base = 1
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		remove_ideas = nobility_held_industry #Remove
+		remove_ideas = traditional_bureaucracy #Remove
+		remove_ideas = disjointed_military #Remove
+		remove_ideas = disjointed_navy #Remove
+		remove_ideas = disjointed_airforce #Remove
+	}
+}
