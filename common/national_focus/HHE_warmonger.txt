@@ -205,6 +205,10 @@ shared_focus = { # VP River's Eye
 	completion_reward = {
 		add_stability = 0.03
 		add_war_support = 0.03
+		add_timed_idea = {
+			idea = victory_spirit
+			days = 14
+		}
 	}
 }
 
@@ -235,6 +239,10 @@ shared_focus = { # VP Crystal Cathedral
 	completion_reward = {
 		add_stability = 0.03
 		add_war_support = 0.03
+		add_timed_idea = {
+			idea = victory_spirit
+			days = 14
+		}
 	}
 }
 
@@ -265,6 +273,10 @@ shared_focus = { # VP Holy Sea
 	completion_reward = {
 		add_stability = 0.03
 		add_war_support = 0.03
+		add_timed_idea = {
+			idea = victory_spirit
+			days = 14
+		}
 	}
 }
 
@@ -295,6 +307,10 @@ shared_focus = { # VP Sanctus Bay
 	completion_reward = {
 		add_stability = 0.03
 		add_war_support = 0.03
+		add_timed_idea = {
+			idea = victory_spirit
+			days = 14
+		}
 	}
 }
 
@@ -325,6 +341,10 @@ shared_focus = { # VP Laity City
 	completion_reward = {
 		add_stability = 0.03
 		add_war_support = 0.03
+		add_timed_idea = {
+			idea = victory_spirit
+			days = 14
+		}
 	}
 }
 
@@ -355,6 +375,10 @@ shared_focus = { # VP Nobilitas
 	completion_reward = {
 		add_stability = 0.03
 		add_war_support = 0.03
+		add_timed_idea = {
+			idea = victory_spirit
+			days = 14
+		}
 	}
 }
 
@@ -385,6 +409,10 @@ shared_focus = { # VP Regiusurbs
 	completion_reward = {
 		add_stability = 0.03
 		add_war_support = 0.03
+		add_timed_idea = {
+			idea = victory_spirit
+			days = 14
+		}
 	}
 }
 
@@ -415,6 +443,10 @@ shared_focus = { # VP Articulusurbs
 	completion_reward = {
 		add_stability = 0.03
 		add_war_support = 0.03
+		add_timed_idea = {
+			idea = victory_spirit
+			days = 14
+		}
 	}
 }
 
@@ -445,6 +477,10 @@ shared_focus = { # VP Aqua Auguis
 	completion_reward = {
 		add_stability = 0.03
 		add_war_support = 0.03
+		add_timed_idea = {
+			idea = victory_spirit
+			days = 14
+		}
 	}
 }
 
@@ -475,6 +511,10 @@ shared_focus = { # VP Agricola Midland
 	completion_reward = {
 		add_stability = 0.03
 		add_war_support = 0.03
+		add_timed_idea = {
+			idea = victory_spirit
+			days = 14
+		}
 	}
 }
 
@@ -505,6 +545,10 @@ shared_focus = { # VP Urbealta City
 	completion_reward = {
 		add_stability = 0.03
 		add_war_support = 0.03
+		add_timed_idea = {
+			idea = victory_spirit
+			days = 14
+		}
 	}
 }
 
@@ -536,7 +580,9 @@ shared_focus = { # Great Victory Parade
 
 	completion_reward = {
 		custom_effect_tooltip = WARMONGER_GREAT_VICTORY_PARADES
+		clr_global_flag = HHE_collapse_of_the_nation # The civil war has ended and its not need any more.
 		HHE_political_choas_down = yes
+		set_country_flag = mining_operations # Have this here for now.
 	}
 }
 
@@ -767,6 +813,224 @@ shared_focus = { # Spark the Machines
 				type = arms_factory
 				level = 1
 				instant_build = yes
+			}
+		}
+	}
+}
+
+shared_focus = { # Communalize the Industries
+	id = HHE_warmonger_remove_the_minority_species
+	icon = GFX_focus_unknown
+	prerequisite = { focus = HHE_warmonger_great_victory_parade }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = HHE_warmonger_great_victory_parade
+	x = 2
+	y = 1
+	cost = 5
+
+	allow_branch = {
+	}
+	available = {
+		has_completed_focus = HHE_warmonger_spark_the_machines
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		base = 10
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		if = {
+			limit = {
+				NOT = { has_global_flag = HHI_SUBJECTS_firsts_of_many }
+			}
+			RVV = { country_event = { id = HHI_SUBJECTS.100 } }
+			CPV = { country_event = { id = HHI_SUBJECTS.100 } }
+			set_global_flag = HHI_SUBJECTS_firsts_of_many
+		}
+		if = {
+			limit = {
+				19 = { is_controlled_by = ROOT }
+			}
+			19 = { add_manpower = -25496 # 20% of State Manpower 
+				add_core_of = ROOT
+				remove_core_of = ETF
+			}
+			#add_stability = -0.05
+			#add_war_support = -0.01
+			hidden_effect = { # 5% Due to the distance to the Valley
+				219 = { add_manpower = 1275 }
+			}
+		}
+		if = {
+			limit = {
+				91 = { is_controlled_by = ROOT }
+			}
+			91 = { add_manpower = -494000 # 20% of State Manpower 
+				add_core_of = ROOT
+				remove_core_of = ETF
+			}
+			#add_stability = -0.05
+			#add_war_support = -0.01
+			hidden_effect = { # 5% Due to the distance to the Valley
+				217 = { add_manpower = 24700 }
+			}
+		}
+		if = {
+			limit = {
+				136 = { is_controlled_by = ROOT }
+			}
+			136 = { add_manpower = -158560 # 20% of State Manpower
+				add_core_of = ROOT
+				remove_core_of = ETF
+			}
+			#add_stability = -0.05
+			#add_war_support = -0.01
+			hidden_effect = { # 5% Due to the distance to the Valley
+				344 = { add_manpower = 7930 }
+			}
+		}
+		if = {
+			limit = {
+				139 = { is_controlled_by = ROOT }
+			}
+			139 = { add_manpower = -336000 # 20% of State Manpower
+				add_core_of = ROOT
+				remove_core_of = ETF
+			}
+			#add_stability = -0.05
+			#add_war_support = -0.01
+			hidden_effect = { # 5% Due to the distance to the Valley
+				342 = { add_manpower = 16800 }
+			}
+		}
+		if = {
+			limit = {
+				149 = { is_controlled_by = ROOT }
+			}
+			149 = { add_manpower = -63750 # 20% of State Manpower
+				add_core_of = ROOT
+				remove_core_of = ETF
+			}
+			#add_stability = -0.05
+			#add_war_support = -0.01
+			hidden_effect = { # 5% Due to the distance to the Valley
+				421 = { add_manpower = 3187 }
+			}
+		}
+		if = {
+			limit = {
+				161 = { is_controlled_by = ROOT }
+			}
+			161 = { add_manpower = -50995 # 20% of State Manpower
+				add_core_of = ROOT
+				remove_core_of = ETF
+			}
+			#add_stability = -0.05
+			#add_war_support = -0.01
+			hidden_effect = { # 5% Due to the distance to the Valley
+				421 = { add_manpower = 2549 }
+			}
+		}
+		if = {
+			limit = {
+				162 = { is_controlled_by = ROOT }
+			}
+			162 = { add_manpower = -76490 # 20% of State Manpower
+				add_core_of = ROOT
+				remove_core_of = ETF
+			}
+			#add_stability = -0.05
+			#add_war_support = -0.01
+			hidden_effect = { # 5% Due to the distance to the Valley
+				421 = { add_manpower = 3824 }
+			}
+		}
+		if = {
+			limit = {
+				163 = { is_controlled_by = ROOT }
+			}
+			163 = { add_manpower = -31870 # 20% of State Manpower
+				add_core_of = ROOT
+				remove_core_of = ETF
+			}
+			#add_stability = -0.05
+			#add_war_support = -0.01
+			hidden_effect = { # 5% Due to the distance to the Valley
+				344 = { add_manpower = 1593 }
+			}
+		}
+		if = {
+			limit = {
+				167 = { is_controlled_by = ROOT }
+			}
+			167 = { add_manpower = -19100 # 20% of State Manpower
+				add_core_of = ROOT
+				remove_core_of = ETF
+			}
+			#add_stability = -0.05
+			#add_war_support = -0.01
+			hidden_effect = { # 5% Due to the distance to the Valley
+				342 = { add_manpower = 955 }
+			}
+		}
+		if = {
+			limit = {
+				270 = { is_controlled_by = ROOT }
+			}
+			270 = { add_manpower = -3605 # 20% of State Manpower
+				add_core_of = ROOT
+				remove_core_of = ETF
+			}
+			#add_stability = -0.10
+			#add_war_support = -0.05
+			hidden_effect = { # 5% Due to the distance to the Valley
+				218 = { add_manpower = 180 }
+			}
+		}
+		if = {
+			limit = {
+				271 = { is_controlled_by = ROOT }
+			}
+			271 = { add_manpower = -254000 # 20% of State Manpower
+				add_core_of = ROOT
+				remove_core_of = ETF
+			}
+			#add_stability = -0.10
+			#add_war_support = -0.05
+			hidden_effect = { # 5% Due to the distance to the Valley
+				217 = { add_manpower = 12700 }
+			}
+		}
+		if = {
+			limit = {
+				275 = { is_controlled_by = ROOT }
+			}
+			275 = { add_manpower = -38200 # 20% of State Manpower
+				add_core_of = ROOT
+				remove_core_of = ETF
+			}
+			#add_stability = -0.05
+			#add_war_support = -0.01
+			hidden_effect = { # 5% Due to the distance to the Valley
+				342 = { add_manpower = 1910 }
+			}
+		}
+		if = {
+			limit = {
+				408 = { is_controlled_by = ROOT }
+			}
+			408 = { add_manpower = -15935 # 20% of State Manpower
+				add_core_of = ROOT
+				remove_core_of = ETF
+			}
+			#add_stability = -0.05
+			#add_war_support = -0.01
+			hidden_effect = { # 5% Due to the distance to the Valley
+				219 = { add_manpower = 797 }
 			}
 		}
 	}

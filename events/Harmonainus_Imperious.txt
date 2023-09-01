@@ -50,8 +50,6 @@ country_event = {
 	}
 }
 
-
-
 country_event = {
 	id = HHE.99
 	title = HHE.99.t
@@ -62,6 +60,168 @@ country_event = {
 	option = {
 		name = HHE.99.a
 		hidden_effect = {
+		}
+	}
+}
+	### CIVIL WAR ###
+country_event = { # Fire River
+	id = HHE.100
+	title = HHE.100.t
+	desc = HHE.100.d
+	picture = GFX_report_event_usa_election_generic
+	is_triggered_only = yes
+
+	option = { # Stay as is, the first option is the default so this should prevent afk switch
+		name = HHE.100.a
+		hidden_effect = {
+		}
+	}
+	option = {
+		name = HHE.100.b
+		change_tag_from = HFR
+		hidden_effect = {
+		}
+	}
+}
+country_event = { # Freedom Front
+	id = HHE.101
+	title = HHE.101.t
+	desc = HHE.101.d
+	picture = GFX_report_event_usa_election_generic
+	is_triggered_only = yes
+
+	option = { # Stay as is, the first option is the default so this should prevent afk switch
+		name = HHE.101.a
+		hidden_effect = {
+		}
+	}
+	option = {
+		name = HHE.101.b
+		change_tag_from = HFF
+		hidden_effect = {
+		}
+	}
+}
+country_event = { # Peoples Government
+	id = HHE.102
+	title = HHE.102.t
+	desc = HHE.102.d
+	picture = GFX_report_event_usa_election_generic
+	is_triggered_only = yes
+
+	option = { # Stay as is, the first option is the default so this should prevent afk switch
+		name = HHE.102.a
+		hidden_effect = {
+		}
+	}
+	option = {
+		name = HHE.102.b
+		change_tag_from = HPG
+		hidden_effect = {
+		}
+	}
+}
+	####################
+add_namespace = HHI_SUBJECTS
+
+country_event = {
+	id = HHI_SUBJECTS.100
+	title = HHI_SUBJECTS.100.t
+	desc = HHI_SUBJECTS.100.d
+	picture = GFX_report_event_usa_election_generic
+	is_triggered_only = yes
+
+	option = {
+		name = HHI_SUBJECTS.100.a
+		custom_effect_tooltip = HHI_SUBJECTS_this_is_of_the_most_concern
+		ai_chance = {
+			factor = 50
+		}
+	}
+	option = {
+		name = HHI_SUBJECTS.100.b
+		custom_effect_tooltip = HHI_SUBJECTS_this_is_of_the_most_concern
+		add_political_power = -50
+		trigger = {
+			NOT = {
+				OR = {
+					has_government = unitism
+					has_country_flag = harmonainus_religion
+				}
+			}
+		}
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 100
+				OR = {
+					has_government = pluralism
+					has_government = semidemocracy
+				}
+			}
+		}
+		KGK = { country_event = { id = HHI_SUBJECTS.101 } }
+		MJU = { country_event = { id = HHI_SUBJECTS.101 } }
+		SFG = { country_event = { id = HHI_SUBJECTS.101 } }
+		SRA = { country_event = { id = HHI_SUBJECTS.101 } }
+		UFS = { country_event = { id = HHI_SUBJECTS.101 } }
+		MRC = { country_event = { id = HHI_SUBJECTS.102 } }
+	}
+}
+country_event = {
+	id = HHI_SUBJECTS.101
+	title = HHI_SUBJECTS.101.t
+	desc = HHI_SUBJECTS.101.d
+	picture = GFX_report_event_usa_election_generic
+	is_triggered_only = yes
+
+	option = {
+		name = HHI_SUBJECTS.101.a
+		custom_effect_tooltip = HHI_SUBJECTS_this_is_of_the_most_concern
+	}
+}
+country_event = {
+	id = HHI_SUBJECTS.102
+	title = HHI_SUBJECTS.102.t
+	desc = HHI_SUBJECTS.102.d
+	picture = GFX_report_event_usa_election_generic
+	is_triggered_only = yes
+
+	option = {
+		name = HHI_SUBJECTS.102.a
+		custom_effect_tooltip = HHI_SUBJECTS_this_is_of_the_most_concern
+		trigger = {
+			OR = {
+				has_government = unitism
+				has_country_flag = harmonainus_religion
+			}
+		}
+		ai_chance = {
+			factor = 50
+		}
+	}
+	option = {
+		name = HHI_SUBJECTS.102.b
+		custom_effect_tooltip = HHI_SUBJECTS_this_is_of_the_most_concern
+		add_political_power = -50
+		trigger = {
+			NOT = {
+				OR = {
+					has_government = unitism
+					has_country_flag = harmonainus_religion
+				}
+			}
+		}
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 100
+				has_government = pluralism
+			}
+		}
+		news_event = news.100
+		hidden_effect = {
+			set_global_flag = news_genocide_HHI_SUBJECTS
 		}
 	}
 }
