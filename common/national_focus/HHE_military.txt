@@ -38,11 +38,10 @@ shared_focus = { # A Modern Imperious Military
 	allow_branch = {
 	}
 	available = {
-		not = {
-			has_idea = disjointed_military1
-		}
+		not = { has_idea = disjointed_military1 }
 	}
 	bypass = {
+		not = { has_idea = disjointed_military1 }
 	}
 
 	ai_will_do = {
@@ -61,7 +60,7 @@ shared_focus = { # New Theory of Warfare
 	prerequisite = { focus = HHE_modernize_imperious_military }
 	#mutually_exclusive = { focus =  }
 	relative_position_id = HHE_modernize_imperious_military
-	x = -3
+	x = -5
 	y = 1
 	cost = 10
 
@@ -368,7 +367,7 @@ shared_focus = { # A Navy that can Rival the Isles
 	prerequisite = { focus = HHE_modernize_imperious_military }
 	#mutually_exclusive = { focus =  }
 	relative_position_id = HHE_modernize_imperious_military
-	x = 14
+	x = 15
 	y = 1
 	cost = 10
 
@@ -407,6 +406,7 @@ shared_focus = { # A Modernized Imperious Naval Fleet
 	allow_branch = {
 	}
 	available = {
+		has_completed_focus = HHE_carrier_imperious
 	}
 	bypass = {
 	}
@@ -420,6 +420,851 @@ shared_focus = { # A Modernized Imperious Naval Fleet
 	completion_reward = {
 		navy_experience = 25
 		remove_ideas = disjointed_navy0
+	}
+}
+
+shared_focus = { # Research Plan Sea Birds
+	id = HHE_research_plan_carrier
+	icon = GFX_focus_unknown
+	prerequisite = { focus = HHE_third_front }
+	prerequisite = { focus = HHE_navy_rival_isles }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = HHE_navy_rival_isles
+	x = -4
+	y = 1
+	cost = 10
+
+	allow_branch = {
+	}
+	available = {
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		base = 1
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		add_tech_bonus = {
+			name = HHE_air_to_sea_support
+			bonus = 2.0
+			uses = 1
+			category = cv_tech
+		}
+	}
+}
+
+shared_focus = { # Air to Sea Aircraft Support
+	id = HHE_air_sea_support
+	icon = GFX_focus_unknown
+	prerequisite = { focus = HHE_research_plan_carrier }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = HHE_research_plan_carrier
+	x = -1
+	y = 1
+	cost = 10
+
+	allow_branch = {
+	}
+	available = {
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		base = 1
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		air_experience = 25
+		add_tech_bonus = {
+			name = HHE_air_to_sea_support
+			bonus = 1.0
+			uses = 1
+			category = naval_bomber
+			category = cas_bomber
+		}
+		add_doctrine_cost_reduction = {
+			name = HHE_coastal_air_command_focus #land_doc_bonus
+			cost_reduction = 0.5
+			uses = 1
+			category = air_doctrine
+		}
+	}
+}
+
+shared_focus = { # Carrier Damage Protection
+	id = HHE_carrier_protection
+	icon = GFX_focus_unknown
+	prerequisite = { focus = HHE_air_sea_support }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = HHE_air_sea_support
+	x = 0
+	y = 1
+	cost = 10
+
+	allow_branch = {
+	}
+	available = {
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		base = 1
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+	}
+}
+
+shared_focus = { # Improve Scouting Capabilities
+	id = HHE_improve_scouting_capabilities
+	icon = GFX_focus_unknown
+	prerequisite = { focus = HHE_research_plan_carrier }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = HHE_research_plan_carrier
+	x = 1
+	y = 1
+	cost = 10
+
+	allow_branch = {
+	}
+	available = {
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		base = 1
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		add_tech_bonus = {
+			name = HHE_navy_improve_scouting_capabilities
+			bonus = 1.0
+			uses = 2
+			technology = airplane_launcher
+			technology = improved_airplane_launcher
+			technology = advanced_airplane_launcher
+			technology = carrier_airgroup_search
+			technology = improved_carrier_airgroup_search
+			technology = advanced_carrier_airgroup_search
+		}
+	}
+}
+
+shared_focus = { # Improve ASW Capabilities
+	id = HHE_improve_asw_capabilities
+	icon = GFX_focus_unknown
+	prerequisite = { focus = HHE_improve_scouting_capabilities }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = HHE_improve_scouting_capabilities
+	x = 0
+	y = 1
+	cost = 10
+
+	allow_branch = {
+	}
+	available = {
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		base = 1
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		add_tech_bonus = {
+			name = HHE_navy_improve_scouting_capabilities
+			bonus = 1.0
+			uses = 1
+			technology = carrier_airgroup_asw
+			technology = advanced_carrier_airgroup_asw
+		}
+	}
+}
+
+shared_focus = { # Carrier of the Harmonainus Imperious
+	id = HHE_carrier_imperious
+	icon = GFX_goal_generic_navy_carrier
+	prerequisite = { focus = HHE_carrier_protection }
+	prerequisite = { focus = HHE_improve_asw_capabilities }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = HHE_research_plan_carrier
+	x = 0
+	y = 3
+	cost = 10
+
+	allow_branch = {
+	}
+	available = {
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		base = 1
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		if = {
+			limit = {
+				not = { has_tech = early_ship_hull_carrier }
+				not = { has_tech = basic_ship_hull_carrier }
+			}
+			set_technology = {
+				early_ship_hull_carrier = 1
+				basic_ship_hull_carrier = 1
+			}
+		}
+		else_if = {
+			limit = {
+				not = { has_tech = basic_ship_hull_carrier }
+			}
+			set_technology = {
+				basic_ship_hull_carrier = 1
+			}
+		}
+		else_if = {
+			limit = {
+				has_tech = basic_ship_hull_carrier
+				not = { has_tech = improved_ship_hull_carrier }
+			}
+			set_technology = {
+				improved_ship_hull_carrier = 1
+			}
+		}
+		else_if = {
+			limit = {
+				has_tech = improved_ship_hull_carrier
+				not = { has_tech = advanced_ship_hull_carrier }
+			}
+			set_technology = {
+				advanced_ship_hull_carrier = 1
+			}
+		}
+		#custom_effect_tooltip = HHE_
+		create_equipment_variant = {
+			name = "Avis Class"
+			type = nrm_ship_hull_carrier_3
+			#name_group = HHE_
+			parent_version = 0
+			allow_without_tech = yes #Makes no difference since focus grants appropriate tech (above), but it improves tooltip
+			modules = {
+				fixed_ship_hullform_slot = nrm_ship_hullform_carrier_3
+				fixed_ship_engine_slot = nrm_capital_engine_S1_100
+				fixed_ship_armor_layout_slot = nrm_armour_layout_CV_2
+				fixed_ship_armor_slot = nrm_carrier_armour_04_2
+				fixed_ship_damagecontrol_slot = nrm_damagecontrol_4
+				fixed_ship_range_slot = nrm_range_capital_2h
+				fixed_ship_radar_slot = empty
+				fixed_ship_fire_control_system_slot = nrm_fire_control_4
+				fixed_ship_fire_control_system_aa_slot = empty
+				fixed_ship_secondary_slot = nrm_capital_secondary_SB_5_1_x12
+				fixed_ship_tertiary_slot = nrm_capital_tertiary_HA_5_1_x16
+				fixed_ship_flightdeck_slot = nrm_carrier_flightdeck_EH_085
+				custom_slot_1 = empty
+				custom_slot_2 = nrm_support_capital_AA_1
+				custom_slot_3 = nrm_support_capital_AA_1
+				custom_slot_4 = nrm_support_capital_AA_1
+				custom_slot_5 = nrm_support_capital_AA_1
+				custom_slot_6 = nrm_support_capital_AA_1
+			}
+		}
+		hidden_effect = {
+			add_equipment_production = {
+				equipment = {
+					type = nrm_ship_hull_carrier_3
+					creator = "HHE" 
+					version_name = "Avis Class"
+				}
+				#name = "XXX" 
+				requested_factories = 2
+				progress = 0.75
+				amount = 2
+			}
+			add_equipment_production = {
+				equipment = {
+					type = nrm_ship_hull_carrier_3
+					creator = "HHE" 
+					version_name = "Avis Class"
+				}
+				#name = "XXX" 
+				requested_factories = 2
+				progress = 0.50
+				amount = 2
+			}
+		}
+	}
+}
+
+shared_focus = { # Research Plan Shark
+	id = HHE_research_plan_submarine
+	icon = GFX_focus_unknown
+	prerequisite = { focus = HHE_navy_rival_isles }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = HHE_navy_rival_isles
+	x = 4
+	y = 1
+	cost = 10
+
+	allow_branch = {
+	}
+	available = {
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		base = 1
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		if = {
+			limit = {
+				not = { has_dlc = "Man the Guns" }
+			}
+			#add_tech_bonus = {
+			#	name = HHE_
+			#	bonus = 3.0
+			#	uses = 1
+			#	category = shbb_tech	
+			#}
+		}
+		else = {
+			if = {
+				limit = {
+					not = { has_tech = early_ship_hull_submarine }
+				}
+				set_technology = {
+					early_ship_hull_submarine = 1
+				}
+			}
+			else_if = {
+				limit = {
+					has_tech = early_ship_hull_submarine
+					not = { has_tech = basic_ship_hull_submarine }
+				}
+				set_technology = {
+					basic_ship_hull_submarine = 1
+				}
+			}
+			else_if = {
+				limit = {
+					has_tech = basic_ship_hull_submarine
+					not = { has_tech = improved_ship_hull_submarine }
+				}
+				set_technology = {
+					improved_ship_hull_submarine = 1
+				}
+			}
+			else_if = {
+				limit = {
+					has_tech = improved_ship_hull_submarine
+					not = { has_tech = advanced_ship_hull_submarine }
+				}
+				set_technology = {
+					advanced_ship_hull_submarine = 1
+				}
+			}
+			else_if = {
+				limit = {
+					has_tech = advanced_ship_hull_submarine
+					not = { has_tech = modern_ship_hull_submarine }
+				}
+				set_technology = {
+					modern_ship_hull_submarine = 1
+				}
+			}
+			#custom_effect_tooltip = HHE_
+			#create_equipment_variant = {
+			#	name = "XXX Class"
+			#	type = ship_hull_
+			#	#name_group = HHE_
+			#	parent_version = 0
+			#	allow_without_tech = yes #Makes no difference since focus grants appropriate tech (above), but it improves tooltip
+			#	modules = {
+			#		# Need to pick a ship type
+			#	}
+			#}
+			hidden_effect = {
+				#add_equipment_production = {
+				#	equipment = {
+				#		type = ship_hull_
+				#		creator = "HHE" 
+				#		#version_name = "XXX Class"
+				#	}
+				#	#name = "XXX" 
+				#	requested_factories = 1
+				#	progress = 0.80
+				#	amount = 1
+				#}
+				#add_equipment_production = {
+				#	equipment = {
+				#		type = ship_hull_
+				#		creator = "HHE" 
+				#		#version_name = "XXX Class"
+				#	}
+				#	#name = "XXX" 
+				#	requested_factories = 1
+				#	progress = 0.70
+				#	amount = 1
+				#}
+				#add_equipment_production = {
+				#	equipment = {
+				#		type = ship_hull_
+				#		creator = "HHE" 
+				#		#version_name = "XXX Class"
+				#	}
+				#	#name = "XXX" 
+				#	requested_factories = 1
+				#	progress = 0.60
+				#	amount = 1
+				#}
+				#add_equipment_production = {
+				#	equipment = {
+				#		type = ship_hull_
+				#		creator = "HHE" 
+				#		#version_name = "XXX Class"
+				#	}
+				#	#name = "XXX" 
+				#	requested_factories = 1
+				#	progress = 0.50
+				#	amount = 1
+				#}
+			}
+		}
+	}
+}
+
+shared_focus = { # Main Fleet Research Plans
+	id = HHE_main_fleet_research_plans
+	icon = GFX_focus_unknown
+	prerequisite = { focus = HHE_navy_rival_isles }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = HHE_navy_rival_isles
+	x = 10
+	y = 1
+	cost = 5
+
+	allow_branch = {
+	}
+	available = {
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		base = 1
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+	}
+}
+
+shared_focus = { # Research Plan Sea Turtle
+	id = HHE_research_plan_battleship
+	icon = GFX_focus_unknown
+	prerequisite = { focus = HHE_main_fleet_research_plans }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = HHE_main_fleet_research_plans
+	x = -3
+	y = 1
+	cost = 10
+
+	allow_branch = {
+	}
+	available = {
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		base = 1
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		if = {
+			limit = {
+				not = { has_dlc = "Man the Guns" }
+			}
+			#add_tech_bonus = {
+			#	name = HHE_
+			#	bonus = 3.0
+			#	uses = 1
+			#	category = shbb_tech	
+			#}
+		}
+		else = {
+			if = {
+				limit = {
+					not = { has_tech = early_ship_hull_heavy }
+				}
+				set_technology = {
+					early_ship_hull_heavy = 1
+				}
+			}
+			else_if = {
+				limit = {
+					has_tech = early_ship_hull_heavy
+					not = { has_tech = basic_ship_hull_heavy }
+				}
+				set_technology = {
+					basic_ship_hull_heavy = 1
+				}
+			}
+			else_if = {
+				limit = {
+					has_tech = basic_ship_hull_heavy
+					not = { has_tech = improved_ship_hull_heavy }
+				}
+				set_technology = {
+					improved_ship_hull_heavy = 1
+				}
+			}
+			else_if = {
+				limit = {
+					has_tech = improved_ship_hull_heavy
+					not = { has_tech = advanced_ship_hull_heavy }
+				}
+				set_technology = {
+					advanced_ship_hull_heavy = 1
+				}
+			}
+			#custom_effect_tooltip = HHE_
+			#create_equipment_variant = {
+			#	name = "XXX Class"
+			#	type = ship_hull_
+			#	#name_group = HHE_
+			#	parent_version = 0
+			#	allow_without_tech = yes #Makes no difference since focus grants appropriate tech (above), but it improves tooltip
+			#	modules = {
+			#		# Need to pick a ship type
+			#	}
+			#}
+			hidden_effect = {
+				#add_equipment_production = {
+				#	equipment = {
+				#		type = ship_hull_
+				#		creator = "HHE" 
+				#		#version_name = "XXX Class"
+				#	}
+				#	#name = "XXX" 
+				#	requested_factories = 1
+				#	progress = 0.80
+				#	amount = 1
+				#}
+				#add_equipment_production = {
+				#	equipment = {
+				#		type = ship_hull_
+				#		creator = "HHE" 
+				#		#version_name = "XXX Class"
+				#	}
+				#	#name = "XXX" 
+				#	requested_factories = 1
+				#	progress = 0.70
+				#	amount = 1
+				#}
+				#add_equipment_production = {
+				#	equipment = {
+				#		type = ship_hull_
+				#		creator = "HHE" 
+				#		#version_name = "XXX Class"
+				#	}
+				#	#name = "XXX" 
+				#	requested_factories = 1
+				#	progress = 0.60
+				#	amount = 1
+				#}
+				#add_equipment_production = {
+				#	equipment = {
+				#		type = ship_hull_
+				#		creator = "HHE" 
+				#		#version_name = "XXX Class"
+				#	}
+				#	#name = "XXX" 
+				#	requested_factories = 1
+				#	progress = 0.50
+				#	amount = 1
+				#}
+			}
+		}
+	}
+}
+
+shared_focus = { # Research Plan Manta Ray
+	id = HHE_research_plan_cruiser
+	icon = GFX_focus_unknown
+	prerequisite = { focus = HHE_main_fleet_research_plans }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = HHE_main_fleet_research_plans
+	x = 0
+	y = 1
+	cost = 10
+
+	allow_branch = {
+	}
+	available = {
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		base = 1
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		if = {
+			limit = {
+				not = { has_dlc = "Man the Guns" }
+			}
+			#add_tech_bonus = {
+			#	name = HHE_
+			#	bonus = 3.0
+			#	uses = 1
+			#	category = shbb_tech	
+			#}
+		}
+		else = {
+			if = {
+				limit = {
+					not = { has_tech = early_ship_hull_cruiser }
+				}
+				set_technology = {
+					early_ship_hull_cruiser = 1
+				}
+			}
+			else_if = {
+				limit = {
+					has_tech = early_ship_hull_cruiser
+					not = { has_tech = basic_ship_hull_cruiser }
+				}
+				set_technology = {
+					basic_ship_hull_cruiser = 1
+				}
+			}
+			else_if = {
+				limit = {
+					has_tech = basic_ship_hull_cruiser
+					not = { has_tech = improved_ship_hull_cruiser }
+				}
+				set_technology = {
+					improved_ship_hull_cruiser = 1
+				}
+			}
+			else_if = {
+				limit = {
+					has_tech = improved_ship_hull_cruiser
+					not = { has_tech = advanced_ship_hull_cruiser }
+				}
+				set_technology = {
+					advanced_ship_hull_cruiser = 1
+				}
+			}
+			#custom_effect_tooltip = HHE_
+			#create_equipment_variant = {
+			#	name = "XXX Class"
+			#	type = ship_hull_
+			#	#name_group = HHE_
+			#	parent_version = 0
+			#	allow_without_tech = yes #Makes no difference since focus grants appropriate tech (above), but it improves tooltip
+			#	modules = {
+			#		# Need to pick a ship type
+			#	}
+			#}
+			hidden_effect = {
+				#add_equipment_production = {
+				#	equipment = {
+				#		type = ship_hull_
+				#		creator = "HHE" 
+				#		#version_name = "XXX Class"
+				#	}
+				#	#name = "XXX" 
+				#	requested_factories = 1
+				#	progress = 0.80
+				#	amount = 1
+				#}
+				#add_equipment_production = {
+				#	equipment = {
+				#		type = ship_hull_
+				#		creator = "HHE" 
+				#		#version_name = "XXX Class"
+				#	}
+				#	#name = "XXX" 
+				#	requested_factories = 1
+				#	progress = 0.70
+				#	amount = 1
+				#}
+				#add_equipment_production = {
+				#	equipment = {
+				#		type = ship_hull_
+				#		creator = "HHE" 
+				#		#version_name = "XXX Class"
+				#	}
+				#	#name = "XXX" 
+				#	requested_factories = 1
+				#	progress = 0.60
+				#	amount = 1
+				#}
+				#add_equipment_production = {
+				#	equipment = {
+				#		type = ship_hull_
+				#		creator = "HHE" 
+				#		#version_name = "XXX Class"
+				#	}
+				#	#name = "XXX" 
+				#	requested_factories = 1
+				#	progress = 0.50
+				#	amount = 1
+				#}
+			}
+		}
+	}
+}
+
+shared_focus = { # Research Plan Barracuda
+	id = HHE_research_plan_destroyer
+	icon = GFX_focus_unknown
+	prerequisite = { focus = HHE_main_fleet_research_plans }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = HHE_main_fleet_research_plans
+	x = 3
+	y = 1
+	cost = 10
+
+	allow_branch = {
+	}
+	available = {
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		base = 1
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		if = {
+			limit = {
+				not = { has_dlc = "Man the Guns" }
+			}
+			#add_tech_bonus = {
+			#	name = HHE_
+			#	bonus = 3.0
+			#	uses = 1
+			#	category = shbb_tech	
+			#}
+		}
+		else = {
+			if = {
+				limit = {
+					not = { has_tech = early_ship_hull_light }
+				}
+				set_technology = {
+					early_ship_hull_light = 1
+				}
+			}
+			else_if = {
+				limit = {
+					has_tech = early_ship_hull_light
+					not = { has_tech = basic_ship_hull_light }
+				}
+				set_technology = {
+					basic_ship_hull_light = 1
+				}
+			}
+			else_if = {
+				limit = {
+					has_tech = basic_ship_hull_light
+					not = { has_tech = improved_ship_hull_light }
+				}
+				set_technology = {
+					improved_ship_hull_light = 1
+				}
+			}
+			#custom_effect_tooltip = HHE_
+			#create_equipment_variant = {
+			#	name = "XXX Class"
+			#	type = ship_hull_
+			#	#name_group = HHE_
+			#	parent_version = 0
+			#	allow_without_tech = yes #Makes no difference since focus grants appropriate tech (above), but it improves tooltip
+			#	modules = {
+			#		# Need to pick a ship type
+			#	}
+			#}
+			hidden_effect = {
+				#add_equipment_production = {
+				#	equipment = {
+				#		type = ship_hull_
+				#		creator = "HHE" 
+				#		#version_name = "XXX Class"
+				#	}
+				#	#name = "XXX" 
+				#	requested_factories = 1
+				#	progress = 0.80
+				#	amount = 1
+				#}
+				#add_equipment_production = {
+				#	equipment = {
+				#		type = ship_hull_
+				#		creator = "HHE" 
+				#		#version_name = "XXX Class"
+				#	}
+				#	#name = "XXX" 
+				#	requested_factories = 1
+				#	progress = 0.70
+				#	amount = 1
+				#}
+				#add_equipment_production = {
+				#	equipment = {
+				#		type = ship_hull_
+				#		creator = "HHE" 
+				#		#version_name = "XXX Class"
+				#	}
+				#	#name = "XXX" 
+				#	requested_factories = 1
+				#	progress = 0.60
+				#	amount = 1
+				#}
+				#add_equipment_production = {
+				#	equipment = {
+				#		type = ship_hull_
+				#		creator = "HHE" 
+				#		#version_name = "XXX Class"
+				#	}
+				#	#name = "XXX" 
+				#	requested_factories = 1
+				#	progress = 0.50
+				#	amount = 1
+				#}
+			}
+		}
 	}
 }
 	### Old ones that crash the game when removed ###
