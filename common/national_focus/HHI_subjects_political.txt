@@ -518,7 +518,7 @@ shared_focus = { # Peaceful Coexistence
 	}
 }
 	### Civil War Focus Branches ###
-shared_focus = {
+shared_focus = { # Smite Civil Unrest
 	id = HHI_subjects_smite_civil_unrest
 	icon = GFX_goal_generic_major_war
 	prerequisite = { focus = HHI_subjects_clear_sight }
@@ -543,8 +543,110 @@ shared_focus = {
 	available_if_capitulated = yes
 
 	completion_reward = {
-		remove_ideas = elven_tribal_rebellion # Free due to them just rebelling
 		remove_ideas = nobility_held_industry #Remove
 		remove_ideas = traditional_bureaucracy #Remove
+	}
+}
+
+shared_focus = {
+	id = HHI_subjects_the_minority_species
+	icon = GFX_focus_unknown
+	prerequisite = { focus = HHI_subjects_smite_civil_unrest }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = HHI_subjects_smite_civil_unrest
+	x = 0
+	y = 1
+	cost = 10
+
+	allow_branch = {
+	}
+	available = {
+		NOT { OR = { original_tag = ETF original_tag = HDW } }
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		base = 1
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		remove_ideas = elven_tribal_rebellion # Free due to them just rebelling
+	}
+}
+	### Civil War Finish Focus Branches ###
+shared_focus = { # Victory over the Civil war!
+	id = HHI_subjects_civil_war_victory
+	icon = GFX_focus_unknown
+	#prerequisite = { focus =  }
+	#mutually_exclusive = { focus =  }
+	#relative_position_id = 
+	x = 10
+	y = 5
+	cost = 5
+
+	allow_branch = {
+		has_global_flag = HHE_collapse_of_the_nation
+	}
+	available = {
+		ROOT = {
+			has_full_control_of_state = 5
+			has_full_control_of_state = 239
+			has_country_flag = collapse_of_the_nation_civil_war_local
+			has_country_flag = collapse_of_the_nation_civil_war_regional
+			has_country_flag = collapse_of_the_nation_civil_war_ignited
+		}
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		base = 1
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		add_stability = 0.10
+	}
+}
+
+shared_focus = { # Victor Isabella Delfina
+	id = HHI_subjects_victor_isabella_delfina
+	icon = GFX_focus_unknown
+	prerequisite = { focus = HHI_subjects_civil_war_victory }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = HHI_subjects_civil_war_victory
+	x = 0
+	y = 1
+	cost = 5
+
+	allow_branch = {
+		has_global_flag = HHE_collapse_of_the_nation
+		original_tag = HST
+	}
+	available = {
+		ROOT = {
+			has_full_control_of_state = 5
+			has_full_control_of_state = 239
+			has_country_flag = collapse_of_the_nation_civil_war_local
+			has_country_flag = collapse_of_the_nation_civil_war_regional
+			has_country_flag = collapse_of_the_nation_civil_war_ignited
+		}
+		NOT = { country_exists = HHE country_exists = HBB country_exists = HCR country_exists = HER country_exists = HET country_exists = HLF country_exists = HNO country_exists = HPP country_exists = HRF country_exists = HSP country_exists = HTP country_exists = HUM country_exists = HUP country_exists = HWA country_exists = HAN country_exists = HAP country_exists = HAW country_exists = HCO country_exists = HDW country_exists = HFF country_exists = HFR country_exists = HFS country_exists = HJU country_exists = HPG country_exists = HUF country_exists = ETF }
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		base = 1
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		HHI_subjects_civil_war_ends = yes
 	}
 }

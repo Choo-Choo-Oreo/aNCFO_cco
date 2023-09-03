@@ -1,0 +1,928 @@
+HHE_civil_war_begins = {
+	set_global_flag = HHE_warmonger_civil_war_first # This one is to start the civil war
+	#set_global_flag = HHE_warmonger_civil_war_final # This one is after "HHE_warmonger_civil_war_first"
+	every_state = {
+			limit = {
+				OR = {
+					is_core_of = HHE
+					is_core_of = HBB
+					is_core_of = HCR
+					is_core_of = HER
+					is_core_of = HET
+					is_core_of = HLF
+					is_core_of = HNO
+					is_core_of = HPP
+					is_core_of = HRF
+					is_core_of = HSP
+					is_core_of = HST
+					is_core_of = HTP
+					is_core_of = HUM
+					is_core_of = HUP
+					is_core_of = HWA
+					is_core_of = HAN
+					is_core_of = HAP
+					is_core_of = HAW
+					is_core_of = HCO
+					is_core_of = HDW
+					is_core_of = HFS
+					is_core_of = HJU
+					is_core_of = HPG
+					is_core_of = HUF
+						# Extras
+					is_core_of = DOC
+					is_core_of = DMP
+					is_core_of = ETF
+					is_core_of = ERP
+					is_core_of = FIK
+					is_core_of = GSD
+					is_core_of = KGK
+					is_core_of = NRP
+					is_core_of = REP
+					is_core_of = SEK
+					is_core_of = SSD
+					is_core_of = SLA
+						# Majors
+					#is_core_of = MRC
+					#is_core_of = UFS
+				}
+			}
+			add_claim_by = HHE
+			add_claim_by = HPG
+	}
+	every_state = {
+			limit = {
+				OR = {
+					is_core_of = HCR
+					is_core_of = HET
+					is_core_of = HPP
+					is_core_of = HWA
+						# Extras
+					is_core_of = ETF
+				}
+			}
+			add_claim_by = HST
+	}
+	DOC = { country_event = { id = HHE.96 days = 173 } }
+	REP = { country_event = { id = HHE.96 days = 173 } }
+	SFG = { country_event = { id = HHE.97 days = 173 } }
+	SRA = { country_event = { id = HHE.97 days = 173 } }
+	UFS = { country_event = { id = HHE.98 days = 173 } }
+	HHE = { country_event = { id = HHE.99 days = 83 } }
+	HBB = { country_event = { id = HHE.99 days = 83 } }
+	HCR = { country_event = { id = HHE.99 days = 83 } }
+	HER = { country_event = { id = HHE.99 days = 83 } }
+	HET = { country_event = { id = HHE.99 days = 83 } }
+	HLF = { country_event = { id = HHE.99 days = 83 } }
+	HNO = { country_event = { id = HHE.99 days = 83 } }
+	HPP = { country_event = { id = HHE.99 days = 83 } }
+	HRF = { country_event = { id = HHE.99 days = 83 } }
+	HSP = { country_event = { id = HHE.99 days = 83 } }
+	HST = { country_event = { id = HHE.99 days = 83 } }
+	HTP = { country_event = { id = HHE.99 days = 83 } }
+	HUM = { country_event = { id = HHE.99 days = 83 } }
+	HUP = { country_event = { id = HHE.99 days = 83 } }
+	HWA = { country_event = { id = HHE.99 days = 83 } }
+	HAN = { country_event = { id = HHE.99 days = 83 } }
+	HAP = { country_event = { id = HHE.99 days = 83 } }
+	HAW = { country_event = { id = HHE.99 days = 83 } }
+	HCO = { country_event = { id = HHE.99 days = 83 } }
+	HDW = { country_event = { id = HHE.99 days = 83 } }
+	HFF = { country_event = { id = HHE.99 days = 83 } }
+	HFR = { country_event = { id = HHE.99 days = 83 } }
+	HFS = { country_event = { id = HHE.99 days = 83 } }
+	HJU = { country_event = { id = HHE.99 days = 83 } }
+	HPG = { country_event = { id = HHE.99 days = 83 } }
+	HUF = { country_event = { id = HHE.99 days = 83 } }
+}
+HHE_civil_war_ends = {
+	clr_global_flag = HHE_warmonger_civil_war_first # We no longer need this flag as the civil war is over.
+	clr_global_flag = HHE_warmonger_civil_war_final # We no longer need this flag as the civil war is over.
+}
+HHI_subjects_civil_war_ends = {
+	clr_global_flag = HHE_warmonger_civil_war_first # We no longer need this flag as the civil war is over.
+	clr_global_flag = HHE_warmonger_civil_war_final # We no longer need this flag as the civil war is over.
+	if = {
+		limit = { original_tag = HST }
+		post_civil_war_influencer_effect = yes
+	}
+	else_if = {
+	}
+}
+
+HHE_civil_war_local = {
+	if = {
+		limit = { OR = { original_tag = HHE original_tag = HFF original_tag = HFR original_tag = HPG } }
+		if = {
+			limit = { country_exists = HHE NOT = { original_tag = HHE } }
+			ROOT = { declare_war_on = { target = HHE type = civil_war } }
+		}
+		if = {
+			limit = { country_exists = HFF NOT = { OR = { original_tag = HFF original_tag = HFR } } } # Special Countries
+			ROOT = { declare_war_on = { target = HFF type = civil_war } }
+		}
+		if = {
+			limit = { country_exists = HFR NOT = { OR = { original_tag = HFF original_tag = HFR } } } # Special Countries
+			ROOT = { declare_war_on = { target = HFR type = civil_war } }
+		}
+		if = {
+			limit = { country_exists = HPG NOT = { original_tag = HPG } }
+			ROOT = { declare_war_on = { target = HPG type = civil_war } }
+		}
+	}
+	else_if = {
+		limit = { OR = { original_tag = HTP original_tag = HFS } }
+		if = {
+			limit = { country_exists = HTP NOT = { original_tag = HTP } }
+			ROOT = { declare_war_on = { target = HTP type = civil_war } }
+		}
+		if = {
+			limit = { country_exists = HFS NOT = { original_tag = HFS } }
+			ROOT = { declare_war_on = { target = HFS type = civil_war } }
+		}
+	}
+	else_if = {
+		limit = { OR = { original_tag = HLF original_tag = HCO original_tag = HJU } }
+		if = {
+			limit = { country_exists = HLF NOT = { original_tag = HLF } }
+			ROOT = { declare_war_on = { target = HLF type = civil_war } }
+		}
+		if = {
+			limit = { country_exists = HCO NOT = { original_tag = HCO } }
+			ROOT = { declare_war_on = { target = HCO type = civil_war } }
+		}
+		if = {
+			limit = { country_exists = HJU NOT = { original_tag = HJU } }
+			ROOT = { declare_war_on = { target = HJU type = civil_war } }
+		}
+	}
+	else_if = {
+		limit = { OR = { original_tag = HBB original_tag = HNO original_tag = HUM original_tag = HDW original_tag = HUF } }
+		if = {
+			limit = { country_exists = HBB NOT = { original_tag = HBB } }
+			ROOT = { declare_war_on = { target = HBB type = civil_war } }
+		}
+		if = {
+			limit = { country_exists = HNO NOT = { original_tag = HNO } }
+			ROOT = { declare_war_on = { target = HNO type = civil_war } }
+		}
+		if = {
+			limit = { country_exists = HUM NOT = { original_tag = HUM } }
+			ROOT = { declare_war_on = { target = HUM type = civil_war } }
+		}
+		if = {
+			limit = { country_exists = HDW NOT = { original_tag = HDW } }
+			ROOT = { declare_war_on = { target = HDW type = civil_war } }
+		}
+		if = {
+			limit = { country_exists = HUF NOT = { original_tag = HUF } }
+			ROOT = { declare_war_on = { target = HUF type = civil_war } }
+		}
+	}
+	else_if = {
+		limit = { OR = { original_tag = HCR original_tag = HPP original_tag = HWA original_tag = HAW } }
+		if = {
+			limit = { country_exists = HCR NOT = { original_tag = HCR } }
+			ROOT = { declare_war_on = { target = HCR type = civil_war } }
+		}
+		if = {
+			limit = { country_exists = HPP NOT = { original_tag = HPP } }
+			ROOT = { declare_war_on = { target = HPP type = civil_war } }
+		}
+		if = {
+			limit = { country_exists = HWA NOT = { original_tag = HWA } }
+			ROOT = { declare_war_on = { target = HWA type = civil_war } }
+		}
+		if = {
+			limit = { country_exists = HAW NOT = { original_tag = HAW } }
+			ROOT = { declare_war_on = { target = HAW type = civil_war } }
+		}
+	}
+	else_if = {
+		limit = { OR = { original_tag = HET original_tag = ETF } }
+		if = {
+			limit = { country_exists = HET NOT = { original_tag = HET } }
+			ROOT = { declare_war_on = { target = HET type = civil_war } }
+		}
+		if = {
+			limit = { country_exists = HPP NOT = { original_tag = HPP } }
+			ROOT = { declare_war_on = { target = HPP type = civil_war } }
+		}
+		if = {
+			limit = { country_exists = HUM NOT = { original_tag = HUM } }
+			ROOT = { declare_war_on = { target = HUM type = civil_war } }
+		}
+		if = {
+			limit = { country_exists = ETF NOT = { original_tag = ETF } }
+			ROOT = { declare_war_on = { target = ETF type = civil_war } }
+		}
+	}
+	else_if = {
+		limit = { OR = { original_tag = HST original_tag = HAP } }
+		if = {
+			limit = { country_exists = HST NOT = { original_tag = HST } }
+			ROOT = { declare_war_on = { target = HST type = civil_war } }
+		}
+		if = {
+			limit = { country_exists = HAP NOT = { original_tag = HAP } }
+			ROOT = { declare_war_on = { target = HAP type = civil_war } }
+		}
+	}
+	set_country_flag = collapse_of_the_nation_civil_war_local
+}
+HHE_civil_war_regional = {
+	if = {
+		limit = { OR = { original_tag = HHE original_tag = HFF original_tag = HFR original_tag = HPG original_tag = HTP original_tag = HFS original_tag = HER original_tag = HSP } }
+		if = {
+			limit = { country_exists = HHE NOT = { original_tag = HHE } }
+			ROOT = { declare_war_on = { target = HHE type = civil_war } }
+		}
+		if = {
+			limit = { country_exists = HFF NOT = { OR = { original_tag = HFF original_tag = HFR } } } # Special Countries
+			ROOT = { declare_war_on = { target = HFF type = civil_war } }
+		}
+		if = {
+			limit = { country_exists = HFR NOT = { OR = { original_tag = HFF original_tag = HFR } } } # Special Countries
+			ROOT = { declare_war_on = { target = HFR type = civil_war } }
+		}
+		if = {
+			limit = { country_exists = HPG NOT = { original_tag = HPG } }
+			ROOT = { declare_war_on = { target = HPG type = civil_war } }
+		}
+		if = {
+			limit = { country_exists = HTP NOT = { original_tag = HTP } }
+			ROOT = { declare_war_on = { target = HTP type = civil_war } }
+		}
+		if = {
+			limit = { country_exists = HFS NOT = { original_tag = HFS } }
+			ROOT = { declare_war_on = { target = HFS type = civil_war } }
+		}
+			# Incomplete for now.
+		if = {
+			limit = { country_exists = HER NOT = { original_tag = HER } }
+			ROOT = { declare_war_on = { target = HER type = civil_war } }
+		}
+		if = {
+			limit = { country_exists = HPS NOT = { original_tag = HPS } }
+			ROOT = { declare_war_on = { target = HPS type = civil_war } }
+		}
+	}
+	else_if = {
+		limit = { OR = { original_tag = HLF original_tag = HCO original_tag = HJU original_tag = HBB original_tag = HNO original_tag = HUM original_tag = HDW original_tag = HUF } }
+		if = {
+			limit = { country_exists = HLF NOT = { original_tag = HLF } }
+			ROOT = { declare_war_on = { target = HLF type = civil_war } }
+		}
+		if = {
+			limit = { country_exists = HCO NOT = { original_tag = HCO } }
+			ROOT = { declare_war_on = { target = HCO type = civil_war } }
+		}
+		if = {
+			limit = { country_exists = HJU NOT = { original_tag = HJU } }
+			ROOT = { declare_war_on = { target = HJU type = civil_war } }
+		}
+		if = {
+			limit = { country_exists = HBB NOT = { original_tag = HBB } }
+			ROOT = { declare_war_on = { target = HBB type = civil_war } }
+		}
+		if = {
+			limit = { country_exists = HNO NOT = { original_tag = HNO } }
+			ROOT = { declare_war_on = { target = HNO type = civil_war } }
+		}
+		if = {
+			limit = { country_exists = HUM NOT = { original_tag = HUM } }
+			ROOT = { declare_war_on = { target = HUM type = civil_war } }
+		}
+		if = {
+			limit = { country_exists = HDW NOT = { original_tag = HDW } }
+			ROOT = { declare_war_on = { target = HDW type = civil_war } }
+		}
+		if = {
+			limit = { country_exists = HUF NOT = { original_tag = HUF } }
+			ROOT = { declare_war_on = { target = HUF type = civil_war } }
+		}
+	}
+	else_if = {
+		limit = { OR = { original_tag = HCR original_tag = HAW original_tag = HPP original_tag = HWA original_tag = HET original_tag = ETF original_tag = HST original_tag = HAP } }
+		if = {
+			limit = { country_exists = HCR NOT = { original_tag = HCR } }
+			ROOT = { declare_war_on = { target = HCR type = civil_war } }
+		}
+		if = {
+			limit = { country_exists = HAW NOT = { original_tag = HAW } }
+			ROOT = { declare_war_on = { target = HAW type = civil_war } }
+		}
+		if = {
+			limit = { country_exists = HPP NOT = { original_tag = HPP } }
+			ROOT = { declare_war_on = { target = HPP type = civil_war } }
+		}
+		if = {
+			limit = { country_exists = HWA NOT = { original_tag = HWA } }
+			ROOT = { declare_war_on = { target = HWA type = civil_war } }
+		}
+		if = {
+			limit = { country_exists = HET NOT = { original_tag = HET } }
+			ROOT = { declare_war_on = { target = HET type = civil_war } }
+		}
+		if = {
+			limit = { country_exists = ETF NOT = { original_tag = ETF } }
+			ROOT = { declare_war_on = { target = ETF type = civil_war } }
+		}
+		if = {
+			limit = { country_exists = HST NOT = { original_tag = HST } }
+			ROOT = { declare_war_on = { target = HST type = civil_war } }
+		}
+		if = {
+			limit = { country_exists = HAP NOT = { original_tag = HAP } }
+			ROOT = { declare_war_on = { target = HAP type = civil_war } }
+		}
+	}
+	set_country_flag = collapse_of_the_nation_civil_war_regional
+}
+HHE_civil_war_ignited = {
+	HFF = {
+		create_faction = HFF_coalition_of_free_states
+		add_to_faction = HCO
+		add_to_faction = HFR
+	}
+	if = {
+		limit = { OR = { original_tag = HHE original_tag = HBB original_tag = HCR original_tag = HER original_tag = HET original_tag = HLF original_tag = HNO original_tag = HPP original_tag = HRF original_tag = HSP original_tag = HST original_tag = HTP original_tag = HUM original_tag = HUP original_tag = HWA original_tag = HAN original_tag = HAP original_tag = HAW original_tag = HCO original_tag = HDW original_tag = HFF original_tag = HFR original_tag = HFS original_tag = HJU original_tag = HPG original_tag = HUF original_tag = ETF } }
+		if = {
+			limit = { country_exists = HBB NOT = { original_tag = HBB } }
+			ROOT = { declare_war_on = { target = HBB type = civil_war } }
+		}
+		if = {
+			limit = { country_exists = HCR NOT = { original_tag = HCR } }
+			ROOT = { declare_war_on = { target = HCR type = civil_war } }
+		}
+		if = {
+			limit = { country_exists = HER NOT = { original_tag = HER } }
+			ROOT = { declare_war_on = { target = HER type = civil_war } }
+		}
+		if = {
+			limit = { country_exists = HET NOT = { original_tag = HET } }
+			ROOT = { declare_war_on = { target = HET type = civil_war } }
+		}
+		if = {
+			limit = { country_exists = HHE NOT = { original_tag = HHE } }
+			ROOT = { declare_war_on = { target = HHE type = civil_war } }
+		}
+		if = {
+			limit = { country_exists = HLF NOT = { original_tag = HLF } }
+			ROOT = { declare_war_on = { target = HLF type = civil_war } }
+		}
+		if = {
+			limit = { country_exists = HNO NOT = { original_tag = HNO } }
+			ROOT = { declare_war_on = { target = HNO type = civil_war } }
+		}
+		if = {
+			limit = { country_exists = HPP NOT = { original_tag = HPP } }
+			ROOT = { declare_war_on = { target = HPP type = civil_war } }
+		}
+		if = {
+			limit = { country_exists = HRF NOT = { original_tag = HRF } }
+			ROOT = { declare_war_on = { target = HRF type = civil_war } }
+		}
+		if = {
+			limit = { country_exists = HSP NOT = { original_tag = HSP } }
+			ROOT = { declare_war_on = { target = HSP type = civil_war } }
+		}
+		if = {
+			limit = { country_exists = HST NOT = { original_tag = HST } }
+			ROOT = { declare_war_on = { target = HST type = civil_war } }
+		}
+		if = {
+			limit = { country_exists = HTP NOT = { original_tag = HTP } }
+			ROOT = { declare_war_on = { target = HTP type = civil_war } }
+		}
+		if = {
+			limit = { country_exists = HUM NOT = { original_tag = HUM } }
+			ROOT = { declare_war_on = { target = HUM type = civil_war } }
+		}
+		if = {
+			limit = { country_exists = HUP NOT = { original_tag = HUP } }
+			ROOT = { declare_war_on = { target = HUP type = civil_war } }
+		}
+		if = {
+			limit = { country_exists = HWA NOT = { original_tag = HWA } }
+			ROOT = { declare_war_on = { target = HWA type = civil_war } }
+		}
+		if = {
+			limit = { country_exists = HAN NOT = { original_tag = HAN } }
+			ROOT = { declare_war_on = { target = HAN type = civil_war } }
+		}
+		if = {
+			limit = { country_exists = HAP NOT = { original_tag = HAP } }
+			ROOT = { declare_war_on = { target = HAP type = civil_war } }
+		}
+		if = {
+			limit = { country_exists = HAW NOT = { original_tag = HAW } }
+			ROOT = { declare_war_on = { target = HAW type = civil_war } }
+		}
+		if = {
+			limit = { country_exists = HCO NOT = { original_tag = HCO original_tag = HFF original_tag = HFR } } # Special Countries
+			ROOT = { declare_war_on = { target = HCO type = civil_war } }
+		}
+		if = {
+			limit = { country_exists = HDW NOT = { original_tag = HDW } }
+			ROOT = { declare_war_on = { target = HDW type = civil_war } }
+		}
+		if = {
+			limit = { country_exists = HFF NOT = { original_tag = HCO original_tag = HFF original_tag = HFR } } # Special Countries
+			ROOT = { declare_war_on = { target = HFF type = civil_war } }
+		}
+		if = {
+			limit = { country_exists = HFR NOT = { original_tag = HCO original_tag = HFF original_tag = HFR } } # Special Countries
+			ROOT = { declare_war_on = { target = HFR type = civil_war } }
+		}
+		if = {
+			limit = { country_exists = HFS NOT = { original_tag = HFS } }
+			ROOT = { declare_war_on = { target = HFS type = civil_war } }
+		}
+		if = {
+			limit = { country_exists = HJU NOT = { original_tag = HJU } }
+			ROOT = { declare_war_on = { target = HJU type = civil_war } }
+		}
+		if = {
+			limit = { country_exists = HPG NOT = { original_tag = HPG } }
+			ROOT = { declare_war_on = { target = HPG type = civil_war } }
+		}
+		if = {
+			limit = { country_exists = HUF NOT = { original_tag = HUF } }
+			ROOT = { declare_war_on = { target = HUF type = civil_war } }
+		}
+	}
+	set_country_flag = collapse_of_the_nation_civil_war_ignited
+}
+
+HHE_rebellion_HNO = { # Harmonainus Independent Nobals Council
+	hidden_effect = {
+		79 = { set_demilitarized_zone = no }
+		81 = { set_demilitarized_zone = no }
+		77 = { set_demilitarized_zone = yes }
+		84 = { set_demilitarized_zone = yes }
+		87 = { set_demilitarized_zone = yes }
+		180 = { set_demilitarized_zone = yes }
+		238 = { set_demilitarized_zone = yes }
+		79 = { add_core_of = HNO }
+		81 = { add_core_of = HNO }
+	}
+	add_stability = 0.01
+	HNO = { transfer_state = 79 transfer_state = 81 }
+	HNO = { load_oob = HNO_callapse_militia }
+}
+HHE_suppressed_rebellion_HNO = {
+	hidden_effect = {
+		79 = { set_demilitarized_zone = no }
+		81 = { set_demilitarized_zone = no }
+		77 = { set_demilitarized_zone = yes }
+		84 = { set_demilitarized_zone = yes }
+		87 = { set_demilitarized_zone = yes }
+		180 = { set_demilitarized_zone = yes }
+		238 = { set_demilitarized_zone = yes }
+		79 = { add_core_of = HNO }
+		81 = { add_core_of = HNO }
+	}
+}
+HHE_rebellion_HFR = { # Ignis Independent State
+	hidden_effect = {
+		77 = { set_demilitarized_zone = no }
+		84 = { set_demilitarized_zone = no }
+		87 = { set_demilitarized_zone = no }
+		180 = { set_demilitarized_zone = no }
+		238 = { set_demilitarized_zone = no }
+		82 = { set_demilitarized_zone = yes } # This one goes to HNO
+		85 = { set_demilitarized_zone = yes }
+		86 = { set_demilitarized_zone = yes }
+		88 = { set_demilitarized_zone = yes }
+		89 = { set_demilitarized_zone = yes }
+		90 = { set_demilitarized_zone = yes }
+		152 = { set_demilitarized_zone = yes }
+		HHE = { HFR = { transfer_technology_all = yes } }
+		11  = { add_core_of = HFR } # HSP
+		77 = { add_core_of = HFR }
+		84 = { add_core_of = HFR }
+		87 = { add_core_of = HFR }
+		96  = { add_core_of = HFR } # HSP
+		107 = { add_core_of = HFR } # HSP
+		108 = { add_core_of = HFR } # HSP
+		109 = { add_core_of = HFR } # HSP
+		180 = { add_core_of = HFR }
+		238 = { add_core_of = HFR }
+		every_state = {
+			limit = {
+				is_core_of = HER
+			}
+			add_core_of = HFR
+		}
+	}
+	add_stability = 0.03
+	country_event = { id = HHE.100 }
+	HFR = { transfer_state = 77 transfer_state = 84 transfer_state = 87 transfer_state = 180 transfer_state = 238 }
+	HFR = { load_oob = HFR_callapse_militia add_ideas = { disjointed_military1 disjointed_navy1 disjointed_airforce1 } }
+}
+HHE_suppressed_rebellion_HFR = {
+	hidden_effect = {
+		77 = { set_demilitarized_zone = no }
+		84 = { set_demilitarized_zone = no }
+		87 = { set_demilitarized_zone = no }
+		180 = { set_demilitarized_zone = no }
+		238 = { set_demilitarized_zone = no }
+		82 = { set_demilitarized_zone = yes } # This one goes to HNO
+		85 = { set_demilitarized_zone = yes }
+		86 = { set_demilitarized_zone = yes }
+		88 = { set_demilitarized_zone = yes }
+		89 = { set_demilitarized_zone = yes }
+		90 = { set_demilitarized_zone = yes }
+		152 = { set_demilitarized_zone = yes }
+		11  = { add_core_of = HFR } # HSP
+		77 = { add_core_of = HFR }
+		84 = { add_core_of = HFR }
+		87 = { add_core_of = HFR }
+		96  = { add_core_of = HFR } # HSP
+		107 = { add_core_of = HFR } # HSP
+		108 = { add_core_of = HFR } # HSP
+		109 = { add_core_of = HFR } # HSP
+		180 = { add_core_of = HFR }
+		238 = { add_core_of = HFR }
+		448 = { add_core_of = HFR } # HSP
+		449 = { add_core_of = HFR } # HSP
+		450 = { add_core_of = HFR } # HSP
+		every_state = {
+			limit = {
+				is_core_of = HER
+			}
+			add_core_of = HFR
+		}
+	}
+}
+HHE_rebellion_HFF = { # Archaigan Liberation Front
+	hidden_effect = {
+		82 = { set_demilitarized_zone = no } # This one goes to HNO
+		85 = { set_demilitarized_zone = no }
+		86 = { set_demilitarized_zone = no }
+		88 = { set_demilitarized_zone = no }
+		89 = { set_demilitarized_zone = no }
+		90 = { set_demilitarized_zone = no }
+		152 = { set_demilitarized_zone = no }
+		78 = { set_demilitarized_zone = yes }
+		80 = { set_demilitarized_zone = yes }
+		83 = { set_demilitarized_zone = yes }
+		236 = { set_demilitarized_zone = yes }
+		HHE = { HFF = { transfer_technology_all = yes } }
+		82 = { add_core_of = HNO }
+		every_state = {
+			limit = {
+				or = {
+					is_core_of = HHE
+					is_core_of = HSP
+					is_core_of = HTF
+				}
+				NOT = { is_core_of = HFR }
+			}
+			add_core_of = HFF
+		}
+	}
+	add_stability = 0.05
+	country_event = { id = HHE.101 }
+	HNO = { transfer_state = 82 }
+	HFF = { transfer_state = 85 transfer_state = 86 transfer_state = 88 transfer_state = 89 transfer_state = 90 transfer_state = 152 }
+	HFF = { load_oob = HFF_callapse_militia add_ideas = { disjointed_military1 disjointed_navy1 disjointed_airforce1 } }
+}
+HHE_suppressed_rebellion_HFF = {
+	hidden_effect = {
+		82 = { set_demilitarized_zone = no } # This one goes to HNO
+		85 = { set_demilitarized_zone = no }
+		86 = { set_demilitarized_zone = no }
+		88 = { set_demilitarized_zone = no }
+		89 = { set_demilitarized_zone = no }
+		90 = { set_demilitarized_zone = no }
+		152 = { set_demilitarized_zone = no }
+		78 = { set_demilitarized_zone = yes }
+		80 = { set_demilitarized_zone = yes }
+		83 = { set_demilitarized_zone = yes }
+		236 = { set_demilitarized_zone = yes }
+		82 = { add_core_of = HNO }
+		every_state = {
+			limit = {
+				or = {
+					is_core_of = HHE
+					is_core_of = HSP
+					is_core_of = HTF
+				}
+				NOT = { is_core_of = HFR }
+			}
+			add_core_of = HFF
+		}
+	}
+}
+HHE_rebellion_HPG = { # Peoples Government of Upper Archaiga
+	hidden_effect = {
+		78 = { set_demilitarized_zone = no }
+		80 = { set_demilitarized_zone = no }
+		83 = { set_demilitarized_zone = no }
+		236 = { set_demilitarized_zone = no }
+		HHE = { HPG = { transfer_technology_all = yes } }
+		78 = { add_core_of = HPG }
+		80 = { add_core_of = HPG }
+		83 = { add_core_of = HPG }
+		236 = { add_core_of = HPG }
+		every_state = {
+			limit = {
+				or = {
+					#is_core_of = HHE
+					is_core_of = HFR
+					is_core_of = HFF
+				}
+				NOT = { is_core_of = HPG }
+			}
+			add_core_of = HPG
+		}
+		every_state = {
+			limit = {
+				OR = {
+					is_core_of = HBB
+					is_core_of = HCR
+					is_core_of = HER
+					is_core_of = HET
+					is_core_of = HLF
+					is_core_of = HNO
+					is_core_of = HRF
+					is_core_of = HPP
+					is_core_of = HSP
+					is_core_of = HST
+					is_core_of = HTP
+					is_core_of = HUM
+					is_core_of = HUP
+					is_core_of = HWA
+					is_core_of = HAN
+					is_core_of = HAP
+					is_core_of = HAW
+					is_core_of = HCO
+					is_core_of = HDW
+					is_core_of = HFS
+					is_core_of = HJU
+					is_core_of = HPG
+					is_core_of = HUF
+						# Extras
+					is_core_of = DOC
+					is_core_of = DMP
+					is_core_of = ETF
+					is_core_of = ERP
+					is_core_of = FIK
+					is_core_of = GSD
+					is_core_of = KGK
+					is_core_of = NRP
+					is_core_of = REP
+					is_core_of = SEK
+					is_core_of = SSD
+					is_core_of = SLA
+				}
+			}
+			add_claim_by = HPG
+		}
+	}
+	add_stability = 0.07
+	country_event = { id = HHE.102 }
+	HPG = { transfer_state = 78 transfer_state = 80 transfer_state = 83 transfer_state = 236 }
+	HPG = { load_oob = HPG_callapse_militia add_ideas = { disjointed_military1 disjointed_navy1 disjointed_airforce1 } }
+}
+HHE_suppressed_rebellion_HPG = {
+	hidden_effect = {
+		78 = { set_demilitarized_zone = no }
+		80 = { set_demilitarized_zone = no }
+		83 = { set_demilitarized_zone = no }
+		236 = { set_demilitarized_zone = no }
+	}
+}
+HBB_rebellion_HUF = { # Unity Front of the People
+	hidden_effect = {
+		150 = { set_demilitarized_zone = no }
+		154 = { set_demilitarized_zone = no }
+		156 = { set_demilitarized_zone = no }
+		157 = { set_demilitarized_zone = no }
+		HBB = { HUF = { transfer_technology_all = yes } }
+		every_state = {
+			limit = {
+				is_core_of = HBB
+			}
+			add_core_of = HUF
+		}
+	}
+	add_stability = 0.05
+	HUF = { transfer_state = 150 transfer_state = 154 transfer_state = 156 transfer_state = 157 }
+	HUF = { load_oob = HUF_callapse_militia add_ideas = { disjointed_military1 disjointed_navy1 disjointed_airforce1 } }
+}
+HBB_suppressed_rebellion_HUF = {
+	hidden_effect = {
+		150 = { set_demilitarized_zone = no }
+		154 = { set_demilitarized_zone = no }
+		156 = { set_demilitarized_zone = no }
+		157 = { set_demilitarized_zone = no }
+	}
+}
+HCR_rebellion_HAW = { # Western Anarchist
+	hidden_effect = {
+		8 = { set_demilitarized_zone = no }
+		283 = { set_demilitarized_zone = no }
+		284 = { set_demilitarized_zone = no }
+		285 = { set_demilitarized_zone = no }
+		286 = { set_demilitarized_zone = no }
+		287 = { set_demilitarized_zone = no }
+		401 = { set_demilitarized_zone = no }
+		HCR = { HAW = { transfer_technology_all = yes } }
+		every_state = {
+			limit = {
+				OR = {
+					is_core_of = HCR
+					is_core_of = HPP
+					is_core_of = HWA
+				}
+			}
+			add_core_of = HAW
+		}
+	}
+	add_stability = 0.05
+	HAW = { transfer_state = 8 transfer_state = 283 transfer_state = 284 transfer_state = 285 transfer_state = 286 transfer_state = 287 transfer_state = 401 }
+	HAW = { load_oob = HAW_callapse_militia add_ideas = { disjointed_military1 disjointed_navy1 disjointed_airforce1 } }
+}
+HCR_suppressed_rebellion_HAW = {
+	hidden_effect = {
+		8 = { set_demilitarized_zone = no }
+		283 = { set_demilitarized_zone = no }
+		284 = { set_demilitarized_zone = no }
+		285 = { set_demilitarized_zone = no }
+		286 = { set_demilitarized_zone = no }
+		287 = { set_demilitarized_zone = no }
+		401 = { set_demilitarized_zone = no }
+	}
+}
+HET_rebellion_ETF = { # Elven Tribes Forces
+	hidden_effect = {
+		149 = { set_demilitarized_zone = no }
+		161 = { set_demilitarized_zone = no }
+		162 = { set_demilitarized_zone = no }
+		HET = { ETF = { transfer_technology_all = yes } }
+	}
+	add_stability = 0.01
+	remove_ideas = elven_tribal_rebellion
+	ETF = { transfer_state = 149 transfer_state = 161 transfer_state = 162 }
+	ETF = { load_oob = ETF_callapse_militia add_ideas = { disjointed_military1 disjointed_navy1 disjointed_airforce1 } }
+}
+HET_suppressed_rebellion_ETF = {
+	hidden_effect = {
+		149 = { set_demilitarized_zone = no }
+		161 = { set_demilitarized_zone = no }
+		162 = { set_demilitarized_zone = no }
+	}
+}
+HLF_rebellion_HCO = { # Laity Confederacy
+	hidden_effect = {
+		93 = { set_demilitarized_zone = no }
+		118 = { set_demilitarized_zone = no }
+		122 = { set_demilitarized_zone = no }
+		116 = { set_demilitarized_zone = yes }
+		119 = { set_demilitarized_zone = yes }
+		127 = { set_demilitarized_zone = yes }
+		HLF = { HCO = { transfer_technology_all = yes } }
+		93 = { add_core_of = HCO }
+		117 = { add_core_of = HCO }
+		118 = { add_core_of = HCO }
+		122 = { add_core_of = HCO }
+	}
+	add_stability = 0.05
+	HCO = { transfer_state = 93 transfer_state = 118 transfer_state = 122 }
+	HCO = { load_oob = HCO_callapse_militia add_ideas = { disjointed_military1 disjointed_navy1 disjointed_airforce1 } }
+}
+HLF_suppressed_rebellion_HCO = {
+	hidden_effect = {
+		93 = { set_demilitarized_zone = no }
+		118 = { set_demilitarized_zone = no }
+		122 = { set_demilitarized_zone = no }
+		116 = { set_demilitarized_zone = yes }
+		119 = { set_demilitarized_zone = yes }
+		127 = { set_demilitarized_zone = yes }
+		93 = { add_core_of = HCO }
+		117 = { add_core_of = HCO }
+		118 = { add_core_of = HCO }
+		122 = { add_core_of = HCO }
+	}
+}
+HLF_rebellion_MJU = { # Laity Junta
+	hidden_effect = {
+		116 = { set_demilitarized_zone = no }
+		119 = { set_demilitarized_zone = no }
+		127 = { set_demilitarized_zone = no }
+		HLF = { MJU = { transfer_technology_all = yes } }
+		2 = { add_core_of = HJU }
+		116 = { add_core_of = HJU }
+		119 = { add_core_of = HJU }
+		120 = { add_core_of = HJU }
+		121 = { add_core_of = HJU }
+		127 = { add_core_of = HJU }
+		128 = { add_core_of = HJU }
+	}
+	add_stability = 0.05
+	HJU = { transfer_state = 116 transfer_state = 119 transfer_state = 127 }
+	HJU = { load_oob = HJU_callapse_militia add_ideas = { disjointed_military1 disjointed_navy1 disjointed_airforce1 } }
+}
+HLF_suppressed_rebellion_MJU = {
+	hidden_effect = {
+		116 = { set_demilitarized_zone = no }
+		119 = { set_demilitarized_zone = no }
+		127 = { set_demilitarized_zone = no }
+		2 = { add_core_of = HJU }
+		116 = { add_core_of = HJU }
+		119 = { add_core_of = HJU }
+		120 = { add_core_of = HJU }
+		121 = { add_core_of = HJU }
+		127 = { add_core_of = HJU }
+		128 = { add_core_of = HJU }
+	}
+}
+HST_rebellion_HAP = { # West Peoples Revolt of Upper Archaiga
+	hidden_effect = {
+		140 = { set_demilitarized_zone = no }
+		141 = { set_demilitarized_zone = no }
+		146 = { set_demilitarized_zone = no }
+		HST = { HAP = { transfer_technology_all = yes } }
+		every_state = {
+			limit = {
+				is_core_of = HST
+			}
+			add_core_of = HAP
+		}
+		every_state = {
+			limit = {
+				OR = {
+					is_core_of = HCR
+					is_core_of = HPP
+					is_core_of = HST
+					is_core_of = HWA
+				}
+			}
+			add_claim_by = HAW
+		}
+	}
+	add_stability = 0.05
+	HAP = { transfer_state = 140 transfer_state = 141 transfer_state = 146 }
+	HAP = { load_oob = HAP_callapse_militia add_ideas = { disjointed_military1 disjointed_navy1 disjointed_airforce1 } }
+}
+HST_suppressed_rebellion_HAW = {
+	hidden_effect = {
+		140 = { set_demilitarized_zone = no }
+		141 = { set_demilitarized_zone = no }
+		146 = { set_demilitarized_zone = no }
+	}
+}
+HTP_rebellion_HFS = { # Mercantile Free Sailors
+	hidden_effect = {
+		114 = { set_demilitarized_zone = no }
+		123 = { set_demilitarized_zone = no }
+		124 = { set_demilitarized_zone = no }
+		HTP = { HFS = { transfer_technology_all = yes } }
+		114 = { add_core_of = HFS }
+		123 = { add_core_of = HFS }
+		124 = { add_core_of = HFS }
+	}
+	add_stability = 0.05
+	HFS = { transfer_state = 114 transfer_state = 123 transfer_state = 124 }
+	HFS = { load_oob = HFS_callapse_militia add_ideas = { disjointed_military1 disjointed_navy1 disjointed_airforce1 } }
+}
+HTP_suppressed_rebellion_HFS = {
+	hidden_effect = {
+		114 = { set_demilitarized_zone = no }
+		123 = { set_demilitarized_zone = no }
+		124 = { set_demilitarized_zone = no }
+		114 = { add_core_of = HFS }
+		123 = { add_core_of = HFS }
+		124 = { add_core_of = HFS }
+	}
+}
+HUM_rebellion_HDW = { # State of the Dwarves
+	hidden_effect = {
+		99 = { set_demilitarized_zone = no }
+		148 = { set_demilitarized_zone = no }
+		151 = { set_demilitarized_zone = no }
+		HUM = { HDW = { transfer_technology_all = yes } }
+		99 = { add_core_of = HDW }
+		148 = { add_core_of = HDW }
+		151 = { add_core_of = HDW }
+		158 = { add_core_of = HDW }
+		191 = { add_core_of = HDW }
+		409 = { add_core_of = HDW }
+		410 = { add_core_of = HDW }
+	}
+	add_stability = 0.05
+	HDW = { transfer_state = 99 transfer_state = 148 transfer_state = 151 }
+	HDW = { load_oob = HDW_callapse_militia add_ideas = { disjointed_military1 disjointed_navy1 disjointed_airforce1 } }
+}
+HUM_suppressed_rebellion_HDW = {
+	hidden_effect = {
+		99 = { set_demilitarized_zone = no }
+		148 = { set_demilitarized_zone = no }
+		151 = { set_demilitarized_zone = no }
+		99 = { add_core_of = HDW }
+		148 = { add_core_of = HDW }
+		151 = { add_core_of = HDW }
+	}
+}

@@ -7,6 +7,10 @@ technologies = {
 			leads_to_tech = basic_assembly_line_production 
 			research_cost_coeff = 1
 		}
+		path = {
+			leads_to_tech = basic_ship_construction 
+			research_cost_coeff = 1
+		}
 
 		research_cost = 1.5
 		folder = {
@@ -58,10 +62,6 @@ technologies = {
 
 		path = {
 			leads_to_tech = improved_assembly_line_production 
-			research_cost_coeff = 1
-		}
-		path = {
-			leads_to_tech = improved_ship_construction 
 			research_cost_coeff = 1
 		}
 		
@@ -264,6 +264,31 @@ technologies = {
 		}
 	}
 
+	basic_ship_construction = {
+
+		industrial_capacity_dockyard = 0.2
+
+		path = {
+			leads_to_tech = improved_ship_construction
+			research_cost_coeff = 1
+		}
+		
+		research_cost = 1.5
+		start_year = 1824
+		
+		folder = {
+			name = industry_folder
+			position = { x = 4 y = 2 }
+		}
+
+		ai_will_do = {
+			factor = 5
+		}
+
+		categories = {
+			industry
+		}
+	}
 	improved_ship_construction = {
 
 		industrial_capacity_dockyard = 0.2
@@ -274,11 +299,11 @@ technologies = {
 		}
 		
 		research_cost = 1.5
-		start_year = 1826
+		start_year = 1828
 		
 		folder = {
 			name = industry_folder
-			position = { x = 4 y = 4 }
+			position = { x = 4 y = 6 }
 		}
 
 		ai_will_do = {
@@ -299,11 +324,11 @@ technologies = {
 		}
 
 		research_cost = 1.5
-		start_year = 1830
+		start_year = 1832
 		
 		folder = {
 			name = industry_folder
-			position = { x = 4 y = 8 }
+			position = { x = 4 y = 10 }
 		}
 
 		ai_will_do = {
@@ -319,11 +344,11 @@ technologies = {
 		industrial_capacity_dockyard = 0.2
 
 		research_cost = 1.5
-		start_year = 1834
+		start_year = 1836
 		
 		folder = {
 			name = industry_folder
-			position = { x = 4 y = 12 }
+			position = { x = 4 y = 14 }
 		}
 
 		ai_will_do = {
@@ -335,13 +360,14 @@ technologies = {
 		}
 	}
 
-
 	concentrated_industry = {
 
-		industrial_capacity_factory = 0.2
-		industrial_capacity_dockyard = 0.2
+		industrial_capacity_factory = 0.45
+		industrial_capacity_dockyard = 0.30
+		industry_air_damage_factor = 0.125
 		
 		research_cost = 3
+		start_year = 1820
 		
 		XOR = {
 			dispersed_industry
@@ -375,12 +401,14 @@ technologies = {
 	}
 	dispersed_industry = {
 
-		line_change_production_efficiency_factor = 0.15
+		line_change_production_efficiency_factor = 0.30
 		production_factory_start_efficiency_factor = 0.15
 		production_factory_efficiency_gain_factor = -0.075
+		industry_air_damage_factor = -0.25
 		equipment_conversion_speed = 0.25
 		
 		research_cost = 3
+		start_year = 1820
 		
 		XOR = {
 			concentrated_industry
@@ -682,6 +710,56 @@ technologies = {
 		}
 	}
 
+	regulated_construction = {
+		
+		production_speed_buildings_factor = -0.15
+		industry_repair_factor = 0.10
+
+		XOR = {
+			dispersed_industry
+		}
+		
+		research_cost = 2
+		start_year = 1820
+		categories = {
+			industry
+			construction_tech
+		}
+		
+		folder = {
+			name = industry_folder
+			position = { x = -1 y = -2 }
+		}
+
+		ai_will_do = {
+			factor = 50
+		}
+	}
+	tofu_construction = {
+		
+		production_speed_buildings_factor = 0.10
+		industry_repair_factor = -0.15
+
+		XOR = {
+			dispersed_industry
+		}
+		
+		research_cost = 2
+		start_year = 1820
+		categories = {
+			industry
+			construction_tech
+		}
+		
+		folder = {
+			name = industry_folder
+			position = { x = 1 y = -2 }
+		}
+
+		ai_will_do = {
+			factor = 50
+		}
+	}
 
 	construction1 = {
 		
@@ -853,7 +931,7 @@ technologies = {
 		}
 		
 		research_cost = 2
-		start_year = 1832
+		start_year = 1834
 		
 		categories = {
 			industry
@@ -880,7 +958,7 @@ technologies = {
 		}
 		
 		research_cost = 2
-		start_year = 1832
+		start_year = 1836
 		
 		categories = {
 			industry
@@ -1234,6 +1312,108 @@ technologies = {
 		}
 	}
 
+	enrich_iron = { # Enrich Iron Mining
+
+		on_research_complete = {
+			modify_building_resources = {
+				building = steel_complex
+				resource = steel
+				amount = 5
+			}
+		}
+		local_resources_factor = 0.10
+
+		research_cost = 1
+		start_year = 1812
+		folder = {
+			name = industry_folder
+			position = { x = -4 y = -2 }
+		}
+		
+		categories = {
+			industry
+			synth_resources
+		}
+	}
+	impoverish_metals = { # Impoverish Metals
+
+		on_research_complete = {
+			modify_building_resources = {
+				building = steel_complex
+				resource = steel
+				amount = -5
+			}
+			modify_building_resources = {
+				building = aluminium_complex
+				resource = aluminium
+				amount = -5
+			}
+		}
+		local_resources_factor = -0.10
+
+		research_cost = 1
+		start_year = 1812
+		folder = {
+			name = industry_folder
+			position = { x = 0 y = -2 }
+		}
+		
+		categories = {
+			industry
+			synth_resources
+		}
+	}
+	nonimpoverish_metals = { # Non-Impoverish Metals # To disable Impoverish Metals
+
+		on_research_complete = {
+			modify_building_resources = {
+				building = steel_complex
+				resource = steel
+				amount = 5
+			}
+			modify_building_resources = {
+				building = aluminium_complex
+				resource = aluminium
+				amount = 5
+			}
+		}
+		local_resources_factor = 0.10
+
+		research_cost = 1
+		start_year = 1812
+		folder = {
+			name = industry_folder
+			position = { x = 0 y = -2 }
+		}
+		
+		categories = {
+			industry
+			synth_resources
+		}
+	}
+	enrich_bauxite = { # Enrich Bauxite Mining
+
+		on_research_complete = {
+			modify_building_resources = {
+				building = aluminium_complex
+				resource = aluminium
+				amount = 5
+			}
+		}
+		local_resources_factor = 0.10
+
+		research_cost = 1
+		start_year = 1812
+		folder = {
+			name = industry_folder
+			position = { x = 4 y = -2 }
+		}
+		
+		categories = {
+			industry
+			synth_resources
+		}
+	}
 
 	alloy_refining = {
 
@@ -1256,7 +1436,7 @@ technologies = {
 		}
 		
 		research_cost = 1
-		start_year = 1824
+		start_year = 1820
 		folder = {
 			name = industry_folder
 			position = { x = 0 y = 0 }
@@ -1345,7 +1525,7 @@ technologies = {
 		
 		folder = {
 			name = industry_folder
-			position = { x = -1 y = 4 }
+			position = { x = -1 y = 2 }
 		}
 		
 		categories = {
@@ -1399,7 +1579,7 @@ technologies = {
 		
 		folder = {
 			name = industry_folder
-			position = { x = 1 y = 4 }
+			position = { x = 1 y = 2 }
 		}
 		
 		categories = {
@@ -1444,7 +1624,7 @@ technologies = {
 		}
 
 		path = {
-			leads_to_tech = alloy_refining2
+			leads_to_tech = steel_refining3
 			research_cost_coeff = 1
 		}
 		
@@ -1453,7 +1633,7 @@ technologies = {
 		
 		folder = {
 			name = industry_folder
-			position = { x = -1 y = 6 }
+			position = { x = -1 y = 4 }
 		}
 		
 		categories = {
@@ -1498,12 +1678,120 @@ technologies = {
 		}
 
 		path = {
-			leads_to_tech = alloy_refining2
+			leads_to_tech = aluminium_refining3
 			research_cost_coeff = 1
 		}
 		
 		research_cost = 1.5
 		start_year = 1828
+		
+		folder = {
+			name = industry_folder
+			position = { x = 1 y = 4 }
+		}
+		
+		categories = {
+			industry
+			synth_resources
+		}
+		
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 7
+				is_major = yes
+			}
+			modifier = {
+				factor = 0.5
+				aluminium > 10
+			}
+			modifier = {
+				factor = 0.5
+				aluminium > 20
+			}	
+			modifier = {
+				factor = 0.5
+				aluminium > 30
+			}			
+		}
+		
+		ai_research_weights = {
+			aluminium = -2.0
+		}
+		
+		show_effect_as_desc = yes
+	}
+	steel_refining3 = {
+
+		on_research_complete = {
+			modify_building_resources = {
+				building = steel_complex
+				resource = steel
+				amount = 2
+			}
+		}
+
+		path = {
+			leads_to_tech = alloy_refining2
+			research_cost_coeff = 1
+		}
+		
+		research_cost = 1.5
+		start_year = 1830
+		
+		folder = {
+			name = industry_folder
+			position = { x = -1 y = 6 }
+		}
+		
+		categories = {
+			industry
+			synth_resources
+		}
+		
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 7
+				is_major = yes
+			}
+			modifier = {
+				factor = 0.5
+				steel > 10
+			}
+			modifier = {
+				factor = 0.5
+				steel > 20
+			}	
+			modifier = {
+				factor = 0.5
+				steel > 30
+			}			
+		}
+		
+		ai_research_weights = {
+			steel = -2.0
+		}
+		
+		show_effect_as_desc = yes
+	}
+	aluminium_refining3 = {
+
+		on_research_complete = {
+			modify_building_resources = {
+				building = aluminium_complex
+				resource = aluminium
+				amount = 2
+			}
+		}
+
+		path = {
+			leads_to_tech = alloy_refining2
+			research_cost_coeff = 1
+		}
+		
+		research_cost = 1.5
+		start_year = 1830
 		
 		folder = {
 			name = industry_folder
@@ -1553,16 +1841,16 @@ technologies = {
 		}
 				
 		path = {
-			leads_to_tech = steel_refining3
+			leads_to_tech = steel_refining4
 			research_cost_coeff = 1
 		}
 		path = {
-			leads_to_tech = aluminium_refining3
+			leads_to_tech = aluminium_refining4
 			research_cost_coeff = 1
 		}
 		
 		research_cost = 1
-		start_year = 1829
+		start_year = 1832
 		folder = {
 			name = industry_folder
 			position = { x = 0 y = 8 }
@@ -1632,114 +1920,6 @@ technologies = {
 			}
 		}
 	}
-	steel_refining3 = {
-
-		on_research_complete = {
-			modify_building_resources = {
-				building = steel_complex
-				resource = steel
-				amount = 2
-			}
-		}
-
-		path = {
-			leads_to_tech = steel_refining4
-			research_cost_coeff = 1
-		}
-		
-		research_cost = 1.5
-		start_year = 1830
-		
-		folder = {
-			name = industry_folder
-			position = { x = -1 y = 10 }
-		}
-		
-		categories = {
-			industry
-			synth_resources
-		}
-		
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				factor = 7
-				is_major = yes
-			}
-			modifier = {
-				factor = 0.5
-				steel > 10
-			}
-			modifier = {
-				factor = 0.5
-				steel > 20
-			}	
-			modifier = {
-				factor = 0.5
-				steel > 30
-			}			
-		}
-		
-		ai_research_weights = {
-			steel = -2.0
-		}
-		
-		show_effect_as_desc = yes
-	}
-	aluminium_refining3 = {
-
-		on_research_complete = {
-			modify_building_resources = {
-				building = aluminium_complex
-				resource = aluminium
-				amount = 2
-			}
-		}
-
-		path = {
-			leads_to_tech = aluminium_refining4
-			research_cost_coeff = 1
-		}
-		
-		research_cost = 1.5
-		start_year = 1830
-		
-		folder = {
-			name = industry_folder
-			position = { x = 1 y = 10 }
-		}
-		
-		categories = {
-			industry
-			synth_resources
-		}
-		
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				factor = 7
-				is_major = yes
-			}
-			modifier = {
-				factor = 0.5
-				aluminium > 10
-			}
-			modifier = {
-				factor = 0.5
-				aluminium > 20
-			}	
-			modifier = {
-				factor = 0.5
-				aluminium > 30
-			}			
-		}
-		
-		ai_research_weights = {
-			aluminium = -2.0
-		}
-		
-		show_effect_as_desc = yes
-	}
 	steel_refining4 = {
 
 		on_research_complete = {
@@ -1756,11 +1936,11 @@ technologies = {
 		}
 		
 		research_cost = 1.5
-		start_year = 1832
+		start_year = 1834
 		
 		folder = {
 			name = industry_folder
-			position = { x = -1 y = 12 }
+			position = { x = -1 y = 10 }
 		}
 		
 		categories = {
@@ -1810,11 +1990,11 @@ technologies = {
 		}
 		
 		research_cost = 1.5
-		start_year = 1832
+		start_year = 1834
 		
 		folder = {
 			name = industry_folder
-			position = { x = 1 y = 12 }
+			position = { x = 1 y = 10 }
 		}
 		
 		categories = {
@@ -1857,13 +2037,18 @@ technologies = {
 				amount = 2
 			}
 		}
+
+		path = {
+			leads_to_tech = steel_refining6
+			research_cost_coeff = 1
+		}
 		
 		research_cost = 1.5
-		start_year = 1834
+		start_year = 1836
 		
 		folder = {
 			name = industry_folder
-			position = { x = -1 y = 14 }
+			position = { x = -1 y = 12 }
 		}
 		
 		categories = {
@@ -1907,8 +2092,111 @@ technologies = {
 			}
 		}
 		
+		path = {
+			leads_to_tech = aluminium_refining6
+			research_cost_coeff = 1
+		}
+
 		research_cost = 1.5
-		start_year = 1834
+		start_year = 1836
+		
+		folder = {
+			name = industry_folder
+			position = { x = 1 y = 12 }
+		}
+		
+		categories = {
+			industry
+			synth_resources
+		}
+		
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 7
+				is_major = yes
+			}
+			modifier = {
+				factor = 0.5
+				aluminium > 10
+			}
+			modifier = {
+				factor = 0.5
+				aluminium > 20
+			}	
+			modifier = {
+				factor = 0.5
+				aluminium > 30
+			}			
+		}
+		
+		ai_research_weights = {
+			aluminium = -2.0
+		}
+		
+		show_effect_as_desc = yes
+	}
+	steel_refining6 = {
+
+		on_research_complete = {
+			modify_building_resources = {
+				building = steel_complex
+				resource = steel
+				amount = 2
+			}
+		}
+		
+		research_cost = 1.5
+		start_year = 1838
+		
+		folder = {
+			name = industry_folder
+			position = { x = -1 y = 14 }
+		}
+		
+		categories = {
+			industry
+			synth_resources
+		}
+		
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 7
+				is_major = yes
+			}
+			modifier = {
+				factor = 0.5
+				steel > 10
+			}
+			modifier = {
+				factor = 0.5
+				steel > 20
+			}	
+			modifier = {
+				factor = 0.5
+				steel > 30
+			}			
+		}
+		
+		ai_research_weights = {
+			steel = -2.0
+		}
+		
+		show_effect_as_desc = yes
+	}
+	aluminium_refining6 = {
+
+		on_research_complete = {
+			modify_building_resources = {
+				building = aluminium_complex
+				resource = aluminium
+				amount = 2
+			}
+		}
+		
+		research_cost = 1.5
+		start_year = 1838
 		
 		folder = {
 			name = industry_folder
@@ -1947,7 +2235,6 @@ technologies = {
 		show_effect_as_desc = yes
 	}
 
-
 	fuel_silos = {
 
 		enable_building = {
@@ -1965,7 +2252,7 @@ technologies = {
 		}
 		
 		research_cost = 1
-		start_year = 1824
+		start_year = 1818
 		folder = {
 			name = industry_folder
 			position = { x = 1 y = 0 }
@@ -2359,7 +2646,6 @@ technologies = {
 			}				
 		}		
 	}
-
 
 	synth_oil_experiments = {
 

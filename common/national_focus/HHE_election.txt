@@ -64,6 +64,10 @@ shared_focus = { # Halt Reforms
 	ai_will_do = {
 		base = 1
 		modifier = {
+			factor = 50
+			is_historical_focus_on = yes
+		}
+		modifier = {
 			add = 10
 			factor = 10
 			has_game_rule = {
@@ -193,6 +197,10 @@ shared_focus = { # Heavy Prevention
 
 	ai_will_do = {
 		base = 1
+		modifier = {
+			factor = 50
+			is_historical_focus_on = yes
+		}
 		modifier = {
 			add = 10
 			factor = 10
@@ -324,6 +332,10 @@ shared_focus = { # Blame the People
 	ai_will_do = {
 		base = 1
 		modifier = {
+			factor = 50
+			is_historical_focus_on = yes
+		}
+		modifier = {
 			add = 10
 			factor = 10
 			has_game_rule = {
@@ -428,23 +440,7 @@ shared_focus = { # The Election
 				has_country_flag = halt_reforms
 				has_country_flag = light_assassination_prevention
 			}
-			set_global_flag = elected_tradition
-			hidden_effect = {
-				load_focus_tree = hhe_tradition_focus
-				HHE = {
-					create_country_leader = {
-						name = "Gabriel Strongheart"
-						desc = "POLITICS_GABRIEL_DESC"
-						#picture = "Portrait_XXX.dds"
-						expire = "1965.1.1"
-						ideology = sub_harmonainism
-						traits = {
-							silent_workhorse
-						}
-						id = 202
-					}
-				}
-			}
+			elected_tradition_effect = yes
 		}
 		else_if = { # Influencer
 			# Isabella Delfina wants to procede to a extent of the "Dead Reforms" to impove apon the Imperium, after some improvement she will start reinfluencing regions the imperium once controlled and then some though either politcal civil war or uprising of natives to reinstate imperial rule/influencer.
@@ -453,23 +449,7 @@ shared_focus = { # The Election
 				has_stability > 0.10
 				has_country_flag = finish_reforms
 			}
-			set_global_flag = elected_influencer
-			hidden_effect = {
-				load_focus_tree = hhe_influencer_focus
-				HHE = {
-					create_country_leader = {
-						name = "Isabella Delfina"
-						desc = "POLITICS_XXX_DESC"
-						#picture = "Portrait_XXX.dds"
-						expire = "1936.1.1"
-						ideology = sub_reformed_harmonainism
-						traits = {
-							political_dancer
-						}
-						id = 203
-					}
-				}
-			}
+			elected_influencer_effect = yes
 		}
 		else_if = { # Authority
 			# NAME will be mostly internal wars and annexs though politcal means, he works closer with the nobillity of the regions to being people into the fold. Once he is completed with his work he shell fight wars over independed nations to regain Imperial lands.
@@ -480,180 +460,12 @@ shared_focus = { # The Election
 				has_country_flag = halt_reforms
 				has_country_flag = heavy_assassination_prevention
 			}
-			set_global_flag = elected_authority
-			hidden_effect = {
-				load_focus_tree = hhe_authority_focus
-				HHE = {
-					create_country_leader = {
-						name = "XXX"
-						desc = "POLITICS_XXX_DESC"
-						#picture = "Portrait_XXX.dds"
-						expire = "1965.1.1"
-						ideology = sub_harmonainism
-						traits = {
-							prince_of_terror
-						}
-						id = 204
-					}
-				}
-			}
+			elected_authority_effect = yes
 		}
 		else_if = { # Warmonger
 			# Archard Vlad once he gets elected the imperium shell shatter and blow up into civil war, he is the Radical Militarist with views of industrial progress is liberation for the man well capitalism is exploitive of the works such as looking inward at the nobility 
-			# This path is histical and can easily happen if the player doesnt select focus correctly. 
-			set_global_flag = elected_warmonger
-			hidden_effect = {
-					load_focus_tree = hhe_warmonger_focus
-					set_global_flag = HHE_collapse_of_the_nation
-					HHE = {
-						#leave_faction  = yes
-						add_timed_idea = { idea = military_takeover days = 90 }
-						create_country_leader = {
-							name = "Archard Vlad"
-							desc = "POLITICS_XXX_DESC"
-							picture = "gfx/leaders/Europe/portrait_europe_generic_5.dds"
-							expire = "1965.1.1"
-							ideology = sub_radical_harmonainism
-							traits = {
-								warmonger
-								national_integralist
-							}
-							id = 205
-						}
-						create_country_leader = {
-							name = "Archard Vlad"
-							desc = "POLITICS_XXX_DESC"
-							picture = "gfx/leaders/Europe/portrait_europe_generic_5.dds"
-							expire = "1965.1.1"
-							ideology = sub_authoritarian
-							traits = {
-								warmonger
-								national_integralist
-							}
-							id = 206
-						}
-						#create_country_leader = { # Will become the leader of this party if certent events happen
-						#	name = "Archard Vlad"
-						#	desc = "POLITICS_XXX_DESC"
-						#	picture = "gfx/leaders/Europe/portrait_europe_generic_5.dds"
-						#	expire = "1965.1.1"
-						#	ideology = sub_national_unitist # National unitist? HES NAZI!?!?
-						#	traits = {
-						#		warmonger
-						#		national_integralist
-						#	}
-						#	id = 206
-						#}
-					}
-					# Harmonainus Farmers Region
-					set_autonomy = { target = HBB autonomy_state = autonomy_free }
-					HBB = {
-						leave_faction  = yes
-						drop_cosmetic_tag = yes
-					}
-					# Harmonainus Central Region
-					set_autonomy = { target = HCR autonomy_state = autonomy_free }
-					HCR = {
-						leave_faction  = yes
-						drop_cosmetic_tag = yes
-					}
-					# Harmonainus East Region
-					set_autonomy = { target = HER autonomy_state = autonomy_free }
-					HER = {
-						leave_faction  = yes
-						drop_cosmetic_tag = yes
-					}
-					# Harmonainus Elven Tribes
-					set_autonomy = { target = HET autonomy_state = autonomy_free }
-					HET = {
-						leave_faction  = yes
-						drop_cosmetic_tag = yes
-					}
-					# Harmonainus Laity Federation
-					set_autonomy = { target = HLF autonomy_state = autonomy_free }
-					HLF = {
-						leave_faction  = yes
-						drop_cosmetic_tag = yes
-					}
-					# Harmonainus Nobals Estate Region
-					set_autonomy = { target = HNO autonomy_state = autonomy_free }
-					HNO = {
-						leave_faction  = yes
-						drop_cosmetic_tag = yes
-					}
-					# Harmonainus North River Federation
-					set_autonomy = { target = HRF autonomy_state = autonomy_free }
-					HRF = {
-						leave_faction  = yes
-						drop_cosmetic_tag = yes
-					}
-					# Harmonainus Pearl Sea Protectorate
-					set_autonomy = { target = HPP autonomy_state = autonomy_free }
-					HPP = {
-						leave_faction  = yes
-						drop_cosmetic_tag = yes
-					}
-					# Harmonainus Sea Protectorate
-					set_autonomy = { target = HSP autonomy_state = autonomy_free }
-					HSP = {
-						leave_faction  = yes
-						drop_cosmetic_tag = yes
-					}
-					# Harmonainus Sinus Theocracy
-					set_autonomy = { target = HST autonomy_state = autonomy_free }
-					HST = {
-						leave_faction  = yes
-						drop_cosmetic_tag = yes
-					}
-					# Harmonainus Temerarium Peninsula
-					#set_autonomy = { target = HTP autonomy_state = autonomy_free }
-					HTP = {
-					#	leave_faction  = yes
-					#	drop_cosmetic_tag = yes
-						create_country_leader = {
-							name = "Coccineum Vlad"
-							desc = "POLITICS_XXX_DESC"
-							picture = "gfx/leaders/Europe/portrait_europe_generic_5.dds"
-							expire = "1965.1.1"
-							ideology = sub_radical_harmonainism
-							traits = {
-								warmonger
-								retired_officer
-							}
-							id = 401
-						}
-						create_country_leader = {
-							name = "Coccineum Vlad"
-							desc = "POLITICS_XXX_DESC"
-							picture = "gfx/leaders/Europe/portrait_europe_generic_5.dds"
-							expire = "1965.1.1"
-							ideology = sub_authoritarian
-							traits = {
-								warmonger
-								retired_officer
-							}
-							id = 402
-						}
-					}
-					# Harmonainus Under Mountain Region
-					set_autonomy = { target = HUM autonomy_state = autonomy_free }
-					HUM = {
-						leave_faction  = yes
-						drop_cosmetic_tag = yes
-					}
-					# Harmonainus Upper Peninsula
-					set_autonomy = { target = HUP autonomy_state = autonomy_free }
-					HUP = {
-						leave_faction  = yes
-						drop_cosmetic_tag = yes
-					}
-					# Harmonainus Western Approach
-					set_autonomy = { target = HWA autonomy_state = autonomy_free }
-					HWA = {
-						leave_faction  = yes
-						drop_cosmetic_tag = yes
-					}
-			}
+			# This path is histical and can easily happen if the player doesnt select focus correctly.
+			elected_warmonger_effect = yes
 		}
 		hidden_effect = {
 			country_event = { id = HHE.1 }
