@@ -135,7 +135,7 @@ ideas = {
 			modifier = {
 				consumer_goods_factor = 0.05
 				political_power_cost = 0.125
-				stability_factor = -0.075
+				stability_factor = -0.050
 				war_support_factor = -0.225
 			}
 		}
@@ -191,7 +191,38 @@ ideas = {
 				political_power_cost = 0.5
 			}
 		}
-		military_takeover = {
+		initial_takeover = {
+			allowed = {
+				always = yes
+			}
+			allowed_civil_war = {
+				always = yes
+			}
+			removal_cost = -1
+
+			picture = eng_imperial_conscription
+
+			modifier = {
+				political_power_factor = -0.75
+			}
+		}
+		prepare_military_takeover = {
+			allowed = {
+				always = yes
+			}
+			allowed_civil_war = {
+				always = yes
+			}
+			removal_cost = -1
+
+			picture = eng_imperial_conscription
+
+			modifier = {
+				political_power_factor = -0.25
+				industrial_capacity_factory = 0.15
+			}
+		}
+		failed_military_takeover = {
 			allowed = {
 				always = yes
 			}
@@ -623,6 +654,29 @@ ideas = {
 				line_change_production_efficiency_factor = 0.15
 				production_speed_buildings_factor = 0.15
 				industry_repair_factor = 0.15
+			}
+		}
+		harmonainus_civil_war = {
+			allowed = {
+				OR = {
+					has_global_flag = HHE_warmonger_civil_war_first
+					has_global_flag = HHE_warmonger_civil_war_final
+				}
+				NOT = { OR = { date < 1830.01.01 threat > 0.75 } }
+			}
+			allowed_civil_war = {
+				always = yes
+			}
+			#removal_cost = 0
+
+			picture = idea_unknown
+
+			modifier = {
+				generate_wargoal_tension = 1.00
+				join_faction_tension = 1.00
+				lend_lease_tension = 1.00
+				send_volunteers_tension = 1.00
+				guarantee_tension = 1.00
 			}
 		}
 	}

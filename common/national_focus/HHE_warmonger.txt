@@ -1,10 +1,472 @@
+#shared_focus = {
+#	id = HHE_warmonger_
+#	icon = GFX_focus_unknown
+#	#prerequisite = { focus =  }
+#	#mutually_exclusive = { focus =  }
+#	#relative_position_id = 
+#	x = 0
+#	y = 0
+#	cost = 10
+#
+#	allow_branch = {
+#	}
+#	available = {
+#	}
+#	bypass = {
+#	}
+#
+#	ai_will_do = {
+#		base = 1
+#	}
+#
+#	available_if_capitulated = yes
+#
+#	completion_reward = {
+#	}
+#}
+
+shared_focus = { # Unexpected Results, but a Welcomed one
+	id = HHE_warmonger_unexpected_but_welcomed
+	icon = GFX_focus_unknown
+	#prerequisite = { focus =  }
+	#mutually_exclusive = { focus =  }
+	#relative_position_id = 
+	x = 0
+	y = 0
+	cost = 5
+
+	allow_branch = {
+		#NOT = { has_global_flag = HHE_collapse_of_the_nation }
+	}
+	available = {
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		base = 1
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		add_popularity = { ideology = unitism popularity = 0.05 }
+		add_popularity = { ideology = authoritarianism popularity = 0.05 }
+		add_stability = -0.025
+	}
+}
+
+shared_focus = { # Brake ties with U.o.t.W.M.
+	id = HHE_warmonger_brake_ties_unitist
+	icon = GFX_focus_unknown
+	prerequisite = { focus = HHE_warmonger_unexpected_but_welcomed }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = HHE_warmonger_unexpected_but_welcomed
+	x = -1
+	y = 1
+	cost = 4
+
+	allow_branch = {
+	}
+	available = {
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		base = 1
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		add_popularity = { ideology = unitism popularity = -0.075 }
+		add_political_power = 25
+		add_stability = -0.05
+	}
+}
+
+shared_focus = { # Communalize Unitist Unions
+	id = HHE_warmonger_communalize_unitist_Unions
+	icon = GFX_focus_unknown
+	prerequisite = { focus = HHE_warmonger_brake_ties_unitist }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = HHE_warmonger_brake_ties_unitist
+	x = 0
+	y = 2
+	cost = 4
+
+	allow_branch = {
+	}
+	available = {
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		base = 1
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		add_political_power = 25
+		add_stability = -0.05
+		77={
+			add_extra_state_shared_building_slots = 1
+			add_building_construction = {
+				type = arms_factory
+				level = 1
+				instant_build = yes
+			}
+		}
+		78={
+			add_extra_state_shared_building_slots = 1
+			add_building_construction = {
+				type = arms_factory
+				level = 1
+				instant_build = yes
+			}
+		}
+		79={
+			add_extra_state_shared_building_slots = 1
+			add_building_construction = {
+				type = arms_factory
+				level = 1
+				instant_build = yes
+			}
+		}
+		80={
+			add_extra_state_shared_building_slots = 1
+			add_building_construction = {
+				type = arms_factory
+				level = 1
+				instant_build = yes
+			}
+		}
+		85={
+			add_extra_state_shared_building_slots = 1
+			add_building_construction = {
+				type = arms_factory
+				level = 1
+				instant_build = yes
+			}
+		}
+	}
+}
+
+shared_focus = { # Intergrate the Hardliners Movement
+	id = HHE_warmonger_intergrate_hardliners
+	icon = GFX_focus_unknown
+	prerequisite = { focus = HHE_warmonger_unexpected_but_welcomed }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = HHE_warmonger_unexpected_but_welcomed
+	x = 1
+	y = 1
+	cost = 4
+
+	allow_branch = {
+	}
+	available = {
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		base = 1
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		set_party_name = {
+			ideology = authoritarianism
+			long_name = HTP_authoritarianism_party
+			name = HTP_authoritarianism_party
+		}
+		add_popularity = { ideology = authoritarianism popularity = 0.05 }
+		add_political_power = 25
+		add_stability = 0.025
+	}
+}
+
+shared_focus = { # Siphon Military Equipment
+	id = HHE_warmonger_siphon_military_equipment
+	icon = GFX_focus_unknown
+	prerequisite = { focus = HHE_warmonger_intergrate_hardliners }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = HHE_warmonger_intergrate_hardliners
+	x = 0
+	y = 2
+	cost = 4
+
+	allow_branch = {
+	}
+	available = {
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		base = 1
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		add_equipment_to_stockpile = {
+		    type = infantry_equipment
+		    amount = 1000
+		    producer = HHE
+		}
+		add_political_power = 25
+		add_stability = 0.025
+	}
+}
+
+shared_focus = { # Prepare Military Coups
+	id = HHE_warmonger_prepare_military_assignments
+	icon = GFX_focus_unknown
+	prerequisite = { focus = HHE_warmonger_unexpected_but_welcomed }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = HHE_warmonger_unexpected_but_welcomed
+	x = 0
+	y = 2
+	cost = 4
+
+	allow_branch = {
+	}
+	available = {
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		base = 1
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		swap_ideas = { remove_idea = initial_takeover add_idea = prepare_military_takeover }
+		hidden_effect = {
+			if = {
+				#limit = { is_starting_subject_harmonainus_imperious = YES }
+				# Put event here
+			}
+			2={
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+			6={
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+			7={
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+			11={
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+			18={
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+			110={
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+			114={
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+			118={
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+			119={
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+			140={
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+			141={
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+			146={
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+			153={
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+			161={
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+			168={
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+			170={
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+			271={
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+			406={
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+}
+
+shared_focus = { # Military Under Vlad
+	id = HHE_warmonger_military_under_vlad
+	icon = GFX_focus_unknown
+	prerequisite = { focus = HHE_warmonger_communalize_unitist_Unions }
+	prerequisite = { focus = HHE_warmonger_prepare_military_assignments }
+	prerequisite = { focus = HHE_warmonger_siphon_military_equipment }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = HHE_warmonger_prepare_military_assignments
+	x = 0
+	y = 2
+	cost = 5
+
+	allow_branch = {
+	}
+	available = {
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		base = 1
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		HHE = { country_event = { id = HHE.2 } }
+		civil_war_warmonger_effect = yes
+	}
+}
+
+#shared_focus = {
+#	id = HHE_warmonger_
+#	icon = GFX_focus_unknown
+#	#prerequisite = { focus =  }
+#	#mutually_exclusive = { focus =  }
+#	#relative_position_id = 
+#	x = 0
+#	y = 0
+#	cost = 10
+#
+#	allow_branch = {
+#	}
+#	available = {
+#	}
+#	bypass = {
+#	}
+#
+#	ai_will_do = {
+#		base = 1
+#	}
+#
+#	available_if_capitulated = yes
+#
+#	completion_reward = {
+#	}
+#}
+
 shared_focus = { # Stability in the Choas
 	id = HHE_warmonger_stability_in_choas
 	icon = GFX_focus_unknown
 	#prerequisite = { focus =  }
 	#mutually_exclusive = { focus =  }
 	#relative_position_id = 
-	x = 5
+	x = 8
 	y = 0
 	cost = 1
 
@@ -38,6 +500,7 @@ shared_focus = { # Political Restart
 	cost = 1
 
 	allow_branch = {
+		has_global_flag = HHE_collapse_of_the_nation
 	}
 	available = {
 		has_completed_focus = HHE_warmonger_stability_in_choas
@@ -69,11 +532,12 @@ shared_focus = { # Force Military Reforms
 	prerequisite = { focus = HHE_warmonger_stability_in_choas }
 	#mutually_exclusive = { focus =  }
 	relative_position_id = HHE_warmonger_stability_in_choas
-	x = 1
+	x = 0
 	y = 1
 	cost = 3
 
 	allow_branch = {
+		is_subject = no
 	}
 	available = {
 		or = {
@@ -155,6 +619,7 @@ shared_focus = { # Victory Parade
 	cost = 5
 
 	allow_branch = {
+		is_subject = no
 	}
 	available = {
 	}
@@ -563,7 +1028,6 @@ shared_focus = { # Great Victory Parade
 	cost = 5
 
 	allow_branch = {
-		is_subject = no
 	}
 	available = {
 		has_war = no
@@ -580,6 +1044,7 @@ shared_focus = { # Great Victory Parade
 
 	completion_reward = {
 		custom_effect_tooltip = WARMONGER_GREAT_VICTORY_PARADES
+		add_stability = 0.10
 		HHE_civil_war_ends = yes
 		HHE_political_choas_down = yes
 		set_country_flag = mining_operations # Have this here for now.
@@ -592,11 +1057,12 @@ shared_focus = { # Political Clamp Downs
 	prerequisite = { focus = HHE_warmonger_stability_in_choas }
 	#mutually_exclusive = { focus =  }
 	relative_position_id = HHE_warmonger_stability_in_choas
-	x = -1
+	x = -2
 	y = 1
 	cost = 5
 
 	allow_branch = {
+		is_subject = no
 	}
 	available = {
 		or = {
