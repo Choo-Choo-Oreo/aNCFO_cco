@@ -1,34 +1,49 @@
+wants_civilian_factories = {
+	enable = {
+		date < 1825.04.01 # One year of civ build up.
+	}
+	abort_when_not_enabled = yes
+	ai_strategy = {
+		type = building_target
+		id = industrial_complex
+		value = 25
+	}
+}
+
 wants_steel0 = {
 	enable = {
 		steel < 16
+		num_of_civilian_factories > 8
 	}
 	abort_when_not_enabled = yes
 	ai_strategy = {
 		type = building_target
 		id = steel_complex
-		value = 5
+		value = 10
 	}
 }
 wants_steel1 = {
 	enable = {
 		steel < 0
+		num_of_civilian_factories > 16
 	}
 	abort_when_not_enabled = yes
 	ai_strategy = {
 		type = building_target
 		id = steel_complex
-		value = 15
+		value = 20
 	}
 }
 wants_steel2 = {
 	enable = {
 		steel < -16
+		num_of_civilian_factories > 24
 	}
 	abort_when_not_enabled = yes
 	ai_strategy = {
 		type = building_target
 		id = steel_complex
-		value = 45
+		value = 30
 	}
 }
 major_wants_steel0 = {
@@ -67,10 +82,44 @@ major_wants_steel2 = {
 		value = 10
 	}
 }
+aversion_steel0 = {
+	enable = {
+		steel > 32
+	}
+	abort_when_not_enabled = yes
+	ai_strategy = {
+		type = building_target
+		id = steel_complex
+		value = -16
+	}
+}
+aversion_steel1 = {
+	enable = {
+		steel > 48
+	}
+	abort_when_not_enabled = yes
+	ai_strategy = {
+		type = building_target
+		id = steel_complex
+		value = -32
+	}
+}
+aversion_steel2 = {
+	enable = {
+		steel > 64
+	}
+	abort_when_not_enabled = yes
+	ai_strategy = {
+		type = building_target
+		id = steel_complex
+		value = -48
+	}
+}
 
 wants_aluminum0 = {
 	enable = {
 		aluminium < 0
+		num_of_military_factories > 9
 	}
 	abort_when_not_enabled = yes
 	ai_strategy = {
@@ -82,6 +131,19 @@ wants_aluminum0 = {
 wants_aluminum1 = {
 	enable = {
 		aluminium < -8
+		num_of_military_factories > 18
+	}
+	abort_when_not_enabled = yes
+	ai_strategy = {
+		type = building_target
+		id = aluminium_complex
+		value = 10
+	}
+}
+wants_aluminum2 = {
+	enable = {
+		aluminium < -24
+		num_of_military_factories > 27
 	}
 	abort_when_not_enabled = yes
 	ai_strategy = {
@@ -90,21 +152,10 @@ wants_aluminum1 = {
 		value = 15
 	}
 }
-wants_aluminum2 = {
-	enable = {
-		aluminium < -24
-	}
-	abort_when_not_enabled = yes
-	ai_strategy = {
-		type = building_target
-		id = aluminium_complex
-		value = 45
-	}
-}
 major_wants_aluminum0 = {
 	enable = {
 		aluminium < 24
-		num_of_military_factories > 24
+		num_of_military_factories > 36
 	}
 	abort_when_not_enabled = yes
 	ai_strategy = {
@@ -113,115 +164,61 @@ major_wants_aluminum0 = {
 		value = 5 # 10
 	}
 }
-
-default_unit_production = {
+major_wants_aluminum1 = {
 	enable = {
-		always = yes
+		aluminium < 36
+		num_of_military_factories > 72
 	}
-	
+	abort_when_not_enabled = yes
 	ai_strategy = {
-		type = role_ratio
-		id = paratroopers
-		value = 0
+		type = building_target
+		id = aluminium_complex
+		value = 5 # 10
 	}
-
-	ai_strategy = {
-		type = role_ratio
-		id = mountaineers
-		value = 4
+}
+major_wants_aluminum2 = {
+	enable = {
+		aluminium < 48
+		num_of_military_factories > 108
 	}
-
+	abort_when_not_enabled = yes
 	ai_strategy = {
-		type = role_ratio
-		id = marines
-		value = 0
+		type = building_target
+		id = aluminium_complex
+		value = 5 # 10
 	}
-
-	ai_strategy = {
-		type = role_ratio
-		id = armor
-		value = 10 # 2
+}
+aversion_aluminum0 = {
+	enable = {
+		aluminium > 24
 	}
-
+	abort_when_not_enabled = yes
 	ai_strategy = {
-		type = role_ratio
-		id = infantry
-		value = 80
+		type = building_target
+		id = aluminium_complex
+		value = -16
 	}
-	
-	#Air unit factors
-	ai_strategy = {
-		type = unit_ratio
-		id = fighter
-		value = 80
+}
+aversion_aluminum1 = {
+	enable = {
+		aluminium > 36
 	}
-	
+	abort_when_not_enabled = yes
 	ai_strategy = {
-		type = unit_ratio
-		id = cas
-		value = 25 # 5
+		type = building_target
+		id = aluminium_complex
+		value = -32
 	}
-	
-	ai_strategy = {
-		type = unit_ratio
-		id = tactical_bomber
-		value = 25 # 5
+}
+aversion_aluminum2 = {
+	enable = {
+		aluminium > 48
 	}
-	
+	abort_when_not_enabled = yes
 	ai_strategy = {
-		type = unit_ratio
-		id = strategic_bomber
-		value = 25 # 5
-	}
-	
-	ai_strategy = {
-		type = unit_ratio
-		id = naval_bomber
-		value = 25 # 5
-	}
-	
-	
-	# Naval unit factors
-	ai_strategy = {
-		type = unit_ratio
-		id = capital_ship
-		value = 10
-	}
-
-	ai_strategy = {
-		type = unit_ratio
-		id = submarine
-		value = 10
-	}
-
-	ai_strategy = {
-		type = unit_ratio
-		id = screen_ship
-		value = 40
-	}
-
-	ai_strategy = {
-		type = unit_ratio
-		id = convoy
-		value = 15
-	}
-	
-	ai_strategy = {
-		type = equipment_production_factor
-		id = fighter
-		value = 35
-	}
-	
-	ai_strategy = {
-		type = equipment_production_factor
-		id = infantry
-		value = 40
-	}
-	
-	ai_strategy = {
-		type = equipment_production_factor
-		id = artillery
-		value = 25
+		type = building_target
+		id = aluminium_complex
+		value = -48
 	}
 }
 
@@ -243,6 +240,109 @@ default_pp_spend_amount = {
 	}
 }
 
+default_equipment_production = {
+	enable = {
+		always = yes
+		not = {
+			original_tag = MRC
+		}
+	}
+	# Land equipment factors
+		ai_strategy = {
+			type = equipment_production_factor
+			id = motorized
+			value = 12
+		}
+		ai_strategy = {
+			type = equipment_production_factor
+			id = armor
+			value = 12
+		}
+		ai_strategy = {
+			type = equipment_production_factor
+			id = anti_tank
+			value = 20
+		}
+		ai_strategy = {
+			type = equipment_production_factor
+			id = anti_air
+			value = 50
+		}
+		ai_strategy = {
+			type = equipment_production_factor
+			id = artillery
+			value = 85 #20 to 40
+		}
+		ai_strategy = {
+			type = equipment_production_factor
+			id = infantry
+			value = 10
+		}
+		ai_strategy = {
+			type = equipment_variant_production_factor
+			id = support_equipment
+			value = 15
+		}
+		#ai_strategy = {
+		#	type = equipment_production_min_factories
+		#	id = support_equipment
+		#	value = 3
+		#}
+		ai_strategy = {
+			type = equipment_production_min_factories
+			id = artillery
+			value = 3
+		}
+	# Air equipment factors
+		ai_strategy = {
+			type = equipment_production_factor
+			id = fighter
+			value = 72
+		}
+		ai_strategy = {
+			type = equipment_production_factor
+			id = cas
+			value = 24
+		}
+		ai_strategy = {
+			type = equipment_production_factor
+			id = tactical_bomber
+			value = -24
+		}
+		ai_strategy = {
+			type = equipment_production_factor
+			id = strategic_bomber
+			value = 24
+		}
+		ai_strategy = {
+			type = equipment_production_factor
+			id = naval_bomber
+			value = -24
+		}
+		ai_strategy = {
+			type = equipment_variant_production_factor
+			id = small_plane_airframe
+			value = 72
+		}
+		ai_strategy = {
+			type = equipment_variant_production_factor
+			id = large_plane_airframe
+			value = 24
+		}
+		ai_strategy = {
+			type = equipment_production_min_factories
+			id = fighter
+			value = 1
+		}
+		#ai_strategy = {
+		#	type = equipment_production_min_factories
+		#	id = cas
+		#	value = 1
+		#}
+	# Naval equipment factors
+
+	# End of equipment production
+}
 
 default_area_priority = {
 	enable = {
@@ -303,7 +403,6 @@ build_intelligence_agency_as_major = {
 		value = 5
 	}
 }
-
 build_intelligence_agency = {
 	enable = {
 		date > 1828.1.1
@@ -322,7 +421,6 @@ build_intelligence_agency = {
 		value = 5
 	}
 }
-
 upgrade_intelligence_agency = {
 	enable = {
 		date > 1830.1.1
@@ -339,7 +437,6 @@ upgrade_intelligence_agency = {
 		value = 5
 	}
 }
-
 upgrade_intelligence_agency_as_spy_master = {
 	enable = {
 		is_spymaster = yes
@@ -358,7 +455,6 @@ upgrade_intelligence_agency_as_spy_master = {
 		value = 10
 	}
 }
-
 addintelligence_agency_normal_upgrade_prio = {
 	enable = {
 		always = yes
@@ -390,7 +486,6 @@ addintelligence_agency_normal_upgrade_prio = {
 		value = 2000
 	}	
 }
-
 more_upgrades_as_spymaster = {
 
 	enable = {

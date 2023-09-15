@@ -1,0 +1,162 @@
+# befriend
+# conquer
+# antagonize
+# build_ship
+# build_army
+# unit_ratio
+# build_building
+# research_tech
+# garrison
+# protect
+# influence
+
+MRC_support_RVV_against_threats = {
+	allowed = {
+		original_tag = MRC
+	}
+	enable = {
+		OR = {
+			has_government = pluralism
+			has_government = semidemocracy
+		}
+		RVV = { NOT = { has_government = unitism } }
+	}
+	abort = {
+		RVV = { has_government = unitism }
+	}
+
+	ai_strategy = {
+		type = send_volunteers_desire
+		id = "RVV"
+		value = 200
+	}
+	ai_strategy = {
+		type = support
+		id = "RVV"
+		value = 200
+	}
+}
+
+MRC_defend_UFS_against_threats = {
+	allowed = { original_tag = MRC original_tag = UFS }
+	enable = {
+		HHE = { has_war_with = UFS }
+		97 = { is_controlled_by = UFS }
+		country_exists = UFS
+	}
+	abort = {
+		OR = {
+			NOT = {
+				country_exists = UFS
+				97 = { is_controlled_by = UFS }
+			}
+			has_war_with = UFS
+		}
+	}
+	
+	ai_strategy = {
+		type = befriend
+		id = "UFS"
+		value = 200
+	}
+	ai_strategy = {
+		type = alliance
+		id = "UFS"
+		value = 200
+	}
+	ai_strategy = {
+		type = protect
+		id = "UFS"
+		value = 200
+	}
+}
+
+iron_pact_junta_ally = {
+	allowed = {
+		original_tag = MJU
+	}
+	enable = {
+		always = yes
+	}
+	abort = {
+		NOT = { country_exists = MRC }
+	}
+	
+	ai_strategy = {
+		type = befriend
+		id = "MRC"			
+		value = 200
+	}
+}
+
+iron_pact_republica_ally = {
+	allowed = {
+		original_tag = MRC
+	}
+	enable = {
+		always = yes
+	}
+	abort = {
+		NOT = { country_exists = MJU }
+	}
+	
+	ai_strategy = {
+		type = befriend
+		id = "MJU"			
+		value = 200
+	}
+}
+
+junta_ally_HHE_war = {
+	allowed = {
+		original_tag = MJU
+	}
+	enable = {
+		or = {
+			HHE = {
+				has_government = theocratism
+				has_war_with = MRC
+			}
+			HHE = {
+				has_government = theocratism
+				has_war_with = MJU
+			}
+		}
+	}
+	abort = {
+		NOT = { country_exists = MRC }
+	}
+
+	ai_strategy = {
+		type = alliance
+		id = "MRC"			
+		value = 200
+	}	
+}
+
+republica_ally_HHE_war = {
+	allowed = {
+		original_tag = MRC
+	}
+	enable = {
+		or = {
+			HHE = {
+				has_government = theocratism
+				has_war_with = MJU
+			}
+			HHE = {
+				has_government = theocratism
+				has_war_with = MRC
+			}
+		}
+	}
+	abort = {
+		NOT = { country_exists = MJU }
+	}
+
+	ai_strategy = {
+		type = alliance
+		id = "MJU"			
+		value = 200
+	}	
+}

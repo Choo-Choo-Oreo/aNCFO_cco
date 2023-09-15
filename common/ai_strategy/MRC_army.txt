@@ -178,7 +178,12 @@ MRC_unit_production = {
 	ai_strategy = {
 		type = equipment_production_min_factories
 		id = fighter
-		value = 4
+		value = 3
+	}
+	ai_strategy = {
+		type = equipment_production_min_factories
+		id = cas
+		value = 3
 	}
 	ai_strategy = {
 		type = equipment_variant_production_factor
@@ -209,8 +214,6 @@ MRC_armored_production = {
 		value = 50
 	}
 }
-
-
 MRC_halt_light_armor_production_in_transitioning = {
 	allowed = {
 		original_tag = MRC
@@ -232,7 +235,6 @@ MRC_halt_light_armor_production_in_transitioning = {
 		value = -100
 	}
 }
-
 MRC_super_boost_light_for_med_armor = {
 	allowed = {
 		original_tag = MRC
@@ -246,12 +248,6 @@ MRC_super_boost_light_for_med_armor = {
 		has_template_ai_majority_unit = medium_armor
 	}
 
-	# lets do changes more often during this period too
-	#ai_strategy = {
-	#	type = template_xp_reserve 
-	#	value = -125
-	#}
-
 	# this is gateway
 	ai_strategy = {
 		type = template_prio
@@ -264,15 +260,13 @@ MRC_super_boost_light_for_med_armor = {
 		id = medium_armor
 		value = 150
 	}
-	
-	# Germany is set up to change their SS division into medium armor.
+
 	ai_strategy = {
 		type = template_prio
 		id = motorized
 		value = 200
 	}
 }
-
 MRC_super_boost_light_for_modern_armor = {
 	allowed = {
 		original_tag = MRC
@@ -285,12 +279,6 @@ MRC_super_boost_light_for_modern_armor = {
 	abort = {	
 		has_template_ai_majority_unit = modern_armor
 	}
-
-	# lets do changes more often during this period too
-	#ai_strategy = {
-	#	type = template_xp_reserve 
-	#	value = -125
-	#}
 
 	# this is gateway
 	ai_strategy = {
@@ -306,94 +294,220 @@ MRC_super_boost_light_for_modern_armor = {
 	}
 }
 
-
-
-iron_pact_junta_ally = {
-	allowed = {
-		original_tag = MJU
-	}
+merchants_air_force = {
+	allowed = { original_tag = MRC }
 	enable = {
-		always = yes
+		date > 1824.1.1
+		has_war_with_major = yes
 	}
 	abort = {
-		NOT = { country_exists = MRC }
 	}
 	
 	ai_strategy = {
-		type = befriend
-		id = "MRC"			
-		value = 200
+		type = air_factory_balance
+		value = 125
 	}
 }
 
-iron_pact_republica_ally = {
-	allowed = {
-		original_tag = MRC
-	}
+MRC_template_design_1 = {
+	allowed = { original_tag = MRC }
 	enable = {
-		always = yes
+		date < 1824.1.1
 	}
-	abort = {
-		NOT = { country_exists = MJU }
+	abort = { 
 	}
 	
 	ai_strategy = {
-		type = befriend
-		id = "MJU"			
-		value = 200
-	}
-}
-
-junta_ally_HHE_war = {
-	allowed = {
-		original_tag = MJU
-	}
-	enable = {
-		or = {
-			HHE = {
-				has_government = theocratism
-				has_war_with = MRC
-			}
-			HHE = {
-				has_government = theocratism
-				has_war_with = MJU
-			}
-		}
-	}
-	abort = {
-		NOT = { country_exists = MRC }
+		type = template_prio
+		id = infantry
+		value = 40
 	}
 
 	ai_strategy = {
-		type = alliance
-		id = "MRC"			
-		value = 200
-	}	
+		type = template_prio
+		id = motorized
+		value = 25
+	}
+
+	ai_strategy = {
+		type = template_prio
+		id = cavalry
+		value = -100
+	}
+	
+	ai_strategy = {
+		type = template_prio
+		id = light_armor
+		value = -100
+	}
+
+	ai_strategy = {
+		type = template_prio
+		id = medium_armor
+		value = 50
+	}
+
+	ai_strategy = {
+		type = template_prio
+		id = heavy_armor
+		value = 10
+	}
+
+	ai_strategy = {
+		type = template_prio
+		id = paratroopers
+		value = -10
+	}
+	
+	ai_strategy = {
+		type = template_prio
+		id = mechanized
+		value = 50
+	}
 }
 
-republica_ally_HHE_war = {
+MRC_naval_role_ratios_historical = {
 	allowed = {
+		has_dlc = "Man the Guns"
+		original_tag = MRC
+	}
+	enable = { always = yes }
+
+	ai_strategy = {
+		type = role_ratio
+		id = naval_capital_bb
+		value = 45
+	}
+	ai_strategy = {
+		type = dockyard_to_military_factory_ratio
+		value = 20  #aim for a 2-1 ratio on naval factories
+	}
+	ai_strategy = {
+		type = role_ratio
+		id = naval_capital_bc
+		value = 20
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = naval_carrier
+		value = 45
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = naval_carrier_light
+		value = 8 # 7.5
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = naval_submarine
+		value = -150
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = naval_screen
+		value = 250
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = naval_escort
+		value = 50
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = naval_cruiser_light
+		value = 60
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = naval_cruiser_heavy
+		value = 00
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = naval_mine_sweeper
+		value = 20
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = naval_mine_layer
+		value = 10
+	}
+}
+
+MRC_naval_role_ratios_anti_submarines = {
+	allowed = {
+		has_dlc = "Man the Guns"
 		original_tag = MRC
 	}
 	enable = {
-		or = {
-			HHE = {
-				has_government = theocratism
-				has_war_with = MJU
-			}
-			HHE = {
-				has_government = theocratism
-				has_war_with = MRC
-			}
-		}
+		anti_submarine_strategy_required_trigger = yes
 	}
 	abort = {
-		NOT = { country_exists = MJU }
+		not = { anti_submarine_strategy_required_trigger = yes }
+	}
+	ai_strategy = {
+		type = role_ratio
+		id = naval_capital_bb
+		value = -90
+	}
+	ai_strategy = {
+		type = dockyard_to_military_factory_ratio
+		value = 20  #aim for a 2-1 ratio on naval factories
+	}
+	ai_strategy = {
+		type = role_ratio
+		id = naval_capital_bc
+		value = -10
 	}
 
 	ai_strategy = {
-		type = alliance
-		id = "MJU"			
-		value = 200
-	}	
+		type = role_ratio
+		id = naval_carrier
+		value = -90
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = naval_carrier_light
+		value = -25
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = naval_submarine
+		value = -150
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = naval_screen
+		value = -70
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = naval_escort
+		value = 100
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = naval_cruiser_light
+		value = -25
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = naval_cruiser_heavy
+		value = -10
+	}
 }
