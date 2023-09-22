@@ -73,18 +73,15 @@ technologies = {
 					limit = {
 						has_tech = motorised_infantry
 					}
-
 					load_oob = "unlock_tanks_mot"
 				}
 				if = {
 					limit = {
 						NOT = { has_tech = motorised_infantry }
 					}
-
 					load_oob = "unlock_tanks"
 				}
 			}
-
 			custom_effect_tooltip = UNLOCK_DIVISION_TEMPLATE
 		}
 
@@ -111,26 +108,33 @@ technologies = {
 		}
 
 		ai_will_do = {
-			factor = 1
-
+			base = 0
 			modifier = {
-				factor = 2
-				is_major = yes
+				add = 5
+				low_aircraft_focus_nation = yes
 			}
-
 			modifier = {
-				factor = 1.2
-				date > "1825.1.1"
+				factor = 1.60
+				date > "1821.0.1"
+				low_aircraft_focus_nation = yes
 			}
-
 			modifier = {
-				factor = 1.2
-				date > "1830.1.1"
+				add = 5
+				medium_aircraft_focus_nation = yes
 			}
-
 			modifier = {
-				factor = 1.2
-				date > "1831.1.1"
+				factor = 2.0
+				date > "1820.6.1"
+				medium_aircraft_focus_nation = yes
+			}
+			modifier = {
+				add = 5
+				high_aircraft_focus_nation = yes
+			}
+			modifier = {
+				factor = 2.4
+				date > "1820.1.1"
+				high_aircraft_focus_nation = yes
 			}
 		}
 
@@ -196,27 +200,7 @@ technologies = {
 		}
 
 		ai_will_do = {
-			factor = 1
-
-			modifier = {
-				factor = 2
-				is_major = yes
-			}
-
-			modifier = {
-				factor = 1.1
-				date > "1825.1.1"
-			}
-
-			modifier = {
-				factor = 1.1
-				date > "1830.1.1"
-			}
-
-			modifier = {
-				factor = 1.1
-				date > "1831.1.1"
-			}
+			base = 0
 		}
 
 		categories = {
@@ -224,7 +208,6 @@ technologies = {
 			cat_light_armor
 		}
 	}
-
 	improved_light_tank_chassis = { #Panzer II
 
 		enable_equipments = {
@@ -248,31 +231,7 @@ technologies = {
 		}
 
 		ai_will_do = {
-			factor = 1
-
-			modifier = {
-				factor = 2
-				is_major = yes
-			}
-			modifier = {
-				is_major = yes
-				has_war = yes
-				factor = 10 #you are embarassing yourself
-			}
-			modifier = {
-				factor = 1.1
-				date > "1825.1.1"
-			}
-
-			modifier = {
-				factor = 1.1
-				date > "1830.1.1"
-			}
-
-			modifier = {
-				factor = 1.1
-				date > "1831.1.1"
-			}
+			base = 0
 		}
 
 		categories = {
@@ -280,56 +239,35 @@ technologies = {
 			cat_light_armor
 		}
 	}
-
-
-
-	amphibious_tank_chassis = { #SchwimmPanzer II
+	advanced_light_tank_chassis = { #Leopard
 
 		enable_equipments = {
-			amphibious_tank_chassis_1
-		}
-
-		enable_subunits = {
-			amphibious_armor
+			light_tank_chassis_3
+			light_tank_destroyer_chassis_3
+			light_tank_artillery_chassis_3
+			light_tank_aa_chassis_3
 		}
 
 		path = {
-			leads_to_tech = amphibious_drive
+			leads_to_tech = main_battle_tank_chassis
 			research_cost_coeff = 1
 		}
 
-		allow_branch = {
-			has_dlc = "Man the Guns"
-		}
-
 		research_cost = 2
-		start_year = 1830
+		start_year = 1833
 
 		folder = {
 			name = nsb_armour_folder
-			position = { x = -1 y = 5 }
+			position = { x = -4 y = 8 }
 		}
 
 		ai_will_do = {
-			factor = 0.5
-
-			modifier = {
-				factor = 2
-				is_major = yes
-			}
-			modifier = {
-				not = {
-					any_controlled_state = {
-						is_coastal = yes
-					}
-				}
-				factor = 0
-			}
+			base = 0
 		}
 
 		categories = {
 			armor
-			tp_tech
+			cat_light_armor
 		}
 	}
 
@@ -364,20 +302,7 @@ technologies = {
 		}
 
 		ai_will_do = {
-			factor = 0.5
-
-			modifier = {
-				factor = 2
-				is_major = yes
-			}
-			modifier = {
-				not = {
-					any_controlled_state = {
-						is_coastal = yes
-					}
-				}
-				factor = 0
-			}
+			base = 0
 		}
 
 		categories = {
@@ -385,55 +310,40 @@ technologies = {
 			tp_tech
 		}
 	}
-
-	advanced_light_tank_chassis = { #Leopard
+	amphibious_tank_chassis = { #SchwimmPanzer II
 
 		enable_equipments = {
-			light_tank_chassis_3
-			light_tank_destroyer_chassis_3
-			light_tank_artillery_chassis_3
-			light_tank_aa_chassis_3
+			amphibious_tank_chassis_1
+		}
+
+		enable_subunits = {
+			amphibious_armor
 		}
 
 		path = {
-			leads_to_tech = main_battle_tank_chassis
+			leads_to_tech = amphibious_drive
 			research_cost_coeff = 1
 		}
 
+		allow_branch = {
+			has_dlc = "Man the Guns"
+		}
+
 		research_cost = 2
-		start_year = 1833
+		start_year = 1830
 
 		folder = {
 			name = nsb_armour_folder
-			position = { x = -4 y = 8 }
+			position = { x = -1 y = 5 }
 		}
 
 		ai_will_do = {
-			factor = 0.5
-			modifier = {
-				is_major = no
-				factor = 2
-			}
-
-			modifier = {
-				factor = 1.1
-				date > "1842.1.1"
-			}
-
-			modifier = {
-				factor = 1.1
-				date > "1835.1.1"
-			}
-
-			modifier = {
-				factor = 1.1
-				date > "1836.1.1"
-			}
+			base = 0
 		}
 
 		categories = {
 			armor
-			cat_light_armor
+			tp_tech
 		}
 	}
 
@@ -495,26 +405,33 @@ technologies = {
 		}
 
 		ai_will_do = {
-			factor = 2
-
+			base = 0
 			modifier = {
-				factor = 2
-				is_major = yes
-				date > "1830.1.1"
+				add = 5
+				low_aircraft_focus_nation = yes
 			}
 			modifier = {
-				factor = 1.1
-				date > "1832.1.1"
+				factor = 1.60
+				date > "1827.0.1"
+				low_aircraft_focus_nation = yes
 			}
-
 			modifier = {
-				factor = 1.1
-				date > "1833.1.1"
+				add = 5
+				medium_aircraft_focus_nation = yes
 			}
-
 			modifier = {
-				factor = 1.1
-				date > "1842.1.1"
+				factor = 2.0
+				date > "1826.6.1"
+				medium_aircraft_focus_nation = yes
+			}
+			modifier = {
+				add = 5
+				high_aircraft_focus_nation = yes
+			}
+			modifier = {
+				factor = 2.4
+				date > "1826.1.1"
+				high_aircraft_focus_nation = yes
 			}
 		}
 
@@ -523,9 +440,6 @@ technologies = {
 			cat_medium_armor
 		}
 	}
-
-
-
 	improved_medium_tank_chassis = { #Panzer IV
 
 		enable_equipments = {
@@ -549,37 +463,33 @@ technologies = {
 		}
 
 		ai_will_do = {
-			factor = 3
-
+			base = 0
 			modifier = {
-				factor = 2
-				is_major = yes
+				add = 5
+				low_aircraft_focus_nation = yes
 			}
 			modifier = {
-				date < "1833.1.1"
-				factor = 0.3
+				factor = 1.60
+				date > "1833.0.1"
+				low_aircraft_focus_nation = yes
 			}
 			modifier = {
-				factor = 2
+				add = 5
+				medium_aircraft_focus_nation = yes
 			}
-
 			modifier = {
-				factor = 2
+				factor = 2.0
+				date > "1832.6.1"
+				medium_aircraft_focus_nation = yes
 			}
-
 			modifier = {
-				factor = 1.1
-				date > "1842.1.1"
+				add = 5
+				high_aircraft_focus_nation = yes
 			}
-
 			modifier = {
-				factor = 1.1
-				date > "1835.1.1"
-			}
-
-			modifier = {
-				factor = 1.1
-				date > "1836.1.1"
+				factor = 2.4
+				date > "1832.1.1"
+				high_aircraft_focus_nation = yes
 			}
 		}
 
@@ -588,7 +498,6 @@ technologies = {
 			cat_medium_armor
 		}
 	}
-
 	advanced_medium_tank_chassis = { #Panther
 
 		enable_equipments = {
@@ -612,21 +521,33 @@ technologies = {
 		}
 
 		ai_will_do = {
-			factor = 1
-
+			base = 0
 			modifier = {
-				factor = 1.2
-				date > "1836.1.1"
+				add = 5
+				low_aircraft_focus_nation = yes
 			}
-
 			modifier = {
-				factor = 1.2
-				date > "1837.1.1"
+				factor = 1.60
+				date > "1836.0.1"
+				low_aircraft_focus_nation = yes
 			}
-
 			modifier = {
-				factor = 1.2
-				date > "1838.1.1"
+				add = 5
+				medium_aircraft_focus_nation = yes
+			}
+			modifier = {
+				factor = 2.0
+				date > "1835.6.1"
+				medium_aircraft_focus_nation = yes
+			}
+			modifier = {
+				add = 5
+				high_aircraft_focus_nation = yes
+			}
+			modifier = {
+				factor = 2.4
+				date > "1835.1.1"
+				high_aircraft_focus_nation = yes
 			}
 		}
 
@@ -657,21 +578,33 @@ technologies = {
 		}
 
 		ai_will_do = {
-			factor = 1
-
+			base = 0
 			modifier = {
-				factor = 2
-				date > "1838.1.1"
+				add = 5
+				low_aircraft_focus_nation = yes
 			}
-
 			modifier = {
-				factor = 2
-				date > "1841.1.1"
+				factor = 1.60
+				date > "1838.0.1"
+				low_aircraft_focus_nation = yes
 			}
-
 			modifier = {
-				factor = 2
-				date > "1842.1.1"
+				add = 5
+				medium_aircraft_focus_nation = yes
+			}
+			modifier = {
+				factor = 2.0
+				date > "1837.6.1"
+				medium_aircraft_focus_nation = yes
+			}
+			modifier = {
+				add = 5
+				high_aircraft_focus_nation = yes
+			}
+			modifier = {
+				factor = 2.4
+				date > "1837.1.1"
+				high_aircraft_focus_nation = yes
 			}
 		}
 
@@ -680,7 +613,6 @@ technologies = {
 			cat_medium_armor
 		}
 	}
-
 
 	basic_heavy_tank_chassis = { #Grosstraktor
 
@@ -735,22 +667,7 @@ technologies = {
 		}
 
 		ai_will_do = {
-			factor = 0.8
-
-			modifier = {
-				factor = 1.2
-				date > "1825.1.1"
-			}
-
-			modifier = {
-				factor = 1.2
-				date > "1830.1.1"
-			}
-
-			modifier = {
-				factor = 1.2
-				date > "1831.1.1"
-			}
+			base = 0
 		}
 
 		categories = {
@@ -758,7 +675,6 @@ technologies = {
 			cat_heavy_armor
 		}
 	}
-
 	improved_heavy_tank_chassis = { #Tiger
 
 		enable_equipments = {
@@ -787,21 +703,7 @@ technologies = {
 		}
 
 		ai_will_do = {
-			factor = 0.8
-			modifier = {
-				factor = 1.2
-				date > "1842.1.1"
-			}
-
-			modifier = {
-				factor = 1.2
-				date > "1835.1.1"
-			}
-
-			modifier = {
-				factor = 1.2
-				date > "1836.1.1"
-			}
+			base = 0
 		}
 
 		categories = {
@@ -809,8 +711,6 @@ technologies = {
 			cat_heavy_armor
 		}
 	}
-
-
 	advanced_heavy_tank_chassis = { #King Tiger
 
 		enable_equipments = {
@@ -834,22 +734,7 @@ technologies = {
 		}
 
 		ai_will_do = {
-			factor = 0.8
-
-			modifier = {
-				factor = 1.2
-				date > "1836.1.1"
-			}
-
-			modifier = {
-				factor = 1.2
-				date > "1837.1.1"
-			}
-
-			modifier = {
-				factor = 1.2
-				date > "1838.1.1"
-			}
+			base = 0
 		}
 
 		categories = {
@@ -883,7 +768,7 @@ technologies = {
 		}
 
 		ai_will_do = {
-			factor = 0 # Hitler cries on the inside
+			base = 0
 		}
 
 		categories = {
@@ -915,30 +800,15 @@ technologies = {
 		}
 
 		ai_will_do = {
-			factor = 1
-
+			base = 0
 			modifier = {
-				factor = 2
-				is_major = yes
+				add = 15
+				wants_tank_chassis_research = yes
 			}
 			modifier = {
-				has_war = yes
-				factor = 2
-			}
-
-			modifier = {
-				factor = 1.1
-				date > "1825.1.1"
-			}
-
-			modifier = {
-				factor = 1.1
-				date > "1830.1.1"
-			}
-
-			modifier = {
-				factor = 1.1
-				date > "1831.1.1"
+				factor = 2.00
+				date > "1825.0.1"
+				wants_tank_chassis_research = yes
 			}
 		}
 
@@ -946,7 +816,6 @@ technologies = {
 			armor
 		}
 	}
-
 	armor_tech_2 = {
 
 		enable_equipment_modules = {
@@ -970,30 +839,15 @@ technologies = {
 		}
 
 		ai_will_do = {
-			factor = 1
-
+			base = 0
 			modifier = {
-				factor = 2
-				is_major = yes
+				add = 15
+				wants_tank_chassis_research = yes
 			}
 			modifier = {
-				has_war = yes
-				factor = 2
-			}
-
-			modifier = {
-				factor = 1.1
-				date > "1825.1.1"
-			}
-
-			modifier = {
-				factor = 1.1
-				date > "1830.1.1"
-			}
-
-			modifier = {
-				factor = 1.1
-				date > "1831.1.1"
+				factor = 2.00
+				date > "1825.0.1"
+				wants_tank_chassis_research = yes
 			}
 		}
 
@@ -1001,7 +855,6 @@ technologies = {
 			armor
 		}
 	}
-
 	armor_tech_3 = {
 
 
@@ -1023,30 +876,15 @@ technologies = {
 		}
 
 		ai_will_do = {
-			factor = 1
-
+			base = 0
 			modifier = {
-				factor = 2
-				is_major = yes
+				add = 15
+				wants_tank_chassis_research = yes
 			}
 			modifier = {
-				has_war = yes
-				factor = 2
-			}
-
-			modifier = {
-				factor = 1.1
-				date > "1825.1.1"
-			}
-
-			modifier = {
-				factor = 1.1
-				date > "1830.1.1"
-			}
-
-			modifier = {
-				factor = 1.1
-				date > "1831.1.1"
+				factor = 2.00
+				date > "1834.0.1"
+				wants_tank_chassis_research = yes
 			}
 		}
 
@@ -1054,7 +892,6 @@ technologies = {
 			armor
 		}
 	}
-
 	armor_tech_4 = {
 
 		research_cost = 1
@@ -1070,30 +907,15 @@ technologies = {
 		show_effect_as_desc = yes
 
 		ai_will_do = {
-			factor = 1
-
+			base = 0
 			modifier = {
-				factor = 2
-				is_major = yes
+				add = 15
+				wants_tank_chassis_research = yes
 			}
 			modifier = {
-				has_war = yes
-				factor = 2
-			}
-
-			modifier = {
-				factor = 1.1
-				date > "1825.1.1"
-			}
-
-			modifier = {
-				factor = 1.1
-				date > "1830.1.1"
-			}
-
-			modifier = {
-				factor = 1.1
-				date > "1831.1.1"
+				factor = 2.00
+				date > "1837.0.1"
+				wants_tank_chassis_research = yes
 			}
 		}
 
@@ -1121,30 +943,15 @@ technologies = {
 		}
 
 		ai_will_do = {
-			factor = 1
-
+			base = 0
 			modifier = {
-				factor = 2
-				is_major = yes
+				add = 15
+				wants_tank_chassis_research = yes
 			}
 			modifier = {
-				has_war = yes
-				factor = 2
-			}
-
-			modifier = {
-				factor = 1.1
-				date > "1825.1.1"
-			}
-
-			modifier = {
-				factor = 1.1
-				date > "1830.1.1"
-			}
-
-			modifier = {
-				factor = 1.1
-				date > "1831.1.1"
+				factor = 2.00
+				date > "1825.0.1"
+				wants_tank_chassis_research = yes
 			}
 		}
 
@@ -1152,7 +959,6 @@ technologies = {
 			armor
 		}
 	}
-
 	engine_tech_2 = {
 
 
@@ -1174,30 +980,15 @@ technologies = {
 		}
 
 		ai_will_do = {
-			factor = 1
-
+			base = 0
 			modifier = {
-				factor = 2
-				is_major = yes
+				add = 15
+				wants_tank_chassis_research = yes
 			}
 			modifier = {
-				has_war = yes
-				factor = 2
-			}
-
-			modifier = {
-				factor = 1.1
-				date > "1825.1.1"
-			}
-
-			modifier = {
-				factor = 1.1
-				date > "1830.1.1"
-			}
-
-			modifier = {
-				factor = 1.1
-				date > "1831.1.1"
+				factor = 2.00
+				date > "1829.0.1"
+				wants_tank_chassis_research = yes
 			}
 		}
 
@@ -1205,7 +996,6 @@ technologies = {
 			armor
 		}
 	}
-
 	engine_tech_3 = {
 
 
@@ -1225,30 +1015,15 @@ technologies = {
 		}
 
 		ai_will_do = {
-			factor = 1
-
+			base = 0
 			modifier = {
-				factor = 2
-				is_major = yes
+				add = 15
+				wants_tank_chassis_research = yes
 			}
 			modifier = {
-				has_war = yes
-				factor = 2
-			}
-
-			modifier = {
-				factor = 1.1
-				date > "1825.1.1"
-			}
-
-			modifier = {
-				factor = 1.1
-				date > "1830.1.1"
-			}
-
-			modifier = {
-				factor = 1.1
-				date > "1831.1.1"
+				factor = 2.00
+				date > "1834.0.1"
+				wants_tank_chassis_research = yes
 			}
 		}
 
@@ -1256,7 +1031,6 @@ technologies = {
 			armor
 		}
 	}
-
 	engine_tech_4 = {
 
 		research_cost = 1
@@ -1269,31 +1043,17 @@ technologies = {
 			custom_effect_tooltip = engine_tech_4_tt
 		}
 		show_effect_as_desc = yes
+
 		ai_will_do = {
-			factor = 1
-
+			base = 0
 			modifier = {
-				factor = 2
-				is_major = yes
+				add = 15
+				wants_tank_chassis_research = yes
 			}
 			modifier = {
-				has_war = yes
-				factor = 2
-			}
-
-			modifier = {
-				factor = 1.1
-				date > "1825.1.1"
-			}
-
-			modifier = {
-				factor = 1.1
-				date > "1830.1.1"
-			}
-
-			modifier = {
-				factor = 1.1
-				date > "1831.1.1"
+				factor = 2.00
+				date > "1837.0.1"
+				wants_tank_chassis_research = yes
 			}
 		}
 

@@ -6,7 +6,7 @@ wants_civilian_factories = {
 	ai_strategy = {
 		type = building_target
 		id = industrial_complex
-		value = 25
+		value = 50
 	}
 }
 
@@ -236,16 +236,13 @@ default_pp_spend_amount = {
 	ai_strategy = {
 		type = pp_spend_amount
 		id = decision
-		value = 100
+		value = 110
 	}
 }
 
 default_equipment_production = {
 	enable = {
 		always = yes
-		not = {
-			original_tag = MRC
-		}
 	}
 	# Land equipment factors
 		ai_strategy = {
@@ -300,14 +297,29 @@ default_equipment_production = {
 			value = 72
 		}
 		ai_strategy = {
+			type = unit_ratio
+			id = cv_fighter
+			value = 8
+		}
+		ai_strategy = {
 			type = equipment_production_factor
 			id = cas
+			value = 64
+		}
+		ai_strategy = {
+			type = equipment_production_factor
+			id = naval_bomber
 			value = 24
+		}
+		ai_strategy = {
+			type = unit_ratio
+			id = cv_naval_bomber
+			value = 8
 		}
 		ai_strategy = {
 			type = equipment_production_factor
 			id = tactical_bomber
-			value = -24
+			value = 24
 		}
 		ai_strategy = {
 			type = equipment_production_factor
@@ -315,77 +327,57 @@ default_equipment_production = {
 			value = 24
 		}
 		ai_strategy = {
-			type = equipment_production_factor
-			id = naval_bomber
-			value = -24
-		}
-		ai_strategy = {
-			type = equipment_variant_production_factor
-			id = small_plane_airframe
-			value = 72
-		}
-		ai_strategy = {
-			type = equipment_variant_production_factor
-			id = large_plane_airframe
-			value = 24
-		}
-		ai_strategy = {
-			type = equipment_production_min_factories
-			id = fighter
+			type = unit_ratio
+			id = air_transport
 			value = 1
 		}
-		#ai_strategy = {
-		#	type = equipment_production_min_factories
-		#	id = cas
-		#	value = 1
-		#}
 	# Naval equipment factors
 
 	# End of equipment production
 }
 
-default_area_priority = {
-	enable = {
-		always = yes
-	}
-
-	ai_strategy = {
-		type = area_priority
-		id = europe
-		value = 100
-	}
-	
-	ai_strategy = {
-		type = area_priority
-		id = north_america
-		value = 100
-	}
-	
-	ai_strategy = {
-		type = area_priority
-		id = south_america
-		value = 100
-	}
-	
-	ai_strategy = {
-		type = area_priority
-		id = asia
-		value = 100
-	}
-}
-
 default_stockpile_management = {
 	enable = {
-		num_divisions > 150
+		num_divisions > 120
 	}
 
 	abort = {
-		num_divisions < 130
+		num_divisions < 72
 	}
 
 	ai_strategy = {
 		type = equipment_stockpile_surplus_ratio
-		value = 25 # double base stockpile #from 25 to 35
+		value = 35
+	}
+}
+
+default_produce_floating_harbors = {
+	enable = {
+		has_war = yes
+		num_of_naval_factories > 24
+		num_of_military_factories > 48
+	}
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = unit_ratio
+		id = floating_harbor
+		value = 1
+	}
+}
+
+default_railway_gun_management = {
+	enable = {
+		num_divisions > 180
+		has_dlc = "No Step Back"
+	}
+	abort = {
+		num_divisions < 120
+	}
+
+	ai_strategy = {
+		type = railway_gun_divisions_ratio
+		value = 1
 	}
 }
 
@@ -498,12 +490,12 @@ more_upgrades_as_spymaster = {
 
 	ai_strategy = {
 		type = agency_ai_base_num_factories_factor
-		value = -50    # -50% on the define
+		value = -50
 	}
 
 	ai_strategy = {
 		type = agency_ai_per_upgrade_factories_factor
-		value = -25    # -25% on the define
+		value = -25
 	}
 }
 
@@ -514,7 +506,7 @@ put_garrisons_on_high_prio = {
 	
 	ai_strategy = {
 		type = garrison_reinforcement_priority
-		value = 100 # positive is high prio, negative is low prio
+		value = 100
 	}
 }
 
@@ -529,13 +521,7 @@ put_garrisons_on_high_prio = {
 #	ai_strategy = {
 #		type = unit_ratio
 #		id = scout_plane
-#		value = -99
-#	}
-#
-#	ai_strategy = {
-#		type = equipment_production_factor
-#		id = scout_plane
-#		value = -99
+#		value = 1
 #	}
 #
 #	ai_strategy = {

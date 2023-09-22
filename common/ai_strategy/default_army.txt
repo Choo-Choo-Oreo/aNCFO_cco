@@ -149,48 +149,28 @@ default_unit_production = {
 	# End of unit production
 }
 
-default_paratroopers_production = {
+default_paratroopers_production = { # Para is usless for AI
 	enable = {
-		ai_wants_divisions >  12 #Massively decreasing the amount of paratroopers the AI wants
-		not = {
-			original_tag = MRC
-		}
-	}
-	abort = {
-		ai_wants_divisions < 13 #Massively decreasing the amount of paratroopers the AI wants
-	}
-
-	ai_strategy = {
-		type = role_ratio
-		id = paratroopers
-		value = 0
+		always = no
 	}
 }
-
 default_mountaineers_production = {
 	enable = {
-		ai_wants_divisions > 11 #Decreasing the amount of mountaineers the AI wants
-		not = {
-			original_tag = MRC
-		}
+		ai_wants_divisions > 23 # Decreasing the amount of mountaineers the AI wants
 	}
 	abort = {
-		ai_wants_divisions < 12 #Decreasing the amount of mountaineers the AI wants
+		ai_wants_divisions < 24 # Decreasing the amount of mountaineers the AI wants
 	}
 
 	ai_strategy = {
 		type = role_ratio
 		id = mountaineers
-		value = 3
+		value = 5
 	}
 }
-
 default_marines_production = {
 	enable = {
 		ai_wants_divisions > 47
-		not = {
-			original_tag = MRC
-		}
 	}
 	abort = {
 		ai_wants_divisions < 48
@@ -199,73 +179,183 @@ default_marines_production = {
 	ai_strategy = {
 		type = role_ratio
 		id = marines
-		value = 2
-	}
-
-	ai_strategy = {
-		type = role_ratio
-		id = infantry
-		value = 0
+		value = 5
 	}
 }
 
-default_mobile_production = {
+default_motorized_production = {
 	enable = {
-		ai_wants_divisions > 11
-		has_tech = motorised_infantry
-		not = {
-			original_tag = MRC
-		}
+		ai_wants_divisions > 72
 	}
-	abort = {
-		ai_wants_divisions < 12
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = unit_ratio
+		id = motorized
+		value = 8
 	}
 
 	ai_strategy = {
-		type = role_ratio
-		id = mobile
-		value = 2
+		type = unit_ratio
+		id = infantry
+		value = -4
+	}
+}
+default_mechanized_production = {
+	enable = {
+		ai_wants_divisions > 64
+	}
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = unit_ratio
+		id = mechanized
+		value = 10
+	}
+
+	ai_strategy = {
+		type = unit_ratio
+		id = motorized
+		value = -4
+	}
+
+	ai_strategy = {
+		type = unit_ratio
+		id = infantry
+		value = -4
 	}
 }
 
 default_armored_production = {
 	enable = {
-		ai_wants_divisions > 23
-		not = {
-			original_tag = MRC
-		}
+		ai_wants_divisions > 32
 	}
-	abort = {
-		ai_wants_divisions < 24
-	}
+	abort_when_not_enabled = yes
 
 	ai_strategy = {
 		type = role_ratio
 		id = armor
-		value = 4 # 2
+		value = 20
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = heavy_armor_role
+		value = 5
+	}
+	
+	ai_strategy = {
+		type = equipment_production_factor
+		id = motorized
+		value = 10
 	}
 
 	ai_strategy = {
 		type = role_ratio
 		id = infantry
-		value = 0
+		value = -5
 	}
 }
-
 highered_armored_production = {
 	enable = {
-		num_of_military_factories > 19
-		not = {
-			original_tag = MRC
-		}
+		num_of_military_factories > 48
 	}
-	abort = {
-		num_of_military_factories < 20
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = role_ratio
+		id = armor_role
+		value = 35
 	}
 
 	ai_strategy = {
 		type = role_ratio
-		id = armor
-		value = 10 # 5
+		id = heavy_armor_role
+		value = 10
+	}
+	
+	ai_strategy = {
+		type = role_ratio
+		id = infantry
+		value = -6
+	}
+
+	ai_strategy = {
+		type = equipment_production_factor
+		id = mechanized
+		value = 5
+	}
+
+	ai_strategy = {
+		type = equipment_production_factor
+		id = motorized
+		value = 15
+	}
+}
+highered_armored_production_major = {
+	enable = {
+		OR = {
+			is_major = yes
+			AND = {
+				num_of_military_factories > 24
+			}
+		}
+	}
+	abort = {
+		always = no
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = armor_role
+		value = 35
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = heavy_armor_role
+		value = 15
+	}
+
+	ai_strategy = {
+		type = equipment_production_factor
+		id = mechanized
+		value = 10
+	}
+
+	ai_strategy = {
+		type = equipment_production_factor
+		id = motorized
+		value = 10
+	}
+}
+
+default_area_priority = {
+	enable = {
+		always = yes
+	}
+
+	ai_strategy = {
+		type = area_priority
+		id = europe
+		value = 100
+	}
+	
+	ai_strategy = {
+		type = area_priority
+		id = north_america
+		value = 100
+	}
+	
+	ai_strategy = {
+		type = area_priority
+		id = south_america
+		value = 100
+	}
+	
+	ai_strategy = {
+		type = area_priority
+		id = asia
+		value = 100
 	}
 }
