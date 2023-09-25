@@ -29,14 +29,16 @@ shared_focus = {
 	available_if_capitulated = yes
 
 	completion_reward = {
+		add_timed_idea = { idea = modern_state days = 720 }
 	}
 }
 
-shared_focus = {
-	id = liberalization
+shared_focus = { # Liberalize the State
+	id = liberalize_the_state
 	icon = GFX_
 	prerequisite = { focus = political_semidemocracy_effort }
-	x = -1
+	mutually_exclusive = { focus = reinforce_current_state }
+	x = -2
 	y = 1
 	relative_position_id = political_semidemocracy_effort
 	cost = 10
@@ -49,13 +51,30 @@ shared_focus = {
 	}
 }
 
-shared_focus = {
-	id = stay_semiauthoritarian
+shared_focus = { # Reinforce the Current State
+	id = reinforce_current_state
 	icon = GFX_
-	prerequisite = { focus = political_effort }
 	prerequisite = { focus = political_semidemocracy_effort }
+	mutually_exclusive = { focus = liberalize_the_state }
 	x = 0
-	y = 3
+	y = 1
+	relative_position_id = political_semidemocracy_effort
+	cost = 10
+
+	search_filters = { FOCUS_FILTER_POLITICAL }
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+	}
+}
+
+shared_focus = { # Liberalize our Society
+	id = liberalize_our_society
+	icon = GFX_
+	prerequisite = { focus = political_semidemocracy_effort }
+	x = 2
+	y = 1
 	relative_position_id = political_semidemocracy_effort
 	cost = 10
 
@@ -72,6 +91,7 @@ shared_focus = {
 	icon = GFX_
 	prerequisite = { focus = political_effort }
 	prerequisite = { focus = political_semidemocracy_effort }
+	mutually_exclusive = { focus = stay_semiauthoritarian }
 	x = -3
 	y = 3
 	relative_position_id = political_semidemocracy_effort
@@ -82,10 +102,30 @@ shared_focus = {
 	available_if_capitulated = yes
 
 	completion_reward = {
+		add_timed_idea = { idea = freedom_for_the_people days = 720 }
 	}
 }
 
 shared_focus = {
+	id = stay_semiauthoritarian
+	icon = GFX_
+	prerequisite = { focus = reinforce_current_state }
+	mutually_exclusive = { focus = political_pluralism_effort }
+	x = 0
+	y = 2
+	relative_position_id = reinforce_current_state
+	cost = 10
+
+	search_filters = { FOCUS_FILTER_POLITICAL }
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		add_timed_idea = { idea = intrench_current_party days = 720 }
+	}
+}
+
+shared_focus = { # Give us Liberty or give us Death
 	id = liberty_or_death
 	icon = GFX_
 	prerequisite = { focus = stay_semiauthoritarian focus = political_pluralism_effort }
@@ -117,6 +157,7 @@ shared_focus = {
 	available_if_capitulated = yes
 
 	completion_reward = {
+		add_timed_idea = { idea = clergy_in_the_state days = 720 }
 	}
 }
 
@@ -135,6 +176,7 @@ shared_focus = {
 	available_if_capitulated = yes
 
 	completion_reward = {
+		add_timed_idea = { idea = power_to_the_state days = 720 }
 	}
 }
 
@@ -153,6 +195,7 @@ shared_focus = {
 	available_if_capitulated = yes
 
 	completion_reward = {
+		add_timed_idea = { idea = state_of_unity days = 720 }
 	}
 }
 
