@@ -1,4 +1,4 @@
-shared_focus = {
+shared_focus = { # Political Effort
 	id = political_effort
 	icon = GFX_goal_generic_demand_territory
 	x = 25
@@ -19,6 +19,14 @@ shared_focus = {
 	icon = GFX_
 	prerequisite = { focus = political_effort }
 	mutually_exclusive = { focus = political_theocratism_effort focus = political_authoritarianism_effort focus = political_unitism_effort }
+	available = {
+		OR = {
+			has_government = pluralism
+			has_government = semidemocracy
+			pluralism > 0.34
+			semidemocracy > 0.34
+		}
+	}
 	x = -4
 	y = 1
 	relative_position_id = political_effort
@@ -92,6 +100,12 @@ shared_focus = {
 	prerequisite = { focus = political_effort }
 	prerequisite = { focus = political_semidemocracy_effort }
 	mutually_exclusive = { focus = stay_semiauthoritarian }
+	available = {
+		OR = {
+			has_government = pluralism
+			pluralism > 0.34
+		}
+	}
 	x = -3
 	y = 3
 	relative_position_id = political_semidemocracy_effort
@@ -111,6 +125,12 @@ shared_focus = {
 	icon = GFX_
 	prerequisite = { focus = reinforce_current_state }
 	mutually_exclusive = { focus = political_pluralism_effort }
+	available = {
+		OR = {
+			NOT = { has_government = pluralism }
+			pluralism < 0.34
+		}
+	}
 	x = 0
 	y = 2
 	relative_position_id = reinforce_current_state
@@ -143,30 +163,17 @@ shared_focus = { # Give us Liberty or give us Death
 }
 
 shared_focus = {
-	id = political_theocratism_effort
-	icon = GFX_
-	prerequisite = { focus = political_effort }
-	mutually_exclusive = { focus = political_semidemocracy_effort focus = political_authoritarianism_effort focus = political_unitism_effort }
-	x = 0
-	y = 1
-	relative_position_id = political_effort
-	cost = 10
-
-	search_filters = { FOCUS_FILTER_POLITICAL }
-
-	available_if_capitulated = yes
-
-	completion_reward = {
-		add_timed_idea = { idea = clergy_in_the_state days = 720 }
-	}
-}
-
-shared_focus = {
 	id = political_authoritarianism_effort
 	icon = GFX_
 	prerequisite = { focus = political_effort }
 	mutually_exclusive = { focus = political_semidemocracy_effort focus = political_theocratism_effort focus = political_unitism_effort }
-	x = 4
+	available = {
+		OR = {
+			has_government = authoritarianism
+			authoritarianism > 0.34
+		}
+	}
+	x = 1
 	y = 1
 	relative_position_id = political_effort
 	cost = 10
@@ -181,11 +188,42 @@ shared_focus = {
 }
 
 shared_focus = {
+	id = political_theocratism_effort
+	icon = GFX_
+	prerequisite = { focus = political_effort }
+	mutually_exclusive = { focus = political_semidemocracy_effort focus = political_authoritarianism_effort focus = political_unitism_effort }
+	available = {
+		OR = {
+			has_government = theocratism
+			theocratism > 0.34
+		}
+	}
+	x = 6
+	y = 1
+	relative_position_id = political_effort
+	cost = 10
+
+	search_filters = { FOCUS_FILTER_POLITICAL }
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		add_timed_idea = { idea = clergy_in_the_state days = 720 }
+	}
+}
+
+shared_focus = {
 	id = political_unitism_effort
 	icon = GFX_
 	prerequisite = { focus = political_effort }
 	mutually_exclusive = { focus = political_semidemocracy_effort focus = political_theocratism_effort focus = political_authoritarianism_effort }
-	x = 8
+	available = {
+		OR = {
+			has_government = unitism
+			unitism > 0.34
+		}
+	}
+	x = 10
 	y = 1
 	relative_position_id = political_effort
 	cost = 10
@@ -199,13 +237,86 @@ shared_focus = {
 	}
 }
 
-shared_focus = {
+shared_focus = { # The Priests Behind the Curtains
+	id = the_priest_behind_the_curtains
+	icon = GFX_goal_generic_demand_territory
+	prerequisite = { focus = political_theocratism_effort focus = political_unitism_effort }
+	x = -2
+	y = 1
+	relative_position_id = political_unitism_effort
+	cost = 10
+
+	search_filters = { FOCUS_FILTER_POLITICAL }
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		add_ideas = priests_behind_the_curtains
+	}
+}
+
+shared_focus = { # Us vs THEM
+	id = us_vs_them
+	icon = GFX_goal_generic_demand_territory
+	prerequisite = { focus = the_priest_behind_the_curtains }
+	x = 0
+	y = 1
+	relative_position_id = the_priest_behind_the_curtains
+	cost = 10
+
+	search_filters = { FOCUS_FILTER_POLITICAL }
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		add_ideas = militarism_focus
+	}
+}
+
+shared_focus = { # International Struggle
+	id = international_struggle
+	icon = GFX_goal_generic_demand_territory
+	prerequisite = { focus = us_vs_them }
+	x = 0
+	y = 1
+	relative_position_id = us_vs_them
+	cost = 10
+
+	search_filters = { FOCUS_FILTER_POLITICAL }
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		add_offsite_building = { type = arms_factory level = 3 }
+		add_ideas = paramilitarism_focus
+	}
+}
+
+shared_focus = { # Towards A Utopia
+	id = towards_utopia
+	icon = GFX_goal_generic_demand_territory
+	prerequisite = { focus = international_struggle }
+	x = 0
+	y = 1
+	relative_position_id = international_struggle
+	cost = 10
+
+	search_filters = { FOCUS_FILTER_POLITICAL }
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		add_ideas = militarism_focus
+	}
+}
+
+shared_focus = { # Ideological Fanaticism
 	id = ideological_fanaticism
 	icon = GFX_goal_generic_demand_territory
-	prerequisite = { focus = political_theocratism_effort focus = political_authoritarianism_effort focus = political_unitism_effort }
-	x = 4
-	y = 5
-	relative_position_id = political_effort
+	prerequisite = { focus = towards_utopia }
+	x = 0
+	y = 1
+	relative_position_id = towards_utopia
 	cost = 10
 
 	search_filters = { FOCUS_FILTER_POLITICAL }
@@ -214,12 +325,8 @@ shared_focus = {
 
 	completion_reward = {
 		add_ideas = ideological_fanaticism_focus
-		set_rule = {
-			can_create_factions = yes
-		}
-		hidden_effect = {
-			set_rule = { can_use_kamikaze_pilots = yes }
-		}
+		#set_rule = { can_create_factions = yes }
+		set_rule = { can_use_kamikaze_pilots = yes }
 		custom_effect_tooltip = kamikaze_focus_tooltip
 	}
 }

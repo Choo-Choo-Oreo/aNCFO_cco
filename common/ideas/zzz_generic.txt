@@ -138,6 +138,7 @@ ideas = {
 				semidemocracy_drift = 0.10 # You made it law so its more impactful than a advisor
 			}
 		}
+
 		clergy_in_the_state = {
 			allowed = {
 				always = no
@@ -155,6 +156,7 @@ ideas = {
 				theocratism_drift = 0.1 # You made it law so its more impactful than a advisor
 			}
 		}
+
 		power_to_the_state = {
 			allowed = {
 				always = no
@@ -172,6 +174,7 @@ ideas = {
 				authoritarianism_drift = 0.1 # You made it law so its more impactful than a advisor
 			}
 		}
+	# Unitism Start
 		state_of_unity = {
 			allowed = {
 				always = no
@@ -189,6 +192,144 @@ ideas = {
 				unitism_drift = 0.1 # You made it law so its more impactful than a advisor
 			}
 		}
+
+		nationalism = {
+			allowed = {
+				always = no
+			}
+
+			allowed_civil_war = {
+				has_government = unitism
+			}
+
+			removal_cost = -1
+
+			picture = generic_infantry_bonus
+
+			modifier = {
+				unitism_drift = 0.1
+			}
+		}
+		militarism_focus = {
+			
+			allowed = {
+				always = no
+			}
+
+			removal_cost = -1
+
+			picture = generic_spy_intel
+	
+			modifier = {
+				conscription = 0.015
+				resistance_damage_to_garrison = -0.1 
+			}
+		}
+		military_youth_focus = {
+			allowed = {
+				always = no
+			}
+
+			removal_cost = -1
+
+			picture = generic_manpower_bonus
+	
+			modifier = {
+				conscription = 0.02
+			}
+		}
+		paramilitarism_focus = {
+			
+			allowed = {
+				always = no
+			}
+			
+			removal_cost = -1
+
+			picture = generic_infantry_bonus
+	
+			modifier = {
+				training_time_army_factor = -0.1
+			}
+		}
+
+		internationalism = {
+			allowed = {
+				always = no
+			}
+
+			removal_cost = -1
+
+			picture = fourth_international
+			
+			modifier = {
+				justify_war_goal_time = -0.05
+				unitism_drift = 0.1
+			}
+		}
+		idea_political_correctness = {
+			allowed = {
+				always = no
+			}
+
+			allowed_civil_war = {
+				always = yes
+			}
+			
+			removal_cost = -1
+
+			picture = generic_intel_bonus
+			
+			modifier = {
+				foreign_subversive_activites = -0.75
+			}			
+		}
+		indoctrination_focus = {
+			
+			allowed = {
+				always = no
+			}
+			
+			removal_cost = -1
+
+			picture = generic_pp_unity_bonus
+	
+			modifier = {
+				stability_factor = 0.10
+				conscription = 0.10
+			}
+		}
+		political_commissars_focus = {
+			
+			allowed = {
+				always = no
+			}
+			
+			removal_cost = -1
+
+			picture = generic_morale_bonus
+	
+			modifier = {
+				army_morale_factor = 0.1
+				war_support_factor = 0.10
+			}
+		}
+	# Unitism End
+	# Fanaticism Start
+		collectivist_ethos_focus = {
+			
+			allowed = {
+				always = no
+			}
+		
+			removal_cost = -1
+
+			picture = generic_pp_unity_bonus
+
+			modifier = {
+				pluralism_drift = -0.02
+			}
+		}
 		reign_of_terror = {
 			picture = generic_intel_bonus
 			allowed = {
@@ -200,7 +341,54 @@ ideas = {
 				stability_weekly = 0.005
 			}
 		}
+		priests_behind_the_curtains = { # The idea behind this is that behind the curtains(Or any expert which push Pseudoscience) is a priests which wants it to continue.
+			allowed = {
+				always = no
+			}
 
+			allowed_civil_war = {
+				OR = {
+					has_government = theocratism
+					has_government = authoritarianism
+					has_government = unitism
+				}
+			}
+
+			removal_cost = -1
+
+			picture = generic_spy_political
+
+			modifier = {
+				political_power_factor = 0.125
+				war_support_weekly = 0.001
+			}
+		}
+		ideological_fanaticism_focus = {
+			
+			allowed = {
+				always = no
+			}
+
+			allowed_civil_war = {
+				always = yes
+			}
+			
+			removal_cost = -1
+
+			picture = generic_pp_unity_bonus
+	
+			rule = {
+				can_create_factions = yes
+			}
+	
+			modifier = {
+				political_power_factor = 0.125
+				war_support_factor = 0.05
+				army_core_attack_factor = 0.1
+				army_core_defence_factor = 0.1
+			}
+		}
+	# Fanaticism End
 		shattered_government = {
 			picture = generic_democratic_drift_bonus
 			allowed = {
@@ -226,23 +414,6 @@ ideas = {
 			}
 		}
 
-		civil_conflic = {
-			picture = FRA_matignon_agreements
-			removal_cost = -1
-			allowed_civil_war = {
-				always = yes
-			}
-			cancel = {
-				has_war = no
-			}
-			modifier = {
-				army_speed_factor = -0.75
-				army_attack_factor = -0.45
-				local_org_regain = -0.5
-				surrender_limit = 0.15
-			}
-		}
-
 		agrarian_society = {
 			picture = generic_agrarian_society
 
@@ -260,6 +431,23 @@ ideas = {
 			}
 		}
 
+		civil_conflic = {
+			picture = FRA_matignon_agreements
+			removal_cost = -1
+			allowed_civil_war = {
+				always = yes
+			}
+			cancel = {
+				has_war = no
+			}
+			modifier = {
+				army_speed_factor = -0.75
+				army_attack_factor = -0.45
+				local_org_regain = -0.5
+				surrender_limit = 0.15
+			}
+		}
+
 		multi_ethnic_state = {
 			picture = multi_ethnic
 			removal_cost = -1
@@ -274,49 +462,7 @@ ideas = {
 				surrender_limit = -0.1
 			}
 		}
-	
-		generic_nobility = {
-			picture = generic_infantry_bonus
-			removal_cost = -1
-			allowed = {
-				always = no
-			}
-			modifier = {
-				theocratism_drift = 0.1
-			}
-		}
 
-		generic_internationalism = {
-			
-			allowed = {
-				always = no
-			}
-
-			removal_cost = -1
-
-			picture = fourth_international
-			
-			modifier = {
-				justify_war_goal_time = -0.05
-				unitism_drift = 0.1
-			}
-		}
-
-		collectivist_ethos_focus = {
-			
-			allowed = {
-				always = no
-			}
-		
-			removal_cost = -1
-
-			picture = generic_pp_unity_bonus
-
-			modifier = {
-				pluralism_drift = -0.02
-			}
-		}
-	
 		liberty_ethos_focus = {
 			
 			allowed = {
@@ -331,129 +477,6 @@ ideas = {
 				trade_opinion_factor = 0.25
 			}
 		}
-
-		militarism_focus = {
-			
-			allowed = {
-				always = no
-			}
-
-			removal_cost = -1
-
-			picture = generic_spy_intel
-	
-			modifier = {
-				conscription = 0.15
-				resistance_damage_to_garrison = -0.1 
-			}
-		}
-
-		military_youth_focus = {
-			
-			allowed = {
-				always = no
-			}
-			
-
-			removal_cost = -1
-
-			picture = generic_manpower_bonus
-	
-			modifier = {
-				conscription = 0.02
-			}
-		}
-	
-		paramilitarism_focus = {
-			
-			allowed = {
-				always = no
-			}
-			
-			removal_cost = -1
-
-			picture = generic_infantry_bonus
-	
-			modifier = {
-				training_time_army_factor = -0.1
-			}
-		}
-	
-		indoctrination_focus = {
-			
-			allowed = {
-				always = no
-			}
-			
-			removal_cost = -1
-
-			picture = generic_pp_unity_bonus
-	
-			modifier = {
-				stability_factor = 0.10
-				conscription = 0.10
-			}
-		}
-	
-		ideological_fanaticism_focus = {
-			
-			allowed = {
-				always = no
-			}
-
-			allowed_civil_war = {
-				always = yes
-			}
-			
-			removal_cost = -1
-
-			picture = generic_pp_unity_bonus
-	
-			rule = {
-				can_create_factions = yes
-			}
-	
-			modifier = {
-				war_support_factor = 0.05
-				army_core_attack_factor = 0.1
-				army_core_defence_factor = 0.1
-			}
-		}
-	
-		political_commissars_focus = {
-			
-			allowed = {
-				always = no
-			}
-			
-			removal_cost = -1
-
-			picture = generic_morale_bonus
-	
-			modifier = {
-				army_morale_factor = 0.1
-				war_support_factor = 0.10
-			}
-		}
-
-		idea_political_correctness = {
-			allowed = {
-				always = no
-			}
-
-			allowed_civil_war = {
-				always = yes
-			}
-			
-			removal_cost = -1
-
-			picture = generic_intel_bonus
-			
-			modifier = {
-				foreign_subversive_activites = -0.75
-			}			
-		}
-
 		special_forces = {
 			allowed = {
 				always = yes
@@ -467,7 +490,6 @@ ideas = {
 				special_forces_cap = 0.05
 			}
 		}
-
 		neutrality_idea = {
 			picture = FRA_scw_intervention_nationalists_focus
 			allowed = {
@@ -491,7 +513,6 @@ ideas = {
 				ai_get_ally_desire_factor = -10000
 			}
 		}
-	
 		deterrence = {
 			allowed = {
 				always = no
@@ -512,7 +533,6 @@ ideas = {
 				production_speed_arms_factory_factor = 0.2
 			}
 		}
-
 		volunteer_corps_focus = {
 			allowed = {
 				always = no
@@ -530,7 +550,6 @@ ideas = {
 				send_volunteer_divisions_required = -0.25
 			}
 		}
-
 		foreign_expeditions_focus = {
 			allowed = {
 				always = no
@@ -548,7 +567,6 @@ ideas = {
 				send_volunteer_divisions_required = -0.5
 			}
 		}
-
 		why_we_fight_focus = {
 			allowed = {
 				always = no
@@ -588,7 +606,6 @@ ideas = {
 				nuclear = 0.10
 			}
 		}
-
 		race_for_the_bomb_outclassed = {
 			allowed = {
 				always = no
@@ -627,7 +644,7 @@ ideas = {
 				planning_speed = 0.10
 			}
 		}
-
+	# Crisis Start
 		draft_dodging = {
 			
 			allowed = {
@@ -646,7 +663,6 @@ ideas = {
 				conscription_factor = -0.2
 			}
 		}
-
 		draft_dodging_2 = {
 			
 			allowed = {
@@ -665,7 +681,6 @@ ideas = {
 				conscription_factor = -0.3
 			}
 		}
-
 		draft_dodging_3 = {
 			
 			allowed = {
@@ -706,7 +721,6 @@ ideas = {
 				industrial_capacity_dockyard = -0.2
 			}
 		}
-
 		strikes_2 = {
 			
 			allowed = {
@@ -728,7 +742,6 @@ ideas = {
 				industrial_capacity_dockyard = -0.3
 			}
 		}
-
 		strikes_3 = {
 			
 			allowed = {
@@ -773,7 +786,6 @@ ideas = {
 				army_org_factor = -0.1
 			}
 		}
-
 		mutiny_2 = {
 			
 			allowed = {
@@ -796,7 +808,6 @@ ideas = {
 				army_org_factor = -0.20
 			}
 		}
-
 		mutiny_3 = {
 			
 			allowed = {
@@ -819,8 +830,8 @@ ideas = {
 				army_org_factor = -0.5
 			}
 		}
-
-		# Civil War Ideas
+	# Crisis End
+	# Civil War Ideas
 		civil_war_surprise_attack_plan = {
 
 			allowed = {
