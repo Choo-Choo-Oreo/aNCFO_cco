@@ -7,7 +7,9 @@ shared_focus = { # Political Effort
 
 	search_filters = { FOCUS_FILTER_POLITICAL }
 
-	available_if_capitulated = yes
+	ai_will_do = {
+		factor = 5
+	}
 
 	completion_reward = {
 		add_political_power = 100
@@ -23,8 +25,8 @@ shared_focus = {
 		OR = {
 			has_government = pluralism
 			has_government = semidemocracy
-			pluralism > 0.34
-			semidemocracy > 0.34
+			pluralism > 0.25
+			semidemocracy > 0.25
 		}
 	}
 	x = -4
@@ -34,7 +36,31 @@ shared_focus = {
 
 	search_filters = { FOCUS_FILTER_POLITICAL }
 
-	available_if_capitulated = yes
+	ai_will_do = {
+		factor = 100
+		modifier = {
+			factor = 100
+			OR = {
+				has_government = pluralism
+				has_government = semidemocracy
+				pluralism > 0.34
+				semidemocracy > 0.34
+			}
+		}
+		modifier = {
+			factor = 0.1
+			any_neighbor_country = {
+					is_major = yes
+				OR = { has_government = pluralism has_government = semidemocracy }
+			}
+			NOT = {
+				any_neighbor_country = {
+					is_major = yes
+					OR = { has_government = theocratism has_government = authoritarianism has_government = unitism }
+				}
+			}
+		}
+	}
 
 	completion_reward = {
 		add_timed_idea = { idea = modern_state days = 720 }
@@ -103,7 +129,7 @@ shared_focus = {
 	available = {
 		OR = {
 			has_government = pluralism
-			pluralism > 0.34
+			pluralism > 0.25
 		}
 	}
 	x = -3
@@ -113,14 +139,36 @@ shared_focus = {
 
 	search_filters = { FOCUS_FILTER_POLITICAL }
 
-	available_if_capitulated = yes
+	ai_will_do = {
+		factor = 100
+		modifier = {
+			factor = 100
+			OR = {
+				has_government = pluralism
+				pluralism > 0.34
+			}
+		}
+		modifier = {
+			factor = 0.1
+			any_neighbor_country = {
+					is_major = yes
+				OR = { has_government = pluralism has_government = semidemocracy }
+			}
+			NOT = {
+				any_neighbor_country = {
+					is_major = yes
+					OR = { has_government = theocratism has_government = authoritarianism has_government = unitism }
+				}
+			}
+		}
+	}
 
 	completion_reward = {
 		add_timed_idea = { idea = freedom_for_the_people days = 720 }
 	}
 }
 
-shared_focus = {
+shared_focus = { # Intrench the Party
 	id = stay_semiauthoritarian
 	icon = GFX_
 	prerequisite = { focus = reinforce_current_state }
@@ -170,7 +218,7 @@ shared_focus = {
 	available = {
 		OR = {
 			has_government = authoritarianism
-			authoritarianism > 0.34
+			authoritarianism > 0.25
 		}
 	}
 	x = 1
@@ -180,7 +228,29 @@ shared_focus = {
 
 	search_filters = { FOCUS_FILTER_POLITICAL }
 
-	available_if_capitulated = yes
+	ai_will_do = {
+		factor = 100
+		modifier = {
+			factor = 100
+			OR = {
+				has_government = authoritarianism
+				authoritarianism > 0.34
+			}
+		}
+		modifier = {
+			factor = 0.1
+			any_neighbor_country = {
+				is_major = yes
+				OR = { has_government = theocratism has_government = authoritarianism has_government = unitism }
+			}
+			NOT = {
+				any_neighbor_country = {
+					is_major = yes
+					OR = { has_government = pluralism has_government = semidemocracy }
+				}
+			}
+		}
+	}
 
 	completion_reward = {
 		add_timed_idea = { idea = power_to_the_state days = 720 }
@@ -195,7 +265,7 @@ shared_focus = {
 	available = {
 		OR = {
 			has_government = theocratism
-			theocratism > 0.34
+			theocratism > 0.25
 		}
 	}
 	x = 6
@@ -205,7 +275,29 @@ shared_focus = {
 
 	search_filters = { FOCUS_FILTER_POLITICAL }
 
-	available_if_capitulated = yes
+	ai_will_do = {
+		factor = 100
+		modifier = {
+			factor = 100
+			OR = {
+				has_government = theocratism
+				theocratism > 0.34
+			}
+		}
+		modifier = {
+			factor = 0.1
+			any_neighbor_country = {
+				is_major = yes
+				OR = { has_government = theocratism has_government = authoritarianism has_government = unitism }
+			}
+			NOT = {
+				any_neighbor_country = {
+					is_major = yes
+					OR = { has_government = pluralism has_government = semidemocracy }
+				}
+			}
+		}
+	}
 
 	completion_reward = {
 		add_timed_idea = { idea = clergy_in_the_state days = 720 }
@@ -220,7 +312,7 @@ shared_focus = {
 	available = {
 		OR = {
 			has_government = unitism
-			unitism > 0.34
+			unitism > 0.25
 		}
 	}
 	x = 10
@@ -230,7 +322,29 @@ shared_focus = {
 
 	search_filters = { FOCUS_FILTER_POLITICAL }
 
-	available_if_capitulated = yes
+	ai_will_do = {
+		factor = 100
+		modifier = {
+			factor = 100
+			OR = {
+				has_government = unitism
+				unitism > 0.34
+			}
+		}
+		modifier = {
+			factor = 0.1
+			any_neighbor_country = {
+				is_major = yes
+				OR = { has_government = theocratism has_government = authoritarianism has_government = unitism }
+			}
+			NOT = {
+				any_neighbor_country = {
+					is_major = yes
+					OR = { has_government = pluralism has_government = semidemocracy }
+				}
+			}
+		}
+	}
 
 	completion_reward = {
 		add_timed_idea = { idea = state_of_unity days = 720 }
@@ -248,7 +362,27 @@ shared_focus = { # The Priests Behind the Curtains
 
 	search_filters = { FOCUS_FILTER_POLITICAL }
 
-	available_if_capitulated = yes
+	ai_will_do = {
+		factor = 5
+		modifier = {
+			factor = 5
+			OR = {
+				has_government = theocratism
+				has_government = unitism
+				theocratism > 0.25
+				unitism > 0.25
+			}
+		}
+		modifier = {
+			factor = 5
+			OR = {
+				has_government = theocratism
+				has_government = unitism
+				theocratism > 0.50
+				unitism > 0.50
+			}
+		}
+	}
 
 	completion_reward = {
 		add_ideas = priests_behind_the_curtains
@@ -266,7 +400,27 @@ shared_focus = { # Us vs THEM
 
 	search_filters = { FOCUS_FILTER_POLITICAL }
 
-	available_if_capitulated = yes
+	ai_will_do = {
+		factor = 5
+		modifier = {
+			factor = 5
+			OR = {
+				has_government = theocratism
+				has_government = unitism
+				theocratism > 0.25
+				unitism > 0.25
+			}
+		}
+		modifier = {
+			factor = 5
+			OR = {
+				has_government = theocratism
+				has_government = unitism
+				theocratism > 0.50
+				unitism > 0.50
+			}
+		}
+	}
 
 	completion_reward = {
 		add_ideas = militarism_focus
@@ -284,7 +438,27 @@ shared_focus = { # International Struggle
 
 	search_filters = { FOCUS_FILTER_POLITICAL }
 
-	available_if_capitulated = yes
+	ai_will_do = {
+		factor = 5
+		modifier = {
+			factor = 5
+			OR = {
+				has_government = theocratism
+				has_government = unitism
+				theocratism > 0.25
+				unitism > 0.25
+			}
+		}
+		modifier = {
+			factor = 5
+			OR = {
+				has_government = theocratism
+				has_government = unitism
+				theocratism > 0.50
+				unitism > 0.50
+			}
+		}
+	}
 
 	completion_reward = {
 		add_offsite_building = { type = arms_factory level = 3 }
@@ -303,7 +477,27 @@ shared_focus = { # Towards A Utopia
 
 	search_filters = { FOCUS_FILTER_POLITICAL }
 
-	available_if_capitulated = yes
+	ai_will_do = {
+		factor = 5
+		modifier = {
+			factor = 5
+			OR = {
+				has_government = theocratism
+				has_government = unitism
+				theocratism > 0.25
+				unitism > 0.25
+			}
+		}
+		modifier = {
+			factor = 5
+			OR = {
+				has_government = theocratism
+				has_government = unitism
+				theocratism > 0.50
+				unitism > 0.50
+			}
+		}
+	}
 
 	completion_reward = {
 		add_ideas = militarism_focus
@@ -321,7 +515,27 @@ shared_focus = { # Ideological Fanaticism
 
 	search_filters = { FOCUS_FILTER_POLITICAL }
 
-	available_if_capitulated = yes
+	ai_will_do = {
+		factor = 5
+		modifier = {
+			factor = 5
+			OR = {
+				has_government = theocratism
+				has_government = unitism
+				theocratism > 0.25
+				unitism > 0.25
+			}
+		}
+		modifier = {
+			factor = 5
+			OR = {
+				has_government = theocratism
+				has_government = unitism
+				theocratism > 0.50
+				unitism > 0.50
+			}
+		}
+	}
 
 	completion_reward = {
 		add_ideas = ideological_fanaticism_focus

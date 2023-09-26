@@ -640,6 +640,42 @@ form_harmonainus_imperious_category = {
 }
 
 form_united_vally_category = {
+	form_united_vally_conquest = {
+		icon = generic_form_nation
+		allowed = {
+			OR = {
+				original_tag = RVV
+				original_tag = CPV
+			}
+		}
+		available = {
+			is_subject = no
+		}
+		visible = {
+			OR = {
+				original_tag = RVV
+				original_tag = CPV
+			}
+			OR = {
+				NOT = { country_exists = RVV }
+				NOT = { country_exists = CPV }
+			}
+			NOT = { has_global_flag = form_united_vally_conquest_flag }
+		}
+		complete_effect = {
+			set_country_flag = ravens_valley_unified_conquest
+			hidden_effect = {
+				set_global_flag = form_united_vally_conquest_flag
+			}
+		}
+		ai_will_do = {
+			base = 10
+			modifier = {
+				factor = 10
+				is_historical_focus_on = yes
+			}
+		}
+	}
 	form_united_vally = {
 		icon = generic_form_nation
 		allowed = {
@@ -665,8 +701,8 @@ form_united_vally_category = {
 			422 = { is_controlled_by = ROOT }
 			### = { is_controlled_by = ROOT }
 			OR = {
-				has_country_flag = ravens_valley_unfified_peaceful
-				has_country_flag = ravens_valley_unfified_conquest
+				has_country_flag = ravens_valley_unified_peaceful
+				has_country_flag = ravens_valley_unified_conquest
 			}
 		}
 		visible = {
