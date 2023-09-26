@@ -16,7 +16,7 @@ shared_focus = { # Political Effort
 	}
 }
 
-shared_focus = {
+shared_focus = { # Transitionist Effort
 	id = political_semidemocracy_effort
 	icon = GFX_
 	prerequisite = { focus = political_effort }
@@ -120,7 +120,7 @@ shared_focus = { # Liberalize our Society
 	}
 }
 
-shared_focus = {
+shared_focus = { # Pluralism Effort
 	id = political_pluralism_effort
 	icon = GFX_
 	prerequisite = { focus = political_effort }
@@ -210,7 +210,7 @@ shared_focus = { # Give us Liberty or give us Death
 	}
 }
 
-shared_focus = {
+shared_focus = { # Authoritarianism Effort
 	id = political_authoritarianism_effort
 	icon = GFX_
 	prerequisite = { focus = political_effort }
@@ -257,7 +257,7 @@ shared_focus = {
 	}
 }
 
-shared_focus = {
+shared_focus = { # Theocratism Effort
 	id = political_theocratism_effort
 	icon = GFX_
 	prerequisite = { focus = political_effort }
@@ -268,7 +268,7 @@ shared_focus = {
 			theocratism > 0.25
 		}
 	}
-	x = 6
+	x = 7
 	y = 1
 	relative_position_id = political_effort
 	cost = 10
@@ -304,7 +304,202 @@ shared_focus = {
 	}
 }
 
-shared_focus = {
+shared_focus = { # Harmonainus Faith
+	id = harmonainus_faith
+	icon = GFX_
+	prerequisite = { focus = political_theocratism_effort }
+	mutually_exclusive = { focus = pullus_faith focus = thalassaus_faith focus = ager_montis_faith }
+	available = {
+		OR = {
+			has_government = theocratism
+			theocratism > 0.25
+		}
+		OR = {
+			has_country_flag = harmonainus_religion
+			has_country_flag = harmonainus_reformed_religion
+		}
+	}
+	x = -3
+	y = 1
+	relative_position_id = political_theocratism_effort
+	cost = 10
+
+	search_filters = { FOCUS_FILTER_POLITICAL }
+
+	ai_will_do = {
+		factor = 100
+		modifier = {
+			factor = 100
+			OR = {
+				has_government = theocratism
+				theocratism > 0.34
+			}
+		}
+		modifier = {
+			factor = 0.1
+			any_neighbor_country = {
+				is_major = yes
+				OR = { has_government = theocratism has_government = authoritarianism has_government = unitism }
+			}
+			NOT = {
+				any_neighbor_country = {
+					is_major = yes
+					OR = { has_government = pluralism has_government = semidemocracy }
+				}
+			}
+		}
+	}
+
+	completion_reward = {
+		add_timed_idea = { idea = clergy_in_the_state days = 720 }
+	}
+}
+
+shared_focus = { # Pullus Faith
+	id = pullus_faith
+	icon = GFX_
+	prerequisite = { focus = political_theocratism_effort }
+	mutually_exclusive = { focus = harmonainus_faith focus = thalassaus_faith focus = ager_montis_faith }
+	available = {
+		OR = {
+			has_government = theocratism
+			theocratism > 0.25
+		}
+		has_country_flag = pullus_religion
+	}
+	x = -1
+	y = 1
+	relative_position_id = political_theocratism_effort
+	cost = 10
+
+	search_filters = { FOCUS_FILTER_POLITICAL }
+
+	ai_will_do = {
+		factor = 100
+		modifier = {
+			factor = 100
+			OR = {
+				has_government = theocratism
+				theocratism > 0.34
+			}
+		}
+		modifier = {
+			factor = 0.1
+			any_neighbor_country = {
+				is_major = yes
+				OR = { has_government = theocratism has_government = authoritarianism has_government = unitism }
+			}
+			NOT = {
+				any_neighbor_country = {
+					is_major = yes
+					OR = { has_government = pluralism has_government = semidemocracy }
+				}
+			}
+		}
+	}
+
+	completion_reward = {
+		add_timed_idea = { idea = clergy_in_the_state days = 720 }
+	}
+}
+
+shared_focus = { # Thalassaus Faith
+	id = thalassaus_faith
+	icon = GFX_
+	prerequisite = { focus = political_theocratism_effort }
+	mutually_exclusive = { focus = harmonainus_faith focus = pullus_faith focus = ager_montis_faith }
+	available = {
+		OR = {
+			has_government = theocratism
+			theocratism > 0.25
+		}
+		has_country_flag = thalassaus_religion
+	}
+	x = 1
+	y = 1
+	relative_position_id = political_theocratism_effort
+	cost = 10
+
+	search_filters = { FOCUS_FILTER_POLITICAL }
+
+	ai_will_do = {
+		factor = 100
+		modifier = {
+			factor = 100
+			OR = {
+				has_government = theocratism
+				theocratism > 0.34
+			}
+		}
+		modifier = {
+			factor = 0.1
+			any_neighbor_country = {
+				is_major = yes
+				OR = { has_government = theocratism has_government = authoritarianism has_government = unitism }
+			}
+			NOT = {
+				any_neighbor_country = {
+					is_major = yes
+					OR = { has_government = pluralism has_government = semidemocracy }
+				}
+			}
+		}
+	}
+
+	completion_reward = {
+		add_timed_idea = { idea = clergy_in_the_state days = 720 }
+	}
+}
+
+shared_focus = { # Ager Montis Faith
+	id = ager_montis_faith
+	icon = GFX_
+	prerequisite = { focus = political_theocratism_effort }
+	mutually_exclusive = { focus = harmonainus_faith focus = pullus_faith focus = thalassaus_faith }
+	available = {
+		OR = {
+			has_government = theocratism
+			theocratism > 0.25
+		}
+		has_country_flag = ager_montis_religion
+	}
+	x = 3
+	y = 1
+	relative_position_id = political_theocratism_effort
+	cost = 10
+
+	search_filters = { FOCUS_FILTER_POLITICAL }
+
+	ai_will_do = {
+		factor = 100
+		modifier = {
+			factor = 100
+			OR = {
+				has_government = theocratism
+				theocratism > 0.34
+			}
+		}
+		modifier = {
+			factor = 0.1
+			any_neighbor_country = {
+				is_major = yes
+				OR = { has_government = theocratism has_government = authoritarianism has_government = unitism }
+			}
+			NOT = {
+				any_neighbor_country = {
+					is_major = yes
+					OR = { has_government = pluralism has_government = semidemocracy }
+				}
+			}
+		}
+	}
+
+	completion_reward = {
+		add_timed_idea = { idea = clergy_in_the_state days = 720 }
+	}
+}
+
+shared_focus = { # Unitism Effort
 	id = political_unitism_effort
 	icon = GFX_
 	prerequisite = { focus = political_effort }
@@ -315,7 +510,7 @@ shared_focus = {
 			unitism > 0.25
 		}
 	}
-	x = 10
+	x = 14
 	y = 1
 	relative_position_id = political_effort
 	cost = 10
