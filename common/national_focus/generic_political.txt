@@ -259,7 +259,7 @@ shared_focus = { # Authoritarianism Effort
 
 shared_focus = { # Theocratism Effort
 	id = political_theocratism_effort
-	icon = GFX_
+	icon = GFX_focus_generic_catholic_dominion
 	prerequisite = { focus = political_effort }
 	mutually_exclusive = { focus = political_semidemocracy_effort focus = political_authoritarianism_effort focus = political_unitism_effort }
 	available = {
@@ -408,7 +408,7 @@ shared_focus = { # Our Theistic Faith
 	icon = GFX_
 	prerequisite = { focus = harmonainus_faith focus = pullus_faith }
 	x = 1
-	y = 3
+	y = 5
 	relative_position_id = harmonainus_faith
 	cost = 10
 
@@ -489,6 +489,40 @@ shared_focus = { # Thalassaus Faith
 	}
 }
 
+shared_focus = { # Environmental Attunement
+	id = environmental_attunement
+	icon = GFX_
+	prerequisite = { focus = thalassaus_faith }
+	x = 0
+	y = 1
+	relative_position_id = thalassaus_faith
+	cost = 10
+
+	search_filters = { FOCUS_FILTER_POLITICAL }
+
+	ai_will_do = {
+		factor = 5
+		modifier = {
+			factor = 5
+			OR = {
+				has_government = theocratism
+				theocratism > 0.25
+			}
+		}
+		modifier = {
+			factor = 5
+			OR = {
+				has_government = theocratism
+				theocratism > 0.50
+			}
+		}
+	}
+
+	completion_reward = {
+		add_ideas = environmental_unity
+	}
+}
+
 shared_focus = { # Ager Montis Faith
 	id = ager_montis_faith
 	icon = GFX_
@@ -542,7 +576,7 @@ shared_focus = { # Our Nontheistic Faith
 	icon = GFX_
 	prerequisite = { focus = thalassaus_faith focus = ager_montis_faith }
 	x = 1
-	y = 3
+	y = 5
 	relative_position_id = thalassaus_faith
 	cost = 10
 
@@ -622,6 +656,146 @@ shared_focus = { # Unitism Effort
 	}
 }
 
+shared_focus = { # Revolutionary Warfare over the Mind
+	id = revolutionary_warfare_over_mind
+	icon = GFX_focus_generic_join_comintern
+	prerequisite = { focus = political_unitism_effort }
+	x = 0
+	y = 1
+	relative_position_id = political_unitism_effort
+	cost = 10
+
+	search_filters = { FOCUS_FILTER_POLITICAL }
+
+	ai_will_do = {
+		factor = 5
+		modifier = {
+			factor = 5
+			OR = {
+				has_government = unitism
+				unitism > 0.25
+			}
+		}
+		modifier = {
+			factor = 5
+			OR = {
+				has_government = unitism
+				unitism > 0.50
+			}
+		}
+	}
+
+	completion_reward = {
+		add_ideas = revolutionary_warfare
+	}
+}
+
+shared_focus = { # Countryside Gorilla Warfare
+	id = countryside_gorilla_warfare
+	icon = GFX_focus_ETH_freedom_at_gunpoint
+	prerequisite = { focus = political_unitism_effort }
+	x = 2
+	y = 1
+	relative_position_id = political_unitism_effort
+	cost = 10
+
+	search_filters = { FOCUS_FILTER_POLITICAL }
+
+	ai_will_do = {
+		factor = 5
+		modifier = {
+			factor = 5
+			OR = {
+				has_government = unitism
+				unitism > 0.25
+			}
+		}
+		modifier = {
+			factor = 5
+			OR = {
+				has_government = unitism
+				unitism > 0.50
+			}
+		}
+	}
+
+	completion_reward = {
+		unitism_gorilla_warfare = yes
+		add_offsite_building = { type = arms_factory level = 2 }
+	}
+}
+
+shared_focus = { # The Underground
+	id = the_underground
+	icon = GFX_focus_generic_join_comintern
+	prerequisite = { focus = countryside_gorilla_warfare }
+	x = 0
+	y = 2
+	relative_position_id = countryside_gorilla_warfare
+	cost = 10
+
+	search_filters = { FOCUS_FILTER_POLITICAL }
+
+	ai_will_do = {
+		factor = 5
+		modifier = {
+			factor = 5
+			OR = {
+				has_government = unitism
+				unitism > 0.25
+			}
+		}
+		modifier = {
+			factor = 5
+			OR = {
+				has_government = unitism
+				unitism > 0.50
+			}
+		}
+	}
+
+	completion_reward = {
+		unitism_gorilla_warfare = yes
+		add_offsite_building = { type = arms_factory level = 2 }
+	}
+}
+
+shared_focus = { # Assult on all Fronts
+	id = assult_all_fronts
+	icon = GFX_focus_generic_manpower
+	prerequisite = { focus = the_underground }
+	x = 0
+	y = 2
+	relative_position_id = the_underground
+	cost = 10
+
+	search_filters = { FOCUS_FILTER_POLITICAL }
+
+	ai_will_do = {
+		factor = 5
+		modifier = {
+			factor = 5
+			OR = {
+				has_government = unitism
+				unitism > 0.25
+			}
+		}
+		modifier = {
+			factor = 5
+			OR = {
+				has_government = unitism
+				unitism > 0.50
+			}
+		}
+	}
+
+	completion_reward = {
+		unitism_gorilla_warfare = yes
+		add_offsite_building = { type = arms_factory level = 2 }
+	}
+}
+
+# Shared Theo-Uni
 shared_focus = { # The Priests Behind the Curtains
 	id = the_priest_behind_the_curtains
 	icon = GFX_goal_generic_demand_territory
@@ -700,7 +874,7 @@ shared_focus = { # Us vs THEM
 
 shared_focus = { # International Struggle
 	id = international_struggle
-	icon = GFX_goal_generic_demand_territory
+	icon = GFX_focus_ETH_callout_to_the_world
 	prerequisite = { focus = us_vs_them }
 	x = 0
 	y = 1
