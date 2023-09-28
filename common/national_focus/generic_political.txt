@@ -133,7 +133,7 @@ shared_focus = { # Pluralism Effort
 		}
 	}
 	x = -3
-	y = 3
+	y = 4
 	relative_position_id = political_semidemocracy_effort
 	cost = 10
 
@@ -180,7 +180,7 @@ shared_focus = { # Intrench the Party
 		}
 	}
 	x = 0
-	y = 2
+	y = 3
 	relative_position_id = reinforce_current_state
 	cost = 10
 
@@ -198,7 +198,7 @@ shared_focus = { # Give us Liberty or give us Death
 	icon = GFX_
 	prerequisite = { focus = stay_semiauthoritarian focus = political_pluralism_effort }
 	x = 3
-	y = 3
+	y = 4
 	relative_position_id = political_pluralism_effort
 	cost = 10
 
@@ -686,7 +686,7 @@ shared_focus = { # Revolutionary Warfare over the Mind
 	}
 
 	completion_reward = {
-		add_ideas = revolutionary_warfare
+		unitism_revolutionary_warfare = yes
 	}
 }
 
@@ -721,16 +721,17 @@ shared_focus = { # Countryside Gorilla Warfare
 
 	completion_reward = {
 		unitism_gorilla_warfare = yes
-		add_offsite_building = { type = arms_factory level = 2 }
+		add_offsite_building = { type = arms_factory level = 1 }
 	}
 }
 
-shared_focus = { # The Underground
-	id = the_underground
+shared_focus = { # First Preparations
+	id = first_preparations
 	icon = GFX_focus_generic_join_comintern
+	prerequisite = { focus = revolutionary_warfare_over_mind }
 	prerequisite = { focus = countryside_gorilla_warfare }
-	x = 0
-	y = 2
+	x = -1
+	y = 1
 	relative_position_id = countryside_gorilla_warfare
 	cost = 10
 
@@ -755,18 +756,51 @@ shared_focus = { # The Underground
 	}
 
 	completion_reward = {
-		unitism_gorilla_warfare = yes
-		add_offsite_building = { type = arms_factory level = 2 }
+		unitism_revolutionary_warfare = yes
 	}
 }
 
-shared_focus = { # Assult on all Fronts
-	id = assult_all_fronts
-	icon = GFX_focus_generic_manpower
-	prerequisite = { focus = the_underground }
-	x = 0
-	y = 2
-	relative_position_id = the_underground
+shared_focus = { # Utilized the Land
+	id = utilized_the_land
+	icon = GFX_focus_generic_join_comintern
+	prerequisite = { focus = first_preparations }
+	x = -1
+	y = 1
+	relative_position_id = first_preparations
+	cost = 10
+
+	search_filters = { FOCUS_FILTER_POLITICAL }
+
+	ai_will_do = {
+		factor = 5
+		modifier = {
+			factor = 5
+			OR = {
+				has_government = unitism
+				unitism > 0.25
+			}
+		}
+		modifier = {
+			factor = 5
+			OR = {
+				has_government = unitism
+				unitism > 0.50
+			}
+		}
+	}
+
+	completion_reward = {
+		add_ideas = land_utilized
+	}
+}
+
+shared_focus = { # The Underground
+	id = the_underground
+	icon = GFX_focus_generic_join_comintern
+	prerequisite = { focus = first_preparations }
+	x = 1
+	y = 1
+	relative_position_id = first_preparations
 	cost = 10
 
 	search_filters = { FOCUS_FILTER_POLITICAL }
@@ -791,7 +825,158 @@ shared_focus = { # Assult on all Fronts
 
 	completion_reward = {
 		unitism_gorilla_warfare = yes
-		add_offsite_building = { type = arms_factory level = 2 }
+		add_offsite_building = { type = arms_factory level = 1 }
+	}
+}
+
+shared_focus = { # Second Preparations
+	id = second_preparations
+	icon = GFX_focus_generic_join_comintern
+	prerequisite = { focus = utilized_the_land }
+	prerequisite = { focus = the_underground }
+	x = -1
+	y = 1
+	relative_position_id = the_underground
+	cost = 10
+
+	search_filters = { FOCUS_FILTER_POLITICAL }
+
+	ai_will_do = {
+		factor = 5
+		modifier = {
+			factor = 5
+			OR = {
+				has_government = unitism
+				unitism > 0.25
+			}
+		}
+		modifier = {
+			factor = 5
+			OR = {
+				has_government = unitism
+				unitism > 0.50
+			}
+		}
+	}
+
+	completion_reward = {
+		unitism_revolutionary_warfare = yes
+	}
+}
+
+shared_focus = { # Utopia City
+	id = utopia_city
+	icon = GFX_focus_generic_join_comintern
+	prerequisite = { focus = second_preparations }
+	x = -1
+	y = 1
+	relative_position_id = second_preparations
+	cost = 10
+
+	search_filters = { FOCUS_FILTER_POLITICAL }
+
+	ai_will_do = {
+		factor = 5
+		modifier = {
+			factor = 5
+			OR = {
+				has_government = unitism
+				unitism > 0.25
+			}
+		}
+		modifier = {
+			factor = 5
+			OR = {
+				has_government = unitism
+				unitism > 0.50
+			}
+		}
+	}
+
+	completion_reward = {
+		capital_scope = {
+			add_extra_state_shared_building_slots = 3
+			add_building_construction = {
+				type = industrial_complex
+				level = 1
+				instant_build = yes
+			}
+			add_building_construction = {
+				type = steel_complex
+				level = 1
+				instant_build = yes
+			}
+		}
+	}
+}
+
+shared_focus = { # Assult on all Fronts
+	id = assult_all_fronts
+	icon = GFX_focus_generic_manpower
+	prerequisite = { focus = second_preparations }
+	x = 1
+	y = 1
+	relative_position_id = second_preparations
+	cost = 10
+
+	search_filters = { FOCUS_FILTER_POLITICAL }
+
+	ai_will_do = {
+		factor = 5
+		modifier = {
+			factor = 5
+			OR = {
+				has_government = unitism
+				unitism > 0.25
+			}
+		}
+		modifier = {
+			factor = 5
+			OR = {
+				has_government = unitism
+				unitism > 0.50
+			}
+		}
+	}
+
+	completion_reward = {
+		unitism_gorilla_warfare = yes
+		add_offsite_building = { type = arms_factory level = 1 }
+	}
+}
+
+shared_focus = { # Third Preparations
+	id = third_preparations
+	icon = GFX_focus_generic_join_comintern
+	prerequisite = { focus = utopia_city }
+	prerequisite = { focus = assult_all_fronts }
+	x = -1
+	y = 1
+	relative_position_id = assult_all_fronts
+	cost = 10
+
+	search_filters = { FOCUS_FILTER_POLITICAL }
+
+	ai_will_do = {
+		factor = 5
+		modifier = {
+			factor = 5
+			OR = {
+				has_government = unitism
+				unitism > 0.25
+			}
+		}
+		modifier = {
+			factor = 5
+			OR = {
+				has_government = unitism
+				unitism > 0.50
+			}
+		}
+	}
+
+	completion_reward = {
+		unitism_revolutionary_warfare = yes
 	}
 }
 
@@ -800,6 +985,10 @@ shared_focus = { # The Priests Behind the Curtains
 	id = the_priest_behind_the_curtains
 	icon = GFX_goal_generic_demand_territory
 	prerequisite = { focus = political_theocratism_effort focus = political_unitism_effort }
+	available = {
+		NOT = { has_country_flag = thalassaus_religion }
+		NOT = { has_country_flag = ager_montis_religion }
+	}
 	x = -2
 	y = 1
 	relative_position_id = political_unitism_effort
@@ -868,6 +1057,7 @@ shared_focus = { # Us vs THEM
 	}
 
 	completion_reward = {
+		add_offsite_building = { type = arms_factory level = 1 }
 		add_ideas = militarism_focus
 	}
 }
@@ -906,7 +1096,7 @@ shared_focus = { # International Struggle
 	}
 
 	completion_reward = {
-		add_offsite_building = { type = arms_factory level = 3 }
+		add_offsite_building = { type = arms_factory level = 1 }
 		add_ideas = paramilitarism_focus
 	}
 }
