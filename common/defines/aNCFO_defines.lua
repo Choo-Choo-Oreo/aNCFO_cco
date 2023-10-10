@@ -1,3 +1,13 @@
+		-- aNCFO Defines
+NDefines.NGame.START_DATE = "1924.1.1.12"
+NDefines.NGame.END_DATE = "1949.1.1.1"
+NDefines.NGame.MAP_SCALE_PIXEL_TO_KM = 7.8254
+NDefines.NGame.HANDS_OFF_START_TAG = "LLA"
+
+
+		-- frontlineai Defines
+
+
 --Hello, if you're looking to put this in a modpack, ask and link, but jokes on you, it's compatible in theory with literally every mod so you shouldn't have to put it in a modpack!						
 		
 NDefines.NAI.GARRISON_FRACTION = 0.2					-- How large part of a front should always be holding the line rather than advancing at the enemy
@@ -49,15 +59,13 @@ NDefines.NAI.EASY_TARGET_FRONT_IMPORTANCE = 7.5 --MOD was 10.0			-- How much ext
 		
 NDefines.NAI.AI_FRONT_MOVEMENT_FACTOR_FOR_READY = 0.2	-- If less than this fraction of units on a front is moving, AI sees it as ready for action	
 
---------------------------------------------------------------------------------------------------------------
+-------------------------
 -- RESEARCH
---------------------------------------------------------------------------------------------------------------
+-------------------------
 
---------------------------------------------------------------------------------------------------------------
+-------------------------
 -- DESIGNS
---------------------------------------------------------------------------------------------------------------
-
----------------
+-------------------------
 
 NDefines.NAI.REFIT_SHIP_RELUCTANCE = 5000							-- How often to consider refitting to new equipment variants for ships in the field
 NDefines.NAI.REFIT_SHIP_PERCENTAGE_OF_FORCES = 0.30				-- How big part of the navy that should be considered for refitting
@@ -69,9 +77,9 @@ NDefines.NAI.DIVISION_DESIGN_COMBAT_WIDTH_TARGET_WEIGHT = -10000 -- -200	       
 NDefines.NAI.UPGRADE_PERCENTAGE_OF_FORCES = 0.25 --0.1
 NDefines.NAI.UPGRADES_DEFICIT_LIMIT_DAYS = 180 --365 --50      ---test if it makes ai more sufficient remove if problematic                     -- Ai will avoid upgrading units in the field to new templates if it takes longer than this to fullfill their equipment need
 
---------------------------------------------------------------------------------------------------------------
+-------------------------
 -- DIVISION PRODUCTION
---------------------------------------------------------------------------------------------------------------
+-------------------------
 
 NDefines.NAI.MANPOWER_RATIO_REQUIRED_TO_PRIO_MOBILIZATION_LAW = 0.4		-- percentage of manpower in field is desired to be buffered for AI when it has upcoming wars or already at war. if it has less manpower, it will prio manpower laws
 
@@ -83,9 +91,9 @@ NDefines.NAI.DEPLOY_MIN_TRAINING_WAR_FACTOR = 0.9		-- Required percentage of tra
 NDefines.NAI.DEPLOY_MIN_EQUIPMENT_WAR_FACTOR = 0.9		-- Required percentage of equipment (1.0 = 100%) for AI to deploy unit in wartime
 NDefines.NAI.DEPLOY_MIN_EQUIPMENT_CAP_DEPLOY_FACTOR = 0.85 -- If training is capped by equipment deficit and we have reached that cap, deploy unit anyway if percentage is above this (reinforce in field instead).
 
---------------------------------------------------------------------------------------------------------------
+-------------------------
 -- EQUIPMENT PRODUCTION
---------------------------------------------------------------------------------------------------------------
+-------------------------
 
 NDefines.NAI.PRODUCTION_EQUIPMENT_SURPLUS_FACTOR = 1 -- [0.4] -- Base value for how much of currently used equipment the AI will at least strive to have in stock
 
@@ -100,17 +108,17 @@ NDefines.NAI.NAVAL_DOCKYARDS_SHIP_FACTOR = 1000			-- The extent to which number 
 NDefines.NAI.NAVAL_BASES_SHIP_FACTOR = 1000				-- The extent to which number of naval bases play into amount of sips a nation wants
 NDefines.NAI.NAVAL_STATES_SHIP_FACTOR = 1000			-- The extent to which number of states play into amount of sips a nation wants
 
---------------------------------------------------------------------------------------------------------------
+-------------------------
 -- FUEL
---------------------------------------------------------------------------------------------------------------
+-------------------------
 
 NDefines.NAI.WANTED_MAX_FUEL_BUFFER_IN_DAYS_FOR_ARMY_MAX_CONSUMPTION = 365  -- AI will try to buffer at least this amount of days on max consumption, will trade if necesarry and will go into fuel saving mode/aggresive mode using this buffer 
 NDefines.NAI.WANTED_MAX_FUEL_BUFFER_IN_DAYS_FOR_AIR_MAX_CONSUMPTION  = 365  -- AI will try to buffer at least this amount of days on max consumption, will trade if necesarry and will go into fuel saving mode/aggresive mode using this buffer
 NDefines.NAI.WANTED_MAX_FUEL_BUFFER_IN_DAYS_FOR_NAVY_MAX_CONSUMPTION = 365  -- AI will try to buffer at least this amount of days on max consumption, will trade if necesarry and will go into fuel saving mode/aggresive mode using this buffer
 
---------------------------------------------------------------------------------------------------------------
+-------------------------
 -- DIPLOMACY
---------------------------------------------------------------------------------------------------------------
+-------------------------
 
 NDefines.NAI.DIPLOMACY_SEND_MAX_FACTION = 0.75
 
@@ -120,9 +128,9 @@ NDefines.NAI.GENERATE_WARGOAL_THREAT_BASELINE = 0.6
 NDefines.NAI.LENDLEASE_FRACTION_OF_PRODUCTION = 0.25 --0.5
 NDefines.NAI.LENDLEASE_FRACTION_OF_STOCKPILE = 0.125 --0.25
 
---------------------------------------------------------------------------------------------------------------
+-------------------------
 -- PP
---------------------------------------------------------------------------------------------------------------
+-------------------------
 
 NDefines.NAI.NEW_LEADER_EXTRA_PP_FACTOR = 1 --2.0								 -- Country must have at least this many times extra PP to get new admirals or army leaders
 
@@ -130,9 +138,9 @@ NDefines.NAI.DIPLOMACY_IMPROVE_RELATION_COST_FACTOR = 7.0                       
 
 NDefines.NAI.COMMAND_POWER_BEFORE_SPEND_ON_TRAITS = 65.0
 
---------------------------------------------------------------------------------------------------------------
+-------------------------
 -- LAND AI
---------------------------------------------------------------------------------------------------------------
+-------------------------
 
 NDefines.NAI.MIN_AI_UNITS_PER_TILE_FOR_STANDARD_COHESION = 2.0	-- How many units should we have for each tile along a front in order to switch to standard cohesion (less moving around)
 NDefines.NAI.MIN_FRONT_SIZE_TO_CONSIDER_STANDARD_COHESION = 2000	-- How long should fronts be before we consider switching to standard cohesion (under this, standard cohesion fronts will switch back to relaxed)
@@ -193,9 +201,9 @@ NDefines.NAI.AREA_DEFENSE_CAPITAL_BASE_WEIGHT = { 0.5, 1.5, 1.5 }
 NDefines.NAI.AREA_DEFENSE_HOME_BASE_WEIGHT = { 0.5, 1.5, 1.5 }
 NDefines.NAI.AREA_DEFENSE_OTHER_BASE_WEIGHT = { 0.5, 1.0, 1.0 }
 	
---------------------------------------------------------------------------------------------------------------
+-------------------------
 -- NAVY AI
---------------------------------------------------------------------------------------------------------------
+-------------------------
 
 NDefines.NAI.MAX_SCREEN_TASKFORCES_FOR_MINE_SWEEPING = 0.10 -- maximum ratio of screens forces to be used in mine sweeping
 
@@ -286,9 +294,9 @@ NDefines.NAI.MAX_SCREEN_TASKFORCES_FOR_CONVOY_DEFENSE_MAX = 0.6 --0.70 -- maximu
 NDefines.NAI.MAX_SCREEN_TASKFORCES_FOR_CONVOY_DEFENSE_MAX_CONVOY_THREAT = 500 -- 1500 -- AI will increase screen assignment for escort missions as threate increases
 
 
---------------------------------------------------------------------------------------------------------------
+-------------------------
 -- AIR AI
---------------------------------------------------------------------------------------------------------------
+-------------------------
 
 
 NDefines.NAI.MAX_FUEL_CONSUMPTION_RATIO_FOR_AIR_TRAINING = 1
@@ -342,7 +350,7 @@ NDefines.NAI.NAVAL_PATROL_PLANES_PER_SHIP_RAIDING = 40 --10.0		-- Amount of nava
 NDefines.NAI.NAVAL_PATROL_PLANES_PER_SHIP_ESCORTING = 20 --10.0		-- Amount of naval patrol planes per ship on a convoy escort mission
 
 
---- Land Defines
+-- Land Defines
 NDefines.NMilitary.PLAN_EXECUTE_BALANCED_LIMIT = -10.0			-- When looking for an attach target, this score limit ---is required in the battle plan to consider province for attack suggested define by SensitiveDannyBoi
 NDefines.NMilitary.PLAN_PORVINCE_PORT_BASE_IMPORTANCE = 18.0		-- Added importance for area defense province with a port
 NDefines.NMilitary.PLAN_PORVINCE_PORT_LEVEL_FACTOR = 0.5			-- Bonus factor for port level
@@ -351,14 +359,14 @@ NDefines.NMilitary.PLAN_PORVINCE_RESISTANCE_BASE_IMPORTANCE = 150.0 -- Used when
 NDefines.NMilitary.PLAN_PROVINCE_LOW_VP_IMPORTANCE_FRONT = 1.0    -- Used when calculating the calue of fronts in the battle plan system vanilla 2.0
 
 
---- Navy Defines
+-- Navy Defines
 NDefines.NAI.ESTIMATED_CONVOYS_PER_DIVISION = 18			-- Not always correct, but mainly used to make sure AI does not go crazy vanilla 6
 NDefines.NAI.MAX_DISTANCE_NAVAL_INVASION = 100.0				-- AI is extremely unwilling to plan naval invasions above this naval distance limit. van 250 this value is multiplied by 15.92 I think for the actual km distance, aka 250 ='s almost 4k km.
 NDefines.NAI.NAVY_PREFERED_MAX_SIZE = 50
 NDefines.NAI.RESEARCH_NAVAL_DOCTRINE_NEED_GAIN_FACTOR = 0.075 -- Multiplies value based on relative naval industry size / country size.
 NDefines.NAI.NAVAL_MISSION_INVASION_BASE = 30000					-- Base score for region with naval invasion (modified dynamically by prioritizing orders)
 
---- Diplo Defines
+-- Diplo Defines
 NDefines.NDiplomacy.NAP_UNBREAKABLE_MONTHS = 18                    -- NAPS cannot be broken for this many months
 NDefines.NDiplomacy.NAP_BREAK_FORCE_BALANCE_1 = 5.0              	-- 2-1 brigades along the border required to break NAP
 NDefines.NDiplomacy.NAP_BREAK_FORCE_BALANCE_2 = 1.0              	-- 1-1 brigades along the border required to break NAP
@@ -370,7 +378,7 @@ NDefines.NAI.TRADEABLE_FACTORIES_FRACTION = 0.6	-- Will at most trade away this 
 NDefines.NDiplomacy.NOT_READY_FOR_WAR_BASE = -100 -- AI should be unwilling to enter accept a call to war if not ready ---for war against the relevant enemies. vanilla -50 - suggested define by SensitiveDannyBoi
 NDefines.NAI.LENDLEASE_FRACTION_OF_PRODUCTION = 0.1		-- Base fraction AI would send as lendlease 0.5 vanilla less base production used, perhaps will promote AI to send more?
 
---- AI Defines
+-- AI Defines
 NDefines.NAI.MICRO_POCKET_SIZE = 2						-- Pockets with a size equal to or lower than this will be mocroed by the AI, for efficiency.
 NDefines.NAI.UPGRADE_DIVISION_RELUCTANCE = .0042 -- aggressively trying to get the AI to upgrade divisions to newer templates, may work, may not, but it doesn't break anything. vanilla is 14, .0042 is just over 1 hour, where I believe the vanilla value at 14 = 14 days. So it should be checking to upgrade ONE division every single hour. 
 NDefines.NAI.RESEARCH_BONUS_FACTOR = 4.5 				-- To which extent AI should care about bonuses to research
@@ -379,7 +387,7 @@ NDefines.NAI.COMBINED_ARMS_LEVEL = 1                    -- 0 = Never, 1 = Infant
 
 NDefines.NAI.RESERVE_TO_COMMITTED_BALANCE = 0.3  ----next test, remove if problematic
 
-------Better Lend Lease AI
+-- Better Lend Lease AI
 
 NDefines.NProduction.EQUIPMENT_LEND_LEASE_WEIGHT_FACTOR     = 0.0025
 NDefines.NProduction.LEND_LEASE_DELIVERY_TOTAL_DAYS = 15
@@ -391,3 +399,125 @@ NDefines.NAI.MINIMUM_FUEL_DAYS_TO_ASK_LEND_LEASE = 10
 NDefines.NAI.MINIMUM_FUEL_DAYS_TO_ACCEPT_LEND_LEASE = 5
 
 NDefines.NAI.DIPLOMACY_ACCEPT_ATTACHE_OPINION_TRASHHOLD = 0
+
+
+	-- NRM Defines
+
+
+NDefines.NProduction.DEFAULT_MAX_NAV_FACTORIES_PER_LINE = 6 -- Was 3 changed to 6
+NDefines.NProduction.CAPITAL_SHIP_MAX_NAV_FACTORIES_PER_LINE = 6 -- Was 3 changed to 6
+NDefines.NProduction.CONVOY_MAX_NAV_FACTORIES_PER_LINE = 9
+NDefines.NProduction.BASE_FACTORY_SPEED_NAV = 4.15
+NDefines.NProduction.EQUIPMENT_MODULE_ADD_XP_COST = 3.0
+NDefines.NProduction.EQUIPMENT_MODULE_REPLACE_XP_COST = 3.0
+NDefines.NProduction.EQUIPMENT_MODULE_CONVERT_XP_COST = 2.0
+NDefines.NProduction.EQUIPMENT_MODULE_REMOVE_XP_COST = 1.0
+NDefines.NProduction.MIN_NAVAL_EQUIPMENT_CONVERSION_IC_COST_FACTOR = 0.1
+
+NDefines.NAir.DISRUPTION_FACTOR_CARRIER = 8
+
+NDefines.NNavy.MAX_SUBMARINES_PER_AUTO_TASK_FORCE = 10
+NDefines.NNavy.BEST_CAPITALS_TO_SCREENS_RATIO = 0.34
+NDefines.NNavy.COMBAT_MIN_HIT_CHANCE = 0.01
+NDefines.NNavy.COMBAT_EVASION_TO_HIT_CHANCE_TORPEDO_MULT = 40.0
+NDefines.NNavy.COMBAT_DAMAGE_RANDOMNESS = 0.4
+NDefines.NNavy.COMBAT_TORPEDO_CRITICAL_CHANCE = 0.25
+NDefines.NNavy.COMBAT_DAMAGE_TO_STR_FACTOR = 1.2
+NDefines.NNavy.COMBAT_DAMAGE_TO_ORG_FACTOR = 1.8
+NDefines.NNavy.COMBAT_RETREAT_DECISION_CHANCE = 0.3
+NDefines.NNavy.COMBAT_CRITICAL_DAMAGE_MULT = 3.0
+NDefines.NNavy.COMBAT_ARMOR_PIERCING_CRITICAL_BONUS = 0.5
+NDefines.NNavy.COMBAT_ARMOR_PIERCING_DAMAGE_REDUCTION = -0.9
+NDefines.NNavy.REPAIR_AND_RETURN_PRIO_LOW = 0.5
+NDefines.NNavy.REPAIR_AND_RETURN_PRIO_MEDIUM = 0.7
+NDefines.NNavy.REPAIR_AND_RETURN_PRIO_HIGH = 0.9
+NDefines.NNavy.REPAIR_AND_RETURN_PRIO_LOW_COMBAT = 0.4
+NDefines.NNavy.REPAIR_AND_RETURN_PRIO_MEDIUM_COMBAT = 0.6
+NDefines.NNavy.REPAIR_AND_RETURN_PRIO_HIGH_COMBAT = 0.8
+NDefines.NNavy.REPAIR_AND_RETURN_AMOUNT_SHIPS_LOW = 0.4
+NDefines.NNavy.REPAIR_AND_RETURN_AMOUNT_SHIPS_MEDIUM = 0.6
+NDefines.NNavy.REPAIR_AND_RETURN_UNIT_DYING_STR = 0.35
+NDefines.NNavy.NAVY_EXPENSIVE_IC = 8000
+NDefines.NNavy.MISSION_MAX_REGIONS = 5
+NDefines.NNavy.EXPERIENCE_FACTOR_CARRIER_GAIN = 0.075
+NDefines.NNavy.ANTI_AIR_TARGETTING_TO_CHANCE = 0.1
+NDefines.NNavy.BASE_CARRIER_SORTIE_EFFICIENCY = 0.4
+NDefines.NNavy.CONVOY_ATTACK_BASE_FACTOR = 0.10
+NDefines.NNavy.CARRIER_STACK_PENALTY = 6
+NDefines.NNavy.CARRIER_STACK_PENALTY_EFFECT = 0.1
+NDefines.NNavy.ENEMY_AIR_SUPERIORITY_IMPACT = -0.9
+NDefines.NNavy.DECRYPTION_SPOTTING_BONUS = 0.15
+NDefines.NNavy.MANPOWER_LOSS_RATIO_ON_STR_LOSS = 0.4
+NDefines.NNavy.CAPITAL_ONLY_COMBAT_ACTIVATE_TIME = 8
+NDefines.NNavy.ALL_SHIPS_ACTIVATE_TIME = 12
+NDefines.NNavy.ON_BASE_FUEL_COST = 0.01
+NDefines.NNavy.FUEL_COST_MULT = 0.20
+NDefines.NNavy.AGGRESION_MULTIPLIER_FOR_COMBAT = 1.25
+NDefines.NNavy.AGGRESSION_MAX_ARMOR_EFFICIENCY = 1.25
+NDefines.NNavy.AGGRESSION_HEAVY_GUN_EFFICIENCY_ON_LIGHT_SHIPS = 0.3
+NDefines.NNavy.AGGRESSION_TORPEDO_EFFICIENCY_ON_LIGHT_SHIPS = 0.2
+NDefines.NNavy.AGGRESSION_LIGHT_GUN_EFFICIENCY_ON_HEAVY_SHIPS = 0.15
+NDefines.NNavy.AGGRESSION_TORPEDO_EFFICIENCY_ON_HEAVY_SHIPS = 1.0
+NDefines.NNavy.SUPREMACY_PER_SHIP_BASE = 10.0
+NDefines.NNavy.NAVAL_MINES_SWEEPERS_REDUCTION_ON_PENALTY_EFFECT = 2.5
+NDefines.NNavy.NAVAL_MINES_INTEL_DIFF_FACTOR = 0.2
+NDefines.NNavy.NAVAL_MINES_NAVAL_SUPREMACY_FACTOR = 0.5
+NDefines.NNavy.NAVAL_MINES_ACCIDENT_CRITICAL_HIT_CHANCES = 0.1
+NDefines.NNavy.NAVAL_MINES_ACCIDENT_STRENGTH_LOSS = 20.0
+NDefines.NNavy.NAVAL_MINES_ACCIDENT_ORG_LOSS_FACTOR = 0.8
+NDefines.NNavy.SPOTTING_ENEMY_SPOTTING_MULTIPLIER_FOR_RUNNING_AWAY = 0.8
+NDefines.NNavy.SPOTTING_SPEED_MULT_FOR_CATCHING_UP = 0.25
+NDefines.NNavy.BASE_ESCAPE_SPEED = 0.01
+NDefines.NNavy.SPEED_TO_ESCAPE_SPEED = 1.5
+NDefines.NNavy.ESCAPE_SPEED_PER_COMBAT_DAY = 0.2
+NDefines.NNavy.MAX_ESCAPE_SPEED_FROM_COMBAT_DURATION = 0.3
+NDefines.NNavy.ESCAPE_SPEED_SUB_BASE = 0.05
+NDefines.NNavy.ESCAPE_SPEED_HIDDEN_SUB = 0.20
+NDefines.NNavy.CONVOY_DETECTION_CHANCE_BASE = 4.17
+NDefines.NNavy.BASE_SPOTTING_EFFECT_FOR_INITIAL_CONVOY_SPOTTING = 0.35
+NDefines.NNavy.SPOTTING_SPEED_EFFECT_FOR_INITIAL_CONVOY_SPOTTING = 1.20
+NDefines.NNavy.UNIT_TRANSFER_DETECTION_CHANCE_BASE = 25.02
+NDefines.NNavy.BASE_SPOTTING_EFFECT_FOR_INITIAL_UNIT_TRANSFER_SPOTTING = 10.0
+NDefines.NNavy.SPOTTING_SPEED_EFFECT_FOR_INITIAL_UNIT_TRANSFER_SPOTTING = 20.0
+NDefines.NNavy.RELATIVE_SURFACE_DETECTION_TO_POSITIONING_FACTOR = 0.1
+NDefines.NNavy.MAX_POSITIONING_BONUS_FROM_SURFACE_DETECTION = 0.0
+NDefines.NNavy.HIGHER_SHIP_RATIO_POSITIONING_PENALTY_FACTOR = 0.4
+NDefines.NNavy.MAX_POSITIONING_PENALTY_FROM_HIGHER_SHIP_RATIO = 0.8
+NDefines.NNavy.POSITIONING_PENALTY_HOURLY_DECAY_FOR_NEWLY_JOINED_SHIPS = 0.005
+NDefines.NNavy.DAMAGE_PENALTY_ON_MINIMUM_POSITIONING = 0.75
+NDefines.NNavy.AA_EFFICIENCY_PENALTY_ON_MINIMUM_POSITIONING = 0.6
+NDefines.NNavy.MAX_ANTI_AIR_REDUCTION_EFFECT_ON_INCOMING_AIR_DAMAGE = 0.75
+NDefines.NNavy.SCREEN_RATIO_FOR_FULL_SCREENING_FOR_CAPITALS = 3.0
+NDefines.NNavy.HEAVY_GUN_ATTACK_TO_SHORE_BOMBARDMENT = 0.06
+NDefines.NNavy.LIGHT_GUN_ATTACK_TO_SHORE_BOMBARDMENT = 0.04
+NDefines.NNavy.GUN_HIT_PROFILES = { -- hit profiles for guns, if target ih profile is lower the gun will have lower accuracy
+		80.0,	-- big guns
+		120.0,	-- torpedos
+		50.0,	-- small guns
+	}
+NDefines.NNavy.DEPTH_CHARGES_HIT_CHANCE_MULT = 0.8
+NDefines.NNavy.DEPTH_CHARGES_DAMAGE_MULT = 1.0
+NDefines.NNavy.DEPTH_CHARGE_STAT_FOR_SHIP_TO_BE_SUB_HUNTER = 10
+NDefines.NNavy.SUB_DETECTION_STAT_FOR_SHIP_TO_BE_SUB_HUNTER = 4
+NDefines.NNavy.CONVOY_DEFENSE_MAX_CONVOY_TO_SHIP_RATIO = 2.0
+NDefines.NNavy.CONVOY_DEFENSE_MAX_REGION_TO_TASKFORCE_RATIO	= 3.0
+NDefines.NNavy.SUBMARINE_REVEAL_BASE_CHANCE = 15
+NDefines.NNavy.SUBMARINE_BASE_TORPEDO_REVEAL_CHANCE = 0.2
+NDefines.NNavy.COMBAT_RESULT_PRIORITY_DAY_TO_LIVE = { 										-- the game will delete the combat results after some duration depending on its importance
+		14, 
+		60, 
+		180,
+	}
+
+NDefines.NAI.PRODUCTION_MAX_PROGRESS_TO_SWITCH_NAVAL = 0.02
+NDefines.NAI.PRODUCTION_CARRIER_PLANE_BUFFER_RATIO = 2.0
+NDefines.NAI.MAX_FUEL_CONSUMPTION_RATIO_FOR_NAVY_TRAINING = 0.4
+NDefines.NAI.MAX_FULLY_TRAINED_SHIP_RATIO_FOR_TRAINING = 1.0
+NDefines.NAI.REFIT_SHIP_RELUCTANCE = 500
+NDefines.NAI.REFIT_SHIP_PERCENTAGE_OF_FORCES = 0.0
+NDefines.NAI.MAX_CARRIER_OVERFILL = 1.05
+NDefines.NAI.SUB_TASKFORCE_MAX_SHIP_COUNT = 6
+NDefines.NAI.SCREEN_TASKFORCE_MAX_SHIP_COUNT = 8
+NDefines.NAI.MIN_CAPITALS_FOR_CARRIER_TASKFORCE = 4
+NDefines.NAI.CAPITALS_TO_CARRIER_RATIO = 1.5
+NDefines.NAI.SCREENS_TO_CAPITAL_RATIO = 4.0
