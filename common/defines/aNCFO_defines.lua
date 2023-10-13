@@ -3,6 +3,7 @@ NDefines.NGame.START_DATE = "1924.1.1.12"
 NDefines.NGame.END_DATE = "1949.1.1.1"
 NDefines.NGame.MAP_SCALE_PIXEL_TO_KM = 7.8254
 NDefines.NGame.HANDS_OFF_START_TAG = "LLA"
+NDefines.NBuildings.MAX_SHARED_SLOTS = 55
 
 
 		-- frontlineai Defines
