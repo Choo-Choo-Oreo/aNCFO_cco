@@ -25,7 +25,7 @@ HHE_deed_reform_starter_up = {
 		}
 	}
 }
-HHE_kill_deed_lvl1 = {
+HHE_deeds_assassination_row2 = {
 	if = {
 		limit = {
 			or = {
@@ -51,27 +51,10 @@ HHE_kill_deed_lvl1 = {
 				}
 			}
 		}
-		hidden_effect = {
-			set_global_flag = death_of_deed
-			add_stability = -0.1
-			add_ideas = HHE_choas4
-			load_focus_tree = hhe_election_focus
-			ROOT = {
-				kill_country_leader = yes
-				add_country_leader_role = {
-					character = HHE_harmonainus_senate
-					promote_leader = yes
-					country_leader = {
-						ideology = sub_harmonainism
-						traits = { harmonainus_senate }
-					}
-				}
-			}
-			news_event = HHE.0
-		}
+		HHE_deeds_assassination = yes
 	}
 }
-HHE_kill_deed_lvl2 = {
+HHE_deeds_assassination_row3 = {
 	if = {
 		limit = {
 			or = {
@@ -97,16 +80,19 @@ HHE_kill_deed_lvl2 = {
 				}
 			}
 		}
-		hidden_effect = {
-			set_global_flag = death_of_deed
-			add_stability = -0.1
-			add_ideas = HHE_choas4
-			load_focus_tree = hhe_election_focus
-			ROOT = {
-				kill_country_leader = yes
-				recruit_character = HHE_harmonainus_senate
+		HHE_deeds_assassination = yes
+	}
+}
+HHE_deeds_assassination = {
+	hidden_effect = {
+		set_global_flag = death_of_deed
+		add_stability = -0.1
+		add_ideas = HHE_choas4
+		load_focus_tree = hhe_election_focus
+		ROOT = {
+			kill_country_leader = yes
+			HHE_harmonainus_senate = {
 				add_country_leader_role = {
-					character = HHE_harmonainus_senate
 					promote_leader = yes
 					country_leader = {
 						ideology = sub_harmonainism
@@ -114,8 +100,8 @@ HHE_kill_deed_lvl2 = {
 					}
 				}
 			}
-			news_event = HHE.0
 		}
+		news_event = HHE.0
 	}
 }
 # Important to put HIGHEST first
@@ -140,18 +126,26 @@ HHE_deed_reform_removal = {
 	}
 }
 # Election Effects
+HHE_harmonainus_senate_dismissed = {
+	hidden_effect = {
+		ROOT = {
+			HHE_harmonainus_senate = { remove_trait = { ideology = sub_harmonainism } }
+		}
+	}
+}
 elected_tradition_effect = {
 	set_global_flag = elected_tradition
 	hidden_effect = {
 		load_focus_tree = hhe_tradition_focus
 		ROOT = {
-			recruit_character = HLF_gabriel_strongheart
-			add_country_leader_role = {
-				character = HLF_gabriel_strongheart
-				promote_leader = yes
-				country_leader = {
-					ideology = sub_harmonainism
-					traits = { silent_workhorse }
+			HHE_harmonainus_senate_dismissed = yes
+			HHE_gabriel_strongheart = {
+				add_country_leader_role = {
+					promote_leader = yes
+					country_leader = {
+						ideology = sub_harmonainism
+						traits = { silent_workhorse }
+					}
 				}
 			}
 		}
@@ -162,13 +156,14 @@ elected_influencer_effect = {
 	hidden_effect = {
 		load_focus_tree = hhe_influencer_focus
 		ROOT = {
-			recruit_character = HST_isabella_delfina
-			add_country_leader_role = {
-				character = HST_isabella_delfina
-				promote_leader = yes
-				country_leader = {
-					ideology = sub_reformed_harmonainism
-					traits = { political_dancer pl_semidemocracy_advisor }
+			HHE_harmonainus_senate_dismissed = yes
+			HHE_isabella_delfina = {
+				add_country_leader_role = {
+					promote_leader = yes
+					country_leader = {
+						ideology = sub_reformed_harmonainism
+						traits = { political_dancer pl_semidemocracy_advisor }
+					}
 				}
 			}
 		}
@@ -179,13 +174,14 @@ elected_authority_effect = {
 	hidden_effect = {
 		load_focus_tree = hhe_authority_focus
 		ROOT = {
-			recruit_character = HHE_elected_authority_leader
-			add_country_leader_role = {
-				character = HHE_elected_authority_leader
-				promote_leader = yes
-				country_leader = {
-					ideology = sub_harmonainism
-					traits = { prince_of_terror }
+			HHE_harmonainus_senate_dismissed = yes
+			HHE_elected_authority_leader = {
+				add_country_leader_role = {
+					promote_leader = yes
+					country_leader = {
+						ideology = sub_harmonainism
+						traits = { prince_of_terror }
+					}
 				}
 			}
 		}
@@ -197,37 +193,44 @@ elected_warmonger_effect = {
 		add_ideas = initial_takeover
 		load_focus_tree = hhe_warmonger_focus
 		ROOT = {
-			recruit_character = HTP_archard_vlad
-			add_country_leader_role = {
-				character = HTP_archard_vlad
-				promote_leader = yes
-				country_leader = {
-					ideology = sub_radical_harmonainism
-					traits = { warmonger national_integralist }
+			HHE_harmonainus_senate_dismissed = yes
+			HHE_archard_vlad = {
+				add_country_leader_role = {
+					promote_leader = yes
+					country_leader = {
+						ideology = sub_radical_harmonainism
+						traits = { warmonger national_integralist }
+					}
 				}
-				country_leader = {
-					ideology = sub_authoritarian
-					traits = { warmonger national_integralist }
+				add_country_leader_role = {
+					promote_leader = yes
+					country_leader = {
+						ideology = sub_authoritarian
+					}
 				}
 			}
 		}
 		HTP = {
-			recruit_character = HTP_coccineum_vlad
-			add_country_leader_role = {
-				character = HTP_coccineum_vlad
-				promote_leader = yes
-				country_leader = {
-					ideology = sub_radical_harmonainism
-					traits = { warmonger retired_officer }
+			HTP_archard_vlad = { remove_trait = { ideology = sub_radical_harmonainism ideology = sub_authoritarian } }
+			HTP_coccineum_vlad = {
+				add_country_leader_role = {
+					promote_leader = yes
+					country_leader = {
+						ideology = sub_radical_harmonainism
+						traits = { warmonger retired_officer }
+					}
 				}
-				country_leader = {
-					ideology = sub_authoritarian
-					traits = { warmonger retired_officer }
+				add_country_leader_role = {
+					promote_leader = yes
+					country_leader = {
+						ideology = sub_authoritarian
+					}
 				}
 			}
 		}
 	}
 }
+# Pre Civil War Effects
 civil_war_warmonger_effect = {
 	set_global_flag = HHE_collapse_of_the_nation # This one is Perma
 	hidden_effect = {
@@ -357,31 +360,29 @@ civil_war_warmonger_effect = {
 post_civil_war_tradition_effect = {
 	set_global_flag = elected_tradition
 	load_focus_tree = hhe_tradition_focus
-	#ROOT = {
-	#	create_country_leader = {
-	#		name = "Gabriel Strongheart"
-	#		desc = "POLITICS_GABRIEL_DESC"
-	#		#picture = "Portrait_XXX.dds"
-	#		expire = "1965.1.1"
-	#		ideology = sub_harmonainism
-	#		traits = {
-	#			silent_workhorse
-	#		}
-	#		id = 202
-	#	}
-	#}
+	ROOT = {
+		HHE_gabriel_strongheart = {
+			add_country_leader_role = {
+				promote_leader = yes
+				country_leader = {
+					ideology = sub_harmonainism
+					traits = { silent_workhorse }
+				}
+			}
+		}
+	}
 }
 post_civil_war_influencer_effect = {
 	set_global_flag = elected_influencer
-	load_focus_tree = hhe_influencer_focus
+	load_focus_tree = HHE_influencer_focus
 	ROOT = {
-		recruit_character = HST_isabella_delfina
+		HST_isabella_delfina = {
 		add_country_leader_role = {
-			character = HST_isabella_delfina
-			promote_leader = yes
-			country_leader = {
-				ideology = sub_reformed_harmonainism
-				traits = { political_dancer pl_semidemocracy_advisor }
+				promote_leader = yes
+				country_leader = {
+					ideology = sub_reformed_harmonainism
+					traits = { political_dancer pl_semidemocracy_advisor }
+				}
 			}
 		}
 	}
