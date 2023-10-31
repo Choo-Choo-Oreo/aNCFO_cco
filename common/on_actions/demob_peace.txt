@@ -1,0 +1,160 @@
+on_actions = {
+	on_startup = {
+		effect = {
+			every_country = {
+				#log = "[ROOT.GetName] Startup"
+				#log = "[FROM.GetName] Startup"
+				#log = "[PREV.GetName] Startup"
+				#log = "[THIS.GetName] Startup"
+				THIS = {
+				country_event = {
+					id = demob_peace_init.0
+				}
+				}
+			}
+		}
+	}
+	on_monthly = {
+		effect = {
+			#every_country = {
+				#log = "[ROOT.GetName] Startup"
+				#log = "[FROM.GetName] Startup"
+				#log = "[PREV.GetName] Startup"
+				#log = "[THIS.GetName] Startup"
+				THIS = {
+				country_event = {
+					id = demob_peace_init.0
+				}
+				#add_to_variable = {ROOT.GetUnitLimit = 1}
+				}
+			#}
+			#limit = {THIS = ROOT}
+			#ROOT = {
+			if = {
+			limit = {has_country_flag = JustifyPulse_dp has_war = no}
+		###log = "Event 3 for Aggressor [THIS.GetName] - Clearing Justification Flag"
+				country_event = {
+					id = demob_peace_init.3
+				}
+			}
+			#}
+		}
+	}
+	on_justifying_wargoal_pulse = {
+	effect = {
+				set_variable = {ROOT.PrevJust1_dp = FROM}
+				
+	every_country = {
+	limit = {has_country_flag = WillJoinCo_dp}
+				###log = "Event 2 for Coalition Participant ([THIS.GetName]) - Checking Coalition Data"
+	country_event = {id = demob_peace_init.2}
+	}
+	ROOT = {
+				###log = "Justify Wargoal Found from [ROOT.GetName]. Firing Event 1"
+				#log = "[?ROOT.PrevJust1_dp.GetName]"
+				country_event = {
+					id = demob_peace_init.1
+				}
+	}
+	}
+	}
+	on_declare_war = {
+	effect = {
+	ROOT = {
+	if = {
+	limit = {has_country_flag = JustifyPulse_dp FROM = {has_country_flag = WillJoinCo_dp}}
+	every_country = {
+	limit = {has_country_flag = WillJoinCo_dp}
+	declare_war_on = {
+		target = PREV
+		type = topple_government
+	}
+	}
+	}
+	}
+	}
+	}
+	on_war_relation_added = {
+	effect = {
+	if = { limit = {
+	OR = {
+	ROOT = {
+	OR = {
+	num_of_military_factories > 9
+	any_allied_country = {num_of_military_factories > 9}
+	}
+	}
+	FROM = {
+	OR = {
+	num_of_military_factories > 9
+	any_allied_country = {num_of_military_factories > 9}
+	}
+	}
+	}
+	}
+	if = {limit = {ROOT = {is_major = yes} FROM = {is_major = yes}} add_to_variable = {FROM.SetMajorAmount_dp = 1} add_to_variable = {ROOT.SetMajorAmount_dp = 1} ###log = "Major has joined the war. +1. >3 needed. Currently on [?ROOT.SetMajorAmount_dp]/[?FROM.SetMajorAmount_dp] out of 4"}
+	if = {limit = {OR = {NOT = {ROOT = {has_country_flag = Great_War_dp}} NOT = {FROM = {has_country_flag = Great_War_dp}}}
+	OR = {check_variable = {ROOT.SetMajorAmount_dp > 2} check_variable = {FROM.SetMajorAmount_dp > 2}}
+	}
+	if = {
+	limit = {
+	NOT = {OR = {ROOT = {has_country_flag = Great_War_dp} FROM = {has_country_flag = Great_War_dp}}}
+	}
+	news_event = {id = peace_events_dp.3}
+	}
+	if = {limit = {NOT = {has_country_flag = Great_War_dp}}
+	set_country_flag = Great_War_dp
+	######log = "[THIS.GetName] has been set with the Great War Flag."
+	}
+	every_country = {
+	limit = {NOT = {has_country_flag = Great_War_dp} OR = {has_war_with = ROOT has_war_with = FROM}}
+	set_country_flag = Great_War_dp
+	###log = "[THIS.GetName] has been set with the Great War Flag."
+	}
+	}
+	
+	}
+	
+	}
+	}
+	on_peace = {
+	effect = {
+	every_country = {
+	limit = {has_country_flag = JustifyPulse_dp}
+		###log = "Event 3 for Aggressor [THIS.GetName] - Clearing Justification Flag"
+	country_event = {id = demob_peace_init.3}
+	}
+	every_country = {
+	#Great War is Over
+	limit = {has_country_flag = Great_War_dp has_war = no}
+	#Sets Configurable Time Since War variable - >60 = 100% >48 = 80% >36 = 60% >24 = 40% >12 = 30% >0 = 20% 0 = 0%
+				###log = "Setting Peace Timer for [THIS.GetName]"
+				set_variable = {THIS.SetMajorAmount_dp = 0}
+				if = {limit = {has_game_rule = { rule = demob_peace_try_no_wars option = demob_peace_try_no_wars_a }}
+				set_variable = {THIS.TimeSinceWar_dp = 9999}
+				} else_if = {limit = {has_game_rule = { rule = demob_peace_try_no_wars option = demob_peace_try_no_wars_b }}
+				set_variable = {THIS.TimeSinceWar_dp = 120}
+				} else_if = {limit = {has_game_rule = { rule = demob_peace_try_no_wars option = demob_peace_try_no_wars_c }}
+				set_variable = {THIS.TimeSinceWar_dp = 60}
+				} else_if = {limit = {has_game_rule = { rule = demob_peace_try_no_wars option = demob_peace_try_no_wars_d }}
+				set_variable = {THIS.TimeSinceWar_dp = 24}
+				} else = {
+				set_variable = {THIS.TimeSinceWar_dp = 0}
+				}
+				clr_country_flag = Great_War_dp
+				#Every country with great war flag will clear great war flag and get event
+				#set_variable = {THIS.PrevJust1_dp = ROOT}
+				#if = {limit = {has_country_flag = }}
+				#log = "Event 2 for Participant ([THIS.GetName]) of Big War - Clearing Coalition Data - is Now at Peace"
+				#THIS = {
+				#country_event = {
+				#	id = demob_peace_init.2
+				#}
+				#}
+	}
+
+	
+	
+	}
+	}
+}

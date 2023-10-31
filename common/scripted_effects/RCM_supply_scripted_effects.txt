@@ -1,0 +1,997 @@
+supply_on_daily_effect = {
+    ############################################
+    ###########SUPPLY WEEKLY CALC###############
+    ############################################
+    #clear weekly and daily    
+    set_variable = {
+        This.supply_condition_weeky	= 0
+    }
+    set_variable = {
+        This.supply_condition_daily	= 0
+    }
+    #mobilization laws
+    if = {
+        limit = {
+            has_idea = civilian_economy
+        }
+        add_to_variable = {
+            This.supply_condition_weeky = 0.2
+        }
+    }
+    else_if = {
+        limit = {
+            has_idea = low_economic_mobilisation
+        }
+        add_to_variable = {
+            This.supply_condition_weeky = -0.1
+        }
+    }
+    else_if = {
+        limit = {
+            has_idea = partial_economic_mobilisation
+        }
+        add_to_variable = {
+            This.supply_condition_weeky = -0.2
+        }
+    }
+    else_if = {
+        limit = {
+            has_idea = economic_mobilisation
+        }
+        add_to_variable = {
+            This.supply_condition_weeky = -0.2
+        }
+    }
+    else_if = {
+        limit = {
+            has_idea = war_economy
+        }
+        add_to_variable = {
+            This.supply_condition_weeky = -0.4
+        }
+    }
+    else_if = {
+        limit = {
+            has_idea = tot_economic_mobilisation
+        }
+        add_to_variable = {
+            This.supply_condition_weeky = -0.5
+        }
+    }
+    #inflation
+    if = {
+        limit = {
+            has_idea = CHI_hyper_inflation_none
+        }
+        add_to_variable = {
+            This.supply_condition_weeky = 0.1
+        }
+    }
+    else_if = {
+        limit = {
+            has_idea = CHI_hyper_inflation_1
+        }
+        add_to_variable = {
+        	This.supply_condition_weeky = -0.1
+        }
+    }
+    else_if = {
+        limit = {
+            has_idea = CHI_hyper_inflation_2
+        }
+        add_to_variable = {
+            This.supply_condition_weeky = -0.2
+        }
+    }
+    else_if = {
+        limit = {
+            has_idea = CHI_hyper_inflation_3
+        }
+        add_to_variable = {
+            This.supply_condition_weeky = -0.3
+        }
+    }
+    else_if = {
+        limit = {
+            has_idea = CHI_hyper_inflation_4
+        }
+        add_to_variable = {
+            This.supply_condition_weeky = -0.4
+        }
+    }
+    else_if = {
+        limit = {
+            has_idea = CHI_hyper_inflation_5
+        }
+        add_to_variable = {
+            This.supply_condition_weeky = -0.5
+        }
+    }
+    #idea modifiers
+    
+    #stability modifier
+    if = {
+        limit = {
+            always = yes
+        }        
+        #set_variable = { #see if it works
+        #    This.supply_condition_stabiliy_bonus = 0
+        #}
+        set_variable = {
+            This.supply_condition_stabiliy_bonus = This.has_stability
+        }
+        subtract_from_variable = {
+            This.supply_condition_stabiliy_bonus = 0.5
+        }
+        if = {
+            limit = {
+                check_variable = {
+                    This.supply_condition_stabiliy_bonus > 0
+                }
+            } 
+            multiply_variable = {
+                This.supply_condition_stabiliy_bonus = 0.6 #+0.3(+60%),-0.5(-100%)
+            }
+        }
+        add_to_variable = {
+            This.supply_condition_weeky = This.supply_condition_stabiliy_bonus
+        }
+    }
+    #######################################
+    #CUSTOM WEEKLY MODIFIER
+    #if = {
+    #    limit = {
+    #        has_idea = JAP_intervene_in_china_1
+    #    }
+    #    #add_to_variable = {
+    #    #    This.supply_condition_weeky = -0.2
+    #    #}
+    #}
+    #foreign aid
+    set_variable = {
+        This.num_of_foreign_aid_temp = This.num_of_foreign_aid
+    }
+    multiply_variable = {
+        This.num_of_foreign_aid_temp = -0.5
+    }
+    add_to_variable = {
+        This.supply_condition_weeky = This.num_of_foreign_aid_temp
+    }
+
+    #recieve FA
+    set_variable = {
+        This.recieved_foreign_aid = 0
+    }
+    set_variable = {
+        This.foreign_aid_ver_big_temp = This.foreign_aid_ver_big
+    }
+    multiply_variable = {
+        This.foreign_aid_ver_big_temp = 0.1
+    }
+    add_to_variable = {
+        This.recieved_foreign_aid = This.foreign_aid_ver_big_temp
+    }
+
+    set_variable = {
+        This.foreign_aid_big_temp = This.foreign_aid_big
+    }
+    multiply_variable = {
+        This.foreign_aid_big_temp = 0.25
+    }
+    add_to_variable = {
+        This.recieved_foreign_aid = This.foreign_aid_big_temp
+    }
+
+    set_variable = {
+        This.foreign_aid_med_temp = This.foreign_aid_med
+    }
+    multiply_variable = {
+        This.foreign_aid_med_temp = 0.5
+    }
+    add_to_variable = {
+        This.recieved_foreign_aid = This.foreign_aid_med_temp
+    }
+
+    set_variable = {
+        This.foreign_aid_sml_temp = This.foreign_aid_sml
+    }
+    multiply_variable = {
+        This.foreign_aid_sml_temp = 0.75
+    }
+    add_to_variable = {
+        This.recieved_foreign_aid = This.foreign_aid_sml_temp
+    }
+
+    set_variable = {
+        This.foreign_aid_ver_sml_temp = This.foreign_aid_ver_sml
+    }
+    multiply_variable = {
+        This.foreign_aid_ver_sml_temp = 1
+    }
+    add_to_variable = {
+        This.recieved_foreign_aid = This.foreign_aid_ver_sml_temp
+    }
+    add_to_variable = {
+        This.supply_condition_weeky = This.recieved_foreign_aid
+    }
+    #decision
+    if = {
+        limit = {
+            has_country_flag = improved_supply_conditions_flag
+        }
+        add_to_variable = {
+            This.supply_condition_weeky = 0.5
+        }
+    }
+    #WEEKLY CALC ENDS######################
+    #weekly to daily
+    if = {
+        limit = {
+            always = yes
+        }
+        set_variable = {
+            This.supply_condition_daily	= This.supply_condition_weeky
+        }
+        divide_variable = {
+            This.supply_condition_daily = 7
+        }
+        add_to_variable = {
+            This.supply_condition_base = This.supply_condition_daily
+        }
+    }
+    
+    #SUPPLY CONSUMPTION per factories = the percentage to be deducted , with a small buff
+    if = { 
+        limit = {
+            always = yes
+        }
+        ###############F*CK IT, WE ARE ADDING it MANUALLY ################################################################################
+        ########
+        ##ARMY##
+        ########
+        set_variable = {
+            RCM_army_supply_consumption = 0
+        }
+        #A is subunit type
+        #B is SC
+        #set_variable = { RCM_supply_consumption_A = This.num_battalions_with_type@A }
+        #multiply_variable = { RCM_supply_consumption_A = B }
+        #add_to_variable = { RCM_army_supply_consumption = RCM_supply_consumption_A }
+        set_variable = { RCM_supply_consumption_amphibious_armor = This.num_battalions_with_type@amphibious_armor }
+        multiply_variable = { RCM_supply_consumption_amphibious_armor = 0.2 } #supply consumption
+        add_to_variable = { RCM_army_supply_consumption = RCM_supply_consumption_amphibious_armor }
+        set_variable = { RCM_supply_consumption_amphibious_mechanized = This.num_battalions_with_type@amphibious_mechanized }
+        multiply_variable = { RCM_supply_consumption_amphibious_mechanized = 0.18 } #supply consumption
+        add_to_variable = { RCM_army_supply_consumption = RCM_supply_consumption_amphibious_mechanized }
+        set_variable = { RCM_supply_consumption_anti_tank = This.num_battalions_with_type@anti_tank }
+        multiply_variable = { RCM_supply_consumption_anti_tank = 0.08 } #supply consumption
+        add_to_variable = { RCM_army_supply_consumption = RCM_supply_consumption_anti_tank }
+        set_variable = { RCM_supply_consumption_anti_tank_brigade = This.num_battalions_with_type@anti_tank_brigade }
+        multiply_variable = { RCM_supply_consumption_anti_tank_brigade = 0.1 } #supply consumption
+        add_to_variable = { RCM_army_supply_consumption = RCM_supply_consumption_anti_tank_brigade }
+        set_variable = { RCM_supply_consumption_mot_anti_tank_brigade = This.num_battalions_with_type@mot_anti_tank_brigade }
+        multiply_variable = { RCM_supply_consumption_mot_anti_tank_brigade = 0.15 } #supply consumption
+        add_to_variable = { RCM_army_supply_consumption = RCM_supply_consumption_mot_anti_tank_brigade }
+        set_variable = { RCM_supply_consumption_anti_air = This.num_battalions_with_type@anti_air }
+        multiply_variable = { RCM_supply_consumption_anti_air = 0.1 } #supply consumption
+        add_to_variable = { RCM_army_supply_consumption = RCM_supply_consumption_anti_air }
+        set_variable = { RCM_supply_consumption_anti_air_brigade = This.num_battalions_with_type@anti_air_brigade }
+        multiply_variable = { RCM_supply_consumption_anti_air_brigade = 0.1 } #supply consumption
+        add_to_variable = { RCM_army_supply_consumption = RCM_supply_consumption_anti_air_brigade }
+        set_variable = { RCM_supply_consumption_mot_anti_air_brigade = This.num_battalions_with_type@mot_anti_air_brigade }
+        multiply_variable = { RCM_supply_consumption_mot_anti_air_brigade = 0.15 } #supply consumption
+        add_to_variable = { RCM_army_supply_consumption = RCM_supply_consumption_mot_anti_air_brigade }
+        set_variable = { RCM_supply_consumption_armored_car = This.num_battalions_with_type@armored_car } #amored car!
+        multiply_variable = { RCM_supply_consumption_armored_car = 0.14 }
+        add_to_variable = { RCM_army_supply_consumption = RCM_supply_consumption_armored_car }
+        set_variable = { RCM_supply_consumption_artillery = This.num_battalions_with_type@artillery }
+        multiply_variable = { RCM_supply_consumption_artillery = 0.16 } #supply consumption
+        add_to_variable = { RCM_army_supply_consumption = RCM_supply_consumption_artillery }
+        set_variable = { RCM_supply_consumption_rocket_artillery = This.num_battalions_with_type@rocket_artillery }
+        multiply_variable = { RCM_supply_consumption_rocket_artillery = 0.16 } #supply consumption
+        add_to_variable = { RCM_army_supply_consumption = RCM_supply_consumption_rocket_artillery }
+        set_variable = { RCM_supply_consumption_artillery_brigade = This.num_battalions_with_type@artillery_brigade }
+        multiply_variable = { RCM_supply_consumption_artillery_brigade = 0.2 } #supply consumption
+        add_to_variable = { RCM_army_supply_consumption = RCM_supply_consumption_artillery_brigade }
+        set_variable = { RCM_supply_consumption_mot_artillery_brigade = This.num_battalions_with_type@mot_artillery_brigade }
+        multiply_variable = { RCM_supply_consumption_mot_artillery_brigade = 0.3 } #supply consumption
+        add_to_variable = { RCM_army_supply_consumption = RCM_supply_consumption_mot_artillery_brigade }
+        set_variable = { RCM_supply_consumption_rocket_artillery_brigade = This.num_battalions_with_type@rocket_artillery_brigade }
+        multiply_variable = { RCM_supply_consumption_rocket_artillery_brigade = 0.2 } #supply consumption
+        add_to_variable = { RCM_army_supply_consumption = RCM_supply_consumption_rocket_artillery_brigade }
+        set_variable = { RCM_supply_consumption_mot_rocket_artillery_brigade = This.num_battalions_with_type@mot_rocket_artillery_brigade }
+        multiply_variable = { RCM_supply_consumption_mot_rocket_artillery_brigade = 0.3 } #supply consumption
+        add_to_variable = { RCM_army_supply_consumption = RCM_supply_consumption_mot_rocket_artillery_brigade }
+        set_variable = { RCM_supply_consumption_motorized_rocket_brigade = This.num_battalions_with_type@motorized_rocket_brigade }
+        multiply_variable = { RCM_supply_consumption_motorized_rocket_brigade = 0.28 } #supply consumption
+        add_to_variable = { RCM_army_supply_consumption = RCM_supply_consumption_motorized_rocket_brigade }
+        set_variable = { RCM_supply_consumption_cavalry = This.num_battalions_with_type@cavalry }
+        multiply_variable = { RCM_supply_consumption_cavalry = 0.12 } #supply consumption
+        add_to_variable = { RCM_army_supply_consumption = RCM_supply_consumption_cavalry }
+        set_variable = { RCM_supply_consumption_engineer = This.num_battalions_with_type@engineer }
+        multiply_variable = { RCM_supply_consumption_engineer = 0.02 } #supply consumption
+        add_to_variable = { RCM_army_supply_consumption = RCM_supply_consumption_engineer }
+        set_variable = { RCM_supply_consumption_field_hospital = This.num_battalions_with_type@field_hospital }
+        multiply_variable = { RCM_supply_consumption_field_hospital = 0.05 } #supply consumption
+        add_to_variable = { RCM_army_supply_consumption = RCM_supply_consumption_field_hospital }
+        set_variable = { RCM_supply_consumption_heavy_armor = This.num_battalions_with_type@heavy_armor }
+        multiply_variable = { RCM_supply_consumption_heavy_armor = 0.3 } #supply consumption
+        add_to_variable = { RCM_army_supply_consumption = RCM_supply_consumption_heavy_armor }
+        set_variable = { RCM_supply_consumption_infantry = This.num_battalions_with_type@infantry }
+        multiply_variable = { RCM_supply_consumption_infantry = 0.07 } #supply consumption
+        add_to_variable = { RCM_army_supply_consumption = RCM_supply_consumption_infantry }
+        set_variable = { RCM_supply_consumption_bicycle_battalion = This.num_battalions_with_type@bicycle_battalion }
+        multiply_variable = { RCM_supply_consumption_bicycle_battalion = 0.07 } #supply consumption
+        add_to_variable = { RCM_army_supply_consumption = RCM_supply_consumption_bicycle_battalion }
+        set_variable = { RCM_supply_consumption_marine = This.num_battalions_with_type@marine }
+        multiply_variable = { RCM_supply_consumption_marine = 0.06 } #supply consumption
+        add_to_variable = { RCM_army_supply_consumption = RCM_supply_consumption_marine }
+        set_variable = { RCM_supply_consumption_mountaineers = This.num_battalions_with_type@mountaineers }
+        multiply_variable = { RCM_supply_consumption_mountaineers = 0.07 } #supply consumption
+        add_to_variable = { RCM_army_supply_consumption = RCM_supply_consumption_mountaineers }
+        set_variable = { RCM_supply_consumption_paratrooper = This.num_battalions_with_type@paratrooper }
+        multiply_variable = { RCM_supply_consumption_paratrooper = 0.06 } #supply consumption
+        add_to_variable = { RCM_army_supply_consumption = RCM_supply_consumption_paratrooper }
+        set_variable = { RCM_supply_consumption_motorized = This.num_battalions_with_type@motorized }
+        multiply_variable = { RCM_supply_consumption_motorized = 0.11 } #supply consumption
+        add_to_variable = { RCM_army_supply_consumption = RCM_supply_consumption_motorized }
+        set_variable = { RCM_supply_consumption_mechanized = This.num_battalions_with_type@mechanized }
+        multiply_variable = { RCM_supply_consumption_mechanized = 0.18 } #supply consumption
+        add_to_variable = { RCM_army_supply_consumption = RCM_supply_consumption_mechanized }
+        set_variable = { RCM_supply_consumption_light_armor = This.num_battalions_with_type@light_armor }
+        multiply_variable = { RCM_supply_consumption_light_armor = 0.2 } #supply consumption
+        add_to_variable = { RCM_army_supply_consumption = RCM_supply_consumption_light_armor }
+        set_variable = { RCM_supply_consumption_logistics_company = This.num_battalions_with_type@logistics_company }
+        multiply_variable = { RCM_supply_consumption_logistics_company = 0.1 } #supply consumption
+        add_to_variable = { RCM_army_supply_consumption = RCM_supply_consumption_logistics_company }
+        set_variable = { RCM_supply_consumption_maintenance_company = This.num_battalions_with_type@maintenance_company }
+        multiply_variable = { RCM_supply_consumption_maintenance_company = 0.03 } #supply consumption
+        add_to_variable = { RCM_army_supply_consumption = RCM_supply_consumption_maintenance_company }
+        set_variable = { RCM_supply_consumption_medium_armor = This.num_battalions_with_type@medium_armor }
+        multiply_variable = { RCM_supply_consumption_medium_armor = 0.22 } #supply consumption
+        add_to_variable = { RCM_army_supply_consumption = RCM_supply_consumption_medium_armor }
+        set_variable = { RCM_supply_consumption_military_police = This.num_battalions_with_type@military_police }
+        multiply_variable = { RCM_supply_consumption_military_police = 0.02 } #supply consumption
+        add_to_variable = { RCM_army_supply_consumption = RCM_supply_consumption_military_police }
+        set_variable = { RCM_supply_consumption_modern_armor = This.num_battalions_with_type@modern_armor }
+        multiply_variable = { RCM_supply_consumption_modern_armor = 0.25 } #supply consumption
+        add_to_variable = { RCM_army_supply_consumption = RCM_supply_consumption_modern_armor }
+        set_variable = { RCM_supply_consumption_recon = This.num_battalions_with_type@recon }
+        multiply_variable = { RCM_supply_consumption_recon = 0.02 } #supply consumption
+        add_to_variable = { RCM_army_supply_consumption = RCM_supply_consumption_recon }
+        set_variable = { RCM_supply_consumption_signal_company = This.num_battalions_with_type@signal_company }
+        multiply_variable = { RCM_supply_consumption_signal_company = 0.02 } #supply consumption
+        add_to_variable = { RCM_army_supply_consumption = RCM_supply_consumption_signal_company }
+        set_variable = { RCM_supply_consumption_light_sp_anti_air_brigade = This.num_battalions_with_type@light_sp_anti_air_brigade }
+        multiply_variable = { RCM_supply_consumption_light_sp_anti_air_brigade = 0.1 } #supply consumption
+        add_to_variable = { RCM_army_supply_consumption = RCM_supply_consumption_light_sp_anti_air_brigade }
+        set_variable = { RCM_supply_consumption_medium_sp_anti_air_brigade = This.num_battalions_with_type@medium_sp_anti_air_brigade }
+        multiply_variable = { RCM_supply_consumption_medium_sp_anti_air_brigade = 0.1 } #supply consumption
+        add_to_variable = { RCM_army_supply_consumption = RCM_supply_consumption_medium_sp_anti_air_brigade }
+        set_variable = { RCM_supply_consumption_heavy_sp_anti_air_brigade = This.num_battalions_with_type@heavy_sp_anti_air_brigade }
+        multiply_variable = { RCM_supply_consumption_heavy_sp_anti_air_brigade = 0.1 } #supply consumption
+        add_to_variable = { RCM_army_supply_consumption = RCM_supply_consumption_heavy_sp_anti_air_brigade }
+        set_variable = { RCM_supply_consumption_super_heavy_sp_anti_air_brigade = This.num_battalions_with_type@super_heavy_sp_anti_air_brigade }
+        multiply_variable = { RCM_supply_consumption_super_heavy_sp_anti_air_brigade = 0.1 } #supply consumption
+        add_to_variable = { RCM_army_supply_consumption = RCM_supply_consumption_super_heavy_sp_anti_air_brigade }
+        set_variable = { RCM_supply_consumption_modern_sp_anti_air_brigade = This.num_battalions_with_type@modern_sp_anti_air_brigade }
+        multiply_variable = { RCM_supply_consumption_modern_sp_anti_air_brigade = 0.1 } #supply consumption
+        add_to_variable = { RCM_army_supply_consumption = RCM_supply_consumption_modern_sp_anti_air_brigade }
+        set_variable = { RCM_supply_consumption_light_sp_artillery_brigade = This.num_battalions_with_type@light_sp_artillery_brigade }
+        multiply_variable = { RCM_supply_consumption_light_sp_artillery_brigade = 0.4 } #supply consumption
+        add_to_variable = { RCM_army_supply_consumption = RCM_supply_consumption_light_sp_artillery_brigade }
+        set_variable = { RCM_supply_consumption_medium_sp_artillery_brigade = This.num_battalions_with_type@medium_sp_artillery_brigade }
+        multiply_variable = { RCM_supply_consumption_medium_sp_artillery_brigade = 0.44 } #supply consumption
+        add_to_variable = { RCM_army_supply_consumption = RCM_supply_consumption_medium_sp_artillery_brigade }
+        set_variable = { RCM_supply_consumption_heavy_sp_artillery_brigade = This.num_battalions_with_type@heavy_sp_artillery_brigade }
+        multiply_variable = { RCM_supply_consumption_heavy_sp_artillery_brigade = 0.6 } #supply consumption
+        add_to_variable = { RCM_army_supply_consumption = RCM_supply_consumption_heavy_sp_artillery_brigade }
+        set_variable = { RCM_supply_consumption_super_heavy_sp_artillery_brigade = This.num_battalions_with_type@super_heavy_sp_artillery_brigade }
+        multiply_variable = { RCM_supply_consumption_super_heavy_sp_artillery_brigade = 0.8 } #supply consumption
+        add_to_variable = { RCM_army_supply_consumption = RCM_supply_consumption_super_heavy_sp_artillery_brigade }
+        set_variable = { RCM_supply_consumption_modern_sp_artillery_brigade = This.num_battalions_with_type@modern_sp_artillery_brigade }
+        multiply_variable = { RCM_supply_consumption_modern_sp_artillery_brigade = 0.5 } #supply consumption
+        add_to_variable = { RCM_army_supply_consumption = RCM_supply_consumption_modern_sp_artillery_brigade }
+        set_variable = { RCM_supply_consumption_super_heavy_armor = This.num_battalions_with_type@super_heavy_armor }
+        multiply_variable = { RCM_supply_consumption_super_heavy_armor = 0.4 } #supply consumption
+        add_to_variable = { RCM_army_supply_consumption = RCM_supply_consumption_super_heavy_armor }
+        set_variable = { RCM_supply_consumption_light_tank_destroyer_brigade = This.num_battalions_with_type@light_tank_destroyer_brigade }
+        multiply_variable = { RCM_supply_consumption_light_tank_destroyer_brigade = 0.2 } #supply consumption
+        add_to_variable = { RCM_army_supply_consumption = RCM_supply_consumption_light_tank_destroyer_brigade }
+        set_variable = { RCM_supply_consumption_medium_tank_destroyer_brigade = This.num_battalions_with_type@medium_tank_destroyer_brigade }
+        multiply_variable = { RCM_supply_consumption_medium_tank_destroyer_brigade = 0.22 } #supply consumption
+        add_to_variable = { RCM_army_supply_consumption = RCM_supply_consumption_medium_tank_destroyer_brigade }
+        set_variable = { RCM_supply_consumption_heavy_tank_destroyer_brigade = This.num_battalions_with_type@heavy_tank_destroyer_brigade }
+        multiply_variable = { RCM_supply_consumption_heavy_tank_destroyer_brigade = 0.3 } #supply consumption
+        add_to_variable = { RCM_army_supply_consumption = RCM_supply_consumption_heavy_tank_destroyer_brigade }
+        set_variable = { RCM_supply_consumption_super_heavy_tank_destroyer_brigade = This.num_battalions_with_type@super_heavy_tank_destroyer_brigade }
+        multiply_variable = { RCM_supply_consumption_super_heavy_tank_destroyer_brigade = 0.4 } #supply consumption
+        add_to_variable = { RCM_army_supply_consumption = RCM_supply_consumption_super_heavy_tank_destroyer_brigade }
+        set_variable = { RCM_supply_consumption_modern_tank_destroyer_brigade = This.num_battalions_with_type@modern_tank_destroyer_brigade }
+        multiply_variable = { RCM_supply_consumption_modern_tank_destroyer_brigade = 0.25 } #supply consumption
+        add_to_variable = { RCM_army_supply_consumption = RCM_supply_consumption_modern_tank_destroyer_brigade }
+        ########
+        ##NAVY##
+        ########
+        set_variable = {
+            RCM_navy_supply_consumption = 0
+        }
+        #A is subunit type
+        #B is SC
+        #set_variable = { RCM_supply_consumption_A = This.num_ships_with_type@A }
+        #multiply_variable = { RCM_supply_consumption_A = B }
+        #add_to_variable = { RCM_navy_supply_consumption = RCM_supply_consumption_A }
+        set_variable = { RCM_supply_consumption_battle_cruiser = This.num_ships_with_type@battle_cruiser }
+        multiply_variable = { RCM_supply_consumption_battle_cruiser = 0.12 }
+        add_to_variable = { RCM_navy_supply_consumption = RCM_supply_consumption_battle_cruiser }
+        set_variable = { RCM_supply_consumption_carrier = This.num_ships_with_type@carrier }
+        multiply_variable = { RCM_supply_consumption_carrier = 0.3 }
+        add_to_variable = { RCM_navy_supply_consumption = RCM_supply_consumption_carrier }
+        set_variable = { RCM_supply_consumption_battleship = This.num_ships_with_type@battleship }
+        multiply_variable = { RCM_supply_consumption_battleship = 0.2 }
+        add_to_variable = { RCM_navy_supply_consumption = RCM_supply_consumption_battleship }
+        set_variable = { RCM_supply_consumption_destroyer = This.num_ships_with_type@destroyer }
+        multiply_variable = { RCM_supply_consumption_destroyer = 0.01 }
+        add_to_variable = { RCM_navy_supply_consumption = RCM_supply_consumption_destroyer }
+        set_variable = { RCM_supply_consumption_heavy_cruiser = This.num_ships_with_type@heavy_cruiser }
+        multiply_variable = { RCM_supply_consumption_heavy_cruiser = 0.1 }
+        add_to_variable = { RCM_navy_supply_consumption = RCM_supply_consumption_heavy_cruiser }
+        set_variable = { RCM_supply_consumption_light_cruiser = This.num_ships_with_type@light_cruiser }
+        multiply_variable = { RCM_supply_consumption_light_cruiser = 0.04 }
+        add_to_variable = { RCM_navy_supply_consumption = RCM_supply_consumption_light_cruiser }
+        set_variable = { RCM_supply_consumption_submarine = This.num_ships_with_type@submarine }
+        multiply_variable = { RCM_supply_consumption_submarine = 0.01 }
+        add_to_variable = { RCM_navy_supply_consumption = RCM_supply_consumption_submarine }
+        
+        #no air for now
+        
+        
+        #add them together
+        set_variable = {
+            This.RCM_supply_consumption = This.RCM_army_supply_consumption
+        }
+        add_to_variable = {
+            This.RCM_supply_consumption = This.RCM_navy_supply_consumption
+        }
+
+        #set the total supply
+        set_variable = {
+            This.supply_condition_army_debuff = This.RCM_supply_consumption
+        }
+        #add civies and mils together, no need dockyards
+        set_variable = {
+            This.civies_and_mils = This.num_of_civilian_factories
+        }
+        add_to_variable = {
+            This.civies_and_mils = This.num_of_military_factories
+        }
+        
+        #get_average_infra
+        set_variable = {
+            This.average_infra = 0
+        }
+        set_variable = {
+            This.total_population = 0
+        }
+        #every_state = {
+        #    limit = {
+        #        is_controlled_by = PREV
+        #    }
+        #    add_to_variable = {
+        #        Prev.average_infra = This.infrastructure_level
+        #    }
+        #}        
+        #divide_variable = {
+        #    This.average_infra = This.num_owned_controlled_states
+        #}
+        every_state = { #weight it by population
+            limit = {
+                is_controlled_by = PREV
+            }
+            #do this or it will overfloat
+            set_variable = {
+                This.state_population_hundred_k = This.state_population_k
+            }
+            divide_variable = {
+                This.state_population_hundred_k = 100
+            }
+            ####
+            add_to_variable = {
+                Prev.total_population = This.state_population_hundred_k
+            }
+            set_variable = {
+                This.weighted_infra = This.infrastructure_level
+            }
+            multiply_variable = {
+                This.weighted_infra = This.state_population_hundred_k
+            }
+            add_to_variable = {
+                Prev.average_infra = This.weighted_infra
+            }
+        }      
+        divide_variable = {
+            This.average_infra = This.total_population
+        }
+        set_variable = {
+            This.average_infra_display = This.average_infra
+        }
+        divide_variable = {
+            This.average_infra = 5 # X level out of 5
+        }
+        #Occupation Ratio (controlled_states/owned_states or controlled core_states)
+        set_variable = {
+            This.num_core_or_owned_controlled_states = 0
+        }
+        for_each_scope_loop = {
+			array = This.controlled_states
+            if = {
+                limit = {
+                    OR = {
+                        is_core_of = Prev.Prev
+                        is_owned_by = Prev.Prev
+                    }
+                }
+                add_to_variable = {
+                    Prev.num_core_or_owned_controlled_states = 1
+                }
+            }
+        } 
+        set_variable = {
+            This.occ_ratio = This.num_controlled_states
+        }
+        divide_variable = {
+            This.occ_ratio = This.num_core_or_owned_controlled_states
+        }
+
+
+
+        #Governing Upkeep Ratio (controlled_owned_states/controlled_core_and_owned_states)
+        set_variable = {
+            This.num_core_and_owned_states = 0
+        }
+        for_each_scope_loop = {
+			array = This.controlled_states
+            if = {
+                limit = {
+                    is_owned_by = Prev
+                    is_core_of = Prev
+                }
+                add_to_variable = {
+                    Prev.num_core_and_owned_states = 1
+                }
+            }
+        } 
+        set_variable = {
+            This.gov_upk_ratio = This.num_owned_controlled_states
+        }
+        divide_variable = {
+            This.gov_upk_ratio = This.num_core_and_owned_states
+        }
+
+
+        
+        #Spherical Upkeep Ratio (controlled states including puppets'/owned_states or controlled core_states)
+        set_variable = {
+            This.num_of_all_puppet_controlled_states = 0
+        }
+        for_each_scope_loop = {
+			array = This.subjects
+            if = {
+                limit = {
+                    #has_war_together_with = Prev
+                }
+                for_each_scope_loop = {
+		        	array = This.controlled_states
+                    add_to_variable = {
+                        Prev.Prev.num_of_all_puppet_controlled_states = 1
+                    }
+                }
+            }
+        } 
+        set_variable = {
+            This.sphe_upk_ratio = This.num_of_all_puppet_controlled_states
+        }
+        add_to_variable = {
+            This.sphe_upk_ratio = This.controlled_states
+        }
+        divide_variable = {
+            This.sphe_upk_ratio = This.num_core_or_owned_controlled_states
+        }
+
+        set_variable = {
+            This.occ_ratio_cube = This.occ_ratio
+        }
+        set_variable = {
+            This.occ_ratio_cube_two = This.sphe_upk_ratio
+        }
+        multiply_variable = {
+            This.occ_ratio_cube = This.gov_upk_ratio
+        }
+        multiply_variable = {
+            This.occ_ratio_cube = This.occ_ratio_cube_two
+        }
+
+        set_variable = {
+            This.processed_stability = This.has_stability
+        }
+        add_to_variable = {
+            This.processed_stability = 0.5
+        }
+        divide_variable = {
+            This.processed_stability = 2
+        }
+        #if = {
+        #    limit = {
+        #        has_offensive_war = yes
+        #    }
+        #    set_variable = {
+        #        This.war_coefficient = 3
+        #    }
+        #}
+        #else_if = {
+        #    limit = {
+        #        has_war = yes
+        #    }
+        #    set_variable = {
+        #        This.war_coefficient = 2
+        #    }
+        #}
+        #if = {
+        #    limit = {
+        #        has_war = no
+        #    }
+        #    set_variable = {
+        #        This.war_coefficient = 1
+        #    }
+        #}
+        #buff the debuff a tad bit
+        #multiply_variable = {
+        #    This.supply_condition_army_debuff = -10
+        #}
+        #divide supply_consumption by civies and mils
+        set_variable = {
+            This.fact_mult_infra = This.civies_and_mils
+        }
+        multiply_variable = {
+            This.fact_mult_infra = This.average_infra
+        }
+        divide_variable = {
+            This.supply_condition_army_debuff = This.fact_mult_infra
+        }
+        divide_variable = {
+            This.supply_condition_army_debuff = This.processed_stability
+        }
+        multiply_variable = {
+            This.supply_condition_army_debuff = -1
+        }
+        multiply_variable = {
+            This.supply_condition_army_debuff = This.occ_ratio_cube
+        }
+        #multiply_variable = {
+        #    This.supply_condition_army_debuff = This.war_coefficient
+        #}
+    }
+    #Surrender Progress
+    set_variable = { #BASE
+        This.RCM_surrender_progress_impact = This.surrender_progress
+    }
+    multiply_variable = {
+        This.RCM_surrender_progress_impact = -25
+    }
+    #Tally them up
+    set_variable = { #BASE
+        This.supply_condition = This.supply_condition_base #edit the base only when use bonus weekly and subtract/add by an amount
+    }
+    add_to_variable = { #ARMY PER FACTORIES
+        This.supply_condition = This.supply_condition_army_debuff
+    }
+    add_to_variable = {
+        This.supply_condition = This.RCM_surrender_progress_impact
+    }
+    
+    #clamp var if adult serves and stuff, if not then clamp it to 0-100
+    if = {
+        limit = {
+            has_idea = extensive_conscription
+        }
+        clamp_variable = {
+            var = This.supply_condition
+            min = 0
+            max = 90
+        }
+    }
+    else_if = {
+        limit = {
+            has_idea = service_by_requirement
+        }
+        clamp_variable = {
+            var = This.supply_condition
+            min = 0
+            max = 80
+        }
+    }
+    else_if = {
+        limit = {
+            has_idea = all_adults_serve
+        }
+        clamp_variable = {
+            var = This.supply_condition
+            min = 0
+            max = 70
+        }
+    }
+    else_if = {
+        limit = {
+            has_idea = scraping_the_barrel
+        }
+        clamp_variable = {
+            var = This.supply_condition
+            min = 0
+            max = 60
+        }
+    }
+    if = {
+        limit = {
+            NOT = {
+                OR = {
+                    has_idea = extensive_conscription
+                    has_idea = service_by_requirement
+                    has_idea = all_adults_serve
+                    has_idea = scraping_the_barrel
+                }
+            }
+        }
+        clamp_variable = {
+            var = This.supply_condition
+            min = 0
+            max = 100
+        }
+    }
+    #difficulty: (basically when upkeep is more than 30% and overall supply is lower than 30%,
+    #Challenge: 5% of supply will be added to base and base supply upper limit will be added 5%
+    #Nightmare: 10% of supply will be added to base and base supply upper limit will be added 10%
+    set_temp_variable = { temp_max_base_supply = 100 }
+    if = {
+        limit = {
+            has_country_flag = challenge_extra_supply
+        }
+        set_temp_variable = { temp_extra_supply = 5 }
+        multiply_temp_variable = { temp_extra_supply = challenge_extra_supply_coefficient }
+        add_to_temp_variable = { temp_max_base_supply = temp_extra_supply }
+    }
+    else_if = {
+        limit = {
+            has_country_flag = nightmare_extra_supply
+        }
+        set_temp_variable = { temp_extra_supply = 10 }
+        multiply_temp_variable = { temp_extra_supply = nightmare_extra_supply_coefficient }
+        add_to_temp_variable = { temp_max_base_supply = temp_extra_supply }
+    }    
+    #clamp base 
+    clamp_variable = {
+        var = This.supply_condition_base
+        min = 0
+        max = temp_max_base_supply
+    }
+    #add supply if no supply
+    if = {
+        limit = {
+            any_country = {
+                exists = yes
+                NOT = {
+                    has_country_flag = I_have_supply_conditions
+                }
+            }
+        }
+        every_country = {
+            limit = {
+                exists = yes
+                NOT = {
+                    has_country_flag = I_have_supply_conditions
+                }
+            }            
+            add_dynamic_modifier = {
+                modifier = RCM_supply_condition
+            }
+            set_variable = {
+                This.supply_condition_base = 50
+            }
+            set_variable = {
+                This.supply_condition = 50
+            }
+            set_variable = {
+                This.supply_condition_weeky = 0
+            }
+            set_variable = {
+                This.supply_condition_daily = 0
+            }
+            set_country_flag = I_have_supply_conditions
+        }
+    }
+
+
+    ##EFFECTS!!!!
+    set_country_flag = Im_testing_this
+    #war support 
+	set_variable = {
+        This.war_support_supply = This.supply_condition #MODDED
+		#This.war_support_supply = 90
+    }
+    subtract_from_variable = {
+        This.war_support_supply = 50
+    }
+    divide_variable = {
+        This.war_support_supply = 100
+    }
+    if = {
+        limit = {
+            check_variable = {
+                This.war_support_supply > 0
+            }
+        }
+	    divide_variable = {
+            This.war_support_supply = 2 #+0.25 -0.5 
+        }
+    }
+    #attrition
+    #set_variable = {
+    #    This.attrition_supply = This.supply_condition
+    #}
+    #subtract_from_variable = {
+    #    This.attrition_supply = 50
+    #}
+    #multiply_variable = {
+    #    This.attrition_supply = -1
+    #}
+    #divide_variable = {
+    #    This.attrition_supply = 100
+    #}
+    #if = {
+    #    limit = {
+    #        check_variable = {
+    #            This.attrition_supply < 0
+    #        }
+    #    }
+    #    multiply_variable = {
+    #        This.attrition_supply = 0.4 #-0.2 +0.5
+    #    }
+    #}
+    #supply_factor
+    set_variable = {
+        This.supply_supply = This.supply_condition
+    }
+    subtract_from_variable = {
+        This.supply_supply = 50
+    }
+    #multiply_variable = {
+    #    This.supply_supply = -1
+    #}
+    divide_variable = {
+        This.supply_supply = 100
+    }
+    if = {
+        limit = {
+            check_variable = {
+                This.supply_supply > 0
+            }
+        }
+        multiply_variable = {
+            This.supply_supply = 0.7 #-0.35 +0.35
+        }
+    }
+    if = {
+        limit = {
+            check_variable = {
+                This.supply_supply < 0
+            }
+        }
+        multiply_variable = {
+            This.supply_supply = 0.7 #-0.35 +0.35
+        }
+    }
+   
+    #supply consumption
+    #set_variable = {
+    #    This.consumption_supply = This.supply_condition
+    #}
+    #subtract_from_variable = {
+    #    This.consumption_supply = 50
+    #}
+    #multiply_variable = {
+    #    This.consumption_supply = -1
+    #}
+    #divide_variable = {
+    #    This.consumption_supply = 100
+    #}
+    #if = {
+    #    limit = {
+    #        check_variable = {
+    #            This.consumption_supply > 0
+    #       }
+    #    }
+    #    multiply_variable = {
+    #        This.consumption_supply = 1 #-0.3 +0.5
+    #    }
+    #}
+    #if = {
+    #    limit = {
+    #        check_variable = {
+    #            This.consumption_supply < 0
+    #        }
+    #    }
+    #    multiply_variable = {
+    #        This.consumption_supply = 0.6 #-0.3 +0.5
+    #    }
+    #}
+    #morale
+    set_variable = {
+        This.army_morale_supply = This.supply_condition
+    }
+    subtract_from_variable = {
+        This.army_morale_supply = 50
+    }
+    divide_variable = {
+        This.army_morale_supply = 100
+    }
+    if = {
+        limit = {
+            check_variable = {
+                This.army_morale_supply < 0
+            }
+        }
+        multiply_variable = {
+            This.army_morale_supply = 1 #0.3 -0.5
+        }
+    }
+    if = {
+        limit = {
+            check_variable = {
+                This.army_morale_supply > 0
+            }
+        }
+        multiply_variable = {
+            This.army_morale_supply = 0.6 #0.3 -0.5
+        }
+    }
+    #org
+    set_variable = {
+        This.army_org_supply = This.supply_condition
+    }
+    subtract_from_variable = {
+        This.army_org_supply = 50
+    }
+    divide_variable = {
+        This.army_org_supply = 100
+    }
+    if = {
+        limit = {
+            check_variable = {
+                This.army_org_supply < 0
+            }
+        }
+        multiply_variable = {
+            This.army_org_supply = 1 #+0.3 -0.5
+        }
+    }
+    if = {
+        limit = {
+            check_variable = {
+               This.army_org_supply > 0
+           }
+        }
+        multiply_variable = {
+            This.army_org_supply = 0.6 #+0.3 -0.5
+        }
+    }
+
+    #unrelated but needed to prevent unit spam
+    set_variable = {
+        This.total_infra = 0
+    }
+    for_each_scope_loop = {
+        array = controlled_states
+        add_to_variable = {
+            Prev.total_infra = This.infrastructure_level
+        }
+    }
+}

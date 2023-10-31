@@ -1,0 +1,543 @@
+
+add_namespace = demobilisation_events_dp
+
+country_event = {
+        
+	id = demobilisation_events_dp.1
+        title = demobilisation_events_dp.1.t 
+        desc = demobilisation_events_dp.1.d
+	picture = GFX_report_event_gathering_protest
+
+	is_triggered_only = yes
+	trigger = {check_variable = {num_divisions > ROOT.GetUnitLimit}}
+	hidden = no
+	fire_only_once = no 
+	immediate = {
+	}
+	option = {
+		name = demobilisation_events_dp.1.a
+		custom_effect_tooltip = demobilisation_events_dp.1.a.tt
+		ai_chance = {factor = 1}
+		hidden_effect = {
+		every_state = {
+		limit = {
+		#is_owned_by = ROOT
+		ROOT = {
+		divisions_in_state = {size > 0 state = PREV}
+		#log = "divisions in state: [THIS.GetName] [FROM.GetName] [PREV.GetName] [ROOT.GetName]"
+		}
+		}
+		ROOT = {
+		#log = "Units: [?ROOT.num_divisions] Unit Limit: [?ROOT.GetUnitLimit] State: [THIS.GetName]"
+		if = {
+		limit = {check_variable = {num_divisions > ROOT.GetUnitLimit}}
+		#log = "delete units if loop: [THIS.GetName] [FROM.GetName] [PREV.GetName] [ROOT.GetName]"
+		delete_unit = { 
+            state = PREV
+            disband = yes #will refund equipment and manpower
+		#log = "delete units: [THIS.GetName] [FROM.GetName] [PREV.GetName] [ROOT.GetName]"
+        }
+		}
+		}
+		}
+		}
+	}
+    option = { 
+		ai_chance = {factor = 0}
+		name = demobilisation_events_dp.1.b
+		custom_effect_tooltip = demobilisation_events_dp.1.b.tt
+		
+	ROOT = {
+		set_country_flag = demob_peace_event_1
+	}
+	}
+}
+country_event = {
+        
+	id = demobilisation_events_dp.2
+        title = demobilisation_events_dp.2.t 
+        desc = demobilisation_events_dp.2.d
+	picture = GFX_report_event_gathering_protest
+
+	trigger = {check_variable = {num_divisions > ROOT.GetUnitLimit}}
+	is_triggered_only = yes
+	
+	hidden = no
+	
+	fire_only_once = no 
+	option = {
+		name = demobilisation_events_dp.2.a
+		custom_effect_tooltip = demobilisation_events_dp.2.a.tt
+		ai_chance = {factor = 1}
+		hidden_effect = {
+		every_state = {
+		limit = {
+		#is_owned_by = ROOT
+		ROOT = {
+		divisions_in_state = {size > 0 state = PREV}
+		#log = "divisions in state: [THIS.GetName] [FROM.GetName] [PREV.GetName] [ROOT.GetName]"
+		}
+		}
+		ROOT = {
+		#log = "Units: [?ROOT.num_divisions] Unit Limit: [?ROOT.GetUnitLimit] State: [THIS.GetName]"
+		if = {
+		limit = {check_variable = {num_divisions > ROOT.GetUnitLimit}}
+		#log = "delete units if loop: [THIS.GetName] [FROM.GetName] [PREV.GetName] [ROOT.GetName]"
+		delete_unit = { 
+            state = PREV
+            disband = yes #will refund equipment and manpower
+		#log = "delete units: [THIS.GetName] [FROM.GetName] [PREV.GetName] [ROOT.GetName]"
+        }
+		}
+		}
+		}
+		}
+	}
+    option = { 
+		name = demobilisation_events_dp.2.b
+		custom_effect_tooltip = demobilisation_events_dp.2.b.tt
+		ai_chance = {factor = 0}
+		if = {
+		limit = {NOT = {has_government = pluralism}}
+		add_popularity = {
+			ideology = pluralism
+			popularity = 0.05
+		}
+		} else_if = {
+		limit = {has_government = pluralism}
+		add_popularity = {
+			ideology = pluralism
+			popularity = -0.05
+		}
+		}
+	}
+    option = { 
+		name = demobilisation_events_dp.2.c
+		add_stability = -0.05
+		custom_effect_tooltip = demobilisation_events_dp.2.c.tt
+		ai_chance = {factor = 0}
+		if = {
+		limit = {
+		NOT = {
+		has_stability < 0.3
+		check_variable = {party_popularity@ruling_party < 0.2}
+		set_temp_variable = {temp1 = GetUnitLimit}
+		multiply_temp_variable = {temp1 = 2}
+		check_variable = {num_divisions > temp1}
+		}
+		} 
+		
+		subtract_from_variable = {ROOT.getRedTime = 12}
+		add_to_variable = {ROOT.getFear_dp = 1}
+		} else = {
+		add_to_variable = {ROOT.getRedTime = 6}
+		}
+		every_country = {
+			news_event = {id = demobilisation_events_dp.5}
+		}
+	}
+}
+country_event = {
+        
+	id = demobilisation_events_dp.3
+        title = demobilisation_events_dp.3.t 
+        desc = demobilisation_events_dp.3.d
+	picture = GFX_report_event_gathering_protest
+
+	is_triggered_only = yes
+	
+	trigger = {check_variable = {num_divisions > ROOT.GetUnitLimit}}
+	hidden = no
+
+	fire_only_once = no 
+	option = {
+		name = demobilisation_events_dp.3.a
+		ai_chance = {factor = 1}
+	}
+    option = { 
+		name = demobilisation_events_dp.3.b
+		ai_chance = {factor = 0}
+		custom_effect_tooltip = demobilisation_events_dp.3.b.tt
+		add_to_variable = {ROOT.getFear_dp = 1}
+		add_stability = -0.05
+	}
+}
+country_event = {
+        
+	id = demobilisation_events_dp.4
+        title = demobilisation_events_dp.4.t 
+        desc = demobilisation_events_dp.4.d
+	picture = GFX_report_event_gathering_protest
+
+	is_triggered_only = yes
+	
+	trigger = {check_variable = {num_divisions > ROOT.GetUnitLimit}}
+	hidden = no
+
+	fire_only_once = no 
+	immediate = {
+		hidden_effect = {
+		set_variable = {ROOT.RebelMilitaryLeader_dp = 0}
+		random_unit_leader = {
+		limit = {is_field_marshal = yes is_country_leader = no}
+		set_variable = {ROOT.RebelMilitaryLeader_dp = THIS}
+		}
+		}
+		}
+	option = {
+		ai_chance = {factor = 0}
+		name = demobilisation_events_dp.4.a
+		random_unit_leader = {
+		limit = {is_field_marshal = yes is_country_leader = no}
+		}
+		hidden_effect = {
+		subtract_from_variable = {ROOT.getRedTime = 12}
+		retire_character = ROOT.RebelMilitaryLeader_dp
+		if = {
+		limit = {
+		check_variable = {party_popularity@ruling_party < 0.15}
+		has_stability < 0.5
+		check_variable = {num_divisions > ROOT.GetUnitLimit}
+		NOT = {has_government = pluralism}
+		}
+		random_list = {
+		25 = {start_civil_war = {
+			ideology = pluralism
+			size = 0.025
+			keep_political_leader = no
+			keep_political_party_members = no
+		}}
+		25 = {start_civil_war = {
+			ideology = pluralism
+			size = 0.05
+			keep_political_leader = no
+			keep_political_party_members = no
+		}}
+		25 = {start_civil_war = {
+			ideology = pluralism
+			size = 0.075
+			keep_political_leader = no
+			keep_political_party_members = no
+		}}
+		25 = {start_civil_war = {
+			ideology = pluralism
+			size = 0.1
+			keep_political_leader = no
+			keep_political_party_members = no
+		}}
+		
+		}
+		}
+		else_if = {
+		limit = {
+		check_variable = {party_popularity@ruling_party < 0.15}
+		has_stability < 0.5
+		check_variable = {num_divisions > ROOT.GetUnitLimit}
+		has_government = pluralism
+		}
+		random_list = {
+		25 = {start_civil_war = {
+			ideology = theocratism
+			size = 0.05
+			keep_political_leader = no
+			keep_political_party_members = no
+		}}
+		25 = {start_civil_war = {
+			ideology = unitism
+			size = 0.05
+			keep_political_leader = no
+			keep_political_party_members = no
+		}}
+		25 = {start_civil_war = {
+			ideology = authoritarianism
+			size = 0.05
+			keep_political_leader = no
+			keep_political_party_members = no
+		}}
+		25 = {start_civil_war = {
+			ideology = pluralism
+			size = 0.1
+			keep_political_leader = yes
+			keep_political_party_members = yes
+		}}
+		
+		}
+		}
+		}
+		custom_effect_tooltip = demote_leader_dp
+		custom_effect_tooltip = demobilisation_events_dp.4.a.tt
+	}
+    option = { 
+		ai_chance = {factor = 1}
+		name = demobilisation_events_dp.4.b
+		
+		random_unit_leader = {
+		limit = {is_field_marshal = yes is_country_leader = no}
+		}
+	hidden_effect = {
+		subtract_from_variable = {ROOT.getRedTime = 12}
+		if = {
+		limit = {
+		NOT = {has_government = pluralism}
+		check_variable = {party_popularity@ruling_party < 0.2}
+		pluralism > 0.29
+		theocratism < 0.3
+		authoritarianism < 0.3
+		}
+		set_politics = {
+			ruling_party = pluralism
+				elections_allowed = yes
+				#last_election = "[?global.date.GetDateStringNoHour]"
+				election_frequency = 48
+		}
+		
+		add_country_leader_role = {
+				character = ROOT.RebelMilitaryLeader_dp
+				country_leader = {
+				ideology = sub_central_republic
+				 expire = "1965.1.1"
+			}
+				promote_leader = yes
+		}
+		} else_if = {
+		limit = {
+		NOT = {has_government = theocratism}
+		check_variable = {party_popularity@ruling_party < 0.2}
+		theocratism > 0.29
+		pluralism < 0.3
+		authoritarianism < 0.3
+		}
+		set_politics = {
+			ruling_party = theocratism
+				elections_allowed = no
+				#last_election = "[?global.date.GetDateStringNoHour]"
+				#election_frequency = 48
+		}
+		
+		add_country_leader_role = {
+				character = ROOT.RebelMilitaryLeader_dp
+				country_leader = {
+				ideology = sub_radical_harmonainism
+				 expire = "1965.1.1"
+			}
+				promote_leader = yes
+		}
+		} else_if = {
+		limit = {
+		NOT = {has_government = unitism}
+		check_variable = {party_popularity@ruling_party < 0.2}
+		unitism > 0.29
+		theocratism < 0.3
+		authoritarianism < 0.3
+		}
+		set_politics = {
+			ruling_party = unitism
+				elections_allowed = yes
+				#last_election = "[?global.date.GetDateStringNoHour]"
+				election_frequency = 240
+		}
+		
+		add_country_leader_role = {
+				Character = ROOT.RebelMilitaryLeader_dp
+				Promote_leader = yes
+				Country_leader = {
+				ideology = sub_unitist
+				 expire = "1965.1.1"
+			}
+		}
+		} else_if = {
+		limit = {
+		NOT = {has_government = authoritarianism}
+		check_variable = {party_popularity@ruling_party < 0.2}
+		pluralism < 0.3
+		theocratism < 0.3
+		unitism < 0.3
+		}
+		set_politics = {
+			ruling_party = authoritarianism
+				elections_allowed = no
+				#last_election = "[?global.date.GetDateStringNoHour]"
+				#election_frequency = 240
+		}
+		
+		add_country_leader_role = {
+				character = ROOT.RebelMilitaryLeader_dp
+				country_leader = {
+				ideology = sub_authoritarian
+				 expire = "1965.1.1"
+			}
+				promote_leader = yes
+		}
+		} else_if = {
+		limit = {
+		#check_variable = {party_popularity@ruling_party > 0.2}
+		}
+		log = "Government above 0.2"
+		if = {
+		limit = {has_government = theocratism}
+		add_country_leader_role = {
+				character = ROOT.RebelMilitaryLeader_dp
+				country_leader = {
+				ideology = sub_radical_harmonainism
+				 expire = "1965.1.1"
+			}
+				promote_leader = yes
+		}
+		} else_if = {
+		limit = {has_government = pluralism}
+		add_country_leader_role = {
+				character = ROOT.RebelMilitaryLeader_dp
+				country_leader = {
+				ideology = sub_central_republic
+				 expire = "1965.1.1"
+			}
+				promote_leader = yes
+		}
+		} else_if = {
+		limit = {has_government = authoritarianism}
+		add_country_leader_role = {
+				character = ROOT.RebelMilitaryLeader_dp
+				country_leader = {
+				ideology = sub_authoritarian
+				 expire = "1965.1.1"
+			}
+				promote_leader = yes
+		}
+		} else_if = {
+		limit = {has_government = unitism}
+		log = "unitism role"
+		add_country_leader_role = {
+				character = ROOT.RebelMilitaryLeader_dp
+				country_leader = {
+				ideology = sub_unitist
+				 expire = "1965.1.1"
+			}
+				promote_leader = yes
+		}
+		}
+		
+		}
+		
+		var:ROOT.RebelMilitaryLeader_dp = {
+				remove_unit_leader_role = yes
+				remove_unit_leader = yes
+			}
+		}
+		if = {
+			limit = {has_government = theocratism}
+		custom_effect_tooltip = promote_leader_f_dp
+		} else_if = {
+		limit = {has_government = unitism}
+		custom_effect_tooltip = promote_leader_c_dp
+		} else_if = {
+		limit = {has_government = authoritarianism}
+		custom_effect_tooltip = promote_leader_n_dp
+		} else_if = {
+		limit = {has_government = pluralism}
+		custom_effect_tooltip = promote_leader_d_dp
+		}
+		custom_effect_tooltip = demobilisation_events_dp.4.b.tt
+		hidden_effect = {
+		every_state = {
+		limit = {
+		#is_owned_by = ROOT
+		ROOT = {
+		divisions_in_state = {size > 0 state = PREV}
+		#log = "divisions in state: [THIS.GetName] [FROM.GetName] [PREV.GetName] [ROOT.GetName]"
+		}
+		}
+		ROOT = {
+		#log = "Units: [?ROOT.num_divisions] Unit Limit: [?ROOT.GetUnitLimit] State: [THIS.GetName]"
+		if = {
+		limit = {check_variable = {num_divisions > ROOT.GetUnitLimit}}
+		#log = "delete units if loop: [THIS.GetName] [FROM.GetName] [PREV.GetName] [ROOT.GetName]"
+		delete_unit = { 
+            state = PREV
+            disband = yes #will refund equipment and manpower
+		#log = "delete units: [THIS.GetName] [FROM.GetName] [PREV.GetName] [ROOT.GetName]"
+        }
+		}
+		}
+		}
+		log = "Demob country: [ROOT]"
+		ROOT = {
+		every_country = {
+			news_event = {id = demobilisation_events_dp.6}
+		}
+		}
+		
+		}
+	}
+	#option = {
+	#	trigger = {
+	#		#has_country_flag = nuked_before 
+	#	}
+	#	name = demobilisation_events_dp.2.c 
+	#	add_stability = 0.05
+	#}
+}
+news_event = {
+        
+	id = demobilisation_events_dp.5
+        title = demobilisation_events_dp.5.t 
+        desc = demobilisation_events_dp.5.d
+	picture = GFX_news_event_generic_funeral
+
+	is_triggered_only = yes
+	
+	hidden = no
+
+	fire_only_once = no
+	option = {
+		name = demobilisation_events_dp.5.a
+	}
+    option = { 
+		trigger = {
+			NOT = {
+			has_government = pluralism
+		}
+		}
+		name = demobilisation_events_dp.5.b
+	}
+}
+news_event = {
+        
+	id = demobilisation_events_dp.6
+        title = demobilisation_events_dp.6.t 
+        desc = demobilisation_events_dp.6.d
+	picture = GFX_news_event_generic_parliament
+
+	is_triggered_only = yes
+	
+	hidden = no
+
+	fire_only_once = no
+	option = {
+		name = demobilisation_events_dp.6.a
+	}
+    option = { 
+		name = demobilisation_events_dp.6.b
+	}
+	option = {
+		trigger = {
+			has_government = unitism
+		}
+		name = demobilisation_events_dp.6.c 
+	}
+}
+news_event = {
+        
+	id = demobilisation_events_dp.7
+        title = demobilisation_events_dp.7.t 
+        desc = demobilisation_events_dp.7.d
+	picture = GFX_news_event_generic_riot
+
+	is_triggered_only = yes
+	
+	hidden = no
+
+	fire_only_once = no
+	option = {
+		name = demobilisation_events_dp.7.a
+	}
+}

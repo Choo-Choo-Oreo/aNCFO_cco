@@ -1,0 +1,156 @@
+# AI triggers
+# By Rylock and Alpinia
+
+### To have tags send volunteers whenever a war starts, add a new rule below
+### ROOT is the tag sending the volunteers, FROM is the tag that receives them
+### If the conditions are fulfilled, ROOT will automatically send volunteers to FROM whenever the latter is at war
+### When adding new rules, please follow the order of triggers - first global (when the rule should apply), then FROM triggers (who should receive the volunteers), then ROOT triggers (who should send them)
+
+#### OTHER AI TRIGGERS ####
+
+has_unattained_important_goals = {
+	OR = {
+		# Canada needs to reclaim the home isles
+		AND = {
+			is_in_faction_with = CAN
+			CAN = { is_faction_leader = yes }
+			NOT = { country_exists = GBR }
+		}
+		# National France needs to reclaim France
+		AND = {
+			is_in_faction_with = NFA
+			is_in_faction_with = ENT
+			country_exists = FRA
+		}
+		# Germany needs to destroy CoF
+		AND = {
+			is_in_faction_with = GER
+			country_exists = FRA
+		}
+		# the Internationale needs to destroy Germany
+		AND = {
+			is_in_faction_with = INT
+			country_exists = GER
+		}
+		# UoB needs to destroy Canada
+		AND = {
+			tag = ENG
+			CAN = {
+				exists = yes
+				is_faction_leader = yes
+			}
+		}
+		# Balkans need to reclaim their core states
+		AND = {
+			OR = {
+				tag = SER
+				tag = ROM
+				tag = GRE
+				tag = BUL
+			}
+			is_subject = no
+			any_of_scopes = {
+				array = core_states
+				NOT = { is_owned_by = ROOT }
+			}
+		}
+		# America only demobilizes once the war is done
+	   #AND = { ✖DELETED BY KEN
+		   #is_american_tag = yes ✖DELETED BY KEN
+		   #OR = { ✖DELETED BY KEN
+		       #NOT = { has_global_flag = USA_civil_war_over_flag } ✖DELETED BY KEN
+		       #has_global_flag = PSA_rockies_ceasefire ✖DELETED BY KEN
+		   #} ✖DELETED BY KEN
+	   #} ✖DELETED BY KEN
+		# India won't demobilize until after the civil war is complete
+		AND = {
+			tag = RAJ
+			OR = {
+				country_exists = PRF
+				country_exists = HND
+			}
+		}
+		AND = {
+			tag = PRF
+			OR = {
+				country_exists = RAJ
+				country_exists = HND
+			}
+		}
+		AND = {
+			tag = HND
+			OR = {
+				country_exists = PRF
+				country_exists = RAJ
+			}
+		}
+		# China won't demobilize so long as Japan holds Korea
+		AND = {
+			tag = CHI #MODDED BY KEN
+			country_exists = JAP
+			JAP = {
+				is_faction_leader = yes
+				OR = {
+					owns_state = 525
+					owns_state = 527
+				}
+			}
+			is_subject = no
+		}
+		# Italy won't demobilize so long as SRI exists
+		AND = {
+			tag = ITA #MODDED BY KEN
+			NOT = { tag = SRI }
+			country_exists = SRI
+		}
+		AND = {
+			tag = SRI
+			any_of_scopes = {
+				array = global.italian_tags_array
+				exists = yes
+				NOT = { tag = ROOT }
+			}
+		}
+		# Cairo Pact won't demobilize so long as Ottomans exist
+		AND = {
+			OR = {
+				tag = EGY
+				tag = SAU
+				tag = JBS
+				tag = PER
+			}
+			is_subject = no
+			country_exists = OTT
+		}
+		# The Ottomans won't demobilize until the Cairo Pact is defeated
+		AND = {
+			tag = OTT
+			EGY = {
+				exists = yes
+				is_subject = no
+			}
+		}
+		# These countries never fully demobilize
+		tag = RUS
+		tag = SOV
+		tag = MON
+		has_government = fascism # national_populist ✖ MODDED BY KEN
+	}
+}
+
+has_reached_maximum_divisions = {
+	if = {
+		limit = { has_variable = num_actual_divisions }
+		check_variable = { num_actual_divisions > max_divisions }
+	}
+	else = {
+		check_variable = { num_divisions > max_divisions }
+	}
+}
+
+has_enough_reserve_manpower_per_battalion = {
+	num_divisions > 1
+	check_variable = { manpower_k > num_battalions }
+}
+
+

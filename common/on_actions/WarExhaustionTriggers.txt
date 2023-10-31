@@ -1,0 +1,704 @@
+on_actions = {
+
+	on_startup = {
+		effect = {
+			901 = {
+				add_dynamic_modifier = {
+					modifier = strategic_zone
+				}
+			}
+			685 = {
+				add_dynamic_modifier = {
+					modifier = strategic_zone
+				}
+			}
+			118 = {
+				add_dynamic_modifier = {
+					modifier = strategic_zone
+				}
+			}
+			797 = {
+				add_dynamic_modifier = {
+					modifier = strategic_zone
+				}
+			}
+			37 = {
+				add_dynamic_modifier = {
+					modifier = strategic_zone
+				}
+			}
+		}
+	}
+
+	on_war = {
+		effect = {
+			if = {
+				limit = {
+					has_civil_war = no
+				}
+				set_variable = {
+					var = war_exhaustion
+					value = 0
+				}
+				set_variable = {
+					var = pop_war_start
+					value = 0
+				}
+				set_variable = {
+					var = casualties_since_last
+					value = casualties_k
+				}
+				every_core_state = {
+					PREV = {
+						add_to_variable = {
+							var = pop_war_start
+							value = PREV.state_population_k
+						}
+					}
+				}
+				round_variable = pop_war_start
+				
+			}
+		}
+
+	}
+
+	on_capitulation = {
+		effect = {
+			clear_variable = war_exhaustion
+		}
+
+	}
+
+	on_uncapitulation = {
+		effect = {
+			if = {
+				limit = {
+					has_war = yes
+				}
+				set_variable = {
+					var = war_exhaustion
+					value = 0
+				}
+			}
+			
+		}
+	}	
+	
+
+
+	on_peace = {
+		effect = {
+			clear_variable = war_exhaustion
+			clear_variable = pop_war_start
+			clr_country_flag = original_capital_lost
+			country_event = exhaustion.21
+			every_owned_state = {
+				clr_state_flag = capital_recently_lost
+				clr_state_flag = strategic_recently_lost
+			}
+		}
+	}
+	
+	on_monthly = {
+		effect = {
+			if = {
+				limit = {
+					has_variable = war_exhaustion
+					has_war = yes
+				}
+				add_to_variable = {
+					var = war_exhaustion
+					value = 2
+				}
+				clamp_variable = {
+					var = war_exhaustion
+					min = 0
+					max = 100
+				}
+				
+			}
+			
+			every_state = {
+				clr_state_flag = recently_lost
+				clr_state_flag = recently_taken
+			}
+			if = {
+				limit = {
+					has_offensive_war = yes
+					check_variable = {
+						var = war_exhaustion
+						value = 90
+						compare = greater_than_or_equals
+						
+					}
+				}
+				if = {
+					limit = {
+						NOT = {
+							has_idea = war_exhaustion_5_a
+						}
+					}
+					country_event = exhaustion.15
+				}
+				
+			}
+			else_if = {
+				limit = {
+					has_defensive_war = yes
+					check_variable = {
+						var = war_exhaustion
+						value = 90
+						compare = greater_than_or_equals
+						
+					}
+				}
+				if = {
+					limit = {
+						NOT = {
+							has_idea = war_exhaustion_5_d
+						}
+					}
+					country_event = exhaustion.15
+				}
+				
+				
+			}
+			else_if = {
+				limit = {
+					has_offensive_war = yes
+					check_variable = {
+						var = war_exhaustion
+						value = 75
+						compare = greater_than_or_equals
+						
+					}
+				}
+				if = {
+					limit = {
+						NOT = {
+							has_idea = war_exhaustion_5_a
+							has_idea = war_exhaustion_4_a
+							has_idea = war_exhaustion_5_d
+							
+						}
+					}
+					country_event = exhaustion.14
+				}
+				else_if = {
+					limit = {
+						has_idea = war_exhaustion_4_a
+					}
+				}
+				else = {
+					country_event = exhaustion.25
+				}
+			}
+			else_if = {
+				limit = {
+					has_defensive_war = yes
+					check_variable = {
+						var = war_exhaustion
+						value = 80
+						compare = greater_than_or_equals
+						
+					}
+				}
+				if = {
+					limit = {
+						NOT = {
+							has_idea = war_exhaustion_5_d
+							has_idea = war_exhaustion_4_d
+						}
+					}
+					country_event = exhaustion.14
+				}
+				else_if = {
+					limit = {
+						has_idea = war_exhaustion_4_d
+					}
+				}
+				else = {
+					country_event = exhaustion.25
+				}
+				
+				
+			}
+			else_if = {
+				limit = {
+					has_offensive_war = yes
+					check_variable = {
+						var = war_exhaustion
+						value = 60
+						compare = greater_than_or_equals
+						
+					}
+				}
+				if = {
+					limit = {
+						NOT = {
+							has_idea = war_exhaustion_5_a
+							has_idea = war_exhaustion_4_a
+							has_idea = war_exhaustion_3_a
+							has_idea = war_exhaustion_5_d
+							has_idea = war_exhaustion_4_d
+							
+						}
+					}
+					country_event = exhaustion.13
+				}
+				else_if = {
+					limit = {
+						has_idea = war_exhaustion_3_a
+					}
+				}
+				else = {
+					country_event = exhaustion.24
+				}
+			}
+			else_if = {
+				limit = {
+					has_defensive_war = yes
+					check_variable = {
+						var = war_exhaustion
+						value = 70
+						compare = greater_than_or_equals
+						
+					}
+				}
+				if = {
+					limit = {
+						NOT = {
+							has_idea = war_exhaustion_5_a
+							has_idea = war_exhaustion_4_a
+							has_idea = war_exhaustion_5_d
+							has_idea = war_exhaustion_4_d
+							has_idea = war_exhaustion_3_d
+							
+						}
+					}
+					country_event = exhaustion.13
+				}
+				else_if = {
+					limit = {
+						has_idea = war_exhaustion_3_d
+					}
+				}
+				else = {
+					country_event = exhaustion.24
+				}
+				
+				
+			}
+			else_if = {
+				limit = {
+					has_offensive_war = yes
+					check_variable = {
+						var = war_exhaustion
+						value = 40
+						compare = greater_than_or_equals
+						
+					}
+				}
+				if = {
+					limit = {
+						NOT = {
+							has_idea = war_exhaustion_5_a
+							has_idea = war_exhaustion_4_a
+							has_idea = war_exhaustion_3_a
+							has_idea = war_exhaustion_2_a
+							has_idea = war_exhaustion_5_d
+							has_idea = war_exhaustion_4_d
+							has_idea = war_exhaustion_3_d
+						}
+					}
+					country_event = exhaustion.12
+				}
+				else_if = {
+					limit = {
+						has_idea = war_exhaustion_2_a
+					}
+				}
+				else = {
+					country_event = exhaustion.23
+				}
+			}
+			else_if = {
+				limit = {
+					has_defensive_war = yes
+					check_variable = {
+						var = war_exhaustion
+						value = 50
+						compare = greater_than_or_equals
+						
+					}
+				}
+				if = {
+					limit = {
+						NOT = {
+							
+							has_idea = war_exhaustion_5_d
+							has_idea = war_exhaustion_4_d
+							has_idea = war_exhaustion_3_d
+							has_idea = war_exhaustion_2_d
+						}
+					}
+					country_event = exhaustion.12
+				}
+				else_if = {
+					limit = {
+						has_idea = war_exhaustion_2_d
+					}
+				}
+				else = {
+					country_event = exhaustion.23
+				}
+				
+				
+			}
+			else_if = {
+				limit = {
+					has_offensive_war = yes
+					check_variable = {
+						var = war_exhaustion
+						value = 20
+						compare = greater_than_or_equals
+						
+					}
+				}
+				if = {
+					limit = {
+						NOT = {
+							has_idea = war_exhaustion_1_a
+							has_idea = war_exhaustion_2_a
+							has_idea = war_exhaustion_3_a
+							has_idea = war_exhaustion_4_a
+							has_idea = war_exhaustion_5_a
+							has_idea = war_exhaustion_2_d
+							has_idea = war_exhaustion_3_d
+							has_idea = war_exhaustion_4_d
+							has_idea = war_exhaustion_5_d
+						}
+					}
+					country_event = exhaustion.11
+				}
+				else_if = {
+					limit = {
+						has_idea = war_exhaustion_1_a
+					}
+				}
+				else = {
+					country_event = exhaustion.22
+				}
+			}
+			else_if = {
+				limit = {
+					has_defensive_war = yes
+					check_variable = {
+						var = war_exhaustion
+						value = 25
+						compare = greater_than_or_equals
+						
+					}
+				}
+				if = {
+					limit = {
+						NOT = {
+							has_idea = war_exhaustion_1_d
+							has_idea = war_exhaustion_2_d
+							has_idea = war_exhaustion_3_d
+							has_idea = war_exhaustion_4_d
+							has_idea = war_exhaustion_5_d
+						}
+					}
+					country_event = exhaustion.11
+				}
+				else_if = {
+					limit = {
+						has_idea = war_exhaustion_1_d
+					}
+				}
+				else = {
+					country_event = exhaustion.22
+				}
+				
+				
+			}
+			else_if = {
+				limit = {
+					has_offensive_war = yes
+					check_variable = {
+						var = war_exhaustion
+						value = 20
+						compare = less_than
+						
+					}
+					OR = {
+						has_idea = war_exhaustion_1_a
+						has_idea = war_exhaustion_1_d
+						has_idea = war_exhaustion_2_a
+						has_idea = war_exhaustion_2_d
+						has_idea = war_exhaustion_3_a
+						has_idea = war_exhaustion_3_d
+						has_idea = war_exhaustion_4_a
+						has_idea = war_exhaustion_4_d
+						has_idea = war_exhaustion_5_a
+						has_idea = war_exhaustion_5_d
+
+					}
+				}
+					country_event = exhaustion.21
+			}
+			else_if = {
+				limit = {
+					has_defensive_war = yes
+					check_variable = {
+						var = war_exhaustion
+						value = 25
+						compare = less_than
+						
+					}
+					OR = {
+						has_idea = war_exhaustion_1_a
+						has_idea = war_exhaustion_1_d
+						has_idea = war_exhaustion_2_a
+						has_idea = war_exhaustion_2_d
+						has_idea = war_exhaustion_3_a
+						has_idea = war_exhaustion_3_d
+						has_idea = war_exhaustion_4_a
+						has_idea = war_exhaustion_4_d
+						has_idea = war_exhaustion_5_a
+						has_idea = war_exhaustion_5_d
+
+					}
+				}
+				country_event = exhaustion.21
+				
+				
+			}
+			
+			
+			
+
+		}
+	}
+
+	on_state_control_changed = {
+		effect = {
+
+			if = {
+				limit = {
+					ROOT = {has_variable = war_exhaustion}
+					FROM = {has_variable = war_exhaustion}
+					FROM = {
+						FROM = {
+							is_core_of = PREV
+						}
+					}
+					NOT = {
+						FROM.FROM = {
+							has_state_flag = recently_lost
+						}
+					}
+				}
+				set_temp_variable = { ratio =  FROM.FROM.state_population_k}
+				FROM.FROM = {
+					owner = {
+						divide_temp_variable = {ratio = pop_war_start}
+					}
+				}
+				multiply_temp_variable = {ratio = 100}
+				round_temp_variable = ratio
+				add_to_variable = {
+					var = FROM.war_exhaustion
+					value = ratio
+				}
+				clamp_variable = {
+					var = ROOT.war_exhaustion
+					min = 0
+					max = 100
+				}
+				
+				FROM.FROM = {
+					set_state_flag = recently_lost
+				}
+				
+			}
+			if = {
+				limit = {
+					ROOT = {has_variable = war_exhaustion}
+					FROM = {has_variable = war_exhaustion}
+					FROM.FROM = {
+						is_core_of = owner
+					}
+					FROM.FROM = {
+						NOT = {
+							has_state_flag = recently_taken
+						}
+					}
+					
+				}
+				set_temp_variable = { ratio =  FROM.FROM.state_population_k}
+				FROM.FROM = {
+					owner = {
+						divide_temp_variable = {ratio = pop_war_start}
+					}
+				}
+				multiply_temp_variable = {ratio = 65}
+				if = {
+					limit = {
+						FROM.FROM = {
+							is_core_of = ROOT
+						}
+					}
+					multiply_temp_variable = {ratio = 1.6}
+				}
+				round_temp_variable = ratio
+				subtract_from_variable = {
+					var = ROOT.war_exhaustion
+					value =  ratio
+				}
+				clamp_variable = {
+					var = ROOT.war_exhaustion
+					min = 0
+					max = 100
+				}
+				FROM.FROM = {
+					set_state_flag = recently_taken
+				}
+				
+			}
+			if = {
+				limit = {
+					ROOT = {has_variable = war_exhaustion}
+					FROM = {has_variable = war_exhaustion}
+					FROM.FROM = {
+						is_core_of = FROM
+						is_capital = yes
+						NOT = {
+							has_state_flag = capital_recently_lost
+						}
+					}
+					NOT = {
+						ROOT = {
+								is_ally_with = FROM
+						}
+					}
+					
+				}
+				log = "[FROM.GetName] has lost [FROM.FROM.GetCapitalVictoryPointName]"
+				FROM = {
+					ROOT = {
+						FROM.FROM = {
+							save_event_target_as = state_lost
+						}
+						FROM = {
+							save_event_target_as = country_lost_capital
+						}
+						save_event_target_as = capital_taker
+					}
+					country_event = {
+						id = exhaustion.101
+						days = 1
+						random_hours = 12
+					}
+				}
+				
+				FROM.FROM = {
+					set_state_flag = capital_recently_lost
+				
+				}
+
+				
+				
+			}
+
+			if = {
+				limit = {
+					ROOT = {has_variable = war_exhaustion}
+					FROM = {has_variable = war_exhaustion}
+					FROM.FROM = {
+						OR = {
+							state = 901
+							state = 685
+							state = 118
+							state = 797
+							AND = {
+								state = 37
+								NOT = {
+									PREV = {
+										TAG = DEN
+									}
+								}
+							}
+						}
+						NOT = {
+							has_state_flag = strategic_recently_lost
+						}
+						
+					}
+				}
+				ROOT = {
+					FROM.FROM = {
+							save_event_target_as = state_lost
+					}
+					country_event = {
+						id = exhaustion.105
+						days = 1
+						random_hours = 12 
+					}
+				}
+				log = "[FROM.GetName] has lost [FROM.FROM.GetCapitalVictoryPointName]"
+				FROM = {
+					country_event = {
+						id = exhaustion.102
+						days = 1
+						random_hours = 12
+					}
+				}
+				FROM.FROM  = {
+					set_state_flag = strategic_recently_lost
+				}
+				
+			}
+		}
+			
+
+	}
+
+	on_nuke_drop = {
+		effect = {
+			if = {
+				limit = {
+					NOT = {
+						has_country_flag = nuked_already
+					}
+					has_variable = war_exhaustion
+				}
+				FROM = {
+					save_event_target_as = nuked_state
+				}
+				FROM.owner = {
+					country_event = {
+						id = exhaustion.103
+						days = 1
+						random_hours = 12
+					}
+				}
+			}
+			
+			FROM = {
+				add_dynamic_modifier = {
+					modifier = nuked_populace
+					
+					days = 274
+				}
+			}
+			
+			
+		}
+	}
+
+	
+
+}

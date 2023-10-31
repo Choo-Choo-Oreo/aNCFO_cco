@@ -1,0 +1,499 @@
+
+add_namespace = demob_peace_init
+country_event = {
+	id = demob_peace_init.0 
+        title = demob_peace_init.0.t # The localisable text that appears as a header
+        desc = demob_peace_init.0.d # The localisable main text body that appears
+	#picture = GFX_demob_peace # Image displayed alongside the text.
+
+	is_triggered_only = yes # Optional : if set to "yes" the event will only occur by command
+
+	hidden = yes # Optional : if set to "yes" no one will see the event
+	exclusive = yes
+
+	fire_only_once = no # Optional : if set to "yes" the event will never occur more than once
+
+	immediate = { # Optional : all the following will occur once the event occurs
+	#Peace Timer
+	if = {limit = {check_variable = {THIS.TimeSinceWar_dp > 0}}
+	subtract_from_variable = {THIS.TimeSinceWar_dp = 1}
+	} else = {
+	set_variable = {THIS.TimeSinceWar_dp = 0}
+	}
+		if = {
+		limit = {
+		OR = {
+		has_game_rule = { rule = demob_peace_unit_limit option = demob_peace_unit_limit_a }
+		AND = {
+		has_game_rule = { rule = demob_peace_unit_limit option = demob_peace_unit_limit_b }
+		is_ai = yes
+		}
+		}
+		}
+	
+		Calculate_Unit_Limiter = yes
+		#Variable 1 - Troop Reduction Amount
+		set_temp_variable = {temp1 = num_divisions}
+		subtract_from_temp_variable = {temp1 = GetUnitLimit}
+		set_variable = {ROOT.getDisbandedUnits = temp1}
+		#Variable 2 - Time since red
+		if = {
+		limit = {check_variable = {num_divisions > GetUnitLimit}}
+		add_to_variable = {ROOT.getRedTime = 1}
+		set_variable = {ROOT.getYellowTime = 0}
+		}
+		#Variable 3 - Time since yellow (resets on exceed limit)
+		if = {
+		limit = {NOT = {check_variable = {num_divisions > GetUnitLimit}}}
+		add_to_variable = {ROOT.getYellowTime = 1}
+		}
+		#Calculations - If Yellow Var is 3, the Red Var resets to 0, as well as events
+		if = {
+		limit = {check_variable = {ROOT.getYellowTime > 2}}
+		set_variable = {ROOT.getRedTime = 0}
+		ROOT = {clr_country_flag = demob_peace_event_1}
+		}
+		#Event 1 - If Red Var is between 2 and 4, random first event. If 5 or above, forced random first event
+		#ROOT = {add_stability = 0.1}
+		#log = "[ROOT.GetName]: Yellow: [?ROOT.getYellowTime] Red: [?ROOT.getRedTime]"
+		if = {
+		limit = {
+		check_variable = {ROOT.getRedTime > 1}
+		check_variable = {ROOT.getRedTime < 5}
+		check_variable = {num_divisions > GetUnitLimit}
+		has_game_rule = { rule = demob_peace_demobilization option = demob_peace_demobilization_b }
+		NOT = {ROOT = {has_country_flag = demob_peace_event_1}}
+		}
+		ROOT = {
+			random_list = {
+			70 = {}
+			30 = {
+			country_event = {
+				id = demobilisation_events_dp.1
+				days = 1
+				random_hours = 50
+				random_days = 15
+			}
+			}}
+			}
+		} else_if = {
+		limit = {
+		OR = {
+		AND = {
+		has_game_rule = { rule = demob_peace_demobilization option = demob_peace_demobilization_b }
+		check_variable = {ROOT.getRedTime > 4}
+		}
+		has_game_rule = { rule = demob_peace_demobilization option = demob_peace_demobilization_a }
+		}
+		check_variable = {num_divisions > GetUnitLimit}
+		NOT = {ROOT = {has_country_flag = demob_peace_event_1}}
+		}
+		ROOT = {
+			country_event = {
+				id = demobilisation_events_dp.1
+				days = 1
+				random = 50
+				random_days = 15
+			}}
+		}
+		#Event 2 - If Event 1 is done, and if Red Var is above 2, this event might happen
+		
+		else_if = {
+		limit = {
+		OR = {
+		AND = {
+		has_game_rule = { rule = demob_peace_demobilization option = demob_peace_demobilization_b }
+		check_variable = {ROOT.getRedTime > 1}
+		}
+		has_game_rule = { rule = demob_peace_demobilization option = demob_peace_demobilization_a }
+		}
+		check_variable = {num_divisions > GetUnitLimit}
+		ROOT = {has_country_flag = demob_peace_event_1}
+		}
+			ROOT = {
+			if = {limit = {has_game_rule = { rule = demob_peace_demobilization option = demob_peace_demobilization_b }}
+			random_list = {
+			80 = {}
+			20 = {country_event = {
+				id = demobilisation_events_dp.2
+				days = 1
+				random_hours = 50
+				random_days = 15
+			}
+			}}} else_if = {
+			limit = {has_game_rule = { rule = demob_peace_demobilization option = demob_peace_demobilization_a }}
+			country_event = {
+				id = demobilisation_events_dp.2
+				days = 1
+			}
+			
+			}
+		}
+		#Event 3 - Potential Coup; Might trigger if Red variable is above 12
+		
+		if = {
+		limit = {
+		OR = {
+		AND = {
+		has_game_rule = { rule = demob_peace_demobilization option = demob_peace_demobilization_b }
+		check_variable = {ROOT.getRedTime > 12}
+		}
+		#has_game_rule = { rule = demob_peace_demobilization option = demob_peace_demobilization_a }
+		}
+		check_variable = {num_divisions > GetUnitLimit}
+		ROOT = {has_country_flag = demob_peace_event_1}
+		}
+			ROOT = {
+			random_list = {
+			80 = {}
+			20 = {country_event = {
+				id = demobilisation_events_dp.3
+				days = 1
+				random_hours = 50
+				random_days = 15
+			}}
+			}}
+		}
+		#Event 4 - Coup; Might trigger if Red variable is above 15
+		
+		if = {
+		limit = {
+		OR = {
+		AND = {
+		has_game_rule = { rule = demob_peace_demobilization option = demob_peace_demobilization_b }
+		check_variable = {ROOT.getRedTime > 15}
+		}
+		AND = {
+		has_game_rule = { rule = demob_peace_demobilization option = demob_peace_demobilization_a }
+		check_variable = {ROOT.getRedTime > 4}
+		}
+		}
+		check_variable = {num_divisions > GetUnitLimit}
+		ROOT = {has_country_flag = demob_peace_event_1}
+		any_unit_leader = {is_field_marshal = yes is_country_leader = no}
+		}
+					set_temp_variable = {temp1 = 20}
+					set_temp_variable = {temp2 = ROOT.getFear_dp}
+					if = {limit = {check_variable = {temp2 > 10}} set_temp_variable = {temp2 = 10}}
+					subtract_from_temp_variable = {temp1 = temp2}
+					if = {limit = {has_game_rule = { rule = demob_peace_demobilization option = demob_peace_demobilization_b }}
+			random_list = {
+			80 = {}
+			var:temp1 = {
+			ROOT = {
+			country_event = {
+				id = demobilisation_events_dp.4
+				days = 1
+				random_hours = 50
+				random_days = 15
+			}
+			}}}
+					}
+					else_if = {limit = {has_game_rule = { rule = demob_peace_demobilization option = demob_peace_demobilization_a }}
+			ROOT = {
+			country_event = {
+				id = demobilisation_events_dp.4
+				days = 1
+				random_hours = 50
+				random_days = 15
+			}
+			}
+					}
+		}
+		
+		}
+		
+		}
+		}
+}
+country_event = {
+	id = demob_peace_init.1 
+        title = demob_peace_init.1.t # The localisable text that appears as a header
+        desc = demob_peace_init.1.d # The localisable main text body that appears
+	#picture = GFX_demob_peace # Image displayed alongside the text.
+
+	is_triggered_only = yes # Optional : if set to "yes" the event will only occur by command
+	trigger = {NOT = {has_game_rule = { rule = demob_peace_try_no_wars option = demob_peace_try_no_wars_e }}}
+	hidden = yes # Optional : if set to "yes" no one will see the event
+	exclusive = yes
+
+	fire_only_once = no # Optional : if set to "yes" the event will never occur more than once
+
+	immediate = { # Optional : all the following will occur once the event occurs
+		if = {
+		limit = {
+		#OR = {
+		#
+		#AND = {
+		#has_game_rule = { rule = demob_peace_unit_limit option = demob_peace_unit_limit_b }
+		#is_ai = yes
+		#}
+		#}
+		}
+		#Calculations
+		#TimeSinceWar_dp - Time since war - set after war
+		#NationAmount_dp - Amount of nations against us
+		#PrevJust_dp - Justification Targets
+		#PrevJust1_dp - Single Justification Target
+		#WillJoinCo_dp - Set to all countries that will join coalition. Will be removed if all justification is cancelled
+		#JustifyPulse_dp - Country(ies) to form coalition against. Will be removed if all justification is cancelled.
+		#Great_War_dp - If war is big or not
+		#ROOT.SetLeaderCoalition - Coalition leader
+		#log = "[?ROOT.GetName]'s Time Since War: [?ROOT.TimeSinceWar_dp]"
+		set_variable = {NationAmount_dp = 0}
+		###log = "Checking for new justifications"
+		var:ROOT.PrevJust1_dp = {
+		ROOT = {
+		if = {limit = {
+		OR = {
+		is_justifying_wargoal_against = PREV
+		has_wargoal_against = PREV
+		}
+		NOT = {is_in_array = {
+				array = ROOT.PrevJust_dp
+				value = PREV
+			}
+		}
+		}
+		###log = "Justification against [PREV.GetName] Found! Adding to array. Checking Justification Flag Requirements..."
+		add_to_array = {
+			array = ROOT.PrevJust_dp
+			value = PREV
+		}	
+		###log = "Adding Coalition Flag for [PREV.GetName]"
+		var:ROOT.PrevJust1_dp = {
+		set_country_flag = WillJoinCo_dp
+		}
+		} else = {
+		###log = "Justification for [PREV.GetName] already found in [ROOT.GetName] Justification Array. Aborting..."
+		
+		}
+		####log = "[THIS.GetName] [ROOT.GetName] [PREV.GetName] [?ROOT.PrevJust1_dp.GetName]"
+		#if = {limit = {NOT = {has_country_flag = JustifyPulse_dp}} ###log = "Justification Flag Not Set!"
+		}
+		#if = {limit = {has_country_flag = JustifyPulse_dp} ###log = "Justification Flag Set!"
+		}
+		if = {limit = {
+		NOT = {has_country_flag = JustifyPulse_dp}
+		#log = "[THIS.GetName] [ROOT.GetName] [PREV.GetName]"
+		OR = {
+		is_justifying_wargoal_against = var:ROOT.PrevJust1_dp
+		has_wargoal_against = var:ROOT.PrevJust1_dp
+		}
+		OR = {
+		num_of_military_factories > 9
+		any_allied_country = {
+		num_of_military_factories > 9
+		}
+		var:ROOT.PrevJust1_dp = {
+		OR = {
+		num_of_military_factories > 9
+		any_allied_country = {
+		num_of_military_factories > 9
+		}
+		}
+		}
+		
+		}
+		}
+		###log = "Flag requirements found! Checking if they are met..."
+		if = {limit = {
+		any_country = {
+		check_variable = {THIS.TimeSinceWar_dp > 0}
+		num_of_military_factories > 9
+		NOT = {has_country_flag = Great_War_dp}
+		NOT = {tag = ROOT}
+		}
+		}
+		random_country = {
+		limit = {check_variable = {THIS.TimeSinceWar_dp > 0} NOT = {tag = ROOT} num_of_military_factories > 9 NOT = {has_country_flag = Great_War_dp}}
+		###log = "[THIS.GetName] will start the coalition!"
+		set_country_flag = WillJoinCo_dp
+		set_variable = {ROOT.SetLeaderCoalition = THIS}
+		}
+		###log = "Flag should be set! Looking at every country willing to join..." 
+		every_country = {
+		limit = {NOT = {tag = ROOT} check_variable = {THIS.TimeSinceWar_dp > 0} NOT = {has_country_flag = Great_War_dp}}
+		if = {limit = {check_variable = {THIS.TimeSinceWar_dp > 60}}
+		###log = "[THIS.GetName] is willing to join!"
+		set_country_flag = WillJoinCo_dp
+		add_to_variable = {ROOT.NationAmount_dp = 1}
+		} else_if = {limit = {check_variable = {THIS.TimeSinceWar_dp > 48}}
+		random_list = {
+		80 = {
+		###log = "[THIS.GetName] is willing to join!"
+		set_country_flag = WillJoinCo_dp
+		add_to_variable = {ROOT.NationAmount_dp = 1}}
+		20 = {}
+		}
+		} else_if = {limit = {check_variable = {THIS.TimeSinceWar_dp > 36}}
+		random_list = {
+		60 = {
+		###log = "[THIS.GetName] is willing to join!"
+		set_country_flag = WillJoinCo_dp
+		add_to_variable = {ROOT.NationAmount_dp = 1}}
+		40 = {}
+		}
+		} else_if = {limit = {check_variable = {THIS.TimeSinceWar_dp > 24}}
+		random_list = {
+		40 = {
+		###log = "[THIS.GetName] is willing to join!"
+		set_country_flag = WillJoinCo_dp
+		add_to_variable = {ROOT.NationAmount_dp = 1}}
+		60 = {}
+		}
+		} else_if = {limit = {check_variable = {THIS.TimeSinceWar_dp > 12}}
+		random_list = {
+		30 = {
+		###log = "[THIS.GetName] is willing to join!"
+		set_country_flag = WillJoinCo_dp
+		add_to_variable = {ROOT.NationAmount_dp = 1}}
+		70 = {}
+		}
+		} else_if = {limit = {check_variable = {THIS.TimeSinceWar_dp > 0}}
+		random_list = {
+		20 = {
+		###log = "[THIS.GetName] is willing to join!"
+		set_country_flag = WillJoinCo_dp
+		add_to_variable = {ROOT.NationAmount_dp = 1}}
+		80 = {}
+		}
+		}
+		}
+		###log = "Setting Justification Flag"
+		set_country_flag = JustifyPulse_dp
+		#Event 1 - Coalition Warning
+			var:ROOT.SetLeaderCoalition = {
+			ROOT = {
+			country_event = {
+				id = peace_events_dp.1
+			}
+			}
+			}
+		}
+		
+		
+		 else = {
+		###log = "Justification flag requirements not found!"
+		}
+		}
+		
+		
+		
+		#Event 2 - Coalition Alert
+			#country_event = {
+			#	id = peace_events_dp.2
+			#}
+		}
+		}
+		}
+		}
+		}
+country_event = {
+	id = demob_peace_init.2 
+        title = demob_peace_init.2.t # The localisable text that appears as a header
+        desc = demob_peace_init.2.d # The localisable main text body that appears
+	#picture = GFX_demob_peace # Image displayed alongside the text.
+
+	is_triggered_only = yes # Optional : if set to "yes" the event will only occur by command
+
+	trigger = {NOT = {has_game_rule = { rule = demob_peace_try_no_wars option = demob_peace_try_no_wars_e }}}
+	hidden = yes # Optional : if set to "yes" no one will see the event
+	exclusive = yes
+
+	fire_only_once = no # Optional : if set to "yes" the event will never occur more than once
+
+	immediate = { # Optional : all the following will occur once the event occurs
+	#Cleared every peace deal / every month an aggressor is not doing anything (justifying)
+	#Clears Coalition data and Justification data - ROOT = {clr_country_flag = WillJoinCo_dp} and clear_array = ROOT.PrevJust_dp
+	#If any countries have JustifyPulse_dp, or the current country is at war, this will not clear
+		
+		#every_country = {
+		#limit = {has_country_flag = JustifyPulse_dp}
+		#log = "[THIS.GetName] is currently justifying!"
+		#}
+		###log = "[THIS.GetName] Is checking clear data"
+		if = {
+		limit = {
+		has_war = no
+		NOT = {
+		any_country = {
+		has_country_flag = JustifyPulse_dp
+		}
+		}
+		}
+		###log = "No Countries Detected with Justification Flag"
+		#clear_array = THIS.PrevJust_dp
+		if = {
+		limit = {has_country_flag = WillJoinCo_dp}
+		clr_country_flag = WillJoinCo_dp
+		###log = "Cleared Coalition flag for [THIS.GetName]"
+		###log = "Cleared all Coalition flags"
+		} else_if = {
+		limit = {
+			has_war = yes
+		NOT = {
+		any_country = {
+		has_country_flag = JustifyPulse_dp
+		}
+		}
+		}
+		###log = "You are at war/nobody is justifying! Keeping coalition and aborting..."
+		} else_if = {
+		limit = {
+			has_war = no
+		any_country = {
+		has_country_flag = JustifyPulse_dp
+		}
+		}
+		###log = "Country is currently justifying! Keeping coalition and aborting..."
+		} else_if = {
+		limit = {
+			has_war = yes
+		any_country = {
+		has_country_flag = JustifyPulse_dp
+		}
+		}
+		###log = "You are at war/[THIS.GetName] is justifying! Keeping coalition and aborting..."
+		}
+		}
+	}
+}
+country_event = {
+	id = demob_peace_init.3
+        title = demob_peace_init.3.t # The localisable text that appears as a header
+        desc = demob_peace_init.3.d # The localisable main text body that appears
+	#picture = GFX_demob_peace # Image displayed alongside the text.
+
+	is_triggered_only = yes # Optional : if set to "yes" the event will only occur by command
+
+	trigger = {NOT = {has_game_rule = { rule = demob_peace_try_no_wars option = demob_peace_try_no_wars_e }}}
+	hidden = yes # Optional : if set to "yes" no one will see the event
+	exclusive = yes
+
+	fire_only_once = no # Optional : if set to "yes" the event will never occur more than once
+
+	immediate = { # Optional : all the following will occur once the event occurs
+	#Checks countries that have JustifyPulse_dp to see if they can clear it.
+	###log = "Checking if justification flag is still valid from [THIS.GetName]"
+		if = {
+		limit = {
+		has_war = no
+		has_country_flag = JustifyPulse_dp
+		NOT = {
+		any_country = {
+		is_in_array = {array = ROOT.PrevJust_dp value = THIS}
+		OR = {
+		ROOT = {is_justifying_wargoal_against = PREV}
+		ROOT = {has_wargoal_against = PREV}
+		}
+		}
+		}
+		}
+		###log = "Cleared justify flag for [ROOT.GetName]"
+		ROOT = {clr_country_flag = JustifyPulse_dp}
+		###log = "Cleared Array for Justification"
+		clear_array = ROOT.PrevJust_dp
+		}
+	}
+}

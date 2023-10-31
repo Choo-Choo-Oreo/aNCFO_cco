@@ -1,0 +1,624 @@
+war_exhaustion = {
+	consumer_support = {
+
+		icon = GFX_decision_generic_factory	
+		
+		available = {
+			has_war = yes
+			has_variable = war_exhaustion
+		}
+		
+		fire_only_once = no		
+		days_re_enable = 180	
+
+		visible = {		
+			has_variable = war_exhaustion
+		}		
+
+		cost = 50	
+		complete_effect = {		
+			custom_effect_tooltip = lower_by_15
+			subtract_from_variable = {war_exhaustion = 15}
+			clamp_variable = {
+				var = war_exhaustion
+				min = 0
+				max = 100
+			}
+		}
+		modifier = {
+			consumer_goods_factor = 0.05
+		}
+		days_remove = 120
+
+		ai_will_do = {	
+			factor = 1
+			modifier = {
+				factor = 100
+				check_variable = {war_exhaustion > 35}
+			}	
+		}
+	}
+	supress_protests = {
+		icon = GFX_decision_oppression
+
+		available = {
+			has_war = yes
+			has_variable = war_exhaustion
+			has_elections = no
+			OR = {
+				has_idea = war_exhaustion_3_a
+				has_idea = war_exhaustion_4_a
+				has_idea = war_exhaustion_5_a
+				hidden_trigger = {
+					OR = {
+						has_idea = war_exhaustion_3_d
+						has_idea = war_exhaustion_4_d
+						has_idea = war_exhaustion_5_d
+					}
+					
+				}
+			}
+		}
+
+		fire_only_once = no
+		days_re_enable = 240
+		visible = {
+			has_variable = war_exhaustion
+		}
+		cost = 100
+		complete_effect = {
+			custom_effect_tooltip = lower_by_20
+			subtract_from_variable = {war_exhaustion = 20}
+			add_manpower = -7500
+			add_stability = -0.075
+			clamp_variable = {
+				var = war_exhaustion
+				min = 0
+				max = 100
+			}
+		}
+		ai_will_do = {	
+			factor = 1
+			modifier = {
+				factor = 80
+				check_variable = {war_exhaustion > 50}
+			}	
+		}
+	}
+	martial_law_start = {
+		icon = GFX_decision_eng_blackshirt_march
+		available = {
+			has_elections = no
+			OR = {
+				has_idea = war_exhaustion_5_a
+				has_idea = war_exhaustion_4_a
+				hidden_trigger = {
+					has_idea = war_exhaustion_5_d
+					has_idea = war_exhaustion_4_d
+				}
+			}
+		}
+		fire_only_once = no
+		visible = {
+			has_war = yes
+			has_variable = war_exhaustion
+		}
+		days_remove = -1
+		cancel_if_not_visible = yes
+		cost = 150
+		complete_effect = {
+			custom_effect_tooltip = lower_by_50
+			subtract_from_variable = {war_exhaustion = 50}
+			if = {
+				limit = {
+					has_government = unitism
+				}
+				add_popularity = {
+					ideology = unitism
+					popularity = -0.15
+				}
+			}
+			else_if = {
+				limit = {
+					has_government = authoritarianism
+				}
+				add_popularity = {
+					ideology = authoritarianism
+					popularity = -0.15
+				}
+			}
+			else_if = {
+				limit = {
+					has_government = theocratism
+				}
+				add_popularity = {
+					ideology = theocratism
+					popularity = -0.15
+				}
+			}
+			else_if = {
+				limit = {
+					has_government = semidemocracy
+				}
+				add_popularity = {
+					ideology = semidemocracy
+					popularity = -0.15
+				}
+			}
+			else_if = {
+				limit = {
+					has_government = pluralism
+				}
+				add_popularity = {
+					ideology = pluralism
+					popularity = -0.15
+				}
+			}
+			add_stability = -0.2
+			clamp_variable = {
+				var = war_exhaustion
+				min = 0
+				max = 100
+			}
+
+		}
+		ai_will_do = {	
+			factor = 1
+			modifier = {
+				factor = 80
+				check_variable = {war_exhaustion > 70}
+			}	
+		}
+	}
+	accede_to_protests = {	
+		icon = GFX_decision_eng_trade_unions_support
+		available = {
+			has_war = yes
+			has_variable = war_exhaustion
+			has_elections = yes
+			OR = {
+				has_idea = war_exhaustion_3_a
+				has_idea = war_exhaustion_4_a
+				has_idea = war_exhaustion_5_a
+				hidden_trigger = {
+					OR = {
+						has_idea = war_exhaustion_3_d
+						has_idea = war_exhaustion_4_d
+						has_idea = war_exhaustion_5_d
+					}
+				}
+			}
+		}
+		fire_only_once = no
+		days_re_enable = 240
+		visible = {
+			has_variable = war_exhaustion
+		}
+		cost = 75
+		complete_effect = {
+			custom_effect_tooltip = lower_by_15
+			subtract_from_variable = {war_exhaustion = 15}
+			clamp_variable = {
+				var = war_exhaustion
+				min = 0
+				max = 100
+			}
+		}
+		modifier = {
+			political_power_gain = -0.25
+		}
+		days_remove = 180
+		ai_will_do = {	
+			factor = 1
+			modifier = {
+				factor = 80
+				check_variable = {war_exhaustion > 40}
+			}	
+		}
+	}
+	hold_emergency_election = {
+		icon = GFX_decision_hol_war_on_pacifism
+		available = {
+			has_war = yes
+			has_variable = war_exhaustion
+			has_elections = yes
+			OR = {
+				has_idea = war_exhaustion_5_a
+				has_idea = war_exhaustion_4_a
+				hidden_trigger = {
+					has_idea = war_exhaustion_5_d
+					has_idea = war_exhaustion_4_d
+				}
+			}
+			
+		}
+		fire_only_once = yes
+		cost = 250
+		visible = {
+			has_war = yes
+			has_variable = war_exhaustion
+		}
+		cancel_if_not_visible = yes
+		days_remove = -1
+		complete_effect = {
+			custom_effect_tooltip = warning_elections
+			if = {
+				limit = {
+					has_government = unitism
+				}
+				add_popularity ={
+					ideology = authoritarianism
+					popularity = 0.03
+				}
+				add_popularity ={
+					ideology = theocratism
+					popularity = 0.03
+				}
+				add_popularity ={
+					ideology = semidemocracy
+					popularity = 0.03
+				}
+				add_popularity ={
+					ideology = pluralism
+					popularity = 0.03
+				}
+			}
+			else_if = {
+				limit = {
+					has_government = authoritarianism
+				}
+				add_popularity ={
+					ideology = unitism
+					popularity = 0.03
+				}
+				add_popularity ={
+					ideology = theocratism
+					popularity = 0.03
+				}
+				add_popularity ={
+					ideology = semidemocracy
+					popularity = 0.03
+				}
+				add_popularity ={
+					ideology = pluralism
+					popularity = 0.03
+				}
+			}
+			else_if = {
+				limit = {
+					has_government = theocratism
+				}
+				add_popularity ={
+					ideology = unitism
+					popularity = 0.03
+				}
+				add_popularity ={
+					ideology = authoritarianism
+					popularity = 0.03
+				}
+				add_popularity ={
+					ideology = semidemocracy
+					popularity = 0.03
+				}
+				add_popularity ={
+					ideology = pluralism
+					popularity = 0.03
+				}
+			}
+			else_if = {
+				limit = {
+					has_government = semidemocracy
+				}
+				add_popularity ={
+					ideology = unitism
+					popularity = 0.03
+				}
+				add_popularity ={
+					ideology = authoritarianism
+					popularity = 0.03
+				}
+				add_popularity ={
+					ideology = theocratism
+					popularity = 0.03
+				}
+				add_popularity ={
+					ideology = pluralism
+					popularity = 0.03
+				}
+			}
+			else_if = {
+				limit = {
+					has_government = pluralism
+				}
+				add_popularity ={
+					ideology = unitism
+					popularity = 0.03
+				}
+				add_popularity ={
+					ideology = authoritarianism
+					popularity = 0.03
+				}
+				add_popularity ={
+					ideology = theocratism
+					popularity = 0.03
+				}
+				add_popularity ={
+					ideology = semidemocracy
+					popularity = 0.03
+				}
+			}
+			add_stability = -0.1
+			custom_effect_tooltip = lower_by_50
+			subtract_from_variable = {war_exhaustion = 50}
+			hidden_effect = {
+				hold_election = ROOT
+			}
+			clamp_variable = {
+				var = war_exhaustion
+				min = 0
+				max = 100
+			}
+			
+		}
+	}
+	defense_propaganda = {
+		icon = GFX_decision_hol_radio_oranje
+		available = {
+			has_war = yes
+			has_variable = war_exhaustion
+			has_defensive_war = yes
+			OR = {
+				has_idea = war_exhaustion_2_a
+				has_idea = war_exhaustion_3_a
+				has_idea = war_exhaustion_4_a
+				has_idea = war_exhaustion_5_a
+				hidden_trigger = {
+					OR = {
+						has_idea = war_exhaustion_2_d
+						has_idea = war_exhaustion_3_d
+						has_idea = war_exhaustion_4_d
+						has_idea = war_exhaustion_5_d
+					}
+				}
+			}
+		}
+		cost = 50
+		visible = {
+			has_variable = war_exhaustion
+		}
+		fire_only_once = no
+		days_re_enable = 120
+		complete_effect = {
+			custom_effect_tooltip = lower_by_15
+			subtract_from_variable = {war_exhaustion = 15}
+			clamp_variable = {
+				var = war_exhaustion
+				min = 0
+				max = 100
+			}
+		}
+		ai_will_do = {	
+			factor = 1
+			modifier = {
+				factor = 80
+				check_variable = {war_exhaustion > 55}
+			}	
+		}
+	}
+	liberation_propaganda = {
+		icon = GFX_decision_generic_nationalism
+		available = {
+			has_war = yes
+			has_variable = war_exhaustion
+			any_country = {
+				has_war_with = ROOT
+				any_owned_state ={
+					is_core_of = ROOT
+				}
+			}
+			OR = {
+				has_idea = war_exhaustion_2_a
+				has_idea = war_exhaustion_3_a
+				has_idea = war_exhaustion_4_a
+				has_idea = war_exhaustion_5_a
+				hidden_trigger = {
+					OR = {
+						has_idea = war_exhaustion_2_d
+						has_idea = war_exhaustion_3_d
+						has_idea = war_exhaustion_4_d
+						has_idea = war_exhaustion_5_d
+					}
+				}
+			}
+
+		}
+		cost = 150
+		visible = {
+			has_variable = war_exhaustion
+		}
+		fire_only_once = no
+		days_re_enable = 365
+		complete_effect = {
+			custom_effect_tooltip = lower_by_20
+			subtract_from_variable = {war_exhaustion = 20}
+			clamp_variable = {
+				var = war_exhaustion
+				min = 0
+				max = 100
+			}
+		}
+		ai_will_do = {	
+			factor = 1
+			modifier = {
+				factor = 80
+				check_variable = {war_exhaustion > 50}
+			}	
+		}
+	}
+
+	conscription_law_small = {
+		icon = GFX_decision_generic_army_support
+		available = { 
+			has_war = yes
+			has_variable = war_exhaustion
+			NOT = {
+				has_idea = war_exhaustion_5_a
+				hidden_trigger = {
+					has_idea = war_exhaustion_5_d
+				}
+			}
+		}
+		cost = 50
+		visible = {
+			
+			has_war = yes
+			has_variable = war_exhaustion
+		}
+		cancel_trigger = {
+			has_decision = conscription_law_large
+		}
+		complete_effect = {
+			custom_effect_tooltip = raise_by_10
+			add_to_variable = {war_exhaustion = 10}
+			clamp_variable = {
+				var = war_exhaustion
+				min = 0
+				max = 100
+			}
+		}
+		modifier = {
+			conscription_factor = 0.1
+		}
+		cancel_if_not_visible = yes
+		days_remove = -1
+	}
+	conscription_law_large = {
+		icon = GFX_decision_generic_army_support
+		available = { 
+			has_variable = war_exhaustion
+			has_war = yes
+			any_country = {
+				has_war_with = ROOT
+				strength_ratio = {
+					tag = ROOT
+					ratio > 1.5
+				}
+			}
+			NOT = {
+				has_idea = war_exhaustion_5_a
+				has_idea = war_exhaustion_4_a
+				hidden_trigger = {
+					OR= {
+						has_idea = war_exhaustion_4_d
+						has_idea = war_exhaustion_5_d
+					}
+					
+				}
+			}
+		}
+		cost = 100
+		visible = {
+			has_war = yes
+			has_variable = war_exhaustion
+		}
+		cancel_trigger = {
+			has_decision = conscription_law_small
+		}
+		complete_effect = {
+			custom_effect_tooltip = raise_by_20
+			add_to_variable = {war_exhaustion = 20}
+			clamp_variable = {
+				var = war_exhaustion
+				min = 0
+				max = 100
+			}
+		}
+		modifier = {
+			conscription_factor = 0.2
+		}
+		cancel_if_not_visible = yes
+		days_remove = -1
+	}
+
+	increase_factory_light = {
+		icon = GFX_decision_generic_merge_plant_materiel
+		
+		available = { 
+			has_war = yes
+			has_variable = war_exhaustion
+			NOT = {
+				has_idea = war_exhaustion_5_a
+				hidden_trigger = {
+					has_idea = war_exhaustion_5_d
+				}
+			}
+		}
+		
+		cost = 100
+		visible = {
+			has_war = yes
+			has_variable = war_exhaustion
+		}
+		cancel_trigger = {
+			has_decision = increase_factory_heavy
+		}
+		complete_effect = {
+			custom_effect_tooltip = raise_by_10
+			add_to_variable = {war_exhaustion = 10}
+			clamp_variable = {
+				var = war_exhaustion
+				min = 0
+				max = 100
+			}
+		}
+		modifier = {
+			industrial_capacity_factory = 0.075
+			industrial_capacity_dockyard = 0.075
+		}
+		cancel_if_not_visible = yes
+		days_remove = -1
+	}
+	increase_factory_heavy = {
+		icon = GFX_decision_generic_merge_plant_materiel
+		
+		available = { 
+			NOT = {
+				OR = { has_government = pluralism has_government = semidemocracy }
+			}
+			has_war = yes
+			has_variable = war_exhaustion
+			NOT = {
+				has_idea = war_exhaustion_5_a
+				has_idea = war_exhaustion_4_a
+				hidden_trigger = {
+					has_idea = war_exhaustion_5_d
+					has_idea = war_exhaustion_4_d
+				}
+			}
+		}
+		
+		cost = 100
+		visible = {
+			has_war = yes
+			has_variable = war_exhaustion
+		}
+		cancel_trigger = {
+			has_decision = increase_factory_light
+		}
+		complete_effect = {
+			custom_effect_tooltip = raise_by_25
+			add_to_variable = {war_exhaustion = 25}
+			clamp_variable = {
+				var = war_exhaustion
+				min = 0
+				max = 100
+			}
+		}
+		modifier = {
+			industrial_capacity_factory = 0.15
+			industrial_capacity_dockyard = 0.15
+		}
+		cancel_if_not_visible = yes
+		days_remove = -1
+	}
+}
