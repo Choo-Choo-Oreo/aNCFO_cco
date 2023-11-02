@@ -1,4 +1,3 @@
-
 add_namespace = demob_peace_init
 country_event = {
 	id = demob_peace_init.0 
@@ -204,191 +203,155 @@ country_event = {
 		}
 		
 		}
-		}
+	}
 }
 country_event = {
 	id = demob_peace_init.1 
-        title = demob_peace_init.1.t # The localisable text that appears as a header
-        desc = demob_peace_init.1.d # The localisable main text body that appears
-	#picture = GFX_demob_peace # Image displayed alongside the text.
+    title = demob_peace_init.1.t
+    desc = demob_peace_init.1.d
 
-	is_triggered_only = yes # Optional : if set to "yes" the event will only occur by command
+	is_triggered_only = yes
 	trigger = {NOT = {has_game_rule = { rule = demob_peace_try_no_wars option = demob_peace_try_no_wars_e }}}
-	hidden = yes # Optional : if set to "yes" no one will see the event
+	hidden = yes
 	exclusive = yes
 
-	fire_only_once = no # Optional : if set to "yes" the event will never occur more than once
+	fire_only_once = no
 
-	immediate = { # Optional : all the following will occur once the event occurs
+	immediate = {
 		if = {
-		limit = {
-		#OR = {
-		#
-		#AND = {
-		#has_game_rule = { rule = demob_peace_unit_limit option = demob_peace_unit_limit_b }
-		#is_ai = yes
-		#}
-		#}
-		}
-		#Calculations
-		#TimeSinceWar_dp - Time since war - set after war
-		#NationAmount_dp - Amount of nations against us
-		#PrevJust_dp - Justification Targets
-		#PrevJust1_dp - Single Justification Target
-		#WillJoinCo_dp - Set to all countries that will join coalition. Will be removed if all justification is cancelled
-		#JustifyPulse_dp - Country(ies) to form coalition against. Will be removed if all justification is cancelled.
-		#Great_War_dp - If war is big or not
-		#ROOT.SetLeaderCoalition - Coalition leader
-		#log = "[?ROOT.GetName]'s Time Since War: [?ROOT.TimeSinceWar_dp]"
-		set_variable = {NationAmount_dp = 0}
-		###log = "Checking for new justifications"
-		var:ROOT.PrevJust1_dp = {
-		ROOT = {
-		if = {limit = {
-		OR = {
-		is_justifying_wargoal_against = PREV
-		has_wargoal_against = PREV
-		}
-		NOT = {is_in_array = {
-				array = ROOT.PrevJust_dp
-				value = PREV
+			limit = {
+			}
+			set_variable = {NationAmount_dp = 0}
+			var:ROOT.PrevJust1_dp = {
+				ROOT = {
+					if = {
+						limit = {
+							OR = {
+								is_justifying_wargoal_against = PREV
+								has_wargoal_against = PREV
+							}
+							NOT = {
+								is_in_array = {
+									array = ROOT.PrevJust_dp
+									value = PREV
+								}
+							}
+						}
+						add_to_array = {
+							array = ROOT.PrevJust_dp
+							value = PREV
+						}
+						var:ROOT.PrevJust1_dp = {
+							set_country_flag = WillJoinCo_dp
+						}
+					}
+					else = {
+					}
+				}
+			}
+			if = {
+				limit = {
+					NOT = {has_country_flag = JustifyPulse_dp}
+					OR = {
+						is_justifying_wargoal_against = var:ROOT.PrevJust1_dp
+						has_wargoal_against = var:ROOT.PrevJust1_dp
+					}
+					OR = {
+						num_of_military_factories > 9
+						any_allied_country = {
+							num_of_military_factories > 9
+						}
+						var:ROOT.PrevJust1_dp = {
+							OR = {
+								num_of_military_factories > 9
+								any_allied_country = {
+									num_of_military_factories > 9
+								}
+							}
+						}
+					}
+				}
+				if = {
+					limit = {
+						any_country = {
+							check_variable = {THIS.TimeSinceWar_dp > 0}
+							num_of_military_factories > 9
+							NOT = {has_country_flag = Great_War_dp}
+							NOT = {tag = ROOT}
+						}
+					}
+					random_country = {
+						limit = {check_variable = {THIS.TimeSinceWar_dp > 0} NOT = {tag = ROOT} num_of_military_factories > 9 NOT = {has_country_flag = Great_War_dp}}
+						set_country_flag = WillJoinCo_dp
+						set_variable = {ROOT.SetLeaderCoalition = THIS}
+					}
+					every_country = {
+						limit = {NOT = {tag = ROOT} check_variable = {THIS.TimeSinceWar_dp > 0} NOT = {has_country_flag = Great_War_dp}}
+						if = {limit = {check_variable = {THIS.TimeSinceWar_dp > 60}}
+							set_country_flag = WillJoinCo_dp
+							add_to_variable = {ROOT.NationAmount_dp = 1}
+						}
+						else_if = {limit = {check_variable = {THIS.TimeSinceWar_dp > 48}}
+							random_list = {
+								80 = {
+									set_country_flag = WillJoinCo_dp
+									add_to_variable = {ROOT.NationAmount_dp = 1}
+								}
+								20 = {}
+							}
+						}
+						else_if = {limit = {check_variable = {THIS.TimeSinceWar_dp > 36}}
+							random_list = {
+								60 = {
+									set_country_flag = WillJoinCo_dp
+									add_to_variable = {ROOT.NationAmount_dp = 1}
+								}
+								40 = {}
+							}
+						}
+						else_if = {limit = {check_variable = {THIS.TimeSinceWar_dp > 24}}
+							random_list = {
+								40 = {
+									set_country_flag = WillJoinCo_dp
+									add_to_variable = {ROOT.NationAmount_dp = 1}
+								}
+								60 = {}
+							}
+						}
+						else_if = {limit = {check_variable = {THIS.TimeSinceWar_dp > 12}}
+							random_list = {
+								30 = {
+									set_country_flag = WillJoinCo_dp
+									add_to_variable = {ROOT.NationAmount_dp = 1}
+								}
+								70 = {}
+							}
+						}
+						else_if = {limit = {check_variable = {THIS.TimeSinceWar_dp > 0}}
+							random_list = {
+								20 = {
+									set_country_flag = WillJoinCo_dp
+									add_to_variable = {ROOT.NationAmount_dp = 1}
+								}
+								80 = {}
+							}
+						}
+					}
+					set_country_flag = JustifyPulse_dp
+					var:ROOT.SetLeaderCoalition = {
+						ROOT = {
+							country_event = {
+								id = peace_events_dp.1
+							}
+						}
+					}
+				}
+				else = {
+				}
 			}
 		}
-		}
-		###log = "Justification against [PREV.GetName] Found! Adding to array. Checking Justification Flag Requirements..."
-		add_to_array = {
-			array = ROOT.PrevJust_dp
-			value = PREV
-		}	
-		###log = "Adding Coalition Flag for [PREV.GetName]"
-		var:ROOT.PrevJust1_dp = {
-		set_country_flag = WillJoinCo_dp
-		}
-		} else = {
-		###log = "Justification for [PREV.GetName] already found in [ROOT.GetName] Justification Array. Aborting..."
-		
-		}
-		####log = "[THIS.GetName] [ROOT.GetName] [PREV.GetName] [?ROOT.PrevJust1_dp.GetName]"
-		#if = {limit = {NOT = {has_country_flag = JustifyPulse_dp}} ###log = "Justification Flag Not Set!"
-		}
-		#if = {limit = {has_country_flag = JustifyPulse_dp} ###log = "Justification Flag Set!"
-		}
-		if = {limit = {
-		NOT = {has_country_flag = JustifyPulse_dp}
-		#log = "[THIS.GetName] [ROOT.GetName] [PREV.GetName]"
-		OR = {
-		is_justifying_wargoal_against = var:ROOT.PrevJust1_dp
-		has_wargoal_against = var:ROOT.PrevJust1_dp
-		}
-		OR = {
-		num_of_military_factories > 9
-		any_allied_country = {
-		num_of_military_factories > 9
-		}
-		var:ROOT.PrevJust1_dp = {
-		OR = {
-		num_of_military_factories > 9
-		any_allied_country = {
-		num_of_military_factories > 9
-		}
-		}
-		}
-		
-		}
-		}
-		###log = "Flag requirements found! Checking if they are met..."
-		if = {limit = {
-		any_country = {
-		check_variable = {THIS.TimeSinceWar_dp > 0}
-		num_of_military_factories > 9
-		NOT = {has_country_flag = Great_War_dp}
-		NOT = {tag = ROOT}
-		}
-		}
-		random_country = {
-		limit = {check_variable = {THIS.TimeSinceWar_dp > 0} NOT = {tag = ROOT} num_of_military_factories > 9 NOT = {has_country_flag = Great_War_dp}}
-		###log = "[THIS.GetName] will start the coalition!"
-		set_country_flag = WillJoinCo_dp
-		set_variable = {ROOT.SetLeaderCoalition = THIS}
-		}
-		###log = "Flag should be set! Looking at every country willing to join..." 
-		every_country = {
-		limit = {NOT = {tag = ROOT} check_variable = {THIS.TimeSinceWar_dp > 0} NOT = {has_country_flag = Great_War_dp}}
-		if = {limit = {check_variable = {THIS.TimeSinceWar_dp > 60}}
-		###log = "[THIS.GetName] is willing to join!"
-		set_country_flag = WillJoinCo_dp
-		add_to_variable = {ROOT.NationAmount_dp = 1}
-		} else_if = {limit = {check_variable = {THIS.TimeSinceWar_dp > 48}}
-		random_list = {
-		80 = {
-		###log = "[THIS.GetName] is willing to join!"
-		set_country_flag = WillJoinCo_dp
-		add_to_variable = {ROOT.NationAmount_dp = 1}}
-		20 = {}
-		}
-		} else_if = {limit = {check_variable = {THIS.TimeSinceWar_dp > 36}}
-		random_list = {
-		60 = {
-		###log = "[THIS.GetName] is willing to join!"
-		set_country_flag = WillJoinCo_dp
-		add_to_variable = {ROOT.NationAmount_dp = 1}}
-		40 = {}
-		}
-		} else_if = {limit = {check_variable = {THIS.TimeSinceWar_dp > 24}}
-		random_list = {
-		40 = {
-		###log = "[THIS.GetName] is willing to join!"
-		set_country_flag = WillJoinCo_dp
-		add_to_variable = {ROOT.NationAmount_dp = 1}}
-		60 = {}
-		}
-		} else_if = {limit = {check_variable = {THIS.TimeSinceWar_dp > 12}}
-		random_list = {
-		30 = {
-		###log = "[THIS.GetName] is willing to join!"
-		set_country_flag = WillJoinCo_dp
-		add_to_variable = {ROOT.NationAmount_dp = 1}}
-		70 = {}
-		}
-		} else_if = {limit = {check_variable = {THIS.TimeSinceWar_dp > 0}}
-		random_list = {
-		20 = {
-		###log = "[THIS.GetName] is willing to join!"
-		set_country_flag = WillJoinCo_dp
-		add_to_variable = {ROOT.NationAmount_dp = 1}}
-		80 = {}
-		}
-		}
-		}
-		###log = "Setting Justification Flag"
-		set_country_flag = JustifyPulse_dp
-		#Event 1 - Coalition Warning
-			var:ROOT.SetLeaderCoalition = {
-			ROOT = {
-			country_event = {
-				id = peace_events_dp.1
-			}
-			}
-			}
-		}
-		
-		
-		 else = {
-		###log = "Justification flag requirements not found!"
-		}
-		}
-		
-		
-		
-		#Event 2 - Coalition Alert
-			#country_event = {
-			#	id = peace_events_dp.2
-			#}
-		}
-		}
-		}
-		}
-		}
+	}
+}
 country_event = {
 	id = demob_peace_init.2 
         title = demob_peace_init.2.t # The localisable text that appears as a header

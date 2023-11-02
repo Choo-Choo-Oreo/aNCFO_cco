@@ -4,6 +4,10 @@
 	NDefines.NGame.MAP_SCALE_PIXEL_TO_KM = 7.8254
 	NDefines.NGame.HANDS_OFF_START_TAG = "LLA"
 	NDefines.NBuildings.MAX_SHARED_SLOTS = 55
+	NDefines.NCountry.MIN_STABILITY = -1.0
+	NDefines.NCountry.MAX_STABILITY = 1.0
+	NDefines.NCountry.MIN_WAR_SUPPORT = -1.0
+	NDefines.NCountry.MAX_WAR_SUPPORT = 1.0
 
 -- NRM Defines
 	NDefines.NProduction.DEFAULT_MAX_NAV_FACTORIES_PER_LINE = 6 -- Was 3 changed to 6
