@@ -28,13 +28,168 @@
 #}
 
 shared_focus = {
-	id = LMN_eastern_conquest
-	icon = GFX_
-	#prerequisite = { focus =  }
-	#mutually_exclusive = { focus =  }
-	#relative_position_id = 
-	x = 25
+	id = LMN_reclaim_mandate
+	icon = GFX_LMN_reclaim_mandate
+	x = 16
 	y = 0
+
+	cost = 10
+	cancel_if_invalid = yes
+	continue_if_invalid = no
+	available_if_capitulated = no
+
+	available = {
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		base = 5
+	}
+
+	completion_reward = {
+		create_wargoal = {
+			type = annex_everything
+			target = RUC
+			expire = 0
+		}
+		create_wargoal = {
+			type = annex_everything
+			target = SAG
+			expire = 0
+		}
+	}
+}
+
+shared_focus = { # Western Reconquest
+	id = LMN_western_reconquest
+	icon = GFX_
+	prerequisite = { focus = LMN_reclaim_mandate }
+	relative_position_id = LMN_reclaim_mandate
+	x = 0
+	y = 1
+
+	cost = 10
+
+	available = {
+		date > 1825.01.01 # Year Month Day
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		base = 5
+	}
+
+	completion_reward = {
+		create_wargoal = {
+			type = annex_everything
+			target = CHI
+			expire = 0
+		}
+		create_wargoal = {
+			type = annex_everything
+			target = IWE
+			expire = 0
+		}
+		create_wargoal = {
+			type = annex_everything
+			target = FUL
+			expire = 0
+		}
+		create_wargoal = {
+			type = annex_everything
+			target = SHE
+			expire = 0
+		}
+	}
+}
+
+shared_focus = { # Eastern Reconquest
+	id = LMN_eastern_reconquest
+	icon = GFX_
+	prerequisite = { focus = LMN_western_reconquest }
+	relative_position_id = LMN_western_reconquest
+	x = 0
+	y = 1
+
+	cost = 10
+
+	available = {
+		date > 1826.01.01 # Year Month Day
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		base = 5
+	}
+
+	completion_reward = {
+		create_wargoal = {
+			type = annex_everything
+			target = DOG
+			expire = 0
+		}
+		create_wargoal = {
+			type = annex_everything
+			target = VIT
+			expire = 0
+		}
+		create_wargoal = {
+			type = annex_everything
+			target = VEN
+			expire = 0
+		}
+		create_wargoal = {
+			type = annex_everything
+			target = LCF
+			expire = 0
+		}
+	}
+}
+
+shared_focus = { # North-Western Reconquest
+	id = LMN_north_western_reconquest
+	icon = GFX_
+	prerequisite = { focus = LMN_eastern_reconquest }
+	relative_position_id = LMN_eastern_reconquest
+	x = 0
+	y = 1
+
+	cost = 10
+
+	available = {
+		date > 1827.01.01 # Year Month Day
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		base = 5
+	}
+
+	completion_reward = {
+		create_wargoal = {
+			type = annex_everything
+			target = HUV
+			expire = 0
+		}
+		create_wargoal = {
+			type = annex_everything
+			target = TRF
+			expire = 0
+		}
+	}
+}
+
+shared_focus = { # Northern Reconquest
+	id = LMN_northern_reconquest
+	icon = GFX_
+	prerequisite = { focus = LMN_north_western_reconquest }
+	relative_position_id = LMN_north_western_reconquest
+	x = 0
+	y = 1
 
 	cost = 10
 
@@ -48,33 +203,69 @@ shared_focus = {
 		base = 5
 	}
 
-	complete_tooltip = {
-	}
 	completion_reward = {
+		create_wargoal = {
+			type = annex_everything
+			target = RPT
+			expire = 0
+		}
+		create_wargoal = {
+			type = annex_everything
+			target = XIF
+			expire = 0
+		}
 		create_wargoal = {
 			type = annex_everything
 			target = DRC
 			expire = 0
 		}
+	}
+}
+
+shared_focus = { # Last Western Reconquest
+	id = LMN_last_western_reconquest
+	icon = GFX_
+	prerequisite = { focus = LMN_northern_reconquest }
+	relative_position_id = LMN_northern_reconquest
+	x = 0
+	y = 1
+
+	cost = 10
+
+	available = {
+		date > 1829.01.01 # Year Month Day
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		base = 5
+	}
+
+	completion_reward = {
 		create_wargoal = {
 			type = annex_everything
-			target = FDL
+			target = SHU
 			expire = 0
 		}
 		create_wargoal = {
 			type = annex_everything
-			target = LCF
+			target = SIH
+			expire = 0
+		}
+		create_wargoal = {
+			type = annex_everything
+			target = ICU
 			expire = 0
 		}
 	}
 }
 
-shared_focus = {
-	id = LMN_north_eastern_conquest
+shared_focus = { # North-Eastern Reconquest
+	id = LMN_north_eastern_reconquest
 	icon = GFX_
-	prerequisite = { focus = LMN_eastern_conquest }
-	#mutually_exclusive = { focus =  }
-	relative_position_id = LMN_eastern_conquest
+	prerequisite = { focus = LMN_last_western_reconquest }
+	relative_position_id = LMN_last_western_reconquest
 	x = 0
 	y = 1
 
@@ -90,8 +281,6 @@ shared_focus = {
 		base = 5
 	}
 
-	complete_tooltip = {
-	}
 	completion_reward = {
 		create_wargoal = {
 			type = annex_everything
@@ -100,12 +289,7 @@ shared_focus = {
 		}
 		create_wargoal = {
 			type = annex_everything
-			target = NEC
-			expire = 0
-		}
-		create_wargoal = {
-			type = annex_everything
-			target = LCS
+			target = FDL
 			expire = 0
 		}
 		create_wargoal = {
@@ -115,25 +299,34 @@ shared_focus = {
 		}
 		create_wargoal = {
 			type = annex_everything
-			target = RPT
+			target = MYU
+			expire = 0
+		}
+		create_wargoal = {
+			type = annex_everything
+			target = LCS
+			expire = 0
+		}
+		create_wargoal = {
+			type = annex_everything
+			target = NEC
 			expire = 0
 		}
 	}
 }
 
-shared_focus = {
-	id = LMN_south_eastern_conquest
+shared_focus = { # South-Eastern Reconquest
+	id = LMN_south_eastern_reconquest
 	icon = GFX_
-	prerequisite = { focus = LMN_north_eastern_conquest }
-	#mutually_exclusive = { focus =  }
-	relative_position_id = LMN_north_eastern_conquest
+	prerequisite = { focus = LMN_north_eastern_reconquest }
+	relative_position_id = LMN_north_eastern_reconquest
 	x = 0
 	y = 1
 
 	cost = 10
 
 	available = {
-		date > 1831.06.01 # Year Month Day
+		date > 1831.01.01 # Year Month Day
 	}
 	bypass = {
 	}
@@ -142,8 +335,6 @@ shared_focus = {
 		base = 5
 	}
 
-	complete_tooltip = {
-	}
 	completion_reward = {
 		create_wargoal = {
 			type = annex_everything
@@ -168,19 +359,18 @@ shared_focus = {
 	}
 }
 
-shared_focus = {
+shared_focus = { # The last Reconquest
 	id = LMN_reconquest
 	icon = GFX_
-	prerequisite = { focus = LMN_south_eastern_conquest }
-	#mutually_exclusive = { focus =  }
-	relative_position_id = LMN_south_eastern_conquest
+	prerequisite = { focus = LMN_south_eastern_reconquest }
+	relative_position_id = LMN_south_eastern_reconquest
 	x = 0
 	y = 1
 
 	cost = 10
 
 	available = {
-		date > 1832.06.01 # Year Month Day
+		date > 1832.01.01 # Year Month Day
 	}
 	bypass = {
 	}
@@ -189,8 +379,6 @@ shared_focus = {
 		base = 5
 	}
 
-	complete_tooltip = {
-	}
 	completion_reward = {
 		declare_war_on = {
 			target = EPC
@@ -198,7 +386,7 @@ shared_focus = {
 		}
 		create_wargoal = {
 			type = annex_everything
-			target = EPC
+			target = EPY
 			expire = 0
 		}
 	}
