@@ -1,0 +1,80 @@
+#shared_focus = {
+#	id = EPY_
+#	icon = GFX_
+#	prerequisite = { focus =  }
+#	mutually_exclusive = { focus =  }
+#	relative_position_id = 
+#	x = 0
+#	y = 0
+#
+#	cost = 10
+#	cancel_if_invalid = yes
+#	continue_if_invalid = no
+#	available_if_capitulated = no
+#
+#	available = {
+#	}
+#	bypass = {
+#	}
+#
+#	ai_will_do = {
+#		base = 5
+#	}
+#
+#	complete_tooltip = {
+#	}
+#	completion_reward = {
+#	}
+#}
+
+shared_focus = {
+	id = EPY_liming_conquest
+	icon = GFX_
+	#prerequisite = { focus =  }
+	#mutually_exclusive = { focus =  }
+	#relative_position_id = 
+	x = 25
+	y = 0
+
+	cost = 10
+
+	available = {
+		date > 1830.01.01 # Year Month Day
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		base = 5
+	}
+
+	complete_tooltip = {
+	}
+	completion_reward = {
+		if = {
+			limit = {
+				LMN = {
+					any_core_state = {
+						NOT = {
+							is_owned_and_controlled_by = LMN
+						}
+					}
+				}
+			}
+			LMN = {
+				every_core_state = {
+					limit = {
+						NOT = { is_owned_and_controlled_by = PREV }
+					}
+					ROOT = {
+						create_wargoal = {
+							target = PREV.controller
+							type = annex_everything
+							expire = 0
+						}
+					}
+				}
+			}
+		}
+	}
+}
