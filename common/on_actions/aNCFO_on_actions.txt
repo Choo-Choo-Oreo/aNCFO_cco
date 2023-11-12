@@ -1,29 +1,519 @@
 on_actions = {
 	on_startup = {
-		effect = {
-			every_state = { # Add cores for nations the can form the final Mandate
-				limit = {
-					OR = {
-						is_core_of = EPC
-						is_core_of = DRC
-						is_core_of = FDL
-						is_core_of = LCF
-						is_core_of = LCS
-						is_core_of = LMN
-						is_core_of = LPR
-						is_core_of = RPT
-						is_core_of = SSJ
+		# Mandate
+			effect = {
+				every_state = { # Add cores for nations the can form the final Mandate
+					limit = {
+						OR = {
+							is_core_of = EPC
+							is_core_of = DRC
+							is_core_of = FDL
+							is_core_of = LCF
+							is_core_of = LCS
+							is_core_of = LMN
+							is_core_of = LPR
+							is_core_of = RPT
+							is_core_of = SSJ
+						}
+					}
+					add_core_of = EPC
+					add_core_of = DRC
+					add_core_of = FDL
+					add_core_of = LCF
+					add_core_of = LCS
+					add_core_of = LMN
+					add_core_of = LPR
+					add_core_of = RPT
+					add_core_of = SSJ
+				}
+			}
+		# Harmonainus Imperious
+			effect = {
+					### Enrich Nations ###
+				EPY = { set_technology = { enrich_bauxite = 1 popup = no } }
+					### Map/Idea Setup ###
+				every_country = {
+					country_event = startup_fuction.0
+					update_all_stances = yes
+				}
+				HSP = {
+					give_resource_rights = { receiver = HHE state = 11 }
+					give_resource_rights = { receiver = HHE state = 106 }
+				}
+				HTP = {
+					give_resource_rights = { receiver = HHE state = 123 }
+					give_resource_rights = { receiver = HHE state = 124 }
+				}
+				HPP = {
+					give_resource_rights = { receiver = HHE state = 92 }
+					give_resource_rights = { receiver = HHE state = 277 }
+					give_resource_rights = { receiver = HHE state = 278 }
+					give_resource_rights = { receiver = HHE state = 279 }
+					give_resource_rights = { receiver = HHE state = 399 }
+				}
+			}
+			effect = {
+				every_country = {
+					if = {
+						limit = {
+							date < 1824.4.2
+							has_idea = uncertain_future
+						}
+						country_lock_all_division_template = yes
 					}
 				}
-				add_core_of = EPC
-				add_core_of = DRC
-				add_core_of = FDL
-				add_core_of = LCF
-				add_core_of = LCS
-				add_core_of = LMN
-				add_core_of = LPR
-				add_core_of = RPT
-				add_core_of = SSJ
+			}
+			effect = {
+				if = {
+					limit = { has_dlc = "La Resistance" }
+					HHE = {
+						load_oob = "HHE_1824_armored_cars"
+					}
+					HLF = {
+						load_oob = "HLF_1824_armored_cars"
+					}
+					HST = {
+						load_oob = "HST_1824_armored_cars"
+					}
+					HTP = {
+						load_oob = "HTP_1824_armored_cars"
+					}
+					else = {
+						HHE = {
+							load_oob = "HHE_1824_motorised_cars"
+						}
+						HLF = {
+							load_oob = "HLF_1824_motorised_cars"
+						}
+						HST = {
+							load_oob = "HST_1824_motorised_cars"
+						}
+						HTP = {
+							load_oob = "HTP_1824_motorised_cars"
+						}
+					}
+				}
+			}
+	}
+	on_daily = {
+		effect = {
+			update_all_stances = yes
+		}
+	}
+	on_weekly = {
+	}
+	on_monthly = {
+	}
+	on_capitulation_immediate = {
+		effect = { # Remove Wargoals from capitulated nations
+			if = {
+				ROOT = {
+					remove_wargoal = {
+						type = all
+						target = ROOT
+					}
+				}
+			}
+		}
+		effect = { # Starting Wars
+			if = { # HPV Start Wars
+				limit = {
+					date < 1827.1.1
+					ROOT = { tag = HPV }
+				}
+				ROOT = { white_peace = { tag = FROM } transfer_navy = { target = FROM } }
+				FROM = { annex_country = { target = ROOT } }
+			}
+			if = { # SFG Start Wars
+				limit = {
+					date < 1827.1.1
+					ROOT = { tag = SFG }
+				}
+				ROOT = { white_peace = { tag = FROM } transfer_navy = { target = FROM } }
+				FROM = { annex_country = { target = ROOT } }
+			}
+			if = { # SLA Start Wars
+				limit = {
+					date < 1827.1.1
+					ROOT = { tag = SLA }
+				}
+				ROOT = { white_peace = { tag = FROM } transfer_navy = { target = FROM } }
+				FROM = { annex_country = { target = ROOT } }
+			}
+			if = { # SRA Start Wars
+				limit = {
+					date < 1827.1.1
+					ROOT = { tag = SRA }
+				}
+				ROOT = { white_peace = { tag = FROM } transfer_navy = { target = FROM } }
+				FROM = { annex_country = { target = ROOT } }
+			}
+		}
+		effect = { # Civil War
+			if = { # HBB Capitulation in Civil War
+				limit = {
+					NOT = { is_faction_leader = yes }
+					OR = {
+						has_global_flag = HHE_warmonger_civil_war_first
+						has_global_flag = HHE_warmonger_civil_war_final
+					}
+					ROOT = { tag = HBB }
+				}
+				ROOT = { white_peace = { tag = FROM } transfer_navy = { target = FROM } } # message = lost_during_civil_war_tt
+				FROM = { annex_country = { target = ROOT } }
+			}
+			if = { # HCR Capitulation in Civil War
+				limit = {
+					NOT = { is_faction_leader = yes }
+					OR = {
+						has_global_flag = HHE_warmonger_civil_war_first
+						has_global_flag = HHE_warmonger_civil_war_final
+					}
+					ROOT = { tag = HCR }
+				}
+				ROOT = { white_peace = { tag = FROM } transfer_navy = { target = FROM } } # message = lost_during_civil_war_tt
+				FROM = { annex_country = { target = ROOT } }
+			}
+			if = { # HER Capitulation in Civil War
+				limit = {
+					NOT = { is_faction_leader = yes }
+					OR = {
+						has_global_flag = HHE_warmonger_civil_war_first
+						has_global_flag = HHE_warmonger_civil_war_final
+					}
+					ROOT = { tag = HER }
+				}
+				ROOT = { white_peace = { tag = FROM } transfer_navy = { target = FROM } } # message = lost_during_civil_war_tt
+				FROM = { annex_country = { target = ROOT } }
+			}
+			if = { # HET Capitulation in Civil War
+				limit = {
+					NOT = { is_faction_leader = yes }
+					OR = {
+						has_global_flag = HHE_warmonger_civil_war_first
+						has_global_flag = HHE_warmonger_civil_war_final
+					}
+					ROOT = { tag = HET }
+				}
+				ROOT = { white_peace = { tag = FROM } transfer_navy = { target = FROM } } # message = lost_during_civil_war_tt
+				FROM = { annex_country = { target = ROOT } }
+			}
+			if = { # HHE Capitulation in Civil War
+				limit = {
+					NOT = { is_faction_leader = yes }
+					OR = {
+						has_global_flag = HHE_warmonger_civil_war_first
+						has_global_flag = HHE_warmonger_civil_war_final
+					}
+					ROOT = { tag = HHE }
+				}
+				ROOT = { white_peace = { tag = FROM } transfer_navy = { target = FROM } } # message = lost_during_civil_war_tt
+				FROM = { annex_country = { target = ROOT } }
+			}
+			if = { # HLF Capitulation in Civil War
+				limit = {
+					NOT = { is_faction_leader = yes }
+					OR = {
+						has_global_flag = HHE_warmonger_civil_war_first
+						has_global_flag = HHE_warmonger_civil_war_final
+					}
+					ROOT = { tag = HLF }
+				}
+				ROOT = { white_peace = { tag = FROM } transfer_navy = { target = FROM } } # message = lost_during_civil_war_tt
+				FROM = { annex_country = { target = ROOT } }
+			}
+			if = { # HNO Capitulation in Civil War
+				limit = {
+					NOT = { is_faction_leader = yes }
+					OR = {
+						has_global_flag = HHE_warmonger_civil_war_first
+						has_global_flag = HHE_warmonger_civil_war_final
+					}
+					ROOT = { tag = HNO }
+				}
+				ROOT = { white_peace = { tag = FROM } transfer_navy = { target = FROM } } # message = lost_during_civil_war_tt
+				FROM = { annex_country = { target = ROOT } }
+			}
+			if = { # HPP Capitulation in Civil War
+				limit = {
+					NOT = { is_faction_leader = yes }
+					OR = {
+						has_global_flag = HHE_warmonger_civil_war_first
+						has_global_flag = HHE_warmonger_civil_war_final
+					}
+					ROOT = { tag = HPP }
+				}
+				ROOT = { white_peace = { tag = FROM } transfer_navy = { target = FROM } } # message = lost_during_civil_war_tt
+				FROM = { annex_country = { target = ROOT } }
+			}
+			if = { # HRF Capitulation in Civil War
+				limit = {
+					NOT = { is_faction_leader = yes }
+					OR = {
+						has_global_flag = HHE_warmonger_civil_war_first
+						has_global_flag = HHE_warmonger_civil_war_final
+					}
+					ROOT = { tag = HRF }
+					OR = {
+						FROM = { tag = DOC }
+						FROM = { tag = REP }
+					}
+				}
+				ROOT = {
+					white_peace = { tag = DOC } # message = lost_during_civil_war_tt
+					white_peace = { tag = REP } # message = lost_during_civil_war_tt
+				}
+				DOC = { transfer_state = 200 transfer_state = 221 }
+				REP = { transfer_state = 194 transfer_state = 195 transfer_state = 199 transfer_state = 220 transfer_state = 247 }
+				else = {
+					limit = {
+						NOT = { is_faction_leader = yes }
+						OR = {
+							has_global_flag = HHE_warmonger_civil_war_first
+							has_global_flag = HHE_warmonger_civil_war_final
+						}
+						ROOT = { tag = HRF }
+					}
+					ROOT = { white_peace = { tag = FROM } transfer_navy = { target = FROM } } # message = lost_during_civil_war_tt
+					FROM = { annex_country = { target = ROOT } }
+				}
+			}
+			if = { # HSP Capitulation in Civil War
+				limit = {
+					NOT = { is_faction_leader = yes }
+					OR = {
+						has_global_flag = HHE_warmonger_civil_war_first
+						has_global_flag = HHE_warmonger_civil_war_final
+					}
+					ROOT = { tag = HSP }
+					OR = {
+						FROM = { tag = HFF }
+						FROM = { tag = HFR }
+					}
+				}
+				ROOT = {
+					# transfer_navy = { target = FROM }
+					white_peace = { tag = HFF } # message = lost_during_civil_war_tt
+					white_peace = { tag = HFR } # message = lost_during_civil_war_tt
+				}
+				HFF = { transfer_state = 106 transfer_state = 110 transfer_state = 111 transfer_state = 112 transfer_state = 447 transfer_state = 451 }
+				#HFR = { transfer_state = 11 transfer_state = 96 transfer_state = 107 transfer_state = 108 transfer_state = 448 transfer_state = 449 transfer_state = 450 }
+				HFR = { annex_country = { target = ROOT } }
+				else = {
+					limit = {
+						NOT = { is_faction_leader = yes }
+						OR = {
+							has_global_flag = HHE_warmonger_civil_war_first
+							has_global_flag = HHE_warmonger_civil_war_final
+						}
+						ROOT = { tag = HSP }
+					}
+					ROOT = { white_peace = { tag = FROM } transfer_navy = { target = FROM } } # message = lost_during_civil_war_tt
+					FROM = { annex_country = { target = ROOT } }
+				}
+			}
+			if = { # HST Capitulation in Civil War
+				limit = {
+					NOT = { is_faction_leader = yes }
+					OR = {
+						has_global_flag = HHE_warmonger_civil_war_first
+						has_global_flag = HHE_warmonger_civil_war_final
+					}
+					ROOT = { tag = HST }
+				}
+				ROOT = { white_peace = { tag = FROM } transfer_navy = { target = FROM } } # message = lost_during_civil_war_tt
+				FROM = { annex_country = { target = ROOT } }
+			}
+			if = { # HTP Capitulation in Civil War
+				limit = {
+					NOT = { is_faction_leader = yes }
+					OR = {
+						has_global_flag = HHE_warmonger_civil_war_first
+						has_global_flag = HHE_warmonger_civil_war_final
+					}
+					ROOT = { tag = HTP }
+				}
+				ROOT = { white_peace = { tag = FROM } transfer_navy = { target = FROM } } # message = lost_during_civil_war_tt
+				FROM = { annex_country = { target = ROOT } }
+			}
+			if = { # HUM Capitulation in Civil War
+				limit = {
+					NOT = { is_faction_leader = yes }
+					OR = {
+						has_global_flag = HHE_warmonger_civil_war_first
+						has_global_flag = HHE_warmonger_civil_war_final
+					}
+					ROOT = { tag = HUM }
+				}
+				ROOT = { white_peace = { tag = FROM } transfer_navy = { target = FROM } } # message = lost_during_civil_war_tt
+				FROM = { annex_country = { target = ROOT } }
+			}
+			if = { # HUP Capitulation in Civil War
+				limit = {
+					NOT = { is_faction_leader = yes }
+					OR = {
+						has_global_flag = HHE_warmonger_civil_war_first
+						has_global_flag = HHE_warmonger_civil_war_final
+					}
+					ROOT = { tag = HUP }
+				}
+				ROOT = { white_peace = { tag = FROM } transfer_navy = { target = FROM } } # message = lost_during_civil_war_tt
+				FROM = { annex_country = { target = ROOT } }
+			}
+			if = { # HWA Capitulation in Civil War
+				limit = {
+					NOT = { is_faction_leader = yes }
+					OR = {
+						has_global_flag = HHE_warmonger_civil_war_first
+						has_global_flag = HHE_warmonger_civil_war_final
+					}
+					ROOT = { tag = HWA }
+				}
+				ROOT = { white_peace = { tag = FROM } transfer_navy = { target = FROM } } # message = lost_during_civil_war_tt
+				FROM = { annex_country = { target = ROOT } }
+			}
+			if = { # HAN Capitulation in Civil War
+				limit = {
+					NOT = { is_faction_leader = yes }
+					OR = {
+						has_global_flag = HHE_warmonger_civil_war_first
+						has_global_flag = HHE_warmonger_civil_war_final
+					}
+					ROOT = { tag = HAN }
+				}
+				ROOT = { white_peace = { tag = FROM } transfer_navy = { target = FROM } } # message = lost_during_civil_war_tt
+				FROM = { annex_country = { target = ROOT } }
+			}
+			if = { # HAP Capitulation in Civil War
+				limit = {
+					NOT = { is_faction_leader = yes }
+					OR = {
+						has_global_flag = HHE_warmonger_civil_war_first
+						has_global_flag = HHE_warmonger_civil_war_final
+					}
+					ROOT = { tag = HAP }
+				}
+				ROOT = { white_peace = { tag = FROM } transfer_navy = { target = FROM } } # message = lost_during_civil_war_tt
+				FROM = { annex_country = { target = ROOT } }
+			}
+			if = { # HAW Capitulation in Civil War
+				limit = {
+					NOT = { is_faction_leader = yes }
+					OR = {
+						has_global_flag = HHE_warmonger_civil_war_first
+						has_global_flag = HHE_warmonger_civil_war_final
+					}
+					ROOT = { tag = HAW }
+				}
+				ROOT = { white_peace = { tag = FROM } transfer_navy = { target = FROM } } # message = lost_during_civil_war_tt
+				FROM = { annex_country = { target = ROOT } }
+			}
+			if = { # HCO Capitulation in Civil War
+				limit = {
+					NOT = { is_faction_leader = yes }
+					OR = {
+						has_global_flag = HHE_warmonger_civil_war_first
+						has_global_flag = HHE_warmonger_civil_war_final
+					}
+					ROOT = { tag = HCO }
+				}
+				ROOT = { white_peace = { tag = FROM } transfer_navy = { target = FROM } } # message = lost_during_civil_war_tt
+				FROM = { annex_country = { target = ROOT } }
+			}
+			if = { # HDW Capitulation in Civil War
+				limit = {
+					NOT = { is_faction_leader = yes }
+					OR = {
+						has_global_flag = HHE_warmonger_civil_war_first
+						has_global_flag = HHE_warmonger_civil_war_final
+					}
+					ROOT = { tag = HDW }
+				}
+				ROOT = { white_peace = { tag = FROM } transfer_navy = { target = FROM } } # message = lost_during_civil_war_tt
+				FROM = { annex_country = { target = ROOT } }
+			}
+			if = { # HFF Capitulation in Civil War
+				limit = {
+					NOT = { is_faction_leader = yes }
+					OR = {
+						has_global_flag = HHE_warmonger_civil_war_first
+						has_global_flag = HHE_warmonger_civil_war_final
+					}
+					ROOT = { tag = HFF }
+				}
+				ROOT = { white_peace = { tag = FROM } transfer_navy = { target = FROM } } # message = lost_during_civil_war_tt
+				FROM = { annex_country = { target = ROOT } }
+			}
+			if = { # HFR Capitulation in Civil War
+				limit = {
+					NOT = { is_faction_leader = yes }
+					OR = {
+						has_global_flag = HHE_warmonger_civil_war_first
+						has_global_flag = HHE_warmonger_civil_war_final
+					}
+					ROOT = { tag = HFR }
+				}
+				ROOT = { white_peace = { tag = FROM } transfer_navy = { target = FROM } } # message = lost_during_civil_war_tt
+				FROM = { annex_country = { target = ROOT } }
+			}
+			if = { # HFS Capitulation in Civil War
+				limit = {
+					NOT = { is_faction_leader = yes }
+					OR = {
+						has_global_flag = HHE_warmonger_civil_war_first
+						has_global_flag = HHE_warmonger_civil_war_final
+					}
+					ROOT = { tag = HFS }
+				}
+				ROOT = { white_peace = { tag = FROM } transfer_navy = { target = FROM } } # message = lost_during_civil_war_tt
+				FROM = { annex_country = { target = ROOT } }
+			}
+			if = { # HJU Capitulation in Civil War
+				limit = {
+					NOT = { is_faction_leader = yes }
+					OR = {
+						has_global_flag = HHE_warmonger_civil_war_first
+						has_global_flag = HHE_warmonger_civil_war_final
+					}
+					ROOT = { tag = HJU }
+				}
+				ROOT = { white_peace = { tag = FROM } transfer_navy = { target = FROM } } # message = lost_during_civil_war_tt
+				FROM = { annex_country = { target = ROOT } }
+			}
+			if = { # HPG Capitulation in Civil War
+				limit = {
+					NOT = { is_faction_leader = yes }
+					OR = {
+						has_global_flag = HHE_warmonger_civil_war_first
+						has_global_flag = HHE_warmonger_civil_war_final
+					}
+					ROOT = { tag = HPG }
+				}
+				ROOT = { white_peace = { tag = FROM } transfer_navy = { target = FROM } } # message = lost_during_civil_war_tt
+				FROM = { annex_country = { target = ROOT } }
+			}
+			if = { # HUF Capitulation in Civil War
+				limit = {
+					NOT = { is_faction_leader = yes }
+					OR = {
+						has_global_flag = HHE_warmonger_civil_war_first
+						has_global_flag = HHE_warmonger_civil_war_final
+					}
+					ROOT = { tag = HUF }
+				}
+				ROOT = { white_peace = { tag = FROM } transfer_navy = { target = FROM } } # message = lost_during_civil_war_tt
+				FROM = { annex_country = { target = ROOT } }
+			}
+		}
+		effect = { # Vlad Won Great War
+		}
+		effect = { # Vlad Lost Great War
+			if = {
+				limit = {
+					ROOT = { tag = HHE }
+					HHE = { has_cosmetic_tag = VLADS_IMPERIOUS_UNIFIED }
+				}
+				HHE_great_war_lost = yes
 			}
 		}
 	}
