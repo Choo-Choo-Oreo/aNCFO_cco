@@ -1,3 +1,58 @@
+# Shared
+	HHE_political_choas_down = { # Important to put LOWEST first
+		if = {
+			limit = { has_idea = HHE_choas0 }
+			custom_effect_tooltip = HHE_political_choas_down_tt
+			remove_ideas = HHE_choas0
+		}
+		if = {
+			limit = { has_idea = HHE_choas1 }
+			custom_effect_tooltip = HHE_political_choas_down_tt
+			swap_ideas = {
+				remove_idea = HHE_choas1
+				add_idea = HHE_choas0
+			}
+		}
+		if = {
+			limit = { has_idea = HHE_choas2 }
+			custom_effect_tooltip = HHE_political_choas_down_tt
+			swap_ideas = {
+				remove_idea = HHE_choas2
+				add_idea = HHE_choas1
+			}
+		}
+		if = {
+			limit = { has_idea = HHE_choas3 }
+			custom_effect_tooltip = HHE_political_choas_down_tt
+			swap_ideas = {
+				remove_idea = HHE_choas3
+				add_idea = HHE_choas2
+			}
+		}
+		if = {
+			limit = { has_idea = HHE_choas4 }
+			custom_effect_tooltip = HHE_political_choas_down_tt
+			swap_ideas = {
+				remove_idea = HHE_choas4
+				add_idea = HHE_choas3
+			}
+		}
+	}
+	HHE_bureaucracy_improvement = { # Important to put LOWEST first
+		if = {
+			limit = { has_idea = mediocre_bureaucracy }
+			custom_effect_tooltip = HHE_bureaucracy_improvement_tt
+			remove_ideas = mediocre_bureaucracy
+		}
+		if = {
+			limit = { has_idea = traditional_bureaucracy }
+			custom_effect_tooltip = HHE_bureaucracy_improvement_tt
+			swap_ideas = {
+				remove_idea = traditional_bureaucracy
+				add_idea = mediocre_bureaucracy
+			}
+		}
+	}
 # DEED
 	HHE_deed_reform_starter_up = { # Important to put HIGHEST first
 		if = {
@@ -233,61 +288,6 @@
 						}
 					}
 				}
-			}
-		}
-	}
-	
-	HHE_political_choas_down = { # Important to put LOWEST first
-		if = {
-			limit = { has_idea = HHE_choas0 }
-			custom_effect_tooltip = HHE_political_choas_down_tt
-			remove_ideas = HHE_choas0
-		}
-		if = {
-			limit = { has_idea = HHE_choas1 }
-			custom_effect_tooltip = HHE_political_choas_down_tt
-			swap_ideas = {
-				remove_idea = HHE_choas1
-				add_idea = HHE_choas0
-			}
-		}
-		if = {
-			limit = { has_idea = HHE_choas2 }
-			custom_effect_tooltip = HHE_political_choas_down_tt
-			swap_ideas = {
-				remove_idea = HHE_choas2
-				add_idea = HHE_choas1
-			}
-		}
-		if = {
-			limit = { has_idea = HHE_choas3 }
-			custom_effect_tooltip = HHE_political_choas_down_tt
-			swap_ideas = {
-				remove_idea = HHE_choas3
-				add_idea = HHE_choas2
-			}
-		}
-		if = {
-			limit = { has_idea = HHE_choas4 }
-			custom_effect_tooltip = HHE_political_choas_down_tt
-			swap_ideas = {
-				remove_idea = HHE_choas4
-				add_idea = HHE_choas3
-			}
-		}
-	}
-	HHE_bureaucracy_improvement = { # Important to put LOWEST first
-		if = {
-			limit = { has_idea = mediocre_bureaucracy }
-			custom_effect_tooltip = HHE_bureaucracy_improvement_tt
-			remove_ideas = mediocre_bureaucracy
-		}
-		if = {
-			limit = { has_idea = traditional_bureaucracy }
-			custom_effect_tooltip = HHE_bureaucracy_improvement_tt
-			swap_ideas = {
-				remove_idea = traditional_bureaucracy
-				add_idea = mediocre_bureaucracy
 			}
 		}
 	}
@@ -626,7 +626,7 @@
 		load_focus_tree = hhe_influencer_focus
 		ROOT = {
 			HST_isabella_delfina = {
-			add_country_leader_role = {
+				add_country_leader_role = {
 					promote_leader = yes
 					country_leader = {
 						ideology = sub_reformed_harmonainism
@@ -635,6 +635,25 @@
 				}
 			}
 		}
+	}
+	post_civil_war_authority_effect = {
+		set_global_flag = elected_authority
+		load_focus_tree = hhe_authority_focus
+		ROOT = {
+			HHE_gaius_divitiis = {
+				add_country_leader_role = {
+					promote_leader = yes
+					country_leader = {
+						ideology = sub_harmonainism
+						traits = { prince_of_terror railway_noble }
+					}
+				}
+			}
+		}
+	}
+	post_civil_war_peoples_government_effect = {
+		set_global_flag = elected_peoples_government
+		#load_focus_tree = hhe_peoples_government_focus
 	}
 # Great War scripted peace deals.
 	HHE_great_war_won = {
