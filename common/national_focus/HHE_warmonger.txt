@@ -1136,7 +1136,21 @@
 		available_if_capitulated = yes
 
 		completion_reward = {
-			add_ideas = HHE_the_underground
+			if = {
+				limit = {
+					has_dlc = "La Resistance"
+				}
+				if = {
+					limit = {
+						has_intelligence_agency = no
+					}
+					create_intelligence_agency = yes
+				}
+				add_ideas = HHE_the_underground_lla
+				else = {
+					add_ideas = HHE_the_underground_vanilla
+				}
+			}
 			add_victory_points = { province = 15115 value = 5 }
 			add_victory_points = { province = 15116 value = 3 }
 		}
@@ -2143,6 +2157,8 @@
 
 		available_if_capitulated = yes
 
+		will_lead_to_war_with = DOC
+		will_lead_to_war_with = REP
 		completion_reward = {
 			create_wargoal = {
 				type = annex_everything
@@ -2256,6 +2272,7 @@
 
 		available_if_capitulated = yes
 
+		will_lead_to_war_with = KGK
 		completion_reward = {
 			create_wargoal = {
 				type = annex_everything
@@ -2288,6 +2305,7 @@
 
 		available_if_capitulated = yes
 
+		will_lead_to_war_with = SMK
 		completion_reward = {
 			create_wargoal = {
 				type = annex_everything
@@ -2339,6 +2357,7 @@
 		allow_branch = {
 		}
 		available = {
+			NOT = { has_idea_disjointed_military = yes }
 		}
 		bypass = {
 		}
@@ -2430,6 +2449,9 @@
 
 		available_if_capitulated = yes
 
+		will_lead_to_war_with = UFS
+		will_lead_to_war_with = MJU
+		will_lead_to_war_with = MRC
 		completion_reward = {
 			add_ideas = HHE_high_spirits_efforts_4
 			unlock_decision_tooltip = HHE_falling_spirits
@@ -2475,6 +2497,13 @@
 
 		available_if_capitulated = yes
 
+		will_lead_to_war_with = CPV
+		will_lead_to_war_with = ERP
+		will_lead_to_war_with = FIK
+		will_lead_to_war_with = GSD
+		will_lead_to_war_with = SEK
+		will_lead_to_war_with = SSD
+		will_lead_to_war_with = RVV
 		completion_reward = {
 			add_named_threat = { threat = 10 name = HHE_bifurcation_crusade }
 			# Event
@@ -2602,8 +2631,8 @@
 		}
 	}
 
-	shared_focus = { # Filler Civil Liberties1
-		id = HHE_warmonger_filler_civil_liberties1
+	shared_focus = { # Ipsa Contemplatur Project
+		id = HHE_warmonger_ipsa_contemplatur_project
 		icon = GFX_focus_unknown
 		prerequisite = { focus = HHE_warmonger_filler_k1 }
 		prerequisite = { focus = HHE_warmonger_filler_l1 }
@@ -2611,7 +2640,7 @@
 		relative_position_id = HHE_warmonger_pillar_civil_liberties
 		x = 0
 		y = 3
-		cost = 1
+		cost = 7
 
 		allow_branch = {
 		}
@@ -2627,15 +2656,30 @@
 		available_if_capitulated = yes
 
 		completion_reward = {
+			if = {
+				limit = {
+					has_dlc = "La Resistance"
+				}
+				swap_ideas = {
+					remove_idea = HHE_the_underground_lla
+					add_idea = HHE_ipsa_contemplatur_lla_0
+				}
+				else = {
+					swap_ideas = {
+						remove_idea = HHE_the_underground_vanilla
+						add_idea = HHE_ipsa_contemplatur_vanilla_0
+					}
+				}
+			}
 		}
 	}
 
 	shared_focus = { # Filler Civil Liberties2
 		id = HHE_warmonger_filler_civil_liberties2
 		icon = GFX_focus_unknown
-		prerequisite = { focus = HHE_warmonger_filler_civil_liberties1 }
+		prerequisite = { focus = HHE_warmonger_ipsa_contemplatur_project }
 		#mutually_exclusive = { focus =  }
-		relative_position_id = HHE_warmonger_filler_civil_liberties1
+		relative_position_id = HHE_warmonger_ipsa_contemplatur_project
 		x = 0
 		y = 1
 		cost = 1
@@ -2657,8 +2701,8 @@
 		}
 	}
 
-	shared_focus = { # Filler Civil Liberties3
-		id = HHE_warmonger_filler_civil_liberties3
+	shared_focus = { # Defend our Internal Affairs
+		id = HHE_warmonger_defend_our_internal_affairs
 		icon = GFX_focus_unknown
 		prerequisite = { focus = HHE_warmonger_filler_civil_liberties2 }
 		#mutually_exclusive = { focus =  }
@@ -2681,15 +2725,30 @@
 		available_if_capitulated = yes
 
 		completion_reward = {
+			if = {
+				limit = {
+					has_dlc = "La Resistance"
+				}
+				swap_ideas = {
+					remove_idea = HHE_ipsa_contemplatur_lla_0
+					add_idea = HHE_ipsa_contemplatur_lla_1
+				}
+				else = {
+					swap_ideas = {
+						remove_idea = HHE_ipsa_contemplatur_vanilla_0
+						add_idea = HHE_ipsa_contemplatur_vanilla_1
+					}
+				}
+			}
 		}
 	}
 
 	shared_focus = { # Filler Civil Liberties4
 		id = HHE_warmonger_filler_civil_liberties4
 		icon = GFX_focus_unknown
-		prerequisite = { focus = HHE_warmonger_filler_civil_liberties3 }
+		prerequisite = { focus = HHE_warmonger_defend_our_internal_affairs }
 		#mutually_exclusive = { focus =  }
-		relative_position_id = HHE_warmonger_filler_civil_liberties3
+		relative_position_id = HHE_warmonger_defend_our_internal_affairs
 		x = 0
 		y = 1
 		cost = 1
@@ -2711,8 +2770,8 @@
 		}
 	}
 
-	shared_focus = { # Filler Civil Liberties5
-		id = HHE_warmonger_filler_civil_liberties5
+	shared_focus = { # Our own Underground
+		id = HHE_warmonger_our_own_underground
 		icon = GFX_focus_unknown
 		prerequisite = { focus = HHE_warmonger_filler_civil_liberties4 }
 		#mutually_exclusive = { focus =  }
@@ -2735,6 +2794,21 @@
 		available_if_capitulated = yes
 
 		completion_reward = {
+			if = {
+				limit = {
+					has_dlc = "La Resistance"
+				}
+				swap_ideas = {
+					remove_idea = HHE_ipsa_contemplatur_lla_1
+					add_idea = HHE_ipsa_contemplatur_lla_2
+				}
+				else = {
+					swap_ideas = {
+						remove_idea = HHE_ipsa_contemplatur_vanilla_1
+						add_idea = HHE_ipsa_contemplatur_vanilla_2
+					}
+				}
+			}
 		}
 	}
 # Social
@@ -3163,7 +3237,7 @@
 			has_completed_focus = HHE_warmonger_filler_governance5
 			has_completed_focus = HHE_warmonger_filler_economic5
 			has_completed_focus = HHE_warmonger_bifurcation_crusade
-			has_completed_focus = HHE_warmonger_filler_civil_liberties5
+			has_completed_focus = HHE_warmonger_our_own_underground
 			has_completed_focus = HHE_warmonger_filler_social5
 		}
 		bypass = {
@@ -3177,551 +3251,6 @@
 
 		completion_reward = {
 			add_country_leader_trait = discipula_eius
-		}
-	}
-
-	shared_focus = { # Filler AA1
-		id = HHE_warmonger_filler_aa1
-		icon = GFX_focus_unknown
-		prerequisite = { focus = HHE_warmonger_her_disciple_archard_vlad }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = HHE_warmonger_her_disciple_archard_vlad
-		x = 0
-		y = 1
-		cost = 1
-
-		allow_branch = {
-		}
-		available = {
-		}
-		bypass = {
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-		}
-	}
-
-	shared_focus = { # Filler AA2
-		id = HHE_warmonger_filler_aa2
-		icon = GFX_focus_unknown
-		#prerequisite = { focus = HHE_warmonger_her_disciple_archard_vlad }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = HHE_warmonger_her_disciple_archard_vlad
-		x = -2
-		y = -1
-		cost = 1
-
-		allow_branch = {
-		}
-		available = {
-			has_completed_focus = HHE_warmonger_filler_aa1
-		}
-		bypass = {
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-		}
-	}
-
-	shared_focus = { # Filler AA3
-		id = HHE_warmonger_filler_aa3
-		icon = GFX_focus_unknown
-		#prerequisite = { focus = HHE_warmonger_her_disciple_archard_vlad }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = HHE_warmonger_her_disciple_archard_vlad
-		x = 2
-		y = -1
-		cost = 1
-
-		allow_branch = {
-		}
-		available = {
-			has_completed_focus = HHE_warmonger_filler_aa1
-		}
-		bypass = {
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-		}
-	}
-
-	shared_focus = { # Filler AA4
-		id = HHE_warmonger_filler_aa4
-		icon = GFX_focus_unknown
-		prerequisite = { focus = HHE_warmonger_filler_aa2 }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = HHE_warmonger_filler_aa2
-		x = -1
-		y = 1
-		cost = 1
-
-		allow_branch = {
-		}
-		available = {
-		}
-		bypass = {
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-		}
-	}
-
-	shared_focus = { # Filler AA5
-		id = HHE_warmonger_filler_aa5
-		icon = GFX_focus_unknown
-		prerequisite = { focus = HHE_warmonger_filler_aa3 }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = HHE_warmonger_filler_aa3
-		x = 1
-		y = 1
-		cost = 1
-
-		allow_branch = {
-		}
-		available = {
-		}
-		bypass = {
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-		}
-	}
-
-	shared_focus = { # Filler AA6
-		id = HHE_warmonger_filler_aa6
-		icon = GFX_focus_unknown
-		prerequisite = { focus = HHE_warmonger_filler_aa4 }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = HHE_warmonger_filler_aa4
-		x = 1
-		y = 1
-		cost = 1
-
-		allow_branch = {
-		}
-		available = {
-		}
-		bypass = {
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-		}
-	}
-
-	shared_focus = { # Filler AA7
-		id = HHE_warmonger_filler_aa7
-		icon = GFX_focus_unknown
-		prerequisite = { focus = HHE_warmonger_filler_aa5 }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = HHE_warmonger_filler_aa5
-		x = -1
-		y = 1
-		cost = 1
-
-		allow_branch = {
-		}
-		available = {
-		}
-		bypass = {
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-		}
-	}
-
-	shared_focus = { # Filler AA8
-		id = HHE_warmonger_filler_aa8
-		icon = GFX_focus_unknown
-		prerequisite = { focus = HHE_warmonger_filler_aa1 }
-		prerequisite = { focus = HHE_warmonger_filler_aa6 }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = HHE_warmonger_filler_aa6
-		x = 1
-		y = 1
-		cost = 1
-
-		allow_branch = {
-		}
-		available = {
-		}
-		bypass = {
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-		}
-	}
-
-	shared_focus = { # Filler AA9
-		id = HHE_warmonger_filler_aa9
-		icon = GFX_focus_unknown
-		prerequisite = { focus = HHE_warmonger_filler_aa1 }
-		prerequisite = { focus = HHE_warmonger_filler_aa7 }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = HHE_warmonger_filler_aa7
-		x = -1
-		y = 1
-		cost = 1
-
-		allow_branch = {
-		}
-		available = {
-		}
-		bypass = {
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-		}
-	}
-
-	shared_focus = { # Filler AA10
-		id = HHE_warmonger_filler_aa10
-		icon = GFX_focus_unknown
-		prerequisite = { focus = HHE_warmonger_filler_aa8 }
-		prerequisite = { focus = HHE_warmonger_filler_aa9 }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = HHE_warmonger_filler_aa1
-		x = 0
-		y = 2
-		cost = 1
-
-		allow_branch = {
-		}
-		available = {
-		}
-		bypass = {
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-		}
-	}
-
-	shared_focus = { # Filler AA11
-		id = HHE_warmonger_filler_aa11
-		icon = GFX_focus_unknown
-		prerequisite = { focus = HHE_warmonger_filler_aa10 }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = HHE_warmonger_filler_aa10
-		x = 0
-		y = 1
-		cost = 1
-
-		allow_branch = {
-		}
-		available = {
-		}
-		bypass = {
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-		}
-	}
-
-	shared_focus = { # Filler AA12
-		id = HHE_warmonger_filler_aa12
-		icon = GFX_focus_unknown
-		prerequisite = { focus = HHE_warmonger_filler_aa11 }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = HHE_warmonger_filler_aa11
-		x = 0
-		y = 1
-		cost = 1
-
-		allow_branch = {
-		}
-		available = {
-		}
-		bypass = {
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-		}
-	}
-
-	shared_focus = { # Filler AA13
-		id = HHE_warmonger_filler_aa13
-		icon = GFX_focus_unknown
-		prerequisite = { focus = HHE_warmonger_filler_aa12 }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = HHE_warmonger_filler_aa12
-		x = -1
-		y = 1
-		cost = 1
-
-		allow_branch = {
-		}
-		available = {
-		}
-		bypass = {
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-		}
-	}
-
-	shared_focus = { # Filler AA14
-		id = HHE_warmonger_filler_aa14
-		icon = GFX_focus_unknown
-		prerequisite = { focus = HHE_warmonger_filler_aa12 }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = HHE_warmonger_filler_aa12
-		x = 1
-		y = 1
-		cost = 1
-
-		allow_branch = {
-		}
-		available = {
-		}
-		bypass = {
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-		}
-	}
-
-	shared_focus = { # Filler AA15
-		id = HHE_warmonger_filler_aa15
-		icon = GFX_focus_unknown
-		prerequisite = { focus = HHE_warmonger_filler_aa13 }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = HHE_warmonger_filler_aa13
-		x = -1
-		y = 1
-		cost = 1
-
-		allow_branch = {
-		}
-		available = {
-		}
-		bypass = {
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-		}
-	}
-
-	shared_focus = { # Filler AA16
-		id = HHE_warmonger_filler_aa16
-		icon = GFX_focus_unknown
-		prerequisite = { focus = HHE_warmonger_filler_aa14 }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = HHE_warmonger_filler_aa14
-		x = 1
-		y = 1
-		cost = 1
-
-		allow_branch = {
-		}
-		available = {
-		}
-		bypass = {
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-		}
-	}
-
-	shared_focus = { # Filler AA17
-		id = HHE_warmonger_filler_aa17
-		icon = GFX_focus_unknown
-		prerequisite = { focus = HHE_warmonger_filler_aa15 }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = HHE_warmonger_filler_aa15
-		x = 0
-		y = 1
-		cost = 1
-
-		allow_branch = {
-		}
-		available = {
-		}
-		bypass = {
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-		}
-	}
-
-	shared_focus = { # Filler AA18
-		id = HHE_warmonger_filler_aa18
-		icon = GFX_focus_unknown
-		prerequisite = { focus = HHE_warmonger_filler_aa16 }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = HHE_warmonger_filler_aa16
-		x = 0
-		y = 1
-		cost = 1
-
-		allow_branch = {
-		}
-		available = {
-		}
-		bypass = {
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-		}
-	}
-
-	shared_focus = { # Filler AA19
-		id = HHE_warmonger_filler_aa19
-		icon = GFX_focus_unknown
-		prerequisite = { focus = HHE_warmonger_filler_aa17 }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = HHE_warmonger_filler_aa17
-		x = 0
-		y = 1
-		cost = 1
-
-		allow_branch = {
-		}
-		available = {
-		}
-		bypass = {
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-		}
-	}
-
-	shared_focus = { # Filler AA20
-		id = HHE_warmonger_filler_aa20
-		icon = GFX_focus_unknown
-		prerequisite = { focus = HHE_warmonger_filler_aa18 }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = HHE_warmonger_filler_aa18
-		x = 0
-		y = 1
-		cost = 1
-
-		allow_branch = {
-		}
-		available = {
-		}
-		bypass = {
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
 		}
 	}
 # Faith
@@ -3742,7 +3271,7 @@
 			has_completed_focus = HHE_warmonger_filler_governance5
 			has_completed_focus = HHE_warmonger_filler_economic5
 			has_completed_focus = HHE_warmonger_bifurcation_crusade
-			has_completed_focus = HHE_warmonger_filler_civil_liberties5
+			has_completed_focus = HHE_warmonger_our_own_underground
 			has_completed_focus = HHE_warmonger_filler_social5
 		}
 		bypass = {
@@ -3759,551 +3288,6 @@
 			add_stability = 0.05
 			add_political_power = 75
 			add_command_power = 50
-		}
-	}
-
-	shared_focus = { # Filler AB1
-		id = HHE_warmonger_filler_ab1
-		icon = GFX_focus_unknown
-		prerequisite = { focus = HHE_warmonger_one_faith }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = HHE_warmonger_one_faith
-		x = 0
-		y = 1
-		cost = 1
-
-		allow_branch = {
-		}
-		available = {
-		}
-		bypass = {
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-		}
-	}
-
-	shared_focus = { # Filler AB2
-		id = HHE_warmonger_filler_ab2
-		icon = GFX_focus_unknown
-		#prerequisite = { focus = HHE_warmonger_one_faith }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = HHE_warmonger_one_faith
-		x = -4
-		y = -1
-		cost = 1
-
-		allow_branch = {
-		}
-		available = {
-			has_completed_focus = HHE_warmonger_filler_ab1
-		}
-		bypass = {
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-		}
-	}
-
-	shared_focus = { # Filler AB3
-		id = HHE_warmonger_filler_ab3
-		icon = GFX_focus_unknown
-		#prerequisite = { focus = HHE_warmonger_one_faith }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = HHE_warmonger_one_faith
-		x = 4
-		y = -1
-		cost = 1
-
-		allow_branch = {
-		}
-		available = {
-			has_completed_focus = HHE_warmonger_filler_ab1
-		}
-		bypass = {
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-		}
-	}
-
-	shared_focus = { # Filler AB4
-		id = HHE_warmonger_filler_ab4
-		icon = GFX_focus_unknown
-		prerequisite = { focus = HHE_warmonger_filler_ab2 }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = HHE_warmonger_filler_ab2
-		x = 1
-		y = 1
-		cost = 1
-
-		allow_branch = {
-		}
-		available = {
-		}
-		bypass = {
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-		}
-	}
-
-	shared_focus = { # Filler AB5
-		id = HHE_warmonger_filler_ab5
-		icon = GFX_focus_unknown
-		prerequisite = { focus = HHE_warmonger_filler_ab3 }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = HHE_warmonger_filler_ab3
-		x = -1
-		y = 1
-		cost = 1
-
-		allow_branch = {
-		}
-		available = {
-		}
-		bypass = {
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-		}
-	}
-
-	shared_focus = { # Filler AB6
-		id = HHE_warmonger_filler_ab6
-		icon = GFX_focus_unknown
-		prerequisite = { focus = HHE_warmonger_filler_ab4 }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = HHE_warmonger_filler_ab4
-		x = 1
-		y = 1
-		cost = 1
-
-		allow_branch = {
-		}
-		available = {
-		}
-		bypass = {
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-		}
-	}
-
-	shared_focus = { # Filler AB7
-		id = HHE_warmonger_filler_ab7
-		icon = GFX_focus_unknown
-		prerequisite = { focus = HHE_warmonger_filler_ab5 }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = HHE_warmonger_filler_ab5
-		x = -1
-		y = 1
-		cost = 1
-
-		allow_branch = {
-		}
-		available = {
-		}
-		bypass = {
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-		}
-	}
-
-	shared_focus = { # Filler AB8
-		id = HHE_warmonger_filler_ab8
-		icon = GFX_focus_unknown
-		prerequisite = { focus = HHE_warmonger_filler_ab1 }
-		prerequisite = { focus = HHE_warmonger_filler_ab6 }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = HHE_warmonger_filler_ab6
-		x = 1
-		y = 1
-		cost = 1
-
-		allow_branch = {
-		}
-		available = {
-		}
-		bypass = {
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-		}
-	}
-
-	shared_focus = { # Filler AB9
-		id = HHE_warmonger_filler_ab9
-		icon = GFX_focus_unknown
-		prerequisite = { focus = HHE_warmonger_filler_ab1 }
-		prerequisite = { focus = HHE_warmonger_filler_ab7 }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = HHE_warmonger_filler_ab7
-		x = -1
-		y = 1
-		cost = 1
-
-		allow_branch = {
-		}
-		available = {
-		}
-		bypass = {
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-		}
-	}
-
-	shared_focus = { # Filler AB10
-		id = HHE_warmonger_filler_ab10
-		icon = GFX_focus_unknown
-		prerequisite = { focus = HHE_warmonger_filler_ab8 }
-		prerequisite = { focus = HHE_warmonger_filler_ab9 }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = HHE_warmonger_filler_ab1
-		x = 0
-		y = 2
-		cost = 1
-
-		allow_branch = {
-		}
-		available = {
-		}
-		bypass = {
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-		}
-	}
-
-	shared_focus = { # Filler AB11
-		id = HHE_warmonger_filler_ab11
-		icon = GFX_focus_unknown
-		prerequisite = { focus = HHE_warmonger_filler_ab10 }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = HHE_warmonger_filler_ab10
-		x = 0
-		y = 1
-		cost = 1
-
-		allow_branch = {
-		}
-		available = {
-		}
-		bypass = {
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-		}
-	}
-
-	shared_focus = { # Filler AB12
-		id = HHE_warmonger_filler_ab12
-		icon = GFX_focus_unknown
-		prerequisite = { focus = HHE_warmonger_filler_ab11 }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = HHE_warmonger_filler_ab11
-		x = 0
-		y = 1
-		cost = 1
-
-		allow_branch = {
-		}
-		available = {
-		}
-		bypass = {
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-		}
-	}
-
-	shared_focus = { # Filler AB13
-		id = HHE_warmonger_filler_ab13
-		icon = GFX_focus_unknown
-		prerequisite = { focus = HHE_warmonger_filler_ab12 }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = HHE_warmonger_filler_ab12
-		x = -1
-		y = 1
-		cost = 1
-
-		allow_branch = {
-		}
-		available = {
-		}
-		bypass = {
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-		}
-	}
-
-	shared_focus = { # Filler AB14
-		id = HHE_warmonger_filler_ab14
-		icon = GFX_focus_unknown
-		prerequisite = { focus = HHE_warmonger_filler_ab12 }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = HHE_warmonger_filler_ab12
-		x = 1
-		y = 1
-		cost = 1
-
-		allow_branch = {
-		}
-		available = {
-		}
-		bypass = {
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-		}
-	}
-
-	shared_focus = { # Filler AB15
-		id = HHE_warmonger_filler_ab15
-		icon = GFX_focus_unknown
-		prerequisite = { focus = HHE_warmonger_filler_ab13 }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = HHE_warmonger_filler_ab13
-		x = -1
-		y = 1
-		cost = 1
-
-		allow_branch = {
-		}
-		available = {
-		}
-		bypass = {
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-		}
-	}
-
-	shared_focus = { # Filler AB16
-		id = HHE_warmonger_filler_ab16
-		icon = GFX_focus_unknown
-		prerequisite = { focus = HHE_warmonger_filler_ab14 }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = HHE_warmonger_filler_ab14
-		x = 1
-		y = 1
-		cost = 1
-
-		allow_branch = {
-		}
-		available = {
-		}
-		bypass = {
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-		}
-	}
-
-	shared_focus = { # Filler AB17
-		id = HHE_warmonger_filler_ab17
-		icon = GFX_focus_unknown
-		prerequisite = { focus = HHE_warmonger_filler_ab15 }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = HHE_warmonger_filler_ab15
-		x = 0
-		y = 1
-		cost = 1
-
-		allow_branch = {
-		}
-		available = {
-		}
-		bypass = {
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-		}
-	}
-
-	shared_focus = { # Filler AB18
-		id = HHE_warmonger_filler_ab18
-		icon = GFX_focus_unknown
-		prerequisite = { focus = HHE_warmonger_filler_ab16 }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = HHE_warmonger_filler_ab16
-		x = 0
-		y = 1
-		cost = 1
-
-		allow_branch = {
-		}
-		available = {
-		}
-		bypass = {
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-		}
-	}
-
-	shared_focus = { # Filler AB19
-		id = HHE_warmonger_filler_ab19
-		icon = GFX_focus_unknown
-		prerequisite = { focus = HHE_warmonger_filler_ab17 }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = HHE_warmonger_filler_ab17
-		x = 0
-		y = 1
-		cost = 1
-
-		allow_branch = {
-		}
-		available = {
-		}
-		bypass = {
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-		}
-	}
-
-	shared_focus = { # Filler AB20
-		id = HHE_warmonger_filler_ab20
-		icon = GFX_focus_unknown
-		prerequisite = { focus = HHE_warmonger_filler_ab18 }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = HHE_warmonger_filler_ab18
-		x = 0
-		y = 1
-		cost = 1
-
-		allow_branch = {
-		}
-		available = {
-		}
-		bypass = {
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
 		}
 	}
 # Nation
@@ -4324,7 +3308,7 @@
 			has_completed_focus = HHE_warmonger_filler_governance5
 			has_completed_focus = HHE_warmonger_filler_economic5
 			has_completed_focus = HHE_warmonger_bifurcation_crusade
-			has_completed_focus = HHE_warmonger_filler_civil_liberties5
+			has_completed_focus = HHE_warmonger_our_own_underground
 			has_completed_focus = HHE_warmonger_filler_social5
 		}
 		bypass = {
@@ -4341,550 +3325,5 @@
 			add_stability = 0.05
 			add_political_power = 75
 			add_command_power = 50
-		}
-	}
-
-	shared_focus = { # Filler AC1
-		id = HHE_warmonger_filler_ac1
-		icon = GFX_focus_unknown
-		prerequisite = { focus = HHE_warmonger_one_nation }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = HHE_warmonger_one_nation
-		x = 0
-		y = 1
-		cost = 1
-
-		allow_branch = {
-		}
-		available = {
-		}
-		bypass = {
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-		}
-	}
-
-	shared_focus = { # Filler AC2
-		id = HHE_warmonger_filler_ac2
-		icon = GFX_focus_unknown
-		#prerequisite = { focus = HHE_warmonger_one_nation }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = HHE_warmonger_one_nation
-		x = -4
-		y = -1
-		cost = 1
-
-		allow_branch = {
-		}
-		available = {
-			has_completed_focus = HHE_warmonger_filler_ac1
-		}
-		bypass = {
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-		}
-	}
-
-	shared_focus = { # Filler AC3
-		id = HHE_warmonger_filler_ac3
-		icon = GFX_focus_unknown
-		#prerequisite = { focus = HHE_warmonger_one_nation }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = HHE_warmonger_one_nation
-		x = 4
-		y = -1
-		cost = 1
-
-		allow_branch = {
-		}
-		available = {
-			has_completed_focus = HHE_warmonger_filler_ac1
-		}
-		bypass = {
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-		}
-	}
-
-	shared_focus = { # Filler AC4
-		id = HHE_warmonger_filler_ac4
-		icon = GFX_focus_unknown
-		prerequisite = { focus = HHE_warmonger_filler_ac2 }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = HHE_warmonger_filler_ac2
-		x = 1
-		y = 1
-		cost = 1
-
-		allow_branch = {
-		}
-		available = {
-		}
-		bypass = {
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-		}
-	}
-
-	shared_focus = { # Filler AC5
-		id = HHE_warmonger_filler_ac5
-		icon = GFX_focus_unknown
-		prerequisite = { focus = HHE_warmonger_filler_ac3 }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = HHE_warmonger_filler_ac3
-		x = -1
-		y = 1
-		cost = 1
-
-		allow_branch = {
-		}
-		available = {
-		}
-		bypass = {
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-		}
-	}
-
-	shared_focus = { # Filler AC6
-		id = HHE_warmonger_filler_ac6
-		icon = GFX_focus_unknown
-		prerequisite = { focus = HHE_warmonger_filler_ac4 }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = HHE_warmonger_filler_ac4
-		x = 1
-		y = 1
-		cost = 1
-
-		allow_branch = {
-		}
-		available = {
-		}
-		bypass = {
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-		}
-	}
-
-	shared_focus = { # Filler AC7
-		id = HHE_warmonger_filler_ac7
-		icon = GFX_focus_unknown
-		prerequisite = { focus = HHE_warmonger_filler_ac5 }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = HHE_warmonger_filler_ac5
-		x = -1
-		y = 1
-		cost = 1
-
-		allow_branch = {
-		}
-		available = {
-		}
-		bypass = {
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-		}
-	}
-
-	shared_focus = { # Filler AC8
-		id = HHE_warmonger_filler_ac8
-		icon = GFX_focus_unknown
-		prerequisite = { focus = HHE_warmonger_filler_ac1 }
-		prerequisite = { focus = HHE_warmonger_filler_ac6 }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = HHE_warmonger_filler_ac6
-		x = 1
-		y = 1
-		cost = 1
-
-		allow_branch = {
-		}
-		available = {
-		}
-		bypass = {
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-		}
-	}
-
-	shared_focus = { # Filler AC9
-		id = HHE_warmonger_filler_ac9
-		icon = GFX_focus_unknown
-		prerequisite = { focus = HHE_warmonger_filler_ac1 }
-		prerequisite = { focus = HHE_warmonger_filler_ac7 }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = HHE_warmonger_filler_ac7
-		x = -1
-		y = 1
-		cost = 1
-
-		allow_branch = {
-		}
-		available = {
-		}
-		bypass = {
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-		}
-	}
-
-	shared_focus = { # Filler AC10
-		id = HHE_warmonger_filler_ac10
-		icon = GFX_focus_unknown
-		prerequisite = { focus = HHE_warmonger_filler_ac8 }
-		prerequisite = { focus = HHE_warmonger_filler_ac9 }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = HHE_warmonger_filler_ac1
-		x = 0
-		y = 2
-		cost = 1
-
-		allow_branch = {
-		}
-		available = {
-		}
-		bypass = {
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-		}
-	}
-
-	shared_focus = { # Filler AC11
-		id = HHE_warmonger_filler_ac11
-		icon = GFX_focus_unknown
-		prerequisite = { focus = HHE_warmonger_filler_ac10 }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = HHE_warmonger_filler_ac10
-		x = 0
-		y = 1
-		cost = 1
-
-		allow_branch = {
-		}
-		available = {
-		}
-		bypass = {
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-		}
-	}
-
-	shared_focus = { # Filler AC12
-		id = HHE_warmonger_filler_ac12
-		icon = GFX_focus_unknown
-		prerequisite = { focus = HHE_warmonger_filler_ac11 }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = HHE_warmonger_filler_ac11
-		x = 0
-		y = 1
-		cost = 1
-
-		allow_branch = {
-		}
-		available = {
-		}
-		bypass = {
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-		}
-	}
-
-	shared_focus = { # Filler AC13
-		id = HHE_warmonger_filler_ac13
-		icon = GFX_focus_unknown
-		prerequisite = { focus = HHE_warmonger_filler_ac12 }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = HHE_warmonger_filler_ac12
-		x = -1
-		y = 1
-		cost = 1
-
-		allow_branch = {
-		}
-		available = {
-		}
-		bypass = {
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-		}
-	}
-
-	shared_focus = { # Filler AC14
-		id = HHE_warmonger_filler_ac14
-		icon = GFX_focus_unknown
-		prerequisite = { focus = HHE_warmonger_filler_ac12 }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = HHE_warmonger_filler_ac12
-		x = 1
-		y = 1
-		cost = 1
-
-		allow_branch = {
-		}
-		available = {
-		}
-		bypass = {
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-		}
-	}
-
-	shared_focus = { # Filler AC15
-		id = HHE_warmonger_filler_ac15
-		icon = GFX_focus_unknown
-		prerequisite = { focus = HHE_warmonger_filler_ac13 }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = HHE_warmonger_filler_ac13
-		x = -1
-		y = 1
-		cost = 1
-
-		allow_branch = {
-		}
-		available = {
-		}
-		bypass = {
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-		}
-	}
-
-	shared_focus = { # Filler AC16
-		id = HHE_warmonger_filler_ac16
-		icon = GFX_focus_unknown
-		prerequisite = { focus = HHE_warmonger_filler_ac14 }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = HHE_warmonger_filler_ac14
-		x = 1
-		y = 1
-		cost = 1
-
-		allow_branch = {
-		}
-		available = {
-		}
-		bypass = {
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-		}
-	}
-
-	shared_focus = { # Filler AC17
-		id = HHE_warmonger_filler_ac17
-		icon = GFX_focus_unknown
-		prerequisite = { focus = HHE_warmonger_filler_ac15 }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = HHE_warmonger_filler_ac15
-		x = 0
-		y = 1
-		cost = 1
-
-		allow_branch = {
-		}
-		available = {
-		}
-		bypass = {
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-		}
-	}
-
-	shared_focus = { # Filler AC18
-		id = HHE_warmonger_filler_ac18
-		icon = GFX_focus_unknown
-		prerequisite = { focus = HHE_warmonger_filler_ac16 }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = HHE_warmonger_filler_ac16
-		x = 0
-		y = 1
-		cost = 1
-
-		allow_branch = {
-		}
-		available = {
-		}
-		bypass = {
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-		}
-	}
-
-	shared_focus = { # Filler AC19
-		id = HHE_warmonger_filler_ac19
-		icon = GFX_focus_unknown
-		prerequisite = { focus = HHE_warmonger_filler_ac17 }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = HHE_warmonger_filler_ac17
-		x = 0
-		y = 1
-		cost = 1
-
-		allow_branch = {
-		}
-		available = {
-		}
-		bypass = {
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-		}
-	}
-
-	shared_focus = { # Filler AC20
-		id = HHE_warmonger_filler_ac20
-		icon = GFX_focus_unknown
-		prerequisite = { focus = HHE_warmonger_filler_ac18 }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = HHE_warmonger_filler_ac18
-		x = 0
-		y = 1
-		cost = 1
-
-		allow_branch = {
-		}
-		available = {
-		}
-		bypass = {
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
 		}
 	}
