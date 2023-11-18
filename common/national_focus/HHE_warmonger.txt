@@ -1,29 +1,12 @@
-#shared_focus = {
-#	id = HHE_warmonger_
-#	icon = GFX_focus_unknown
-#	#prerequisite = { focus =  }
-#	#mutually_exclusive = { focus =  }
-#	#relative_position_id = 
-#	x = 0
-#	y = 0
-#	cost = 10
-#
-#	allow_branch = {
-#	}
-#	available = {
-#	}
-#	bypass = {
-#	}
-#
-#	ai_will_do = {
-#		base = 1
-#	}
-#
-#	available_if_capitulated = yes
-#
-#	completion_reward = {
-#	}
-#}
+#　　 　　／＞　　フ
+#　　 　　| 　_　_ l
+# 　　 　／` ミ＿xノ
+#　 　 /　　　 　 |
+#　　 /　 ヽ　　 ﾉ
+# 　 │　　|　|　|
+#／￣|　　 |　|　|
+#| (￣ヽ＿_ヽ_)__)
+#＼二つ
 # Starting
 	shared_focus = { # Unexpected Results, but a Welcomed one
 		id = HHE_warmonger_unexpected_but_welcomed
@@ -36,7 +19,7 @@
 		cost = 5
 
 		allow_branch = {
-			#NOT = { has_global_flag = HHE_collapse_of_the_nation }
+			NOT = { has_completed_focus = HHE_warmonger_military_under_vlad }
 		}
 		available = {
 		}
@@ -216,7 +199,7 @@
 		completion_reward = {
 			add_equipment_to_stockpile = {
 			    type = infantry_equipment
-			    amount = 1000
+			    amount = 5000
 			    producer = HHE
 			}
 			add_political_power = 25
@@ -588,6 +571,11 @@
 		available_if_capitulated = yes
 
 		completion_reward = {
+			custom_effect_tooltip = if_they_accept
+			effect_tooltip = {
+				transfer_navy = { target = HTP }
+				annex_country = { target = HTP transfer_troops = yes }
+			}
 			HTP = { country_event = { id = HHE.3 } }
 		}
 	}
@@ -1437,7 +1425,6 @@
 			add_stability = 0.10
 			HHE_civil_war_ends = yes
 			HHE_political_choas_down = yes
-			add_political_power = 35
 			set_country_flag = mining_operations # Have this here for now.
 		}
 	}
@@ -1497,14 +1484,41 @@
 		}
 	}
 
-	shared_focus = { # Loyal Businessesn Loyal Nobles
-		id = HHE_warmonger_loyal_businesses_loyal_nobles
+	shared_focus = { # Marco-Economy
+		id = HHE_warmonger_marco_economy
 		icon = GFX_focus_unknown
 		prerequisite = { focus = HHE_warmonger_state_economy }
 		#mutually_exclusive = { focus =  }
 		relative_position_id = HHE_warmonger_state_economy
 		x = 0
-		y = 2
+		y = 1
+		cost = 6
+
+		allow_branch = {
+		}
+		available = {
+		}
+		bypass = {
+		}
+
+		ai_will_do = {
+			base = 7
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+		}
+	}
+
+	shared_focus = { # Loyal Businessesn Loyal Nobles
+		id = HHE_warmonger_loyal_businesses_loyal_nobles
+		icon = GFX_focus_unknown
+		prerequisite = { focus = HHE_warmonger_marco_economy }
+		#mutually_exclusive = { focus =  }
+		relative_position_id = HHE_warmonger_marco_economy
+		x = 0
+		y = 1
 		cost = 7
 
 		allow_branch = {
@@ -1597,14 +1611,43 @@
 		}
 	}
 
-	shared_focus = { # Party Bureaucracy
-		id = HHE_warmonger_party_bureaucracy
+	shared_focus = { # Forwarding Propaganda
+		id = HHE_warmonger_forwarding_propaganda
 		icon = GFX_focus_unknown
 		prerequisite = { focus = HHE_warmonger_one_party_one_state }
 		#mutually_exclusive = { focus =  }
 		relative_position_id = HHE_warmonger_one_party_one_state
 		x = 0
-		y = 2
+		y = 1
+		cost = 4
+
+		allow_branch = {
+		}
+		available = {
+		}
+		bypass = {
+		}
+
+		ai_will_do = {
+			base = 1
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			
+			add_political_power = 35
+		}
+	}
+
+	shared_focus = { # Party Bureaucracy
+		id = HHE_warmonger_party_bureaucracy
+		icon = GFX_focus_unknown
+		prerequisite = { focus = HHE_warmonger_forwarding_propaganda }
+		#mutually_exclusive = { focus =  }
+		relative_position_id = HHE_warmonger_forwarding_propaganda
+		x = 0
+		y = 1
 		cost = 7
 
 		allow_branch = {
@@ -1914,6 +1957,7 @@
 		allow_branch = {
 		}
 		available = {
+			has_completed_focus = HHE_warmonger_marco_economy
 		}
 		bypass = {
 		}
@@ -2012,8 +2056,8 @@
 		}
 	}
 
-	shared_focus = { # Filler C1
-		id = HHE_warmonger_filler_c1
+	shared_focus = { # Savior of the Nation
+		id = HHE_warmonger_savior_nation
 		icon = GFX_focus_unknown
 		prerequisite = { focus = HHE_warmonger_pillar_personality }
 		#mutually_exclusive = { focus =  }
@@ -2039,8 +2083,8 @@
 		}
 	}
 
-	shared_focus = { # Filler D1
-		id = HHE_warmonger_filler_d1
+	shared_focus = { # Savior of the Faith
+		id = HHE_warmonger_savior_faith
 		icon = GFX_focus_unknown
 		prerequisite = { focus = HHE_warmonger_pillar_personality }
 		#mutually_exclusive = { focus =  }
@@ -2066,16 +2110,16 @@
 		}
 	}
 
-	shared_focus = { # Filler Personality1
-		id = HHE_warmonger_filler_personality1
+	shared_focus = { # Vladaros Cult of Personality
+		id = HHE_warmonger_vladaros_cult_of_personality
 		icon = GFX_focus_unknown
-		prerequisite = { focus = HHE_warmonger_filler_c1 }
-		prerequisite = { focus = HHE_warmonger_filler_d1 }
+		prerequisite = { focus = HHE_warmonger_savior_nation }
+		prerequisite = { focus = HHE_warmonger_savior_faith }
 		#mutually_exclusive = { focus =  }
 		relative_position_id = HHE_warmonger_pillar_personality
 		x = 0
 		y = 2
-		cost = 1
+		cost = 5
 
 		allow_branch = {
 		}
@@ -2098,9 +2142,9 @@
 	shared_focus = { # Filler Personality2
 		id = HHE_warmonger_filler_personality2
 		icon = GFX_focus_unknown
-		prerequisite = { focus = HHE_warmonger_filler_personality1 }
+		prerequisite = { focus = HHE_warmonger_vladaros_cult_of_personality }
 		#mutually_exclusive = { focus =  }
-		relative_position_id = HHE_warmonger_filler_personality1
+		relative_position_id = HHE_warmonger_vladaros_cult_of_personality
 		x = 0
 		y = 1
 		cost = 1
@@ -2477,7 +2521,7 @@
 		relative_position_id = HHE_warmonger_trilateral_preparations
 		x = 0
 		y = 1
-		cost = 5
+		cost = 10
 
 		allow_branch = {
 		}
@@ -2504,7 +2548,7 @@
 		relative_position_id = HHE_warmonger_filler_foreign_policy2
 		x = 0
 		y = 1
-		cost = 5
+		cost = 10
 
 		allow_branch = {
 		}
@@ -3347,6 +3391,7 @@
 		available_if_capitulated = yes
 
 		completion_reward = {
+			custom_effect_tooltip = UNFINISH_FOCUSTREE
 			add_country_leader_trait = discipula_eius
 		}
 	}
@@ -3381,6 +3426,7 @@
 		available_if_capitulated = yes
 
 		completion_reward = {
+			custom_effect_tooltip = UNFINISH_FOCUSTREE
 			add_war_support = 0.05
 			add_stability = 0.05
 			add_political_power = 75
@@ -3418,6 +3464,7 @@
 		available_if_capitulated = yes
 
 		completion_reward = {
+			custom_effect_tooltip = UNFINISH_FOCUSTREE
 			add_war_support = 0.05
 			add_stability = 0.05
 			add_political_power = 75
