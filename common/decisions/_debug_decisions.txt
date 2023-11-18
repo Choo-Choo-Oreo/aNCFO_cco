@@ -12,6 +12,32 @@ debug_decisions = {
 			set_country_flag = mining_operations
 		}
 	}
+	one_faction_one_nation_test = {
+		available = {
+			is_debug = yes
+		}
+		visible = {
+			always = yes
+		}
+		fire_only_once = no
+		cost = 0
+		complete_effect = {
+			every_country = {
+				limit = { is_in_faction_with = ROOT }
+				FROM = { annex_country = { target = PREV transfer_troops = yes } }
+				PREV = { transfer_navy = { target = ROOT }  }
+			}
+			every_state = {
+				limit = {
+					every_country = {
+						limit = { is_in_faction_with = ROOT }
+						is_core_of = PREV
+					}
+				}
+				add_core_of = ROOT
+			}
+		}
+	}
 	HHE_collapse_of_the_nation_add_test = {
 		available = {
 			is_debug = yes
