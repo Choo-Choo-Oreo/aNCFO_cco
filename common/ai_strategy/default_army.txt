@@ -22,7 +22,6 @@ do_not_waste_pp_if_saving_for_manpower_laws = {
 		value = -9999
 	}
 }
-
 ask_foreign_manpower_as_major = {
 	enable = {
 		is_major = yes
@@ -38,50 +37,6 @@ ask_foreign_manpower_as_major = {
 	}
 }
 
-default_army_unit_production = {
-	enable = {
-		always = yes
-		not = {
-			original_tag = MRC
-		}
-	}
-	abort_when_not_enabled = yes
-	ai_strategy = {
-		type = role_ratio
-		id = paratroopers
-		value = 0
-	}
-	ai_strategy = {
-		type = role_ratio
-		id = mountaineers
-		value = 3
-	}
-	ai_strategy = {
-		type = role_ratio
-		id = marines
-		value = 6
-	}
-	ai_strategy = {
-		type = role_ratio
-		id = motorized
-		value = 12
-	}
-	ai_strategy = {
-		type = role_ratio
-		id = mechanized
-		value = 12
-	}
-	ai_strategy = {
-		type = role_ratio
-		id = armor
-		value = 6
-	}
-	ai_strategy = {
-		type = role_ratio
-		id = infantry
-		value = 64
-	}
-}
 bba_support_boosts = {
 	enable = {
 		is_historical_focus_on = yes
@@ -112,210 +67,34 @@ default_garrison_production = {
 		value = 5
 	}
 }
-put_garrisons_on_high_prio = {
+put_garrisons_on_low_prio = {
 	enable = {
-		always = yes
-	}
-	abort_when_not_enabled = yes
-
-	ai_strategy = {
-		type = garrison_reinforcement_priority
-		value = 100
-	}
-}
-
-default_paratroopers_production = { # Para is usless for AI
-	enable = {
-		always = no
-	}
-	abort_when_not_enabled = yes
-}
-default_mountaineers_production = {
-	enable = {
-		ai_wants_divisions > 23 # Decreasing the amount of mountaineers the AI wants
-	}
-	abort = {
-		ai_wants_divisions < 24 # Decreasing the amount of mountaineers the AI wants
-	}
-
-	ai_strategy = {
-		type = role_ratio
-		id = mountaineers
-		value = 5
-	}
-}
-default_marines_production = {
-	enable = {
-		ai_wants_divisions > 47
-	}
-	abort = {
-		ai_wants_divisions < 48
-	}
-
-	ai_strategy = {
-		type = role_ratio
-		id = marines
-		value = 5
-	}
-}
-
-default_mobile_production = {
-	enable = {
-		ai_wants_divisions > 15
-		has_tech = motorised_infantry
-	}
-	abort = {
-		ai_wants_divisions < 16
-	}
-
-	ai_strategy = {
-		type = role_ratio
-		id = mobile
-		value = 2
-	}
-}
-default_motorized_production = {
-	enable = {
-		ai_wants_divisions > 72
-	}
-	abort_when_not_enabled = yes
-
-	ai_strategy = {
-		type = unit_ratio
-		id = motorized
-		value = 8
-	}
-
-	ai_strategy = {
-		type = unit_ratio
-		id = infantry
-		value = -4
-	}
-}
-default_mechanized_production = {
-	enable = {
-		ai_wants_divisions > 64
-	}
-	abort_when_not_enabled = yes
-
-	ai_strategy = {
-		type = unit_ratio
-		id = mechanized
-		value = 10
-	}
-
-	ai_strategy = {
-		type = unit_ratio
-		id = motorized
-		value = -4
-	}
-
-	ai_strategy = {
-		type = unit_ratio
-		id = infantry
-		value = -4
-	}
-}
-
-default_armored_production = {
-	enable = {
-		ai_wants_divisions > 32
-	}
-	abort_when_not_enabled = yes
-
-	ai_strategy = {
-		type = role_ratio
-		id = armor
-		value = 10
-	}
-
-	ai_strategy = {
-		type = role_ratio
-		id = heavy_armor_role
-		value = 5
-	}
-	
-	ai_strategy = {
-		type = equipment_production_factor
-		id = motorized
-		value = 10
-	}
-
-	ai_strategy = {
-		type = role_ratio
-		id = infantry
-		value = -5
-	}
-}
-highered_armored_production = {
-	enable = {
-		num_of_military_factories > 48
-	}
-	abort_when_not_enabled = yes
-
-	ai_strategy = {
-		type = role_ratio
-		id = armor_role
-		value = 17.5
-	}
-
-	ai_strategy = {
-		type = role_ratio
-		id = heavy_armor_role
-		value = 10
-	}
-	
-	ai_strategy = {
-		type = role_ratio
-		id = infantry
-		value = -6
-	}
-
-	ai_strategy = {
-		type = equipment_production_factor
-		id = mechanized
-		value = 5
-	}
-
-	ai_strategy = {
-		type = equipment_production_factor
-		id = motorized
-		value = 15
-	}
-}
-highered_armored_production_major = {
-	enable = {
-		OR = {
-			is_major = yes
-			AND = {
-				num_of_military_factories > 24
+		NOT = {
+			any_state = {
+				is_owned_by = ROOT
+				is_coastal = yes
 			}
 		}
 	}
 	abort_when_not_enabled = yes
 
 	ai_strategy = {
-		type = role_ratio
-		id = armor_role
-		value = 17.5
+		type = garrison_reinforcement_priority
+		value = -100
 	}
+}
+put_garrisons_on_high_prio = {
+	enable = {
+		any_state = {
+			is_owned_by = ROOT
+			is_coastal = yes
+		}
+	}
+	abort_when_not_enabled = yes
 
 	ai_strategy = {
-		type = role_ratio
-		id = heavy_armor_role
-		value = 15
-	}
-
-	ai_strategy = {
-		type = equipment_production_factor
-		id = mechanized
-		value = 10
-	}
-
-	ai_strategy = {
-		type = equipment_production_factor
-		id = motorized
-		value = 10
+		type = garrison_reinforcement_priority
+		value = 100
 	}
 }
 
