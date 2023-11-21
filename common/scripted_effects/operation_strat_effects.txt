@@ -27,14 +27,14 @@ update_operation_ai = {
 	# find the captor so they can be rescued
 	set_temp_variable = { captor = 0 }
 	
-	every_operative = {
-		limit = { is_operative_captured = yes }
-		add_to_temp_variable = { min_needed_operative_for_operations = 1 }
-		if = {
-			limit = { check_variable = { captor = 0 } }
-			set_temp_variable = { captor = operative_captor }
-		}
-	}
+	#every_operative = { # Hashed out.
+	#	limit = { is_operative_captured = yes }
+	#	add_to_temp_variable = { min_needed_operative_for_operations = 1 }
+	#	if = {
+	#		limit = { check_variable = { captor = 0 } }
+	#		set_temp_variable = { captor = operative_captor }
+	#	}
+	#}
 	set_variable = { rescue_operative_from = 0 }
 	if = {
 		limit = { NOT = { check_variable = { captor = 0 } } }
@@ -124,39 +124,40 @@ update_operation_ai = {
 			}
 			
 			# get token for boost resistance
-			var:generic_operation_target = {
-				# only do on theocratism
-				if = {
-					limit = { 
-						PREV = {
-							NOT = { has_government = theocratism } 
-							NOT = {
-								has_operation_token = {
-									tag = var:generic_operation_target
-									token = token_resistance_contacts
-								}
-							}
-						}
-						has_government = theocratism
-						check_variable = { occupied_countries^num > 0 }
-						has_added_tension_amount > 20
-					}
+			#var:generic_operation_target = { # Hashed out.
+			#	# only do on fascist
+			#	if = {
+			#		limit = { 
+			#			PREV = {
+			#				NOT = { tag = ENG } # ENG already does it against GER
+			#				NOT = { has_government = fascism } 
+			#				NOT = {
+			#					has_operation_token = {
+			#						tag = var:generic_operation_target
+			#						token = token_resistance_contacts
+			#					}
+			#				}
+			#			}
+			#			has_government = fascism
+			#			check_variable = { occupied_countries^num > 0 }
+			#			has_added_tension_amount > 20
+			#		}
 					
-					# ~number of occupied_states
-					set_temp_variable = { t = 1 }
-					add_to_temp_variable = { t = num_controlled_states }
-					subtract_from_temp_variable = { t = num_owned_states }
-					clamp_temp_variable = { var = t min = 1 }
+			#		# ~number of occupied_states
+			#		set_temp_variable = { t = 1 }
+			#		add_to_temp_variable = { t = num_controlled_states }
+			#		subtract_from_temp_variable = { t = num_owned_states }
+			#		clamp_temp_variable = { var = t min = 1 }
 					
-					set_temp_variable = { score = t }
-					multiply_temp_variable = { score = 15 }
-					add_to_temp_variable = { score = 50 }
-					clamp_temp_variable = { var = score max = 200 }
+			#		set_temp_variable = { score = t }
+			#		multiply_temp_variable = { score = 15 }
+			#		add_to_temp_variable = { score = 50 }
+			#		clamp_temp_variable = { var = score max = 200 }
 					
-					add_to_temp_array = { operation_types = token:operation_make_resistance_contacts }
-					add_to_temp_array = { operation_types_scores = score }
-				}
-			}
+			#		add_to_temp_array = { operation_types = token:operation_make_resistance_contacts }
+			#		add_to_temp_array = { operation_types_scores = score }
+			#	}
+			#}
 			# boost resistance
 			if = {
 				limit = { 
