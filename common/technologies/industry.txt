@@ -1,4 +1,5 @@
 technologies = {
+# Production Max Efficiency
 	basic_machine_tools = {
 
 		production_factory_max_efficiency_factor = 0.1
@@ -214,7 +215,7 @@ technologies = {
 			industry
 		}
 	}
-
+# Equipment Conversion
 	improved_equipment_conversion = {
 	
 		equipment_conversion_speed = 0.40
@@ -263,7 +264,7 @@ technologies = {
 			industry
 		}
 	}
-
+# Ship Construction
 	basic_ship_construction = {
 
 		industrial_capacity_dockyard = 0.2
@@ -503,7 +504,7 @@ technologies = {
 			industry
 		}
 	}
-
+# Slots
 	concentrated_industry = {
 
 		industrial_capacity_factory = 0.45
@@ -892,7 +893,7 @@ technologies = {
 			defensive = 0.0
 		}
 	}
-
+# Construction
 	regulated_construction = {
 		production_speed_buildings_factor = -0.15
 		industry_repair_factor = 0.10
@@ -1125,7 +1126,7 @@ technologies = {
 			factor = 5
 		}
 	}
-
+# Excavation
 	excavation1 = {
 		
 		local_resources_factor = 0.10
@@ -1462,7 +1463,7 @@ technologies = {
 			}
 		}
 	}
-
+# Alloying
 	enrich_iron = { # Enrich Iron Mining
 		on_research_complete = {
 			modify_building_resources = {
@@ -2377,7 +2378,7 @@ technologies = {
 		
 		show_effect_as_desc = yes
 	}
-
+# Fuel
 	fuel_silos = {
 
 		enable_building = {
@@ -2789,7 +2790,7 @@ technologies = {
 			}				
 		}		
 	}
-
+# Synth
 	synth_oil_experiments = {
 
 		enable_building = {
@@ -2888,7 +2889,7 @@ technologies = {
 		fuel_gain_factor_from_states = 0.5
 
 		path = {
-			leads_to_tech = synth_oil_experiments_2
+			leads_to_tech = advanced_oil_processing
 			research_cost_coeff = 1
 		}
 		
@@ -2923,6 +2924,50 @@ technologies = {
 		
 		ai_research_weights = {
 			oil = -2.0
+		}
+		
+		show_effect_as_desc = yes
+	}
+	advanced_oil_processing = {
+
+		fuel_gain_factor_from_states = 0.5
+
+		path = {
+			leads_to_tech = synth_oil_experiments_2
+			research_cost_coeff = 1
+		}
+		
+		research_cost = 1.5
+		start_year = 1830
+		
+		folder = {
+			name = industry_folder
+			position = { x = -1 y = 8 }
+		}
+		
+		categories = {
+			industry
+			synth_resources
+		}
+		
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0.5
+				rubber > 10
+			}
+			modifier = {
+				factor = 0.5
+				rubber > 20
+			}	
+			modifier = {
+				factor = 0.5
+				rubber > 30
+			}			
+		}
+		
+		ai_research_weights = {
+			rubber = -2.0
 		}
 		
 		show_effect_as_desc = yes
@@ -2988,7 +3033,7 @@ technologies = {
 		}
 
 		path = {
-			leads_to_tech = synth_oil_experiments_2
+			leads_to_tech = advanced_rubber_processing
 			research_cost_coeff = 1
 		}
 		
@@ -3027,79 +3072,27 @@ technologies = {
 		
 		show_effect_as_desc = yes
 	}
-	synth_oil_experiments_2 = {
-
-		enable_building = {
-			building = synthetic_refinery
-			level = 5
-		}
+	advanced_rubber_processing = {
 
 		on_research_complete = {
 			modify_building_resources = {
 				building = synthetic_refinery
 				resource = rubber
-				amount = 2
+				amount = 1
 			}
 		}
 
-		fuel_gain_factor_from_states = 1.25
-
 		path = {
-			leads_to_tech = advanced_oil_processing 
-			research_cost_coeff = 1
-		}
-		path = {
-			leads_to_tech = advanced_rubber_processing 
-			research_cost_coeff = 1
-		}
-		
-		research_cost = 3
-		start_year = 1830
-		folder = {
-			name = industry_folder
-			position = { x = 0 y = 8 }
-		}
-		
-		categories = {
-			industry
-			synth_resources
-		}
-		
-		ai_will_do = {
-			factor = 5
-			modifier = {
-				factor = 0.5
-				oil > 10
-			}
-			modifier = {
-				factor = 0.5
-				oil > 20
-			}	
-			modifier = {
-				factor = 0.5
-				oil > 30
-			}			
-		}
-		
-		ai_research_weights = {
-			oil = -2.0
-		}
-	}
-	advanced_oil_processing = {
-
-		fuel_gain_factor_from_states = 0.5
-
-		path = {
-			leads_to_tech = modern_oil_processing
+			leads_to_tech = synth_oil_experiments_2
 			research_cost_coeff = 1
 		}
 		
 		research_cost = 1.5
-		start_year = 1832
+		start_year = 1830
 		
 		folder = {
 			name = industry_folder
-			position = { x = -1 y = 10 }
+			position = { x = 1 y = 8 }
 		}
 		
 		categories = {
@@ -3129,10 +3122,63 @@ technologies = {
 		
 		show_effect_as_desc = yes
 	}
-	modern_oil_processing = {
+	synth_oil_experiments_2 = {
+
+		enable_building = {
+			building = synthetic_refinery
+			level = 5
+		}
+
+		path = {
+			leads_to_tech = semi_modern_oil_processing 
+			research_cost_coeff = 1
+		}
+		path = {
+			leads_to_tech = semi_modern_rubber_processing 
+			research_cost_coeff = 1
+		}
+		
+		research_cost = 3
+		start_year = 1832
+		folder = {
+			name = industry_folder
+			position = { x = 0 y = 10 }
+		}
+		
+		categories = {
+			industry
+			synth_resources
+		}
+		
+		ai_will_do = {
+			factor = 5
+			modifier = {
+				factor = 0.5
+				oil > 10
+			}
+			modifier = {
+				factor = 0.5
+				oil > 20
+			}	
+			modifier = {
+				factor = 0.5
+				oil > 30
+			}			
+		}
+		
+		ai_research_weights = {
+			oil = -2.0
+		}
+	}
+	semi_modern_oil_processing = {
 
 		fuel_gain_factor_from_states = 0.5
 		
+		path = {
+			leads_to_tech = modern_oil_processing 
+			research_cost_coeff = 1
+		}
+
 		research_cost = 1.5
 		start_year = 1834
 		
@@ -3168,27 +3214,16 @@ technologies = {
 		
 		show_effect_as_desc = yes
 	}
-	advanced_rubber_processing = {
+	modern_oil_processing = {
 
-		on_research_complete = {
-			modify_building_resources = {
-				building = synthetic_refinery
-				resource = rubber
-				amount = 1
-			}
-		}
-
-		path = {
-			leads_to_tech = modern_rubber_processing
-			research_cost_coeff = 1
-		}
+		fuel_gain_factor_from_states = 0.5
 		
 		research_cost = 1.5
-		start_year = 1832
+		start_year = 1836
 		
 		folder = {
 			name = industry_folder
-			position = { x = 1 y = 10 }
+			position = { x = -1 y = 14 }
 		}
 		
 		categories = {
@@ -3197,7 +3232,57 @@ technologies = {
 		}
 		
 		ai_will_do = {
-			factor = 1
+			factor = 0.5
+			modifier = {
+				factor = 0.5
+				oil > 10
+			}
+			modifier = {
+				factor = 0.5
+				oil > 20
+			}	
+			modifier = {
+				factor = 0.5
+				oil > 30
+			}			
+		}
+		
+		ai_research_weights = {
+			oil = -2.0
+		}
+		
+		show_effect_as_desc = yes
+	}
+	semi_modern_rubber_processing = {
+
+		on_research_complete = {
+			modify_building_resources = {
+				building = synthetic_refinery
+				resource = rubber
+				amount = 1
+			}
+		}
+		
+		path = {
+			leads_to_tech = modern_rubber_processing 
+			research_cost_coeff = 1
+		}
+
+		research_cost = 1.5
+		start_year = 1834
+		
+		folder = {
+			name = industry_folder
+			position = { x = 1 y = 12 }
+		}
+		
+		categories = {
+			industry
+			synth_resources
+		}
+		
+		ai_will_do = {
+			factor = 0.5
 			modifier = {
 				factor = 0.5
 				rubber > 10
@@ -3229,11 +3314,11 @@ technologies = {
 		}
 		
 		research_cost = 1.5
-		start_year = 1834
+		start_year = 1836
 		
 		folder = {
 			name = industry_folder
-			position = { x = 1 y = 12 }
+			position = { x = 1 y = 14 }
 		}
 		
 		categories = {
