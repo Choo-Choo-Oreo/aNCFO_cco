@@ -34,11 +34,11 @@ MRC_support_RVV_against_threats = {
 		id = "RVV"
 		value = 200
 	}
-	ai_strategy = {
-		type = protect
-		id = "RVV"
-		value = 200
-	}
+	#ai_strategy = {
+	#	type = protect
+	#	id = "RVV"
+	#	value = 200
+	#}
 }
 
 MRC_defend_UFS_against_threats = {
@@ -75,15 +75,24 @@ MRC_defend_UFS_against_threats = {
 	}
 }
 
-iron_pact_junta_ally = {
+iron_pact_befriend = {
 	allowed = {
-		original_tag = MJU
+		OR = {
+			original_tag = MRC
+			original_tag = MJU
+		}
 	}
 	enable = {
-		always = yes
+		OR = {
+			country_exists = MRC
+			country_exists = MJU
+		}
 	}
 	abort = {
-		NOT = { country_exists = MRC }
+		OR = {
+			NOT = { country_exists = MRC }
+			NOT = { country_exists = MJU }
+		}
 	}
 	
 	ai_strategy = {
@@ -91,19 +100,6 @@ iron_pact_junta_ally = {
 		id = "MRC"			
 		value = 200
 	}
-}
-
-iron_pact_republica_ally = {
-	allowed = {
-		original_tag = MRC
-	}
-	enable = {
-		always = yes
-	}
-	abort = {
-		NOT = { country_exists = MJU }
-	}
-	
 	ai_strategy = {
 		type = befriend
 		id = "MJU"			
@@ -111,9 +107,12 @@ iron_pact_republica_ally = {
 	}
 }
 
-junta_ally_HHE_war = {
+ally_against_HHE = {
 	allowed = {
-		original_tag = MJU
+		OR = {
+			original_tag = MRC
+			original_tag = MJU
+		}
 	}
 	enable = {
 		or = {
@@ -128,39 +127,20 @@ junta_ally_HHE_war = {
 		}
 	}
 	abort = {
-		NOT = { country_exists = MRC }
-	}
-
-	ai_strategy = {
-		type = alliance
-		id = "MRC"			
-		value = 200
-	}	
-}
-
-republica_ally_HHE_war = {
-	allowed = {
-		original_tag = MRC
-	}
-	enable = {
-		or = {
-			HHE = {
-				has_government = theocratism
-				has_war_with = MJU
-			}
-			HHE = {
-				has_government = theocratism
-				has_war_with = MRC
-			}
+		OR = {
+			NOT = { country_exists = MRC }
+			NOT = { country_exists = MJU }
 		}
 	}
-	abort = {
-		NOT = { country_exists = MJU }
-	}
 
 	ai_strategy = {
 		type = alliance
-		id = "MJU"			
+		id = "MRC"
 		value = 200
-	}	
+	}
+	ai_strategy = {
+		type = alliance
+		id = "MJU"
+		value = 200
+	}
 }

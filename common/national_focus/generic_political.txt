@@ -67,12 +67,11 @@ shared_focus = { # Political Effort
 		}
 	}
 
-	shared_focus = { # Liberalize the State
-		id = liberalize_the_state
+	shared_focus = { # Liberalize our Society
+		id = liberalize_our_society
 		icon = GFX_
 		prerequisite = { focus = political_semidemocracy_effort }
-		mutually_exclusive = { focus = reinforce_current_state }
-		x = -2
+		x = 2
 		y = 1
 		relative_position_id = political_semidemocracy_effort
 		cost = 10
@@ -103,11 +102,71 @@ shared_focus = { # Political Effort
 		}
 	}
 
-	shared_focus = { # Liberalize our Society
-		id = liberalize_our_society
+	shared_focus = { # Legal Rights
+		id = legal_rights
+		icon = GFX_
+		prerequisite = { focus = reinforce_current_state }
+		x = 0
+		y = 1
+		relative_position_id = reinforce_current_state
+		cost = 10
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+		}
+	}
+
+	shared_focus = { # Unitary Foundation
+		id = unitary_foundation
+		icon = GFX_
+		prerequisite = { focus = legal_rights }
+		x = 0
+		y = 1
+		relative_position_id = legal_rights
+		cost = 10
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+		}
+	}
+
+	shared_focus = { # Intrench the Party
+		id = stay_semiauthoritarian
+		icon = GFX_
+		prerequisite = { focus = unitary_foundation }
+		mutually_exclusive = { focus = political_pluralism_effort }
+		available = {
+			OR = {
+				NOT = { has_government = pluralism }
+				pluralism < 0.34
+			}
+		}
+		x = 0
+		y = 3
+		relative_position_id = reinforce_current_state
+		cost = 10
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_timed_idea = { idea = intrench_current_party days = 720 }
+		}
+	}
+# Pluralism
+	shared_focus = { # Liberalize the State
+		id = liberalize_the_state
 		icon = GFX_
 		prerequisite = { focus = political_semidemocracy_effort }
-		x = 2
+		mutually_exclusive = { focus = reinforce_current_state }
+		x = -2
 		y = 1
 		relative_position_id = political_semidemocracy_effort
 		cost = 10
@@ -119,12 +178,46 @@ shared_focus = { # Political Effort
 		completion_reward = {
 		}
 	}
-# Pluralism
+
+	shared_focus = { # Constitutional Rights
+		id = constitutional_rights
+		icon = GFX_
+		prerequisite = { focus = liberalize_the_state }
+		x = 0
+		y = 1
+		relative_position_id = liberalize_the_state
+		cost = 10
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+		}
+	}
+
+	shared_focus = { # Constitutional Foundation
+		id = constitutional_foundation
+		icon = GFX_
+		prerequisite = { focus = constitutional_rights }
+		x = 0
+		y = 1
+		relative_position_id = constitutional_rights
+		cost = 10
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+		}
+	}
+
 	shared_focus = { # Pluralism Effort
 		id = political_pluralism_effort
 		icon = GFX_
 		prerequisite = { focus = political_effort }
-		prerequisite = { focus = political_semidemocracy_effort }
+		prerequisite = { focus = constitutional_foundation }
 		mutually_exclusive = { focus = stay_semiauthoritarian }
 		available = {
 			OR = {
@@ -167,32 +260,7 @@ shared_focus = { # Political Effort
 			add_timed_idea = { idea = freedom_for_the_people days = 720 }
 		}
 	}
-
-	shared_focus = { # Intrench the Party
-		id = stay_semiauthoritarian
-		icon = GFX_
-		prerequisite = { focus = reinforce_current_state }
-		mutually_exclusive = { focus = political_pluralism_effort }
-		available = {
-			OR = {
-				NOT = { has_government = pluralism }
-				pluralism < 0.34
-			}
-		}
-		x = 0
-		y = 3
-		relative_position_id = reinforce_current_state
-		cost = 10
-
-		search_filters = { FOCUS_FILTER_POLITICAL }
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-			add_timed_idea = { idea = intrench_current_party days = 720 }
-		}
-	}
-
+# Shared Trans-Plural
 	shared_focus = { # Give us Liberty or give us Death
 		id = liberty_or_death
 		icon = GFX_
@@ -254,6 +322,72 @@ shared_focus = { # Political Effort
 
 		completion_reward = {
 			add_timed_idea = { idea = power_to_the_state days = 720 }
+		}
+	}
+	shared_focus = { # Our Monarch
+		id = political_our_monarch
+		icon = GFX_
+		prerequisite = { focus = political_authoritarianism_effort }
+		mutually_exclusive = { focus = political_our_leader }
+		available = {
+			OR = {
+				has_government = authoritarianism
+				authoritarianism > 0.25
+			}
+			has_country_leader_ideology = sub_monarchy
+		}
+		x = -1
+		y = 1
+		relative_position_id = political_authoritarianism_effort
+		cost = 10
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		ai_will_do = {
+			factor = 100
+			modifier = {
+				factor = 100
+				OR = {
+					has_government = authoritarianism
+					authoritarianism > 0.34
+				}
+			}
+		}
+
+		completion_reward = {
+		}
+	}
+	shared_focus = { # Our Leader
+		id = political_our_leader
+		icon = GFX_
+		prerequisite = { focus = political_authoritarianism_effort }
+		mutually_exclusive = { focus = political_our_monarch }
+		available = {
+			OR = {
+				has_government = authoritarianism
+				authoritarianism > 0.25
+			}
+			has_country_leader_ideology = sub_authoritarian
+		}
+		x = 1
+		y = 1
+		relative_position_id = political_authoritarianism_effort
+		cost = 10
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		ai_will_do = {
+			factor = 100
+			modifier = {
+				factor = 100
+				OR = {
+					has_government = authoritarianism
+					authoritarianism > 0.34
+				}
+			}
+		}
+
+		completion_reward = {
 		}
 	}
 # Theocratism
@@ -684,573 +818,573 @@ shared_focus = { # Political Effort
 				add_ideas = nontheistic_faith
 			}
 		}
-	# Unitism
-		shared_focus = { # Unitism Effort
-			id = political_unitism_effort
-			icon = GFX_
-			prerequisite = { focus = political_effort }
-			mutually_exclusive = { focus = political_semidemocracy_effort focus = political_theocratism_effort focus = political_authoritarianism_effort }
-			available = {
+# Unitism
+	shared_focus = { # Unitism Effort
+		id = political_unitism_effort
+		icon = GFX_
+		prerequisite = { focus = political_effort }
+		mutually_exclusive = { focus = political_semidemocracy_effort focus = political_theocratism_effort focus = political_authoritarianism_effort }
+		available = {
+			OR = {
+				has_government = unitism
+				unitism > 0.25
+			}
+		}
+		x = 14
+		y = 1
+		relative_position_id = political_effort
+		cost = 10
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		ai_will_do = {
+			factor = 100
+			modifier = {
+				factor = 100
+				OR = {
+					has_government = unitism
+					unitism > 0.34
+				}
+			}
+			modifier = {
+				factor = 0.1
+				any_neighbor_country = {
+					is_major = yes
+					OR = { has_government = theocratism has_government = authoritarianism has_government = unitism }
+				}
+				NOT = {
+					any_neighbor_country = {
+						is_major = yes
+						OR = { has_government = pluralism has_government = semidemocracy }
+					}
+				}
+			}
+		}
+
+		completion_reward = {
+			add_timed_idea = { idea = state_of_unity days = 720 }
+		}
+	}
+
+	shared_focus = { # Revolutionary Warfare over the Mind
+		id = revolutionary_warfare_over_mind
+		icon = GFX_focus_generic_join_comintern
+		prerequisite = { focus = political_unitism_effort }
+		x = 0
+		y = 1
+		relative_position_id = political_unitism_effort
+		cost = 10
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		ai_will_do = {
+			factor = 5
+			modifier = {
+				factor = 5
 				OR = {
 					has_government = unitism
 					unitism > 0.25
 				}
 			}
-			x = 14
-			y = 1
-			relative_position_id = political_effort
-			cost = 10
-
-			search_filters = { FOCUS_FILTER_POLITICAL }
-
-			ai_will_do = {
-				factor = 100
-				modifier = {
-					factor = 100
-					OR = {
-						has_government = unitism
-						unitism > 0.34
-					}
-				}
-				modifier = {
-					factor = 0.1
-					any_neighbor_country = {
-						is_major = yes
-						OR = { has_government = theocratism has_government = authoritarianism has_government = unitism }
-					}
-					NOT = {
-						any_neighbor_country = {
-							is_major = yes
-							OR = { has_government = pluralism has_government = semidemocracy }
-						}
-					}
-				}
-			}
-
-			completion_reward = {
-				add_timed_idea = { idea = state_of_unity days = 720 }
-			}
-		}
-
-		shared_focus = { # Revolutionary Warfare over the Mind
-			id = revolutionary_warfare_over_mind
-			icon = GFX_focus_generic_join_comintern
-			prerequisite = { focus = political_unitism_effort }
-			x = 0
-			y = 1
-			relative_position_id = political_unitism_effort
-			cost = 10
-
-			search_filters = { FOCUS_FILTER_POLITICAL }
-
-			ai_will_do = {
+			modifier = {
 				factor = 5
-				modifier = {
-					factor = 5
-					OR = {
-						has_government = unitism
-						unitism > 0.25
-					}
+				OR = {
+					has_government = unitism
+					unitism > 0.50
 				}
-				modifier = {
-					factor = 5
-					OR = {
-						has_government = unitism
-						unitism > 0.50
-					}
-				}
-			}
-
-			completion_reward = {
-				unitism_revolutionary_warfare = yes
 			}
 		}
 
-		shared_focus = { # Countryside Gorilla Warfare
-			id = countryside_gorilla_warfare
-			icon = GFX_focus_ETH_freedom_at_gunpoint
-			prerequisite = { focus = political_unitism_effort }
-			x = 2
-			y = 1
-			relative_position_id = political_unitism_effort
-			cost = 10
+		completion_reward = {
+			unitism_revolutionary_warfare = yes
+		}
+	}
 
-			search_filters = { FOCUS_FILTER_POLITICAL }
+	shared_focus = { # Countryside Gorilla Warfare
+		id = countryside_gorilla_warfare
+		icon = GFX_focus_ETH_freedom_at_gunpoint
+		prerequisite = { focus = political_unitism_effort }
+		x = 2
+		y = 1
+		relative_position_id = political_unitism_effort
+		cost = 10
 
-			ai_will_do = {
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		ai_will_do = {
+			factor = 5
+			modifier = {
 				factor = 5
-				modifier = {
-					factor = 5
-					OR = {
-						has_government = unitism
-						unitism > 0.25
-					}
-				}
-				modifier = {
-					factor = 5
-					OR = {
-						has_government = unitism
-						unitism > 0.50
-					}
+				OR = {
+					has_government = unitism
+					unitism > 0.25
 				}
 			}
-
-			completion_reward = {
-				unitism_gorilla_warfare = yes
-				add_offsite_building = { type = arms_factory level = 1 }
-			}
-		}
-
-		shared_focus = { # First Preparations
-			id = first_preparations
-			icon = GFX_focus_generic_join_comintern
-			prerequisite = { focus = revolutionary_warfare_over_mind }
-			prerequisite = { focus = countryside_gorilla_warfare }
-			x = -1
-			y = 1
-			relative_position_id = countryside_gorilla_warfare
-			cost = 10
-
-			search_filters = { FOCUS_FILTER_POLITICAL }
-
-			ai_will_do = {
+			modifier = {
 				factor = 5
-				modifier = {
-					factor = 5
-					OR = {
-						has_government = unitism
-						unitism > 0.25
-					}
+				OR = {
+					has_government = unitism
+					unitism > 0.50
 				}
-				modifier = {
-					factor = 5
-					OR = {
-						has_government = unitism
-						unitism > 0.50
-					}
-				}
-			}
-
-			completion_reward = {
-				unitism_revolutionary_warfare = yes
 			}
 		}
 
-		shared_focus = { # Utilized the Land
-			id = utilized_the_land
-			icon = GFX_focus_generic_join_comintern
-			prerequisite = { focus = first_preparations }
-			x = -1
-			y = 1
-			relative_position_id = first_preparations
-			cost = 10
+		completion_reward = {
+			unitism_gorilla_warfare = yes
+			add_offsite_building = { type = arms_factory level = 1 }
+		}
+	}
 
-			search_filters = { FOCUS_FILTER_POLITICAL }
+	shared_focus = { # First Preparations
+		id = first_preparations
+		icon = GFX_focus_generic_join_comintern
+		prerequisite = { focus = revolutionary_warfare_over_mind }
+		prerequisite = { focus = countryside_gorilla_warfare }
+		x = -1
+		y = 1
+		relative_position_id = countryside_gorilla_warfare
+		cost = 10
 
-			ai_will_do = {
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		ai_will_do = {
+			factor = 5
+			modifier = {
 				factor = 5
-				modifier = {
-					factor = 5
-					OR = {
-						has_government = unitism
-						unitism > 0.25
-					}
-				}
-				modifier = {
-					factor = 5
-					OR = {
-						has_government = unitism
-						unitism > 0.50
-					}
+				OR = {
+					has_government = unitism
+					unitism > 0.25
 				}
 			}
-
-			completion_reward = {
-				add_ideas = land_utilized
-			}
-		}
-
-		shared_focus = { # The Underground
-			id = the_underground
-			icon = GFX_focus_generic_join_comintern
-			prerequisite = { focus = first_preparations }
-			x = 1
-			y = 1
-			relative_position_id = first_preparations
-			cost = 10
-
-			search_filters = { FOCUS_FILTER_POLITICAL }
-
-			ai_will_do = {
+			modifier = {
 				factor = 5
-				modifier = {
-					factor = 5
-					OR = {
-						has_government = unitism
-						unitism > 0.25
-					}
+				OR = {
+					has_government = unitism
+					unitism > 0.50
 				}
-				modifier = {
-					factor = 5
-					OR = {
-						has_government = unitism
-						unitism > 0.50
-					}
-				}
-			}
-
-			completion_reward = {
-				unitism_gorilla_warfare = yes
-				add_offsite_building = { type = arms_factory level = 1 }
 			}
 		}
 
-		shared_focus = { # Second Preparations
-			id = second_preparations
-			icon = GFX_focus_generic_join_comintern
-			prerequisite = { focus = utilized_the_land }
-			prerequisite = { focus = the_underground }
-			x = -1
-			y = 1
-			relative_position_id = the_underground
-			cost = 10
+		completion_reward = {
+			unitism_revolutionary_warfare = yes
+		}
+	}
 
-			search_filters = { FOCUS_FILTER_POLITICAL }
+	shared_focus = { # Utilized the Land
+		id = utilized_the_land
+		icon = GFX_focus_generic_join_comintern
+		prerequisite = { focus = first_preparations }
+		x = -1
+		y = 1
+		relative_position_id = first_preparations
+		cost = 10
 
-			ai_will_do = {
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		ai_will_do = {
+			factor = 5
+			modifier = {
 				factor = 5
-				modifier = {
-					factor = 5
-					OR = {
-						has_government = unitism
-						unitism > 0.25
-					}
-				}
-				modifier = {
-					factor = 5
-					OR = {
-						has_government = unitism
-						unitism > 0.50
-					}
+				OR = {
+					has_government = unitism
+					unitism > 0.25
 				}
 			}
-
-			completion_reward = {
-				unitism_revolutionary_warfare = yes
-			}
-		}
-
-		shared_focus = { # Utopia City
-			id = utopia_city
-			icon = GFX_focus_generic_join_comintern
-			prerequisite = { focus = second_preparations }
-			x = -1
-			y = 1
-			relative_position_id = second_preparations
-			cost = 10
-
-			search_filters = { FOCUS_FILTER_POLITICAL }
-
-			ai_will_do = {
+			modifier = {
 				factor = 5
-				modifier = {
-					factor = 5
-					OR = {
-						has_government = unitism
-						unitism > 0.25
-					}
-				}
-				modifier = {
-					factor = 5
-					OR = {
-						has_government = unitism
-						unitism > 0.50
-					}
-				}
-			}
-
-			completion_reward = {
-				capital_scope = {
-					add_extra_state_shared_building_slots = 3
-					add_building_construction = {
-						type = industrial_complex
-						level = 1
-						instant_build = yes
-					}
-					add_building_construction = {
-						type = steel_complex
-						level = 1
-						instant_build = yes
-					}
+				OR = {
+					has_government = unitism
+					unitism > 0.50
 				}
 			}
 		}
 
-		shared_focus = { # Assult on all Fronts
-			id = assult_all_fronts
-			icon = GFX_focus_generic_manpower
-			prerequisite = { focus = second_preparations }
-			x = 1
-			y = 1
-			relative_position_id = second_preparations
-			cost = 10
+		completion_reward = {
+			add_ideas = land_utilized
+		}
+	}
 
-			search_filters = { FOCUS_FILTER_POLITICAL }
+	shared_focus = { # The Underground
+		id = the_underground
+		icon = GFX_focus_generic_join_comintern
+		prerequisite = { focus = first_preparations }
+		x = 1
+		y = 1
+		relative_position_id = first_preparations
+		cost = 10
 
-			ai_will_do = {
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		ai_will_do = {
+			factor = 5
+			modifier = {
 				factor = 5
-				modifier = {
-					factor = 5
-					OR = {
-						has_government = unitism
-						unitism > 0.25
-					}
-				}
-				modifier = {
-					factor = 5
-					OR = {
-						has_government = unitism
-						unitism > 0.50
-					}
+				OR = {
+					has_government = unitism
+					unitism > 0.25
 				}
 			}
-
-			completion_reward = {
-				unitism_gorilla_warfare = yes
-				add_offsite_building = { type = arms_factory level = 1 }
-			}
-		}
-
-		shared_focus = { # Third Preparations
-			id = third_preparations
-			icon = GFX_focus_generic_join_comintern
-			prerequisite = { focus = utopia_city }
-			prerequisite = { focus = assult_all_fronts }
-			x = -1
-			y = 1
-			relative_position_id = assult_all_fronts
-			cost = 10
-
-			search_filters = { FOCUS_FILTER_POLITICAL }
-
-			ai_will_do = {
+			modifier = {
 				factor = 5
-				modifier = {
-					factor = 5
-					OR = {
-						has_government = unitism
-						unitism > 0.25
-					}
+				OR = {
+					has_government = unitism
+					unitism > 0.50
 				}
-				modifier = {
-					factor = 5
-					OR = {
-						has_government = unitism
-						unitism > 0.50
-					}
-				}
-			}
-
-			completion_reward = {
-				unitism_revolutionary_warfare = yes
 			}
 		}
-	# Shared Theo-Uni
-		shared_focus = { # The Priests Behind the Curtains
-			id = the_priest_behind_the_curtains
-			icon = GFX_goal_generic_demand_territory
-			prerequisite = { focus = political_theocratism_effort focus = political_unitism_effort }
-			available = {
-				NOT = { has_country_flag = thalassaus_religion }
-				NOT = { has_country_flag = ager_montis_religion }
-			}
-			x = -2
-			y = 1
-			relative_position_id = political_unitism_effort
-			cost = 10
 
-			search_filters = { FOCUS_FILTER_POLITICAL }
+		completion_reward = {
+			unitism_gorilla_warfare = yes
+			add_offsite_building = { type = arms_factory level = 1 }
+		}
+	}
 
-			ai_will_do = {
+	shared_focus = { # Second Preparations
+		id = second_preparations
+		icon = GFX_focus_generic_join_comintern
+		prerequisite = { focus = utilized_the_land }
+		prerequisite = { focus = the_underground }
+		x = -1
+		y = 1
+		relative_position_id = the_underground
+		cost = 10
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		ai_will_do = {
+			factor = 5
+			modifier = {
 				factor = 5
-				modifier = {
-					factor = 5
-					OR = {
-						has_government = theocratism
-						has_government = unitism
-						theocratism > 0.25
-						unitism > 0.25
-					}
-				}
-				modifier = {
-					factor = 5
-					OR = {
-						has_government = theocratism
-						has_government = unitism
-						theocratism > 0.50
-						unitism > 0.50
-					}
+				OR = {
+					has_government = unitism
+					unitism > 0.25
 				}
 			}
-
-			completion_reward = {
-				add_ideas = priests_behind_the_curtains
-			}
-		}
-
-		shared_focus = { # Us vs THEM
-			id = us_vs_them
-			icon = GFX_goal_generic_demand_territory
-			prerequisite = { focus = the_priest_behind_the_curtains }
-			x = 0
-			y = 1
-			relative_position_id = the_priest_behind_the_curtains
-			cost = 10
-
-			search_filters = { FOCUS_FILTER_POLITICAL }
-
-			ai_will_do = {
+			modifier = {
 				factor = 5
-				modifier = {
-					factor = 5
-					OR = {
-						has_government = theocratism
-						has_government = unitism
-						theocratism > 0.25
-						unitism > 0.25
-					}
+				OR = {
+					has_government = unitism
+					unitism > 0.50
 				}
-				modifier = {
-					factor = 5
-					OR = {
-						has_government = theocratism
-						has_government = unitism
-						theocratism > 0.50
-						unitism > 0.50
-					}
-				}
-			}
-
-			completion_reward = {
-				add_offsite_building = { type = arms_factory level = 1 }
-				add_ideas = militarism_focus
 			}
 		}
 
-		shared_focus = { # International Struggle
-			id = international_struggle
-			icon = GFX_focus_ETH_callout_to_the_world
-			prerequisite = { focus = us_vs_them }
-			x = 0
-			y = 1
-			relative_position_id = us_vs_them
-			cost = 10
+		completion_reward = {
+			unitism_revolutionary_warfare = yes
+		}
+	}
 
-			search_filters = { FOCUS_FILTER_POLITICAL }
+	shared_focus = { # Utopia City
+		id = utopia_city
+		icon = GFX_focus_generic_join_comintern
+		prerequisite = { focus = second_preparations }
+		x = -1
+		y = 1
+		relative_position_id = second_preparations
+		cost = 10
 
-			ai_will_do = {
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		ai_will_do = {
+			factor = 5
+			modifier = {
 				factor = 5
-				modifier = {
-					factor = 5
-					OR = {
-						has_government = theocratism
-						has_government = unitism
-						theocratism > 0.25
-						unitism > 0.25
-					}
-				}
-				modifier = {
-					factor = 5
-					OR = {
-						has_government = theocratism
-						has_government = unitism
-						theocratism > 0.50
-						unitism > 0.50
-					}
+				OR = {
+					has_government = unitism
+					unitism > 0.25
 				}
 			}
-
-			completion_reward = {
-				add_offsite_building = { type = arms_factory level = 1 }
-				add_ideas = paramilitarism_focus
-			}
-		}
-
-		shared_focus = { # Towards A Utopia
-			id = towards_utopia
-			icon = GFX_goal_generic_demand_territory
-			prerequisite = { focus = international_struggle }
-			x = 0
-			y = 1
-			relative_position_id = international_struggle
-			cost = 10
-
-			search_filters = { FOCUS_FILTER_POLITICAL }
-
-			ai_will_do = {
+			modifier = {
 				factor = 5
-				modifier = {
-					factor = 5
-					OR = {
-						has_government = theocratism
-						has_government = unitism
-						theocratism > 0.25
-						unitism > 0.25
-					}
+				OR = {
+					has_government = unitism
+					unitism > 0.50
 				}
-				modifier = {
-					factor = 5
-					OR = {
-						has_government = theocratism
-						has_government = unitism
-						theocratism > 0.50
-						unitism > 0.50
-					}
-				}
-			}
-
-			completion_reward = {
-				add_ideas = idea_political_correctness
 			}
 		}
 
-		shared_focus = { # Ideological Fanaticism
-			id = ideological_fanaticism
-			icon = GFX_goal_generic_demand_territory
-			prerequisite = { focus = towards_utopia }
-			x = 0
-			y = 1
-			relative_position_id = towards_utopia
-			cost = 10
+		completion_reward = {
+			capital_scope = {
+				add_extra_state_shared_building_slots = 3
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = steel_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
 
-			search_filters = { FOCUS_FILTER_POLITICAL }
+	shared_focus = { # Assult on all Fronts
+		id = assult_all_fronts
+		icon = GFX_focus_generic_manpower
+		prerequisite = { focus = second_preparations }
+		x = 1
+		y = 1
+		relative_position_id = second_preparations
+		cost = 10
 
-			ai_will_do = {
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		ai_will_do = {
+			factor = 5
+			modifier = {
 				factor = 5
-				modifier = {
-					factor = 5
-					OR = {
-						has_government = theocratism
-						has_government = unitism
-						theocratism > 0.25
-						unitism > 0.25
-					}
-				}
-				modifier = {
-					factor = 5
-					OR = {
-						has_government = theocratism
-						has_government = unitism
-						theocratism > 0.50
-						unitism > 0.50
-					}
+				OR = {
+					has_government = unitism
+					unitism > 0.25
 				}
 			}
-
-			completion_reward = {
-				add_ideas = ideological_fanaticism_focus
-				#set_rule = { can_create_factions = yes }
-				set_rule = { can_use_kamikaze_pilots = yes }
-				custom_effect_tooltip = kamikaze_focus_tooltip
+			modifier = {
+				factor = 5
+				OR = {
+					has_government = unitism
+					unitism > 0.50
+				}
 			}
 		}
+
+		completion_reward = {
+			unitism_gorilla_warfare = yes
+			add_offsite_building = { type = arms_factory level = 1 }
+		}
+	}
+
+	shared_focus = { # Third Preparations
+		id = third_preparations
+		icon = GFX_focus_generic_join_comintern
+		prerequisite = { focus = utopia_city }
+		prerequisite = { focus = assult_all_fronts }
+		x = -1
+		y = 1
+		relative_position_id = assult_all_fronts
+		cost = 10
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		ai_will_do = {
+			factor = 5
+			modifier = {
+				factor = 5
+				OR = {
+					has_government = unitism
+					unitism > 0.25
+				}
+			}
+			modifier = {
+				factor = 5
+				OR = {
+					has_government = unitism
+					unitism > 0.50
+				}
+			}
+		}
+
+		completion_reward = {
+			unitism_revolutionary_warfare = yes
+		}
+	}
+# Shared Theo-Uni
+	shared_focus = { # The Priests Behind the Curtains
+		id = the_priest_behind_the_curtains
+		icon = GFX_goal_generic_demand_territory
+		prerequisite = { focus = political_theocratism_effort focus = political_unitism_effort }
+		available = {
+			NOT = { has_country_flag = thalassaus_religion }
+			NOT = { has_country_flag = ager_montis_religion }
+		}
+		x = -2
+		y = 1
+		relative_position_id = political_unitism_effort
+		cost = 10
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		ai_will_do = {
+			factor = 5
+			modifier = {
+				factor = 5
+				OR = {
+					has_government = theocratism
+					has_government = unitism
+					theocratism > 0.25
+					unitism > 0.25
+				}
+			}
+			modifier = {
+				factor = 5
+				OR = {
+					has_government = theocratism
+					has_government = unitism
+					theocratism > 0.50
+					unitism > 0.50
+				}
+			}
+		}
+
+		completion_reward = {
+			add_ideas = priests_behind_the_curtains
+		}
+	}
+
+	shared_focus = { # Us vs THEM
+		id = us_vs_them
+		icon = GFX_goal_generic_demand_territory
+		prerequisite = { focus = the_priest_behind_the_curtains }
+		x = 0
+		y = 1
+		relative_position_id = the_priest_behind_the_curtains
+		cost = 10
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		ai_will_do = {
+			factor = 5
+			modifier = {
+				factor = 5
+				OR = {
+					has_government = theocratism
+					has_government = unitism
+					theocratism > 0.25
+					unitism > 0.25
+				}
+			}
+			modifier = {
+				factor = 5
+				OR = {
+					has_government = theocratism
+					has_government = unitism
+					theocratism > 0.50
+					unitism > 0.50
+				}
+			}
+		}
+
+		completion_reward = {
+			add_offsite_building = { type = arms_factory level = 1 }
+			add_ideas = militarism_focus
+		}
+	}
+
+	shared_focus = { # International Struggle
+		id = international_struggle
+		icon = GFX_focus_ETH_callout_to_the_world
+		prerequisite = { focus = us_vs_them }
+		x = 0
+		y = 1
+		relative_position_id = us_vs_them
+		cost = 10
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		ai_will_do = {
+			factor = 5
+			modifier = {
+				factor = 5
+				OR = {
+					has_government = theocratism
+					has_government = unitism
+					theocratism > 0.25
+					unitism > 0.25
+				}
+			}
+			modifier = {
+				factor = 5
+				OR = {
+					has_government = theocratism
+					has_government = unitism
+					theocratism > 0.50
+					unitism > 0.50
+				}
+			}
+		}
+
+		completion_reward = {
+			add_offsite_building = { type = arms_factory level = 1 }
+			add_ideas = paramilitarism_focus
+		}
+	}
+
+	shared_focus = { # Towards A Utopia
+		id = towards_utopia
+		icon = GFX_goal_generic_demand_territory
+		prerequisite = { focus = international_struggle }
+		x = 0
+		y = 1
+		relative_position_id = international_struggle
+		cost = 10
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		ai_will_do = {
+			factor = 5
+			modifier = {
+				factor = 5
+				OR = {
+					has_government = theocratism
+					has_government = unitism
+					theocratism > 0.25
+					unitism > 0.25
+				}
+			}
+			modifier = {
+				factor = 5
+				OR = {
+					has_government = theocratism
+					has_government = unitism
+					theocratism > 0.50
+					unitism > 0.50
+				}
+			}
+		}
+
+		completion_reward = {
+			add_ideas = idea_political_correctness
+		}
+	}
+
+	shared_focus = { # Ideological Fanaticism
+		id = ideological_fanaticism
+		icon = GFX_goal_generic_demand_territory
+		prerequisite = { focus = towards_utopia }
+		x = 0
+		y = 1
+		relative_position_id = towards_utopia
+		cost = 10
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		ai_will_do = {
+			factor = 5
+			modifier = {
+				factor = 5
+				OR = {
+					has_government = theocratism
+					has_government = unitism
+					theocratism > 0.25
+					unitism > 0.25
+				}
+			}
+			modifier = {
+				factor = 5
+				OR = {
+					has_government = theocratism
+					has_government = unitism
+					theocratism > 0.50
+					unitism > 0.50
+				}
+			}
+		}
+
+		completion_reward = {
+			add_ideas = ideological_fanaticism_focus
+			#set_rule = { can_create_factions = yes }
+			set_rule = { can_use_kamikaze_pilots = yes }
+			custom_effect_tooltip = kamikaze_focus_tooltip
+		}
+	}
