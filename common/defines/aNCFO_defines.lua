@@ -408,7 +408,7 @@
 
 	NDefines.NAI.ENTRENCHMENT_WEIGHT = 4.0					-- AI should favour units with less entrenchment when assigning units around.
 
-	NDefines.NAI.UNIT_ASSIGNMENT_TERRAIN_IMPORTANCE = 100.0	-- Terrain score for units are multiplied by this when the AI is deciding which front they should be assigned to
+	NDefines.NAI.UNIT_ASSIGNMENT_TERRAIN_IMPORTANCE = 150.0	-- Terrain score for units are multiplied by this when the AI is deciding which front they should be assigned to
 		
 	NDefines.NAI.SEND_VOLUNTEER_EVAL_BASE_DISTANCE = 175.0  -- How far away it will evaluate sending volunteers if not a major power
 	NDefines.NAI.SEND_VOLUNTEER_EVAL_MAJOER_POWER = 1.0 	-- How willing major powers are to send volunteers.
@@ -421,9 +421,9 @@
 
 	NDefines.NAI.MIN_PLAN_VALUE_TO_MICRO_INACTIVE = 0.2 --default 0.2				-- The AI will not consider members of groups which plan is not activated AND evaluates lower than this.
 		
-	NDefines.NAI.MAX_UNITS_FACTOR_AREA_ORDER = 2.0 --default 1.0					-- Factor for max number of units to assign to area defense orders
-	NDefines.NAI.DESIRED_UNITS_FACTOR_AREA_ORDER = 1.5	--default^			-- Factor for desired number of units to assign to area defense orders
-	NDefines.NAI.MIN_UNITS_FACTOR_AREA_ORDER = 1.0	--default^^				-- Factor for min number of units to assign to area defense orders
+	---NDefines.NAI.MAX_UNITS_FACTOR_AREA_ORDER = 2.0 --default 1.0					-- Factor for max number of units to assign to area defense orders
+	---NDefines.NAI.DESIRED_UNITS_FACTOR_AREA_ORDER = 1.5	--default^			-- Factor for desired number of units to assign to area defense orders
+	---NDefines.NAI.MIN_UNITS_FACTOR_AREA_ORDER = 1.0	--default^^				-- Factor for min number of units to assign to area defense orders
 
 	NDefines.NAI.MAX_UNITS_FACTOR_FRONT_ORDER = 3.0	--default 1.5			-- Factor for max number of units to assign to area front orders
 	NDefines.NAI.DESIRED_UNITS_FACTOR_FRONT_ORDER = 3.0	--default ^			-- Factor for desired number of units to assign to area front orders
@@ -433,7 +433,7 @@
 	NDefines.NAI.DESIRED_UNITS_FACTOR_INVASION_ORDER = 1.0	--default ^		-- Factor for desired number of units to assign to naval invasion orders
 	NDefines.NAI.MIN_UNITS_FACTOR_INVASION_ORDER = 1.0	--default ^^			-- Factor for min number of units to assign to naval invasion orders
 
-	NDefines.NAI.FRONT_UNITS_CAP_FACTOR = 15.0		--default 15.0				-- A factor applied to total front size and supply use. Primarily effects small fronts
+	NDefines.NAI.FRONT_UNITS_CAP_FACTOR = 12.0		--default 15.0				-- A factor applied to total front size and supply use. Primarily effects small fronts
 	NDefines.NAI.MAX_DIST_PORT_RUSH = 20.0	--default 20.0			-- If a unit is in enemy territory with no supply it will consider nearby ports within this distance.
 		
 	NDefines.NAI.MIN_FIELD_STRENGTH_TO_BUILD_UNITS = 0.7	--default 0.7		-- Cancel unit production if below this to get resources out to units in the field
@@ -595,7 +595,7 @@
 
 	NDefines.NAI.DIPLOMACY_IMPROVE_RELATION_COST_FACTOR = 7.0                       -- Desire to boost relations subtracts the cost multiplied by this
 
-	NDefines.NAI.COMMAND_POWER_BEFORE_SPEND_ON_TRAITS = 65.0
+	NDefines.NAI.COMMAND_POWER_BEFORE_SPEND_ON_TRAITS = 30.0
 
 	--------------------------------------------------------------------------------------------------------------
 	-- LAND AI
@@ -604,7 +604,7 @@
 	NDefines.NAI.MIN_AI_UNITS_PER_TILE_FOR_STANDARD_COHESION = 2.0	-- How many units should we have for each tile along a front in order to switch to standard cohesion (less moving around)
 	NDefines.NAI.MIN_FRONT_SIZE_TO_CONSIDER_STANDARD_COHESION = 2000	-- How long should fronts be before we consider switching to standard cohesion (under this, standard cohesion fronts will switch back to relaxed)
 
-	NDefines.NAI.ASSIGN_TANKS_TO_WAR_FRONT = 8.0 --4.0
+	NDefines.NAI.ASSIGN_TANKS_TO_WAR_FRONT = 12.0 --4.0
 	NDefines.NAI.ASSIGN_TANKS_TO_NON_WAR_FRONT = 0.2 --0.4
 
 	NDefines.NMilitary.PLAN_EXECUTE_RUSH = -10									-- When looking for an attach target, this score limit is required in the battle plan to consider province for attack
@@ -612,7 +612,7 @@
 
 	NDefines.NAI.FALLBACK_LOSING_FACTOR = 0.0 					                    -- The lower this number  the longer the AI will hold the line before sending them to the fallback line
 
-	NDefines.NAI.HOUR_BAD_COMBAT_REEVALUATE = 24                                 	-- if we are in combat for this amount and it goes shitty then try skipping it
+	NDefines.NAI.HOUR_BAD_COMBAT_REEVALUATE = 36                                 	-- if we are in combat for this amount and it goes shitty then try skipping it
 
 	NDefines.NAI.PLAN_ATTACK_MIN_ORG_FACTOR_LOW = 0.85							-- Minimum org % for a unit to actively attack an enemy unit when executing a plan
 	NDefines.NAI.PLAN_ATTACK_MIN_STRENGTH_FACTOR_LOW = 0.85						-- Minimum strength for a unit to actively attack an enemy unit when executing a plan
@@ -846,7 +846,7 @@
 	NDefines.NAI.RESEARCH_BONUS_FACTOR = 4.5 				-- To which extent AI should care about bonuses to research
 	NDefines.NAI.RESEARCH_AHEAD_OF_TIME_FACTOR = 7.0 		-- To which extent AI should care about ahead of time penalties to research
 	NDefines.NAI.COMBINED_ARMS_LEVEL = 1                    -- 0 = Never, 1 = Infantry/Artillery, 2 = Go wild
-	NDefines.NAI.MAX_SUPPLY_DIVISOR = 2.5							-- To make sure the AI does not overdeploy divisions. Higher number means more supply per unit. van 2.0
+	NDefines.NAI.MAX_SUPPLY_DIVISOR = 3.0							-- To make sure the AI does not overdeploy divisions. Higher number means more supply per unit. van 2.0
 	NDefines.NAI.PLAN_FACTION_WEAK_TO_ABORT = 0.50			-- % or more of units in an order to consider ececuting the plan
 	NDefines.NAI.PLAN_FACTION_NORMAL_TO_EXECUTE = 0.50
 
