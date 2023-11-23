@@ -1,29 +1,29 @@
-#shared_focus = {
-#	id = HHE_
-#	icon = GFX_focus_unknown
-#	#prerequisite = { focus =  }
-#	#mutually_exclusive = { focus =  }
-#	#relative_position_id = 
-#	x = 0
-#	y = 0
-#	cost = 10
-#
-#	allow_branch = {
+#	shared_focus = {
+#		id = HHE_
+#		icon = GFX_focus_unknown
+#		#prerequisite = { focus =  }
+#		#mutually_exclusive = { focus =  }
+#		#relative_position_id = 
+#		x = 0
+#		y = 0
+#		cost = 10
+#	
+#		allow_branch = {
+#		}
+#		available = {
+#		}
+#		bypass = {
+#		}
+#	
+#		ai_will_do = {
+#			base = 1
+#		}
+#	
+#		available_if_capitulated = yes
+#	
+#		completion_reward = {
+#		}
 #	}
-#	available = {
-#	}
-#	bypass = {
-#	}
-#
-#	ai_will_do = {
-#		base = 1
-#	}
-#
-#	available_if_capitulated = yes
-#
-#	completion_reward = {
-#	}
-#}
 # Army
 	shared_focus = { # A Modern Imperious Military
 		id = HHE_modernize_imperious_military
@@ -31,7 +31,7 @@
 		#prerequisite = { focus =  }
 		#mutually_exclusive = { focus =  }
 		#relative_position_id = 
-		x = 30
+		x = 23
 		y = 0
 		cost = 10
 
@@ -45,7 +45,7 @@
 		}
 
 		ai_will_do = {
-			base = 1
+			base = 2
 		}
 
 		available_if_capitulated = yes
@@ -81,131 +81,401 @@
 			army_experience = 25
 		}
 	}
+	# Mobile Warfare
+		shared_focus = { # Theory of Mobile Warfare
+			id = HHE_theory_mobile_warfare
+			icon = GFX_focus_unknown
+			prerequisite = { focus = HHE_new_theory }
+			mutually_exclusive = { focus = HHE_theory_superior_firepower focus = HHE_theory_grand_battleplan focus = HHE_theory_mass_assault }
+			relative_position_id = HHE_new_theory
+			x = -6
+			y = 1
+			offset = {
+				x = 6
+				y = 0
+				trigger = { has_completed_focus = HHE_theory_mobile_warfare }
+			}
+			cost = 5
 
-	shared_focus = {
-		id = HHE_theory_mobile_warfare
-		icon = GFX_focus_unknown
-		prerequisite = { focus = HHE_new_theory }
-		mutually_exclusive = { focus = HHE_theory_superior_firepower focus = HHE_theory_grand_battleplan focus = HHE_theory_mass_assault }
-		relative_position_id = HHE_new_theory
-		x = -6
-		y = 1
-		cost = 5
+			allow_branch = {
+				NOT = { OR = { has_completed_focus = HHE_theory_superior_firepower has_completed_focus = HHE_theory_grand_battleplan has_completed_focus = HHE_theory_mass_assault } }
+			}
+			available = {
+			}
+			bypass = {
+			}
 
-		allow_branch = {
-		}
-		available = {
-		}
-		bypass = {
-		}
+			ai_will_do = {
+				base = 0
+				modifier = {
+					factor = 10
+					has_tech = mobile_warfare
+				}
+			}
 
-		ai_will_do = {
-			base = 1
-		}
+			available_if_capitulated = yes
 
-		available_if_capitulated = yes
-
-		completion_reward = {
-		}
-	}
-
-	shared_focus = {
-		id = HHE_theory_superior_firepower
-		icon = GFX_focus_unknown
-		prerequisite = { focus = HHE_new_theory }
-		mutually_exclusive = { focus = HHE_theory_mobile_warfare focus = HHE_theory_grand_battleplan focus = HHE_theory_mass_assault }
-		relative_position_id = HHE_new_theory
-		x = -2
-		y = 1
-		cost = 5
-
-		allow_branch = {
-		}
-		available = {
-		}
-		bypass = {
-		}
-
-		ai_will_do = {
-			base = 1
+			completion_reward = {
+				add_doctrine_cost_reduction = {
+					name = army_mobile_warfare_bonus
+					cost_reduction = 0.25
+					uses = 2
+					category = cat_mobile_warfare
+				}
+			}
 		}
 
-		available_if_capitulated = yes
+		shared_focus = { # Armor Revitalization Program
+			id = HHE_armor_revitalization_program
+			icon = GFX_focus_unknown
+			prerequisite = { focus = HHE_theory_mobile_warfare }
+			#mutually_exclusive = { focus =  }
+			relative_position_id = HHE_theory_mobile_warfare
+			x = 1
+			y = 1
+			cost = 5
 
-		completion_reward = {
-		}
-	}
+			ai_will_do = {
+				base = 2
+			}
 
-	shared_focus = {
-		id = HHE_theory_grand_battleplan
-		icon = GFX_focus_unknown
-		prerequisite = { focus = HHE_new_theory }
-		mutually_exclusive = { focus = HHE_theory_mobile_warfare focus = HHE_theory_superior_firepower focus = HHE_theory_mass_assault }
-		relative_position_id = HHE_new_theory
-		x = 2
-		y = 1
-		cost = 5
+			available_if_capitulated = yes
 
-		allow_branch = {
-		}
-		available = {
-		}
-		bypass = {
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-		}
-	}
-
-	shared_focus = {
-		id = HHE_theory_mass_assault
-		icon = GFX_focus_unknown
-		prerequisite = { focus = HHE_new_theory }
-		mutually_exclusive = { focus = HHE_theory_mobile_warfare focus = HHE_theory_superior_firepower focus = HHE_theory_grand_battleplan }
-		relative_position_id = HHE_new_theory
-		x = 6
-		y = 1
-		cost = 5
-
-		allow_branch = {
-		}
-		available = {
-		}
-		bypass = {
+			completion_reward = {
+				add_tech_bonus = {
+					name = armor_bonus
+					bonus = 2.0
+					uses = 1
+					category = cat_armored_cars
+				}
+			}
 		}
 
-		ai_will_do = {
-			base = 1
+		shared_focus = { # Armored Offensive
+			id = HHE_armored_offensive
+			icon = GFX_focus_unknown
+			prerequisite = { focus = HHE_armor_revitalization_program }
+			#mutually_exclusive = { focus =  }
+			relative_position_id = HHE_armor_revitalization_program
+			x = 0
+			y = 1
+			cost = 5
+
+			ai_will_do = {
+				base = 2
+			}
+
+			available_if_capitulated = yes
+
+			completion_reward = {
+				add_tech_bonus = {
+					name = armor_bonus
+					bonus = 1.0
+					uses = 2
+					category = armor
+				}
+			}
 		}
 
-		available_if_capitulated = yes
+		shared_focus = { # Improve Firepower
+			id = HHE_improve_Firepower
+			icon = GFX_focus_unknown
+			prerequisite = { focus = HHE_theory_mobile_warfare }
+			#mutually_exclusive = { focus =  }
+			relative_position_id = HHE_theory_mobile_warfare
+			x = -1
+			y = 1
+			cost = 5
 
-		completion_reward = {
+			ai_will_do = {
+				base = 2
+			}
+
+			available_if_capitulated = yes
+
+			completion_reward = {
+				add_tech_bonus = {
+					name = armor_bonus
+					bonus = 0.5
+					uses = 2
+					category = artillery
+				}
+			}
 		}
-	}
 
+		shared_focus = { # Mechanized Backbone
+			id = HHE_mechanized_backbone
+			icon = GFX_focus_unknown
+			prerequisite = { focus = HHE_improve_Firepower }
+			#mutually_exclusive = { focus =  }
+			relative_position_id = HHE_improve_Firepower
+			x = 0
+			y = 1
+			cost = 5
+
+			ai_will_do = {
+				base = 2
+			}
+
+			available_if_capitulated = yes
+
+			completion_reward = {
+				add_tech_bonus = {
+					name = armor_bonus
+					bonus = 2.0
+					uses = 1
+					category = cat_mechanized_equipment
+				}
+			}
+		}
+
+		shared_focus = { # Mobile Doctrine
+			id = HHE_mobile_doctrine
+			icon = GFX_focus_unknown
+			prerequisite = { focus = HHE_armored_offensive }
+			prerequisite = { focus = HHE_mechanized_backbone }
+			#mutually_exclusive = { focus =  }
+			relative_position_id = HHE_theory_mobile_warfare
+			x = 0
+			y = 3
+			cost = 5
+
+			ai_will_do = {
+				base = 2
+			}
+
+			available_if_capitulated = yes
+
+			completion_reward = {
+				add_ideas = HHE_mobile_doctrine
+				add_doctrine_cost_reduction = {
+					name = army_mobile_warfare_bonus
+					cost_reduction = 0.25
+					uses = 2
+					category = cat_mobile_warfare
+				}
+			}
+		}
+	# Superior Firepower
+		shared_focus = { # Theory of Superior Firepower
+			id = HHE_theory_superior_firepower
+			icon = GFX_focus_unknown
+			prerequisite = { focus = HHE_new_theory }
+			mutually_exclusive = { focus = HHE_theory_mobile_warfare focus = HHE_theory_grand_battleplan focus = HHE_theory_mass_assault }
+			relative_position_id = HHE_new_theory
+			x = -2
+			y = 1
+			offset = {
+				x = 2
+				y = 0
+				trigger = { has_completed_focus = HHE_theory_superior_firepower }
+			}
+			cost = 5
+
+			allow_branch = {
+				NOT = { OR = { has_completed_focus = HHE_theory_mobile_warfare has_completed_focus = HHE_theory_grand_battleplan has_completed_focus = HHE_theory_mass_assault } }
+			}
+			available = {
+			}
+			bypass = {
+			}
+
+			ai_will_do = {
+				base = 0
+				modifier = {
+					factor = 10
+					has_tech = superior_firepower
+				}
+			}
+
+			available_if_capitulated = yes
+
+			completion_reward = {
+				add_doctrine_cost_reduction = {
+					name = army_superior_firepower_bonus
+					cost_reduction = 0.25
+					uses = 2
+					category = cat_superior_firepower
+				}
+			}
+		}
+
+		shared_focus = { # Firepower Doctrine
+			id = HHE_firepower_doctrine
+			icon = GFX_focus_unknown
+			prerequisite = { focus = HHE_theory_superior_firepower }
+			#mutually_exclusive = { focus =  }
+			relative_position_id = HHE_theory_superior_firepower
+			x = 0
+			y = 3
+			cost = 5
+
+			ai_will_do = {
+				base = 2
+			}
+
+			available_if_capitulated = yes
+
+			completion_reward = {
+				add_ideas = HHE_firepower_doctrine
+				add_doctrine_cost_reduction = {
+					name = army_superior_firepower_bonus
+					cost_reduction = 0.25
+					uses = 2
+					category = cat_superior_firepower
+				}
+			}
+		}
+	# Grand Battleplan
+		shared_focus = { # Theory of Grand Battleplan
+			id = HHE_theory_grand_battleplan
+			icon = GFX_focus_unknown
+			prerequisite = { focus = HHE_new_theory }
+			mutually_exclusive = { focus = HHE_theory_mobile_warfare focus = HHE_theory_superior_firepower focus = HHE_theory_mass_assault }
+			relative_position_id = HHE_new_theory
+			x = 2
+			y = 1
+			offset = {
+				x = -2
+				y = 0
+				trigger = { has_completed_focus = HHE_theory_grand_battleplan }
+			}
+			cost = 5
+
+			allow_branch = {
+				NOT = { OR = { has_completed_focus = HHE_theory_mobile_warfare has_completed_focus = HHE_theory_superior_firepower has_completed_focus = HHE_theory_mass_assault } }
+			}
+			available = {
+			}
+			bypass = {
+			}
+
+			ai_will_do = {
+				base = 0
+				modifier = {
+					factor = 10
+					has_tech = trench_warfare
+				}
+			}
+
+			available_if_capitulated = yes
+
+			completion_reward = {
+				add_doctrine_cost_reduction = {
+					name = army_grand_battle_plan_bonus
+					cost_reduction = 0.25
+					uses = 2
+					category = cat_grand_battle_plan
+				}
+			}
+		}
+
+		shared_focus = { # Battleplan Doctrine
+			id = HHE_battleplan_doctrine
+			icon = GFX_focus_unknown
+			prerequisite = { focus = HHE_theory_grand_battleplan }
+			#mutually_exclusive = { focus =  }
+			relative_position_id = HHE_theory_grand_battleplan
+			x = 0
+			y = 3
+			cost = 5
+
+			ai_will_do = {
+				base = 2
+			}
+
+			available_if_capitulated = yes
+
+			completion_reward = {
+				add_ideas = HHE_battleplan_doctrine
+				add_doctrine_cost_reduction = {
+					name = army_grand_battle_plan_bonus
+					cost_reduction = 0.25
+					uses = 2
+					category = cat_grand_battle_plan
+				}
+			}
+		}
+	# Mass Assault
+		shared_focus = { # Theory of Mass Assault
+			id = HHE_theory_mass_assault
+			icon = GFX_focus_unknown
+			prerequisite = { focus = HHE_new_theory }
+			mutually_exclusive = { focus = HHE_theory_mobile_warfare focus = HHE_theory_superior_firepower focus = HHE_theory_grand_battleplan }
+			relative_position_id = HHE_new_theory
+			x = 6
+			y = 1
+			offset = {
+				x = -6
+				y = 0
+				trigger = { has_completed_focus = HHE_theory_mass_assault }
+			}
+			cost = 5
+
+			allow_branch = {
+				NOT = { OR = { has_completed_focus = HHE_theory_mobile_warfare has_completed_focus = HHE_theory_superior_firepower has_completed_focus = HHE_theory_grand_battleplan } }
+			}
+			available = {
+			}
+			bypass = {
+			}
+
+			ai_will_do = {
+				base = 0
+				modifier = {
+					factor = 10
+					has_tech = mass_assault
+				}
+			}
+
+			available_if_capitulated = yes
+
+			completion_reward = {
+				add_doctrine_cost_reduction = {
+					name = army_mass_assault_bonus
+					cost_reduction = 0.25
+					uses = 2
+					category = cat_mass_assault
+				}
+			}
+		}
+
+		shared_focus = { # Assault Doctrine
+			id = HHE_assault_doctrine
+			icon = GFX_focus_unknown
+			prerequisite = { focus = HHE_theory_mass_assault }
+			#mutually_exclusive = { focus =  }
+			relative_position_id = HHE_theory_mass_assault
+			x = 0
+			y = 3
+			cost = 5
+
+			ai_will_do = {
+				base = 2
+			}
+
+			available_if_capitulated = yes
+
+			completion_reward = {
+				add_ideas = HHE_assault_doctrine
+				add_doctrine_cost_reduction = {
+					name = army_mass_assault_bonus
+					cost_reduction = 0.25
+					uses = 2
+					category = cat_mass_assault
+				}
+			}
+		}
+	# End of Doctrines
 	shared_focus = { # A Modernized Imperious Army
 		id = HHE_modernized_imperious_army
 		icon = GFX_focus_unknown
-		prerequisite = { focus = HHE_theory_mobile_warfare focus = HHE_theory_superior_firepower focus = HHE_theory_grand_battleplan focus = HHE_theory_mass_assault }
+		prerequisite = { focus = HHE_mobile_doctrine focus = HHE_firepower_doctrine focus = HHE_battleplan_doctrine focus = HHE_assault_doctrine }
 		#mutually_exclusive = { focus =  }
 		relative_position_id = HHE_new_theory
 		x = 0
-		y = 2
+		y = 5
 		cost = 10
-
-		allow_branch = {
-		}
-		available = {
-		}
-		bypass = {
-		}
 
 		ai_will_do = {
 			base = 2
@@ -238,6 +508,10 @@
 
 		ai_will_do = {
 			base = 1
+			modifier = {
+				factor = -10
+				ROOT = { has_country_flag = collapse_of_the_nation_civil_war_regional }
+			}
 		}
 
 		available_if_capitulated = yes
@@ -299,6 +573,10 @@
 
 		ai_will_do = {
 			base = 1
+			modifier = {
+				factor = -10
+				ROOT = { has_country_flag = collapse_of_the_nation_civil_war_regional }
+			}
 		}
 
 		available_if_capitulated = yes
