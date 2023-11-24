@@ -34,7 +34,7 @@
 		#mutually_exclusive = { focus =  }
 		#relative_position_id = MRC_continue_foreign_intervention
 		x = -10
-		y = 0
+		y = 5
 	
 		cost = 10
 		cancel_if_invalid = yes
@@ -58,24 +58,51 @@
 		completion_reward = {
 		}
 	}
-# Neutrality Rearmement Branch
-	shared_focus = { # Neutrality Rearmement
-		id = MRC_neutrality_rearmement
+
+	shared_focus = { # Centralized the Mesi Sea
+		id = MRC_centralized_the_mesi_sea
 		icon = GFX_
-		#prerequisite = { focus = MRC_neutrality_focus }
+		prerequisite = { focus = MRC_intervention_military }
 		#mutually_exclusive = { focus =  }
-		#relative_position_id = MRC_neutrality_focus
-		x = 10
-		y = 0
+		relative_position_id = MRC_intervention_military
+		x = -3
+		y = 1
 	
-		cost = 10
+		cost = 1
 		cancel_if_invalid = yes
 		continue_if_invalid = no
 		available_if_capitulated = no
-	
+
 		available = {
-			has_completed_focus = MRC_neutrality_focus
-			has_global_flag = civilwar_victory_warmonger
+			#
+		}
+		bypass = {
+			# Auto Bypass later for conquest
+		}
+	
+		ai_will_do = {
+			base = 5
+		}
+
+		completion_reward = {
+		}
+	}
+
+	shared_focus = { # Industrial Militarism
+		id = MRC_industrial_militarism
+		icon = GFX_
+		prerequisite = { focus = MRC_intervention_military }
+		#mutually_exclusive = { focus =  }
+		relative_position_id = MRC_intervention_military
+		x = 3
+		y = 1
+	
+		cost = 5
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		available = {
 		}
 		bypass = {
 		}
@@ -88,7 +115,123 @@
 		}
 	}
 
-	# Slow down measures VS Vlad
+# Neutrality Rearmement Branch
+	shared_focus = { # Neutrality Rearmement
+		id = MRC_neutrality_rearmement
+		icon = GFX_
+		#prerequisite = { focus = MRC_neutrality_focus }
+		#mutually_exclusive = { focus =  }
+		#relative_position_id = MRC_neutrality_focus
+		x = 10
+		y = 5
+	
+		cost = 10
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		available = {
+			has_completed_focus = MRC_neutrality_focus
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			base = 5
+		}
+
+		completion_reward = {
+			hidden_effect = {
+				if = {
+					limit = { MRC = { has_completed_focus = MRC_neutrality_rearmement } }
+					MRC = { complete_national_focus = MRC_archard_vlad_the_warmonger }
+				}
+			}
+		}
+	}
+
+	shared_focus = { # Home Island Coastal Defensives
+		id = MRC_home_island_coastal_defensives
+		icon = GFX_
+		prerequisite = { focus = MRC_neutrality_rearmement }
+		#mutually_exclusive = { focus =  }
+		relative_position_id = MRC_neutrality_rearmement
+		x = -3
+		y = 1
+	
+		cost = 5
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		available = {
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			base = 5
+		}
+
+		completion_reward = {
+		}
+	}
+	# Deed
+	# Traditional
+	# Influencer
+	# Authority
+	# Warmonger
+		shared_focus = { # Archard Vlad the Warmonger
+			id = MRC_archard_vlad_the_warmonger
+			icon = GFX_
+			prerequisite = { focus = MRC_neutrality_rearmement }
+			#mutually_exclusive = { focus =  }
+			relative_position_id = MRC_neutrality_rearmement
+			x = 3
+			y = 1
+		
+			cost = 1
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+		
+			allow_branch = {
+				has_global_flag = civilwar_victory_warmonger
+			}
+			bypass = {
+				has_global_flag = civilwar_victory_warmonger
+			}
+		
+			ai_will_do = {
+				base = 5
+			}
+
+			completion_reward = {
+			}
+		}
+
+		shared_focus = { # Voluteers against Tyranny
+			id = MRC_voluteers_against_tyranny
+			icon = GFX_
+			prerequisite = { focus = MRC_archard_vlad_the_warmonger }
+			#mutually_exclusive = { focus =  }
+			relative_position_id = MRC_archard_vlad_the_warmonger
+			x = 0
+			y = 1
+		
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+
+			ai_will_do = {
+				base = 5
+			}
+
+			completion_reward = {
+				custom_effect_tooltip = MRC_WARMONGER_UNLOCK_VOLUNTEER_TROOPS_TT
+			}
+		}
 
 # Military Research Branch
 	shared_focus = { # Military Defensive Advancements
