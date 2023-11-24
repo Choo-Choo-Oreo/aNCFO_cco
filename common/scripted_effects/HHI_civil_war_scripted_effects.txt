@@ -98,6 +98,10 @@ HHE_civil_war_begins = {
 	HUF = { country_event = { id = HHE.99 days = 83 } add_ideas = harmonainus_civil_war }
 }
 HHE_civil_war_ends = {
+	if = {
+		limit = { original_tag = HHE }
+		set_global_flag = civilwar_victory_warmonger
+	}
 	clr_global_flag = HHE_warmonger_civil_war_first # We no longer need this flag as the civil war is over.
 	clr_global_flag = HHE_warmonger_civil_war_final # We no longer need this flag as the civil war is over.
 	remove_ideas = harmonainus_civil_war
@@ -106,18 +110,22 @@ HHI_subjects_civil_war_ends = {
 	HHE_civil_war_ends = yes
 	if = {
 		limit = { original_tag = HLF }
+		set_global_flag = civilwar_victory_tradition
 		post_civil_war_tradition_effect = yes
 	}
 	else_if = {
 		limit = { original_tag = HST }
+		set_global_flag = civilwar_victory_influencer
 		post_civil_war_influencer_effect = yes
 	}
 	else_if = {
 		limit = { original_tag = HNO }
+		set_global_flag = civilwar_victory_authority
 		post_civil_war_authority_effect = yes
 	}
 	else_if = {
 		limit = { original_tag = HPG }
+		set_global_flag = civilwar_victory_
 		post_civil_war_peoples_government_effect = yes
 	}
 }
