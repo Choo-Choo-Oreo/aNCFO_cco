@@ -876,10 +876,6 @@
 -- MS Defines
 	NDefines.NOperatives.MAX_RECRUITED_OPERATIVES = 500
 
--- NE Defines
-	NDefines.NDiplomacy.MAX_TRUST_VALUE = 200
-	NDefines.NDiplomacy.MIN_TRUST_VALUE = -500
-	
 -- RealisticArmsProduction Defines
 	NDefines.NProduction.BASE_FACTORY_SPEED_MIL = 9
 	NDefines.NProduction.BASE_FACTORY_SPEED_NAV = 5
