@@ -110,6 +110,27 @@ war_measures = {
 		}
 	}
 }
+bop_HHE_archard_vlad = {
+	DEBUG_deactivate_bop_HHE_archard_vlad = {
+		priority = 91
+		visible = {
+			is_debug = yes
+		}
+		complete_effect = {
+			remove_power_balance = { id = power_balance_HHE_archard_vlad }
+		}
+	}
+	left_test = {
+		complete_effect = {
+			bop_HHE_archard_vlad_very_low_decrease_effect = yes
+		}
+	}
+	right_test = {
+		complete_effect = {
+			bop_HHE_archard_vlad_very_low_increase_effect = yes
+		}
+	}
+}
 parade_HHE_victory_parades = {
 	agricola_midland_HHE_victory_parades = { # 340
 		icon = generic_prepare_civil_war
@@ -633,17 +654,14 @@ moral_HHE_falling_spirits = {
 	HHE_falling_spirits = {
 
 		allowed = {
-			HHE_has_idea_HHE_high_spirits_efforts = yes
 			original_tag = HHE
 		}
 
 		icon = ger_mefo_bills
 
 		available = {
-			NOT = {
-				any_enemy_country = {
-					HHE_is_crusade_target = yes
-				}
+			any_enemy_country = {
+				HHE_is_crusade_target = yes
 			}
 		}
 
@@ -665,11 +683,46 @@ moral_HHE_falling_spirits = {
 			}
 		}
 
-		remove_effect = { }
-		complete_effect = { }
-
 		timeout_effect = {
 			HHE_high_spirits_efforts_level_down = yes
+		}
+
+		ai_will_do = {
+			factor = 200
+		}
+	}
+	HHE_falling_spirits_in_a_failed_war = {
+
+		allowed = {
+			original_tag = HHE
+		}
+
+		icon = ger_mefo_bills
+
+		available = {
+			any_enemy_country = {
+				HHE_is_crusade_target = yes
+			}
+		}
+
+		activation = {
+			has_idea = HHE_exhausted_efforts
+			any_enemy_country = {
+				HHE_is_crusade_target = yes
+			}
+		}
+
+		days_mission_timeout = 30
+		is_good = no
+		fire_only_once = no
+
+		cancel_trigger = {
+			hidden_trigger = {
+				NOT = { has_idea = HHE_exhausted_efforts }
+			}
+		}
+
+		timeout_effect = {
 		}
 
 		ai_will_do = {

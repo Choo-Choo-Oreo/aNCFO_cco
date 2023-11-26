@@ -102,10 +102,20 @@ HHE_civil_war_ends = {
 		limit = { original_tag = HHE }
 		MRC = { country_event = { id = MRC.0 } }
 		set_global_flag = civilwar_victory_warmonger
+		set_power_balance = {
+			id = power_balance_HHE_archard_vlad
+			left_side = archard_vlad_failed_leader
+			right_side = archard_vlad_succeeding_leading
+		}
 	}
 	clr_global_flag = HHE_warmonger_civil_war_first # We no longer need this flag as the civil war is over.
 	clr_global_flag = HHE_warmonger_civil_war_final # We no longer need this flag as the civil war is over.
-	remove_ideas = harmonainus_civil_war
+	hidden_effect = {
+		if = {
+			limit = { any_country = { has_idea = harmonainus_civil_war } }
+			remove_ideas = harmonainus_civil_war
+		}
+	}
 }
 HHI_subjects_civil_war_ends = {
 	HHE_civil_war_ends = yes
@@ -475,6 +485,10 @@ HHE_civil_war_ignited = {
 		if = {
 			limit = { country_exists = HUF NOT = { OR = { original_tag = HUF has_war_with = HUF } } }
 			ROOT = { declare_war_on = { target = HUF type = civil_war } }
+		}
+		if = {
+			limit = { country_exists = HWA NOT = { OR = { original_tag = HWA has_war_with = HWA } } }
+			ROOT = { declare_war_on = { target = HWA type = civil_war } }
 		}
 		if = {
 			limit = { country_exists = ETF NOT = { OR = { original_tag = ETF has_war_with = ETF } } }
