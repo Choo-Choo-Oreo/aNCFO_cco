@@ -31,7 +31,7 @@
 		id = MRC_continue_foreign_intervention
 		icon = GFX_
 		mutually_exclusive = { focus = MRC_neutrality_focus }
-		x = -2
+		x = -3
 		y = 0
 	
 		cost = 15
@@ -88,12 +88,43 @@
 			add_political_power = -50
 		}
 	}
+
+	shared_focus = { # Foreign Trade Policies
+		id = MRC_foreign_trade
+		icon = GFX_
+		prerequisite = { focus = MRC_merchents_outpost }
+		prerequisite = { focus = MRC_continue_foreign_intervention }
+		relative_position_id = MRC_continue_foreign_intervention
+		x = 0
+		y = 3
+	
+		cost = 10
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+	
+		available = {
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			base = 5
+			modifier = {
+				factor = 25
+				is_historical_focus_on = yes
+			}
+		}
+
+		completion_reward = {
+		}
+	}
 # Neutrality Focus Policies Branch
 	shared_focus = { # Neutrality Focus Foreign Diplomacy
 		id = MRC_neutrality_focus
 		icon = GFX_
 		mutually_exclusive = { focus = MRC_continue_foreign_intervention }
-		x = 2
+		x = 3
 		y = 0
 	
 		cost = 15
@@ -319,7 +350,7 @@
 		x = 0
 		y = 1
 	
-		cost = 10
+		cost = 20
 		cancel_if_invalid = yes
 		continue_if_invalid = no
 		available_if_capitulated = no
@@ -346,7 +377,7 @@
 		x = 0
 		y = 1
 	
-		cost = 10
+		cost = 20
 		cancel_if_invalid = yes
 		continue_if_invalid = no
 		available_if_capitulated = no
@@ -374,7 +405,7 @@
 		x = 2
 		y = 2
 	
-		cost = 10
+		cost = 20
 		cancel_if_invalid = yes
 		continue_if_invalid = no
 		available_if_capitulated = no
@@ -397,8 +428,7 @@
 		id = MRC_industral_buildup_actions
 		icon = GFX_
 		prerequisite = { focus = MRC_continue_foreign_intervention focus = MRC_neutrality_focus }
-		relative_position_id = MRC_continue_foreign_intervention
-		x = 2
+		x = 0
 		y = 1
 	
 		cost = 10
@@ -551,44 +581,13 @@
 		}
 	}
 
-	shared_focus = { # Foreign Trade Policies
-		id = MRC_foreign_trade
-		icon = GFX_
-		prerequisite = { focus = MRC_merchents_outpost }
-		prerequisite = { focus = MRC_continue_foreign_intervention }
-		relative_position_id = MRC_continue_foreign_intervention
-		x = 0
-		y = 3
-	
-		cost = 10
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = no
-	
-		available = {
-		}
-		bypass = {
-		}
-	
-		ai_will_do = {
-			base = 5
-			modifier = {
-				factor = 25
-				is_historical_focus_on = yes
-			}
-		}
-
-		completion_reward = {
-		}
-	}
-
 	shared_focus = { # Secondary Isle Buildup
 		id = MRC_secondary_islands_buildup
 		icon = GFX_
 		prerequisite = { focus = MRC_merchents_outpost focus = MRC_home_islands_buildup }
-		relative_position_id = MRC_continue_foreign_intervention
-		x = 2
-		y = 3
+		relative_position_id = MRC_industral_buildup_actions
+		x = 0
+		y = 2
 	
 		cost = 10
 		cancel_if_invalid = yes
