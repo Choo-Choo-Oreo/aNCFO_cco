@@ -2,654 +2,750 @@
 # Generate them from a generic template
 
 # Political advisors
-every_possible_country = { # pluralism_advisor
-	limit = {
-		is_dynamic_country = no
-		NOT = {
-			has_allowed_idea_with_traits = { idea = pluralism_advisor characters = yes }
-		}
-	}
-	generate_character = {
-		token_base = generic_pluralism_reformer # token will be TAG_token_base
-		advisor = {
-			slot = political_advisor
-			traits = { pluralism_advisor }
-			cost = 100
-			available = {
-				if = {
-					limit = { has_dlc = "Man the Guns" }	
-					NOT = { has_autonomy_state = autonomy_supervised_state }
-				}
-				NOT = { tag = HHE }
-			}
-			ai_will_do = {
-				factor = 0
-				modifier = {
-					add = 10
-					has_government = pluralism
-				}
-				modifier = {
-					add = 10
-					has_government = semidemocracy
-				}
+	every_possible_country = { # pluralism_advisor
+		limit = {
+			is_dynamic_country = no
+			NOT = {
+				has_allowed_idea_with_traits = { idea = pluralism_advisor characters = yes }
 			}
 		}
-		portraits = { 
-			army = { small = GFX_idea_generic_democratic_reformer }
-		}
-	}
-}
-every_possible_country = { # semidemocracy_advisor
-	limit = {
-		is_dynamic_country = no
-		NOT = {
-			has_allowed_idea_with_traits = { idea = semidemocracy_advisor characters = yes }
-		}
-	}
-	generate_character = {
-		token_base = generic_semidemocracy_reformer # token will be TAG_token_base
-		advisor = {
-			slot = political_advisor
-			traits = { semidemocracy_advisor }
-			cost = 100
-			available = {
-				if = {
-					limit = { has_dlc = "Man the Guns" }	
-					NOT = { has_autonomy_state = autonomy_supervised_state }
-				}
-			}
-			ai_will_do = {
-				factor = 1
-				modifier = {
-					add = -10
-					has_government = semidemocracy
-				}
-				modifier = {
-					add = -10
-					original_tag = HHE
-					has_global_flag = elected_warmonger
-				}
-			}
-		}
-		portraits = { 
-			army = { small = GFX_idea_generic_democratic_reformer }
-		}
-	}
-}
-every_possible_country = { # theocratism_advisor
-	limit = {
-		is_dynamic_country = no
-		NOT = {
-			has_allowed_idea_with_traits = { idea = theocratism_advisor characters = yes }
-		}
-	}
-	generate_character = {
-		token_base = generic_theocratism_demagogue # token will be TAG_token_base
-		advisor = {
-			slot = political_advisor
-			traits = { theocratism_advisor }
-			cost = 100
-			available = {
-				if = {
-					limit = { has_dlc = "Man the Guns" }	
-					NOT = { has_autonomy_state = autonomy_supervised_state }
-				}				
-			}
-			ai_will_do = {
-				factor = 0
-				modifier = {
-					add = 10
-					has_government = theocratism
-				}
-			}
-		}
-		portraits = { 
-			army = { small = GFX_idea_generic_fascist_demagogue }
-		}
-	}
-}
-every_possible_country = { # authoritarianism_advisor
-	limit = {
-		is_dynamic_country = no
-		NOT = {
-			has_allowed_idea_with_traits = { idea = authoritarianism_advisor characters = yes }
-		}
-	}
-	generate_character = {
-		token_base = generic_authoritarianism_demagogue # token will be TAG_token_base
-		advisor = {
-			slot = political_advisor
-			traits = { authoritarianism_advisor }
-			cost = 100
-			available = {
-				if = {
-					limit = { has_dlc = "Man the Guns" }	
-					NOT = { has_autonomy_state = autonomy_supervised_state }
-				}				
-			}
-			ai_will_do = {
-				factor = 0
-				modifier = {
-					add = 10
-					has_government = authoritarianism
-				}
-				modifier = {
-					add = 10
-					original_tag = HHE
-					has_global_flag = elected_warmonger
-				}
-			}
-		}
-		portraits = { 
-			army = { small = GFX_idea_generic_fascist_demagogue }
-		}
-	}
-}
-every_possible_country = { # unitism_advisor
-	limit = {
-		# avoid generic advisors in temporary countries
-		is_dynamic_country = no
-		NOT = {
-			has_allowed_idea_with_traits = { idea = unitism_advisor characters = yes }
-		}
-	}
-	generate_character = {
-		token_base = generic_unitist_revolutionary # token will be TAG_token_base
-		advisor = {
-			slot = political_advisor
-			traits = { unitism_advisor }
-			cost = 100
-			available = {
-				if = {
-					limit = { has_dlc = "Man the Guns" }	
-					NOT = { has_autonomy_state = autonomy_supervised_state }
-				}
-			}
-			ai_will_do = {
-				factor = 0
-				modifier = {
-					add = 10
-					has_government = unitism
-				}
-			}
-		}
-		portraits = { 
-			army = { small = GFX_idea_generic_communist_revolutionary }
-		}
-	}
-}
-
-# Chief of staff advisor
-every_possible_country = { # silent_workhorse
-	limit = {
-		NOT = { OR = { original_tag = LLA } }
-	}
-	generate_character = { # silent_workhorse
-		token_base = generic_silent_workhorse_pluralism # token will be TAG_token_base
-		advisor = {
-			slot = chief_of_staff_advisor
-			traits = { silent_workhorse pl_pluralism_chief_of_staff_advisor }
-			cost = 100
-			ai_will_do = {
-				factor = 1
-				modifier = {
-					add = 10
-					or = {
-						has_government = pluralism
-						has_government = semidemocracy
+		generate_character = {
+			token_base = generic_pluralism_reformer # token will be TAG_token_base
+			advisor = {
+				slot = political_advisor
+				traits = { pluralism_advisor }
+				cost = 100
+				available = {
+					if = {
+						limit = { has_dlc = "Man the Guns" }	
+						NOT = { has_autonomy_state = autonomy_supervised_state }
 					}
+					NOT = { tag = HHE }
 				}
-			}
-		}
-		portraits = { 
-			army = { small = GFX_idea_generic_silent_workhorse_pluralism }
-		}
-	}
-	generate_character = { # silent_workhorse
-		token_base = generic_silent_workhorse_democracy # token will be TAG_token_base
-		advisor = {
-			slot = chief_of_staff_advisor
-			traits = { silent_workhorse pl_semidemocracy_advisor }
-			cost = 100
-			ai_will_do = {
-				factor = 1
-				modifier = {
-					add = 5
-					has_government = authoritarianism
-				}
-			}
-		}
-		portraits = { 
-			army = { small = GFX_idea_generic_silent_workhorse_democracy }
-		}
-	}
-	generate_character = { # heels_nipper
-		token_base = generic_heels_nipper # token will be TAG_token_base
-		advisor = {
-			slot = chief_of_staff_advisor
-			traits = { heels_nipper pl_authoritarianism_advisor }
-			cost = 100
-			ai_will_do = {
-				factor = 1
-				modifier = {
-					add = 5
-					or = {
-						has_government = theocratism
-						has_government = authoritarianism
-						has_government = unitism
-					}
-				}
-			}
-		}
-		portraits = { 
-			army = { small = GFX_idea_generic_heels_nipper }
-		}
-	}
-	generate_character = { # conservative_nationalist
-		token_base = generic_conservative_nationalist # token will be TAG_token_base
-		advisor = {
-			slot = chief_of_staff_advisor
-			traits = { conservative_nationalist_lar pl_theocratism_advisor }
-			cost = 100
-			ai_will_do = {
-				factor = 1
-				modifier = {
-					add = 20
-					has_government = theocratism
-				}
-				modifier = {
-					add = 5
-					has_government = authoritarianism
-				}
-			}
-		}
-		portraits = { 
-			army = { small = GFX_idea_generic_conservative_nationalist }
-		}
-	}
-}
-
-# National security advisor
-every_possible_country = { # head_of_intelligence
-	limit = {
-		has_dlc = "La Resistance"
-		if = {
-			limit = {
-				has_dlc = "Battle for the Bosporus"
-			}
-		}
-		NOT = {
-			has_allowed_idea_with_traits = { idea = head_of_intelligence characters = yes }
-		}
-		is_dynamic_country = no
-	}
-	generate_character = {
-		token_base = generic_head_of_intelligence # token will be TAG_token_base
-		advisor = {
-			slot = national_security_advisor
-			traits = { head_of_intelligence pl_authoritarianism_national_security_advisor }
-			cost = 100
-			available = {
-				has_intelligence_agency = yes
-			}
-			ai_will_do = {
-				factor = 5
-				modifier = {
-					has_intelligence_agency = no
+				ai_will_do = {
 					factor = 0
-				}
-			}
-		}
-		portraits = { 
-			army = { small = GFX_idea_generic_head_of_intelligence }
-		}
-	}
-}
-
-# Economic advisors
-every_possible_country = {
-	limit = {
-		NOT = { OR = { original_tag = LLA } }
-	}
-	generate_character = { # financial_expert
-		token_base = generic_financial_expert # token will be TAG_token_base
-		advisor = {
-			slot = economic_advisor
-			traits = { financial_expert pl_pluralism_economic_advisor }
-			cost = 100
-			ai_will_do = {
-				factor = 0
-				modifier = {
-					add = 5
-					has_government = pluralism
-				}
-			}
-		}
-		portraits = { 
-			army = { small = GFX_idea_generic_financial_expert }
-		}
-	}
-	generate_character = { # captain_of_industry
-		token_base = generic_captain_of_industry # token will be TAG_token_base
-		advisor = {
-			slot = economic_advisor
-			traits = { captain_of_industry pl_pluralism_economic_advisor }
-			cost = 100
-			ai_will_do = {
-				factor = 0
-				modifier = {
-					add = 5
-					has_government = pluralism
-				}
-			}
-		}
-		portraits = { 
-			army = { small = GFX_idea_generic_captain_of_industry }
-		}
-	}
-	generate_character = { # captain_of_refining
-		token_base = generic_captain_of_refining # token will be TAG_token_base
-		advisor = {
-			slot = economic_advisor
-			traits = { captain_of_refining pl_pluralism_economic_advisor }
-			cost = 100
-			ai_will_do = {
-				factor = 0
-				modifier = {
-					add = 5
-					has_government = pluralism
-				}
-			}
-		}
-		portraits = {
-			army = { small = GFX_idea_generic_captain_of_refining }
-		}
-	}
-	generate_character = { # millatary_industrialist
-		token_base = generic_millatary_industrialist # token will be TAG_token_base
-		advisor = {
-			slot = economic_advisor
-			traits = { millatary_industrialist }
-			cost = 100
-			ai_will_do = {
-				factor = 1
-				modifier = {
-					add = 5
-					or = {
-						has_government = theocratism
-						has_government = authoritarianism
-						has_government = unitism
+					modifier = {
+						add = 10
+						has_government = pluralism
 					}
-				}
-			}
-		}
-		portraits = { 
-			army = { small = GFX_idea_generic_millatary_industrialist }
-		}
-	}
-	generate_character = { # war_industrialist
-		token_base = generic_war_industrialist # token will be TAG_token_base
-		advisor = {
-			slot = economic_advisor
-			traits = { war_industrialist }
-			cost = 100
-			ai_will_do = {
-				factor = 1
-				modifier = {
-					add = 5
-					or = {
+					modifier = {
+						add = 10
 						has_government = semidemocracy
-						has_government = authoritarianism
 					}
 				}
 			}
-		}
-		portraits = { 
-			army = { small = GFX_idea_generic_war_industrialist }
+			portraits = { 
+				army = { small = GFX_idea_generic_democratic_reformer }
+			}
 		}
 	}
-	generate_character = { # naval_industrialist
-		token_base = generic_naval_industrialist # token will be TAG_token_base
-		advisor = {
-			slot = economic_advisor
-			traits = { naval_industrialist }
-			cost = 100
-			ai_will_do = {
-				factor = 1
-				modifier = {
-					add = 5
-					or = {
+	every_possible_country = { # semidemocracy_advisor
+		limit = {
+			is_dynamic_country = no
+			NOT = {
+				has_allowed_idea_with_traits = { idea = semidemocracy_advisor characters = yes }
+			}
+		}
+		generate_character = {
+			token_base = generic_semidemocracy_reformer # token will be TAG_token_base
+			advisor = {
+				slot = political_advisor
+				traits = { semidemocracy_advisor }
+				cost = 100
+				available = {
+					if = {
+						limit = { has_dlc = "Man the Guns" }	
+						NOT = { has_autonomy_state = autonomy_supervised_state }
+					}
+				}
+				ai_will_do = {
+					factor = 1
+					modifier = {
+						add = -10
+						has_government = semidemocracy
+					}
+					modifier = {
+						add = -10
+						original_tag = HHE
+						has_global_flag = elected_warmonger
+					}
+				}
+			}
+			portraits = { 
+				army = { small = GFX_idea_generic_democratic_reformer }
+			}
+		}
+	}
+	every_possible_country = { # theocratism_advisor
+		limit = {
+			is_dynamic_country = no
+			NOT = {
+				has_allowed_idea_with_traits = { idea = theocratism_advisor characters = yes }
+			}
+		}
+		generate_character = {
+			token_base = generic_theocratism_demagogue # token will be TAG_token_base
+			advisor = {
+				slot = political_advisor
+				traits = { theocratism_advisor }
+				cost = 100
+				available = {
+					if = {
+						limit = { has_dlc = "Man the Guns" }	
+						NOT = { has_autonomy_state = autonomy_supervised_state }
+					}				
+				}
+				ai_will_do = {
+					factor = 0
+					modifier = {
+						add = 10
 						has_government = theocratism
+					}
+				}
+			}
+			portraits = { 
+				army = { small = GFX_idea_generic_fascist_demagogue }
+			}
+		}
+	}
+	every_possible_country = { # authoritarianism_advisor
+		limit = {
+			is_dynamic_country = no
+			NOT = {
+				has_allowed_idea_with_traits = { idea = authoritarianism_advisor characters = yes }
+			}
+		}
+		generate_character = {
+			token_base = generic_authoritarianism_demagogue # token will be TAG_token_base
+			advisor = {
+				slot = political_advisor
+				traits = { authoritarianism_advisor }
+				cost = 100
+				available = {
+					if = {
+						limit = { has_dlc = "Man the Guns" }	
+						NOT = { has_autonomy_state = autonomy_supervised_state }
+					}				
+				}
+				ai_will_do = {
+					factor = 0
+					modifier = {
+						add = 10
 						has_government = authoritarianism
+					}
+					modifier = {
+						add = 10
+						original_tag = HHE
+						has_global_flag = elected_warmonger
+					}
+				}
+			}
+			portraits = { 
+				army = { small = GFX_idea_generic_fascist_demagogue }
+			}
+		}
+	}
+	every_possible_country = { # unitism_advisor
+		limit = {
+			# avoid generic advisors in temporary countries
+			is_dynamic_country = no
+			NOT = {
+				has_allowed_idea_with_traits = { idea = unitism_advisor characters = yes }
+			}
+		}
+		generate_character = {
+			token_base = generic_unitist_revolutionary # token will be TAG_token_base
+			advisor = {
+				slot = political_advisor
+				traits = { unitism_advisor }
+				cost = 100
+				available = {
+					if = {
+						limit = { has_dlc = "Man the Guns" }	
+						NOT = { has_autonomy_state = autonomy_supervised_state }
+					}
+				}
+				ai_will_do = {
+					factor = 0
+					modifier = {
+						add = 10
 						has_government = unitism
 					}
 				}
 			}
-		}
-		portraits = { 
-			army = { small = GFX_idea_generic_naval_industrialist }
+			portraits = { 
+				army = { small = GFX_idea_generic_communist_revolutionary }
+			}
 		}
 	}
-	generate_character = { # quartermaster_general
-		token_base = generic_quartermaster_general # token will be TAG_token_base
-		advisor = {
-			slot = economic_advisor
-			traits = { quartermaster_general }
-			cost = 100
-			ai_will_do = {
-				factor = 1
-				modifier = {
-					add = 5
-					or = {
-						has_government = theocratism
+	every_possible_country = { # Vanilla
+		limit = { NOT = { OR = { original_tag = LLA } } }
+		generate_character = { # face_licker
+			token_base = generic_unitist_revolutionary # token will be TAG_token_base
+			advisor = {
+				slot = political_advisor
+				traits = { face_licker }
+				cost = 100
+				ai_will_do = {
+					factor = 1
+				}
+			}
+			portraits = { 
+				army = { small = GFX_idea_generic_communist_revolutionary }
+			}
+		}
+	}
+# Chief of staff advisor
+	every_possible_country = { # Vanilla
+		limit = { NOT = { OR = { original_tag = LLA } } }
+		generate_character = { # silent_workhorse
+			token_base = generic_silent_workhorse_pluralism # token will be TAG_token_base
+			advisor = {
+				slot = chief_of_staff_advisor
+				traits = { silent_workhorse pl_pluralism_chief_of_staff_advisor }
+				cost = 100
+				ai_will_do = {
+					factor = 1
+					modifier = {
+						add = 10
+						or = {
+							has_government = pluralism
+							has_government = semidemocracy
+						}
+					}
+				}
+			}
+			portraits = { 
+				army = { small = GFX_idea_generic_silent_workhorse_pluralism }
+			}
+		}
+		generate_character = { # silent_workhorse
+			token_base = generic_silent_workhorse_democracy # token will be TAG_token_base
+			advisor = {
+				slot = chief_of_staff_advisor
+				traits = { silent_workhorse pl_semidemocracy_advisor }
+				cost = 100
+				ai_will_do = {
+					factor = 1
+					modifier = {
+						add = 5
 						has_government = authoritarianism
+					}
+				}
+			}
+			portraits = { 
+				army = { small = GFX_idea_generic_silent_workhorse_democracy }
+			}
+		}
+		generate_character = { # heels_nipper
+			token_base = generic_heels_nipper # token will be TAG_token_base
+			advisor = {
+				slot = chief_of_staff_advisor
+				traits = { heels_nipper pl_authoritarianism_advisor }
+				cost = 100
+				ai_will_do = {
+					factor = 1
+					modifier = {
+						add = 5
+						or = {
+							has_government = theocratism
+							has_government = authoritarianism
+							has_government = unitism
+						}
+					}
+				}
+			}
+			portraits = { 
+				army = { small = GFX_idea_generic_heels_nipper }
+			}
+		}
+		generate_character = { # conservative_nationalist
+			token_base = generic_conservative_nationalist # token will be TAG_token_base
+			advisor = {
+				slot = chief_of_staff_advisor
+				traits = { conservative_nationalist_lar pl_theocratism_advisor }
+				cost = 100
+				ai_will_do = {
+					factor = 1
+					modifier = {
+						add = 20
+						has_government = theocratism
+					}
+					modifier = {
+						add = 5
+						has_government = authoritarianism
+					}
+				}
+			}
+			portraits = { 
+				army = { small = GFX_idea_generic_conservative_nationalist }
+			}
+		}
+	}
+# National security advisor
+	every_possible_country = { # La Resistance
+		limit = {
+			has_dlc = "La Resistance"
+			if = {
+				limit = {
+					has_dlc = "Battle for the Bosporus"
+				}
+			}
+			NOT = {
+				has_allowed_idea_with_traits = { idea = head_of_intelligence characters = yes }
+			}
+			is_dynamic_country = no
+		}
+		generate_character = { # generic_head_of_intelligence
+			token_base = generic_head_of_intelligence # token will be TAG_token_base
+			advisor = {
+				slot = national_security_advisor
+				traits = { head_of_intelligence pl_authoritarianism_national_security_advisor }
+				cost = 100
+				available = {
+					has_intelligence_agency = yes
+				}
+				ai_will_do = {
+					factor = 5
+					modifier = {
+						has_intelligence_agency = no
+						factor = 0
+					}
+				}
+			}
+			portraits = { 
+				army = { small = GFX_idea_generic_head_of_intelligence }
+			}
+		}
+	}
+	every_possible_country = { # Vanilla
+		limit = { NOT = { OR = { original_tag = LLA } } }
+		generate_character = { # prince_of_terror
+			token_base = generic_unitist_revolutionary # token will be TAG_token_base
+			advisor = {
+				slot = national_security_advisor
+				traits = { prince_of_terror pl_unitism_national_security_advisor }
+				cost = 100
+				available = {
+					if = {
+						limit = { has_dlc = "Man the Guns" }	
+						NOT = { has_autonomy_state = autonomy_supervised_state }
+					}
+				}
+				ai_will_do = {
+					factor = 0
+					modifier = {
+						add = 10
 						has_government = unitism
 					}
 				}
 			}
-		}
-		portraits = { 
-			army = { small = GFX_idea_generic_quartermaster_general }
-		}
-	}
-	generate_character = { # fortification_engineer
-		token_base = generic_fortification_engineer # token will be TAG_token_base
-		advisor = {
-			slot = economic_advisor
-			traits = { fortification_engineer pl_semidemocracy_economic_advisor }
-			cost = 100
-			ai_will_do = {
-				factor = 1
-				modifier = {
-					add = 5
-					has_government = semidemocracy
-				}
+			portraits = { 
+				army = { small = GFX_idea_generic_communist_revolutionary }
 			}
 		}
-		portraits = { 
-			army = { small = GFX_idea_generic_fortification_engineer }
-		}
-	}
-	generate_character = { # armaments_organizer
-		token_base = generic_armaments_organizer # token will be TAG_token_base
-		advisor = {
-			slot = economic_advisor
-			traits = { armaments_organizer pl_unitism_economic_advisor }
-			cost = 100
-			ai_will_do = {
-				factor = 1
-				modifier = {
-					add = 5
-					has_government = unitism
+		generate_character = { # rearmer
+			token_base = generic_unitist_revolutionary # token will be TAG_token_base
+			advisor = {
+				slot = national_security_advisor
+				traits = { rearmer pl_authoritarianism_national_security_advisor }
+				cost = 100
+				available = {
+					if = {
+						limit = { has_dlc = "Man the Guns" }	
+						NOT = { has_autonomy_state = autonomy_supervised_state }
+					}
+				}
+				ai_will_do = {
+					factor = 0
+					modifier = {
+						add = 10
+						has_government = authoritarianism
+					}
 				}
 			}
-		}
-		portraits = { 
-			army = { small = GFX_idea_generic_armaments_organizer }
+			portraits = { 
+				army = { small = GFX_idea_generic_communist_revolutionary }
+			}
 		}
 	}
-}
-
+# Economic advisors
+	every_possible_country = { # Vanilla
+		limit = { NOT = { OR = { original_tag = LLA } } }
+		generate_character = { # financial_expert
+			token_base = generic_financial_expert # token will be TAG_token_base
+			advisor = {
+				slot = economic_advisor
+				traits = { financial_expert pl_pluralism_economic_advisor }
+				cost = 100
+				ai_will_do = {
+					factor = 0
+					modifier = {
+						add = 5
+						has_government = pluralism
+					}
+				}
+			}
+			portraits = { 
+				army = { small = GFX_idea_generic_financial_expert }
+			}
+		}
+		generate_character = { # captain_of_industry
+			token_base = generic_captain_of_industry # token will be TAG_token_base
+			advisor = {
+				slot = economic_advisor
+				traits = { captain_of_industry pl_pluralism_economic_advisor }
+				cost = 100
+				ai_will_do = {
+					factor = 0
+					modifier = {
+						add = 5
+						has_government = pluralism
+					}
+				}
+			}
+			portraits = { 
+				army = { small = GFX_idea_generic_captain_of_industry }
+			}
+		}
+		generate_character = { # captain_of_refining
+			token_base = generic_captain_of_refining # token will be TAG_token_base
+			advisor = {
+				slot = economic_advisor
+				traits = { captain_of_refining pl_pluralism_economic_advisor }
+				cost = 100
+				ai_will_do = {
+					factor = 0
+					modifier = {
+						add = 5
+						has_government = pluralism
+					}
+				}
+			}
+			portraits = {
+				army = { small = GFX_idea_generic_captain_of_refining }
+			}
+		}
+		generate_character = { # millatary_industrialist
+			token_base = generic_millatary_industrialist # token will be TAG_token_base
+			advisor = {
+				slot = economic_advisor
+				traits = { millatary_industrialist }
+				cost = 100
+				ai_will_do = {
+					factor = 1
+					modifier = {
+						add = 5
+						or = {
+							has_government = theocratism
+							has_government = authoritarianism
+							has_government = unitism
+						}
+					}
+				}
+			}
+			portraits = { 
+				army = { small = GFX_idea_generic_millatary_industrialist }
+			}
+		}
+		generate_character = { # war_industrialist
+			token_base = generic_war_industrialist # token will be TAG_token_base
+			advisor = {
+				slot = economic_advisor
+				traits = { war_industrialist }
+				cost = 100
+				ai_will_do = {
+					factor = 1
+					modifier = {
+						add = 5
+						or = {
+							has_government = semidemocracy
+							has_government = authoritarianism
+						}
+					}
+				}
+			}
+			portraits = { 
+				army = { small = GFX_idea_generic_war_industrialist }
+			}
+		}
+		generate_character = { # naval_industrialist
+			token_base = generic_naval_industrialist # token will be TAG_token_base
+			advisor = {
+				slot = economic_advisor
+				traits = { naval_industrialist }
+				cost = 100
+				ai_will_do = {
+					factor = 1
+					modifier = {
+						add = 5
+						or = {
+							has_government = theocratism
+							has_government = authoritarianism
+							has_government = unitism
+						}
+					}
+				}
+			}
+			portraits = { 
+				army = { small = GFX_idea_generic_naval_industrialist }
+			}
+		}
+		generate_character = { # quartermaster_general
+			token_base = generic_quartermaster_general # token will be TAG_token_base
+			advisor = {
+				slot = economic_advisor
+				traits = { quartermaster_general }
+				cost = 100
+				ai_will_do = {
+					factor = 1
+					modifier = {
+						add = 5
+						or = {
+							has_government = theocratism
+							has_government = authoritarianism
+							has_government = unitism
+						}
+					}
+				}
+			}
+			portraits = { 
+				army = { small = GFX_idea_generic_quartermaster_general }
+			}
+		}
+		generate_character = { # fortification_engineer
+			token_base = generic_fortification_engineer # token will be TAG_token_base
+			advisor = {
+				slot = economic_advisor
+				traits = { fortification_engineer pl_semidemocracy_economic_advisor }
+				cost = 100
+				ai_will_do = {
+					factor = 1
+					modifier = {
+						add = 5
+						has_government = semidemocracy
+					}
+				}
+			}
+			portraits = { 
+				army = { small = GFX_idea_generic_fortification_engineer }
+			}
+		}
+		generate_character = { # armaments_organizer
+			token_base = generic_armaments_organizer # token will be TAG_token_base
+			advisor = {
+				slot = economic_advisor
+				traits = { armaments_organizer pl_unitism_economic_advisor }
+				cost = 100
+				ai_will_do = {
+					factor = 1
+					modifier = {
+						add = 5
+						has_government = unitism
+					}
+				}
+			}
+			portraits = { 
+				army = { small = GFX_idea_generic_armaments_organizer }
+			}
+		}
+	}
 # Foreign affairs advisor
-
+	every_possible_country = { # Vanilla
+		limit = { NOT = { OR = { original_tag = LLA } } }
+		generate_character = { # socialite_connections
+			token_base = generic_unitist_revolutionary # token will be TAG_token_base
+			advisor = {
+				slot = foreign_affairs_advisor
+				traits = { socialite_connections pl_pluralism_foreign_affairs_advisor }
+				cost = 100
+				ai_will_do = {
+					factor = 0
+					modifier = {
+						add = 10
+						has_government = pluralism
+					}
+					modifier = {
+						add = 10
+						has_government = semidemocracy
+					}
+				}
+			}
+			portraits = { 
+				army = { small = GFX_idea_generic_communist_revolutionary }
+			}
+		}
+		generate_character = { # chamberlain_appeaser
+			token_base = generic_unitist_revolutionary # token will be TAG_token_base
+			advisor = {
+				slot = foreign_affairs_advisor
+				traits = { chamberlain_appeaser headstrong }
+				cost = 100
+				ai_will_do = {
+					base = 0
+				}
+			}
+			portraits = { 
+				army = { small = GFX_idea_generic_communist_revolutionary }
+			}
+		}
+	}
 # Military advisors
-every_possible_country = {
-	limit = {
-		NOT = { OR = { original_tag = LLA } }
+	every_possible_country = { # Vanilla
+		limit = { NOT = { OR = { original_tag = LLA } } }
+		# generic army chiefs
+		generate_character = {
+			token_base = generic_army_chief_off # token will be TAG_token_base
+			advisor = {
+				slot = army_chief
+				traits = { army_chief_offensive_1 }
+				cost = 50
+			}
+			portraits = { 
+				army = { small = GFX_idea_generic_army_chief_off }
+			}
+		}
+		generate_character = {
+			token_base = generic_army_chief_def # token will be TAG_token_base
+			advisor = {
+				slot = army_chief
+				traits = { army_chief_defensive_1 }
+				cost = 50
+			}
+			portraits = { 
+				army = { small = GFX_idea_generic_army_chief_def }
+			}
+		}
+		# generic navy chiefs
+		generate_character = {
+			token_base = generic_navy_chief_decisive_bat # token will be TAG_token_base
+			advisor = {
+				slot = navy_chief
+				traits = { navy_chief_decisive_battle_2 }
+				cost = 50
+			}
+			portraits = { 
+				army = { small = GFX_idea_generic_navy_chief_decisive_bat }
+			}
+		}
+		generate_character = {
+			token_base = generic_navy_anti_submarine # token will be TAG_token_base
+			advisor = {
+				slot = navy_chief
+				traits = { navy_anti_submarine_2 }
+				cost = 50
+			}
+			portraits = { 
+				army = { small = GFX_idea_generic_navy_anti_submarine }
+			}
+		}
+		# generic air chiefs
+		generate_character = {
+			token_base = generic_air_close_air_sup # token will be TAG_token_base
+			advisor = {
+				slot = air_chief
+				traits = { air_close_air_support_2 }
+				cost = 50
+			}
+			portraits = { 
+				army = { small = GFX_idea_generic_air_close_air_sup }
+			}
+		}
+		generate_character = {
+			token_base = generic_air_chief_all_weather # token will be TAG_token_base
+			advisor = {
+				slot = air_chief
+				traits = { air_chief_all_weather_2 }
+				cost = 50
+			}
+			portraits = { 
+				army = { small = GFX_idea_generic_air_chief_all_weather }
+			}
+		}
+		# generic high command
+		generate_character = {
+			token_base = generic_army_art # token will be TAG_token_base
+			advisor = {
+				slot = high_command
+				traits = { army_artillery_1 }
+				ledger = army
+				cost = 50
+			}
+			portraits = { 
+				army = { small = GFX_idea_generic_army_art }
+			}
+		}
+		generate_character = {
+			token_base = generic_army_log # token will be TAG_token_base
+			advisor = {
+				slot = high_command
+				traits = { army_logistics_2 }
+				ledger = army
+				cost = 50
+			}
+			portraits = { 
+				army = { small = GFX_idea_generic_army_log }
+			}
+		}
+		generate_character = {
+			token_base = generic_navy_fleet_log # token will be TAG_token_base
+			advisor = {
+				slot = high_command
+				traits = { navy_fleet_logistics_1 }
+				ledger = navy
+				cost = 50
+			}
+			portraits = { 
+				army = { small = GFX_idea_generic_navy_fleet_log }
+			}
+		}
+		generate_character = {
+			token_base = generic_air_air_combat_trainer # token will be TAG_token_base
+			advisor = {
+				slot = high_command
+				traits = { air_air_combat_training_2 }
+				ledger = air
+				cost = 50
+			}
+			portraits = { 
+				army = { small = GFX_idea_generic_air_air_combat_trainer }
+			}
+		}
+		# generic theorists
+		generate_character = {
+			token_base = generic_military_theorist # token will be TAG_token_base
+			advisor = {
+				slot = theorist
+				traits = { military_theorist }
+				ledger = army
+				cost = 50
+			}
+			portraits = { 
+				army = { small = GFX_idea_generic_military_theorist }
+			}
+		}
+		generate_character = {
+			token_base = generic_naval_theorist # token will be TAG_token_base
+			advisor = {
+				slot = theorist
+				traits = { naval_theorist }
+				ledger = navy
+				cost = 50
+			}
+			portraits = { 
+				army = { small = GFX_idea_generic_naval_theorist }
+			}
+		}
+		generate_character = {
+			token_base = generic_air_warfare_theorist # token will be TAG_token_base
+			advisor = {
+				slot = theorist
+				traits = { air_warfare_theorist }
+				ledger = air
+				cost = 50
+			}
+			portraits = { 
+				army = { small = GFX_idea_generic_air_warfare_theorist }
+			}
+		}
 	}
-	# generic army chiefs
-	generate_character = {
-		token_base = generic_army_chief_off # token will be TAG_token_base
-		advisor = {
-			slot = army_chief
-			traits = { army_chief_offensive_1 }
-			cost = 50
-		}
-		portraits = { 
-			army = { small = GFX_idea_generic_army_chief_off }
-		}
-	}
-	generate_character = {
-		token_base = generic_army_chief_def # token will be TAG_token_base
-		advisor = {
-			slot = army_chief
-			traits = { army_chief_defensive_1 }
-			cost = 50
-		}
-		portraits = { 
-			army = { small = GFX_idea_generic_army_chief_def }
-		}
-	}
-	# generic navy chiefs
-	generate_character = {
-		token_base = generic_navy_chief_decisive_bat # token will be TAG_token_base
-		advisor = {
-			slot = navy_chief
-			traits = { navy_chief_decisive_battle_2 }
-			cost = 50
-		}
-		portraits = { 
-			army = { small = GFX_idea_generic_navy_chief_decisive_bat }
-		}
-	}
-	generate_character = {
-		token_base = generic_navy_anti_submarine # token will be TAG_token_base
-		advisor = {
-			slot = navy_chief
-			traits = { navy_anti_submarine_2 }
-			cost = 50
-		}
-		portraits = { 
-			army = { small = GFX_idea_generic_navy_anti_submarine }
-		}
-	}
-	# generic air chiefs
-	generate_character = {
-		token_base = generic_air_close_air_sup # token will be TAG_token_base
-		advisor = {
-			slot = air_chief
-			traits = { air_close_air_support_2 }
-			cost = 50
-		}
-		portraits = { 
-			army = { small = GFX_idea_generic_air_close_air_sup }
-		}
-	}
-	generate_character = {
-		token_base = generic_air_chief_all_weather # token will be TAG_token_base
-		advisor = {
-			slot = air_chief
-			traits = { air_chief_all_weather_2 }
-			cost = 50
-		}
-		portraits = { 
-			army = { small = GFX_idea_generic_air_chief_all_weather }
-		}
-	}
-	# generic high command
-	generate_character = {
-		token_base = generic_army_art # token will be TAG_token_base
-		advisor = {
-			slot = high_command
-			traits = { army_artillery_1 }
-			ledger = army
-			cost = 50
-		}
-		portraits = { 
-			army = { small = GFX_idea_generic_army_art }
-		}
-	}
-	generate_character = {
-		token_base = generic_army_log # token will be TAG_token_base
-		advisor = {
-			slot = high_command
-			traits = { army_logistics_2 }
-			ledger = army
-			cost = 50
-		}
-		portraits = { 
-			army = { small = GFX_idea_generic_army_log }
-		}
-	}
-	generate_character = {
-		token_base = generic_navy_fleet_log # token will be TAG_token_base
-		advisor = {
-			slot = high_command
-			traits = { navy_fleet_logistics_1 }
-			ledger = navy
-			cost = 50
-		}
-		portraits = { 
-			army = { small = GFX_idea_generic_navy_fleet_log }
-		}
-	}
-	generate_character = {
-		token_base = generic_air_air_combat_trainer # token will be TAG_token_base
-		advisor = {
-			slot = high_command
-			traits = { air_air_combat_training_2 }
-			ledger = air
-			cost = 50
-		}
-		portraits = { 
-			army = { small = GFX_idea_generic_air_air_combat_trainer }
-		}
-	}
-	# generic theorists
-	generate_character = {
-		token_base = generic_military_theorist # token will be TAG_token_base
-		advisor = {
-			slot = theorist
-			traits = { military_theorist }
-			ledger = army
-			cost = 50
-		}
-		portraits = { 
-			army = { small = GFX_idea_generic_military_theorist }
-		}
-	}
-	generate_character = {
-		token_base = generic_naval_theorist # token will be TAG_token_base
-		advisor = {
-			slot = theorist
-			traits = { naval_theorist }
-			ledger = navy
-			cost = 50
-		}
-		portraits = { 
-			army = { small = GFX_idea_generic_naval_theorist }
-		}
-	}
-	generate_character = {
-		token_base = generic_air_warfare_theorist # token will be TAG_token_base
-		advisor = {
-			slot = theorist
-			traits = { air_warfare_theorist }
-			ledger = air
-			cost = 50
-		}
-		portraits = { 
-			army = { small = GFX_idea_generic_air_warfare_theorist }
-		}
-	}
-}
