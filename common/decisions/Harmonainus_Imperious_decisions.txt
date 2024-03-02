@@ -857,6 +857,45 @@ bop_HHE_archard_vlad = {
 		}
 	#
 }
+railway_HHE_trans_continental = {
+	railway_HHE_8959_9105 = {
+		icon = generic_wreckers
+		available = {
+			has_full_control_of_state = 79
+			has_full_control_of_state = 81
+			num_of_civilian_factories_available_for_projects > 2
+		}
+		visible = {
+			NOT = {
+				has_railway_connection = { start_province = 8959 target_province = 9105 }
+			}
+		}
+		highlight_states = { highlight_state_targets = { state = 79 state = 81 } }
+
+		days_remove = 30
+		fire_only_once = yes
+		cost = 10
+
+		modifier = { civilian_factory_use = 3 }
+		remove_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision remove railway_HHE_PROV_PROV"
+			hidden_effect = {
+				build_railway = {
+					level = 1 fallback = yes build_only_on_allied = yes
+					start_province = 8959 target_province = 9105
+				}
+			}
+		}
+		cancel_trigger = {
+			hidden_trigger = {
+				has_railway_connection = { start_province = 8959 target_province = 9105 }
+			}
+		}
+		ai_will_do = {
+			factor = 100
+		}
+	}
+}
 parade_HHE_victory_parades = {
 	agricola_midland_HHE_victory_parades = { # 340
 		icon = generic_prepare_civil_war
