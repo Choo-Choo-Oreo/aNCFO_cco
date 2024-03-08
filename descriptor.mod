@@ -56,5 +56,5 @@ tags={
 }
 name="A New Chapter - Fantasy Overhaul"
 picture="thumbnail.png"
-supported_version="1.13.*"
+supported_version="1.14.*"
 remote_file_id="2895761227"

@@ -858,42 +858,454 @@ bop_HHE_archard_vlad = {
 	#
 }
 railway_HHE_trans_continental = {
-	railway_HHE_8959_9105 = {
+	railway_HHE_trans_continental_railway = {
 		icon = generic_wreckers
 		available = {
+			has_full_control_of_state = 18
 			has_full_control_of_state = 79
 			has_full_control_of_state = 81
-			num_of_civilian_factories_available_for_projects > 2
+			has_full_control_of_state = 91
+			has_full_control_of_state = 140
+			has_full_control_of_state = 149
+			has_full_control_of_state = 157
+			has_full_control_of_state = 159
+			has_full_control_of_state = 160
+			has_full_control_of_state = 161
+			has_full_control_of_state = 162
+			has_full_control_of_state = 271
+			has_full_control_of_state = 407
+			num_of_civilian_factories_available_for_projects > 9
+		}
+		visible = {
+			always = yes
+			#NOT = {
+			#	AND = {
+			#		has_railway_connection = { start_province = 5398 target_province = 340 }
+			#		has_railway_connection = { start_province = 5643 target_province = 492 }
+			#		has_railway_connection = { start_province = 5643 target_province = 3116 }
+			#		has_railway_connection = { start_province = 8959 target_province = 2057 }
+			#		has_railway_connection = { start_province = 8959 target_province = 9105 }
+			#	}
+			#}
+		}
+		highlight_states = { highlight_state_targets = { state = 18
+			state = 79 state = 81 state = 91 state = 140 state = 149 state = 157 state = 159 state = 160 state = 161 state = 162 state = 271 state = 407
+		} }
+
+		days_remove = 30
+		fire_only_once = yes
+		cost = 25
+
+		modifier = { civilian_factory_use = 10 }
+
+		remove_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision remove railway_HHE_trans_continental_railway"
+			add_victory_points = { province = 340  value = 5 }
+			add_victory_points = { province = 492  value = 5 }
+			add_victory_points = { province = 8570 value = 5 }
+			add_victory_points = { province = 9003 value = 5 }
+			#hidden_effect = {
+				build_railway = {
+					level = 1 fallback = yes build_only_on_allied = yes
+					start_province = 5398 target_province = 340
+				}
+				build_railway = {
+					level = 1 fallback = yes build_only_on_allied = yes
+					path = { 5398 8820 8846 8834 4501 8701 8767 2057 }
+				}
+				build_railway = {
+					level = 1 fallback = yes build_only_on_allied = yes
+					start_province = 5643 target_province = 492
+				}
+				build_railway = {
+					level = 1 fallback = yes build_only_on_allied = yes
+					start_province = 5643 target_province = 3116
+				}
+				build_railway = {
+					level = 1 fallback = yes build_only_on_allied = yes
+					start_province = 8959 target_province = 2057
+				}
+				build_railway = {
+					level = 1 fallback = yes build_only_on_allied = yes
+					start_province = 8959 target_province = 9105
+				}
+				# Upgrades whole network
+				build_railway = {
+					level = 1 fallback = yes build_only_on_allied = yes
+					start_province = 15116 target_province = 8102
+				}
+			#}
+		}
+		ai_will_do = {
+			factor = 100
+		}
+	}
+	railway_HHE_REGION = {
+		visible = { AND = { is_debug = yes is_ai = no } }
+	}
+	railway_HHE_nobilitas_regions = {
+		icon = generic_wreckers
+		available = {
+			has_full_control_of_state = 20
+			has_full_control_of_state = 79
+			has_full_control_of_state = 81
+			has_full_control_of_state = 155
+			has_full_control_of_state = 159
+			has_full_control_of_state = 407
+			num_of_civilian_factories_available_for_projects > 4
 		}
 		visible = {
 			NOT = {
-				has_railway_connection = { start_province = 8959 target_province = 9105 }
+				AND = {
+					has_railway_connection = { start_province = 4398 target_province = 9003 }
+					has_railway_connection = { start_province = 7893 target_province = 9118 }
+					has_railway_connection = { start_province = 8959 target_province = 9239 }
+					has_railway_connection = { start_province = 8967 target_province = 9105 }
+				}
 			}
 		}
-		highlight_states = { highlight_state_targets = { state = 79 state = 81 } }
+		highlight_states = { highlight_state_targets = { state = 159
+			state = 20 state = 79 state = 81 state = 155 state = 407
+		} }
 
 		days_remove = 30
 		fire_only_once = yes
 		cost = 10
 
-		modifier = { civilian_factory_use = 3 }
+		modifier = { civilian_factory_use = 5 }
+
 		remove_effect = {
-			log = "[GetDateText]: [Root.GetName]: Decision remove railway_HHE_PROV_PROV"
-			hidden_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision remove railway_HHE_nobilitas_regions"
+			#hidden_effect = {
 				build_railway = {
 					level = 1 fallback = yes build_only_on_allied = yes
-					start_province = 8959 target_province = 9105
+					start_province = 4398 target_province = 9003
 				}
-			}
+				build_railway = {
+					level = 1 fallback = yes build_only_on_allied = yes
+					path = { 7893 9118 }
+				}
+				build_railway = {
+					level = 1 fallback = yes build_only_on_allied = yes
+					start_province = 8959 target_province = 9239
+				}
+				build_railway = {
+					level = 1 fallback = yes build_only_on_allied = yes
+					start_province = 8967 target_province = 9105
+				}
+			#}
 		}
 		cancel_trigger = {
 			hidden_trigger = {
-				has_railway_connection = { start_province = 8959 target_province = 9105 }
+				AND = {
+					has_railway_connection = { start_province = 4398 target_province = 9003 }
+					has_railway_connection = { start_province = 7893 target_province = 9118 }
+					has_railway_connection = { start_province = 8959 target_province = 9239 }
+					has_railway_connection = { start_province = 8967 target_province = 9105 }
+				}
 			}
 		}
 		ai_will_do = {
 			factor = 100
 		}
+	}
+	railway_HHE_under_mountain_regions = {
+		icon = generic_wreckers
+		available = {
+			has_full_control_of_state = 148
+			has_full_control_of_state = 158
+			has_full_control_of_state = 191
+			has_full_control_of_state = 409
+			has_full_control_of_state = 410
+			num_of_civilian_factories_available_for_projects > 4
+		}
+		visible = {
+			NOT = {
+				AND = {
+					has_railway_connection = { start_province = 2563 target_province = 9003 }
+					has_railway_connection = { start_province = 5398 target_province = 8570 }
+					has_railway_connection = { start_province = 8445 target_province = 8570 }
+				}
+			}
+		}
+		highlight_states = { highlight_state_targets = { state = 410
+			state = 148 state = 158 state = 191 state = 409
+		} }
+
+		days_remove = 30
+		fire_only_once = yes
+		cost = 10
+
+		modifier = { civilian_factory_use = 5 }
+
+		remove_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision remove railway_HHE_under_mountain_regions"
+			#hidden_effect = {
+				build_railway = {
+					level = 1 fallback = yes build_only_on_allied = yes
+					path = { 2563 8541 8666 1773 8933 9003 }
+				}
+				build_railway = {
+					level = 1 fallback = yes build_only_on_allied = yes
+					path = { 5398 8725 4699 8570 }
+				}
+				build_railway = {
+					level = 1 fallback = yes build_only_on_allied = yes
+					start_province = 8445 target_province = 8570
+				}
+			#}
+		}
+		cancel_trigger = {
+			hidden_trigger = {
+				AND = {
+					has_railway_connection = { start_province = 2563 target_province = 9003 }
+					has_railway_connection = { start_province = 5398 target_province = 8570 }
+					has_railway_connection = { start_province = 8445 target_province = 8570 }
+				}
+			}
+		}
+		ai_will_do = {
+			factor = 100
+		}
+	}
+	railway_HHE_western_approach_regions = {
+		icon = generic_wreckers
+		available = {
+			has_full_control_of_state = 141
+			has_full_control_of_state = 142
+			has_full_control_of_state = 168
+			has_full_control_of_state = 170
+			has_full_control_of_state = 281
+			has_full_control_of_state = 282
+			has_full_control_of_state = 404
+			has_full_control_of_state = 405
+			has_full_control_of_state = 412
+			num_of_civilian_factories_available_for_projects > 4
+		}
+		visible = {
+			NOT = {
+				AND = {
+					has_railway_connection = { start_province = 8603 target_province = 1847 }
+					has_railway_connection = { start_province = 8603 target_province = 4569 }
+				}
+			}
+		}
+		highlight_states = { highlight_state_targets = { state = 168
+			state = 141 state = 142 state = 170 state = 281 state = 282 state = 404 state = 405 state = 412
+		} }
+
+		days_remove = 30
+		fire_only_once = yes
+		cost = 10
+
+		modifier = { civilian_factory_use = 5 }
+
+		remove_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision remove railway_HHE_western_approach_regions"
+			#hidden_effect = {
+				build_railway = {
+					level = 1 fallback = yes build_only_on_allied = yes
+					path = { 8603 8649 8714 8740 8750 8680 1847 }
+				}
+				build_railway = {
+					level = 1 fallback = yes build_only_on_allied = yes
+					start_province = 8603 target_province = 4569
+				}
+				build_railway = {
+					level = 1 fallback = yes build_only_on_allied = yes
+					path = { 8678 4289 3178 8425 8357 4221 8449 }
+				}
+			#}
+		}
+		cancel_trigger = {
+			hidden_trigger = {
+				AND = {
+					has_railway_connection = { start_province = 8603 target_province = 1847 }
+					has_railway_connection = { start_province = 8603 target_province = 4569 }
+					has_railway_connection = { start_province = 8678 target_province = 8449 }
+				}
+			}
+		}
+		ai_will_do = {
+			factor = 100
+		}
+	}
+	railway_HHE_pearl_coast_regions = {
+		icon = generic_wreckers
+		available = {
+			has_full_control_of_state = 6
+			has_full_control_of_state = 92
+			has_full_control_of_state = 166
+			has_full_control_of_state = 169
+			has_full_control_of_state = 273
+			has_full_control_of_state = 274
+			has_full_control_of_state = 277
+			has_full_control_of_state = 278
+			has_full_control_of_state = 279
+			has_full_control_of_state = 396
+			has_full_control_of_state = 398
+			has_full_control_of_state = 399
+			has_full_control_of_state = 400
+			has_full_control_of_state = 402
+			num_of_civilian_factories_available_for_projects > 4
+		}
+		visible = {
+			NOT = {
+				AND = {
+					has_railway_connection = { start_province = 1168 target_province = 9581 }
+					has_railway_connection = { start_province = 9581 target_province = 2106 }
+					has_railway_connection = { start_province = 9581 target_province = 9833 }
+					has_railway_connection = { start_province = 9621 target_province = 9526 }
+					has_railway_connection = { start_province = 9621 target_province = 9833 }
+				}
+			}
+		}
+		highlight_states = { highlight_state_targets = { state = 92
+			state = 6 state = 166 state = 169 state = 273 state = 274 state = 277 state = 278 state = 279 state = 396 state = 398 state = 399 state = 400 state = 402
+		} }
+
+		days_remove = 30
+		fire_only_once = yes
+		cost = 10
+
+		modifier = { civilian_factory_use = 5 }
+
+		remove_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision remove railway_HHE_under_mountain_regions"
+			#hidden_effect = {
+				build_railway = { # Main Line
+					level = 1 fallback = yes build_only_on_allied = yes
+					start_province = 1168 target_province = 9581
+				}
+				build_railway = {
+					level = 1 fallback = yes build_only_on_allied = yes
+					path = { 2106 1514 9443 }
+				}
+				build_railway = {
+					level = 1 fallback = yes build_only_on_allied = yes
+					path = { 2106 9516 1187 9601 9672 }
+				}
+				build_railway = {
+					level = 1 fallback = yes build_only_on_allied = yes
+					path = { 9601 9526 9475 }
+				}
+				build_railway = {
+					level = 1 fallback = yes build_only_on_allied = yes
+					path = { 9621 9672 228 9833 }
+				}
+			#}
+		}
+		cancel_trigger = {
+			hidden_trigger = {
+				AND = {
+					has_railway_connection = { start_province = 1168 target_province = 9581 }
+					has_railway_connection = { start_province = 9581 target_province = 2106 }
+					has_railway_connection = { start_province = 9581 target_province = 9833 }
+					has_railway_connection = { start_province = 9621 target_province = 9526 }
+					has_railway_connection = { start_province = 9621 target_province = 9833 }
+				}
+			}
+		}
+		ai_will_do = {
+			factor = 100
+		}
+	}
+	railway_HHE_laity_regions = {
+		icon = generic_wreckers
+		available = {
+			has_full_control_of_state = 93
+			has_full_control_of_state = 119
+			has_full_control_of_state = 120
+			has_full_control_of_state = 121
+			has_full_control_of_state = 122
+			has_full_control_of_state = 127
+			has_full_control_of_state = 128
+			num_of_civilian_factories_available_for_projects > 4
+		}
+		visible = {
+			NOT = {
+				AND = {
+					has_railway_connection = { start_province = 1109 target_province = 9239 }
+					has_railway_connection = { start_province = 3710 target_province = 9558 }
+					has_railway_connection = { start_province = 5027 target_province = 1109 }
+					has_railway_connection = { start_province = 9612 target_province = 5027 }
+					has_railway_connection = { start_province = 9542 target_province = 9778 }
+					has_railway_connection = { start_province = 9558 target_province = 4398 }
+					has_railway_connection = { start_province = 9667 target_province = 5027 }
+					has_railway_connection = { start_province = 9667 target_province = 9542 }
+				}
+			}
+		}
+		highlight_states = { highlight_state_targets = { state = 120
+			state = 93 state = 119 state = 121 state = 122 state = 127 state = 128
+		} }
+
+		days_remove = 30
+		fire_only_once = yes
+		cost = 10
+
+		modifier = { civilian_factory_use = 5 }
+
+		remove_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision remove railway_HHE_under_mountain_regions"
+			#hidden_effect = {
+				build_railway = {
+					level = 1 fallback = yes build_only_on_allied = yes
+					start_province = 1109 target_province = 9239
+				}
+				build_railway = {
+					level = 1 fallback = yes build_only_on_allied = yes
+					path = { 3710 9445 9503 9612 9558 }
+				}
+				build_railway = {
+					level = 1 fallback = yes build_only_on_allied = yes
+					path = { 5027 9531 1109 }
+				}
+				build_railway = {
+					level = 1 fallback = yes build_only_on_allied = yes
+					path = { 9612 3296 9628 1800 5027 }
+				}
+				build_railway = {
+					level = 1 fallback = yes build_only_on_allied = yes
+					start_province = 9542 target_province = 9778
+				}
+				build_railway = {
+					level = 1 fallback = yes build_only_on_allied = yes
+					start_province = 9558 target_province = 4398
+				}
+				build_railway = {
+					level = 1 fallback = yes build_only_on_allied = yes
+					start_province = 9667 target_province = 5027
+				}
+				build_railway = {
+					level = 1 fallback = yes build_only_on_allied = yes
+					start_province = 9667 target_province = 9542
+				}
+			#}
+		}
+		cancel_trigger = {
+			hidden_trigger = {
+				AND = {
+					has_railway_connection = { start_province = 1109 target_province = 9239 }
+					has_railway_connection = { start_province = 3710 target_province = 9558 }
+					has_railway_connection = { start_province = 5027 target_province = 1109 }
+					has_railway_connection = { start_province = 9612 target_province = 5027 }
+					has_railway_connection = { start_province = 9542 target_province = 9778 }
+					has_railway_connection = { start_province = 9558 target_province = 4398 }
+					has_railway_connection = { start_province = 9667 target_province = 5027 }
+					has_railway_connection = { start_province = 9667 target_province = 9542 }
+				}
+			}
+		}
+		ai_will_do = {
+			factor = 100
+		}
+	}
+	railway_HHE_STATE = {
+		visible = { AND = { is_debug = yes is_ai = no } }
+	}
+	railway_HHE_PROV_T_PROV = {
+		visible = { AND = { is_debug = yes is_ai = no } }
 	}
 }
 parade_HHE_victory_parades = {
