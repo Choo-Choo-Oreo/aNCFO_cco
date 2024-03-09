@@ -2576,8 +2576,8 @@ technologies = {
 	}
 	fuel_refining = {
 
-		fuel_gain_factor = 0.2
-		fuel_gain_factor_from_states = 0.1
+		fuel_gain_factor = 0.30
+		fuel_gain_factor_from_states = 0.15
 					
 		path = {
 			leads_to_tech = fuel_refining2 
@@ -2635,8 +2635,8 @@ technologies = {
 	}
 	fuel_refining2 = {
 		
-		fuel_gain_factor = 0.2
-		fuel_gain_factor_from_states = 0.1
+		fuel_gain_factor = 0.30
+		fuel_gain_factor_from_states = 0.15
 
 		path = {
 			leads_to_tech = fuel_refining3 
@@ -2686,8 +2686,8 @@ technologies = {
 	}
 	fuel_refining3 = {
 		
-		fuel_gain_factor = 0.2
-		fuel_gain_factor_from_states = 0.1
+		fuel_gain_factor = 0.30
+		fuel_gain_factor_from_states = 0.15
 
 		path = {
 			leads_to_tech = fuel_refining4 
@@ -2729,7 +2729,7 @@ technologies = {
 	fuel_refining4 = {
 		
 		fuel_gain_factor = 0.20
-		fuel_gain_factor_from_states = 0.1
+		fuel_gain_factor_from_states = 0.10
 
 		path = {
 			leads_to_tech = fuel_refining5
@@ -2771,7 +2771,7 @@ technologies = {
 	fuel_refining5 = {
 		
 		fuel_gain_factor = 0.20
-		fuel_gain_factor_from_states = 0.1
+		fuel_gain_factor_from_states = 0.10
 
 		path = {
 			leads_to_tech = fuel_refining6
@@ -2813,7 +2813,7 @@ technologies = {
 	fuel_refining6 = {
 		
 		fuel_gain_factor = 0.20
-		fuel_gain_factor_from_states = 0.1
+		fuel_gain_factor_from_states = 0.10
 
 		path = {
 			leads_to_tech = fuel_refining7
@@ -2854,14 +2854,95 @@ technologies = {
 	}
 	fuel_refining7 = {
 		
-		fuel_gain_factor = 0.20
-		fuel_gain_factor_from_states = 0.1
+		fuel_gain_factor = 0.10
 
+		path = {
+			leads_to_tech = fuel_refining8
+			research_cost_coeff = 1
+		}
 		research_cost = 3
 		start_year = 1836
 		folder = {
 			name = industry_folder
 			position = { x = 3 y = 14 }
+		}
+		
+		categories = {
+			industry
+			synth_resources
+		}
+		
+		ai_will_do = {
+			factor = 5
+			modifier = {
+				has_war = yes
+				factor = 2
+			}
+			modifier = {
+				is_major = no
+				factor = 0.25
+			}
+			modifier = {
+				factor = 1.5
+				num_of_military_factories > 40
+			}	
+
+			modifier = {
+				factor = 1.5
+				num_of_naval_factories > 40
+			}				
+		}		
+	}
+	fuel_refining8 = {
+		
+		fuel_gain_factor = 0.10
+
+		path = {
+			leads_to_tech = fuel_refining9
+			research_cost_coeff = 1
+		}
+		research_cost = 3
+		start_year = 1838
+		folder = {
+			name = industry_folder
+			position = { x = 3 y = 16 }
+		}
+		
+		categories = {
+			industry
+			synth_resources
+		}
+		
+		ai_will_do = {
+			factor = 5
+			modifier = {
+				has_war = yes
+				factor = 2
+			}
+			modifier = {
+				is_major = no
+				factor = 0.25
+			}
+			modifier = {
+				factor = 1.5
+				num_of_military_factories > 40
+			}	
+
+			modifier = {
+				factor = 1.5
+				num_of_naval_factories > 40
+			}				
+		}		
+	}
+	fuel_refining9 = {
+		
+		fuel_gain_factor = 0.10
+
+		research_cost = 3
+		start_year = 1840
+		folder = {
+			name = industry_folder
+			position = { x = 3 y = 18 }
 		}
 		
 		categories = {
@@ -3230,11 +3311,11 @@ technologies = {
 		}
 
 		path = {
-			leads_to_tech = semi_modern_oil_processing 
+			leads_to_tech = semi_modernize_oil_processing 
 			research_cost_coeff = 1
 		}
 		path = {
-			leads_to_tech = semi_modern_rubber_processing 
+			leads_to_tech = semi_modernize_rubber_processing 
 			research_cost_coeff = 1
 		}
 		
@@ -3270,12 +3351,12 @@ technologies = {
 			oil = -2.0
 		}
 	}
-	semi_modern_oil_processing = {
+	semi_modernize_oil_processing = {
 
-		fuel_gain_factor_from_states = 0.5
+		fuel_gain_factor_from_states = 0.25
 		
 		path = {
-			leads_to_tech = modern_oil_processing 
+			leads_to_tech = modernize_oil_processing 
 			research_cost_coeff = 1
 		}
 
@@ -3314,10 +3395,15 @@ technologies = {
 		
 		show_effect_as_desc = yes
 	}
-	modern_oil_processing = {
+	modernize_oil_processing = {
 
-		fuel_gain_factor_from_states = 0.5
+		fuel_gain_factor_from_states = 0.25
 		
+		path = {
+			leads_to_tech = highly_modernize_oil_processing 
+			research_cost_coeff = 1
+		}
+
 		research_cost = 1.5
 		start_year = 1836
 		
@@ -3353,8 +3439,48 @@ technologies = {
 		
 		show_effect_as_desc = yes
 	}
-	semi_modern_rubber_processing = {
+	highly_modernize_oil_processing = {
 
+		fuel_gain_factor_from_states = 0.25
+		
+		research_cost = 1.5
+		start_year = 1838
+		
+		folder = {
+			name = industry_folder
+			position = { x = -1 y = 16 }
+		}
+		
+		categories = {
+			industry
+			synth_resources
+		}
+		
+		ai_will_do = {
+			factor = 0.5
+			modifier = {
+				factor = 0.5
+				oil > 10
+			}
+			modifier = {
+				factor = 0.5
+				oil > 20
+			}	
+			modifier = {
+				factor = 0.5
+				oil > 30
+			}			
+		}
+		
+		ai_research_weights = {
+			oil = -2.0
+		}
+		
+		show_effect_as_desc = yes
+	}
+	semi_modernize_rubber_processing = {
+
+		fuel_gain_factor_from_states = -0.10
 		on_research_complete = {
 			modify_building_resources = {
 				building = synthetic_refinery
@@ -3364,7 +3490,7 @@ technologies = {
 		}
 		
 		path = {
-			leads_to_tech = modern_rubber_processing 
+			leads_to_tech = modernize_rubber_processing 
 			research_cost_coeff = 1
 		}
 
@@ -3403,8 +3529,60 @@ technologies = {
 		
 		show_effect_as_desc = yes
 	}
-	modern_rubber_processing = {
+	modernize_rubber_processing = {
 
+		fuel_gain_factor_from_states = -0.10
+		on_research_complete = {
+			modify_building_resources = {
+				building = synthetic_refinery
+				resource = rubber
+				amount = 1
+			}
+		}
+		
+		path = {
+			leads_to_tech = highly_modernize_rubber_processing 
+			research_cost_coeff = 1
+		}
+
+		research_cost = 1.5
+		start_year = 1836
+		
+		folder = {
+			name = industry_folder
+			position = { x = 1 y = 14 }
+		}
+		
+		categories = {
+			industry
+			synth_resources
+		}
+		
+		ai_will_do = {
+			factor = 0.5
+			modifier = {
+				factor = 0.5
+				rubber > 10
+			}
+			modifier = {
+				factor = 0.5
+				rubber > 20
+			}	
+			modifier = {
+				factor = 0.5
+				rubber > 30
+			}			
+		}
+		
+		ai_research_weights = {
+			rubber = -2.0
+		}
+		
+		show_effect_as_desc = yes
+	}
+	highly_modernize_rubber_processing = {
+
+		fuel_gain_factor_from_states = -0.10
 		on_research_complete = {
 			modify_building_resources = {
 				building = synthetic_refinery
@@ -3414,11 +3592,11 @@ technologies = {
 		}
 		
 		research_cost = 1.5
-		start_year = 1836
+		start_year = 1838
 		
 		folder = {
 			name = industry_folder
-			position = { x = 1 y = 14 }
+			position = { x = 1 y = 16 }
 		}
 		
 		categories = {
