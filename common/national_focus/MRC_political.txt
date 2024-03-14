@@ -1,21 +1,16 @@
-# Continue Foreign Intervention Branch
-	shared_focus = { # Continue Foreign Intervention
-		id = MRC_continue_foreign_intervention
+# Party Elections Branch
+	shared_focus = { # Political Lobbying
+		id = MRC_political_lobbying
 		icon = GFX_
-		mutually_exclusive = { focus = MRC_neutrality_focus }
-		x = -3
+		x = 0
 		y = 0
 	
-		cost = 15
+		cost = 5
 		cancel_if_invalid = yes
 		continue_if_invalid = no
 		available_if_capitulated = no
 
 		available = {
-			custom_trigger_tooltip = {
-				tooltip = historically_locked_tt
-				is_historical_focus_on = no
-			}
 		}
 		bypass = {
 		}
@@ -25,23 +20,50 @@
 		}
 
 		completion_reward = {
-			add_political_power = 50
 		}
 	}
 
-	shared_focus = { # Southern Financial Assistance
-		id = MRC_southern_financial_help
+	shared_focus = { # Progressive Movement
+		id = MRC_progressive_movement
 		icon = GFX_
-		prerequisite = { focus = MRC_continue_foreign_intervention }
-		relative_position_id = MRC_continue_foreign_intervention
+		mutually_exclusive = { focus = MRC_hamper_progressive_movement }
+		prerequisite = { focus = MRC_political_lobbying }
+		relative_position_id = MRC_political_lobbying
+		x = -1
+		y = 1
+	
+		cost = 3
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		available = {
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			base = 5
+		}
+
+		completion_reward = {
+		}
+	}
+
+	shared_focus = { # Hamper Progressive Movement
+		id = MRC_hamper_progressive_movement
+		icon = GFX_
+		mutually_exclusive = { focus = MRC_progressive_movement }
+		prerequisite = { focus = MRC_political_lobbying }
+		relative_position_id = MRC_political_lobbying
 		x = -3
 		y = 1
 	
-		cost = 10
+		cost = 3
 		cancel_if_invalid = yes
 		continue_if_invalid = no
 		available_if_capitulated = no
-	
+
 		available = {
 		}
 		bypass = {
@@ -49,64 +71,22 @@
 	
 		ai_will_do = {
 			base = 5
-			modifier = {
-				factor = 15
-				is_historical_focus_on = yes
-			}
-		}
-
-		completion_reward = {
-			add_war_support = 0.05
-			add_political_power = -50
-
-			12 = { add_core_of = ROOT }
-			74 = { add_core_of = ROOT }
-			76 = { add_core_of = ROOT }
-			336 = { add_core_of = ROOT }
-			337 = { add_core_of = ROOT }
-			338 = { add_core_of = ROOT }
-		}
-	}
-
-	shared_focus = { # Foreign Trade Policies
-		id = MRC_foreign_trade
-		icon = GFX_
-		prerequisite = { focus = MRC_merchents_outpost }
-		prerequisite = { focus = MRC_continue_foreign_intervention }
-		relative_position_id = MRC_continue_foreign_intervention
-		x = 0
-		y = 3
-	
-		cost = 10
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = no
-	
-		available = {
-		}
-		bypass = {
-		}
-	
-		ai_will_do = {
-			base = 5
-			modifier = {
-				factor = 25
-				is_historical_focus_on = yes
-			}
 		}
 
 		completion_reward = {
 		}
 	}
-# Neutrality Focus Policies Branch
+# Neutrality Branch - Right
 	shared_focus = { # Neutrality Focus Foreign Diplomacy
 		id = MRC_neutrality_focus
 		icon = GFX_
 		mutually_exclusive = { focus = MRC_continue_foreign_intervention }
+		prerequisite = { focus = MRC_progressive_movement }
+		relative_position_id = MRC_political_lobbying
 		x = 3
-		y = 0
+		y = 3
 	
-		cost = 15
+		cost = 9
 		cancel_if_invalid = yes
 		continue_if_invalid = no
 		available_if_capitulated = no
@@ -409,13 +389,141 @@
 			add_research_slot = 1
 		}
 	}
-# Industry Branch
+# Foreign Intervention Branch - Middle
+	shared_focus = { # Continue Foreign Intervention
+		id = MRC_continue_foreign_intervention
+		icon = GFX_
+		mutually_exclusive = { focus = MRC_neutrality_focus }
+		prerequisite = { focus = MRC_hamper_progressive_movement }
+		relative_position_id = MRC_political_lobbying
+		x = -3
+		y = 3
+	
+		cost = 9
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = historically_locked_tt
+				is_historical_focus_on = no
+			}
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			base = 5
+		}
+
+		completion_reward = {
+			add_political_power = 50
+		}
+	}
+
+	shared_focus = { # Southern Financial Assistance
+		id = MRC_southern_financial_help
+		icon = GFX_
+		prerequisite = { focus = MRC_continue_foreign_intervention }
+		relative_position_id = MRC_continue_foreign_intervention
+		x = -3
+		y = 1
+	
+		cost = 10
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+	
+		available = {
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			base = 5
+			modifier = {
+				factor = 15
+				is_historical_focus_on = yes
+			}
+		}
+
+		completion_reward = {
+			add_war_support = 0.05
+			add_political_power = -50
+
+			12 = { add_core_of = ROOT }
+			74 = { add_core_of = ROOT }
+			76 = { add_core_of = ROOT }
+			336 = { add_core_of = ROOT }
+			337 = { add_core_of = ROOT }
+			338 = { add_core_of = ROOT }
+		}
+	}
+
+	shared_focus = { # Foreign Trade Policies
+		id = MRC_foreign_trade
+		icon = GFX_
+		prerequisite = { focus = MRC_merchents_outpost }
+		prerequisite = { focus = MRC_continue_foreign_intervention }
+		relative_position_id = MRC_continue_foreign_intervention
+		x = 0
+		y = 3
+	
+		cost = 10
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+	
+		available = {
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			base = 5
+			modifier = {
+				factor = 25
+				is_historical_focus_on = yes
+			}
+		}
+
+		completion_reward = {
+		}
+	}
+# Revoke the Constitucion - Left
+	shared_focus = { # 
+		id = MRC_revoke_constitucion
+		icon = GFX_
+		prerequisite = { focus = MRC_continue_foreign_intervention }
+		relative_position_id = MRC_continue_foreign_intervention
+		x = -7
+		y = 1
+	
+		cost = 4.5
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		available = {
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			base = 5
+		}
+
+		completion_reward = {
+		}
+	}
+# Industry Development Branch
 	shared_focus = { # Industral Buildup Policies
 		id = MRC_industral_buildup_actions
 		icon = GFX_
 		prerequisite = { focus = MRC_continue_foreign_intervention focus = MRC_neutrality_focus }
 		x = 0
-		y = 1
+		y = 4
 	
 		cost = 10
 		cancel_if_invalid = yes
