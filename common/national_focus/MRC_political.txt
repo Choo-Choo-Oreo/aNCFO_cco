@@ -76,12 +76,122 @@
 		completion_reward = {
 		}
 	}
+
+	shared_focus = { # Priority of Local Governance
+		id = MRC_local_governance
+		icon = GFX_
+		mutually_exclusive = { focus = MRC_federal_governance }
+		prerequisite = { focus = MRC_political_lobbying }
+		relative_position_id = MRC_political_lobbying
+		x = 3
+		y = 1
+	
+		cost = 3
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		available = {
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			base = 5
+		}
+
+		completion_reward = {
+		}
+	}
+
+	shared_focus = { # Priority of Federal Governance
+		id = MRC_federal_governance
+		icon = GFX_
+		mutually_exclusive = { focus = MRC_local_governance }
+		prerequisite = { focus = MRC_political_lobbying }
+		relative_position_id = MRC_political_lobbying
+		x = 1
+		y = 1
+	
+		cost = 3
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		available = {
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			base = 5
+		}
+
+		completion_reward = {
+		}
+	}
+
+	shared_focus = { # Against the Corrupt Guilds
+		id = MRC_against_the_guilds
+		icon = GFX_
+		mutually_exclusive = { focus = MRC_side_with_guilds }
+		prerequisite = { focus = MRC_political_lobbying }
+		relative_position_id = MRC_political_lobbying
+		x = 3
+		y = 2
+	
+		cost = 3
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		available = {
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			base = 5
+		}
+
+		completion_reward = {
+		}
+	}
+
+	shared_focus = { # Side with the Guilds
+		id = MRC_side_with_guilds
+		icon = GFX_
+		mutually_exclusive = { focus = MRC_against_the_guilds }
+		prerequisite = { focus = MRC_political_lobbying }
+		relative_position_id = MRC_political_lobbying
+		x = 1
+		y = 2
+	
+		cost = 3
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		available = {
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			base = 5
+		}
+
+		completion_reward = {
+		}
+	}
 # Neutrality Branch - Right
 	shared_focus = { # Neutrality Focus Foreign Diplomacy
 		id = MRC_neutrality_focus
 		icon = GFX_
-		mutually_exclusive = { focus = MRC_continue_foreign_intervention }
-		prerequisite = { focus = MRC_progressive_movement }
+		mutually_exclusive = { focus = MRC_foreign_intervention_focus }
+		prerequisite = { focus = MRC_progressive_movement focus = MRC_hamper_progressive_movement }
+		prerequisite = { focus = MRC_local_governance focus = MRC_federal_governance }
+		prerequisite = { focus = MRC_against_the_guilds focus = MRC_side_with_guilds }
 		relative_position_id = MRC_political_lobbying
 		x = 3
 		y = 3
@@ -390,11 +500,13 @@
 		}
 	}
 # Foreign Intervention Branch - Middle
-	shared_focus = { # Continue Foreign Intervention
-		id = MRC_continue_foreign_intervention
+	shared_focus = { # Intervention Focus Foreign Policy
+		id = MRC_foreign_intervention_focus
 		icon = GFX_
 		mutually_exclusive = { focus = MRC_neutrality_focus }
-		prerequisite = { focus = MRC_hamper_progressive_movement }
+		prerequisite = { focus = MRC_progressive_movement focus = MRC_hamper_progressive_movement }
+		prerequisite = { focus = MRC_local_governance focus = MRC_federal_governance }
+		prerequisite = { focus = MRC_against_the_guilds focus = MRC_side_with_guilds }
 		relative_position_id = MRC_political_lobbying
 		x = -3
 		y = 3
@@ -425,8 +537,8 @@
 	shared_focus = { # Southern Financial Assistance
 		id = MRC_southern_financial_help
 		icon = GFX_
-		prerequisite = { focus = MRC_continue_foreign_intervention }
-		relative_position_id = MRC_continue_foreign_intervention
+		prerequisite = { focus = MRC_foreign_intervention_focus }
+		relative_position_id = MRC_foreign_intervention_focus
 		x = -3
 		y = 1
 	
@@ -465,8 +577,8 @@
 		id = MRC_foreign_trade
 		icon = GFX_
 		prerequisite = { focus = MRC_merchents_outpost }
-		prerequisite = { focus = MRC_continue_foreign_intervention }
-		relative_position_id = MRC_continue_foreign_intervention
+		prerequisite = { focus = MRC_foreign_intervention_focus }
+		relative_position_id = MRC_foreign_intervention_focus
 		x = 0
 		y = 3
 	
@@ -495,8 +607,8 @@
 	shared_focus = { # 
 		id = MRC_revoke_constitucion
 		icon = GFX_
-		prerequisite = { focus = MRC_continue_foreign_intervention }
-		relative_position_id = MRC_continue_foreign_intervention
+		prerequisite = { focus = MRC_foreign_intervention_focus }
+		relative_position_id = MRC_foreign_intervention_focus
 		x = -7
 		y = 1
 	
@@ -521,7 +633,7 @@
 	shared_focus = { # Industral Buildup Policies
 		id = MRC_industral_buildup_actions
 		icon = GFX_
-		prerequisite = { focus = MRC_continue_foreign_intervention focus = MRC_neutrality_focus }
+		prerequisite = { focus = MRC_foreign_intervention_focus focus = MRC_neutrality_focus }
 		x = 0
 		y = 4
 	
@@ -555,7 +667,7 @@
 		id = MRC_merchents_outpost
 		icon = GFX_
 		prerequisite = { focus = MRC_industral_buildup_actions }
-		prerequisite = { focus = MRC_continue_foreign_intervention }
+		prerequisite = { focus = MRC_foreign_intervention_focus }
 		relative_position_id = MRC_industral_buildup_actions
 		x = -1
 		y = 1
