@@ -1,0 +1,148 @@
+Generic_30w_heavy_armor_role = {
+	roles = { heavy_armor }
+	upgrade_prio = { 
+		factor = 200
+		
+		modifier = {
+		factor = -100
+			NOT = {
+				OR = {
+					has_tech = improved_heavy_tank_chassis
+					has_tech = improved_heavy_tank
+				}
+			}
+		}
+	}
+		
+	match_to_count = 0.9 			###was 0.55
+	
+	
+	GENERIC_HEAVY_ARMOR_BASIC_35A = {                     ### Better unit	
+		enable = { 
+			AND = {
+				OR = {
+					has_tech = improved_heavy_tank_chassis
+					has_tech = improved_heavy_tank
+				}
+			}
+			NOT = {
+				OR = {
+					has_tech = advanced_heavy_tank_chassis
+					has_tech = advanced_heavy_tank
+				}
+			}
+			num_of_military_factories > 124
+		}
+		production_prio = { factor = 100 }
+		upgrade_prio = { factor = 100 }
+		
+		
+		replace_with = GENERIC_HEAVY_ARMOR_BASIC_35B
+	
+	# TEMPLATE
+		target_width = 36
+		width_weight = 3
+		column_swap_factor = 0.01
+		reinforce_prio = 2
+		
+		can_upgrade_in_field = { always = no }
+
+		target_template = {
+			weight = 0.95
+			match_value = 10000
+
+			regiments = {
+				heavy_armor = 11
+				motorized = 7
+			}
+
+			support = {
+				light_tank_recon = 1
+				logistics_company = 1
+				anti_air = 1
+				maintenance_company = 1
+				heavy_flame_tank = 1
+			}
+		}
+
+		allowed_types = {
+			# REGIMENTS
+			heavy_armor
+			motorized
+			mot_anti_tank_brigade
+			
+
+			# SUPPORT
+			light_tank_recon
+			logistics_company
+			anti_air
+			maintenance_company
+			heavy_flame_tank 
+		}
+	}
+	
+	GENERIC_HEAVY_ARMOR_BASIC_35B = {                     ### Way Better unit	
+		enable = { 
+			AND = {
+				OR = {
+					has_tech = advanced_heavy_tank_chassis
+					has_tech = advanced_heavy_tank
+				}
+				has_tech = mechanised_infantry
+			}
+			NOT = {
+				OR = {
+					has_tech = main_battle_tank_chassis
+					has_tech = main_battle_tank
+				}
+			}
+			num_of_military_factories > 124
+		}
+		production_prio = { factor = 100 }
+		upgrade_prio = { factor = 100 }
+	
+	# TEMPLATE
+		target_width = 36
+		width_weight = 3
+		column_swap_factor = 0.01
+		reinforce_prio = 2
+		
+		can_upgrade_in_field = { always = no }
+
+		target_template = {
+			weight = 0.95
+			match_value = 10000
+
+
+			regiments = {
+				heavy_armor = 10
+				heavy_tank_destroyer_brigade = 1
+				mechanized = 7
+			}
+
+			support = {
+				light_tank_recon = 1
+				logistics_company = 1
+				anti_air = 1
+				maintenance_company = 1
+				heavy_flame_tank = 1
+			}
+		}
+
+		allowed_types = {
+			# REGIMENTS
+			heavy_armor
+			mechanized
+			heavy_tank_destroyer_brigade
+			heavy_sp_anti_air_brigade
+			
+			# SUPPORT
+			light_tank_recon
+			logistics_company
+			anti_air
+			maintenance_company
+			heavy_flame_tank
+		}
+	}
+}
+
