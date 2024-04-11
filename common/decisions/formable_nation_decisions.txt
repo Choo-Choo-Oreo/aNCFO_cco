@@ -956,7 +956,81 @@ form_harmonainus_imperious_category = {
 				}
 			}
 		}
-	#
+	# Coring Land End
+	supreme_harmonainus_imperious = { # Global Hegemony
+		icon = generic_form_nation
+		allowed = { always = yes }
+		available = {
+			is_subject = no
+			all_neighbor_country = {
+				LIMIT = {
+					country_exists = yes
+					NOT = {
+						OR = {
+							original_tag = ZZZ
+						}
+					}
+				}
+				NOT = { original_tag = HHE }
+			}
+			OR = {
+				AND = {
+					has_government = theocratism
+					NOT = { original_tag = HHE }
+				}
+				AND = {
+					has_government = theocratism
+					original_tag = HHE
+					NOT = { has_global_flag = elected_warmonger }
+				}
+				AND = {
+					OR = {
+						has_government = theocratism
+						has_government = authoritarianism
+					}
+					original_tag = HHE
+					has_global_flag = elected_warmonger
+					has_completed_focus = HHE_warmonger_one_nation
+				}
+			}
+			NOT = {
+				has_country_leader = {
+					character = HHE_luke_deed
+					ruling_only = yes
+				}
+			}
+		}
+		visible = {
+			AND = {
+				has_country_flag = form_harmonainus_imperious_flag
+				has_country_flag = form_harmonainus_imperious_center_flag
+				has_country_flag = form_harmonainus_imperious_west_flag
+			}
+			NOT = { has_country_flag = form_harmonainus_imperious_hegemony_flag }
+		}
+		days_remove = 365
+		remove_effect = {
+			custom_effect_tooltip = form_country_core_territories_tt
+			set_cosmetic_tag = HARMONAINUS_GLOBAL_UNIFIED
+			hidden_effect = {
+				set_country_flag = form_harmonainus_imperious_hegemony_flag
+				every_state = {
+					limit = {
+						NOT = { is_core_of = ROOT }
+					}
+					add_core_of = ROOT
+				}
+			}
+		}
+		cost = 200
+		ai_will_do = {
+			base = 5
+			modifier = {
+				factor = 10
+				is_historical_focus_on = yes
+			}
+		}
+	}
 }
 
 form_united_vally_category = {
