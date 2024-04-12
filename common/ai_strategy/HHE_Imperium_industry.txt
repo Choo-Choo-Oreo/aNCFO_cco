@@ -9,7 +9,30 @@
 # garrison
 # protect
 # influence
-railway_industrializion = {
+HHE_earlygame_industrializion = {
+	enable = {
+		is_harmonainus_imperious_extras = yes
+		date < 1827.01.01 # Three year of civ build up.
+	}
+	abort_when_not_enabled = yes
+	ai_strategy = {
+		type = building_target
+		id = industrial_complex
+		value = 34
+	}
+	ai_strategy = {
+		type = building_target
+		id = rail_way
+		value = -34
+	}
+	ai_strategy = {
+		type = building_target
+		id = naval_base
+		value = -34
+	}
+}
+
+HHE_railway_industrializion = {
 	enable = {
 		original_tag = HHE has_global_flag = elected_warmonger OR = { has_government = theocratism has_government = authoritarianism has_government = unitism }
 		NOT = { has_completed_focus = HHE_warmonger_revisit_rttf }
@@ -32,7 +55,7 @@ railway_industrializion = {
 	}
 }
 
-peacetime_industrializion = {
+HHE_peacetime_industrializion = {
 	enable = {
 		original_tag = HHE has_global_flag = elected_warmonger OR = { has_government = theocratism has_government = authoritarianism has_government = unitism }
 		has_war = no
@@ -44,10 +67,17 @@ peacetime_industrializion = {
 		value = 34
 	}
 }
-wartime_industrializion = {
+HHE_wartime_industrializion = {
 	enable = {
 		original_tag = HHE has_global_flag = elected_warmonger OR = { has_government = theocratism has_government = authoritarianism has_government = unitism }
-		has_war_with_major = yes
+		OR = {
+			has_war_with_major = yes
+			AND = {
+				has_war = yes
+				has_idea = HHE_piller_economic0
+				has_completed_focus = HHE_warmonger_revisit_rttf
+			}
+		}
 	}
 	abort_when_not_enabled = yes
 	ai_strategy = {
@@ -56,10 +86,29 @@ wartime_industrializion = {
 		value = 17
 	}
 }
-
-fight_for_life_1 = {
+HHE_wartime_industrializion_bonus = {
 	enable = {
 		original_tag = HHE has_global_flag = elected_warmonger OR = { has_government = theocratism has_government = authoritarianism has_government = unitism }
+		has_war = yes
+		has_idea = HHE_piller_economic0
+		has_completed_focus = HHE_warmonger_revisit_rttf
+	}
+	abort_when_not_enabled = yes
+	ai_strategy = {
+		type = building_target
+		id = rail_way
+		value = 17
+	}
+	ai_strategy = {
+		type = building_target
+		id = naval_base
+		value = 17
+	}
+}
+
+HHE_fight_for_life_1 = {
+	enable = {
+		original_tag = HHE OR = { has_government = theocratism has_government = authoritarianism has_government = unitism }
 		surrender_progress > 0.1
 	}
 	abort_when_not_enabled = yes
@@ -69,9 +118,9 @@ fight_for_life_1 = {
 		value = 7.5
 	}
 }
-fight_for_life_2 = {
+HHE_fight_for_life_2 = {
 	enable = {
-		original_tag = HHE has_global_flag = elected_warmonger OR = { has_government = theocratism has_government = authoritarianism has_government = unitism }
+		original_tag = HHE OR = { has_government = theocratism has_government = authoritarianism has_government = unitism }
 		surrender_progress > 0.2
 	}
 	abort_when_not_enabled = yes
@@ -81,9 +130,9 @@ fight_for_life_2 = {
 		value = 7.5
 	}
 }
-fight_for_life_3 = {
+HHE_fight_for_life_3 = {
 	enable = {
-		original_tag = HHE has_global_flag = elected_warmonger OR = { has_government = theocratism has_government = authoritarianism has_government = unitism }
+		original_tag = HHE OR = { has_government = theocratism has_government = authoritarianism has_government = unitism }
 		surrender_progress > 0.3
 	}
 	abort_when_not_enabled = yes
@@ -93,9 +142,9 @@ fight_for_life_3 = {
 		value = 7.5
 	}
 }
-fight_for_life_4 = {
+HHE_fight_for_life_4 = {
 	enable = {
-		original_tag = HHE has_global_flag = elected_warmonger OR = { has_government = theocratism has_government = authoritarianism has_government = unitism }
+		original_tag = HHE OR = { has_government = theocratism has_government = authoritarianism has_government = unitism }
 		surrender_progress > 0.4
 	}
 	abort_when_not_enabled = yes
@@ -105,9 +154,9 @@ fight_for_life_4 = {
 		value = 7.5
 	}
 }
-fight_for_life_5 = {
+HHE_fight_for_life_5 = {
 	enable = {
-		original_tag = HHE has_global_flag = elected_warmonger OR = { has_government = theocratism has_government = authoritarianism has_government = unitism }
+		original_tag = HHE OR = { has_government = theocratism has_government = authoritarianism has_government = unitism }
 		surrender_progress > 0.5
 	}
 	abort_when_not_enabled = yes
@@ -117,9 +166,9 @@ fight_for_life_5 = {
 		value = 7.5
 	}
 }
-fight_for_life_6 = {
+HHE_fight_for_life_6 = {
 	enable = {
-		original_tag = HHE has_global_flag = elected_warmonger OR = { has_government = theocratism has_government = authoritarianism has_government = unitism }
+		original_tag = HHE OR = { has_government = theocratism has_government = authoritarianism has_government = unitism }
 		surrender_progress > 0.6
 	}
 	abort_when_not_enabled = yes
@@ -129,9 +178,9 @@ fight_for_life_6 = {
 		value = 7.5
 	}
 }
-fight_for_life_7 = {
+HHE_fight_for_life_7 = {
 	enable = {
-		original_tag = HHE has_global_flag = elected_warmonger OR = { has_government = theocratism has_government = authoritarianism has_government = unitism }
+		original_tag = HHE OR = { has_government = theocratism has_government = authoritarianism has_government = unitism }
 		surrender_progress > 0.7
 	}
 	abort_when_not_enabled = yes
@@ -141,9 +190,9 @@ fight_for_life_7 = {
 		value = 7.5
 	}
 }
-fight_for_life_8 = {
+HHE_fight_for_life_8 = {
 	enable = {
-		original_tag = HHE has_global_flag = elected_warmonger OR = { has_government = theocratism has_government = authoritarianism has_government = unitism }
+		original_tag = HHE OR = { has_government = theocratism has_government = authoritarianism has_government = unitism }
 		surrender_progress > 0.8
 	}
 	abort_when_not_enabled = yes
@@ -153,9 +202,9 @@ fight_for_life_8 = {
 		value = 7.5
 	}
 }
-fight_for_life_9 = {
+HHE_fight_for_life_9 = {
 	enable = {
-		original_tag = HHE has_global_flag = elected_warmonger OR = { has_government = theocratism has_government = authoritarianism has_government = unitism }
+		original_tag = HHE OR = { has_government = theocratism has_government = authoritarianism has_government = unitism }
 		surrender_progress > 0.9
 	}
 	abort_when_not_enabled = yes
@@ -166,34 +215,57 @@ fight_for_life_9 = {
 	}
 }
 
-late_game_bloodbath_mil = {
+HHE_late_game_bloodbath_mil = {
 	enable = {
 		original_tag = HHE has_global_flag = elected_warmonger OR = { has_government = theocratism has_government = authoritarianism has_government = unitism }
-		date > 1830.1.1
+		date > 1834.1.1
 	}
 	abort_when_not_enabled = yes
 	ai_strategy = {
 		type = building_target
 		id = arms_factory
-		value = 15
+		value = 17
+	}
+	ai_strategy = {
+		type = building_target
+		id = rail_way
+		value = 17
+	}
+	ai_strategy = {
+		type = building_target
+		id = naval_base
+		value = 17
 	}
 }
-late_game_bloodbath_nav = {
+HHE_late_game_bloodbath_nav = {
 	enable = {
 		original_tag = HHE has_global_flag = elected_warmonger OR = { has_government = theocratism has_government = authoritarianism has_government = unitism }
-		date > 1830.1.1
+		date > 1834.1.1
 	}
 	abort_when_not_enabled = yes
 	ai_strategy = {
 		type = building_target
 		id = dockyard
-		value = 10
+		value = 8
 	}
 }
-late_game_bloodbath_civ = {
+HHE_late_game_bloodbath_nav_cap = {
 	enable = {
 		original_tag = HHE has_global_flag = elected_warmonger OR = { has_government = theocratism has_government = authoritarianism has_government = unitism }
-		date > 1830.1.1
+		date > 1834.1.1
+		num_of_naval_factories > 100
+	}
+	abort_when_not_enabled = yes
+	ai_strategy = {
+		type = building_target
+		id = dockyard
+		value = -17
+	}
+}
+HHE_late_game_bloodbath_civ = {
+	enable = {
+		original_tag = HHE has_global_flag = elected_warmonger OR = { has_government = theocratism has_government = authoritarianism has_government = unitism }
+		date > 1834.1.1
 	}
 	abort_when_not_enabled = yes
 	ai_strategy = {
