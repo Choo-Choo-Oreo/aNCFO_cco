@@ -422,7 +422,6 @@ shared_focus = {
 
 
 	complete_tooltip = {
-		log = "[GetDateText]: [Root.GetName]: Focus aviation_effort_2"
 		air_experience = 25
 		if = { limit = { has_country_flag = aviation_effort_2_AB }
 			add_building_construction = {
@@ -440,6 +439,7 @@ shared_focus = {
 	}
 
 	completion_reward = {
+		log = "[GetDateText]: [Root.GetName]: Focus aviation_effort_2"
 		air_experience = 25
 		if = {
 			limit = {
@@ -549,12 +549,13 @@ shared_focus = {
 }
 
 shared_focus = {
-	id = rocket_effort
-	icon = GFX_focus_rocketry
-	prerequisite = { focus = aviation_effort_2 }
-	x = 0
-	y = 2
-	relative_position_id = aviation_effort_2
+	id = advance_air_effort
+	icon = GFX_focus_advance_air_effort
+	prerequisite = { focus = CAS_effort }
+	prerequisite = { focus = NAV_effort }
+	x = 1
+	y = 1
+	relative_position_id = CAS_effort
 	cost = 10
 
 	search_filters = {  FOCUS_FILTER_RESEARCH }
@@ -562,21 +563,14 @@ shared_focus = {
 	available_if_capitulated = yes
 
 	completion_reward = {
-		log = "[GetDateText]: [Root.GetName]: Focus rocket_effort"
-		add_tech_bonus = {
-			name = jet_rocket_bonus
-			ahead_reduction = 2
+		log = "[GetDateText]: [Root.GetName]: Focus advance_air_effort"
+		air_experience = 25
+		add_ideas = advance_airforce
+		add_doctrine_cost_reduction = {
+			name =  air_doc_bonus
+			cost_reduction = 0.5
 			uses = 2
-			category = rocketry
-			category = jet_technology
-		}
-	}
-
-	ai_will_do = {
-		factor = 1
-		modifier = {
-			factor = 0.25
-			always = yes
+			category = air_doctrine
 		}
 	}
 }
@@ -609,10 +603,10 @@ shared_focus = {
 
 	complete_tooltip = {
 		navy_experience = 25
-		add_extra_state_shared_building_slots = 3
+		add_extra_state_shared_building_slots = 2
 		add_building_construction = {
 			type = dockyard
-			level = 3
+			level = 2
 			instant_build = yes
 		}
 	}
@@ -627,7 +621,7 @@ shared_focus = {
 						dockyard > 0
 						free_building_slots = {
 							building = dockyard
-							size > 2
+							size > 1
 							include_locked = yes
 						}
 					}
@@ -641,14 +635,14 @@ shared_focus = {
 					is_coastal = yes
 					free_building_slots = {
 						building = dockyard
-						size > 2
+						size > 1
 						include_locked = yes
 					}
 				}
-				add_extra_state_shared_building_slots = 3
+				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
 					type = dockyard
-					level = 3
+					level = 2
 					instant_build = yes
 				}
 			}
@@ -661,7 +655,7 @@ shared_focus = {
 					dockyard > 0
 					free_building_slots = {
 						building = dockyard
-						size > 2
+						size > 1
 						include_locked = yes
 					}
 				}
@@ -671,14 +665,14 @@ shared_focus = {
 					dockyard > 0
 					free_building_slots = {
 						building = dockyard
-						size > 2
+						size > 1
 						include_locked = yes
 					}
 				}
-				add_extra_state_shared_building_slots = 3
+				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
 					type = dockyard
-					level = 3
+					level = 2
 					instant_build = yes
 				}
 			}
@@ -691,7 +685,7 @@ shared_focus = {
 					any_owned_state = {
 						free_building_slots = {
 							building = dockyard
-							size > 2
+							size > 1
 							include_locked = yes
 						}
 					}
@@ -702,14 +696,14 @@ shared_focus = {
 					controller = { tag = ROOT }
 					free_building_slots = {
 						building = dockyard
-						size > 2
+						size > 1
 						include_locked = yes
 					}
 				}
-				add_extra_state_shared_building_slots = 3
+				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
 					type = dockyard
-					level = 3
+					level = 2
 					instant_build = yes
 				}
 			}
@@ -954,6 +948,46 @@ shared_focus = {
 			category = bc_tech
 			category = bb_tech
 			category = cv_tech
+		}
+	}
+}
+
+shared_focus = {
+	id = advance_naval_effort
+	icon = GFX_focus_advance_naval_effort
+	prerequisite = { focus = destroyer_effort }
+	prerequisite = { focus = capital_ships_effort }
+	x = 1
+	y = 1
+	relative_position_id = destroyer_effort
+	cost = 10
+
+	search_filters = {  FOCUS_FILTER_RESEARCH }
+	
+	available_if_capitulated = yes
+
+	ai_will_do = {
+		factor = 1
+		modifier = {
+			factor = 0
+			all_owned_state = {
+				OR = {
+					is_coastal = no
+					dockyard < 1
+				}
+			}
+		}
+	}
+
+	completion_reward = {
+		log = "[GetDateText]: [Root.GetName]: Focus advance_naval_effort"
+		navy_experience = 25
+		add_ideas = advance_navy
+		add_doctrine_cost_reduction = {
+			name =  navy_doc_bonus
+			cost_reduction = 0.5
+			uses = 2
+			category = naval_doctrine
 		}
 	}
 }

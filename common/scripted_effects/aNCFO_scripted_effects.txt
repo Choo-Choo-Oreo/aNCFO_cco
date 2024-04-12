@@ -779,6 +779,60 @@
 			}
 		}
 # Generic Scripts #
+	trade_raise = {
+		if = {
+			limit = { has_idea = closed_economy }
+			swap_ideas = {
+			    remove_idea = closed_economy
+			    add_idea = limited_exports
+			}
+		}
+		else_if = {
+			limit = { has_idea = limited_exports }
+			swap_ideas = {
+			    remove_idea = limited_exports
+			    add_idea = export_focus
+			}
+		}
+		else_if = {
+			limit = { has_idea = export_focus }
+			swap_ideas = {
+			    remove_idea = export_focus
+			    add_idea = free_trade
+			}
+		}
+		else_if = {
+			limit = { has_idea = free_trade }
+			add_political_power = 100
+		}
+	}
+	trade_lower = {
+		if = {
+			limit = { has_idea = free_trade }
+			swap_ideas = {
+			    remove_idea = free_trade
+			    add_idea = export_focus
+			}
+		}
+		else_if = {
+			limit = { has_idea = export_focus }
+			swap_ideas = {
+			    remove_idea = export_focus
+			    add_idea = limited_exports
+			}
+		}
+		else_if = {
+			limit = { has_idea = limited_exports }
+			swap_ideas = {
+			    remove_idea = limited_exports
+			    add_idea = closed_economy
+			}
+		}
+		else_if = {
+			limit = { has_idea = closed_economy }
+			add_political_power = 100
+		}
+	}
 	unitism_revolutionary_warfare = { # Important to put HIGHEST first
 		if = {
 			limit = {

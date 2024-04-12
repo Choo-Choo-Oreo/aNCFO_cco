@@ -1,3 +1,10 @@
+### search_filters = {FOCUS_FILTER_POLITICAL}
+### search_filters = {FOCUS_FILTER_RESEARCH}
+### search_filters = {FOCUS_FILTER_INDUSTRY}
+### search_filters = {FOCUS_FILTER_STABILITY}
+### search_filters = {FOCUS_FILTER_WAR_SUPPORT}
+### search_filters = {FOCUS_FILTER_MANPOWER}
+### search_filters = {FOCUS_FILTER_ANNEXATION}
 shared_focus = { # Political Effort
 	id = political_effort
 	icon = GFX_goal_generic_demand_territory
@@ -570,45 +577,6 @@ shared_focus = { # Political Effort
 				add_10_current_party_popularity = yes
 			}
 		}
-
-		shared_focus = { # Our Theistic Faith
-			id = our_theistic_faith
-			icon = GFX_
-			prerequisite = { focus = harmonainus_faith focus = pullus_faith }
-			x = 1
-			y = 5
-			relative_position_id = harmonainus_faith
-			cost = 10
-
-			search_filters = { FOCUS_FILTER_POLITICAL }
-
-			ai_will_do = {
-				factor = 5
-				modifier = {
-					factor = 5
-					OR = {
-						has_government = theocratism
-						has_government = unitism
-						theocratism > 0.25
-						unitism > 0.25
-					}
-				}
-				modifier = {
-					factor = 5
-					OR = {
-						has_government = theocratism
-						has_government = unitism
-						theocratism > 0.50
-						unitism > 0.50
-					}
-				}
-			}
-
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus our_theistic_faith"
-				add_ideas = theistic_faith
-			}
-		}
 	# Thalassaus
 		shared_focus = { # Thalassaus Faith
 			id = thalassaus_faith
@@ -668,7 +636,7 @@ shared_focus = { # Political Effort
 			relative_position_id = thalassaus_faith
 			cost = 10
 
-			search_filters = { FOCUS_FILTER_POLITICAL }
+			search_filters = { FOCUS_FILTER_INDUSTRY }
 
 			ai_will_do = {
 				factor = 5
@@ -703,7 +671,7 @@ shared_focus = { # Political Effort
 			relative_position_id = slow_industrial_strides
 			cost = 10
 
-			search_filters = { FOCUS_FILTER_POLITICAL }
+			search_filters = { FOCUS_FILTER_STABILITY }
 
 			ai_will_do = {
 				factor = 5
@@ -787,7 +755,7 @@ shared_focus = { # Political Effort
 			relative_position_id = ager_montis_faith
 			cost = 10
 
-			search_filters = { FOCUS_FILTER_POLITICAL }
+			search_filters = { FOCUS_FILTER_INDUSTRY }
 
 			ai_will_do = {
 				factor = 5
@@ -813,44 +781,83 @@ shared_focus = { # Political Effort
 			}
 		}
 
-		shared_focus = { # Our Nontheistic Faith
-			id = our_nontheistic_faith
-			icon = GFX_
-			prerequisite = { focus = thalassaus_faith focus = ager_montis_faith }
-			x = 1
-			y = 5
-			relative_position_id = thalassaus_faith
-			cost = 10
+	shared_focus = { # Our Theistic Faith
+		id = our_theistic_faith
+		icon = GFX_
+		prerequisite = { focus = harmonainus_faith focus = pullus_faith }
+		x = 1
+		y = 5
+		relative_position_id = harmonainus_faith
+		cost = 10
 
-			search_filters = { FOCUS_FILTER_POLITICAL }
+		search_filters = { FOCUS_FILTER_WAR_SUPPORT }
 
-			ai_will_do = {
+		ai_will_do = {
+			factor = 5
+			modifier = {
 				factor = 5
-				modifier = {
-					factor = 5
-					OR = {
-						has_government = theocratism
-						has_government = unitism
-						theocratism > 0.25
-						unitism > 0.25
-					}
-				}
-				modifier = {
-					factor = 5
-					OR = {
-						has_government = theocratism
-						has_government = unitism
-						theocratism > 0.50
-						unitism > 0.50
-					}
+				OR = {
+					has_government = theocratism
+					has_government = unitism
+					theocratism > 0.25
+					unitism > 0.25
 				}
 			}
-
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus our_nontheistic_faith"
-				add_ideas = nontheistic_faith
+			modifier = {
+				factor = 5
+				OR = {
+					has_government = theocratism
+					has_government = unitism
+					theocratism > 0.50
+					unitism > 0.50
+				}
 			}
 		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus our_theistic_faith"
+			add_ideas = theistic_faith
+		}
+	}
+
+	shared_focus = { # Our Nontheistic Faith
+		id = our_nontheistic_faith
+		icon = GFX_
+		prerequisite = { focus = thalassaus_faith focus = ager_montis_faith }
+		x = 1
+		y = 5
+		relative_position_id = thalassaus_faith
+		cost = 10
+
+		search_filters = { FOCUS_FILTER_STABILITY }
+
+		ai_will_do = {
+			factor = 5
+			modifier = {
+				factor = 5
+				OR = {
+					has_government = theocratism
+					has_government = unitism
+					theocratism > 0.25
+					unitism > 0.25
+				}
+			}
+			modifier = {
+				factor = 5
+				OR = {
+					has_government = theocratism
+					has_government = unitism
+					theocratism > 0.50
+					unitism > 0.50
+				}
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus our_nontheistic_faith"
+			add_ideas = nontheistic_faith
+		}
+	}
 # Unitism
 	shared_focus = { # Unitism Effort
 		id = political_unitism_effort
@@ -909,7 +916,7 @@ shared_focus = { # Political Effort
 		relative_position_id = political_unitism_effort
 		cost = 10
 
-		search_filters = { FOCUS_FILTER_POLITICAL }
+		search_filters = { FOCUS_FILTER_STABILITY }
 
 		ai_will_do = {
 			factor = 5
@@ -981,7 +988,7 @@ shared_focus = { # Political Effort
 		relative_position_id = countryside_gorilla_warfare
 		cost = 10
 
-		search_filters = { FOCUS_FILTER_POLITICAL }
+		search_filters = { FOCUS_FILTER_STABILITY }
 
 		ai_will_do = {
 			factor = 5
@@ -1016,7 +1023,7 @@ shared_focus = { # Political Effort
 		relative_position_id = first_preparations
 		cost = 10
 
-		search_filters = { FOCUS_FILTER_POLITICAL }
+		search_filters = { FOCUS_FILTER_INDUSTRY }
 
 		ai_will_do = {
 			factor = 5
@@ -1088,7 +1095,7 @@ shared_focus = { # Political Effort
 		relative_position_id = the_underground
 		cost = 10
 
-		search_filters = { FOCUS_FILTER_POLITICAL }
+		search_filters = { FOCUS_FILTER_STABILITY }
 
 		ai_will_do = {
 			factor = 5
@@ -1123,7 +1130,7 @@ shared_focus = { # Political Effort
 		relative_position_id = second_preparations
 		cost = 10
 
-		search_filters = { FOCUS_FILTER_POLITICAL }
+		search_filters = { FOCUS_FILTER_INDUSTRY }
 
 		ai_will_do = {
 			factor = 5
@@ -1207,7 +1214,7 @@ shared_focus = { # Political Effort
 		relative_position_id = assult_all_fronts
 		cost = 10
 
-		search_filters = { FOCUS_FILTER_POLITICAL }
+		search_filters = { FOCUS_FILTER_STABILITY }
 
 		ai_will_do = {
 			factor = 5
@@ -1246,7 +1253,7 @@ shared_focus = { # Political Effort
 		relative_position_id = political_unitism_effort
 		cost = 10
 
-		search_filters = { FOCUS_FILTER_POLITICAL }
+		search_filters = { FOCUS_FILTER_WAR_SUPPORT }
 
 		ai_will_do = {
 			factor = 5
@@ -1285,7 +1292,7 @@ shared_focus = { # Political Effort
 		relative_position_id = the_priest_behind_the_curtains
 		cost = 10
 
-		search_filters = { FOCUS_FILTER_POLITICAL }
+		search_filters = { FOCUS_FILTER_MANPOWER }
 
 		ai_will_do = {
 			factor = 5
@@ -1404,7 +1411,7 @@ shared_focus = { # Political Effort
 		relative_position_id = towards_utopia
 		cost = 10
 
-		search_filters = { FOCUS_FILTER_POLITICAL }
+		search_filters = { FOCUS_FILTER_WAR_SUPPORT }
 
 		ai_will_do = {
 			factor = 5
