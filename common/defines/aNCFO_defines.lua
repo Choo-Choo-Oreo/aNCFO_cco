@@ -34,6 +34,8 @@
 	NDefines.NCountry.WAR_SUPPORT_OFFNSIVE_WAR = -0.20
 	NDefines.NCountry.WAR_SUPPORT_DEFENSIVE_WAR = 0.20
 	NDefines.NCountry.WAR_SUPPORT_TENSION_IMPACT = 0.20
+	NDefines.NCountry.DEFAULT_STABILITY = 0.00
+	NDefines.NCountry.DEFAULT_WAR_SUPPORT = 0.00
 	NDefines.NCountry.MIN_STABILITY = -1.0
 	NDefines.NCountry.MAX_STABILITY = 1.0
 	NDefines.NCountry.MIN_WAR_SUPPORT = -1.0
