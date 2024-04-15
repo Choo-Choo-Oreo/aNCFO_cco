@@ -95,12 +95,32 @@ on_actions = {
 					}
 				}
 			}
-		# Harmonainus Imperious
+		# Country Setup
 			effect = {
 				every_country = {
-					country_event = startup_fuction.0
 					update_all_stances = yes
+					country_event = startup_fuction.0
+					every_state = {
+						LIMIT = { is_coastal = yes is_controlled_by = PREV }
+						PREV = { add_equipment_to_stockpile = { type = convoy amount = 25 } }
+					}
 				}
+			}
+			effect = {
+				IF = {
+					LIMIT = {
+						is_species_rhyniognatha = yes
+						#is_species_krohmapsari = yes # Not all nations.
+					}
+					set_rule = {
+						can_generate_female_aces = yes
+						can_generate_female_unit_leaders  = yes
+						can_generate_female_country_leaders = yes
+					}
+				}
+			}
+		# Harmonainus Imperious
+			effect = {
 				HSP = {
 					give_resource_rights = { receiver = HHE state = 106 }
 					give_resource_rights = { receiver = HHE state = 451 }
@@ -131,31 +151,15 @@ on_actions = {
 			effect = { # OoB
 				if = {
 					limit = { has_dlc = "La Resistance" }
-					HHE = {
-						load_oob = "HHE_1824_armored_cars"
-					}
-					HLF = {
-						load_oob = "HLF_1824_armored_cars"
-					}
-					HST = {
-						load_oob = "HST_1824_armored_cars"
-					}
-					HTP = {
-						load_oob = "HTP_1824_armored_cars"
-					}
+					HHE = { load_oob = "HHE_1824_armored_cars" }
+					HLF = { load_oob = "HLF_1824_armored_cars" }
+					HST = { load_oob = "HST_1824_armored_cars" }
+					HTP = { load_oob = "HTP_1824_armored_cars" }
 					else = {
-						HHE = {
-							load_oob = "HHE_1824_motorised_cars"
-						}
-						HLF = {
-							load_oob = "HLF_1824_motorised_cars"
-						}
-						HST = {
-							load_oob = "HST_1824_motorised_cars"
-						}
-						HTP = {
-							load_oob = "HTP_1824_motorised_cars"
-						}
+						HHE = { load_oob = "HHE_1824_motorised_cars" }
+						HLF = { load_oob = "HLF_1824_motorised_cars" }
+						HST = { load_oob = "HST_1824_motorised_cars" }
+						HTP = { load_oob = "HTP_1824_motorised_cars" }
 					}
 				}
 			}
@@ -166,7 +170,31 @@ on_actions = {
 					### Map/Idea Setup ###
 				every_state = { # Add cores for nations the can form the final Mandate
 					limit = {
-						is_gaint_of_the_east_possible = yes
+						OR = {
+							is_core_of = EPC # Colony
+							is_core_of = DRC # Nationalist
+							is_core_of = LMN # Monarchist
+							is_core_of = LPR # Communism
+							is_core_of = DOG
+							is_core_of = DVC
+							is_core_of = FDL
+							is_core_of = FGJ
+							is_core_of = GHN
+							is_core_of = GNG
+							is_core_of = JJY
+							is_core_of = LMC
+							is_core_of = LCF
+							is_core_of = LCS
+							is_core_of = MYU
+							is_core_of = RPG
+							is_core_of = RPT
+							is_core_of = SEC
+							is_core_of = SSJ
+							is_core_of = XIF
+							is_core_of = FUL # TEMP
+							is_core_of = IWE # TEMP
+							is_core_of = SHE # TEMP
+						}
 					}
 					add_claim_by = EPC
 					add_core_of = DRC
@@ -198,9 +226,11 @@ on_actions = {
 						OR = {
 							is_core_of = DOO
 							is_core_of = FDN
+							is_core_of = HNT
 							is_core_of = KST
 							is_core_of = MTR
 							is_core_of = NWE
+							is_core_of = RDN # Should just be neighbor.
 							is_core_of = SHT
 							is_core_of = TRH
 						}
@@ -209,6 +239,7 @@ on_actions = {
 				}
 				every_state = {
 					limit = {
+						NOT = { is_core_of = ROM }
 						OR = {
 							state_is_in_the_kunstfertiger_sea = yes
 							state_is_in_the_mitti_sea = yes
@@ -219,9 +250,7 @@ on_actions = {
 			}
 	}
 	on_daily = {
-		effect = {
-			update_all_stances = yes
-		}
+		effect = { update_all_stances = yes }
 	}
 	on_weekly = {
 	}
