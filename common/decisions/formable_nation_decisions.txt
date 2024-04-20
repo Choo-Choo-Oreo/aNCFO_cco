@@ -1241,7 +1241,7 @@ form_united_vally_category = {
 			hidden_effect = { set_global_flag = form_united_vally_conquest_flag }
 		}
 		ai_will_do = {
-			base = 10
+			base = 5
 			modifier = {
 				factor = 10
 				is_historical_focus_on = yes
@@ -1305,7 +1305,7 @@ form_united_vally_category = {
 			hidden_effect = { set_global_flag = form_united_vally1_flag }
 		}
 		ai_will_do = {
-			base = 10
+			base = 5
 			modifier = {
 				factor = 10
 				is_historical_focus_on = yes
@@ -1348,7 +1348,7 @@ form_united_vally_category = {
 			hidden_effect = { set_global_flag = form_united_vally2_flag }
 		}
 		ai_will_do = {
-			base = 10
+			base = 5
 			modifier = {
 				factor = 10
 				is_historical_focus_on = yes
@@ -1380,7 +1380,7 @@ form_united_vally_category = {
 			transfer_state = 138
 		}
 		ai_will_do = {
-			base = 10
+			base = 5
 			modifier = {
 				factor = 10
 				is_historical_focus_on = yes
@@ -1421,7 +1421,7 @@ form_united_vally_category = {
 			hidden_effect = { set_global_flag = form_united_vally3_flag }
 		}
 		ai_will_do = {
-			base = 10
+			base = 5
 			modifier = {
 				factor = 10
 				is_historical_focus_on = yes
@@ -1476,7 +1476,7 @@ form_united_vally_category = {
 			hidden_effect = { set_global_flag = form_united_vally4_flag }
 		}
 		ai_will_do = {
-			base = 10
+			base = 5
 			modifier = {
 				factor = 10
 				is_historical_focus_on = yes
@@ -1548,6 +1548,7 @@ form_kunstertiger_artificers_category = {
 		complete_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision form_kunstertiger_artificers"
 			set_cosmetic_tag = KUNSTERTIGER_ARTIFICERS
+			set_capital = { state = 467 }
 			hidden_effect = {
 			# Main Core
 				463 = { add_core_of = ROOT }
@@ -1615,7 +1616,7 @@ form_kunstertiger_artificers_category = {
 			hidden_effect = { set_global_flag = form_kunstertiger_artificers_flag }
 		}
 		ai_will_do = {
-			base = 10
+			base = 5
 			modifier = {
 				factor = 10
 				is_historical_focus_on = yes
@@ -1679,7 +1680,290 @@ form_electrum_federation_category = {
 			hidden_effect = { set_global_flag = form_electrum_federation_flag }
 		}
 		ai_will_do = {
-			base = 10
+			base = 5
+		}
+	}
+
+	form_electrum_federation_defensive = {
+		icon = generic_form_nation
+		allowed = {
+			OR = {
+				original_tag = GSD
+				original_tag = SSD
+			}
+		}
+		available = {
+			is_subject = no
+			IF = { # Gold Falling
+				limit = { original_tag = SSD }
+				OR = {
+					232 = { NOT = { is_controlled_by = GSD } }
+					435 = { NOT = { is_controlled_by = GSD } }
+					436 = { NOT = { is_controlled_by = GSD } }
+					388 = { NOT = { is_controlled_by = GSD } }
+				}
+			}
+			IF = { # Silver Falling
+				limit = { original_tag = GSD }
+				OR = {
+					231 = { NOT = { is_controlled_by = SSD } }
+					423 = { NOT = { is_controlled_by = SSD } }
+					424 = { NOT = { is_controlled_by = SSD } }
+					459 = { NOT = { is_controlled_by = SSD } }
+					659 = { NOT = { is_controlled_by = SSD } }
+					660 = { NOT = { is_controlled_by = SSD } }
+				}
+			}
+		}
+		visible = {
+			OR = {
+				original_tag = GSD
+				original_tag = SSD
+			}
+			NOT = { has_global_flag = form_electrum_federation_flag }
+		}
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision form_electrum_federation"
+			set_cosmetic_tag = ELECTRUM_FEDERATION
+			IF = {
+				limit = { original_tag = GSD }
+				annex_country = { target = SSD transfer_troops = yes }
+			}
+			IF = {
+				limit = { original_tag = SSD }
+				annex_country = { target = GSD transfer_troops = yes }
+			}
+			hidden_effect = {
+				231 = { add_core_of = ROOT }
+				232 = { add_core_of = ROOT }
+				331 = { add_core_of = ROOT }
+				332 = { add_core_of = ROOT }
+				333 = { add_core_of = ROOT }
+				343 = { add_core_of = ROOT }
+				388 = { add_core_of = ROOT }
+				389 = { add_core_of = ROOT }
+				422 = { add_core_of = ROOT }
+				423 = { add_core_of = ROOT }
+				424 = { add_core_of = ROOT }
+				435 = { add_core_of = ROOT }
+				436 = { add_core_of = ROOT }
+				459 = { add_core_of = ROOT }
+				659 = { add_core_of = ROOT }
+				660 = { add_core_of = ROOT }
+			}
+			hidden_effect = { set_global_flag = form_electrum_federation_flag }
+		}
+		cost = 50
+		ai_will_do = {
+			base = 5
+			modifier = {
+				factor = 10
+				is_historical_focus_on = yes
+			}
+		}
+	}
+}
+
+form_sanguis_river_category = {
+	form_unification_sanguis_river = {
+		icon = generic_form_nation
+		allowed = {
+			OR = {
+				original_tag = DOC
+				original_tag = HRF
+				original_tag = IHS
+				original_tag = REP
+			}
+		}
+		available = {
+			is_subject = no
+			if = {
+				limit = {
+					original_tag = DOC
+				}
+				101 = { is_controlled_by = ROOT }
+				129 = { is_controlled_by = ROOT }
+				199 = { is_controlled_by = ROOT }
+				200 = { is_controlled_by = ROOT }
+				221 = { is_controlled_by = ROOT }
+				626 = { is_controlled_by = ROOT }
+				627 = { is_controlled_by = ROOT }
+				628 = { is_controlled_by = ROOT }
+			}
+			if = {
+				limit = {
+					original_tag = REP
+				}
+				194 = { is_controlled_by = ROOT }
+				195 = { is_controlled_by = ROOT }
+				220 = { is_controlled_by = ROOT }
+				246 = { is_controlled_by = ROOT }
+				247 = { is_controlled_by = ROOT }
+				264 = { is_controlled_by = ROOT }
+				265 = { is_controlled_by = ROOT }
+			}
+			if = {
+				limit = {
+					OR = {
+						original_tag = HRF
+						original_tag = IHS
+					}
+				}
+				101 = { is_controlled_by = ROOT }
+				129 = { is_controlled_by = ROOT }
+				199 = { is_controlled_by = ROOT }
+				200 = { is_controlled_by = ROOT }
+				221 = { is_controlled_by = ROOT }
+				626 = { is_controlled_by = ROOT }
+				627 = { is_controlled_by = ROOT }
+				628 = { is_controlled_by = ROOT }
+				194 = { is_controlled_by = ROOT }
+				195 = { is_controlled_by = ROOT }
+				220 = { is_controlled_by = ROOT }
+				246 = { is_controlled_by = ROOT }
+				247 = { is_controlled_by = ROOT }
+				264 = { is_controlled_by = ROOT }
+				265 = { is_controlled_by = ROOT }
+			}
+		}
+		visible = {
+			OR = {
+				original_tag = DOC
+				original_tag = HRF
+				original_tag = IHS
+				original_tag = REP
+			}
+			NOT = { has_country_flag = form_sanguis_river_flag }
+		}
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision form_unification_sanguis_river"
+			if = {
+				limit = {
+					NOT = { original_tag = DOC }
+				}
+				set_capital = { state = 194 }
+				else = {
+					set_capital = { state = 626 }
+				}
+			}
+			if = {
+				limit = {
+					original_tag = DOC
+				}
+				set_cosmetic_tag = UNIFIED_SANGUIS_RIVER_DWARF
+			}
+			if = {
+				limit = {
+					original_tag = REP
+				}
+				set_cosmetic_tag = UNIFIED_SANGUIS_RIVER
+			}
+			if = {
+				limit = {
+					OR = {
+						original_tag = HRF
+						original_tag = IHS
+					}
+				}
+				set_cosmetic_tag = UNIFIED_SANGUIS_RIVER_THEOCRATIC
+			}
+			hidden_effect = {
+				101 = { add_core_of = ROOT }
+				129 = { add_core_of = ROOT }
+				199 = { add_core_of = ROOT }
+				200 = { add_core_of = ROOT }
+				221  = { add_core_of = ROOT }
+				626 = { add_core_of = ROOT }
+				627 = { add_core_of = ROOT }
+				628 = { add_core_of = ROOT }
+				# Addional Core
+				194 = { add_core_of = ROOT }
+				195 = { add_core_of = ROOT }
+				220 = { add_core_of = ROOT }
+				246 = { add_core_of = ROOT }
+				264 = { add_core_of = ROOT }
+				265 = { add_core_of = ROOT }
+				247 = { add_core_of = ROOT }
+			}
+			hidden_effect = { set_country_flag = form_sanguis_river_flag }
+		}
+		ai_will_do = {
+			base = 5
+		}
+	}
+
+	form_electrum_federation_defensive = {
+		icon = generic_form_nation
+		allowed = {
+			OR = {
+				original_tag = GSD
+				original_tag = SSD
+			}
+		}
+		available = {
+			is_subject = no
+			IF = { # Gold Falling
+				limit = { original_tag = SSD }
+				OR = {
+					232 = { NOT = { is_controlled_by = GSD } }
+					435 = { NOT = { is_controlled_by = GSD } }
+					436 = { NOT = { is_controlled_by = GSD } }
+					388 = { NOT = { is_controlled_by = GSD } }
+				}
+			}
+			IF = { # Silver Falling
+				limit = { original_tag = GSD }
+				OR = {
+					231 = { NOT = { is_controlled_by = SSD } }
+					423 = { NOT = { is_controlled_by = SSD } }
+					424 = { NOT = { is_controlled_by = SSD } }
+					459 = { NOT = { is_controlled_by = SSD } }
+					659 = { NOT = { is_controlled_by = SSD } }
+					660 = { NOT = { is_controlled_by = SSD } }
+				}
+			}
+		}
+		visible = {
+			OR = {
+				original_tag = GSD
+				original_tag = SSD
+			}
+			NOT = { has_global_flag = form_electrum_federation_flag }
+		}
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision form_electrum_federation"
+			set_cosmetic_tag = ELECTRUM_FEDERATION
+			IF = {
+				limit = { original_tag = GSD }
+				annex_country = { target = SSD transfer_troops = yes }
+			}
+			IF = {
+				limit = { original_tag = SSD }
+				annex_country = { target = GSD transfer_troops = yes }
+			}
+			hidden_effect = {
+				231 = { add_core_of = ROOT }
+				232 = { add_core_of = ROOT }
+				331 = { add_core_of = ROOT }
+				332 = { add_core_of = ROOT }
+				333 = { add_core_of = ROOT }
+				343 = { add_core_of = ROOT }
+				388 = { add_core_of = ROOT }
+				389 = { add_core_of = ROOT }
+				422 = { add_core_of = ROOT }
+				423 = { add_core_of = ROOT }
+				424 = { add_core_of = ROOT }
+				435 = { add_core_of = ROOT }
+				436 = { add_core_of = ROOT }
+				459 = { add_core_of = ROOT }
+				659 = { add_core_of = ROOT }
+				660 = { add_core_of = ROOT }
+			}
+			hidden_effect = { set_global_flag = form_electrum_federation_flag }
+		}
+		cost = 50
+		ai_will_do = {
+			base = 5
 			modifier = {
 				factor = 10
 				is_historical_focus_on = yes

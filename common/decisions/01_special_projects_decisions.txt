@@ -1,0 +1,70 @@
+special_projects = {
+    rebuild_grand_canal = {
+
+        icon = GFX_decision_generic_special_project
+
+        available = {
+            has_full_control_of_state = 97
+            num_of_civilian_factories > 15
+        }
+    
+        visible = {
+            has_global_flag = GRAND_CANAL_BLOCKED
+        }
+    
+        fire_only_once = no
+    
+        days_remove = 365
+    
+        cost = 120
+    
+        modifier = {
+            civilian_factory_use = 15
+        }
+    
+        remove_effect = {
+            if = {
+                limit = {
+                    has_full_control_of_state = 97
+                }
+                set_country_flag = rebuilt_suez
+                clr_global_flag = GRAND_CANAL_BLOCKED
+                #country_event = { id = wtt_news.42 hours = 6}
+            }
+        }
+
+        ai_will_do = {
+            factor = 1
+            modifier = {
+                add = -9999
+                pre_civilwar_trigger = yes
+            }
+            modifier = {
+                factor = 0 # Don't bother if your navy is weak AND not USA
+                has_navy_size = { size < 100 }
+                NOT = { tag = USA }
+            }
+            modifier = {
+                factor = -10 # Prioritize if Italy is being invaded and you can't get to the battlefront (no control of Gibraltar strait)
+                NOT = {
+                    OR = {
+                        has_full_control_of_state = 97
+                        any_allied_country = {
+                            has_full_control_of_state = 97
+                        }
+                    }
+                }
+                has_full_control_of_state = 97
+                NOT = { has_country_flag = blew_up_suez }
+            }
+            modifier = {
+                factor = -10 # Prioritize if UK
+                tag = USA
+            }
+            modifier = {
+                factor = 10 # Prioritize if not at war
+                has_war = no
+            }
+        }
+    }
+}
