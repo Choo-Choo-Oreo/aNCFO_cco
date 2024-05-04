@@ -323,9 +323,9 @@ calculate_maximum_divisions = {
 	}
 
 	# base unit count = population / 1000
-	divide_variable = { base_units = 100 }
+	divide_variable = { base_units = 30 } # Pop Infuance, Lower means Stronger 
 	set_variable = { base_population = base_units } #for the tooltip
-	multiply_variable = { base_states = 10 }
+	multiply_variable = { base_states = 0 } #This give a addional amount base off of states.
 	add_to_variable = { base_units = base_states }
 
 	# calculate the modifier -- 1 + [ ( industry - population ) / ( industry + population ) ]
@@ -337,24 +337,24 @@ calculate_maximum_divisions = {
 	divide_variable = { industry_factor = divisor }
 	add_to_variable = { industry_factor = 1 }
 	
-	multiply_variable = { industry_factor = 4.25 }
+	multiply_variable = { industry_factor = 3.1875 } # Industries Infuance, Lower means Weaker
 	
-	# minimum modifier -- x0.5
+	# minimum modifier -- x0.3
 	clamp_variable = { var = industry_factor min = 0.3 }
 
 	set_variable = { max_divisions = base_units }
 	multiply_variable = { max_divisions = industry_factor } 
 
-	# +15% for faction leaders
+	# +10.0% for faction leaders
 	if = {
 		limit = { is_faction_leader = yes }
-		multiply_variable = { max_divisions = 1.15 }
+		multiply_variable = { max_divisions = 1.10 }
 	}
 
-	# +25% for has war #add by ken
+	# +17.5% for has war #add by ken
 	if = {
 		limit = { has_war = yes }
-		multiply_variable = { max_divisions = 1.25 }
+		multiply_variable = { max_divisions = 1.175 }
 	}
 
 	# +10% per economy law level above civilian economy
@@ -366,8 +366,8 @@ calculate_maximum_divisions = {
 	set_variable = { lower_limit = num_owned_states }
 	clamp_variable = {
 		var = lower_limit
-		min = 100
-		max = 6000
+		min = 67
+		max = 10000
 	}
 
 	# apply the lower limit
@@ -376,7 +376,7 @@ calculate_maximum_divisions = {
 	clamp_variable = {
 		var = max_divisions
 		min = lower_limit
-		max = 6000
+		max = 10000
 	}
 
 	# add any specific bonuses to the limit
