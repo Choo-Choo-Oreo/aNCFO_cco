@@ -345,9 +345,18 @@ ideas = {
 			ai_will_do = {
    				factor = 1
 				modifier = {
+					# Ignore if high on manpower
+					factor = 0.5
+					manpower_per_military_factory > 5000
+				}
+				modifier = {
 					#Prio if low on manpower
 					factor = 20
-					manpower_per_military_factory <  1000
+					manpower_per_military_factory < 2000
+				}
+				modifier = {
+					factor = 0
+					NOT = { has_idea = volunteer_only }
 				}
 			}
 			
@@ -373,14 +382,20 @@ ideas = {
 			ai_will_do = {
    				factor = 1
 				modifier = {
+					# Ignore if high on manpower
+					factor = 0.5
+					manpower_per_military_factory > 3000
+				}
+
+				modifier = {
 					#Prio if low on manpower
 					factor = 20
 					manpower_per_military_factory <  800
 				}
 
 				modifier = {
-					factor = 3
-					has_manpower < 200000
+					factor = 0
+					NOT = { has_idea = limited_conscription }
 				}
 			}
 
@@ -427,10 +442,10 @@ ideas = {
 					factor = 0.5
 					manpower_per_military_factory >  1000
 				}
+
 				modifier = {
-					#Block has plenty manpower
 					factor = 0
-					manpower_per_military_factory >  3000
+					NOT = { has_idea = extensive_conscription }
 				}
 			}
 
@@ -478,9 +493,8 @@ ideas = {
 					manpower_per_military_factory >  1000
 				}
 				modifier = {
-					#Block has plenty manpower
 					factor = 0
-					manpower_per_military_factory >  5000
+					NOT = { has_idea = service_by_requirement }
 				}
 			}
 		
@@ -524,7 +538,7 @@ ideas = {
 					#Prio if low on manpower
 					factor = 20
 					manpower_per_military_factory <  500
-				}				
+				}
 				modifier = {
 					#Lower chance if has decent amount
 					factor = 0.5
@@ -534,6 +548,11 @@ ideas = {
 					#Block has plenty manpower
 					factor = 0
 					manpower_per_military_factory >  5000
+				}
+
+				modifier = {
+					factor = 0
+					NOT = { has_idea = all_adults_serve }
 				}
 			}
 
