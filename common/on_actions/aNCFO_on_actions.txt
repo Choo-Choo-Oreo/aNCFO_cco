@@ -311,14 +311,21 @@ on_actions = {
 	#		}
 	#	}
 	#}
-	on_daily = {
+	on_daily = { # 7 per Week
 	}
-	on_weekly = {
+	on_weekly = { # 4 per Month
 		effect = {
-			log = "[GetDateText]: [Root.GetName]: on_weekly: update_all_stances" update_all_stances = yes
+			IF = {
+				limit = { has_government = unitism }
+				log = "[GetDateText]: [Root.GetName]: on_weekly: update_unitism_fanaticism"
+				update_unitism_fanaticism = yes
+			}
+			log = "[GetDateText]: [Root.GetName]: on_weekly: update_ideological_dogmata_stance"
+			#update_religious_stance = yes # Update with Switch Religion to help with lag.
+			update_ideological_dogmata_stance = yes
 		}
 	}
-	on_monthly = {
+	on_monthly = { # 12 per Year
 		effect = { # Maps
 			IF = {
 				limit = { OR = { is_ai = no is_major = yes } }
