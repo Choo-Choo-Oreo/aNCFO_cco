@@ -857,6 +857,196 @@ bop_HHE_archard_vlad = {
 		}
 	#
 }
+industry_HHE_industrialize_the_cities = {
+	state_HHE_industrialization = {
+		icon = generic_construction
+		state_target = yes
+		on_map_mode = map_only
+		target_array = core_states
+
+		days_remove = 70
+		fire_only_once = no
+		cost = industrialize_ppcost
+
+		modifier = { civilian_factory_use = industrialize_civiliancost }
+
+		target_trigger = {
+			FROM = {
+				NOT = { has_state_flag = state_flag_HHE_industrialize_the_cities }
+				OR = {
+					has_state_category = large_town
+					has_state_category = city
+					has_state_category = large_city
+					has_state_category = metropolis
+					has_state_category = megalopolis
+				}
+				impassable = no
+				is_owned_by = ROOT
+			}
+		}
+		visible = {
+			original_tag = HHE
+			FROM = {
+				NOT = {
+					OR = {
+						AND = {
+							has_state_category = town
+							has_state_flag = state_flag_HHE_industrialize_the_cities
+						}
+						has_state_flag = state_flag_HHE_industrialize_the_cities 
+					}
+				}
+			}
+		}
+		available = {
+			FROM = {
+				if = {
+					limit = { has_state_category = large_town }
+					set_temp_variable = { industrialize_ppcost = 10 }
+					set_temp_variable = { industrialize_civiliancost = 3 }
+					ROOT = { num_of_civilian_factories_available_for_projects > 2 }
+				}
+				else_if = {
+					limit = { has_state_category = city }
+					set_temp_variable = { industrialize_ppcost = 20 }
+					set_temp_variable = { industrialize_civiliancost = 5 }
+					ROOT = { num_of_civilian_factories_available_for_projects > 4 }
+				}
+				else_if = {
+					limit = { has_state_category = large_city }
+					set_temp_variable = { industrialize_ppcost = 30 }
+					set_temp_variable = { industrialize_civiliancost = 7 }
+					ROOT = { num_of_civilian_factories_available_for_projects > 6 }
+				}
+				else_if = {
+					limit = { has_state_category = metropolis }
+					set_temp_variable = { industrialize_ppcost = 40 }
+					set_temp_variable = { industrialize_civiliancost = 10 }
+					ROOT = { num_of_civilian_factories_available_for_projects > 9 }
+				}
+				else_if = {
+					limit = { has_state_category = megalopolis }
+					set_temp_variable = { industrialize_ppcost = 50 }
+					set_temp_variable = { industrialize_civiliancost = 15 }
+					ROOT = { num_of_civilian_factories_available_for_projects > 14 }
+				}
+				hidden_trigger = {
+					OR = {
+						has_state_category = large_town
+						has_state_category = city
+						has_state_category = large_city
+						has_state_category = metropolis
+						has_state_category = megalopolis
+					}
+				}
+			}
+		}
+        complete_effect = {
+            log = "[GetDateText]: [Root.GetName]: Decision state_HHE_industrialization [FROM.state.GetName]"
+        }
+		remove_effect = {
+            log = "[GetDateText]: [Root.GetName]: Decision remove state_HHE_industrialization [FROM.state.GetName]"
+			FROM = {
+				set_state_flag = state_flag_HHE_industrialize_the_cities
+				if = {
+					limit = {
+						has_state_category = large_town
+					}
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = industrial_complex
+						level = 1
+						instant_build = yes
+					}
+				}
+				else_if = {
+					limit = {
+						has_state_category = city
+					}
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = industrial_complex
+						level = 2
+						instant_build = yes
+					}
+				}
+				else_if = {
+					limit = {
+						has_state_category = large_city
+					}
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = industrial_complex
+						level = 3
+						instant_build = yes
+					}
+				}
+				else_if = {
+					limit = {
+						has_state_category = metropolis
+					}
+					add_extra_state_shared_building_slots = 4
+					add_building_construction = {
+						type = industrial_complex
+						level = 4
+						instant_build = yes
+					}
+				}
+				else_if = {
+					limit = {
+						has_state_category = megalopolis
+					}
+					add_extra_state_shared_building_slots = 5
+					add_building_construction = {
+						type = industrial_complex
+						level = 5
+						instant_build = yes
+					}
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 2
+			modifier = {
+				add = 1
+				FROM = { has_state_category = large_town }
+			}
+			modifier = {
+				add = 1.5
+				FROM = { has_state_category = city }
+			}
+			modifier = {
+				add = 2
+				FROM = { has_state_category = large_city }
+			}
+			modifier = {
+				add = 2.5
+				FROM = { has_state_category = metropolis }
+			}
+			modifier = {
+				add = 3
+				FROM = { has_state_category = megalopolis }
+			}
+			modifier = {
+				factor = 0
+				has_political_power < 50
+			}
+			modifier = {
+				factor = 5
+				has_political_power > 50
+			}
+			modifier = {
+				factor = 5
+				has_political_power > 100
+			}
+			modifier = {
+				factor = 10
+				has_political_power > 200
+			}
+		}
+	}
+}
 railway_HHE_trans_continental = {
 	railway_HHE_trans_continental_railway = {
 		icon = generic_wreckers
