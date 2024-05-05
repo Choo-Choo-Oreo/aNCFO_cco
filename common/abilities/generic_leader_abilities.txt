@@ -21,19 +21,19 @@ ability = {
 		
 		ai_will_do = {
 			factor = -1
-			modifier = {
-				FROM = {
-					has_war_support > 0.1
-					command_power > 1.5
-				}
-				check_variable = { num_units_offensive_combats > 6 }
+			#modifier = {
+			#	FROM = {
+			#		has_war_support > 0.1
+			#		command_power > 1.5
+			#	}
+			#	check_variable = { num_units_offensive_combats > 6 }
 				
-				set_temp_variable = { temp = avg_offensive_combat_status }
-				check_variable = { temp > 0.45 }
-				check_variable = { ai_random > temp }
+			#	set_temp_variable = { temp = avg_offensive_combat_status }
+			#	check_variable = { temp > 0.45 }
+			#	check_variable = { ai_random > temp }
 				
-				add = 2
-			}
+			#	add = 2
+			#}
 		}
 		
 		cost = 0.22
@@ -53,7 +53,7 @@ ability = {
 			}
 		}
 	}
-		
+
 	last_stand = {
 		name = ABILITY_LAST_STAND
 		desc = ABILITY_LAST_STAND_DESC
@@ -88,22 +88,22 @@ ability = {
 		
 		ai_will_do = {
 			factor = -1
-			modifier = {
-				FROM = {
-					has_war_support > 0.4
-				}
+			#modifier = {
+			#	FROM = {
+			#		has_war_support > 0.4
+			#	}
 				
-				check_variable = { num_units_defensive_combats > 6 }
+			#	check_variable = { num_units_defensive_combats > 6 }
 				
-				set_temp_variable = { temp = avg_defensive_combat_status }
-				check_variable = { temp < 0.40 }
-				check_variable = { ai_random > temp }
+			#	set_temp_variable = { temp = avg_defensive_combat_status }
+			#	check_variable = { temp < 0.40 }
+			#	check_variable = { ai_random > temp }
 				
-				add = 2
-			}
+			#	add = 2
+			#}
 		}
 	}
-	
+
 	staff_office_plan = {
 		name = ABILITY_STAFF_OFFICE_PLAN
 		desc = ABILITY_STAFF_OFFICE_PLAN_DESC
@@ -126,20 +126,19 @@ ability = {
 		
 		ai_will_do = {
 			factor = -1
-			modifier = {
-				FROM = {
-					command_power > 2.0
-				}
-				check_variable = { num_units > 6 }
-				check_variable = { unit_ratio_ready_for_plan > 0.55 }
-				check_variable = { avg_unit_planning_ratio < 0.4 }
+			#modifier = {
+			#	FROM = {
+			#		command_power > 2.0
+			#	}
+			#	check_variable = { num_units > 6 }
+			#	check_variable = { unit_ratio_ready_for_plan > 0.55 }
+			#	check_variable = { avg_unit_planning_ratio < 0.4 }
 				
-				add = 2
-			}
+			#	add = 2
+			#}
 		}
 	}
-	
-	
+
 	siege_artillery = {
 		name = ABILITY_SIEGE_ARTILLERY
 		desc = ABILITY_SIEGE_ARTILLERY_DESC
@@ -177,9 +176,21 @@ ability = {
 				
 				add = 2
 			}
+			modifier = { # Added
+				FROM = {
+					has_war_support > 0.2
+					command_power > 3.0
+				}
+				check_variable = { num_units_offensive_combats > 6 }
+				
+				set_temp_variable = { temp = avg_offensive_combat_status }
+				check_variable = { temp > 0.45 }
+				check_variable = { ai_random > temp }
+				add = 0.5
+			}
 		}
 	}
-	
+
 	glider_planes = {
 		name = ABILITY_GLIDER_PLANES_ARTILLERY
 		desc = ABILITY_GLIDER_PLANES_ARTILLERY_DESC
@@ -200,6 +211,7 @@ ability = {
 		cost = 0.1
 		duration = 168
 	}
+
 	faster_naval_invasion_planning = {
 		name = ABILITY_FASTER_NAVAL_PLANNING
 		desc = ABILITY_FASTER_NAVAL_PLANNING_DESC
@@ -218,7 +230,7 @@ ability = {
 		cost = 0.1
 		duration = 168
 	}
-	
+
 	probing_attack = {
 		name = ABILITY_PROBING_ATTACK
 		desc = ABILITY_PROBING_ATTACK_DESC
@@ -239,7 +251,7 @@ ability = {
 		cost = 0.1
 		duration = -1
 	}
-	
+
 	makeshift_bridges = {
 		name = ABILITY_MAKESHIFT_BRIDGES
 		desc = ABILITY_MAKESHIFT_BRIDGES_DESC
@@ -272,9 +284,21 @@ ability = {
 				
 				add = 2
 			}
+			modifier = { # Added
+				FROM = {
+					has_war_support > 0.2
+					command_power > 3.0
+				}
+				check_variable = { num_units_offensive_combats > 6 }
+				
+				set_temp_variable = { temp = avg_offensive_combat_status }
+				check_variable = { temp > 0.45 }
+				check_variable = { ai_random > temp }
+				add = 0.5
+			}
 		}
 	}
-	
+
 	extra_suplies = {
 		name = ABILITY_EXTRA_SUPLIES
 		desc = ABILITY_EXTRA_SUPLIES_DESC
@@ -298,7 +322,7 @@ ability = {
 		duration = 168
 		cooldown = 504
 	}
-	
+
 	requisition_winter_gear = {
 		name = ABILITY_REQUISITION_WINTER_GEAR
 		desc = ABILITY_REQUISITION_WINTER_GEAR_DESC
@@ -320,17 +344,17 @@ ability = {
 		
 		ai_will_do = {
 			factor = -1
-			modifier = {
-				FROM = {
-					command_power > 2.0
-				}
-				check_variable = { num_units_on_climate@cold_climate > 8 }
-				set_temp_variable = { temp = avg_units_acclimation@cold_climate }
-				divide_temp_variable = { temp =  num_units }
-				check_variable = { temp < 0.5 }
+			#modifier = {
+			#	FROM = {
+			#		command_power > 2.0
+			#	}
+			#	check_variable = { num_units_on_climate@cold_climate > 8 }
+			#	set_temp_variable = { temp = avg_units_acclimation@cold_climate }
+			#	divide_temp_variable = { temp =  num_units }
+			#	check_variable = { temp < 0.5 }
 				
-				add = 2
-			}
+			#	add = 2
+			#}
 		}
 	}
 }
