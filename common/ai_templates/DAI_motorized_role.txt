@@ -1,17 +1,17 @@
-Generic_30w_motorized_role = {
+generic_motorized_role = {
 	roles = { motorized }
 	upgrade_prio = {
-		factor = 120
+		factor = 200
 	}
 	match_to_count = 0.9
 	
 	GENERIC_MOTORIZED_TEMPLATE_30 = {
 		enable = { 
 			NOT = {
-				AND = {
+				OR = {
 					num_of_military_factories < 20
 					has_tech = mechanised_infantry
-				}
+				}					
 			}
 		}
 		production_prio = { factor = 100 }
@@ -19,12 +19,11 @@ Generic_30w_motorized_role = {
 
 	# TEMPLATE
 		
-		target_width = 30
-		width_weight = 3
-		column_swap_factor = 0.01
+		column_swap_factor = 20
 		reinforce_prio = 1
 		
-		can_upgrade_in_field = { always = yes }
+		# workaround for a PDX bug https://forum.paradoxplaza.com/forum/threads/hoi-4-incremental-division-upgrade-does-not-work-in-most-cases.1414193/
+		can_upgrade_in_field = { always = no }
 		
 		target_template = {
 			weight = 1
@@ -33,14 +32,21 @@ Generic_30w_motorized_role = {
 			regiments = {
 				motorized = 10
 				mot_artillery_brigade = 3
-				mot_anti_tank_brigade = 1
+				mot_anti_air_brigade = 1
 			}
 
 			support = {
 				engineer = 1
 				mot_recon = 1
 				signal_company = 1
+				anti_tank = 1
+				logistics_company = 1
+				artillery = 1
 				anti_air = 1
+				maintenance_company = 1
+				signal_company = 1
+				rocket_artillery = 1
+				field_hospital = 1
 			}
 		}
 
@@ -48,25 +54,25 @@ Generic_30w_motorized_role = {
 			# REGIMENTS
 			motorized
 			mot_artillery_brigade
-			mot_anti_tank_brigade
+			mot_anti_air_brigade
 
 			# SUPPORT
-			signal_company
-			anti_air
-			engineer
-			mot_recon
-			maintenance_company
+			engineer 
+			mot_recon 
+			artillery 
+			anti_tank 
 			logistics_company 
+			anti_air 
+			maintenance_company 
+			signal_company 
+			rocket_artillery 
+			field_hospital 
 		}
 	}
 
 	GENERIC_MECHANIZED_TEMPLATE_30 = {
-	enable = { 
-			NOT = {
-				AND = {
-					num_of_military_factories < 40
-				}
-			}
+		enable = { 
+			num_of_military_factories > 39
 			has_tech = mechanised_infantry
 		}
 		production_prio = { factor = 100 }
@@ -80,7 +86,8 @@ Generic_30w_motorized_role = {
 		column_swap_factor = 0.01
 		reinforce_prio = 2
 		
-		can_upgrade_in_field = { always = yes }
+		# workaround for a PDX bug https://forum.paradoxplaza.com/forum/threads/hoi-4-incremental-division-upgrade-does-not-work-in-most-cases.1414193/
+		can_upgrade_in_field = { always = no }
 
 		target_template = {
 			weight = 1
@@ -88,29 +95,41 @@ Generic_30w_motorized_role = {
 
 			regiments = {
 				mechanized = 10
-				motorized_rocket_brigade = 3
-				mot_anti_tank_brigade = 1
+				mot_artillery_brigade = 3
+				mot_anti_air_brigade = 1
 			}
 
 			support = {
 				engineer = 1
-				mot_recon = 1
+				armored_car_recon = 1
 				signal_company = 1
+				anti_tank = 1
+				logistics_company = 1
 				anti_air = 1
+				maintenance_company = 1
+				artillery = 1
+				rocket_artillery = 1
+				field_hospital = 1
 			}
 		}
 
 		allowed_types = {
 			# REGIMENTS
 			mechanized
-			motorized_rocket_brigade 
-			mot_anti_tank_brigade
+			mot_artillery_brigade 
+			mot_anti_air_brigade
 
 			# SUPPORT
 			engineer 
-			mot_recon 
+			armored_car_recon 
 			signal_company 
+			anti_tank 
+			logistics_company 
 			anti_air 
+			maintenance_company 
+			artillery 
+			rocket_artillery 
+			field_hospital 
 		}
 	}
 }

@@ -1,10 +1,10 @@
-Generic_35w_armor_role = {
+generic_armor_role = {
 	roles = { armor_role }
 	upgrade_prio = { 
-		factor = 200
+		factor = 150
 	}
 		
-	match_to_count = 1.0 			###was 0.55
+	match_to_count = 0.9			###was 0.55
 	
 	
 	#####################################################
@@ -19,24 +19,22 @@ Generic_35w_armor_role = {
 					has_tech = basic_medium_tank_chassis
 					has_tech = basic_medium_tank
 				}
+				num_of_military_factories > 9
 			}
 		}
 		production_prio = { factor = 100 }
-		upgrade_prio = { factor = 100 }
-		
-		replace_with = GENERIC_MEDIUM_ARMOR_BASIC_30W_A
-	
+		upgrade_prio = { factor = 150 }
+			
 	# TEMPLATE
-		target_width = 30
-		width_weight = 1
-		column_swap_factor = 2
+		column_swap_factor = 20
 		reinforce_prio = 1
 		
-		can_upgrade_in_field = { always = yes }
+		# workaround for a PDX bug https://forum.paradoxplaza.com/forum/threads/hoi-4-incremental-division-upgrade-does-not-work-in-most-cases.1414193/
+		can_upgrade_in_field = { always = no }
 
 		target_template = {
-			weight = 0.95
-			match_value = 10000
+			weight = 0.9
+			match_value = 30000 
 
 			regiments = {
 				light_armor = 8
@@ -56,8 +54,6 @@ Generic_35w_armor_role = {
 			# REGIMENTS
 			light_armor
 			motorized
-			mot_anti_air_brigade
-			mot_anti_tank_brigade
 
 			# SUPPORT
 			artillery
@@ -76,45 +72,38 @@ Generic_35w_armor_role = {
 	GENERIC_MEDIUM_ARMOR_BASIC_25W_A = {
 		enable = { 
 			NOT = {
-				AND = {
-					OR = {
-						has_tech = improved_medium_tank_chassis
-						has_tech = improved_medium_tank
-					}
-					has_tech = mechanised_infantry
-				}
-			}
-			AND = {
 				OR = {
-					has_tech = basic_medium_tank_chassis
-					has_tech = basic_medium_tank
+					has_tech = improved_medium_tank_chassis
+					has_tech = improved_medium_tank
 				}
+				has_tech = mechanised_infantry
+			}
+			OR = {
+				has_tech = basic_medium_tank_chassis
+				has_tech = basic_medium_tank
 			}
 			num_of_military_factories > 20
 			num_of_military_factories < 50
 		}
 		production_prio = { factor = 100 }
-		upgrade_prio = { factor = 100 }
+		upgrade_prio = { factor = 150 }
 		
-		replace_with = GENERIC_MEDIUM_ARMOR_BASIC_25W_B
 	
 	# TEMPLATE
-		target_width = 27
-		width_weight = 3
-		column_swap_factor = 2
+		column_swap_factor = 20
 		reinforce_prio = 2
 		
-		can_upgrade_in_field = { always = yes }
+		# workaround for a PDX bug https://forum.paradoxplaza.com/forum/threads/hoi-4-incremental-division-upgrade-does-not-work-in-most-cases.1414193/
+		can_upgrade_in_field = { always = no }
 
 		target_template = {
-			weight = 0.95
-			match_value = 10000
+			weight = 0.9
+			match_value = 30000
 
 			regiments = {
-				medium_armor = 5
-				motorized = 5
-				mot_artillery_brigade = 2
-				mot_anti_tank_brigade = 1
+				medium_armor = 7
+				mot_artillery_brigade = 1
+				motorized = 4
 			}
 
 			support = {
@@ -130,7 +119,6 @@ Generic_35w_armor_role = {
 			# REGIMENTS
 			medium_armor
 			motorized
-			mot_anti_tank_brigade
 			mot_artillery_brigade
 
 			# SUPPORT
@@ -144,13 +132,12 @@ Generic_35w_armor_role = {
 	
 	GENERIC_MEDIUM_ARMOR_BASIC_25W_B = {
 		enable = { 
-			AND = {
-				OR = {
-					has_tech = improved_medium_tank_chassis
-					has_tech = improved_medium_tank
-				}
-				has_tech = mechanised_infantry
+			OR = {
+				has_tech = improved_medium_tank_chassis
+				has_tech = improved_medium_tank
 			}
+			has_tech = mechanised_infantry
+			
 			NOT = {
 				OR = {
 					has_tech = main_battle_tank_chassis
@@ -161,26 +148,24 @@ Generic_35w_armor_role = {
 			num_of_military_factories < 50
 		}
 		production_prio = { factor = 100 }
-		upgrade_prio = { factor = 100 }
+		upgrade_prio = { factor = 150 }
 		
 	
 	# TEMPLATE
-		target_width = 27
-		width_weight = 3
-		column_swap_factor = 2
+		column_swap_factor = 0.02
 		reinforce_prio = 2
 		
-		can_upgrade_in_field = { always = yes }
+		# workaround for a PDX bug https://forum.paradoxplaza.com/forum/threads/hoi-4-incremental-division-upgrade-does-not-work-in-most-cases.1414193/
+		can_upgrade_in_field = { always = no }
 
 		target_template = {
-			weight = 0.95
-			match_value = 10000
+			weight = 0.9
+			match_value = 30000
 
 			regiments = {
-				medium_armor = 5
-				mechanized = 5
-				mot_artillery_brigade = 2
-				mot_anti_tank_brigade = 1
+				medium_armor = 7
+				medium_tank_destroyer_brigade = 1
+				mechanized = 4
 			}
 
 			support = {
@@ -196,8 +181,7 @@ Generic_35w_armor_role = {
 			# REGIMENTS
 			medium_armor
 			mechanized
-			mot_anti_tank_brigade
-			mot_artillery_brigade
+			medium_tank_destroyer_brigade
 
 			# SUPPORT
 			anti_air 
@@ -215,39 +199,33 @@ Generic_35w_armor_role = {
 	GENERIC_MEDIUM_ARMOR_BASIC_30W_A = {
 		enable = { 
 			NOT = {
-				AND = {
-					OR = {
-						has_tech = improved_medium_tank_chassis
-						has_tech = improved_medium_tank
-					}
-					has_tech = mechanised_infantry
-				}
-			}
-			AND = {
 				OR = {
-					has_tech = basic_medium_tank_chassis
-					has_tech = basic_medium_tank
+					has_tech = improved_medium_tank_chassis
+					has_tech = improved_medium_tank
 				}
+				has_tech = mechanised_infantry
+			}
+			OR = {
+				has_tech = basic_medium_tank_chassis
+				has_tech = basic_medium_tank
 			}
 			num_of_military_factories > 49
 			num_of_military_factories < 100
 		}
 		production_prio = { factor = 100 }
-		upgrade_prio = { factor = 100 }
+		upgrade_prio = { factor = 150 }
 		
-		replace_with = GENERIC_MEDIUM_ARMOR_BASIC_30W_B
-	
+		
 	# TEMPLATE
-		target_width = 30
-		width_weight = 3
-		column_swap_factor = 2
+		column_swap_factor = 20
 		reinforce_prio = 2
 		
-		can_upgrade_in_field = { always = yes }
+		# workaround for a PDX bug https://forum.paradoxplaza.com/forum/threads/hoi-4-incremental-division-upgrade-does-not-work-in-most-cases.1414193/
+		can_upgrade_in_field = { always = no }
 
 		target_template = {
-			weight = 0.95
-			match_value = 10000
+			weight = 0.9
+			match_value = 30000
 
 			regiments = {
 				medium_armor = 7
@@ -260,6 +238,11 @@ Generic_35w_armor_role = {
 				logistics_company = 1
 				signal_company = 1
 				maintenance_company = 1
+				artillery = 1
+				engineer = 1
+				anti_tank = 1
+				rocket_artillery = 1
+				field_hospital = 1
 			}
 		}
 
@@ -267,7 +250,7 @@ Generic_35w_armor_role = {
 			# REGIMENTS
 			medium_armor
 			motorized
-			mot_anti_tank_brigade
+			
 			
 
 			# SUPPORT
@@ -276,18 +259,22 @@ Generic_35w_armor_role = {
 			logistics_company 
 			signal_company 
 			maintenance_company 
+			artillery 
+			engineer 
+			anti_tank 
+			rocket_artillery 
+			field_hospital 
 		}
 	}
 	
 	GENERIC_MEDIUM_ARMOR_BASIC_30W_B = {
 		enable = { 
-			AND = {
-				OR = {
-					has_tech = improved_medium_tank_chassis
-					has_tech = improved_medium_tank
-				}
-				has_tech = mechanised_infantry
+			OR = {
+				has_tech = improved_medium_tank_chassis
+				has_tech = improved_medium_tank
 			}
+			has_tech = mechanised_infantry
+			
 			NOT = {
 				OR = {
 					has_tech = main_battle_tank_chassis
@@ -298,20 +285,19 @@ Generic_35w_armor_role = {
 			num_of_military_factories < 100
 		}
 		production_prio = { factor = 100 }
-		upgrade_prio = { factor = 100 }
+		upgrade_prio = { factor = 150 }
 		
 	
 	# TEMPLATE
-		target_width = 30
-		width_weight = 3
-		column_swap_factor = 2
+		column_swap_factor = 20
 		reinforce_prio = 2
 		
-		can_upgrade_in_field = { always = yes }
+		# workaround for a PDX bug https://forum.paradoxplaza.com/forum/threads/hoi-4-incremental-division-upgrade-does-not-work-in-most-cases.1414193/
+		can_upgrade_in_field = { always = no }
 
 		target_template = {
-			weight = 0.95
-			match_value = 10000
+			weight = 0.9
+			match_value = 30000
 
 			regiments = {
 				medium_armor = 7
@@ -324,6 +310,11 @@ Generic_35w_armor_role = {
 				logistics_company = 1
 				signal_company = 1
 				maintenance_company = 1
+				artillery = 1
+				engineer = 1
+				anti_tank = 1
+				rocket_artillery = 1
+				field_hospital = 1
 			}
 		}
 
@@ -338,7 +329,12 @@ Generic_35w_armor_role = {
 			armored_car_recon 
 			logistics_company 
 			signal_company 
-			maintenance_company
+			maintenance_company 
+			artillery 
+			engineer 
+			anti_tank 
+			rocket_artillery 
+			field_hospital
 		}
 	}
 	
@@ -349,38 +345,32 @@ Generic_35w_armor_role = {
 	GENERIC_MEDIUM_ARMOR_BASIC_35W_A = {
 		enable = { 
 			NOT = {
-				AND = {
-					OR = {
-						has_tech = improved_medium_tank_chassis
-						has_tech = improved_medium_tank
-					}
-					has_tech = mechanised_infantry
-				}
-			}
-			AND = {
 				OR = {
-					has_tech = basic_medium_tank_chassis
-					has_tech = basic_medium_tank
+					has_tech = improved_medium_tank_chassis
+					has_tech = improved_medium_tank
 				}
+				has_tech = mechanised_infantry
+			}
+			OR = {
+				has_tech = basic_medium_tank_chassis
+				has_tech = basic_medium_tank
 			}
 			num_of_military_factories > 99
 		}
 		production_prio = { factor = 100 }
-		upgrade_prio = { factor = 100 }
+		upgrade_prio = { factor = 150 }
 		
-		replace_with = GENERIC_MEDIUM_ARMOR_BASIC_35W_B
 	
 	# TEMPLATE
-		target_width = 35
-		width_weight = 3
-		column_swap_factor = 2
+		column_swap_factor = 20
 		reinforce_prio = 2
 		
-		can_upgrade_in_field = { always = yes }
+		# workaround for a PDX bug https://forum.paradoxplaza.com/forum/threads/hoi-4-incremental-division-upgrade-does-not-work-in-most-cases.1414193/
+		can_upgrade_in_field = { always = no }
 
 		target_template = {
-			weight = 0.95
-			match_value = 10000
+			weight = 0.9
+			match_value = 30000
 
 			regiments = {
 				medium_armor = 8
@@ -394,6 +384,11 @@ Generic_35w_armor_role = {
 				logistics_company = 1
 				signal_company = 1
 				maintenance_company = 1
+				artillery = 1
+				engineer = 1
+				anti_tank = 1
+				rocket_artillery = 1
+				field_hospital = 1
 			}
 		}
 
@@ -410,18 +405,22 @@ Generic_35w_armor_role = {
 			logistics_company 
 			signal_company 
 			maintenance_company 
+			artillery 
+			engineer 
+			anti_tank 
+			rocket_artillery 
+			field_hospital 
 		}
 	}
 	
 	GENERIC_MEDIUM_ARMOR_BASIC_35W_B = {
 		enable = { 
-			AND = {
-				OR = {
-					has_tech = improved_medium_tank_chassis
-					has_tech = improved_medium_tank
-				}
-				has_tech = mechanised_infantry
+			OR = {
+				has_tech = improved_medium_tank_chassis
+				has_tech = improved_medium_tank
 			}
+			has_tech = mechanised_infantry
+			
 			NOT = {
 				OR = {
 					has_tech = main_battle_tank_chassis
@@ -431,20 +430,19 @@ Generic_35w_armor_role = {
 			num_of_military_factories > 99
 		}
 		production_prio = { factor = 100 }
-		upgrade_prio = { factor = 100 }
+		upgrade_prio = { factor = 150 }
 		
 	
 	# TEMPLATE
-		target_width = 35
-		width_weight = 3
-		column_swap_factor = 2
+		column_swap_factor = 20
 		reinforce_prio = 2
 		
-		can_upgrade_in_field = { always = yes }
+		# workaround for a PDX bug https://forum.paradoxplaza.com/forum/threads/hoi-4-incremental-division-upgrade-does-not-work-in-most-cases.1414193/
+		can_upgrade_in_field = { always = no }
 
 		target_template = {
-			weight = 0.95
-			match_value = 10000
+			weight = 0.9
+			match_value = 30000
 
 			regiments = {
 				medium_armor = 8
@@ -458,6 +456,11 @@ Generic_35w_armor_role = {
 				logistics_company = 1
 				signal_company = 1
 				maintenance_company = 1
+				artillery = 1
+				engineer = 1
+				anti_tank = 1
+				rocket_artillery = 1
+				field_hospital = 1
 			}
 		}
 
@@ -472,7 +475,12 @@ Generic_35w_armor_role = {
 			armored_car_recon 
 			logistics_company 
 			signal_company 
-			maintenance_company
+			maintenance_company 
+			artillery 
+			engineer 
+			anti_tank 
+			rocket_artillery 
+			field_hospital
 		}
 	}
 	
@@ -482,29 +490,26 @@ Generic_35w_armor_role = {
 	
 	GENERIC_MODERN_ARMOR_BASIC_40W = {                     ### Way Better unit	
 		enable = { 
-			AND = {
-				OR = {
-					has_tech = main_battle_tank_chassis  
-					has_tech = main_battle_tank 
-				}
-				has_tech = mechanised_infantry
-				num_of_military_factories > 74
+			OR = {
+				has_tech = main_battle_tank_chassis  
+				has_tech = main_battle_tank 
 			}
+			has_tech = mechanised_infantry
+			num_of_military_factories > 74
 		}
 		production_prio = { factor = 100 }
-		upgrade_prio = { factor = 100 }
+		upgrade_prio = { factor = 150 }
 
 	# TEMPLATE
-		target_width = 40
-		width_weight = 3
-		column_swap_factor = 2
+		column_swap_factor = 20
 		reinforce_prio = 2
 		
-		can_upgrade_in_field = { always = yes }
+		# workaround for a PDX bug https://forum.paradoxplaza.com/forum/threads/hoi-4-incremental-division-upgrade-does-not-work-in-most-cases.1414193/
+		can_upgrade_in_field = { always = no }
 
 		target_template = {
-			weight = 0.95
-			match_value = 10000
+			weight = 0.9
+			match_value = 30000
 
 
 			regiments = {
@@ -519,6 +524,11 @@ Generic_35w_armor_role = {
 				logistics_company = 1
 				signal_company = 1
 				maintenance_company = 1
+				armored_car_recon = 1
+				artillery = 1
+				anti_tank = 1
+				rocket_artillery = 1
+				field_hospital = 1
 			}
 		}
 
@@ -535,6 +545,11 @@ Generic_35w_armor_role = {
 			logistics_company 
 			signal_company 
 			maintenance_company 
+			armored_car_recon 
+			artillery 
+			anti_tank 
+			rocket_artillery 
+			field_hospital  
 		}
 	}
 }
