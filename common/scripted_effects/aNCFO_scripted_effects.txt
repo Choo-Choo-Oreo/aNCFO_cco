@@ -122,11 +122,24 @@
 			set_country_flag = ideological_religion
 		}
 		else_if = {
-			#limit = { AND = { NOT = { has_government = unitism } has_country_flag = nihilism_religion_archived } } # Just to have a default.
-			limit = { AND = { NOT = { has_government = unitism } } } # Just to have a default.
+			limit = { AND = { NOT = { has_government = unitism } has_country_flag = nihilism_religion_archived } }
 			clr_country_flag = nihilism_religion_archived
 			set_country_flag = nihilism_religion
 			clr_country_flag = ideological_religion
+		}
+		else_if = { # Just to have a default.
+			limit = { NOT = { OR = {
+				has_country_flag = harmonainus_religion
+				has_country_flag = harmonainus_reformed_religion
+				has_country_flag = pullus_religion
+				has_country_flag = emperor_personality_religion
+				has_country_flag = thalassaus_religion
+				has_country_flag = ager_montis_religion
+				has_country_flag = animaekin_religion
+				has_country_flag = yellow_reg_religion
+				has_country_flag = secular_religion
+			} } }
+			set_country_flag = nihilism_religion
 		}
 	}
 	update_religious_stance = {
@@ -180,8 +193,23 @@
 			limit = { has_country_flag = secular_religion }
 			add_ideas = secular_religion_law
 		}
-		else_if = {
-			#limit = { has_country_flag = nihilism_religion } # Just to have a default.
+		else_if = { # Just to have a default.
+			limit = {
+				OR = {
+					has_country_flag = nihilism_religion
+					NOT = { OR = {
+						has_country_flag = harmonainus_religion
+						has_country_flag = harmonainus_reformed_religion
+						has_country_flag = pullus_religion
+						has_country_flag = emperor_personality_religion
+						has_country_flag = thalassaus_religion
+						has_country_flag = ager_montis_religion
+						has_country_flag = animaekin_religion
+						has_country_flag = yellow_reg_religion
+						has_country_flag = secular_religion
+					} }
+				}
+			}
 			add_ideas = nihilism_religion_law
 		}
 		force_update_map_mode = { # We update with it here to reduce lag.
