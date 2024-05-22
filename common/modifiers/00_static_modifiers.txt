@@ -143,10 +143,10 @@ night = { # On province. Multiplied by amount of darkness.
 resistance_effect_base = {
 }
 resistance_effect = {
-	#local_supplies = -0.5
-	#local_intel_to_enemies = 1
-	#local_factory_sabotage = 0.75
-	#attrition = 0.25
+	local_supplies = -0.5
+	local_intel_to_enemies = 1
+	local_factory_sabotage = 0.75
+	attrition = 0.25
 }
 # For compliance base + effect * compliance_level will be applied as a modifier.
 compliance_effect_base = {
@@ -163,7 +163,7 @@ non_core = {
 non_core_controller = {
 	local_building_slots_factor = -0.5
 	local_factories = -0.75
-	#local_manpower = -0.75
+	local_manpower = -0.75
 	local_resources = -0.65
 }
 lacking_consumer_goods = {
@@ -226,89 +226,151 @@ attache_sent = {
 }
 # Difficulty modifiers
 diff_very_easy_player = {
+	political_power_factor = 0.10
+	production_factory_max_efficiency_factor = 0.10
+	production_lack_of_resource_penalty_factor = -0.10
+	max_planning = 0.10
+
+	#research_speed_factor = 0.1
+	no_supply_grace = 48
+	
+	army_fuel_consumption_factor = -0.25
+	air_fuel_consumption_factor = -0.25
+	navy_fuel_consumption_factor = -0.25
 }
 diff_easy_player = {
+	political_power_factor = 0.05
+	production_factory_max_efficiency_factor = 0.05
+	production_lack_of_resource_penalty_factor = -0.05
+	max_planning = 0.05
+	
+	#research_speed_factor = 0.05
+	no_supply_grace = 24
+
+	army_fuel_consumption_factor = -0.15
+	air_fuel_consumption_factor = -0.15
+	navy_fuel_consumption_factor = -0.15
 }
 diff_normal_player = {
 }
 diff_hard_player = {
+	production_factory_max_efficiency_factor = -0.05
+	industrial_capacity_factory_factor = -0.05
+	production_lack_of_resource_penalty_factor = 0.10
+	max_planning_factor = -0.10
 }
 diff_very_hard_player = {
+	production_factory_max_efficiency_factor = -0.10
+	industrial_capacity_factory = -0.10
+	industrial_capacity_factory_factor = -0.05
+	production_lack_of_resource_penalty_factor = 0.20
+	max_planning_factor = -0.20
 }
+
 diff_very_easy_ai = {
+	peace_score_ratio_transferred_to_players = 0.25
 }
 diff_easy_ai = {
-	political_power_factor = 0.15
-	attrition = -0.05
-	line_change_production_efficiency_factor = 0.1
-	production_factory_efficiency_gain_factor = 0.1
-	army_fuel_consumption_factor = -0.1
-	air_fuel_consumption_factor = -0.1
- 	navy_fuel_consumption_factor = -0.1
-	research_speed_factor = 0.05
-	industrial_capacity_factory = 0.1
+	peace_score_ratio_transferred_to_players = 0.10
 }
 diff_normal_ai = {
-	political_power_factor = 0.3
-	attrition = -0.1
-	line_change_production_efficiency_factor = 0.2
-	production_factory_efficiency_gain_factor = 0.2
-	army_fuel_consumption_factor = -0.2
-	air_fuel_consumption_factor = -0.2
- 	navy_fuel_consumption_factor = -0.2
-	research_speed_factor = 0.075
-	industrial_capacity_factory = 0.2
+	no_supply_grace = 18
 }
 diff_hard_ai = {
-	political_power_factor = 0.45
-	attrition = -0.15
-	line_change_production_efficiency_factor = 0.3
-	production_factory_efficiency_gain_factor = 0.3
-	army_fuel_consumption_factor = -0.35
-	air_fuel_consumption_factor = -0.35
- 	navy_fuel_consumption_factor = -0.35
-	research_speed_factor = 0.10
-	industrial_capacity_factory = 0.35
-	industrial_capacity_dockyard = 0.1
+	# fightyness
+	no_supply_grace = 36
+
+	# defensivness
+	attrition = -0.05
+
+	# production/research
+	line_change_production_efficiency_factor = 0.20
+	production_factory_efficiency_gain_factor = 0.20
+	research_speed_factor = 0.025
+	industrial_capacity_factory = 0.10
+	industrial_capacity_dockyard = 0.10
+
+	political_power_factor = 0.20
+
+	# fuel
+	army_fuel_consumption_factor = -0.10 # -0.25 to -0.10
+ 	navy_fuel_consumption_factor = -0.10 # -0.25 to -0.10
+	air_fuel_consumption_factor  = -0.10 # -0.25 to -0.10
 }
 diff_very_hard_ai = {
-	political_power_factor = 0.6
-	attrition = -0.2
-	line_change_production_efficiency_factor = 0.4
-	production_factory_efficiency_gain_factor = 0.4
-	army_fuel_consumption_factor = -0.5
-	air_fuel_consumption_factor = -0.5
- 	navy_fuel_consumption_factor = -0.5
-	research_speed_factor = 0.15
-	industrial_capacity_factory = 0.5
-	industrial_capacity_dockyard = 0.2
+	# fightyness
+	no_supply_grace = 72
+
+	# defensivness
+	attrition = -0.10
+
+	# production/research
+	line_change_production_efficiency_factor = 0.40
+	production_factory_efficiency_gain_factor = 0.40
+	research_speed_factor = 0.05
+	industrial_capacity_factory = 0.20
+	industrial_capacity_dockyard = 0.20
+
+	political_power_factor = 0.50
+
+	# fuel
+	army_fuel_consumption_factor = -0.25 #  -0.50 to -0.25
+ 	navy_fuel_consumption_factor = -0.25 #  -0.50 to -0.25
+	air_fuel_consumption_factor  = -0.25 #  -0.50 to -0.25
 }
 diff_strong_ai_generic = {
 	# fightyness
-	dig_in_speed_factor = 0.25
-	planning_speed = 0.25
-	supply_consumption_factor = -0.15
+	invasion_preparation = -0.10
+	planning_speed = 0.10 # 0.25 to 0.10
+	dig_in_speed_factor = 0.10 # 0.25 to 0.10
 	army_morale_factor = 0.15
-	land_reinforce_rate = 0.02
+	land_reinforce_rate = 0.025
 
+	supply_combat_penalties_on_core_factor = -0.05 # -0.10 to -0.05
+	supply_consumption_factor = -0.10 # -0.25 to -0.10
+	out_of_supply_factor = -0.05 # -0.10 to -0.05
+	no_supply_grace = 24
+
+	# defensivness
+	intelligence_agency_defense = 1.25
+	army_core_attack_factor = 0.025 # 0.15 to 0.025
+	army_core_defence_factor = 0.025 # 0.15 to 0.025
+
+	pocket_penalty = -0.25
 	attrition = -0.075
 
+	# naval
+	critical_receive_chance = -0.025
+	naval_damage_factor = 0.025
+	naval_defense_factor = 0.025
+	naval_enemy_fleet_size_ratio_penalty_factor = 0.025
+	naval_torpedo_damage_reduction_factor = 0.025
+	naval_light_gun_hit_chance_factor  = 0.025
+	naval_heavy_gun_hit_chance_factor  = 0.025
+	repair_speed_factor = 0.10
+	sub_retreat_speed = 0.025
+	submarine_attack = 0.025
+
 	# production/research
+	local_factories = 0.025
 	production_factory_max_efficiency_factor = 0.15
 	production_factory_efficiency_gain_factor = 0.25
-	industrial_capacity_dockyard = 0.25
+	industrial_capacity_factory = 0.20
+	industrial_capacity_dockyard = 0.20
 	political_power_factor = 0.25
-	#research_speed_factor = 0.1 #CCO AI already gets one
-	#production_lack_of_resource_penalty_factor = -0.3 #
+	research_speed_factor = 0.025 # 0.10 to 0.025
+	production_lack_of_resource_penalty_factor = -0.05 # -0.30 to -0.05
+	consumer_goods_expected_value = -0.025
+
 	# fuel
-	army_fuel_consumption_factor = -0.10 #
-	air_fuel_consumption_factor = -0.10 #
- 	navy_fuel_consumption_factor = -0.10 #
+	army_fuel_consumption_factor = -0.10 # 0.40 to 0.10
+	air_fuel_consumption_factor = -0.10 # 0.40 to 0.10
+ 	navy_fuel_consumption_factor = -0.10 # 0.40 to 0.10
 
 	# xp gain
-	experience_gain_air_factor = 0.50
-	experience_gain_army_factor = 0.50
-	experience_gain_navy_factor = 0.50
+	experience_gain_air_factor = 0.50 # 0.25 to 0.50
+	experience_gain_army_factor = 0.50 # 0.25 to 0.50
+	experience_gain_navy_factor = 0.50 # 0.25 to 0.50
 	air_mission_xp_gain_factor = 0.25
 	experience_gain_army_unit_factor = 0.10
 	experience_gain_navy_unit_factor = 0.10
