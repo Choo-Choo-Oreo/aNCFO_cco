@@ -24,8 +24,9 @@ https://steamcommunity.com/workshop/filedetails/?id=2994645469
 	Better Mechanics : Air/Land/Sea Designs (AI)   11 Apr 2024
 	Better Mechanics : Battalion Limiter   6 Jan 2024
 	Better Mechanics : Combat   10 Apr 2024
-	Better Mechanics : Divisional AI   5 Apr 2024   6.1
+	Better Mechanics : Divisional AI   5 Apr 2024   6.5
 	Better Mechanics : Division Designer   18 Mar 2024
+	Better Mechanics : Frontline AI   May 20 2024   6.5
 	Better Mechanics : More Spies   Oct 10 2023
 	Better Mechanics : National Economy   7 Apr 2024
 	Better Mechanics : Production   18 Mar 2024
