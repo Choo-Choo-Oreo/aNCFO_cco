@@ -1,0 +1,181 @@
+HHE_make_sure_MRC_is_ganked_before_we_move = {
+	allowed = { original_tag = HHE }
+	enable = {
+		has_war_with = MRC
+		MRC = { has_capitulated = no }
+		date < 1734.2.1
+	}
+	abort = {
+		OR = {
+			MRC = {
+				has_capitulated = yes
+                days_since_capitulated > 8
+			}
+			count_triggers = {
+				amount = 4
+				12  = { CONTROLLER = { has_war_with = ROOT } }
+				74  = { CONTROLLER = { has_war_with = ROOT } }
+				75  = { CONTROLLER = { has_war_with = ROOT } }
+				335 = { CONTROLLER = { has_war_with = ROOT } }
+				336 = { CONTROLLER = { has_war_with = ROOT } }
+				337 = { CONTROLLER = { has_war_with = ROOT } }
+				338 = { CONTROLLER = { has_war_with = ROOT } }
+			}
+			date > 1734.2.1
+		}
+	}
+
+	ai_strategy = {
+		type = declare_war
+		id = "RVV"
+		value = -2000
+	}
+	ai_strategy = {
+		type = declare_war
+		id = "CPV"
+		value = -2000
+	}
+	ai_strategy = {
+		type = declare_war
+		id = "GSD"
+		value = -2000
+	}
+	ai_strategy = {
+		type = declare_war
+		id = "SSD"
+		value = -2000
+	}
+}
+
+HHE_my_precisioussss = {
+	allowed = { original_tag = HHE }
+	enable = {
+		date < 1727.6.1
+	}
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = send_lend_lease_desire
+		id = HBB
+		value = -999
+	}
+	ai_strategy = {
+		type = send_lend_lease_desire
+		id = HCR
+		value = -999
+	}
+	ai_strategy = {
+		type = send_lend_lease_desire
+		id = HER
+		value = -999
+	}
+	ai_strategy = {
+		type = send_lend_lease_desire
+		id = HET
+		value = -999
+	}
+	ai_strategy = {
+		type = send_lend_lease_desire
+		id = HLF
+		value = -999
+	}
+	ai_strategy = {
+		type = send_lend_lease_desire
+		id = HNO
+		value = -999
+	}
+	ai_strategy = {
+		type = send_lend_lease_desire
+		id = HPP
+		value = -999
+	}
+	ai_strategy = {
+		type = send_lend_lease_desire
+		id = HRF
+		value = -999
+	}
+	ai_strategy = {
+		type = send_lend_lease_desire
+		id = HSP
+		value = -999
+	}
+	ai_strategy = {
+		type = send_lend_lease_desire
+		id = HST
+		value = -999
+	}
+	ai_strategy = {
+		type = send_lend_lease_desire
+		id = HTP
+		value = -999
+	}
+	ai_strategy = {
+		type = send_lend_lease_desire
+		id = HUM
+		value = -999
+	}
+	ai_strategy = {
+		type = send_lend_lease_desire
+		id = HUP
+		value = -999
+	}
+	ai_strategy = {
+		type = send_lend_lease_desire
+		id = HWA
+		value = -999
+	}
+}
+
+HHE_enable_invasion_of_MRC = {
+	allowed = { is_harmonainus_imperious = yes }
+	enable = {
+		# try to invade MRC if things are looking not so bad
+		OR = {
+			date < 1734.4.4
+			AND = {
+				MJU = { has_capitulated = yes } # uh oh, maybe we need more units against MJU
+				UFS = { has_capitulated = yes } # uh oh, maybe we need more units against UFS
+			}
+		}
+	}
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = invade
+		id = "MRC"
+		value = 10
+	}
+}
+
+HHE_normandy_buffer = {
+	allowed = { original_tag = HHE }
+	enable = {
+		#is_historical_focus_on = yes
+		UFS = { has_capitulated = yes }
+		date < 1734.1.1
+	}
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = put_unit_buffers
+		states = {
+			105
+			106
+			110
+			114
+			115
+			123
+			124
+		}
+		ratio = 0.11
+		area = normandy_landing_zone
+		subtract_invasions_from_need = no
+		subtract_fronts_from_need = yes
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = garrison
+		value = 10
+	}
+}

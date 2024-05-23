@@ -315,36 +315,41 @@ max_100_naval_factories = {
 		}
 	}
 
-	default_equipment_production = {
+	minor_equipment_production = {
 		enable = {
-			always = yes
+			is_major = no
 		}
 		abort_when_not_enabled = yes
 		# Land equipment factors
 			ai_strategy = {
-				type = equipment_production_factor
-				id = motorized
-				value = 12
+				type = role_ratio
+				id = garrison
+				value = 4
 			}
 			ai_strategy = {
-				type = equipment_production_factor
-				id = armor
-				value = 12
+				type = role_ratio
+				id = paratroopers
+				value = 0
 			}
 			ai_strategy = {
-				type = equipment_production_factor
-				id = anti_tank
-				value = 20
+				type = role_ratio
+				id = mountaineers
+				value = 5
 			}
 			ai_strategy = {
-				type = equipment_production_factor
-				id = anti_air
-				value = 50
+				type = role_ratio
+				id = marines
+				value = 5
 			}
 			ai_strategy = {
-				type = equipment_production_factor
-				id = artillery
-				value = 85 #20 to 40
+				type = role_ratio
+				id = cavalry
+				value = -100
+			}
+			ai_strategy = {
+				type = role_ratio
+				id = infantry
+				value = 88
 			}
 			ai_strategy = {
 				type = equipment_production_factor
@@ -359,13 +364,55 @@ max_100_naval_factories = {
 			#ai_strategy = {
 			#	type = equipment_production_min_factories
 			#	id = support_equipment
-			#	value = 3
+			#	value = 1
 			#}
-			ai_strategy = {
-				type = equipment_production_min_factories
-				id = artillery
-				value = 3
-			}
+			# Arty equipment factors
+				ai_strategy = {
+					type = equipment_production_factor
+					id = artillery
+					value = 80 # 100 to 80
+				}
+				ai_strategy = {
+					type = equipment_production_factor
+					id = anti_air
+					value = 23 # 35 to 23, less for minor.
+				}
+				ai_strategy = {
+					type = equipment_production_factor
+					id = anti_tank
+					value = 10 # 20 to 10, less for minor.
+				}
+				ai_strategy = {
+					type = equipment_production_min_factories
+					id = artillery
+					value = 2
+				}
+			# Tank equipment factors
+				ai_strategy = {
+					type = role_ratio
+					id = motorized
+					value = 2
+				}
+				ai_strategy = {
+					type = equipment_production_factor
+					id = motorized
+					value = 12
+				}
+				ai_strategy = {
+					type = role_ratio
+					id = mechanized
+					value = 0
+				}
+				ai_strategy = {
+					type = role_ratio
+					id = armor
+					value = 3
+				}
+				ai_strategy = {
+					type = equipment_production_factor
+					id = armor
+					value = 12
+				}
 		# Air equipment factors
 			ai_strategy = {
 				type = equipment_production_factor
@@ -403,8 +450,326 @@ max_100_naval_factories = {
 				value = 24
 			}
 		# Naval equipment factors
-
+			ai_strategy = {
+				type = unit_ratio
+				id = capital_ship
+				value = 4
+			}
+			ai_strategy = {
+				type = unit_ratio
+				id = screen_ship
+				value = 7
+			}
+			# Special equipment factors
+			ai_strategy = { # Added to railway gun define (Set to 0 by default, increased in default strategies)
+				type = railway_gun_divisions_ratio
+				value = 1
+			}
 		# End of equipment production
+	}
+	major_equipment_production = {
+		enable = {
+			is_major = yes
+		}
+		abort_when_not_enabled = yes
+		# Land equipment factors
+			ai_strategy = {
+				type = role_ratio
+				id = garrison
+				value = 4
+			}
+			ai_strategy = {
+				type = role_ratio
+				id = paratroopers
+				value = 0
+			}
+			ai_strategy = {
+				type = role_ratio
+				id = mountaineers
+				value = 5
+			}
+			ai_strategy = {
+				type = role_ratio
+				id = marines
+				value = 5
+			}
+			ai_strategy = {
+				type = role_ratio
+				id = cavalry
+				value = -100
+			}
+			ai_strategy = {
+				type = role_ratio
+				id = infantry
+				value = 70
+			}
+			ai_strategy = {
+				type = equipment_production_factor
+				id = infantry
+				value = 5
+			}
+			#ai_strategy = {
+			#	type = equipment_production_min_factories
+			#	id = support_equipment
+			#	value = 3
+			#}
+			ai_strategy = {
+				type = equipment_production_min_factories
+				id = train
+				value = 1 # Always have some production of trains
+			}
+			# Arty equipment factors
+				ai_strategy = {
+					type = equipment_production_factor
+					id = artillery
+					value = 80 # 100 to 80
+				}
+				ai_strategy = {
+					type = equipment_production_factor
+					id = anti_air
+					value = 35 # 50 to 35
+				}
+				ai_strategy = {
+					type = equipment_production_factor
+					id = anti_tank
+					value = 20
+				}
+				ai_strategy = {
+					type = equipment_production_min_factories
+					id = artillery
+					value = 4
+				}
+				ai_strategy = {
+					type = equipment_production_min_factories # Build these up over time, don't stall
+					id = anti_air
+					value = 2
+				}
+				ai_strategy = {
+					type = equipment_production_min_factories
+					id = anti_tank
+					value = 1
+				}
+			# Tank equipment factors
+				ai_strategy = {
+					type = role_ratio
+					id = motorized
+					value = 2
+				}
+				ai_strategy = {
+					type = equipment_production_factor
+					id = motorized
+					value = 12
+				}
+				ai_strategy = {
+					type = role_ratio
+					id = mechanized
+					value = 0
+				}
+				ai_strategy = {
+					type = role_ratio
+					id = armor
+					value = 3
+				}
+				ai_strategy = {
+					type = equipment_production_factor
+					id = armor
+					value = 12
+				}
+		# Air equipment factors
+			ai_strategy = {
+				type = equipment_production_factor
+				id = fighter
+				value = 72
+			}
+			ai_strategy = {
+				type = unit_ratio
+				id = cv_fighter
+				value = 8
+			}
+			ai_strategy = {
+				type = equipment_production_factor
+				id = cas
+				value = 64
+			}
+			ai_strategy = {
+				type = equipment_production_factor
+				id = naval_bomber
+				value = 24
+			}
+			ai_strategy = {
+				type = unit_ratio
+				id = cv_naval_bomber
+				value = 8
+			}
+			ai_strategy = {
+				type = equipment_production_factor
+				id = tactical_bomber
+				value = 24
+			}
+			ai_strategy = {
+				type = equipment_production_factor
+				id = strategic_bomber
+				value = 24
+			}
+		# Naval equipment factors
+			ai_strategy = {
+				type = unit_ratio
+				id = capital_ship
+				value = 4
+			}
+			ai_strategy = {
+				type = unit_ratio
+				id = screen_ship
+				value = 7
+			}
+			# Special equipment factors
+			ai_strategy = { # Added to railway gun define (Set to 0 by default, increased in default strategies)
+				type = railway_gun_divisions_ratio
+				value = 1
+			}
+		# End of equipment production
+	}
+
+	default_equipment_production_min_factories = {
+		enable = {
+			OR = {
+				has_war_with_major = yes
+				AND = {
+					is_major = yes
+					has_war = yes
+				}
+			}
+		}
+		abort_when_not_enabled = yes
+		# Land equipment factors
+			ai_strategy = {
+				type = equipment_production_min_factories
+				id = motorized
+				value = 2
+			}
+			ai_strategy = {
+				type = equipment_production_min_factories
+				id = armor
+				value = 4
+			}
+		# Air equipment factors
+			ai_strategy = {
+				type = equipment_production_min_factories
+				id = fighter
+				value = 5
+			}
+			ai_strategy = {
+				type = equipment_production_min_factories
+				id = cas
+				value = 5
+			}
+		# End of equipment production
+	}
+
+	coastal_equipment_production_min_factories = {
+		enable = {
+			OR = {
+				has_war_with_major = yes
+				AND = {
+					is_major = yes
+					has_war = yes
+				}
+			}
+			any_state = {
+		        is_owned_by = ROOT
+		        is_coastal = yes
+		    }
+		}
+		abort_when_not_enabled = yes
+		# Air equipment factors
+			ai_strategy = {
+				type = unit_ratio
+				id = cv_fighter
+				value = 8
+			}
+			ai_strategy = {
+				type = equipment_production_min_factories
+				id = naval_bomber
+				value = 1
+			}
+			ai_strategy = {
+				type = unit_ratio
+				id = cv_naval_bomber
+				value = 8
+			}
+		# End of equipment production
+	}
+
+	default_anti_armor = {
+		enable = {
+			ai_wants_divisions > 5 # Decreasing the amount of motorized the AI wants
+			any_enemy_country = {
+				ROOT = {
+					estimated_intel_max_armor = {
+						tag = PREV
+						value > 25
+					}
+				}
+			}
+		}
+		abort = {
+			ai_wants_divisions < 6 # Decreasing the amount of motorized the AI wants
+		}
+
+		ai_strategy = {
+			type = role_ratio
+			id = motorized
+			value = 15
+		}
+	}
+
+	default_armored_production = {
+		enable = {
+			date > 1727.8.1
+			ai_wants_divisions > 10 #Decreasing the amount of tanks the AI wants
+		}
+		abort = {
+			OR = {
+				ai_wants_divisions < 10 #Decreasing the amount of tanks the AI wants
+			}
+		}
+
+		ai_strategy = {
+			type = role_ratio
+			id = armor
+			value = 2
+		}
+	}
+
+	default_halt_light_armor_production_in_transitioning = {
+		enable = {
+			has_template_majority_unit = medium_armor
+			OR = {
+				has_equipment = { light_tank_chassis > 600 }
+				date > 1727.8.1
+			}
+		}
+		abort = {
+			always = no  # once we start we never go back to light armor
+		}
+
+		ai_strategy = {
+			type = equipment_variant_production_factor
+			id = light_tank_chassis
+			value = -100
+		}
+		
+		ai_strategy = {
+			type = equipment_variant_production_factor
+			id = medium_tank_chassis
+			value = 50
+		}
+		
+		ai_strategy = {
+			type = equipment_production_factor
+			id = artillery
+			value = -20 # Downprio this for some more tanks # -50 to -20
+		}
 	}
 
 	default_stockpile_management = {
