@@ -16,40 +16,12 @@
 		}
 	
 		ai_will_do = {
-			base = 5
+			base = 2
 		}
 
 		completion_reward = {
 			log = "[GetDateText]: [Root.GetName]: Focus MRC_political_lobbying"
 			add_political_power = 100
-		}
-	}
-
-	shared_focus = { # Support the Progressive Movement
-		id = MRC_support_progressive_movement
-		icon = GFX_focus_unknown_political
-		mutually_exclusive = { focus = MRC_hamper_progressive_movement }
-		prerequisite = { focus = MRC_political_lobbying }
-		relative_position_id = MRC_political_lobbying
-		x = -1
-		y = 1
-	
-		cost = 3
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = no
-
-		available = {
-		}
-		bypass = {
-		}
-	
-		ai_will_do = {
-			base = 5
-		}
-
-		completion_reward = {
-			log = "[GetDateText]: [Root.GetName]: Focus MRC_progressive_movement"
 		}
 	}
 
@@ -73,21 +45,23 @@
 		}
 	
 		ai_will_do = {
-			base = 5
+			base = 2
+			modifier = { factor = 0.67 }
 		}
 
 		completion_reward = {
 			log = "[GetDateText]: [Root.GetName]: Focus MRC_hamper_progressive_movement"
+			country_event = MRC_election.0
 		}
 	}
 
-	shared_focus = { # Priority of Local Governments
-		id = MRC_local_governance
+	shared_focus = { # Support the Progressive Movement
+		id = MRC_support_progressive_movement
 		icon = GFX_focus_unknown_political
-		mutually_exclusive = { focus = MRC_federal_governance }
+		mutually_exclusive = { focus = MRC_hamper_progressive_movement }
 		prerequisite = { focus = MRC_political_lobbying }
 		relative_position_id = MRC_political_lobbying
-		x = 3
+		x = -1
 		y = 1
 	
 		cost = 3
@@ -101,11 +75,13 @@
 		}
 	
 		ai_will_do = {
-			base = 5
+			base = 2
+			modifier = { factor = 1.67 }
 		}
 
 		completion_reward = {
-			log = "[GetDateText]: [Root.GetName]: Focus MRC_local_governance"
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_progressive_movement"
+			country_event = MRC_election.1
 		}
 	}
 
@@ -129,18 +105,50 @@
 		}
 	
 		ai_will_do = {
-			base = 5
+			base = 2
+			modifier = { factor = 1.67 }
 		}
 
 		completion_reward = {
 			log = "[GetDateText]: [Root.GetName]: Focus MRC_federal_governance"
+			country_event = MRC_election.2
 		}
 	}
 
-	shared_focus = { # Regulate the Mercanaries
-		id = MRC_regulate_mercenaries
+	shared_focus = { # Priority of Local Governments
+		id = MRC_local_governance
 		icon = GFX_focus_unknown_political
-		mutually_exclusive = { focus = MRC_empower_mercenaries }
+		mutually_exclusive = { focus = MRC_federal_governance }
+		prerequisite = { focus = MRC_political_lobbying }
+		relative_position_id = MRC_political_lobbying
+		x = 3
+		y = 1
+	
+		cost = 3
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		available = {
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			base = 2
+			modifier = { factor = 0.67 }
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_local_governance"
+			country_event = MRC_election.3
+		}
+	}
+
+	shared_focus = { # Empower the Mercanaries
+		id = MRC_empower_mercenaries
+		icon = GFX_focus_unknown_political
+		mutually_exclusive = { focus = MRC_regulate_mercenaries }
 		prerequisite = { focus = MRC_support_progressive_movement focus = MRC_hamper_progressive_movement focus = MRC_local_governance focus = MRC_federal_governance }
 		relative_position_id = MRC_political_lobbying
 		x = -3
@@ -157,18 +165,20 @@
 		}
 	
 		ai_will_do = {
-			base = 5
+			base = 2
+			modifier = { factor = 0.67 }
 		}
 
 		completion_reward = {
-			log = "[GetDateText]: [Root.GetName]: Focus MRC_regulate_mercenaries"
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_empower_mercenaries"
+			country_event = MRC_election.4
 		}
 	}
 
-	shared_focus = { # Empower the Mercanaries
-		id = MRC_empower_mercenaries
+	shared_focus = { # Regulate the Mercanaries
+		id = MRC_regulate_mercenaries
 		icon = GFX_focus_unknown_political
-		mutually_exclusive = { focus = MRC_regulate_mercenaries }
+		mutually_exclusive = { focus = MRC_empower_mercenaries }
 		prerequisite = { focus = MRC_support_progressive_movement focus = MRC_hamper_progressive_movement focus = MRC_local_governance focus = MRC_federal_governance }
 		relative_position_id = MRC_political_lobbying
 		x = -1
@@ -185,39 +195,13 @@
 		}
 	
 		ai_will_do = {
-			base = 5
+			base = 2
+			modifier = { factor = 1.67 }
 		}
 
 		completion_reward = {
-			log = "[GetDateText]: [Root.GetName]: Focus MRC_empower_mercenaries"
-		}
-	}
-
-	shared_focus = { # Crackdown on Corrupt Guilds
-		id = MRC_against_the_guilds
-		icon = GFX_focus_unknown_political
-		mutually_exclusive = { focus = MRC_side_with_guilds }
-		prerequisite = { focus = MRC_support_progressive_movement focus = MRC_hamper_progressive_movement focus = MRC_local_governance focus = MRC_federal_governance }
-		relative_position_id = MRC_political_lobbying
-		x = 3
-		y = 2
-	
-		cost = 3
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = no
-
-		available = {
-		}
-		bypass = {
-		}
-	
-		ai_will_do = {
-			base = 5
-		}
-
-		completion_reward = {
-			log = "[GetDateText]: [Root.GetName]: Focus MRC_against_the_guilds"
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_regulate_mercenaries"
+			country_event = MRC_election.5
 		}
 	}
 
@@ -241,16 +225,169 @@
 		}
 	
 		ai_will_do = {
-			base = 5
+			base = 2
+			modifier = { factor = 1.67 }
 		}
 
 		completion_reward = {
 			log = "[GetDateText]: [Root.GetName]: Focus MRC_side_with_guilds"
+			country_event = MRC_election.6
 		}
 	}
+
+	shared_focus = { # Crackdown on Corrupt Guilds
+		id = MRC_against_the_guilds
+		icon = GFX_focus_unknown_political
+		mutually_exclusive = { focus = MRC_side_with_guilds }
+		prerequisite = { focus = MRC_support_progressive_movement focus = MRC_hamper_progressive_movement focus = MRC_local_governance focus = MRC_federal_governance }
+		relative_position_id = MRC_political_lobbying
+		x = 3
+		y = 2
+	
+		cost = 3
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		available = {
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			base = 2
+			modifier = { factor = 0.67 }
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_against_the_guilds"
+			country_event = MRC_election.7
+		}
+	}
+# Foreign Intervention Branch - Left
+	shared_focus = { # Intervention Focus Foreign Policy
+		id = MRC_foreign_intervention_focus
+		icon = GFX_focus_unknown_political
+		mutually_exclusive = { focus = MRC_internal_balanced_focus focus = MRC_foreign_neutrality_focus }
+		prerequisite = { focus = MRC_political_lobbying }
+		relative_position_id = MRC_political_lobbying
+		x = -2
+		y = 3
+	
+		cost = 9
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		available = {
+			#custom_trigger_tooltip = {
+			#	tooltip = historically_locked_tt
+			#	is_historical_focus_on = no
+			#}
+			power_balance_value = {
+				id = power_balance_MRC_political_balance
+			    value < -0.099
+			}
+			OR = { has_completed_focus = MRC_support_progressive_movement has_completed_focus = MRC_hamper_progressive_movement }
+			OR = { has_completed_focus = MRC_local_governance has_completed_focus = MRC_federal_governance }
+			OR = { has_completed_focus = MRC_regulate_mercenaries has_completed_focus = MRC_empower_mercenaries }
+			OR = { has_completed_focus = MRC_against_the_guilds has_completed_focus = MRC_side_with_guilds }
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			base = 2
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_foreign_intervention_focus"
+			add_political_power = 50
+		}
+	}
+
+	shared_focus = { # Peninsula Annexation
+		id = MRC_peninsula_annexation
+		icon = GFX_focus_unknown_political
+		prerequisite = { focus = MRC_foreign_intervention_focus }
+		relative_position_id = MRC_foreign_intervention_focus
+		x = -3
+		y = 1
+	
+		cost = 10
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+	
+		available = {
+			count_triggers = {
+			    amount = 4
+			    12 = { resistance < 5 }
+				74 = { resistance < 5 }
+				76 = { resistance < 5 }
+				336 = { resistance < 5 }
+				337 = { resistance < 5 }
+				338 = { resistance < 5 }
+			}
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			base = 2
+			modifier = {
+				factor = 25
+				is_historical_focus_on = yes
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_loosen_protectionist_tariffs"
+			12 = { add_core_of = ROOT }
+			74 = { add_core_of = ROOT }
+			76 = { add_core_of = ROOT }
+			336 = { add_core_of = ROOT }
+			337 = { add_core_of = ROOT }
+			338 = { add_core_of = ROOT }
+		}
+	}
+
+	shared_focus = { # Southern Financial Assistance
+		id = MRC_southern_financial_help
+		icon = GFX_
+		prerequisite = { focus = MRC_foreign_intervention_focus }
+		relative_position_id = MRC_foreign_intervention_focus
+		x = -7
+		y = 1
+	
+		cost = 10
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+	
+		available = {
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			base = 2
+			modifier = {
+				factor = 15
+				is_historical_focus_on = yes
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_southern_financial_help"
+			add_war_support = 0.05
+			add_political_power = -50
+		}
+	}
+	# Southern Financial Assistance End
 # Progressive Neutrality Branch - Right
 	shared_focus = { # Neutrality Focus Foreign Diplomacy
-		id = MRC_neutrality_focus
+		id = MRC_foreign_neutrality_focus
 		icon = GFX_focus_unknown_political
 		mutually_exclusive = { focus = MRC_foreign_intervention_focus focus = MRC_internal_balanced_focus }
 		prerequisite = { focus = MRC_political_lobbying }
@@ -264,9 +401,13 @@
 		available_if_capitulated = no
 	
 		available = {
-			is_power_balance_in_range = {
+			#custom_trigger_tooltip = {
+			#	tooltip = historically_locked_tt
+			#	is_historical_focus_on = no
+			#}
+			power_balance_value = {
 				id = power_balance_MRC_political_balance
-				range > reactionary_established
+			    value > 0.099
 			}
 			OR = { has_completed_focus = MRC_support_progressive_movement has_completed_focus = MRC_hamper_progressive_movement }
 			OR = { has_completed_focus = MRC_local_governance has_completed_focus = MRC_federal_governance }
@@ -285,19 +426,65 @@
 		}
 
 		completion_reward = {
-			log = "[GetDateText]: [Root.GetName]: Focus MRC_neutrality_focus"
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_foreign_neutrality_focus"
 			add_political_power = 25
 			add_war_support = -0.15
 			add_ideas = MRC_trade_neutrality
 		}
 	}
 
+	shared_focus = { # Peninsula Assimilation
+		id = MRC_peninsula_assimilation
+		icon = GFX_focus_unknown_political
+		prerequisite = { focus = MRC_foreign_neutrality_focus }
+		relative_position_id = MRC_foreign_neutrality_focus
+		x = 3
+		y = 1
+	
+		cost = 10
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+	
+		available = {
+			count_triggers = {
+			    amount = 4
+			    12 = { compliance > 40 }
+				74 = { compliance > 40 }
+				76 = { compliance > 40 }
+				336 = { compliance > 40 }
+				337 = { compliance > 40 }
+				338 = { compliance > 40 }
+			}
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			base = 2
+			modifier = {
+				factor = 25
+				is_historical_focus_on = yes
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_loosen_protectionist_tariffs"
+			12 = { add_core_of = ROOT }
+			74 = { add_core_of = ROOT }
+			76 = { add_core_of = ROOT }
+			336 = { add_core_of = ROOT }
+			337 = { add_core_of = ROOT }
+			338 = { add_core_of = ROOT }
+		}
+	}
+
 	shared_focus = { # Southern Military Withdrawal
 		id = MRC_southern_retreat
 		icon = GFX_
-		prerequisite = { focus = MRC_neutrality_focus }
-		relative_position_id = MRC_neutrality_focus
-		x = 5
+		prerequisite = { focus = MRC_foreign_neutrality_focus }
+		relative_position_id = MRC_foreign_neutrality_focus
+		x = 7
 		y = 1
 	
 		cost = 10
@@ -311,22 +498,19 @@
 		}
 	
 		ai_will_do = {
-			base = 5
+			base = 2
 		}
 
 		completion_reward = {
 			log = "[GetDateText]: [Root.GetName]: Focus MRC_southern_retreat"
 			add_war_support = -0.05
 			add_stability = 0.10
-			12 = { add_core_of = ROOT }
-			74 = { add_core_of = ROOT }
-			76 = { add_core_of = ROOT }
-			336 = { add_core_of = ROOT }
-			337 = { add_core_of = ROOT }
-			338 = { add_core_of = ROOT }
+			132 = { owner = { transfer_state = 250 } }
+			133 = { owner = { transfer_state = 249 } }
+			173 = { owner = { transfer_state = 252 } }
 		}
 	}
-
+	# Southern Military Withdrawal Start
 		shared_focus = { # Reform the government
 			id = MRC_reform_government
 			icon = GFX_
@@ -346,7 +530,7 @@
 			}
 		
 			ai_will_do = {
-				base = 5
+				base = 2
 			}
 
 			completion_reward = {
@@ -379,7 +563,7 @@
 			}
 		
 			ai_will_do = {
-				base = 5
+				base = 2
 			}
 
 			completion_reward = {
@@ -419,7 +603,7 @@
 			}
 		
 			ai_will_do = {
-				base = 5
+				base = 2
 			}
 
 			completion_reward = {
@@ -447,7 +631,7 @@
 			}
 		
 			ai_will_do = {
-				base = 5
+				base = 2
 			}
 
 			completion_reward = {
@@ -476,7 +660,7 @@
 			}
 		
 			ai_will_do = {
-				base = 5
+				base = 2
 			}
 
 			completion_reward = {
@@ -489,8 +673,8 @@
 			}
 		}
 
-		shared_focus = { # The Freedom of Research
-			id = MRC_nuclear_research
+		shared_focus = { # Aborroas Project
+			id = MRC_aborroas_project
 			icon = GFX_focus_MRC_nuclear
 			prerequisite = { focus = MRC_freedom_of_research }
 			relative_position_id = MRC_freedom_of_research
@@ -508,7 +692,7 @@
 			}
 		
 			ai_will_do = {
-				base = 5
+				base = 2
 			}
 
 			completion_reward = {
@@ -542,7 +726,7 @@
 			}
 		
 			ai_will_do = {
-				base = 5
+				base = 2
 			}
 
 			completion_reward = {
@@ -570,7 +754,7 @@
 			}
 		
 			ai_will_do = {
-				base = 5
+				base = 2
 			}
 
 			completion_reward = {
@@ -599,7 +783,7 @@
 			}
 		
 			ai_will_do = {
-				base = 5
+				base = 2
 			}
 
 			completion_reward = {
@@ -608,206 +792,15 @@
 			}
 		}
 	# Southern Military Withdrawal End
-# Merchant-Republicism Equilibrium Branch - Middle
-	shared_focus = { # Balanced Focus Internal Policy
-		id = MRC_internal_balanced_focus
-		icon = GFX_focus_unknown_political
-		mutually_exclusive = { focus = MRC_foreign_intervention_focus focus = MRC_neutrality_focus }
-		prerequisite = { focus = MRC_political_lobbying }
-		relative_position_id = MRC_political_lobbying
-		x = 0
-		y = 3
-	
-		cost = 9
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = no
-
-		available = {
-			custom_trigger_tooltip = {
-				tooltip = historically_locked_tt
-				is_historical_focus_on = no
-			}
-			is_power_balance_in_range = {
-				id = power_balance_MRC_political_balance
-				range > reactionary_established
-			}
-			is_power_balance_in_range = {
-				id = power_balance_MRC_political_balance
-				range < progressive_established
-			}
-			OR = { has_completed_focus = MRC_support_progressive_movement has_completed_focus = MRC_hamper_progressive_movement }
-			OR = { has_completed_focus = MRC_local_governance has_completed_focus = MRC_federal_governance }
-			OR = { has_completed_focus = MRC_regulate_mercenaries has_completed_focus = MRC_empower_mercenaries }
-			OR = { has_completed_focus = MRC_against_the_guilds has_completed_focus = MRC_side_with_guilds }
-		}
-		bypass = {
-		}
-	
-		ai_will_do = {
-			base = 5
-		}
-
-		completion_reward = {
-			log = "[GetDateText]: [Root.GetName]: Focus MRC_internal_balanced_focus"
-			add_political_power = 50
-		}
-	}
-
-	shared_focus = { # Grand Canal trade Deal
-		id = MRC_canal_trade_deal
-		icon = GFX_focus_unknown_political
-		prerequisite = { focus = MRC_home_islands_buildup }
-		prerequisite = { focus = MRC_neutrality_focus focus = MRC_internal_balanced_focus }
-		relative_position_id = MRC_neutrality_focus
-		x = 0
-		y = 3
-	
-		cost = 10
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = no
-	
-		available = {
-		}
-		bypass = {
-		}
-	
-		ai_will_do = {
-			base = 5
-		}
-	
-		complete_tooltip = {
-			custom_effect_tooltip = NEGOTIATE_GRAND_CANAL
-		}
-		completion_reward = {
-			log = "[GetDateText]: [Root.GetName]: Focus MRC_canal_trade_deal"
-			custom_effect_tooltip = NEGOTIATE_GRAND_CANAL
-			set_country_flag = MRC_negotiate_grand_canal ### Old flag was "MRC_negotiate_grand_canal" which was crashing the game? (New flag is "MRC_nGotia_canal") Longest base game flag "ENG_trade_unions_demand_construction_safety_legislation_done_flag" so it cant be length. ### We also switch to global flag rather than country. Did do shitz ###
-		}
-	}
-
-	shared_focus = { # Foreign Trade Policies
-		id = MRC_foreign_trade
-		icon = GFX_focus_unknown_political
-		prerequisite = { focus = MRC_merchents_outpost }
-		prerequisite = { focus = MRC_foreign_intervention_focus focus = MRC_internal_balanced_focus }
-		relative_position_id = MRC_foreign_intervention_focus
-		x = 0
-		y = 3
-	
-		cost = 10
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = no
-	
-		available = {
-		}
-		bypass = {
-		}
-	
-		ai_will_do = {
-			base = 5
-			modifier = {
-				factor = 25
-				is_historical_focus_on = yes
-			}
-		}
-
-		completion_reward = {
-			log = "[GetDateText]: [Root.GetName]: Focus MRC_foreign_trade"
-		}
-	}
-# Foreign Intervention Branch - Left
-	shared_focus = { # Intervention Focus Foreign Policy
-		id = MRC_foreign_intervention_focus
-		icon = GFX_focus_unknown_political
-		mutually_exclusive = { focus = MRC_internal_balanced_focus focus = MRC_neutrality_focus }
-		prerequisite = { focus = MRC_political_lobbying }
-		relative_position_id = MRC_political_lobbying
-		x = -2
-		y = 3
-	
-		cost = 9
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = no
-
-		available = {
-			custom_trigger_tooltip = {
-				tooltip = historically_locked_tt
-				is_historical_focus_on = no
-			}
-			is_power_balance_in_range = {
-				id = power_balance_MRC_political_balance
-				range < progressive_established
-			}
-			OR = { has_completed_focus = MRC_support_progressive_movement has_completed_focus = MRC_hamper_progressive_movement }
-			OR = { has_completed_focus = MRC_local_governance has_completed_focus = MRC_federal_governance }
-			OR = { has_completed_focus = MRC_regulate_mercenaries has_completed_focus = MRC_empower_mercenaries }
-			OR = { has_completed_focus = MRC_against_the_guilds has_completed_focus = MRC_side_with_guilds }
-		}
-		bypass = {
-		}
-	
-		ai_will_do = {
-			base = 5
-		}
-
-		completion_reward = {
-			log = "[GetDateText]: [Root.GetName]: Focus MRC_foreign_intervention_focus"
-			add_political_power = 50
-		}
-	}
-
-	shared_focus = { # Southern Financial Assistance
-		id = MRC_southern_financial_help
-		icon = GFX_
-		prerequisite = { focus = MRC_foreign_intervention_focus }
-		relative_position_id = MRC_foreign_intervention_focus
-		x = -5
-		y = 1
-	
-		cost = 10
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = no
-	
-		available = {
-		}
-		bypass = {
-		}
-	
-		ai_will_do = {
-			base = 5
-			modifier = {
-				factor = 15
-				is_historical_focus_on = yes
-			}
-		}
-
-		completion_reward = {
-			log = "[GetDateText]: [Root.GetName]: Focus MRC_southern_financial_help"
-			add_war_support = 0.05
-			add_political_power = -50
-			12 = { add_core_of = ROOT }
-			74 = { add_core_of = ROOT }
-			76 = { add_core_of = ROOT }
-			336 = { add_core_of = ROOT }
-			337 = { add_core_of = ROOT }
-			338 = { add_core_of = ROOT }
-		}
-	}
-	# Southern Financial Assistance End
-# Industry Development Branch
+# Early Industry Development Branch
 	shared_focus = { # Industral Buildup Policies
 		id = MRC_industral_buildup_actions
 		icon = GFX_focus_unknown_industry
-		prerequisite = { focus = MRC_foreign_intervention_focus focus = MRC_neutrality_focus }
+		prerequisite = { focus = MRC_foreign_intervention_focus focus = MRC_internal_balanced_focus focus = MRC_foreign_neutrality_focus }
 		x = 0
 		y = 4
 	
-		cost = 10
+		cost = 5
 		cancel_if_invalid = yes
 		continue_if_invalid = no
 		available_if_capitulated = no
@@ -818,7 +811,7 @@
 		}
 	
 		ai_will_do = {
-			base = 5
+			base = 2
 			modifier = {
 				factor = 30
 				is_historical_focus_on = yes
@@ -827,6 +820,7 @@
 
 		completion_reward = {
 			log = "[GetDateText]: [Root.GetName]: Focus MRC_industral_buildup_actions"
+			unlock_decision_tooltip = urbanize_state_MRC
 			add_timed_idea = {
 				idea = MRC_homeland_buildup
 				days = 360
@@ -838,12 +832,12 @@
 		id = MRC_merchents_outpost
 		icon = GFX_focus_unknown_industry
 		prerequisite = { focus = MRC_industral_buildup_actions }
-		prerequisite = { focus = MRC_foreign_intervention_focus }
+		prerequisite = { focus = MRC_foreign_intervention_focus focus = MRC_internal_balanced_focus }
 		relative_position_id = MRC_industral_buildup_actions
 		x = -1
 		y = 1
 	
-		cost = 15
+		cost = 10
 		cancel_if_invalid = yes
 		continue_if_invalid = no
 		available_if_capitulated = no
@@ -854,7 +848,7 @@
 		}
 	
 		ai_will_do = {
-			base = 5
+			base = 2
 			modifier = {
 				factor = 20
 				is_historical_focus_on = yes
@@ -892,12 +886,12 @@
 		id = MRC_home_islands_buildup
 		icon = GFX_focus_unknown_industry
 		prerequisite = { focus = MRC_industral_buildup_actions }
-		prerequisite = { focus = MRC_neutrality_focus }
+		prerequisite = { focus = MRC_internal_balanced_focus focus = MRC_foreign_neutrality_focus }
 		relative_position_id = MRC_industral_buildup_actions
 		x = 1
 		y = 1
 	
-		cost = 15
+		cost = 10
 		cancel_if_invalid = yes
 		continue_if_invalid = no
 		available_if_capitulated = no
@@ -908,7 +902,7 @@
 		}
 	
 		ai_will_do = {
-			base = 5
+			base = 2
 			modifier = {
 				factor = 50
 				is_historical_focus_on = yes
@@ -979,7 +973,7 @@
 		}
 	
 		ai_will_do = {
-			base = 5
+			base = 2
 			modifier = {
 				factor = 5
 				is_historical_focus_on = yes
@@ -1032,16 +1026,58 @@
 			}
 		}
 	}
-
-	shared_focus = { # Urbanization
-		id = MRC_urbanization
-		icon = GFX_focus_unknown_industry
-		prerequisite = { focus = MRC_secondary_islands_buildup }
-		relative_position_id = MRC_secondary_islands_buildup
+# Merchant-Republicism Equilibrium Branch - Middle
+	shared_focus = { # Balanced Focus Internal Policy
+		id = MRC_internal_balanced_focus
+		icon = GFX_focus_unknown_political
+		mutually_exclusive = { focus = MRC_foreign_intervention_focus focus = MRC_foreign_neutrality_focus }
+		prerequisite = { focus = MRC_political_lobbying }
+		relative_position_id = MRC_political_lobbying
 		x = 0
-		y = 1
+		y = 3
 	
-		cost = 10
+		cost = 9
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		available = {
+			power_balance_value = {
+				id = power_balance_MRC_political_balance
+			    value > -0.10
+			}
+			power_balance_value = {
+				id = power_balance_MRC_political_balance
+			    value < 0.10
+			}
+			OR = { has_completed_focus = MRC_support_progressive_movement has_completed_focus = MRC_hamper_progressive_movement }
+			OR = { has_completed_focus = MRC_local_governance has_completed_focus = MRC_federal_governance }
+			OR = { has_completed_focus = MRC_regulate_mercenaries has_completed_focus = MRC_empower_mercenaries }
+			OR = { has_completed_focus = MRC_against_the_guilds has_completed_focus = MRC_side_with_guilds }
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			base = 2
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_internal_balanced_focus"
+			add_political_power = 50
+		}
+	}
+
+	shared_focus = { # Foreign Trade Policies
+		id = MRC_canal_trade_deal
+		icon = GFX_focus_unknown_political
+		prerequisite = { focus = MRC_merchents_outpost }
+		prerequisite = { focus = MRC_foreign_intervention_focus focus = MRC_internal_balanced_focus }
+		relative_position_id = MRC_foreign_intervention_focus
+		x = 0
+		y = 3
+	
+		cost = 5
 		cancel_if_invalid = yes
 		continue_if_invalid = no
 		available_if_capitulated = no
@@ -1052,15 +1088,297 @@
 		}
 	
 		ai_will_do = {
-			base = 50
+			base = 2
 			modifier = {
-				factor = 50
+				factor = 25
 				is_historical_focus_on = yes
 			}
 		}
 
 		completion_reward = {
-			log = "[GetDateText]: [Root.GetName]: Focus MRC_urbanization"
-			# dicsion 
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_canal_trade_deal"
+			custom_effect_tooltip = NEGOTIATE_GRAND_CANAL
+			set_country_flag = MRC_negotiate_grand_canal
 		}
 	}
+
+	shared_focus = { # Grand Canal trade Deal
+		id = MRC_foreign_trade
+		icon = GFX_focus_unknown_political
+		prerequisite = { focus = MRC_home_islands_buildup }
+		prerequisite = { focus = MRC_foreign_neutrality_focus focus = MRC_internal_balanced_focus }
+		relative_position_id = MRC_foreign_neutrality_focus
+		x = 0
+		y = 3
+	
+		cost = 5
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+	
+		available = {
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			base = 2
+		}
+	
+		complete_tooltip = {
+			custom_effect_tooltip = NEGOTIATE_GRAND_CANAL
+		}
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_foreign_trade"
+		}
+	}
+
+	shared_focus = { # Intervention Policy
+		id = MRC_intervention_policy
+		icon = GFX_focus_unknown_political
+		mutually_exclusive = { focus = MRC_neutrality_policy }
+		prerequisite = { focus = MRC_foreign_trade }
+		prerequisite = { focus = MRC_canal_trade_deal }
+		relative_position_id = MRC_secondary_islands_buildup
+		x = -1
+		y = 1
+	
+		cost = 10
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+	
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = historically_locked_tt
+				is_historical_focus_on = no
+			}
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			base = 2
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_economic_status_quo"
+		}
+	}
+
+	shared_focus = { # Neutrality Policy
+		id = MRC_neutrality_policy
+		icon = GFX_focus_unknown_political
+		mutually_exclusive = { focus = MRC_intervention_policy }
+		prerequisite = { focus = MRC_foreign_trade }
+		prerequisite = { focus = MRC_canal_trade_deal }
+		relative_position_id = MRC_secondary_islands_buildup
+		x = 1
+		y = 1
+	
+		cost = 10
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+	
+		available = {
+			#custom_trigger_tooltip = {
+			#	tooltip = historically_locked_tt
+			#	is_historical_focus_on = no
+			#}
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			base = 2
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_economic_status_quo"
+		}
+	}
+	# Mercantilism Branch
+		shared_focus = { # Economic Status-Quo
+			id = MRC_economic_status_quo
+			icon = GFX_focus_unknown_political
+			mutually_exclusive = { focus = MRC_economic_reform }
+			prerequisite = { focus = MRC_foreign_trade }
+			prerequisite = { focus = MRC_canal_trade_deal }
+			relative_position_id = MRC_secondary_islands_buildup
+			x = -5
+			y = 1
+		
+			cost = 10
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+		
+			available = {
+				NOT = { OR = {
+					has_completed_focus = MRC_regulate_mercenaries
+					has_completed_focus = MRC_against_the_guilds
+				} }
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				base = 2
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_economic_status_quo"
+			}
+		} # Branch VVV
+			shared_focus = { # Development Tariffs
+				id = MRC_development_tariffs
+				icon = GFX_focus_unknown_political
+				prerequisite = { focus = MRC_economic_status_quo }
+				relative_position_id = MRC_economic_status_quo
+				x = -1
+				y = 1
+			
+				cost = 10
+				cancel_if_invalid = yes
+				continue_if_invalid = no
+				available_if_capitulated = no
+			
+				available = {
+				}
+				bypass = {
+				}
+			
+				ai_will_do = {
+					base = 2
+				}
+
+				completion_reward = {
+					log = "[GetDateText]: [Root.GetName]: Focus MRC_development_tariffs"
+				}
+			}
+
+		shared_focus = { # Economic Reform
+			id = MRC_economic_reform
+			icon = GFX_focus_unknown_political
+			mutually_exclusive = { focus = MRC_economic_status_quo }
+			prerequisite = { focus = MRC_foreign_trade }
+			prerequisite = { focus = MRC_canal_trade_deal }
+			relative_position_id = MRC_secondary_islands_buildup
+			x = -3
+			y = 1
+		
+			cost = 10
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+		
+			available = {
+				OR = {
+					has_completed_focus = MRC_regulate_mercenaries
+					has_completed_focus = MRC_against_the_guilds
+				}
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				base = 2
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_economic_reform"
+			}
+		} # Branch VVV
+			shared_focus = { # Loosen Protectionist Tariffs
+				id = MRC_loosen_protectionist_tariffs
+				icon = GFX_focus_unknown_political
+				prerequisite = { focus = MRC_economic_reform }
+				relative_position_id = MRC_economic_reform
+				x = 1
+				y = 1
+			
+				cost = 10
+				cancel_if_invalid = yes
+				continue_if_invalid = no
+				available_if_capitulated = no
+			
+				available = {
+				}
+				bypass = {
+				}
+			
+				ai_will_do = {
+					base = 2
+				}
+
+				completion_reward = {
+					log = "[GetDateText]: [Root.GetName]: Focus MRC_loosen_protectionist_tariffs"
+				}
+			}
+	# Republicanism Branch
+		shared_focus = { # Steady as She goes
+			id = MRC_steady_couse
+			icon = GFX_focus_unknown_political
+			mutually_exclusive = { focus = MRC_change_couse }
+			prerequisite = { focus = MRC_foreign_trade }
+			prerequisite = { focus = MRC_canal_trade_deal }
+			relative_position_id = MRC_secondary_islands_buildup
+			x = 3
+			y = 1
+		
+			cost = 10
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+		
+			available = {
+				NOT = { OR = {
+					has_completed_focus = MRC_support_progressive_movement
+					has_completed_focus = MRC_local_governance
+				} }
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				base = 2
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_steady_couse"
+			}
+		} # Branch VVV
+
+		shared_focus = { # A Change in Course
+			id = MRC_change_couse
+			icon = GFX_focus_unknown_political
+			mutually_exclusive = { focus = MRC_steady_couse }
+			prerequisite = { focus = MRC_foreign_trade }
+			prerequisite = { focus = MRC_canal_trade_deal }
+			relative_position_id = MRC_secondary_islands_buildup
+			x = 5
+			y = 1
+		
+			cost = 10
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+		
+			available = {
+				OR = {
+					has_completed_focus = MRC_support_progressive_movement
+					has_completed_focus = MRC_local_governance
+				}
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				base = 2
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_change_couse"
+			}
+		} # Branch VVV
