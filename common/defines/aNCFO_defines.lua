@@ -34,8 +34,8 @@
 	NDefines.NCountry.WAR_SUPPORT_OFFNSIVE_WAR = -0.20
 	NDefines.NCountry.WAR_SUPPORT_DEFENSIVE_WAR = 0.20
 	NDefines.NCountry.WAR_SUPPORT_TENSION_IMPACT = 0.20
-	NDefines.NCountry.DEFAULT_STABILITY = 0.50 	-- Could be the 'Middle' for modifers
-	NDefines.NCountry.DEFAULT_WAR_SUPPORT = 0.50 	-- Could be the 'Middle' for modifers
+	NDefines.NCountry.DEFAULT_STABILITY = 0.00 	-- Could be the 'Middle' for modifers
+	NDefines.NCountry.DEFAULT_WAR_SUPPORT = 0.00 	-- Could be the 'Middle' for modifers
 	NDefines.NCountry.MIN_STABILITY = -1.0
 	NDefines.NCountry.MAX_STABILITY = 1.0
 	NDefines.NCountry.MIN_WAR_SUPPORT = -1.0
@@ -1203,3 +1203,9 @@
 
 -- Ten Support Companies Defines
 	NDefines.NMilitary.MAX_DIVISION_SUPPORT_WIDTH = 2;
+
+-- Military Commanders Defines
+	NDefines.NMilitary.CORPS_COMMANDER_DIVISIONS_CAP = 14 			-- how many divisions a corps commander is limited to. 0 = inf  < 0 = blocked
+	NDefines.NMilitary.FIELD_MARSHAL_ARMIES_CAP = 3 	-- how many armies a field marshall is limited to. 0 = inf, < 0 = blocked	
+	NDefines.NMilitary.FIELD_MARSHAL_DIVISIONS_CAP = 14 			-- how many divisions a field marshall is limited to. 0 = inf  < 0 = blocked
+	NDefines.NPolitics.ARMY_LEADER_COST = 3	 --command power cost for recruiting new leaders, 'this value' * number_of_existing_leaders_of_type	

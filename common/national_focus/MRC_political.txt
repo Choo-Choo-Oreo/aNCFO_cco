@@ -52,6 +52,7 @@
 		completion_reward = {
 			log = "[GetDateText]: [Root.GetName]: Focus MRC_hamper_progressive_movement"
 			country_event = MRC_election.0
+			add_power_balance_value = { id = power_balance_MRC_political_balance value = -0.025 }
 		}
 	}
 
@@ -82,6 +83,7 @@
 		completion_reward = {
 			log = "[GetDateText]: [Root.GetName]: Focus MRC_progressive_movement"
 			country_event = MRC_election.1
+			add_power_balance_value = { id = power_balance_MRC_political_balance value = 0.05 }
 		}
 	}
 
@@ -112,6 +114,7 @@
 		completion_reward = {
 			log = "[GetDateText]: [Root.GetName]: Focus MRC_federal_governance"
 			country_event = MRC_election.2
+			add_power_balance_value = { id = power_balance_MRC_political_balance value = -0.025 }
 		}
 	}
 
@@ -142,6 +145,7 @@
 		completion_reward = {
 			log = "[GetDateText]: [Root.GetName]: Focus MRC_local_governance"
 			country_event = MRC_election.3
+			add_power_balance_value = { id = power_balance_MRC_political_balance value = 0.05 }
 		}
 	}
 
@@ -172,6 +176,7 @@
 		completion_reward = {
 			log = "[GetDateText]: [Root.GetName]: Focus MRC_empower_mercenaries"
 			country_event = MRC_election.4
+			add_power_balance_value = { id = power_balance_MRC_political_balance value = -0.025 }
 		}
 	}
 
@@ -202,6 +207,7 @@
 		completion_reward = {
 			log = "[GetDateText]: [Root.GetName]: Focus MRC_regulate_mercenaries"
 			country_event = MRC_election.5
+			add_power_balance_value = { id = power_balance_MRC_political_balance value = 0.05 }
 		}
 	}
 
@@ -232,6 +238,7 @@
 		completion_reward = {
 			log = "[GetDateText]: [Root.GetName]: Focus MRC_side_with_guilds"
 			country_event = MRC_election.6
+			add_power_balance_value = { id = power_balance_MRC_political_balance value = -0.025 }
 		}
 	}
 
@@ -262,6 +269,7 @@
 		completion_reward = {
 			log = "[GetDateText]: [Root.GetName]: Focus MRC_against_the_guilds"
 			country_event = MRC_election.7
+			add_power_balance_value = { id = power_balance_MRC_political_balance value = 0.05 }
 		}
 	}
 # Foreign Intervention Branch - Left
@@ -314,7 +322,7 @@
 		x = -3
 		y = 1
 	
-		cost = 10
+		cost = 7
 		cancel_if_invalid = yes
 		continue_if_invalid = no
 		available_if_capitulated = no
@@ -350,7 +358,7 @@
 			337 = { add_core_of = ROOT }
 			338 = { add_core_of = ROOT }
 		}
-	}
+	} # Branch VVV
 
 	shared_focus = { # Southern Financial Assistance
 		id = MRC_southern_financial_help
@@ -477,7 +485,7 @@
 			337 = { add_core_of = ROOT }
 			338 = { add_core_of = ROOT }
 		}
-	}
+	} # Branch VVV
 
 	shared_focus = { # Southern Military Withdrawal
 		id = MRC_southern_retreat
@@ -544,7 +552,7 @@
 			icon = GFX_
 			prerequisite = { focus = MRC_reform_government }
 			relative_position_id = MRC_reform_government
-			x = 2
+			x = -2
 			y = 1
 		
 			cost = 10
@@ -646,7 +654,7 @@
 			icon = GFX_
 			prerequisite = { focus = MRC_center_knowledge }
 			relative_position_id = MRC_center_knowledge
-			x = -2
+			x = 2
 			y = 1
 		
 			cost = 10
@@ -769,7 +777,7 @@
 			prerequisite = { focus = MRC_ahead_of_the_crowd }
 			prerequisite = { focus = MRC_art_of_armed_neutrality }
 			relative_position_id = MRC_public_documents
-			x = 2
+			x = -2
 			y = 2
 		
 			cost = 20
@@ -1130,7 +1138,7 @@
 		}
 		completion_reward = {
 			log = "[GetDateText]: [Root.GetName]: Focus MRC_foreign_trade"
-			add_ideas = MRC_global_trade
+			add_ideas = MRC_global_trade_idea
 		}
 	}
 
@@ -1164,6 +1172,7 @@
 
 		completion_reward = {
 			log = "[GetDateText]: [Root.GetName]: Focus MRC_economic_status_quo"
+			add_power_balance_value = { id = power_balance_MRC_political_balance value = -0.025 }
 		}
 	}
 
@@ -1197,6 +1206,7 @@
 
 		completion_reward = {
 			log = "[GetDateText]: [Root.GetName]: Focus MRC_economic_status_quo"
+			add_power_balance_value = { id = power_balance_MRC_political_balance value = 0.025 }
 		}
 	}
 	# Mercantilism Branch
@@ -1256,7 +1266,36 @@
 
 				completion_reward = {
 					log = "[GetDateText]: [Root.GetName]: Focus MRC_development_tariffs"
+					add_power_balance_value = { id = power_balance_MRC_political_balance value = -0.025 }
 					trade_lower = yes
+				}
+			}
+
+			shared_focus = { # Mercanaries Government Rights
+				id = MRC_mercanaries_government_rights
+				icon = GFX_focus_unknown_political
+				mutually_exclusive = { focus = MRC_mercanaries_regulations }
+				prerequisite = { focus = MRC_economic_status_quo }
+				relative_position_id = MRC_economic_status_quo
+				x = 0
+				y = 2
+			
+				cost = 10
+				cancel_if_invalid = yes
+				continue_if_invalid = no
+				available_if_capitulated = no
+			
+				available = {
+				}
+				bypass = {
+				}
+			
+				ai_will_do = {
+					base = 2
+				}
+
+				completion_reward = {
+					log = "[GetDateText]: [Root.GetName]: Focus MRC_mercanaries_government_rights"
 				}
 			}
 
@@ -1316,8 +1355,38 @@
 
 				completion_reward = {
 					log = "[GetDateText]: [Root.GetName]: Focus MRC_loosen_protectionist_tariffs"
+					add_power_balance_value = { id = power_balance_MRC_political_balance value = 0.025 }
 				}
 			}
+
+			shared_focus = { # Mercanaries Regulations
+				id = MRC_mercanaries_regulations
+				icon = GFX_focus_unknown_political
+				mutually_exclusive = { focus = MRC_mercanaries_government_rights }
+				prerequisite = { focus = MRC_economic_reform }
+				relative_position_id = MRC_economic_reform
+				x = 0
+				y = 2
+			
+				cost = 10
+				cancel_if_invalid = yes
+				continue_if_invalid = no
+				available_if_capitulated = no
+			
+				available = {
+				}
+				bypass = {
+				}
+			
+				ai_will_do = {
+					base = 2
+				}
+
+				completion_reward = {
+					log = "[GetDateText]: [Root.GetName]: Focus MRC_mercanaries_regulations"
+				}
+			}
+
 	# Republicanism Branch
 		shared_focus = { # Steady as She goes
 			id = MRC_steady_couse
@@ -1349,8 +1418,66 @@
 
 			completion_reward = {
 				log = "[GetDateText]: [Root.GetName]: Focus MRC_steady_couse"
+				add_timed_idea = { idea = MRC_steady_as_she_goes_idea days = 365 }
 			}
 		} # Branch VVV
+			shared_focus = { # End Temporary Military Women Law
+				id = MRC_end_temporary_military_women
+				icon = GFX_focus_unknown_political
+				mutually_exclusive = { focus = MRC_codification_of_military_women }
+				prerequisite = { focus = MRC_steady_couse }
+				relative_position_id = MRC_steady_couse
+				x = -1
+				y = 1
+			
+				cost = 10
+				cancel_if_invalid = yes
+				continue_if_invalid = no
+				available_if_capitulated = no
+			
+				available = {
+				}
+				bypass = {
+				}
+			
+				ai_will_do = {
+					base = 2
+				}
+
+				completion_reward = {
+					log = "[GetDateText]: [Root.GetName]: Focus MRC_loosen_protectionist_tariffs"
+					swap_ideas = { remove_idea = women_in_the_army add_idea = limited_women_in_the_workforce }
+				}
+			}
+
+		shared_focus = { # Codification of Military Women Law
+			id = MRC_codification_of_military_women
+			icon = GFX_focus_unknown_political
+			mutually_exclusive = { focus = MRC_end_temporary_military_women }
+			prerequisite = { focus = MRC_steady_couse focus = MRC_change_couse}
+			relative_position_id = MRC_steady_couse
+			x = 1
+			y = 1
+		
+			cost = 10
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+		
+			available = {
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				base = 2
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_codification_of_military_women"
+				swap_ideas = { remove_idea = women_in_the_army add_idea = women_in_the_frontlines }
+			}
+		}
 
 		shared_focus = { # A Change in Course
 			id = MRC_change_couse
@@ -1382,5 +1509,49 @@
 
 			completion_reward = {
 				log = "[GetDateText]: [Root.GetName]: Focus MRC_change_couse"
+				add_timed_idea = { idea = MRC_change_in_course_idea days = 365 }
 			}
 		} # Branch VVV
+			shared_focus = { # Strengthen Island Governors
+				id = MRC_island_governors
+				icon = GFX_focus_unknown_political
+				prerequisite = { focus = MRC_change_couse }
+				relative_position_id = MRC_change_couse
+				x = 1
+				y = 1
+			
+				cost = 10
+				cancel_if_invalid = yes
+				continue_if_invalid = no
+				available_if_capitulated = no
+			
+				available = {
+				}
+				bypass = {
+				}
+			
+				ai_will_do = {
+					base = 2
+				}
+
+				completion_reward = {
+					log = "[GetDateText]: [Root.GetName]: Focus MRC_island_governors"
+					add_power_balance_value = { id = power_balance_MRC_political_balance value = 0.025 }
+					hidden_effect = { # Create Puppet
+						release_puppet_on_controlled = MAI
+						release_puppet_on_controlled = MOI
+						release_puppet_on_controlled = MPI
+						release_puppet_on_controlled = MTI
+					}
+					set_autonomy = { target = MAI autonomous_state = autonomy_collaboration_government }
+					set_autonomy = { target = MOI autonomous_state = autonomy_collaboration_government }
+					set_autonomy = { target = MPI autonomous_state = autonomy_collaboration_government }
+					set_autonomy = { target = MTI autonomous_state = autonomy_collaboration_government }
+					hidden_effect = { # Set Value
+						set_collaboration = { target = MAI value = 0.10 }
+						set_collaboration = { target = MOI value = 0.10 }
+						set_collaboration = { target = MPI value = 0.10 }
+						set_collaboration = { target = MTI value = 0.10 }
+					}
+				}
+			}
