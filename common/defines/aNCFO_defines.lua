@@ -34,8 +34,10 @@
 	NDefines.NCountry.WAR_SUPPORT_OFFNSIVE_WAR = -0.20
 	NDefines.NCountry.WAR_SUPPORT_DEFENSIVE_WAR = 0.20
 	NDefines.NCountry.WAR_SUPPORT_TENSION_IMPACT = 0.20
-	NDefines.NCountry.DEFAULT_STABILITY = 0.00 	-- Could be the 'Middle' for modifers
-	NDefines.NCountry.DEFAULT_WAR_SUPPORT = 0.00 	-- Could be the 'Middle' for modifers
+	NDefines.NCountry.WEEKLY_STABILITY_GAIN = 0.0
+	NDefines.NCountry.WEEKLY_WAR_SUPPORT_GAIN = 0.0
+	NDefines.NCountry.DEFAULT_STABILITY = 0.50 	-- Could be the 'Middle' for modifers
+	NDefines.NCountry.DEFAULT_WAR_SUPPORT = 0.50 	-- Could be the 'Middle' for modifers
 	NDefines.NCountry.MIN_STABILITY = -1.0
 	NDefines.NCountry.MAX_STABILITY = 1.0
 	NDefines.NCountry.MIN_WAR_SUPPORT = -1.0
@@ -47,8 +49,8 @@
 	NDefines.NCountry.MAX_CONVOYS_BEING_RAIDED_WAR_SUPPORT_IMPACT = -0.70
 
 	NDefines.NBuildings.MAX_SHARED_SLOTS = 55
-	NDefines.NBuildings.DEFAULT_STABILITY = 0.60
-	NDefines.NBuildings.DEFAULT_WAR_SUPPORT = 0.20
+	NDefines.NBuildings.INFRASTRUCTURE_RESOURCE_BONUS = 0.20
+	NDefines.NBuildings.SUPPLY_ROUTE_RESOURCE_BONUS = 0.20
 
 	NDefines.NNavy.MAX_CAPITALS_PER_AUTO_TASK_FORCE = 10
 	NDefines.NNavy.BEST_CAPITALS_TO_CARRIER_RATIO = 2
