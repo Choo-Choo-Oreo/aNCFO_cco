@@ -1,35 +1,5 @@
-#shared_focus = {
-#	id = LMN_
-#	icon = GFX_
-#	prerequisite = { focus =  }
-#	mutually_exclusive = { focus =  }
-#	relative_position_id = 
-#	x = 0
-#	y = 0
-#
-#	cost = 10
-#	cancel_if_invalid = yes
-#	continue_if_invalid = no
-#	available_if_capitulated = no
-#
-#	available = {
-#	}
-#	bypass = {
-#	}
-#
-#	ai_will_do = {
-#		base = 5
-#	}
-#
-#	complete_tooltip = {
-#	}
-#	completion_reward = {
-#		log = "[GetDateText]: [Root.GetName]: Focus LMN_"
-#	}
-#}
-
-shared_focus = {
-	id = LMN_reclaim_mandate
+shared_focus = { # Reclaim Neighboring Lands
+	id = LMN_reclaim_neighboring_lands
 	icon = GFX_LMN_reclaim_mandate
 	x = 17
 	y = 0
@@ -45,29 +15,78 @@ shared_focus = {
 	}
 
 	ai_will_do = {
-		base = 5
+		factor = 5
 	}
 
 	completion_reward = {
-		log = "[GetDateText]: [Root.GetName]: Focus LMN_reclaim_mandate"
-		create_wargoal = {
-			type = annex_everything
-			target = RUC
-			expire = 0
+		log = "[GetDateText]: [Root.GetName]: Focus LMN_reclaim_neighboring_lands"
+		IF = {
+			LIMIT = { original_tag = DRC }
+			create_wargoal = {
+				type = annex_everything
+				target = XIF
+				expire = 0
+			}
+			create_wargoal = {
+				type = annex_everything
+				target = DOG
+				expire = 0
+			}
+			create_wargoal = {
+				type = annex_everything
+				target = DVC
+				expire = 0
+			}
 		}
-		create_wargoal = {
-			type = annex_everything
-			target = SAG
-			expire = 0
+		IF = {
+			LIMIT = { original_tag = LMN }
+			create_wargoal = {
+				type = annex_everything
+				target = DVC
+				expire = 0
+			}
+			create_wargoal = {
+				type = annex_everything
+				target = GNG
+				expire = 0
+			}
+			create_wargoal = {
+				type = annex_everything
+				target = JJY
+				expire = 0
+			}
+		}
+		IF = {
+			LIMIT = { original_tag = LPR }
+			create_wargoal = {
+				type = annex_everything
+				target = JJY
+				expire = 0
+			}
+			create_wargoal = {
+				type = annex_everything
+				target = IWE
+				expire = 0
+			}
+			create_wargoal = {
+				type = annex_everything
+				target = FUL
+				expire = 0
+			}
+			create_wargoal = {
+				type = annex_everything
+				target = SHE
+				expire = 0
+			}
 		}
 	}
 }
 
-shared_focus = { # Western Reconquest
-	id = LMN_western_reconquest
+shared_focus = { # Clique Reconquest
+	id = LMN_clique_reconquest
 	icon = GFX_
-	prerequisite = { focus = LMN_reclaim_mandate }
-	relative_position_id = LMN_reclaim_mandate
+	prerequisite = { focus = LMN_reclaim_neighboring_lands }
+	relative_position_id = LMN_reclaim_neighboring_lands
 	x = 0
 	y = 1
 
@@ -80,30 +99,64 @@ shared_focus = { # Western Reconquest
 	}
 
 	ai_will_do = {
-		base = 5
+		factor = 5
 	}
 
 	completion_reward = {
-		log = "[GetDateText]: [Root.GetName]: Focus LMN_western_reconquest"
-		create_wargoal = {
-			type = annex_everything
-			target = CHI
-			expire = 0
+		log = "[GetDateText]: [Root.GetName]: Focus LMN_clique_reconquest"
+		IF = {
+			LIMIT = { original_tag = DRC }
+			create_wargoal = {
+				type = annex_everything
+				target = RPT
+				expire = 0
+			}
+			create_wargoal = {
+				type = annex_everything
+				target = GHN
+				expire = 0
+			}
 		}
-		create_wargoal = {
-			type = annex_everything
-			target = IWE
-			expire = 0
+		IF = {
+			LIMIT = { original_tag = LMN }
+			create_wargoal = {
+				type = annex_everything
+				target = XIF
+				expire = 0
+			}
+			create_wargoal = {
+				type = annex_everything
+				target = DOG
+				expire = 0
+			}
+			create_wargoal = {
+				type = annex_everything
+				target = RPT
+				expire = 0
+			}
+			create_wargoal = {
+				type = annex_everything
+				target = GHN
+				expire = 0
+			}
 		}
-		create_wargoal = {
-			type = annex_everything
-			target = FUL
-			expire = 0
-		}
-		create_wargoal = {
-			type = annex_everything
-			target = SHE
-			expire = 0
+		IF = {
+			LIMIT = { original_tag = LPR }
+			create_wargoal = {
+				type = annex_everything
+				target = SEC
+				expire = 0
+			}
+			create_wargoal = {
+				type = annex_everything
+				target = GNG
+				expire = 0
+			}
+			create_wargoal = {
+				type = annex_everything
+				target = GHN
+				expire = 0
+			}
 		}
 	}
 }
@@ -111,8 +164,8 @@ shared_focus = { # Western Reconquest
 shared_focus = { # Eastern Reconquest
 	id = LMN_eastern_reconquest
 	icon = GFX_
-	prerequisite = { focus = LMN_western_reconquest }
-	relative_position_id = LMN_western_reconquest
+	prerequisite = { focus = LMN_clique_reconquest }
+	relative_position_id = LMN_clique_reconquest
 	x = 0
 	y = 1
 
@@ -125,74 +178,103 @@ shared_focus = { # Eastern Reconquest
 	}
 
 	ai_will_do = {
-		base = 5
+		factor = 5
 	}
 
 	completion_reward = {
 		log = "[GetDateText]: [Root.GetName]: Focus LMN_eastern_reconquest"
-		create_wargoal = {
-			type = annex_everything
-			target = DOG
-			expire = 0
+		IF = {
+			LIMIT = { original_tag = DRC }
+			create_wargoal = {
+				type = annex_everything
+				target = LCF
+				expire = 0
+			}
+			create_wargoal = {
+				type = annex_everything
+				target = FDL
+				expire = 0
+			}
+			create_wargoal = {
+				type = annex_everything
+				target = MYU
+				expire = 0
+			}
+			create_wargoal = {
+				type = annex_everything
+				target = SSJ
+				expire = 0
+			}
+			create_wargoal = {
+				type = annex_everything
+				target = LCS
+				expire = 0
+			}
 		}
-		create_wargoal = {
-			type = annex_everything
-			target = VIT
-			expire = 0
+		IF = {
+			LIMIT = { original_tag = LMN }
+			create_wargoal = {
+				type = annex_everything
+				target = LCF
+				expire = 0
+			}
+			create_wargoal = {
+				type = annex_everything
+				target = FDL
+				expire = 0
+			}
+			create_wargoal = {
+				type = annex_everything
+				target = MYU
+				expire = 0
+			}
+			create_wargoal = {
+				type = annex_everything
+				target = SSJ
+				expire = 0
+			}
+			create_wargoal = {
+				type = annex_everything
+				target = LCS
+				expire = 0
+			}
 		}
-		create_wargoal = {
-			type = annex_everything
-			target = VEN
-			expire = 0
-		}
-		create_wargoal = {
-			type = annex_everything
-			target = LCF
-			expire = 0
+		IF = {
+			LIMIT = { original_tag = LPR }
+			create_wargoal = {
+				type = annex_everything
+				target = RPT
+				expire = 0
+			}
+			create_wargoal = {
+				type = annex_everything
+				target = XIF
+				expire = 0
+			}
+			create_wargoal = {
+				type = annex_everything
+				target = DOG
+				expire = 0
+			}
+			create_wargoal = {
+				type = annex_everything
+				target = DVC
+				expire = 0
+			}
+			create_wargoal = { # Major
+				type = annex_everything
+				target = DRC
+				expire = 0
+			}
 		}
 	}
 }
 
-shared_focus = { # North-Western Reconquest
-	id = LMN_north_western_reconquest
+shared_focus = { # Reunification
+	id = LMN_reunification
 	icon = GFX_
 	prerequisite = { focus = LMN_eastern_reconquest }
 	relative_position_id = LMN_eastern_reconquest
-	x = 0
-	y = 1
-
-	cost = 10
-
-	available = {
-		date > 1727.01.01 # Year Month Day
-	}
-	bypass = {
-	}
-
-	ai_will_do = {
-		base = 5
-	}
-
-	completion_reward = {
-		log = "[GetDateText]: [Root.GetName]: Focus LMN_north_western_reconquest"
-		create_wargoal = {
-			type = annex_everything
-			target = HUV
-			expire = 0
-		}
-		create_wargoal = {
-			type = annex_everything
-			target = TRF
-			expire = 0
-		}
-	}
-}
-
-shared_focus = { # Northern Reconquest
-	id = LMN_northern_reconquest
-	icon = GFX_
-	prerequisite = { focus = LMN_north_western_reconquest }
-	relative_position_id = LMN_north_western_reconquest
 	x = 0
 	y = 1
 
@@ -205,146 +287,11 @@ shared_focus = { # Northern Reconquest
 	}
 
 	ai_will_do = {
-		base = 5
+		factor = 5
 	}
 
 	completion_reward = {
-		log = "[GetDateText]: [Root.GetName]: Focus LMN_northern_reconquest"
-		create_wargoal = {
-			type = annex_everything
-			target = RPT
-			expire = 0
-		}
-		create_wargoal = {
-			type = annex_everything
-			target = XIF
-			expire = 0
-		}
-		create_wargoal = {
-			type = annex_everything
-			target = DRC
-			expire = 0
-		}
-	}
-}
-
-shared_focus = { # Last Western Reconquest
-	id = LMN_last_western_reconquest
-	icon = GFX_
-	prerequisite = { focus = LMN_northern_reconquest }
-	relative_position_id = LMN_northern_reconquest
-	x = 0
-	y = 1
-
-	cost = 10
-
-	available = {
-		date > 1729.01.01 # Year Month Day
-	}
-	bypass = {
-	}
-
-	ai_will_do = {
-		base = 5
-	}
-
-	completion_reward = {
-		log = "[GetDateText]: [Root.GetName]: Focus LMN_last_western_reconquest"
-		create_wargoal = {
-			type = annex_everything
-			target = SHU
-			expire = 0
-		}
-		create_wargoal = {
-			type = annex_everything
-			target = SIH
-			expire = 0
-		}
-		create_wargoal = {
-			type = annex_everything
-			target = ICU
-			expire = 0
-		}
-	}
-}
-
-shared_focus = { # North-Eastern Reconquest
-	id = LMN_north_eastern_reconquest
-	icon = GFX_
-	prerequisite = { focus = LMN_last_western_reconquest }
-	relative_position_id = LMN_last_western_reconquest
-	x = 0
-	y = 1
-
-	cost = 10
-
-	available = {
-		date > 1730.01.01 # Year Month Day
-	}
-	bypass = {
-	}
-
-	ai_will_do = {
-		base = 5
-	}
-
-	completion_reward = {
-		log = "[GetDateText]: [Root.GetName]: Focus LMN_north_eastern_reconquest"
-		create_wargoal = {
-			type = annex_everything
-			target = LPR
-			expire = 0
-		}
-		create_wargoal = {
-			type = annex_everything
-			target = FDL
-			expire = 0
-		}
-		create_wargoal = {
-			type = annex_everything
-			target = SSJ
-			expire = 0
-		}
-		create_wargoal = {
-			type = annex_everything
-			target = MYU
-			expire = 0
-		}
-		create_wargoal = {
-			type = annex_everything
-			target = LCS
-			expire = 0
-		}
-		create_wargoal = {
-			type = annex_everything
-			target = NEC
-			expire = 0
-		}
-	}
-}
-
-shared_focus = { # South-Eastern Reconquest
-	id = LMN_south_eastern_reconquest
-	icon = GFX_
-	prerequisite = { focus = LMN_north_eastern_reconquest }
-	relative_position_id = LMN_north_eastern_reconquest
-	x = 0
-	y = 1
-
-	cost = 10
-
-	available = {
-		date > 1731.01.01 # Year Month Day
-	}
-	bypass = {
-	}
-
-	ai_will_do = {
-		base = 5
-	}
-
-	completion_reward = {
-		log = "[GetDateText]: [Root.GetName]: Focus LMN_south_eastern_reconquest"
+		log = "[GetDateText]: [Root.GetName]: Focus LMN_reunification"
 		every_country = {
 			limit = {
 				is_gaint_of_the_east_formed = yes
@@ -364,21 +311,21 @@ shared_focus = { # South-Eastern Reconquest
 shared_focus = { # The last Reconquest
 	id = LMN_reconquest
 	icon = GFX_
-	prerequisite = { focus = LMN_south_eastern_reconquest }
-	relative_position_id = LMN_south_eastern_reconquest
+	prerequisite = { focus = LMN_reunification }
+	relative_position_id = LMN_reunification
 	x = 0
 	y = 1
 
 	cost = 10
 
 	available = {
-		date > 1732.01.01 # Year Month Day
+		date > 1730.01.01 # Year Month Day
 	}
 	bypass = {
 	}
 
 	ai_will_do = {
-		base = 5
+		factor = 5
 	}
 
 	completion_reward = {
