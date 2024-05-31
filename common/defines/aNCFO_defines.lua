@@ -36,11 +36,11 @@
 	NDefines.NCountry.WAR_SUPPORT_TENSION_IMPACT = 0.20
 	NDefines.NCountry.WEEKLY_STABILITY_GAIN = 0.0
 	NDefines.NCountry.WEEKLY_WAR_SUPPORT_GAIN = 0.0
-	NDefines.NCountry.DEFAULT_STABILITY = 0.50 	-- Could be the 'Middle' for modifers
-	NDefines.NCountry.DEFAULT_WAR_SUPPORT = 0.50 	-- Could be the 'Middle' for modifers
-	NDefines.NCountry.MIN_STABILITY = -1.0
+	NDefines.NCountry.DEFAULT_STABILITY = 0.50 	-- Could be the 'Middle' for modifers -- Default stability if not scripted otherwise.
+	NDefines.NCountry.DEFAULT_WAR_SUPPORT = 0.50 	-- Could be the 'Middle' for modifers -- Default war support if not scripted otherwise.
+	NDefines.NCountry.MIN_STABILITY = -0.50		-- 100% total negative, as -100% is nobody but -50% is vast majority.
 	NDefines.NCountry.MAX_STABILITY = 1.0
-	NDefines.NCountry.MIN_WAR_SUPPORT = -1.0
+	NDefines.NCountry.MIN_WAR_SUPPORT = -0.50	-- 100% total negative, as -100% is nobody but -50% is vast majority.
 	NDefines.NCountry.MAX_WAR_SUPPORT = 1.0
 	NDefines.NCountry.BASE_FUEL_GAIN_PER_OIL = 1.0
 	NDefines.NCountry.BASE_FUEL_GAIN = 1.0
