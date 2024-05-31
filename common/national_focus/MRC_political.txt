@@ -341,6 +341,7 @@
 		completion_reward = {
 			log = "[GetDateText]: [Root.GetName]: Focus MRC_foreign_intervention_focus"
 			add_political_power = 50
+			set_politics = { ruling_party = authoritarianism elections_allowed = yes }
 		}
 	}
 
@@ -352,7 +353,7 @@
 		x = -4
 		y = 1
 	
-		cost = 7
+		cost = 8
 		cancel_if_invalid = yes
 		continue_if_invalid = no
 		available_if_capitulated = no
@@ -453,6 +454,7 @@
 
 		completion_reward = {
 			log = "[GetDateText]: [Root.GetName]: Focus MRC_foreign_neutrality_focus"
+			set_politics = { ruling_party = pluralism elections_allowed = yes }
 			add_political_power = 25
 			add_war_support = -0.15
 			add_ideas = MRC_trade_neutrality
@@ -1426,7 +1428,7 @@
 			x = 3
 			y = 1
 		
-			cost = 10
+			cost = 5
 			cancel_if_invalid = yes
 			continue_if_invalid = no
 			available_if_capitulated = no
@@ -1592,7 +1594,7 @@
 			x = 5
 			y = 1
 		
-			cost = 10
+			cost = 5
 			cancel_if_invalid = yes
 			continue_if_invalid = no
 			available_if_capitulated = no
@@ -1662,7 +1664,7 @@
 				x = 1
 				y = 1
 			
-				cost = 10
+				cost = 7
 				cancel_if_invalid = yes
 				continue_if_invalid = no
 				available_if_capitulated = no
@@ -1705,7 +1707,7 @@
 			x = 0
 			y = 2
 		
-			cost = 7
+			cost = 10
 			cancel_if_invalid = yes
 			continue_if_invalid = no
 			available_if_capitulated = no
@@ -1748,7 +1750,7 @@
 			x = 0
 			y = 2
 		
-			cost = 10
+			cost = 7
 			cancel_if_invalid = yes
 			continue_if_invalid = no
 			available_if_capitulated = no
@@ -1819,3 +1821,146 @@
 				}
 			}
 		}
+	# Dealing with the Guilds Branch
+		shared_focus = { # Deal with the Guilds
+			id = MRC_dealing_with_guilds_focus
+			icon = GFX_focus_unknown_political
+			prerequisite = { focus = MRC_mercanaries_government_rights focus = MRC_mercanaries_regulations }
+			relative_position_id = MRC_mercanaries_government_rights
+			x = 1
+			y = 1
+		
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+		
+			available = {
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				factor = 2
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_dealing_with_guilds"
+			}
+		} # Branch VVV
+			shared_focus = { # Guilds Empower
+				id = MRC_guilds_empower_focus
+				icon = GFX_focus_unknown_industry
+				mutually_exclusive = { focus = MRC_guilds_workers_focus }
+				prerequisite = { focus = MRC_dealing_with_guilds_focus }
+				relative_position_id = MRC_dealing_with_guilds_focus
+				x = -1
+				y = 1
+			
+				cost = 10
+				cancel_if_invalid = yes
+				continue_if_invalid = no
+				available_if_capitulated = no
+			
+				available = {
+				}
+				bypass = {
+				}
+			
+				ai_will_do = {
+					factor = 2
+				}
+
+				completion_reward = {
+					log = "[GetDateText]: [Root.GetName]: Focus MRC_guilds_empower_focus"
+					swap_ideas = { remove_idea = MRC_balanced_guilds add_idea = MRC_economic_guilds }
+				}
+			}
+
+			shared_focus = { # Guilds Workers
+				id = MRC_guilds_workers_focus
+				icon = GFX_focus_unknown_industry
+				mutually_exclusive = { focus = MRC_guilds_empower_focus }
+				prerequisite = { focus = MRC_dealing_with_guilds_focus }
+				relative_position_id = MRC_dealing_with_guilds_focus
+				x = 1
+				y = 1
+			
+				cost = 10
+				cancel_if_invalid = yes
+				continue_if_invalid = no
+				available_if_capitulated = no
+			
+				available = {
+				}
+				bypass = {
+				}
+			
+				ai_will_do = {
+					factor = 2
+					modifier = {
+						add = 0.10
+						factor = 1
+						is_historical_focus_on = yes
+					}
+				}
+
+				completion_reward = {
+					log = "[GetDateText]: [Root.GetName]: Focus MRC_guilds_workers_focus"
+					swap_ideas = { remove_idea = MRC_balanced_guilds add_idea = MRC_workers_guilds }
+				}
+			}
+	# Nation of Progress Branch
+		shared_focus = { # Nation of Progress
+			id = MRC_nation_of_progress_focus
+			icon = GFX_focus_unknown_political
+			prerequisite = { focus = MRC_women_workforce focus = MRC_women_attuners }
+			relative_position_id = MRC_women_workforce
+			x = 1
+			y = 1
+		
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+		
+			available = {
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				factor = 2
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_nation_of_progress_focus"
+			}
+		} # Branch VVV
+	# Wartime Contingencies Branch
+		shared_focus = { # Wartime Contingencies
+			id = MRC_wartime_contingencies_focus
+			icon = GFX_focus_unknown_political
+			prerequisite = { focus = MRC_peninsula_integration focus = MRC_setup_collaboration }
+			relative_position_id = MRC_peninsula_integration
+			x = 1
+			y = 1
+		
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+		
+			available = {
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				factor = 2
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_wartime_contingencies_focus"
+			}
+		} # Branch VVV
