@@ -1,0 +1,350 @@
+#Adjust military focus of countries based on their military industrial scale.:		
+	
+	Long_term_industry = {
+		enable = {
+			AND = {
+				always = yes
+				}
+				}
+		Abort = {
+			OR = {
+				has_war = yes							
+				}
+				}
+		
+		ai_strategy = {
+			type = added_military_to_civilian_factory_ratio
+			value = -10
+		}
+		}
+		
+	Get_your_own_rubber = {
+		enable = {
+			AND = {
+				has_tech = synth_oil_experiments
+				synthetic_refinery < 2
+				num_of_civilian_factories_available_for_projects > 10
+				NOT = {				
+				synthetic_refinery > 2
+				}
+				
+			OR = {	
+			check_variable = { resource_imported@rubber > 5 }
+			AND = {
+			check_variable = { resource_produced@rubber < 1 }
+			check_variable = { resource_produced@chromium < 8 }
+			}
+				}
+				}
+				}
+		abort_when_not_enabled = yes
+		
+		ai_strategy = {
+			type = building_target
+			id = synthetic_refinery
+			value = 2
+		}
+		}
+		
+		Get_your_own_rubber2 = {
+		enable = {
+			AND = {
+				has_tech = synth_oil_experiments
+
+				synthetic_refinery < 3
+				num_of_civilian_factories_available_for_projects > 15
+				NOT = {				
+				synthetic_refinery > 2
+				}
+				OR = {	
+					check_variable = { resource_imported@rubber > 5 }
+				AND = {
+					check_variable = { resource_produced@rubber < 1 }
+					check_variable = { resource_produced@chromium < 8 }
+				}
+				}
+				
+				}
+				}
+		abort_when_not_enabled = yes
+		
+		ai_strategy = {
+			type = building_target
+			id = synthetic_refinery
+			value = 2
+		}
+		}
+		
+		Get_your_own_rubber3 = {
+		enable = {
+			AND = {
+				has_tech = rubber_processing
+				check_variable = { resource_imported@rubber > 5 }
+				synthetic_refinery < 5
+				num_of_civilian_factories_available_for_projects > 10
+				NOT = {				
+				synthetic_refinery > 4
+				}
+				}
+				}
+		abort_when_not_enabled = yes
+		
+		ai_strategy = {
+			type = building_target
+			id = synthetic_refinery
+			value = 5
+		}
+		}
+		
+		Get_your_own_rubber4 = {
+		enable = {
+			AND = {
+				has_tech = rubber_processing
+				check_variable = { resource_imported@rubber > 5 }
+				synthetic_refinery < 8
+				num_of_civilian_factories_available_for_projects > 10
+				NOT = {				
+				synthetic_refinery > 7
+				}
+				}
+				}
+		abort_when_not_enabled = yes
+		
+		ai_strategy = {
+			type = building_target
+			id = synthetic_refinery
+			value = 8
+		}
+		}
+		
+		Get_your_own_rubber5 = {
+		enable = {
+			AND = {
+				has_tech = rubber_processing
+				check_variable = { resource_imported@rubber > 5 }
+				synthetic_refinery < 12
+				num_of_civilian_factories_available_for_projects > 10
+				NOT = {				
+				synthetic_refinery > 11
+				}
+				}
+				}
+		abort_when_not_enabled = yes
+		
+		ai_strategy = {
+			type = building_target
+			id = synthetic_refinery
+			value = 12
+		}
+		}
+		
+		
+	Low_indust_country = {
+		enable = {
+			AND = {
+				num_of_military_factories < 12
+				num_of_military_factories > 7
+				}
+				}
+		abort = {
+			OR = { 
+				num_of_military_factories < 8
+				num_of_military_factories > 13
+				}
+				}
+		
+		ai_strategy = {
+			type = role_ratio
+			id = infantry
+			value = 25 
+			}
+		ai_strategy = {
+			type = role_ratio
+			id = armor
+			value = -10
+			}
+			
+		ai_strategy = {
+			type = role_ratio
+			id = light_armor
+			value = -8
+			}
+			}
+		
+		
+			
+	Very_low_indust_country = {
+		enable = {
+			OR = {
+				num_of_military_factories < 6
+				}
+				}			
+		abort = {
+			OR = { 
+				num_of_military_factories > 5
+				}
+				}
+		 
+			
+		ai_strategy = {
+			type = role_ratio
+			id = infantry
+			value = 30 
+			}
+			
+		ai_strategy = {
+			type = template_prio
+			id = infantry
+			value = 25
+			}
+			
+		ai_strategy = {
+			type = role_ratio
+			id = armor
+			value = -20
+			}
+				
+		ai_strategy = {
+			type = role_ratio
+			id = light_armor
+			value = -20
+			}
+	}
+			
+	#Cup-Half-Full_Scripts, aiming the AI away from things it cant efficetly produce and toward things it can.
+
+
+			
+	CHF_Support = {
+		Enable = {
+			AND = {
+				aluminium < 1 
+				has_equipment = { support_equipment > 20 }
+				}
+				}
+			Abort = {
+				OR = {
+				aluminium > 2 
+				has_equipment = { support_equipment < 1 }
+				}
+				}
+		
+		ai_strategy = {
+			type = equipment_variant_production_factor
+			id = support_equipment
+			value = -10000 
+			}
+			}
+	
+	CHF_Motor = {
+		Enable = {
+			AND = {
+				rubber < 1 
+				has_equipment = { motorized_equipment > 50 }
+				num_of_military_factories < 20
+				}
+				}
+			Abort = {
+				OR = {
+				rubber > 2 
+				has_equipment = { motorized_equipment < 1 }
+				num_of_military_factories > 20
+				}
+				}
+		
+		ai_strategy = {
+		type = equipment_production_factor
+		id = motorized
+		value = -1000
+			}
+			}
+
+	CHF_Artillery = {
+		Enable = {
+			AND = {
+				tungsten < 1 
+				has_equipment = { artillery_equipment > 20 }
+				}
+				}
+			Abort = {
+				OR = {
+				tungsten > 2 
+				has_equipment = { artillery_equipment < 1 }
+				}
+				}
+		
+		ai_strategy = {
+			type = equipment_variant_production_factor
+			id = artillery_equipment
+			value = -100 
+			}
+			}
+			
+			
+			
+	
+
+		#Varius scripts incentivising newly researched technlogy while it is ahead - Half a year later and idk what OOD means, what are these names.
+	
+			
+
+	Volkssturm = {
+		Enable = {
+			AND = { 
+			enemies_strength_ratio > 1.5
+			has_manpower > 100000 
+			has_war = yes
+			}
+			}
+		abort = {
+			OR ={ 
+				has_manpower < 10000
+				any_war_score > 24 
+				}
+				}
+				
+		ai_strategy = {
+			type = equipment_variant_production_factor 
+			id = infantry_equipment
+			value = 150 
+			}
+		
+		ai_strategy = {
+			type = equipment_variant_production_factor
+			id = support_equipment
+			value = 25 
+			}
+		
+		ai_strategy = {
+			type = role_ratio
+			id = infantry
+			value = 15 
+			}
+			}
+			
+		
+
+
+Infantry_focus = {
+		Enable = {
+			stockpile_ratio  = { archetype = infantry_equipment ratio < 0.05 }
+			has_war = yes
+			}
+		abort = {
+		stockpile_ratio  = { archetype = infantry_equipment ratio > 0.10 }
+				}
+				
+		ai_strategy = {
+			type = equipment_variant_production_factor 
+			id = infantry_equipment
+			value = 25
+			}
+
+		
+		ai_strategy = {
+			type = air_factory_balance
+			value = -50 
+			}
+			}
+				
+

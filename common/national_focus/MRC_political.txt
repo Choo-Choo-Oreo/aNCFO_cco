@@ -1138,7 +1138,7 @@
 
 	shared_focus = { # Interventionist Policy
 		id = MRC_intervention_policy
-		icon = GFX_focus_unknown_political
+		icon = GFX_focus_unknown_military
 		mutually_exclusive = { focus = MRC_neutrality_policy }
 		prerequisite = { focus = MRC_foreign_trade }
 		prerequisite = { focus = MRC_canal_trade_deal }
@@ -1172,7 +1172,7 @@
 
 	shared_focus = { # Neutrality Policy
 		id = MRC_neutrality_policy
-		icon = GFX_focus_unknown_political
+		icon = GFX_focus_unknown_military
 		mutually_exclusive = { focus = MRC_intervention_policy }
 		prerequisite = { focus = MRC_foreign_trade }
 		prerequisite = { focus = MRC_canal_trade_deal }
@@ -1207,7 +1207,7 @@
 	# Mercantilism Branch
 		shared_focus = { # Economic Status-Quo
 			id = MRC_economic_status_quo
-			icon = GFX_focus_unknown_political
+			icon = GFX_focus_unknown_industry
 			mutually_exclusive = { focus = MRC_economic_reform }
 			prerequisite = { focus = MRC_foreign_trade }
 			prerequisite = { focus = MRC_canal_trade_deal }
@@ -1244,7 +1244,7 @@
 		} # Branch VVV
 			shared_focus = { # Development Tariffs
 				id = MRC_development_tariffs
-				icon = GFX_focus_unknown_political
+				icon = GFX_focus_unknown_industry
 				prerequisite = { focus = MRC_economic_status_quo }
 				relative_position_id = MRC_economic_status_quo
 				x = -1
@@ -1273,7 +1273,7 @@
 
 			shared_focus = { # Mercanaries Government Rights
 				id = MRC_mercanaries_government_rights
-				icon = GFX_focus_unknown_political
+				icon = GFX_focus_unknown_industry
 				mutually_exclusive = { focus = MRC_mercanaries_regulations }
 				prerequisite = { focus = MRC_economic_status_quo }
 				relative_position_id = MRC_economic_status_quo
@@ -1296,12 +1296,13 @@
 
 				completion_reward = {
 					log = "[GetDateText]: [Root.GetName]: Focus MRC_mercanaries_government_rights"
+					swap_ideas = { remove_idea = MRC_mercenaries_notable add_idea = MRC_mercenaries_powerful }
 				}
 			}
 
 		shared_focus = { # Economic Reform
 			id = MRC_economic_reform
-			icon = GFX_focus_unknown_political
+			icon = GFX_focus_unknown_industry
 			mutually_exclusive = { focus = MRC_economic_status_quo }
 			prerequisite = { focus = MRC_foreign_trade }
 			prerequisite = { focus = MRC_canal_trade_deal }
@@ -1333,7 +1334,7 @@
 		} # Branch VVV
 			shared_focus = { # Loosen Protectionist Tariffs
 				id = MRC_loosen_protectionist_tariffs
-				icon = GFX_focus_unknown_political
+				icon = GFX_focus_unknown_industry
 				prerequisite = { focus = MRC_economic_reform }
 				relative_position_id = MRC_economic_reform
 				x = 1
@@ -1361,7 +1362,7 @@
 
 			shared_focus = { # Mercanaries Regulations
 				id = MRC_mercanaries_regulations
-				icon = GFX_focus_unknown_political
+				icon = GFX_focus_unknown_industry
 				mutually_exclusive = { focus = MRC_mercanaries_government_rights }
 				prerequisite = { focus = MRC_economic_reform }
 				relative_position_id = MRC_economic_reform
@@ -1384,12 +1385,13 @@
 
 				completion_reward = {
 					log = "[GetDateText]: [Root.GetName]: Focus MRC_mercanaries_regulations"
+					swap_ideas = { remove_idea = MRC_mercenaries_notable add_idea = MRC_mercenaries_weak }
 				}
 			}
 
 		shared_focus = { # Strengthen Currency
 			id = MRC_strengthen_currency
-			icon = GFX_focus_unknown_political
+			icon = GFX_focus_unknown_industry
 			prerequisite = { focus = MRC_economic_status_quo focus = MRC_economic_reform }
 			relative_position_id = MRC_economic_status_quo
 			x = 1
@@ -1514,6 +1516,72 @@
 				}
 			}
 
+			shared_focus = { # Women in the Workforce
+				id = MRC_women_workforce
+				icon = GFX_focus_unknown_political
+				mutually_exclusive = { focus = MRC_end_temporary_military_women }
+				prerequisite = { focus = MRC_loosen_protectionist_tariffs }
+				prerequisite = { focus = MRC_end_temporary_military_women }
+				relative_position_id = MRC_end_temporary_military_women
+				x = -1
+				y = 1
+			
+				cost = 5
+				cancel_if_invalid = yes
+				continue_if_invalid = no
+				available_if_capitulated = no
+			
+				available = {
+					NOT = { OR = {
+						has_completed_focus = MRC_support_progressive_movement
+						has_completed_focus = MRC_local_governance
+					} }
+				}
+				bypass = {
+				}
+			
+				ai_will_do = {
+					factor = 2
+				}
+
+				completion_reward = {
+					log = "[GetDateText]: [Root.GetName]: Focus MRC_women_workforce"
+					swap_ideas = { remove_idea = limited_women_in_the_workforce add_idea = women_in_the_workforce }
+				}
+			}
+
+		shared_focus = { # Women Right to Attune
+			id = MRC_women_attuners
+			icon = GFX_focus_unknown_political
+			prerequisite = { focus = MRC_codification_of_military_women focus = MRC_end_temporary_military_women }
+			relative_position_id = MRC_end_temporary_military_women
+			x = 1
+			y = 1
+		
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+		
+			available = {
+				NOT = { OR = {
+					has_completed_focus = MRC_support_progressive_movement
+					has_completed_focus = MRC_local_governance
+				} }
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				factor = 2
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_women_attuners"
+				custom_effect_tooltip = attunement_status_focus_tt
+			}
+		}
+
 		shared_focus = { # A Change in Course
 			id = MRC_change_couse
 			icon = GFX_focus_unknown_political
@@ -1554,7 +1622,7 @@
 		} # Branch VVV
 			shared_focus = { # Rule from Aborroas
 				id = MRC_rule_from_aborroas
-				icon = GFX_focus_unknown_political
+				icon = GFX_focus_unknown_expansion
 				mutually_exclusive = { focus = MRC_island_governors }
 				prerequisite = { focus = MRC_steady_couse focus = MRC_change_couse}
 				relative_position_id = MRC_change_couse
@@ -1587,7 +1655,7 @@
 
 			shared_focus = { # Strengthen Island Governors
 				id = MRC_island_governors
-				icon = GFX_focus_unknown_political
+				icon = GFX_focus_unknown_expansion
 				mutually_exclusive = { focus = MRC_rule_from_aborroas }
 				prerequisite = { focus = MRC_change_couse }
 				relative_position_id = MRC_change_couse
@@ -1616,6 +1684,10 @@
 						release_puppet_on_controlled = MOI
 						release_puppet_on_controlled = MPI
 						release_puppet_on_controlled = MTI
+						MAI = { inherit_technology = ROOT }
+						MOI = { inherit_technology = ROOT }
+						MPI = { inherit_technology = ROOT }
+						MTI = { inherit_technology = ROOT }
 					}
 					set_autonomy = { target = MAI autonomous_state = autonomy_collaboration_government }
 					set_autonomy = { target = MOI autonomous_state = autonomy_collaboration_government }
@@ -1623,3 +1695,127 @@
 					set_autonomy = { target = MTI autonomous_state = autonomy_collaboration_government }
 				}
 			}
+
+		shared_focus = { # Peninsula Integration
+			id = MRC_peninsula_integration
+			icon = GFX_focus_unknown_expansion
+			mutually_exclusive = { focus = MRC_setup_collaboration }
+			prerequisite = { focus = MRC_rule_from_aborroas }
+			relative_position_id = MRC_steady_couse
+			x = 0
+			y = 2
+		
+			cost = 7
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+		
+			available = {
+				count_triggers = {
+				    amount = 6
+				    12 = { resistance < 1 }
+					74 = { resistance < 1 }
+					76 = { resistance < 1 }
+					336 = { resistance < 1 }
+					337 = { resistance < 1 }
+					338 = { resistance < 1 }
+				}
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				factor = 2
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_loosen_protectionist_tariffs"
+				12 = { add_core_of = ROOT }
+				74 = { add_core_of = ROOT }
+				76 = { add_core_of = ROOT }
+				336 = { add_core_of = ROOT }
+				337 = { add_core_of = ROOT }
+				338 = { add_core_of = ROOT }
+			}
+		}
+
+		shared_focus = { # Setup Collaboration
+			id = MRC_setup_collaboration
+			icon = GFX_focus_unknown_expansion
+			mutually_exclusive = { focus = MRC_peninsula_integration }
+			prerequisite = { focus = MRC_rule_from_aborroas focus = MRC_island_governors }
+			relative_position_id = MRC_change_couse
+			x = 0
+			y = 2
+		
+			cost = 10
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+		
+			available = {
+				count_triggers = {
+				    amount = 6
+				    12 = { compliance > 60 }
+					74 = { compliance > 60 }
+					76 = { compliance > 60 }
+					336 = { compliance > 60 }
+					337 = { compliance > 60 }
+					338 = { compliance > 60 }
+				}
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				factor = 2
+				modifier = {
+					add = 0.10
+					factor = 1
+					is_historical_focus_on = yes
+				}
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_setup_collaboration"
+				IF = {
+					LIMIT = { country_exists = HSP }
+					create_dynamic_country = {
+						custom_effect_tooltip = MRC_create_crystallo_peninsula_subject_tt
+						hidden_effect = {
+							original_tag = HSP
+							copy_tag = MSP
+							reserve_dynamic_country = yes
+							set_cosmetic_tag = HSP
+							transfer_state = 12
+							transfer_state = 74
+							transfer_state = 75
+							transfer_state = 76
+							transfer_state = 335
+							transfer_state = 336
+							transfer_state = 337
+							transfer_state = 338
+							set_politics = { ruling_party = semidemocracy }
+							set_popularities = {
+								pluralism = 15
+								semidemocracy = 37
+								theocratism = 35
+								authoritarianism = 13
+							}
+							ROOT = { puppet = PREV }
+							set_autonomy = { target = PREV autonomous_state = autonomy_collaboration_government }
+							inherit_technology = ROOT
+							114 = { add_core_of = PREV }
+							123 = { add_core_of = PREV }
+							124 = { add_core_of = PREV }
+							180 = { add_core_of = PREV }
+						}
+						log = "[GetDateText]: [Root.GetName]: Dynamic Country Created"
+					}
+				}
+				IF = {
+					LIMIT = { NOT = { country_exists = HSP } }
+					release_puppet_on_controlled = HSP
+				}
+			}
+		}
