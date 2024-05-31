@@ -1681,20 +1681,20 @@
 				completion_reward = {
 					log = "[GetDateText]: [Root.GetName]: Focus MRC_island_governors"
 					add_power_balance_value = { id = power_balance_MRC_political_balance value = 0.025 }
+					custom_effect_tooltip = MRC_create_MAI_subject_tt
+					custom_effect_tooltip = MRC_create_MOI_subject_tt
+					custom_effect_tooltip = MRC_create_MPI_subject_tt
+					custom_effect_tooltip = MRC_create_MTI_subject_tt
 					hidden_effect = { # Create Puppet
-						release_puppet_on_controlled = MAI
-						release_puppet_on_controlled = MOI
-						release_puppet_on_controlled = MPI
-						release_puppet_on_controlled = MTI
+						release_autonomy = { target = MAI autonomy_state = autonomy_integrated_puppet freedom_level = 0.34 }
+						release_autonomy = { target = MOI autonomy_state = autonomy_integrated_puppet freedom_level = 0.34 }
+						release_autonomy = { target = MPI autonomy_state = autonomy_integrated_puppet freedom_level = 0.34 }
+						release_autonomy = { target = MTI autonomy_state = autonomy_integrated_puppet freedom_level = 0.34 }
 						MAI = { inherit_technology = ROOT }
 						MOI = { inherit_technology = ROOT }
 						MPI = { inherit_technology = ROOT }
 						MTI = { inherit_technology = ROOT }
 					}
-					set_autonomy = { target = MAI autonomous_state = autonomy_collaboration_government }
-					set_autonomy = { target = MOI autonomous_state = autonomy_collaboration_government }
-					set_autonomy = { target = MPI autonomous_state = autonomy_collaboration_government }
-					set_autonomy = { target = MTI autonomous_state = autonomy_collaboration_government }
 				}
 			}
 
@@ -1782,9 +1782,9 @@
 				log = "[GetDateText]: [Root.GetName]: Focus MRC_setup_collaboration"
 				IF = {
 					LIMIT = { country_exists = HSP }
-					create_dynamic_country = {
-						custom_effect_tooltip = MRC_create_crystallo_peninsula_subject_tt
-						hidden_effect = {
+					custom_effect_tooltip = MRC_create_crystallo_peninsula_subject_tt
+					hidden_effect = {
+						create_dynamic_country = {
 							original_tag = HSP
 							copy_tag = MSP
 							reserve_dynamic_country = yes
@@ -1797,6 +1797,7 @@
 							transfer_state = 336
 							transfer_state = 337
 							transfer_state = 338
+							set_capital = { state = 338 remember_old_capital = yes }
 							set_politics = { ruling_party = semidemocracy }
 							set_popularities = {
 								pluralism = 15
@@ -1804,20 +1805,20 @@
 								theocratism = 35
 								authoritarianism = 13
 							}
-							ROOT = { puppet = PREV }
-							set_autonomy = { target = PREV autonomous_state = autonomy_collaboration_government }
+							PREV = { set_autonomy = { target = PREV autonomous_state = autonomy_integrated_puppet } }
 							inherit_technology = ROOT
 							114 = { add_core_of = PREV }
 							123 = { add_core_of = PREV }
 							124 = { add_core_of = PREV }
 							180 = { add_core_of = PREV }
+							log = "[GetDateText]: [PREV.GetName]: Dynamic Country Created"
 						}
-						log = "[GetDateText]: [Root.GetName]: Dynamic Country Created"
 					}
 				}
 				IF = {
 					LIMIT = { NOT = { country_exists = HSP } }
-					release_puppet_on_controlled = HSP
+					custom_effect_tooltip = MRC_create_crystallo_peninsula_subject_tt
+					hidden_effect = { release_autonomy = { target = HSP autonomy_state = autonomy_integrated_puppet freedom_level = 0.34 } }
 				}
 			}
 		}
@@ -1964,3 +1965,42 @@
 				log = "[GetDateText]: [Root.GetName]: Focus MRC_wartime_contingencies_focus"
 			}
 		} # Branch VVV
+			shared_focus = { # Wartime Government
+				id = MRC_wartime_government_forcus
+				icon = GFX_focus_unknown_political
+				prerequisite = { focus = MRC_wartime_contingencies_focus }
+				relative_position_id = MRC_wartime_contingencies_focus
+				x = 0
+				y = 1
+			
+				cost = 5
+				cancel_if_invalid = yes
+				continue_if_invalid = no
+				available_if_capitulated = no
+			
+				available = {
+				}
+				bypass = {
+				}
+			
+				ai_will_do = {
+					factor = 2
+				}
+
+				completion_reward = {
+					log = "[GetDateText]: [Root.GetName]: Focus MRC_wartime_government_forcus"
+					every_country = {
+						limit = { is_subject_of = MRC }
+						PREV = { transfer_navy = { target = PREV } }
+						PREV = { annex_country = { target = PREV transfer_troops = yes } }
+					}
+					hidden_effect = {
+						12 = { add_core_of = ROOT }
+						74 = { add_core_of = ROOT }
+						76 = { add_core_of = ROOT }
+						336 = { add_core_of = ROOT }
+						337 = { add_core_of = ROOT }
+						338 = { add_core_of = ROOT }
+					}
+				}
+			}
