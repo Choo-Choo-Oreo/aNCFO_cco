@@ -415,7 +415,6 @@
 			add_political_power = -50
 		}
 	}
-	# Southern Financial Assistance End
 # Progressive Neutrality Branch - Right
 	shared_focus = { # Neutrality Focus Foreign Diplomacy
 		id = MRC_foreign_neutrality_focus
@@ -815,7 +814,6 @@
 				add_research_slot = 1
 			}
 		}
-	# Southern Military Withdrawal End
 # Early Industry Development Branch
 	shared_focus = { # Industral Buildup Policies
 		id = MRC_industral_buildup_actions
@@ -1244,6 +1242,7 @@
 				log = "[GetDateText]: [Root.GetName]: Focus MRC_economic_status_quo"
 			}
 		} # Branch VVV
+
 			shared_focus = { # Development Tariffs
 				id = MRC_development_tariffs
 				icon = GFX_focus_unknown_industry
@@ -1334,6 +1333,7 @@
 				log = "[GetDateText]: [Root.GetName]: Focus MRC_economic_reform"
 			}
 		} # Branch VVV
+
 			shared_focus = { # Loosen Protectionist Tariffs
 				id = MRC_loosen_protectionist_tariffs
 				icon = GFX_focus_unknown_industry
@@ -1451,6 +1451,7 @@
 				add_timed_idea = { idea = MRC_steady_as_she_goes_idea days = 365 }
 			}
 		} # Branch VVV
+
 			shared_focus = { # End Temporary Military Women Law
 				id = MRC_end_temporary_military_women
 				icon = GFX_focus_unknown_political
@@ -1521,7 +1522,6 @@
 			shared_focus = { # Women in the Workforce
 				id = MRC_women_workforce
 				icon = GFX_focus_unknown_political
-				mutually_exclusive = { focus = MRC_end_temporary_military_women }
 				prerequisite = { focus = MRC_loosen_protectionist_tariffs }
 				prerequisite = { focus = MRC_end_temporary_military_women }
 				relative_position_id = MRC_end_temporary_military_women
@@ -1622,6 +1622,7 @@
 				add_timed_idea = { idea = MRC_change_in_course_idea days = 365 }
 			}
 		} # Branch VVV
+
 			shared_focus = { # Rule from Aborroas
 				id = MRC_rule_from_aborroas
 				icon = GFX_focus_unknown_expansion
@@ -1849,6 +1850,7 @@
 				log = "[GetDateText]: [Root.GetName]: Focus MRC_dealing_with_guilds"
 			}
 		} # Branch VVV
+
 			shared_focus = { # Guilds Empower
 				id = MRC_guilds_empower_focus
 				icon = GFX_focus_unknown_industry
@@ -1965,6 +1967,7 @@
 				log = "[GetDateText]: [Root.GetName]: Focus MRC_wartime_contingencies_focus"
 			}
 		} # Branch VVV
+
 			shared_focus = { # Wartime Government
 				id = MRC_wartime_government_forcus
 				icon = GFX_focus_unknown_political
@@ -1991,16 +1994,12 @@
 					log = "[GetDateText]: [Root.GetName]: Focus MRC_wartime_government_forcus"
 					every_country = {
 						limit = { is_subject_of = MRC }
+						every_state = {
+							limit = { is_core_of = PREV }
+							add_core_of = MRC
+						}
 						PREV = { transfer_navy = { target = PREV } }
 						PREV = { annex_country = { target = PREV transfer_troops = yes } }
-					}
-					hidden_effect = {
-						12 = { add_core_of = ROOT }
-						74 = { add_core_of = ROOT }
-						76 = { add_core_of = ROOT }
-						336 = { add_core_of = ROOT }
-						337 = { add_core_of = ROOT }
-						338 = { add_core_of = ROOT }
 					}
 				}
 			}
