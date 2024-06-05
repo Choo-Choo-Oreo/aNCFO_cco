@@ -41,6 +41,8 @@ replace_path="history/general"
 replace_path="history/states"
 replace_path="history/units"
 replace_path="map/strategicregions"
+replace_path="tests"
+replace_path="tutorial"
 tags={
 	"Map"
 	"Balance"
