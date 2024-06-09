@@ -54,6 +54,7 @@
 
 	NDefines.NNavy.MAX_CAPITALS_PER_AUTO_TASK_FORCE = 10
 	NDefines.NNavy.BEST_CAPITALS_TO_CARRIER_RATIO = 2
+
 -- NRM Defines
 	NDefines.NProduction.DEFAULT_MAX_NAV_FACTORIES_PER_LINE = 6 -- Was 3 changed to 6
 	NDefines.NProduction.CAPITAL_SHIP_MAX_NAV_FACTORIES_PER_LINE = 6 -- Was 3 changed to 6
