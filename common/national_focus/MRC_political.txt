@@ -318,6 +318,7 @@
 		available_if_capitulated = no
 
 		available = {
+			is_debug = yes
 			#custom_trigger_tooltip = {
 			#	tooltip = historically_locked_tt
 			#	is_historical_focus_on = no
@@ -431,6 +432,7 @@
 		available_if_capitulated = no
 	
 		available = {
+			is_debug = yes
 			#custom_trigger_tooltip = {
 			#	tooltip = historically_locked_tt
 			#	is_historical_focus_on = no
@@ -559,259 +561,6 @@
 			completion_reward = {
 				log = "[GetDateText]: [Root.GetName]: Focus MRC_reform_government"
 				set_cosmetic_tag = MRC_deplutocratization
-			}
-		}
-
-		shared_focus = { # Fortify the Grand Canal
-			id = MRC_fortify_canal
-			icon = GFX_
-			prerequisite = { focus = MRC_reform_government }
-			relative_position_id = MRC_reform_government
-			x = -2
-			y = 1
-		
-			cost = 10
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = no
-		
-			available = {
-				ROOT = { controls_state = 97 }
-				or = {
-					threat > 0.2
-					has_war = yes
-				}
-			}
-			bypass = {
-			}
-		
-			ai_will_do = {
-				factor = 2
-			}
-
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_fortify_canal"
-				97 = {
-					add_extra_state_shared_building_slots = 1
-					add_building_construction = { type = bunker province = 5255 level = 3 instant_build = yes }
-					add_building_construction = { type = coastal_bunker province = 5255 level = 3 instant_build = yes }
-					add_building_construction = { type = bunker province = 5315 level = 3 instant_build = yes }
-					add_building_construction = { type = bunker province = 6045 level = 3 instant_build = yes }
-					add_building_construction = { type = coastal_bunker province = 6045 level = 3 instant_build = yes }
-					add_building_construction = { type = bunker province = 15121 level = 3 instant_build = yes }
-				}
-			}
-		}
-
-		shared_focus = { # Art of Armed Neutrality
-			id = MRC_art_of_armed_neutrality
-			icon = GFX_
-			prerequisite = { focus = MRC_fortify_canal }
-			relative_position_id = MRC_fortify_canal
-			x = 0
-			y = 1
-		
-			cost = 10
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = no
-		
-			available = {
-				or = {
-					threat > 0.4
-					has_war = yes
-				}
-			}
-			bypass = {
-			}
-		
-			ai_will_do = {
-				factor = 2
-			}
-
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_art_of_armed_neutrality"
-				add_ideas = MRC_armed_neutrality
-			}
-		}
-
-		shared_focus = { # The Center of Knowledge
-			id = MRC_center_knowledge
-			icon = GFX_
-			prerequisite = { focus = MRC_reform_government }
-			relative_position_id = MRC_reform_government
-			x = 0
-			y = 1
-		
-			cost = 10
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = no
-		
-			available = {
-			}
-			bypass = {
-			}
-		
-			ai_will_do = {
-				factor = 2
-			}
-
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_center_knowledge"
-				add_political_power = 50
-				add_ideas = MRC_center_of_knowledge1
-			}
-		}
-
-		shared_focus = { # The Freedom of Research
-			id = MRC_freedom_of_research
-			icon = GFX_
-			prerequisite = { focus = MRC_center_knowledge }
-			relative_position_id = MRC_center_knowledge
-			x = 2
-			y = 1
-		
-			cost = 10
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = no
-		
-			available = {
-			}
-			bypass = {
-			}
-		
-			ai_will_do = {
-				factor = 2
-			}
-
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_freedom_of_research"
-				add_political_power = 50
-				swap_ideas = {
-					remove_idea = MRC_center_of_knowledge1
-					add_idea = MRC_center_of_knowledge0
-				}
-			}
-		}
-
-		shared_focus = { # Aborroas Project
-			id = MRC_aborroas_project
-			icon = GFX_focus_MRC_nuclear
-			prerequisite = { focus = MRC_freedom_of_research }
-			relative_position_id = MRC_freedom_of_research
-			x = 0
-			y = 1
-		
-			cost = 10
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = no
-		
-			available = {
-			}
-			bypass = {
-			}
-		
-			ai_will_do = {
-				factor = 2
-			}
-
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_nuclear_research"
-				add_tech_bonus = {
-					name = nuclear_bonus
-					ahead_reduction = 4
-					bonus = 2.0
-					uses = 3
-					category = nuclear
-				}
-			}
-		}
-
-		shared_focus = { # Public Research Documents
-			id = MRC_public_documents
-			icon = GFX_
-			prerequisite = { focus = MRC_center_knowledge }
-			relative_position_id = MRC_center_knowledge
-			x = 0
-			y = 1
-		
-			cost = 20
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = no
-		
-			available = {
-			}
-			bypass = {
-			}
-		
-			ai_will_do = {
-				factor = 2
-			}
-
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_public_documents"
-				add_research_slot = 1
-			}
-		}
-
-		shared_focus = { # Ahead of the Crowd
-			id = MRC_ahead_of_the_crowd
-			icon = GFX_
-			prerequisite = { focus = MRC_public_documents }
-			relative_position_id = MRC_public_documents
-			x = 0
-			y = 1
-		
-			cost = 20
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = no
-		
-			available = {
-			}
-			bypass = {
-			}
-		
-			ai_will_do = {
-				factor = 2
-			}
-
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_ahead_of_the_crowd"
-				add_research_slot = 1
-			}
-		}
-
-		shared_focus = { # Art of Neutral Seas
-			id = MRC_art_of_neutral_seas
-			icon = GFX_
-			prerequisite = { focus = MRC_ahead_of_the_crowd }
-			prerequisite = { focus = MRC_art_of_armed_neutrality }
-			relative_position_id = MRC_public_documents
-			x = -2
-			y = 2
-		
-			cost = 20
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = no
-		
-			available = {
-			}
-			bypass = {
-			}
-		
-			ai_will_do = {
-				factor = 2
-			}
-
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_art_of_neutral_seas"
-				add_research_slot = 1
 			}
 		}
 # Early Industry Development Branch
@@ -1048,13 +797,18 @@
 		available_if_capitulated = no
 
 		available = {
-			power_balance_value = {
-				id = power_balance_MRC_political_balance
-			    value > -0.10
-			}
-			power_balance_value = {
-				id = power_balance_MRC_political_balance
-			    value < 0.10
+			OR = {
+				is_debug = no
+				AND = {
+					power_balance_value = {
+						id = power_balance_MRC_political_balance
+					    value > -0.10
+					}
+					power_balance_value = {
+						id = power_balance_MRC_political_balance
+					    value < 0.10
+					}
+				}
 			}
 			OR = { has_completed_focus = MRC_support_progressive_movement has_completed_focus = MRC_hamper_progressive_movement }
 			OR = { has_completed_focus = MRC_local_governance has_completed_focus = MRC_federal_governance }
