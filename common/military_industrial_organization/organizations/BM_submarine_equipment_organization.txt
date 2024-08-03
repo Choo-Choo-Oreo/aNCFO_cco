@@ -1,0 +1,683 @@
+# ============Submarines============
+
+BM_submarine = {
+	name = BM_submarine
+	icon = GFX_idea_bm_submarine
+
+	equipment_type = {
+		bm_only_submarines_eq
+	}
+	research_categories = {
+		mio_cat_tech_all_submarine_and_modules
+	}
+
+	allowed = {
+		has_dlc = "Arms Against Tyranny"
+	}
+	visible = {
+		has_dlc = "Arms Against Tyranny"
+		#every_possible_country = {
+		#	has_dlc = "Arms Against Tyranny"
+		#	always = yes			
+		#}
+	}
+	available = {
+		has_dlc = "Arms Against Tyranny"
+		#every_possible_country = {
+		#	has_dlc = "Arms Against Tyranny"
+		#	always = yes			
+		#}
+	}
+
+	research_bonus = 0.05
+	task_capacity = 999
+
+	tree_header_text = {
+		text = BM_submarine_header_1
+		x = 1
+	}
+	tree_header_text = {
+		text = BM_submarine_header_2
+		x = 6
+	}
+
+	initial_trait = {
+		name = BM_submarine_initaial_trait
+
+		organization_modifier = {
+			military_industrial_organization_design_team_assign_cost = -0.02
+			military_industrial_organization_industrial_manufacturer_assign_cost = -0.05
+		}
+	}
+	#============RELIABILITY, OUTPUT & COST============
+	# RELIABLITY
+	trait = {
+		token = BM_submarine_reliabilty_1
+		name = BM_submarine_reliabilty_1
+		icon = GFX_reliability_1
+
+		position = { x=0 y=0 }
+		mutually_exclusive = {
+			BM_submarine_output_1
+			BM_submarine_cost_1
+		}
+
+		equipment_bonus = {
+			reliability = 0.02
+		}
+	}
+	trait = {
+		token = BM_submarine_reliabilty_2
+		name = BM_submarine_reliabilty_2
+		icon = GFX_reliability_2
+
+		position = { x=0 y=2 }
+		relative_position_id = BM_submarine_reliabilty_1
+		any_parent = {
+			BM_submarine_reliabilty_1
+			BM_submarine_output_1
+			BM_submarine_cost_1
+		}
+		mutually_exclusive = {
+			BM_submarine_output_2
+			BM_submarine_cost_2
+		}
+
+		equipment_bonus = {
+			reliability = 0.03
+		}
+	}
+	trait = {
+		token = BM_submarine_reliabilty_3
+		name = BM_submarine_reliabilty_3
+		icon = GFX_reliability_3
+
+		position = { x=0 y=2 }
+		relative_position_id = BM_submarine_reliabilty_2
+		any_parent = {
+			BM_submarine_reliabilty_2
+			BM_submarine_output_2
+			BM_submarine_cost_2
+		}
+		mutually_exclusive = {
+			BM_submarine_output_3
+			BM_submarine_cost_3
+		}
+
+		equipment_bonus = {
+			reliability = 0.04
+		}
+	}
+	# FACTORY OUTPUT
+	trait = {
+		token = BM_submarine_output_1
+		name = BM_submarine_output_1
+		icon = GFX_factory_output_1
+
+		position = { x=1 y=0 }
+		mutually_exclusive = {
+			BM_submarine_cost_1
+			BM_submarine_reliabilty_1
+		}
+
+		production_bonus = {
+			production_capacity_factor = 0.02
+		}
+	}
+	trait = {
+		token = BM_submarine_output_2
+		name = BM_submarine_output_2
+		icon = GFX_factory_output_2
+
+		position = { x=0 y=2 }
+		relative_position_id = BM_submarine_output_1
+		any_parent = {
+			BM_submarine_reliabilty_1
+			BM_submarine_output_1
+			BM_submarine_cost_1
+		}
+		mutually_exclusive = {
+			BM_submarine_reliabilty_2
+			BM_submarine_cost_2
+		}
+
+		production_bonus = {
+			production_capacity_factor = 0.03
+		}
+	}
+	trait = {
+		token = BM_submarine_output_3
+		name = BM_submarine_output_3
+		icon = GFX_factory_output_3
+
+		position = { x=0 y=2 }
+		relative_position_id = BM_submarine_output_2
+		any_parent = {
+			BM_submarine_reliabilty_2
+			BM_submarine_output_2
+			BM_submarine_cost_2
+		}
+		mutually_exclusive = {
+			BM_submarine_reliabilty_3
+			BM_submarine_cost_3
+		}
+
+		production_bonus = {
+			production_capacity_factor = 0.04
+		}
+	}
+	# PRODUCTION COST
+	trait = {
+		token = BM_submarine_cost_1
+		name = BM_submarine_cost_1
+		icon = GFX_production_cost_1
+
+		position = { x=2 y=0 }
+		mutually_exclusive = {
+			BM_submarine_output_1
+			BM_submarine_reliabilty_1
+		}
+
+		equipment_bonus = {
+			build_cost_ic = -0.02
+		}
+	}
+	trait = {
+		token = BM_submarine_cost_2
+		name = BM_submarine_cost_2
+		icon = GFX_production_cost_2
+
+		position = { x=0 y=2 }
+		relative_position_id = BM_submarine_cost_1
+		any_parent = {
+			BM_submarine_reliabilty_1
+			BM_submarine_output_1
+			BM_submarine_cost_1
+		}
+		mutually_exclusive = {
+			BM_submarine_output_2
+			BM_submarine_output_2
+			BM_submarine_reliabilty_2
+		}
+
+		equipment_bonus = {
+			build_cost_ic = -0.03
+		}
+	}
+	trait = {
+		token = BM_submarine_cost_3
+		name = BM_submarine_cost_3
+		icon = GFX_production_cost_3
+
+		position = { x=0 y=2 }
+		relative_position_id = BM_submarine_cost_2
+		any_parent = {
+			BM_submarine_reliabilty_2
+			BM_submarine_output_2
+			BM_submarine_cost_2
+		}
+		mutually_exclusive = {
+			BM_submarine_output_3
+			BM_submarine_output_3
+			BM_submarine_reliabilty_3
+		}
+
+		equipment_bonus = {
+			build_cost_ic = -0.04
+		}
+	}
+	#============TREE============
+	# ===LINE 1===
+	# PART 1
+	trait = {
+		token = BM_submarine_armor_value_1
+		name = BM_submarine_armor_value_1
+		icon = GFX_armor_value_1
+
+		position = { x=3 y=0 }
+		mutually_exclusive = {
+			BM_submarine_naval_range_1
+            BM_submarine_mine_planting_1
+            BM_submarine_torpedo_hit_chance_1
+		}
+		
+		equipment_bonus = {
+			armor_value = 0.02
+		}
+	}
+	trait = {
+		token = BM_submarine_armor_value_2
+		name = BM_submarine_armor_value_2
+		icon = GFX_armor_value_2
+
+		position = { x=0 y=1 }
+		relative_position_id = BM_submarine_armor_value_1
+		any_parent = {
+			BM_submarine_armor_value_1
+            BM_submarine_naval_range_1
+            BM_submarine_mine_planting_1
+            BM_submarine_torpedo_hit_chance_1
+		}
+		mutually_exclusive = {
+			BM_submarine_naval_range_2
+            BM_submarine_mine_planting_2
+            BM_submarine_torpedo_hit_chance_2
+		}
+		
+		equipment_bonus = {
+			armor_value = 0.03
+		}
+	}
+	# MIDDLE
+	trait = { # NEW
+		token = BM_submarine_armor_surface_detaction
+		name = BM_submarine_armor_surface_detaction
+		icon = GFX_armor_surface_detaction
+
+		position = { x=0 y=1 }
+		relative_position_id = BM_submarine_armor_value_2
+		any_parent = {
+            BM_submarine_armor_value_2
+            BM_submarine_naval_range_2
+            BM_submarine_mine_planting_2
+            BM_submarine_torpedo_hit_chance_2
+		}
+		mutually_exclusive = {
+            BM_submarine_naval_range_speed
+            BM_submarine_navy_coordination
+            BM_submarine_torpedo_chance_damage
+		}
+		
+		equipment_bonus = {
+			armor_value = 0.02
+			surface_detection = 0.03
+		}
+	}
+	# PART 2
+	trait = { # NEW
+		token = BM_submarine_surface_detection_1
+		name = BM_submarine_surface_detection_1
+		icon = GFX_surface_detection_1
+
+		position = { x=0 y=1 }
+		relative_position_id = BM_submarine_armor_surface_detaction
+		any_parent = {
+            BM_submarine_armor_surface_detaction
+            BM_submarine_naval_range_speed
+            BM_submarine_navy_coordination
+            BM_submarine_torpedo_chance_damage
+		}
+		mutually_exclusive = {
+			BM_submarine_naval_speed_1
+			BM_submarine_mine_sweeping_1
+			BM_submarine_torpedo_damage_1
+		}
+
+		equipment_bonus = {
+			surface_detection = 0.02
+		}
+	}
+	trait = { # NEW
+		token = BM_submarine_surface_detection_2
+		name = BM_submarine_surface_detection_2
+		icon = GFX_surface_detection_2
+
+		position = { x=0 y=1 }
+		relative_position_id = BM_submarine_surface_detection_1
+		any_parent = {
+			BM_submarine_surface_detection_1
+			BM_submarine_naval_speed_1
+			BM_submarine_mine_sweeping_1
+			BM_submarine_torpedo_damage_1
+		}
+		mutually_exclusive = {
+			BM_submarine_naval_speed_2
+			BM_submarine_mine_sweeping_2
+			BM_submarine_torpedo_damage_2
+		}
+
+		equipment_bonus = {
+			surface_detection = 0.03
+		}
+	}
+    # ===LINE 2===
+	# PART 1
+	trait = {
+		token = BM_submarine_naval_range_1
+		name = BM_submarine_naval_range_1
+		icon = GFX_naval_range_1
+
+		position = { x=5 y=0 }
+		mutually_exclusive = {
+			BM_submarine_armor_value_1
+            BM_submarine_mine_planting_1
+            BM_submarine_torpedo_hit_chance_1
+		}
+
+		equipment_bonus = {
+			naval_range = 0.02
+		}
+	}
+	trait = {
+		token = BM_submarine_naval_range_2
+		name = BM_submarine_naval_range_2
+		icon = GFX_naval_range_2
+
+		position = { x=0 y=1 }
+		relative_position_id = BM_submarine_naval_range_1
+		any_parent = {
+            BM_submarine_armor_value_1
+            BM_submarine_naval_range_1
+            BM_submarine_mine_planting_1
+            BM_submarine_torpedo_hit_chance_1
+		}
+		mutually_exclusive = {
+			BM_submarine_armor_value_2
+            BM_submarine_mine_planting_2
+            BM_submarine_torpedo_hit_chance_2
+		}
+
+		equipment_bonus = {
+			naval_range = 0.03
+		}
+	}
+	# MIDDLE
+	trait = {
+		token = BM_submarine_naval_range_speed
+		name = BM_submarine_naval_range_speed
+		icon = GFX_naval_speed_range
+
+		position = { x=0 y=1 }
+		relative_position_id = BM_submarine_naval_range_2
+		any_parent = {
+            BM_submarine_armor_value_2
+            BM_submarine_naval_range_2
+            BM_submarine_mine_planting_2
+            BM_submarine_torpedo_hit_chance_2
+		}
+		mutually_exclusive = {
+            BM_submarine_armor_surface_detaction
+            BM_submarine_navy_coordination
+            BM_submarine_torpedo_chance_damage
+		}
+
+		equipment_bonus = {
+			naval_range = 0.02
+			naval_speed = 0.02
+		}
+	}
+	# PART 2
+	trait = {
+		token = BM_submarine_naval_speed_1
+		name = BM_submarine_naval_speed_1
+		icon = GFX_naval_speed_1
+
+		position = { x=0 y=1 }
+		relative_position_id = BM_submarine_naval_range_speed
+		any_parent = {
+            BM_submarine_armor_surface_detaction
+            BM_submarine_naval_range_speed
+            BM_submarine_navy_coordination
+            BM_submarine_torpedo_chance_damage
+		}
+		mutually_exclusive = {
+			BM_submarine_surface_detection_1
+			BM_submarine_mine_sweeping_1
+			BM_submarine_torpedo_damage_1
+		}
+
+		equipment_bonus = {
+			naval_speed = 0.02
+		}
+	}
+	trait = {
+		token = BM_submarine_naval_speed_2
+		name = BM_submarine_naval_speed_2
+		icon = GFX_naval_speed_2
+
+		position = { x=0 y=1 }
+		relative_position_id = BM_submarine_naval_speed_1
+		any_parent = {
+			BM_submarine_surface_detection_1
+			BM_submarine_naval_speed_1
+			BM_submarine_mine_sweeping_1
+			BM_submarine_torpedo_damage_1
+		}
+		mutually_exclusive = {
+			BM_submarine_surface_detection_2
+			BM_submarine_mine_sweeping_2
+			BM_submarine_torpedo_damage_2
+		}
+
+		equipment_bonus = {
+			naval_speed = 0.03
+		}
+	}
+	# ===LINE 3===
+	# PART 1
+	trait = {
+		token = BM_submarine_mine_planting_1
+		name = BM_submarine_mine_planting_1
+		icon = GFX_mine_planting_1
+
+		position = { x=7 y=0 }
+		mutually_exclusive = {
+			BM_submarine_armor_value_1
+            BM_submarine_naval_range_1
+            BM_submarine_torpedo_hit_chance_1
+		}
+
+		equipment_bonus = {
+			mines_planting = 0.02
+		}
+	}
+	trait = {
+		token = BM_submarine_mine_planting_2
+		name = BM_submarine_mine_planting_2
+		icon = GFX_mine_planting_2
+
+		position = { x=0 y=1 }
+		relative_position_id = BM_submarine_mine_planting_1
+		any_parent = {
+            BM_submarine_armor_value_1
+            BM_submarine_naval_range_1
+            BM_submarine_mine_planting_1
+            BM_submarine_torpedo_hit_chance_1
+		}
+		mutually_exclusive = {
+			BM_submarine_armor_value_2
+            BM_submarine_naval_range_2
+            BM_submarine_torpedo_hit_chance_2
+		}
+
+		equipment_bonus = {
+			mines_planting = 0.03
+		}
+	}
+	# MIDDLE
+	trait = {
+		token = BM_submarine_navy_coordination
+		name = BM_submarine_navy_coordination
+		icon = GFX_navy_coordination
+
+		position = { x=0 y=1 }
+		relative_position_id = BM_submarine_mine_planting_2
+		any_parent = {
+            BM_submarine_armor_value_2
+            BM_submarine_naval_range_2
+            BM_submarine_mine_planting_2
+            BM_submarine_torpedo_hit_chance_2
+		}
+		mutually_exclusive = {
+            BM_submarine_armor_surface_detaction
+            BM_submarine_naval_range_speed
+            BM_submarine_torpedo_chance_damage
+		}
+
+		equipment_bonus = {
+			search_and_destroy_coordination = 0.02
+			patrol_coordination = 0.02
+			convoy_raiding_coordination = 0.02
+		}
+	}
+	# PART 2
+	trait = {
+		token = BM_submarine_mine_sweeping_1
+		name = BM_submarine_mine_sweeping_1
+		icon = GFX_mine_sweeping_1
+
+		position = { x=0 y=1 }
+		relative_position_id = BM_submarine_navy_coordination
+		any_parent = {
+            BM_submarine_armor_surface_detaction
+            BM_submarine_naval_range_speed
+            BM_submarine_navy_coordination
+            BM_submarine_torpedo_chance_damage
+		}
+		mutually_exclusive = {
+			BM_submarine_surface_detection_1
+			BM_submarine_naval_speed_1
+			BM_submarine_torpedo_damage_1
+		}
+
+		equipment_bonus = {
+			mines_sweeping = 0.02
+		}
+	}
+	trait = {
+		token = BM_submarine_mine_sweeping_2
+		name = BM_submarine_mine_sweeping_2
+		icon = GFX_mine_sweeping_2
+
+		position = { x=0 y=1 }
+		relative_position_id = BM_submarine_mine_sweeping_1
+		any_parent = {
+			BM_submarine_surface_detection_1
+			BM_submarine_naval_speed_1
+			BM_submarine_mine_sweeping_1
+			BM_submarine_torpedo_damage_1
+		}
+		mutually_exclusive = {
+			BM_submarine_surface_detection_2
+			BM_submarine_naval_speed_2
+			BM_submarine_torpedo_damage_2
+		}
+
+		equipment_bonus = {
+			mines_sweeping = 0.03
+		}
+	}
+	# ===LINE 4===
+	# PART 1
+	trait = {
+		token = BM_submarine_torpedo_hit_chance_1
+		name = BM_submarine_torpedo_hit_chance_1
+		icon = GFX_torpedo_hit_chance_1
+
+		position = { x=9 y=0 }
+		mutually_exclusive = {
+			BM_submarine_armor_value_1
+		    BM_submarine_naval_range_1
+		    BM_submarine_mine_planting_1
+		}
+
+		equipment_bonus = {
+			naval_torpedo_hit_chance_factor = 0.02
+		}
+	}
+	trait = {
+		token = BM_submarine_torpedo_hit_chance_2
+		name = BM_submarine_torpedo_hit_chance_2
+		icon = GFX_torpedo_hit_chance_2
+
+		position = { x=0 y=1 }
+		relative_position_id = BM_submarine_torpedo_hit_chance_1
+		any_parent = {
+            BM_submarine_armor_value_1
+            BM_submarine_naval_range_1
+            BM_submarine_mine_planting_1
+            BM_submarine_torpedo_hit_chance_1
+		}
+		mutually_exclusive = {
+			BM_submarine_armor_value_2
+		    BM_submarine_naval_range_2
+		    BM_submarine_mine_planting_2
+		}
+
+		equipment_bonus = {
+			naval_torpedo_hit_chance_factor = 0.03
+		}
+	}
+	# MIDDLE
+	trait = {
+		token = BM_submarine_torpedo_chance_damage
+		name = BM_submarine_torpedo_chance_damage
+		icon = GFX_torpedo_chance_damage
+
+		position = { x=0 y=1 }
+		relative_position_id = BM_submarine_torpedo_hit_chance_2
+		any_parent = {
+            BM_submarine_armor_value_2
+            BM_submarine_naval_range_2
+            BM_submarine_mine_planting_2
+            BM_submarine_torpedo_hit_chance_2
+		}
+		mutually_exclusive = {
+            BM_submarine_armor_surface_detaction
+            BM_submarine_naval_range_speed
+            BM_submarine_navy_coordination
+		}
+
+		equipment_bonus = {
+			naval_torpedo_hit_chance_factor = 0.02
+			naval_torpedo_damage_reduction_factor = 0.02
+		}
+	}
+	# PART 2
+	trait = {
+		token = BM_submarine_torpedo_damage_1
+		name = BM_submarine_torpedo_damage_1
+		icon = GFX_torpedo_damage_reduction_1
+
+		position = { x=0 y=1 }
+		relative_position_id = BM_submarine_torpedo_chance_damage
+		any_parent = {
+            BM_submarine_armor_surface_detaction
+            BM_submarine_naval_range_speed
+            BM_submarine_navy_coordination
+            BM_submarine_torpedo_chance_damage
+		}
+		mutually_exclusive = {
+			BM_submarine_surface_detection_1
+			BM_submarine_naval_speed_1
+			BM_submarine_mine_sweeping_1
+		}
+
+		equipment_bonus = {
+			naval_torpedo_damage_reduction_factor = 0.02
+		}
+	}
+	trait = {
+		token = BM_submarine_torpedo_damage_2
+		name = BM_submarine_torpedo_damage_2
+		icon = GFX_torpedo_damage_reduction_2
+
+		position = { x=0 y=1 }
+		relative_position_id = BM_submarine_torpedo_damage_1
+		any_parent = {
+			BM_submarine_surface_detection_1
+			BM_submarine_naval_speed_1
+			BM_submarine_mine_sweeping_1
+			BM_submarine_torpedo_damage_1
+		}
+		mutually_exclusive = {
+			BM_submarine_surface_detection_2
+			BM_submarine_naval_speed_2
+			BM_submarine_mine_sweeping_2
+		}
+
+		equipment_bonus = {
+			naval_torpedo_damage_reduction_factor = 0.03
+		}
+	}
+}
