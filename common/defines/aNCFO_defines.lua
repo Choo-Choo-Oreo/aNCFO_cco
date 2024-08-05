@@ -283,7 +283,7 @@
 
 	NDefines.NMilitary.MIN_SUPPLY_CONSUMPTION = 0.01
 
-	NDefines.NMilitary.MULTIPLE_COMBATS_PENALTY = -0.25
+	-- NDefines.NMilitary.MULTIPLE_COMBATS_PENALTY = -0.25
 	NDefines.NMilitary.ENCIRCLED_PENALTY = -0.33
 
 	NDefines.NMilitary.TRAINING_ATTRITION = 0.01
@@ -488,21 +488,21 @@
 
 	NDefines.NMilitary.ATTRITION_EQUIPMENT_LOSS_CHANCE = 0.12 -- skill issue
 	NDefines.NMilitary.RELIABILTY_RECOVERY = 0.1 
-	NDefines.NMilitary.EQUIPMENT_COMBAT_LOSS_FACTOR = 0.90 
-	NDefines.NMilitary.RIVER_CROSSING_PENALTY_LARGE = 0.60 -- Happened WW1 moment
-	NDefines.NMilitary.BASE_FORT_PENALTY = 0.15
-	NDefines.NMilitary.MULTIPLE_COMBATS_PENALTY = 0.5
+	-- NDefines.NMilitary.EQUIPMENT_COMBAT_LOSS_FACTOR = 0.90 
+	-- NDefines.NMilitary.RIVER_CROSSING_PENALTY_LARGE = 0.60 -- Happened WW1 moment
+	-- NDefines.NMilitary.BASE_FORT_PENALTY = 0.15
+	-- NDefines.NMilitary.MULTIPLE_COMBATS_PENALTY = 0.5
 	NDefines.NMilitary.DIG_IN_FACTOR = 0.2 
-	NDefines.NMilitary.UNIT_DIGIN_CAP = 10 -- Cap>factor
+	-- NDefines.NMilitary.UNIT_DIGIN_CAP = 10 -- Cap>factor
 	NDefines.NMilitary.MAX_OUT_OF_SUPPLY_DAYS = 28
-	NDefines.NMilitary.OUT_OF_SUPPLY_SPEED = 0.9
+	-- NDefines.NMilitary.OUT_OF_SUPPLY_SPEED = 0.9
 	NDefines.NMilitary.COMBAT_SUPPLY_LACK_DEFENDER_ATTACK = -0.5
 	NDefines.NMilitary.COMBAT_SUPPLY_LACK_DEFENDER_DEFEND = -0.2 
-	NDefines.NMilitary.ENCIRCLED_PENALTY = 0.20 -- most stupid thing ever, you can be encircled but with supply, or opposite.
+	-- NDefines.NMilitary.ENCIRCLED_PENALTY = 0.20 -- most stupid thing ever, you can be encircled but with supply, or opposite.
 	NDefines.NMilitary.STRATEGIC_REDEPLOY_ORG_RATIO = 0.25 -- your division can sometimes disappear 
-	NDefines.NSupply.RAILWAY_CONVERSION_COOLDOWN = 10 -- it`s make gameplay much worse
-	NDefines.NSupply.RAILWAY_CONVERSION_COOLDOWN_CORE = 5 
-	NDefines.NSupply.RAILWAY_CONVERSION_COOLDOWN_CIVILWAR = 5
+	-- NDefines.NSupply.RAILWAY_CONVERSION_COOLDOWN = 10 -- it`s make gameplay much worse
+	-- NDefines.NSupply.RAILWAY_CONVERSION_COOLDOWN_CORE = 5 
+	-- NDefines.NSupply.RAILWAY_CONVERSION_COOLDOWN_CIVILWAR = 5
 
 -- BMT Defines
 	---- Military additions
