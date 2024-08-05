@@ -19,23 +19,37 @@ https://steamcommunity.com/sharedfiles/filedetails/?id=1687056790
 	Full Mod
 -Amine Alkaline (Better Mechanics Collection)
 https://steamcommunity.com/workshop/filedetails/?id=2994645469
-	Better Mechanics : Optimization,   19 Jan 2024
-	Better Mechanics : AI Research | Vanilla Tech Tree   18 Mar 2024
-	Better Mechanics : Air/Land/Sea Designs (AI)   9 May 2024
-	Better Mechanics : Battalion Limiter   6 Jan 2024
-	Better Mechanics : Combat   10 Apr 2024
-	Better Mechanics : Divisional AI   5 Apr 2024   6.5
-	Better Mechanics : Division Designer   18 Mar 2024
-	Better Mechanics : Frontline AI   May 20 2024   6.5
-	Better Mechanics : More Spies   Oct 10 2023
-	Better Mechanics : National Economy   7 Apr 2024
-	Better Mechanics : Production   18 Mar 2024
-	Better Mechanics : Resource Wars   Not Used
-	Better Mechanics : Tactics & Urban Warfare 23 Mar 2024
-	Better Mechanics : Training and Experience   18 Mar 2024
-	Better Mechanics : Supply Replenishment   Not Used
-	Better Mechanics : State Categories   Pre-Release
+	Better Mechanics : Optimization								19 Jan 2024
+	Better Mechanics : AI Research | Vanilla Tech Tree			18 Mar 2024
+	Better Mechanics : Air/Land/Sea Designs (AI)				9 May 2024
+	Better Mechanics : Battalion Limiter						6 Jan 2024
+	Better Mechanics : Camera									Not Used
+	Better Mechanics : Civilian and Military Laws				Not Used
+	Better Mechanics : Combat									Pre-Release
+	Better Mechanics : Divisional AI							5 Apr 2024			6.5
+	Better Mechanics : Division Designer						18 Mar 2024
+	Better Mechanics : Frontline AI | Updated					3 Aug 2024			7.4
+	Better Mechanics : GFX Rework								Not Used
+	Better Mechanics : Intelligence Agency						Not Used
+	Better Mechanics : More Spies								Oct 10 2023
+	Better Mechanics : National Economy							7 Apr 2024
+	Better Mechanics : Production								18 Mar 2024
+	Better Mechanics : Resource Wars							Not Used
+	Better Mechanics : Battle Indicators						Not Used
+	Better Mechanics : Tactics & Urban Warfare					23 Mar 2024
+	Better Mechanics : Times of Peace							Not Used
+	Better Mechanics : Training and Experience					18 Mar 2024
+	Better Mechanics : War Exhaustion							Not Used
+	Better Mechanics : Buttons									Not Used
+	Better Mechanics : Elite Forces								Not Used
+	Better Mechanics : State Categories							Pre-Release
+	Better Mechanics : Officer Corps							11 May 2024
+	Better Mechanics : Supply Replenishment						Not Used
+	Better Mechanics : Strategic View							3 Jun 2024
+	Better Mechanics : Commanders Limit							6 Jun 2024
+	Better Mechanics : Custom Rules								8 Jul 2024
+	Better Mechanics : MIOs										8 Jul 2024
 
-	Carpet Bombing   Not Used
-	Extensive Generic Aircraft Icons   Not Used
-	Additional Plane Models   Not Used
+	Carpet Bombing												Not Used
+	Extensive Generic Aircraft Icons							Not Used
+	Additional Plane Models										Not Used
