@@ -1223,6 +1223,8 @@ generic_strategic_bomber = {
 generic_maritime_patrol = {
 	category = air
 
+	blocked_for = {}
+
 	available_for = {}
 
 	roles = {
@@ -1230,7 +1232,11 @@ generic_maritime_patrol = {
 	}
 
 	priority = {
-		factor = 200
+		factor = 2000
+		modifier = {
+			num_of_factories < 100
+			factor = 0.5
+		}
 		modifier = {
 			num_of_factories < 50
 			factor = 0
@@ -1243,105 +1249,187 @@ generic_maritime_patrol = {
 		}
 	}
 
-	maritime_patrol_1_default = {
+	early_maritime_patrol_plane_1933 = {
 		priority = {
-			factor = 10
+			factor = 0 #only for generating player presets
 		}
 
 		target_variant = {
 			match_value = 1000
+			type = large_plane_maritime_patrol_plane_airframe_0
+			modules = {
+				fixed_main_weapon_slot = torpedo_mounting
+				fixed_auxiliary_weapon_slot_1 = torpedo_mounting
+				fixed_auxiliary_weapon_slot_2 = torpedo_mounting
+				fixed_auxiliary_weapon_slot_3 = empty
+				engine_type_slot = engine_1_6x
+				special_type_slot_1 = empty
+				special_type_slot_2 = empty
+				special_type_slot_3 = empty
+				special_type_slot_4 = empty
+				special_type_slot_5 = empty
+			}
+		}
+
+		allowed_modules = {
+			torpedo_mounting
+			engine_1_6x
+		}
+	}
+
+	maritime_patrol_1_default = {
+		priority = {
+			factor = 2000
+			modifier = { 
+				has_tech = improved_large_airframe 
+				factor = 0 #let's not waste XP here
+			}
+		}
+
+		target_variant = {
+			match_value = 10000
 			type = large_plane_maritime_patrol_plane_airframe_1
 			modules = {
 				fixed_main_weapon_slot = torpedo_mounting
-				fixed_auxiliary_weapon_slot_1 = empty
-				fixed_auxiliary_weapon_slot_2 = empty
-				engine_type_slot = engine_1_4x
-				special_type_slot_1 = lmg_defense_turret_2x
-				special_type_slot_2 = fuel_tanks_large
-				special_type_slot_3 = flying_boat_large
+				fixed_auxiliary_weapon_slot_1 = torpedo_mounting
+				fixed_auxiliary_weapon_slot_2 = torpedo_mounting
+				fixed_auxiliary_weapon_slot_3 = empty
+				engine_type_slot = engine_2_6x
+				special_type_slot_1 = flying_boat_large
+				special_type_slot_2 = lmg_defense_turret_2x
+				special_type_slot_3 = radio_navigation_1
+				special_type_slot_4 = empty
+				special_type_slot_5 = empty
 			}
 			
 		}
 
 		allowed_modules = {
 			torpedo_mounting
-			engine_1_4x
-			fuel_tanks_large
+			engine_2_6x
 			flying_boat_large
-			lmg_defense_turret
+			lmg_defense_turret_2x
+                        radio_navigation_1
 		}
 	}
 
 	maritime_patrol_2_default = {
 		priority = {
-			factor = 10
+			factor = 3000
+			modifier = { 
+				has_tech = advanced_large_airframe 
+				factor = 0 #let's not waste XP here
+			}
 			
 		}
 
 		target_variant = {
-			match_value = 2000
+			match_value = 20000
 			type = large_plane_maritime_patrol_plane_airframe_2
 			modules = {
-				fixed_main_weapon_slot = torpedo_mounting
-				fixed_auxiliary_weapon_slot_1 = torpedo_mounting
-				fixed_auxiliary_weapon_slot_2 = empty
-				engine_type_slot = engine_2_4x
-				special_type_slot_1 = hmg_defense_turret_2x
-				special_type_slot_2 = lmg_defense_turret_2x
-				special_type_slot_3 = fuel_tanks_large
-				special_type_slot_4 = flying_boat_large
+				fixed_main_weapon_slot = torpedo_mounting_2
+				fixed_auxiliary_weapon_slot_1 = torpedo_mounting_2
+				fixed_auxiliary_weapon_slot_2 = torpedo_mounting_2
+				fixed_auxiliary_weapon_slot_3 = empty
+				fixed_auxiliary_weapon_slot_4 = empty
+				engine_type_slot = engine_3_6x
+				special_type_slot_1 = flying_boat_large
+				special_type_slot_2 = radio_navigation_2
+				special_type_slot_3 = self_sealing_fuel_tanks_large
+				special_type_slot_4 = fuel_tanks_large
+				special_type_slot_5 = lmg_defense_turret
+				special_type_slot_6 = armor_plate_large
 			}
 			
 		}
 
 		allowed_modules = {
-			torpedo_mounting
-			engine_2_4x
-			hmg_defense_turret_2x
-			lmg_defense_turret_2x
-			fuel_tanks_large
+			torpedo_mounting_2
+			engine_3_6x
 			flying_boat_large
+			radio_navigation_2
+                        self_sealing_fuel_tanks_large
+                        fuel_tanks_large
+			lmg_defense_turret
+                        armor_plate_large
 		}
 	}
 
 	maritime_patrol_3_default = {
 		priority = {
-			factor = 10
+			factor = 4000
+			modifier = { 
+				has_tech = modern_large_airframe 
+				factor = 0 #let's not waste XP here
+			}
 		}
 
 		target_variant = {
-			match_value = 4000
+			match_value = 30000
 			type = large_plane_maritime_patrol_plane_airframe_3
 			modules = {
-				fixed_main_weapon_slot = torpedo_mounting
-				fixed_auxiliary_weapon_slot_1 = torpedo_mounting
-				fixed_auxiliary_weapon_slot_2 = torpedo_mounting
-				engine_type_slot = engine_4_4x
-				special_type_slot_1 = cannon_defense_turret_2x
-				special_type_slot_2 = { 
-					any_of = {
-						air_ground_radar_2
-						air_ground_radar_1
-						recon_camera
-						hmg_defense_turret_2x 
-					}
-				}
-				special_type_slot_3 = fuel_tanks_large
-				special_type_slot_4 = flying_boat_large
+				fixed_main_weapon_slot = torpedo_mounting_2
+				fixed_auxiliary_weapon_slot_1 = torpedo_mounting_2
+				fixed_auxiliary_weapon_slot_2 = torpedo_mounting_2
+				fixed_auxiliary_weapon_slot_3 = empty
+				fixed_auxiliary_weapon_slot_4 = empty
+				engine_type_slot = engine_4_6x
+				special_type_slot_1 = flying_boat_large
+				special_type_slot_2 = radio_navigation_2
+				special_type_slot_3 = self_sealing_fuel_tanks_large
+				special_type_slot_4 = fuel_tanks_large
+				special_type_slot_5 = air_ground_radar_2
+				special_type_slot_6 = armor_plate_large
 			}
 			
 		}
 
 		allowed_modules = {
-			torpedo_mounting
-			engine_4_4x
-			cannon_defense_turret_2x
-			hmg_defense_turret_2x
-			air_ground_radar_2
-			air_ground_radar_1
-			recon_camera
-			fuel_tanks_large
+			torpedo_mounting_2
+			engine_4_6x
 			flying_boat_large
+			radio_navigation_2
+                        self_sealing_fuel_tanks_large
+                        fuel_tanks_large
+			air_ground_radar_2
+                        armor_plate_large
+		}
+	}
+
+	maritime_patrol_4_default = {
+		priority = {
+			factor = 5000
+		}
+
+		target_variant = {
+			match_value = 40000
+			type = large_plane_maritime_patrol_plane_airframe_4
+			modules = {
+				fixed_main_weapon_slot = torpedo_mounting_3
+				fixed_auxiliary_weapon_slot_1 = torpedo_mounting_3
+				fixed_auxiliary_weapon_slot_2 = torpedo_mounting_3
+				fixed_auxiliary_weapon_slot_3 = empty
+				fixed_auxiliary_weapon_slot_4 = empty
+				engine_type_slot = engine_4_6x
+				special_type_slot_1 = flying_boat_large
+				special_type_slot_2 = radio_navigation_2
+				special_type_slot_3 = self_sealing_fuel_tanks_large
+				special_type_slot_4 = fuel_tanks_large
+				special_type_slot_5 = air_ground_radar_2
+				special_type_slot_6 = armor_plate_large
+			}
+			
+		}
+
+		allowed_modules = {
+			torpedo_mounting_3
+			engine_4_6x
+			flying_boat_large
+			radio_navigation_2
+                        self_sealing_fuel_tanks_large
+                        fuel_tanks_large
+			air_ground_radar_2
+                        armor_plate_large
 		}
 	}
 }

@@ -21,7 +21,7 @@ https://steamcommunity.com/sharedfiles/filedetails/?id=1687056790
 https://steamcommunity.com/workshop/filedetails/?id=2994645469
 	Better Mechanics : Optimization								19 Jan 2024
 	Better Mechanics : AI Research | Vanilla Tech Tree			18 Mar 2024
-	Better Mechanics : Air/Land/Sea Designs (AI)				9 May 2024
+	Better Mechanics : Air/Land/Sea Designs (AI)				9 Jul 2024
 	Better Mechanics : Battalion Limiter						6 Jan 2024
 	Better Mechanics : Camera									Not Used
 	Better Mechanics : Civilian and Military Laws				Not Used
