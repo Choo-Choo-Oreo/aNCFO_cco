@@ -9,22 +9,51 @@ DAI_PROD_ARMY_default_army_production_strategy = {
 	ai_strategy = { type = role_ratio                          id = area_defense                 value = 0 }
 	ai_strategy = { type = role_ratio                          id = suppression                  value = 0 }
 
-	ai_strategy = { type = role_ratio                          id = infantry                     value = 500 }
+	ai_strategy = { type = role_ratio                          id = infantry                     value = 450 }
 	
 	ai_strategy = { type = role_ratio                          id = marines                       value = 20 }
 	ai_strategy = { type = role_ratio                          id = mountaineers                   value = 20 }
 
-	ai_strategy = { type = role_ratio                          id = light_armor                        value = 15 }
+	ai_strategy = { type = role_ratio                          id = armor_role                        value = 15 }
 
 	ai_strategy = { type = role_ratio                          id = motorized                    value = 0 }
 	
+	
+	#UNIT_RATIO
+
+        #Land unit factors
+
+	ai_strategy = {
+		type = unit_ratio
+		id = infantry
+		value = 180
+	}
+
+	ai_strategy = {
+		type = unit_ratio
+		id = motorized
+		value = 120
+	}
+
+	ai_strategy = {
+		type = unit_ratio
+		id = mechanized
+		value = 120
+	}
+
+	ai_strategy = {
+		type = unit_ratio
+		id = armor
+		value = 180
+	}
 }
+
 
 ########################################################
 #	MOBILE WARFARE
 ########################################################
 
-DAI_PROD_ARMY_MW_armor_army_production_strategy = {
+DAI_PROD_ARMY_MW_armor_role_army_production_strategy = {
 	enable = { 
 	has_tech = mobile_warfare 
 	OR = {
@@ -35,7 +64,7 @@ DAI_PROD_ARMY_MW_armor_army_production_strategy = {
 	abort_when_not_enabled = yes
 
 	ai_strategy = { type = role_ratio                          id = infantry                     value = -30 }
-	ai_strategy = { type = role_ratio                          id = armor                        value = 150 }
+	ai_strategy = { type = role_ratio                          id = armor_role                        value = 180 }
 }
 
 DAI_PROD_ARMY_MW_motorized_army_production_strategy = {
@@ -50,7 +79,7 @@ DAI_PROD_ARMY_MW_motorized_army_production_strategy = {
 #	SUPERIOR FIREPOWER
 ########################################################
 
-DAI_PROD_ARMY_SF_armor_army_production_strategy = {
+DAI_PROD_ARMY_SF_armor_role_army_production_strategy = {
 	enable = { 
 	has_tech = superior_firepower
 	OR = {
@@ -61,7 +90,7 @@ DAI_PROD_ARMY_SF_armor_army_production_strategy = {
 	abort_when_not_enabled = yes
 
 	ai_strategy = { type = role_ratio                          id = infantry                     value = -40 }
-	ai_strategy = { type = role_ratio                          id = armor                        value = 120 }
+	ai_strategy = { type = role_ratio                          id = armor_role                        value = 140 }
 }
 
 DAI_PROD_ARMY_SF_motorized_army_production_strategy = {
@@ -76,7 +105,7 @@ DAI_PROD_ARMY_SF_motorized_army_production_strategy = {
 #	GRAND BATTLEPLAN
 ########################################################
 
-DAI_PROD_ARMY_GB_armor_army_production_strategy = {
+DAI_PROD_ARMY_GB_armor_role_army_production_strategy = {
 	enable = { has_tech = trench_warfare 
 	OR = {
 			has_tech = basic_medium_tank_chassis  
@@ -86,7 +115,7 @@ DAI_PROD_ARMY_GB_armor_army_production_strategy = {
 	abort_when_not_enabled = yes
 
 	ai_strategy = { type = role_ratio                          id = infantry                     value = -25 }
-	ai_strategy = { type = role_ratio                          id = armor                        value = 90 }
+	ai_strategy = { type = role_ratio                          id = armor_role                        value = 120 }
 }
 
 DAI_PROD_ARMY_GB_motorized_army_production_strategy = {
@@ -101,7 +130,7 @@ DAI_PROD_ARMY_GB_motorized_army_production_strategy = {
 #	MASS ASSAULT
 ########################################################
 
-DAI_PROD_ARMY_MA_armor_army_production_strategy = {
+DAI_PROD_ARMY_MA_armor_role_army_production_strategy = {
 	enable = { 
 	has_tech = mass_assault
 	OR = {
@@ -112,7 +141,7 @@ DAI_PROD_ARMY_MA_armor_army_production_strategy = {
 	abort_when_not_enabled = yes
 
 	ai_strategy = { type = role_ratio                          id = infantry                     value = -25 }
-	ai_strategy = { type = role_ratio                          id = armor                        value = 135 }
+	ai_strategy = { type = role_ratio                          id = armor_role                        value = 150 }
 }
 
 DAI_PROD_ARMY_MA_motorized_army_production_strategy = {
@@ -207,7 +236,7 @@ default_air_production = {
 	
 ##	ai_strategy = {
 ##		type = equipment_production_factor
-##		id = armor
+##		id = armor_role
 ##		value = 300
 ##    }
 	
@@ -279,12 +308,12 @@ default_produce_floating_harbors = {
 
 default_railway_gun_management = {
 	enable = {
-		num_divisions > 200
+		num_divisions > 100
 		#is_major = yes
 		has_dlc = "No Step Back"
 	}
 	abort = {
-		num_divisions < 125
+		num_divisions < 75
 	}
 
 	ai_strategy = { 
@@ -308,7 +337,7 @@ default_heavy_tank_production = {
 
 	ai_strategy = {
 		type = role_ratio
-		id = heavy_armor
+		id = heavy_armor_role
 		value = 150
 	}
 

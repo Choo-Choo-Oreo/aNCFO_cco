@@ -26,7 +26,7 @@ https://steamcommunity.com/workshop/filedetails/?id=2994645469
 	Better Mechanics : Camera									Not Used
 	Better Mechanics : Civilian and Military Laws				Not Used
 	Better Mechanics : Combat									Pre-Release
-	Better Mechanics : Divisional AI							5 Apr 2024			6.5
+	Better Mechanics : Divisional AI							3 Aug 2024			6.7
 	Better Mechanics : Division Designer						18 Mar 2024
 	Better Mechanics : Frontline AI | Updated					3 Aug 2024			7.4
 	Better Mechanics : GFX Rework								Not Used
