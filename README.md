@@ -48,7 +48,7 @@ https://steamcommunity.com/workshop/filedetails/?id=2994645469
 	Better Mechanics : Strategic View							3 Jun 2024
 	Better Mechanics : Commanders Limit							6 Jun 2024
 	Better Mechanics : Custom Rules								8 Jul 2024
-	Better Mechanics : MIOs										8 Jul 2024
+	Better Mechanics : MIOs										6 Aug 2024
 
 	Carpet Bombing												Not Used
 	Extensive Generic Aircraft Icons							Not Used

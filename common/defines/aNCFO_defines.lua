@@ -55,6 +55,28 @@
 	NDefines.NNavy.MAX_CAPITALS_PER_AUTO_TASK_FORCE = 10
 	NDefines.NNavy.BEST_CAPITALS_TO_CARRIER_RATIO = 2
 
+-- Optimization Defines
+	-- Spot Optimizations--------------------------------------------------------------------------------------
+	NDefines.NGame.LAG_DAYS_FOR_LOWER_SPEED = 100
+	NDefines.NGame.LAG_DAYS_FOR_PAUSE = 60
+	NDefines.NGame.COMBAT_LOG_MAX_MONTHS = 36
+	NDefines.NGame.GAME_SPEED_SECONDS = { 0.35, 0.15, 0.1, 0.035, 0.0 }
+	NDefines.NFocus.MAX_SAVED_FOCUS_PROGRESS = 30
+	NDefines.NAI.EQUIPMENT_MARKET_BASE_MARKET_RATIO = 0.35
+	NDefines.NCountry.EVENT_PROCESS_OFFSET = 25 -- Performance enhancer. --TW/WTT
+
+	Nlua = {
+		NTopbar = {
+			GAME_SPEED_LIMIT = 0,	-- Unlocks Speed to match as much as the proccessor can handle
+			GAME_SPEED_STEPS = 5,	-- DONT CHANGE -- Deals with graphics and speed settings
+			GAME_SPEED_ONE = 1,	-- DONT CHANGE --
+			GAME_SPEED_TWO = 2,	-- DONT CHANGE --
+			GAME_SPEED_THREE = 3,	-- DONT CHANGE --
+			GAME_SPEED_FOUR = 4,	-- DONT CHANGE --
+			GAME_SPEED_FIVE = 5,	-- DONT CHANGE --
+		}
+	}
+
 -- NRM Defines
 	NDefines.NProduction.DEFAULT_MAX_NAV_FACTORIES_PER_LINE = 6 -- Was 3 changed to 6
 	NDefines.NProduction.CAPITAL_SHIP_MAX_NAV_FACTORIES_PER_LINE = 6 -- Was 3 changed to 6
@@ -201,40 +223,12 @@
 	---NDefines.NMilitary.ARMY_FUEL_COST_MULT = 0.375
 	---NDefines.NNavy.FUEL_COST_MULT = 0.05
 
--- Timestamp Defines
-	-- Spot Optimizations--------------------------------------------------------------------------------------
-	NDefines.NGame.LAG_DAYS_FOR_LOWER_SPEED = 100
-	NDefines.NGame.LAG_DAYS_FOR_PAUSE = 60
-	NDefines.NGame.COMBAT_LOG_MAX_MONTHS = 36
-	NDefines.NGame.GAME_SPEED_SECONDS = { 0.35, 0.15, 0.1, 0.035, 0.0 }
-	NDefines.NFocus.MAX_SAVED_FOCUS_PROGRESS = 30
-
-	Nlua = {
-
-	NTopbar = {
-		GAME_SPEED_LIMIT = 0,	-- Unlocks Speed to match as much as the proccessor can handle
-		GAME_SPEED_STEPS = 5,	-- DONT CHANGE -- Deals with graphics and speed settings
-		GAME_SPEED_ONE = 1,	-- DONT CHANGE --
-		GAME_SPEED_TWO = 2,	-- DONT CHANGE --
-		GAME_SPEED_THREE = 3,	-- DONT CHANGE --
-		GAME_SPEED_FOUR = 4,	-- DONT CHANGE --
-		GAME_SPEED_FIVE = 5,	-- DONT CHANGE --
-		}
-	}
-
--- Abinco Defines
+-- BMCombat Defines
 	--------------------------------------------------------------------------------------------------------------
-	-- AI AND COUNTRY CHANGES 
+	-- COUNTRY CHANGES 
 	--------------------------------------------------------------------------------------------------------------
 
-	NDefines.NCountry.POPULATION_YEARLY_GROWTH_BASE = 0.036
 	NDefines.NCountry.LOCAL_MANPOWER_ACCESSIBLE_NON_CORE_FACTOR = 0.08
-	NDefines.NCountry.ARMY_IMPORTANCE_FACTOR = 10.0
-	NDefines.NCountry.TERRAIN_IMPORTANCE_FACTOR = 5.0
-	NDefines.NCountry.VICTORY_POINTS_IMPORTANCE_FACTOR = 5.0
-	NDefines.NCountry.BUILDING_IMPORTANCE_FACTOR = 1.0
-	NDefines.NCountry.RESOURCE_IMPORTANCE_FACTOR = 5.0
-
 	NDefines.NCountry.BASE_MAX_COMMAND_POWER = 230.0					-- base value for maximum command power
 	NDefines.NCountry.BASE_COMMAND_POWER_GAIN = 0.51
 
@@ -261,9 +255,8 @@
 	-- LAND COMBAT REWORK
 	--------------------------------------------------------------------------------------------------------------
 
-	NDefines.NMilitary.LAND_COMBAT_STR_ARMOR_DEFLECTION_FACTOR = 0.6
-	NDefines.NMilitary.LAND_COMBAT_ORG_ARMOR_DEFLECTION_FACTOR = 0.8
-	NDefines.NMilitary.RECON_SKILL_IMPACT = 7
+
+	NDefines.NMilitary.RECON_SKILL_IMPACT = 8
 
 	NDefines.NMilitary.ENEMY_AIR_SUPERIORITY_IMPACT = -0.50
 	NDefines.NMilitary.ANTI_AIR_TARGETTING_TO_CHANCE = 0.10
@@ -283,9 +276,6 @@
 
 	NDefines.NMilitary.MIN_SUPPLY_CONSUMPTION = 0.01
 
-	-- NDefines.NMilitary.MULTIPLE_COMBATS_PENALTY = -0.25
-	NDefines.NMilitary.ENCIRCLED_PENALTY = -0.33
-
 	NDefines.NMilitary.TRAINING_ATTRITION = 0.01
 
 	---NDefines.NMilitary.COMBAT_OVER_WIDTH_PENALTY = -1	-- #MOD -- was -1.5,			-- over combat width penalty per %.
@@ -298,7 +288,7 @@
 	NDefines.NMilitary.FUEL_CAPACITY_DEFAULT_HOURS = 144 -- #MOD -- was 96,				-- default capacity if not specified
 
 	--- Tactics and Recon ---
-	NDefines.NMilitary.INITIATIVE_PICK_COUNTER_ADVANTAGE_FACTOR  = 0.45 -- #MOD -- was 0.35, -- advantage per leader level for picking a counter
+	NDefines.NMilitary.INITIATIVE_PICK_COUNTER_ADVANTAGE_FACTOR  = 0.5 -- #MOD -- was 0.35, -- advantage per leader level for picking a counter
 
 	--- War Score ---
 	NDefines.NMilitary.WAR_SCORE_AIR_IC_LOSS_FACTOR = 0.008						-- war score gained for every IC of damage done to an enemy's air mission
@@ -307,7 +297,7 @@
 
 	NDefines.NMilitary.LAND_COMBAT_COLLATERAL_INFRA_FACTOR = 0.007
 
-	NDefines.NMilitary.FLANKED_PROVINCES_COUNT = 2
+	NDefines.NMilitary.FLANKED_PROVINCES_COUNT = 3
 
 	--------------------------------------------------------------------------------------------------------------
 	-- AIR COMBAT REWORK
@@ -320,8 +310,7 @@
 	NDefines.NAir.AIR_WING_MAX_STATS_SPEED = 2000
 	NDefines.NAir.AIR_WING_MAX_STATS_BOMBING = 200
 	NDefines.NAir.BIGGEST_AGILITY_FACTOR_DIFF = 5.0
-	NDefines.NAir.AIR_DEPLOYMENT_DAYS = 1	-- #MOD-- was 2,				-- Days to deploy one air wing
-	--# I hate this so much!
+
 
 	NDefines.NAir.AIR_WING_ATTACK_LOGISTICS_TRUCK_DAMAGE_FACTOR = 0.35
 	NDefines.NAir.AIR_WING_ATTACK_LOGISTICS_TRAIN_DAMAGE_FACTOR = 0.065
@@ -333,9 +322,11 @@
 
 	NDefines.NAir.NAVAL_STRIKE_DAMAGE_TO_STR = 0.5					-- Balancing value to convert damage ( naval_strike_attack * hits ) to Strength reduction.
 	NDefines.NAir.NAVAL_STRIKE_DAMAGE_TO_ORG = 0.75					-- Balancing value to convert damage ( naval_strike_attack * hits ) to Organisation reduction.
-	NDefines.NAir.NAVAL_STRIKE_CARRIER_MULTIPLIER = 30.0              -- damage bonus when planes are in naval combat where their carrier is present (and can thus sortie faster and more effectively)
+	--NDefines.NAir.NAVAL_STRIKE_CARRIER_MULTIPLIER = 30.0              -- damage bonus when planes are in naval combat where their carrier is present (and can thus sortie faster and more effectively)
 	NDefines.NAir.NAVAL_STRIKE_TARGETTING_TO_AMOUNT = 0.5			-- Balancing value to convert the naval_strike_targetting equipment stats to chances of how many airplanes managed to do successfull strike.
 
+	NDefines.NMilitary.LAND_AIR_COMBAT_STR_DAMAGE_MODIFIER = 0.06
+	NDefines.NMilitary.LAND_AIR_COMBAT_ORG_DAMAGE_MODIFIER = 0.08
 
 	--------------------------------------------------------------------------------------------------------------
 	-- NAVAL COMBAT REWORK
@@ -368,16 +359,28 @@
 	NDefines.NNavy.WAR_SCORE_GAIN_FOR_SUNK_SHIP_PRODUCTION_COST_FACTOR = 0.01		-- war score gained for every IC of the sunk ship
 	NDefines.NNavy.EXPERIENCE_FACTOR_CARRIER_GAIN = 0.04							-- Xp gain by carrier ships in the combat
 
-	NDefines.NNavy.CARRIER_STACK_PENALTY = 8 -- The most efficient is 4 carriers in combat. 5+ brings the penalty to the amount of wings in battle.
+	---NDefines.NNavy.CARRIER_STACK_PENALTY = 8 -- The most efficient is 4 carriers in combat. 5+ brings the penalty to the amount of wings in battle.
 	NDefines.NNavy.ANTI_AIR_TARGETTING_TO_CHANCE = 0.07 -- Balancing value to convert averaged equipment stats (anti_air_targetting and naval_strike_agility) to probability chances of airplane being hit by navies AA.
 	NDefines.NNavy.ANTI_AIR_ATTACK_TO_AMOUNT = 0.005 -- Balancing value to convert equipment stat anti_air_attack to the random % value of airplanes being hit.
+
+	NDefines.NAir.COMBAT_DAMAGE_SCALE_CARRIER = 3.3
+	NDefines.NAir.NAVAL_STRIKE_CARRIER_MULTIPLIER = 3.3
+	NDefines.NNavy.CARRIER_STACK_PENALTY = 10
+	NDefines.NNavy.CARRIER_STACK_PENALTY_EFFECT = 0.08
+	NDefines.NAI.CARRIER_TASKFORCE_MAX_CARRIER_COUNT = 10
+
+
+	NDefines.NNavy.SUPREMACY_PER_SHIP_PER_MANPOWER = 0.05
+	NDefines.NNavy.SUPREMACY_PER_SHIP_PER_IC = 0.005
+	NDefines.NNavy.SUPREMACY_PER_SHIP_BASE = 0.0
 
 	--------------------------------------------------------------------------------------------------------------
 	-- ARMOUR DAMAGE REWORK
 	--------------------------------------------------------------------------------------------------------------
 
 	NDefines.NMilitary.PIERCING_THRESHOLDS = {    -- 0 armor will always receive maximum damage (so add overmatching at your own peril). the system expects at least 2 values, with no upper limit.
-	        3.00,
+			7.50, --- This is to remove the damage modifiers above from Infantry with no armour
+			3.00,
 	        2.00,
 	        1.75,
 	        1.50,
@@ -392,7 +395,8 @@
 
 	   
 	NDefines.NMilitary.PIERCING_THRESHOLD_DAMAGE_VALUES = {    -- 0 armor will always receive maximum damage (so add overmatching at your own peril). the system expects at least 2 values, with no upper limit.
-	        6.00,
+	        1.00,   --- This is to remove the damage modifiers above from Infantry with no armor
+			6.00,
 	        4.00,
 	        3.00,
 	        2.50,
@@ -405,9 +409,12 @@
 	}
 
 	NDefines.NMilitary.ARMOR_VS_AVERAGE = 0.2  -- 护甲和平均值的比例
-	NDefines.NMilitary.PEN_VS_AVERAGE = 0.2  -- 穿透和平均值的比例
-	NDefines.NMilitary.LAND_COMBAT_STR_ARMOR_ON_SOFT_DICE_SIZE = 6  -- 金盾状态下的hp伤害骰子数
-	NDefines.NMilitary.LAND_COMBAT_ORG_ARMOR_ON_SOFT_DICE_SIZE = 14  -- 金盾状态下的组织度伤害骰子数
+	NDefines.NMilitary.PEN_VS_AVERAGE = 0.3  -- 穿透和平均值的比例
+	NDefines.NMilitary.LAND_COMBAT_STR_ARMOR_ON_SOFT_DICE_SIZE = 4  -- 金盾状态下的hp伤害骰子数
+	NDefines.NMilitary.LAND_COMBAT_ORG_ARMOR_ON_SOFT_DICE_SIZE = 1  -- 金盾状态下的组织度伤害骰子数
+
+	NDefines.NMilitary.LAND_COMBAT_STR_ARMOR_DEFLECTION_FACTOR = 0.7
+	NDefines.NMilitary.LAND_COMBAT_ORG_ARMOR_DEFLECTION_FACTOR = 0.9
 
 	--------------------------------------------------------------------------------------------------------------
 	-- STRATEGIC BOMBING DAMAGE REWORK
@@ -430,23 +437,19 @@
 	-- STRATEGIC NAVAL BOMBARDEMENT REWORK
 	--------------------------------------------------------------------------------------------------------------
 
-	NDefines.NNavy.SHORE_BOMBARDMENT_CAP = 0.35
+	NDefines.NNavy.SHORE_BOMBARDMENT_CAP = 0.40
 	NDefines.NNavy.HEAVY_GUN_ATTACK_TO_SHORE_BOMBARDMENT = 0.1  -- heavy gun attack value is divided by this value * 100 and added to shore bombardment modifier
 	NDefines.NNavy.LIGHT_GUN_ATTACK_TO_SHORE_BOMBARDMENT = 0.05 -- light gun attack value is divided by this value * 100 and added to shore bombardment modifier
-
 
 	--------------------------------------------------------------------------------------------------------------
 	-- EXPERIMENTAL DEFINES
 	--------------------------------------------------------------------------------------------------------------
 
 	NDefines.NMilitary.COMBAT_MINIMUM_TIME = 6
-	NDefines.NMilitary.COMBAT_VALUE_ORG_IMPORTANCE = 1.3		-- Multiplier on TotalOrganisation when determining the combat value of a division
+	---NDefines.NMilitary.COMBAT_VALUE_ORG_IMPORTANCE = 1.3		-- Multiplier on TotalOrganisation when determining the combat value of a division
 	NDefines.NMilitary.SPOTTING_QUALITY_DROP_HOURS = 5 	-- Each X hours the intel quality drops after unit was spotted.
-	NDefines.NMilitary.LAND_COMBAT_STR_DAMAGE_MODIFIER = 0.04        -- global damage modifier... but some equipment is returned at end of battles see : EQUIPMENT_COMBAT_LOSS_FACTOR
-	NDefines.NMilitary.LAND_COMBAT_ORG_DAMAGE_MODIFIER = 0.06        -- global damage modifier
-	NDefines.NMilitary.DIG_IN_FACTOR = 0.02			-- Vanilla 0.02			-- bonus factor for each dug-in level
-	NDefines.NMilitary.UNIT_DIGIN_SPEED = 0.5			-- Vanilla 1			-- how "deep" you can dig a day.
-	NDefines.NMilitary.UNIT_DIGIN_CAP = 5                           -- how "deep" you can dig you can dig in until hitting max bonus
+	NDefines.NMilitary.LAND_COMBAT_STR_DAMAGE_MODIFIER = 0.04       -- global damage modifier... but some equipment is returned at end of battles see : EQUIPMENT_COMBAT_LOSS_FACTOR
+	NDefines.NMilitary.LAND_COMBAT_ORG_DAMAGE_MODIFIER = 0.035        -- global damage modifier
 	NDefines.NMilitary.ENEMY_AIR_SUPERIORITY_DEFENSE_STEEPNESS = 120 -- how quickly defense approaches the max impact diminishing returns curve
 	NDefines.NMilitary.ORG_LOSS_FACTOR_ON_CONQUER = 0.3              -- percentage of (max) org loss on takign enemy province
 
@@ -471,18 +474,47 @@
 
 
 	NDefines.NMilitary.OUT_OF_SUPPLY_ATTRITION = 0.15                 -- max attrition when out of supply
-	NDefines.NMilitary.OUT_OF_SUPPLY_SPEED = -0.92                    -- max speed reduction from supply
+	NDefines.NMilitary.OUT_OF_SUPPLY_SPEED = -0.9                    -- max speed reduction from supply
 	NDefines.NMilitary.NON_CORE_SUPPLY_SPEED = -0.7				   -- we are not running on our own VP supply so need to steal stuff along the way
 	NDefines.NMilitary.OUT_OF_SUPPLY_MORALE = -0.3                   -- max org regain reduction from supply
 
 	NDefines.NMilitary.PARACHUTE_COMPLETE_ORG = 0.5				   -- Organisation value (in %) after unit being dropped regardless if failed disrupted or successful.
 
 
-	NDefines.NMilitary.RIVER_CROSSING_PENALTY_LARGE = -0.75          -- large river crossing
+	NDefines.NMilitary.RIVER_CROSSING_PENALTY_LARGE = -0.7          -- large river crossing
 	NDefines.NMilitary.RIVER_CROSSING_SPEED_PENALTY = -0.30           -- small river crossing
-	NDefines.NMilitary.RIVER_CROSSING_SPEED_PENALTY_LARGE = -0.7     -- large river crossing
+	NDefines.NMilitary.RIVER_CROSSING_SPEED_PENALTY_LARGE = -0.65     -- large river crossing
 	NDefines.NMilitary.BASE_FORT_PENALTY = -0.20 					   -- fort penalty		#HOI4TGW ::: BASE_FORT_PENALTY = -0.15
 	NDefines.NMilitary.MULTIPLE_COMBATS_PENALTY = -0.6               -- defender penalty if attacked from multiple directions
+	NDefines.NMilitary.ENCIRCLED_PENALTY = -0.25
+
+
+	NDefines.NMilitary.COMBAT_STACKING_START = 10
+	NDefines.NMilitary.COMBAT_STACKING_EXTRA = 5
+	NDefines.NMilitary.COMBAT_STACKING_PENALTY = -0.03
+
+	--------------------------------------------------------------------------------------------------------------
+	-- ABADON'S EXPERIMENTAL DEFINES + TWEAKS
+	--------------------------------------------------------------------------------------------------------------
+
+	NDefines.NMilitary.ATTRITION_EQUIPMENT_LOSS_CHANCE = 0.15
+	NDefines.NMilitary.RELIABILTY_RECOVERY = 0.15
+
+	NDefines.NMilitary.DIG_IN_FACTOR = 0.02  ---0.01 	Vanilla 0.02					   -- bonus factor for each dug-in level
+	NDefines.NMilitary.UNIT_DIGIN_SPEED = 0.5		-- Vanilla 1				   -- how "deep" you can dig a day.
+	NDefines.NMilitary.UNIT_DIGIN_CAP = 10             --Vanilla 5              -- how "deep" you can dig you can dig in until hitting max bonus
+
+	NDefines.NMilitary.SUPPLY_USE_FACTOR_INACTIVE = 0.8 -- was 0.95 # You aren't on frontline - you get bad food.
+	NDefines.NMilitary.WITHDRAWING_SPEED_FACTOR =  0.2 -- vanilla 0.15 
+
+	NDefines.NMilitary.EQUIPMENT_COMBAT_LOSS_FACTOR = 0.90 --was 0.70 # 
+
+	NDefines.NMilitary.STRATEGIC_REDEPLOY_ORG_RATIO = 0.15 -- your division can sometimes disappear 
+
+	NDefines.NMilitary.COMBAT_SUPPLY_LACK_ATTACKER_ATTACK = -0.6
+	NDefines.NMilitary.COMBAT_SUPPLY_LACK_ATTACKER_DEFEND = -0.3
+	NDefines.NMilitary.COMBAT_SUPPLY_LACK_DEFENDER_ATTACK = -0.5
+	NDefines.NMilitary.COMBAT_SUPPLY_LACK_DEFENDER_DEFEND = -0.2
 
 -- BMT Defines
 	---- Military additions
@@ -525,7 +557,7 @@
 
 	NDefines.NMilitary.UNIT_LEADER_ASSIGN_TRAIT_COST = 10.0 					-- cost to assign a new trait to a unit leader
 
--- ARR
+-- ARR Defines
 	--------------------------------------------------------------------------------------------------------------
 	-- SUPPLY FLOW REWORK
 	--------------------------------------------------------------------------------------------------------------
