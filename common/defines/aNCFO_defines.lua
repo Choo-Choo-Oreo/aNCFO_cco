@@ -444,7 +444,9 @@
 	NDefines.NMilitary.SPOTTING_QUALITY_DROP_HOURS = 5 	-- Each X hours the intel quality drops after unit was spotted.
 	NDefines.NMilitary.LAND_COMBAT_STR_DAMAGE_MODIFIER = 0.04        -- global damage modifier... but some equipment is returned at end of battles see : EQUIPMENT_COMBAT_LOSS_FACTOR
 	NDefines.NMilitary.LAND_COMBAT_ORG_DAMAGE_MODIFIER = 0.06        -- global damage modifier
-	NDefines.NMilitary.UNIT_DIGIN_CAP = 7                           -- how "deep" you can dig you can dig in until hitting max bonus
+	NDefines.NMilitary.DIG_IN_FACTOR = 0.02			-- Vanilla 0.02			-- bonus factor for each dug-in level
+	NDefines.NMilitary.UNIT_DIGIN_SPEED = 0.5			-- Vanilla 1			-- how "deep" you can dig a day.
+	NDefines.NMilitary.UNIT_DIGIN_CAP = 5                           -- how "deep" you can dig you can dig in until hitting max bonus
 	NDefines.NMilitary.ENEMY_AIR_SUPERIORITY_DEFENSE_STEEPNESS = 120 -- how quickly defense approaches the max impact diminishing returns curve
 	NDefines.NMilitary.ORG_LOSS_FACTOR_ON_CONQUER = 0.3              -- percentage of (max) org loss on takign enemy province
 
@@ -481,28 +483,6 @@
 	NDefines.NMilitary.RIVER_CROSSING_SPEED_PENALTY_LARGE = -0.7     -- large river crossing
 	NDefines.NMilitary.BASE_FORT_PENALTY = -0.20 					   -- fort penalty		#HOI4TGW ::: BASE_FORT_PENALTY = -0.15
 	NDefines.NMilitary.MULTIPLE_COMBATS_PENALTY = -0.6               -- defender penalty if attacked from multiple directions
-
-	--------------------------------------------------------------------------------------------------------------
-	-- ABADON'S EXPERIMENTAL DEFINES
-	--------------------------------------------------------------------------------------------------------------
-
-	NDefines.NMilitary.ATTRITION_EQUIPMENT_LOSS_CHANCE = 0.12 -- skill issue
-	NDefines.NMilitary.RELIABILTY_RECOVERY = 0.1 
-	-- NDefines.NMilitary.EQUIPMENT_COMBAT_LOSS_FACTOR = 0.90 
-	-- NDefines.NMilitary.RIVER_CROSSING_PENALTY_LARGE = 0.60 -- Happened WW1 moment
-	-- NDefines.NMilitary.BASE_FORT_PENALTY = 0.15
-	-- NDefines.NMilitary.MULTIPLE_COMBATS_PENALTY = 0.5
-	NDefines.NMilitary.DIG_IN_FACTOR = 0.2 
-	-- NDefines.NMilitary.UNIT_DIGIN_CAP = 10 -- Cap>factor
-	NDefines.NMilitary.MAX_OUT_OF_SUPPLY_DAYS = 28
-	-- NDefines.NMilitary.OUT_OF_SUPPLY_SPEED = 0.9
-	NDefines.NMilitary.COMBAT_SUPPLY_LACK_DEFENDER_ATTACK = -0.5
-	NDefines.NMilitary.COMBAT_SUPPLY_LACK_DEFENDER_DEFEND = -0.2 
-	-- NDefines.NMilitary.ENCIRCLED_PENALTY = 0.20 -- most stupid thing ever, you can be encircled but with supply, or opposite.
-	NDefines.NMilitary.STRATEGIC_REDEPLOY_ORG_RATIO = 0.25 -- your division can sometimes disappear 
-	-- NDefines.NSupply.RAILWAY_CONVERSION_COOLDOWN = 10 -- it`s make gameplay much worse
-	-- NDefines.NSupply.RAILWAY_CONVERSION_COOLDOWN_CORE = 5 
-	-- NDefines.NSupply.RAILWAY_CONVERSION_COOLDOWN_CIVILWAR = 5
 
 -- BMT Defines
 	---- Military additions
@@ -592,6 +572,7 @@
 	NDefines.NAI.RESEARCH_DAYS_BETWEEN_WEIGHT_UPDATE = 1
 
 	NDefines.NAI.RESEARCH_AHEAD_BONUS_FACTOR = 50.0
+	NDefines.NAI.RESEARCH_YEARS_BEHIND_FACTOR = 0.5 -- (was 0.2) --To which extent AI should care about not falling behind (i.e. increase weight for old tech)
 
 	NDefines.NAI.MAX_AHEAD_RESEARCH_PENALTY = 10
 	NDefines.NAI.RESEARCH_BONUS_FACTOR = 10 				                       		-- To which extent AI should care about bonuses to research

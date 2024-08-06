@@ -988,6 +988,147 @@
 		}
 	}
 
+	shared_focus = { # Capital Panic
+		id = HHE_warmonger_capital_panic
+		icon = GFX_focus_unknown_industry
+		prerequisite = { focus = HHE_warmonger_mobilize_the_nobility }
+		#mutually_exclusive = { focus =  }
+		relative_position_id = HHE_warmonger_mobilize_the_nobility
+		x = 1
+		y = 1
+		cost = 8
+
+		allow_branch = {
+		}
+		available = {
+			NOT = {
+				OR = { has_full_control_of_state = 5 has_full_control_of_state = 239 }
+			}
+		}
+		bypass = {
+		}
+
+		ai_will_do = {
+			base = 10
+			modifier = {
+				add = -10
+				NOT = {
+					OR = {
+						has_completed_focus = HHE_warmonger_family_divided
+						has_completed_focus = HHE_warmonger_family_united
+					}
+				}
+			}
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus HHE_warmonger_capital_panic"
+			add_timed_idea = { idea = ideological_fanaticism_focus days = 180 }
+			5={
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = steel_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+			239={
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = steel_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+			add_stability = -0.05
+		}
+	}
+
+	shared_focus = { # Final Stronghold
+		id = HHE_warmonger_final_stronghold
+		icon = GFX_focus_unknown_industry
+		prerequisite = { focus = HHE_warmonger_capital_panic }
+		#mutually_exclusive = { focus =  }
+		relative_position_id = HHE_warmonger_capital_panic
+		x = 1
+		y = 1
+		cost = 8
+
+		allow_branch = {
+		}
+		available = {
+			num_of_controlled_states < 3
+			NOT = { has_idea = ideological_fanaticism_focus }
+		}
+		bypass = {
+		}
+
+		ai_will_do = {
+			base = 10
+			modifier = {
+				add = -10
+				NOT = {
+					OR = {
+						has_completed_focus = HHE_warmonger_family_divided
+						has_completed_focus = HHE_warmonger_family_united
+					}
+				}
+			}
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus HHE_warmonger_mobilize_the_nobility"
+			5={
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+				add_building_construction = { type = bunker province = 2779 level = 3 instant_build = yes }
+				add_building_construction = { type = bunker province = 7971 level = 3 instant_build = yes }
+				add_building_construction = { type = bunker province = 9145 level = 3 instant_build = yes }
+				add_building_construction = { type = bunker province = 9185 level = 3 instant_build = yes }
+				add_building_construction = { type = trench_line province = 2779 level = 3 instant_build = yes }
+				add_building_construction = { type = trench_line province = 7971 level = 3 instant_build = yes }
+				add_building_construction = { type = trench_line province = 9145 level = 3 instant_build = yes }
+				add_building_construction = { type = trench_line province = 9185 level = 3 instant_build = yes }
+				add_building_construction = { type = coastal_bunker province = 7971 level = 3 instant_build = yes }
+			}
+			239={
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+				add_building_construction = { type = bunker province = 8006 level = 3 instant_build = yes }
+				add_building_construction = { type = bunker province = 15115 level = 3 instant_build = yes }
+				add_building_construction = { type = bunker province = 15116 level = 3 instant_build = yes }
+				add_building_construction = { type = trench_line province = 8006 level = 3 instant_build = yes }
+				add_building_construction = { type = trench_line province = 15115 level = 3 instant_build = yes }
+				add_building_construction = { type = trench_line province = 15116 level = 3 instant_build = yes }
+				add_building_construction = { type = coastal_bunker province = 8006 level = 3 instant_build = yes }
+				add_building_construction = { type = coastal_bunker province = 15116 level = 3 instant_build = yes }
+			}
+			add_stability = -0.05
+		}
+	}
+
 	shared_focus = { # Removal of the Non-Loyalist
 		id = HHE_warmonger_removal_of_non_loyalist
 		icon = GFX_focus_unknown_political
@@ -3040,6 +3181,7 @@
 		completion_reward = {
 			log = "[GetDateText]: [Root.GetName]: Focus HHE_warmonger_secure_eastern_anatoli"
 			259 = { transfer_state_to = ROOT }
+			714 = { transfer_state_to = ROOT }
 		}
 	}
 
