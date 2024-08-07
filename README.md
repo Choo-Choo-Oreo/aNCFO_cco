@@ -8,16 +8,16 @@ If you want utilized any of the CODE here for your own mod, you have permision t
 If you want to use any graphics from the mod, you are not permitted to use any of them.
 
 Other Mod Devs/Modders
--Edouard_Saladier
+-Edouard_Saladier Mod Graphics
 https://steamcommunity.com/sharedfiles/filedetails/?id=1866759372
-	Graphics
--Ringwraith
+
+-Ringwraith Mod Partially
 https://steamcommunity.com/sharedfiles/filedetails/?id=1778255798
-	Graphics
--Elouda
+
+-Elouda Mod Graphics
 https://steamcommunity.com/sharedfiles/filedetails/?id=1687056790
-	Full Mod
--Amine Alkaline (Better Mechanics Collection)
+
+-Amine Alkaline (Better Mechanics Collection) Mod All
 https://steamcommunity.com/workshop/filedetails/?id=2994645469
 	Better Mechanics : Optimization								19 Jan 2024
 	Better Mechanics : AI Research | Vanilla Tech Tree			18 Mar 2024

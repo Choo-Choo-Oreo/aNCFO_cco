@@ -1,0 +1,228 @@
+
+add_operation_token_for_FROM = {
+	if = {
+		limit = {
+			NOT = { FROM = { is_in_array = { array = Root.operation_token_array } } }
+		}
+		add_to_array = { operation_token_array = From.id }
+	}
+	meta_effect = {
+		text = {
+			add_operation_token = {
+				tag = FROM
+				token = [TOKEN]
+			}
+			if = {
+				limit = {
+					NOT = { has_country_flag = operation/[TOKEN]@FROM }
+				}
+				set_country_flag = operation_token/[TOKEN]@FROM
+			}
+			else = {
+				modify_country_flag = {
+					flag = operation/[TOKEN]@FROM
+					value = 1 
+				}
+			}
+		}
+		TOKEN = "[?temp.GetTokenKey]"
+	}
+}
+
+gain_random_agency_upgrade = { 
+	custom_effect_tooltip = free_agency_upgrade_tt
+	hidden_effect = {
+		if = {
+			limit = {
+				has_intelligence_agency = no
+			}
+			create_intelligence_agency = yes
+		}
+		else = {
+			random_list = {
+				1 = {
+					upgrade_intelligence_agency = upgrade_economy_civilian
+					modifier = {
+						factor = 0
+						has_done_agency_upgrade = upgrade_economy_civilian
+					}
+				}
+				1 = {
+					upgrade_intelligence_agency = upgrade_army_department
+					modifier = {
+						factor = 0
+						has_done_agency_upgrade = upgrade_army_department
+					}
+				}
+				1 = {
+					upgrade_intelligence_agency = upgrade_naval_department
+					modifier = {
+						factor = 0
+						has_done_agency_upgrade = upgrade_naval_department
+					}
+				}
+				1 = {
+					upgrade_intelligence_agency = upgrade_airforce_department
+					modifier = {
+						factor = 0
+						has_done_agency_upgrade = upgrade_airforce_department
+					}
+				}
+				1 = {
+					upgrade_intelligence_agency = upgrade_passive_defense
+					modifier = {
+						factor = 0
+						has_done_agency_upgrade = upgrade_passive_defense
+					}
+				}
+				1 = {
+					upgrade_intelligence_agency = upgrade_anti_partisan
+					modifier = {
+						factor = 0
+						has_done_agency_upgrade = upgrade_anti_partisan
+					}
+				}
+				1 = {
+					upgrade_intelligence_agency = upgrade_internal_security
+					modifier = {
+						factor = 0
+						has_done_agency_upgrade = upgrade_internal_security
+					}
+				}
+				1 = {
+					upgrade_intelligence_agency = upgrade_training_centers
+					modifier = {
+						factor = 0
+						has_done_agency_upgrade = upgrade_training_centers
+					}
+				}
+				1 = {
+					upgrade_intelligence_agency = upgrade_civil_intel
+					modifier = {
+						factor = 0
+						OR = {
+							has_done_agency_upgrade = upgrade_civil_intel
+							NOT = { has_done_agency_upgrade = upgrade_economy_civilian }
+						}
+					}
+				}
+				1 = {
+					upgrade_intelligence_agency = upgrade_military_intel
+					modifier = {
+						factor = 0
+						OR = {
+							has_done_agency_upgrade = upgrade_military_intel
+							NOT = { has_done_agency_upgrade = upgrade_army_department }
+						}
+					}
+				}
+				1 = {
+					upgrade_intelligence_agency = upgrade_maritime_intel
+					modifier = {
+						factor = 0
+						OR = {
+							has_done_agency_upgrade = upgrade_maritime_intel
+							NOT = { has_done_agency_upgrade = upgrade_naval_department }
+						}
+					}
+				}
+				1 = {
+					upgrade_intelligence_agency = upgrade_air_recon
+					modifier = {
+						factor = 0
+						OR = {
+							has_done_agency_upgrade = upgrade_air_recon
+							NOT = { has_done_agency_upgrade = upgrade_airforce_department }
+						}
+					}
+				}
+				1 = {
+					upgrade_intelligence_agency = upgrade_humint
+					modifier = {
+						factor = 0
+						has_done_agency_upgrade = upgrade_humint
+					}
+				}
+				1 = {
+					upgrade_intelligence_agency = upgrade_sigint
+					modifier = {
+						factor = 0
+						has_done_agency_upgrade = upgrade_sigint
+					}
+				}
+				1 = {
+					upgrade_intelligence_agency = upgrade_masint
+					modifier = {
+						factor = 0
+						has_done_agency_upgrade = upgrade_masint
+					}
+				}
+				1 = {
+					upgrade_intelligence_agency = upgrade_opsec
+					modifier = {
+						factor = 0
+						has_done_agency_upgrade = upgrade_opsec
+					}
+				}
+				1 = {
+					upgrade_intelligence_agency = upgrade_commando_training
+					modifier = {
+						factor = 0
+						has_done_agency_upgrade = upgrade_commando_training
+					}
+				}
+
+				1 = {
+					upgrade_intelligence_agency = upgrade_form_department
+					modifier = {
+						factor = 0
+						has_done_agency_upgrade = upgrade_form_department
+					}
+				}
+
+				1 = {
+					upgrade_intelligence_agency = upgrade_decryption_boost
+					modifier = {
+						factor = 0
+						OR = {
+							has_done_agency_upgrade = upgrade_decryption_boost
+							NOT = { has_done_agency_upgrade = upgrade_form_department }
+						}
+					}
+				}
+				1 = {
+					upgrade_intelligence_agency = upgrade_decryption_boost_2
+					modifier = {
+						factor = 0
+						OR = {
+							has_done_agency_upgrade = upgrade_decryption_boost_2
+							NOT = { has_done_agency_upgrade = upgrade_form_department }
+							NOT = { has_done_agency_upgrade = upgrade_decryption_boost }
+						}
+					}
+				}
+				1 = {
+					upgrade_intelligence_agency = upgrade_crypto_strength
+					modifier = {
+						factor = 0
+						OR = {
+							has_done_agency_upgrade = upgrade_crypto_strength
+							NOT = { has_done_agency_upgrade = upgrade_form_department }
+						}
+					}
+				}
+				1 = {
+					upgrade_intelligence_agency = upgrade_crypto_strength_2
+					modifier = {
+						factor = 0
+						OR = {
+							has_done_agency_upgrade = upgrade_crypto_strength_2
+							NOT = { has_done_agency_upgrade = upgrade_form_department }
+							NOT = { has_done_agency_upgrade = upgrade_crypto_strength }
+						}
+					}
+				}
+			}
+		}
+	}
+}
