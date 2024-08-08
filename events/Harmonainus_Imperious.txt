@@ -21,32 +21,216 @@
 			is_triggered_only = yes
 
 			option = { # Tradition
-				name = HHE.1.1a
+				name = HHE.1.optA
 				trigger = {
 					has_global_flag = elected_tradition
 				}
 				news_event = news.1
 			}
 			option = { # Influencer
-				name = HHE.1.1b
+				name = HHE.1.optB
 				trigger = {
 					has_global_flag = elected_influencer
 				}
 				news_event = news.2
 			}
 			option = { # Authority
-				name = HHE.1.1c
+				name = HHE.1.optC
 				trigger = {
 					has_global_flag = elected_authority
 				}
 				news_event = news.3
 			}
 			option = { # Warmonger
-				name = HHE.1.1d
+				name = HHE.1.optD
 				trigger = {
 					has_global_flag = elected_warmonger
 				}
 				news_event = news.4
+			}
+		}
+
+		country_event = { # Question Deeds Reforms
+			id = HHE.2
+			title = HHE.2.t
+			desc = HHE.2.d
+			picture = GFX_report_event_usa_election_generic
+			is_triggered_only = yes
+
+			option = { # Halt Reforms
+				name = HHE.4.optA
+				ai_chance = {
+					factor = 1
+					modifier = {
+						factor = 10
+						is_historical_focus_on = yes
+					}
+					modifier = {
+						add = 10
+						factor = 10
+						has_game_rule = {
+							rule = HHE_ai_behavior
+							option = WARMONGER
+						}
+					}
+				}
+				complete_national_focus = HHE_halt_reforms
+				add_popularity = { ideology = pluralism popularity = -0.05 }
+				add_popularity = { ideology = semidemocracy popularity = -0.025 }
+				add_political_power = 150
+				add_stability = -0.05
+				HHE_deed_reform_removal = yes
+				hidden_effect = {
+					set_country_flag = halt_reforms
+				}
+			}
+			option = { # Finish Reforms
+				name = HHE.4.optB
+				ai_chance = {
+					factor = 1
+					modifier = {
+						add = 10
+						factor = 10
+						has_game_rule = {
+							rule = HHE_ai_behavior
+							option = INFLUENCER
+						}
+					}
+				}
+				trigger = {
+					custom_trigger_tooltip = {
+						tooltip = historically_locked_tt
+						is_historical_focus_on = no
+					}
+				}
+				complete_national_focus = HHE_finish_reforms
+			}
+		}
+
+		country_event = { # Future Preventions of Assassinations
+			id = HHE.3
+			title = HHE.3.t
+			desc = HHE.3.d
+			picture = GFX_report_event_usa_election_generic
+			is_triggered_only = yes
+
+			option = { # Heavy Prevention
+				name = HHE.4.optA
+				ai_chance = {
+					factor = 1
+					modifier = {
+						factor = 50
+						is_historical_focus_on = yes
+					}
+					modifier = {
+						add = 10
+						factor = 10
+						has_game_rule = {
+							rule = HHE_ai_behavior
+							option = WARMONGER
+						}
+					}
+				}
+				complete_national_focus = HHE_heavy_assassination_prevention
+			}
+			option = { # Light Prevention
+				name = HHE.4.optB
+				ai_chance = {
+					factor = 1
+					modifier = {
+						add = 10
+						factor = 10
+						has_game_rule = {
+							rule = HHE_ai_behavior
+							option = INFLUENCER
+						}
+					}
+				}
+				trigger = {
+					custom_trigger_tooltip = {
+						tooltip = historically_locked_tt
+						is_historical_focus_on = no
+					}
+				}
+				complete_national_focus = HHE_light_assassination_prevention
+			}
+		}
+
+		country_event = { # Find the Culprit
+			id = HHE.4
+			title = HHE.4.t
+			desc = HHE.4.d
+			picture = GFX_report_event_usa_election_generic
+			is_triggered_only = yes
+
+			option = { # Blame the People
+				name = HHE.4.optA
+				ai_chance = {
+					factor = 1
+					modifier = {
+						factor = 50
+						is_historical_focus_on = yes
+					}
+					modifier = {
+						add = 10
+						factor = 10
+						has_game_rule = {
+							rule = HHE_ai_behavior
+							option = WARMONGER
+						}
+					}
+				}
+				complete_national_focus = HHE_blame_the_people
+			}
+			option = { # Blame the Merchants
+				name = HHE.4.optB
+				ai_chance = {
+					factor = 1
+					modifier = {
+						add = 10
+						factor = 10
+						has_game_rule = {
+							rule = HHE_ai_behavior
+							option = AUTHORITY
+						}
+					}
+				}
+				trigger = {
+					custom_trigger_tooltip = {
+						tooltip = historically_locked_tt
+						is_historical_focus_on = no
+					}
+				}
+				complete_national_focus = HHE_blame_merchants
+			}
+			option = { # Blame the Junta
+				name = HHE.4.optC
+				ai_chance = {
+					factor = 1
+					modifier = {
+						add = 10
+						factor = 10
+						has_game_rule = {
+							rule = HHE_ai_behavior
+							option = TRADITION
+						}
+					}
+					modifier = {
+						add = 10
+						factor = 10
+						has_game_rule = {
+							rule = HHE_ai_behavior
+							option = INFLUENCER
+						}
+					}
+				}
+				trigger = {
+					custom_trigger_tooltip = {
+						tooltip = historically_locked_tt
+						is_historical_focus_on = no
+					}
+				}
+				complete_national_focus = HHE_blame_junta
 			}
 		}
 add_namespace = HHE_tradition # Tradition
@@ -146,6 +330,13 @@ add_namespace = HHE_warmonger # Warmonger
 			option = {
 				name = HHE_warmonger.4.a
 				set_autonomy = { target = HTP autonomy_state = autonomy_free }
+				complete_national_focus = HHE_warmonger_family_divided
+				hidden_effect = {
+					declare_war_on = {
+						target = HTP
+						type = annex_everything
+					}
+				}
 			}
 		}
 
@@ -158,6 +349,11 @@ add_namespace = HHE_warmonger # Warmonger
 			immediate = { set_country_flag = HHE_accepts_intergration }
 			option = {
 				name = HHE_warmonger.5.a
+				complete_national_focus = HHE_warmonger_family_united
+				hidden_effect = {
+					transfer_navy = { target = HTP }
+					annex_country = { target = HTP transfer_troops = yes }
+				}
 			}
 		}
 	# Civil-War
@@ -286,7 +482,6 @@ add_namespace = HHE_warmonger # Warmonger
 				}
 			}
 		}
-
 add_namespace = HHI_SUBJECTS
 	# Normal
 		country_event = {
