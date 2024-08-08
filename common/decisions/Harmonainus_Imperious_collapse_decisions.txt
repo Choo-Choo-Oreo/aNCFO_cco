@@ -1226,7 +1226,7 @@
 			#highlight_states = { highlight_provinces = { prov } }
 
 	        available = {
-	        	#id = { is_controlled_by = ROOT }
+	        	#id = { is_controlled_by = ROOT hidden_trigger = { NOT = { has_state_flag = crisis_HHE_entrench_line_built } } }
 	        	#ROOT = {
 	        	#	controls_province = prov
 	        	#	controls_province = prov
@@ -1254,6 +1254,7 @@
 	        remove_effect = {
 	            log = "[GetDateText]: [Root.GetName]: Decision remove crisis_HHE_entrench_state_id"
 	            #id = {
+	            #	set_state_flag = crisis_HHE_entrench_line_built
 				#	add_building_construction = { type = trench_line province = prov level = 3 instant_build = yes }
 				#	add_building_construction = { type = trench_line province = prov level = 3 instant_build = yes }
 				#	add_building_construction = { type = trench_line province = prov level = 3 instant_build = yes }
@@ -1277,7 +1278,7 @@
 			highlight_states = { highlight_provinces = { 9481 9543 9582 } }
 
 	        available = {
-	        	1 = { is_controlled_by = ROOT }
+	        	1 = { is_controlled_by = ROOT hidden_trigger = { NOT = { has_state_flag = crisis_HHE_entrench_line_built } } }
 	        	ROOT = {
 	        		controls_province = 9481
 	        		controls_province = 9543
@@ -1305,6 +1306,7 @@
 	        remove_effect = {
 	            log = "[GetDateText]: [Root.GetName]: Decision remove crisis_HHE_entrench_state_1"
 	            1 = {
+	            	set_state_flag = crisis_HHE_entrench_line_built
 					add_building_construction = { type = trench_line province = 9481 level = 3 instant_build = yes }
 					add_building_construction = { type = trench_line province = 9543 level = 3 instant_build = yes }
 					add_building_construction = { type = trench_line province = 9582 level = 3 instant_build = yes }
@@ -1328,7 +1330,7 @@
 			highlight_states = { highlight_provinces = { 9399 } }
 
 	        available = {
-	        	2 = { is_controlled_by = ROOT }
+	        	2 = { is_controlled_by = ROOT hidden_trigger = { NOT = { has_state_flag = crisis_HHE_entrench_line_built } } }
 	        	ROOT = {
 	        		controls_province = 9399
 	        	}
@@ -1352,6 +1354,7 @@
 	        remove_effect = {
 	            log = "[GetDateText]: [Root.GetName]: Decision remove crisis_HHE_entrench_state_2"
 	            2 = {
+	            	set_state_flag = crisis_HHE_entrench_line_built
 					add_building_construction = { type = trench_line province = 9399 level = 3 instant_build = yes }
 					add_building_construction = { type = bunker province = 9399 level = 1 instant_build = yes }
 	            }
@@ -1368,13 +1371,68 @@
 	            }
 	        }
 		}
+		crisis_HHE_entrench_state_6 = {
+	        icon = generic_fortification
+
+			highlight_states = { highlight_provinces = { 1168 9212 9249 9312 } }
+
+	        available = {
+	        	6 = { is_controlled_by = ROOT hidden_trigger = { NOT = { has_state_flag = crisis_HHE_entrench_line_built } } }
+	        	ROOT = {
+	        		controls_province = 1168
+	        		controls_province = 9212
+	        		controls_province = 9249
+	        		controls_province = 9312
+	        	}
+	        }
+	        visible = { always = yes }
+
+	        fire_only_once = yes
+	        cost = 10
+
+	        days_remove = 35
+	        remove_trigger = { NOT = {
+	        	6 = { is_controlled_by = ROOT }
+	        	ROOT = {
+	        		controls_province = 1168
+	        		controls_province = 9212
+	        		controls_province = 9249
+	        		controls_province = 9312
+	        	}
+	        } }
+
+	        complete_effect = {
+	            log = "[GetDateText]: [Root.GetName]: Decision crisis_HHE_entrench_state_6"
+	        }
+	        remove_effect = {
+	            log = "[GetDateText]: [Root.GetName]: Decision remove crisis_HHE_entrench_state_6"
+	            6 = {
+	            	set_state_flag = crisis_HHE_entrench_line_built
+					add_building_construction = { type = trench_line province = 1168 level = 3 instant_build = yes }
+					add_building_construction = { type = trench_line province = 9212 level = 3 instant_build = yes }
+					add_building_construction = { type = trench_line province = 9249 level = 3 instant_build = yes }
+					add_building_construction = { type = trench_line province = 9312 level = 3 instant_build = yes }
+	            }
+	        }
+	        ai_will_do = {
+	            base = 0
+	            modifier = {
+	            	add = 1
+	            	factor = 1
+					6 = {
+						is_controlled_by = ROOT
+						any_neighbor_state = { is_controlled_by_ROOT_or_ally = no }
+					}
+	            }
+	        }
+		}
 		crisis_HHE_entrench_state_7 = {
 	        icon = generic_fortification
 
 			highlight_states = { highlight_provinces = { 4941 8102 10076 10525 } }
 
 	        available = {
-	        	7 = { is_controlled_by = ROOT }
+	        	7 = { is_controlled_by = ROOT hidden_trigger = { NOT = { has_state_flag = crisis_HHE_entrench_line_built } } }
 	        	ROOT = {
 	        		controls_province = 4941
 	        		controls_province = 8102
@@ -1404,6 +1462,7 @@
 	        remove_effect = {
 	            log = "[GetDateText]: [Root.GetName]: Decision remove crisis_HHE_entrench_state_7"
 	            7 = {
+	            	set_state_flag = crisis_HHE_entrench_line_built
 					add_building_construction = { type = trench_line province = 4941 level = 3 instant_build = yes }
 					add_building_construction = { type = trench_line province = 8102 level = 3 instant_build = yes }
 					add_building_construction = { type = trench_line province = 10076 level = 3 instant_build = yes }
@@ -1428,7 +1487,7 @@
 			highlight_states = { highlight_provinces = { 4271 9193 18899 } }
 
 	        available = {
-	        	11 = { is_controlled_by = ROOT }
+	        	11 = { is_controlled_by = ROOT hidden_trigger = { NOT = { has_state_flag = crisis_HHE_entrench_line_built } } }
 	        	448 = { is_controlled_by = ROOT }
 	        	ROOT = {
 	        		controls_province = 4271
@@ -1460,6 +1519,7 @@
 	            448 = {
 					add_building_construction = { type = trench_line province = 4271 level = 3 instant_build = yes }
 				} 11 = {
+					set_state_flag = crisis_HHE_entrench_line_built
 					add_building_construction = { type = trench_line province = 9193 level = 3 instant_build = yes }
 					add_building_construction = { type = trench_line province = 18899 level = 3 instant_build = yes }
 	            }
@@ -1482,7 +1542,7 @@
 			highlight_states = { highlight_provinces = { 4733 7730 8175 8862 8925 8960 8995 } }
 
 	        available = {
-	        	77 = { is_controlled_by = ROOT }
+	        	77 = { is_controlled_by = ROOT hidden_trigger = { NOT = { has_state_flag = crisis_HHE_entrench_line_built } } }
 	        	ROOT = {
 	        		controls_province = 4733
 	        		controls_province = 7730
@@ -1518,6 +1578,7 @@
 	        remove_effect = {
 	            log = "[GetDateText]: [Root.GetName]: Decision remove crisis_HHE_entrench_state_77"
 	            77 = {
+	            	set_state_flag = crisis_HHE_entrench_line_built
 					add_building_construction = { type = trench_line province = 4733 level = 3 instant_build = yes }
 					add_building_construction = { type = trench_line province = 7730 level = 3 instant_build = yes }
 					add_building_construction = { type = trench_line province = 8175 level = 3 instant_build = yes }
@@ -1545,7 +1606,7 @@
 			highlight_states = { highlight_provinces = { 9491 } }
 
 	        available = {
-	        	78 = { is_controlled_by = ROOT }
+	        	78 = { is_controlled_by = ROOT hidden_trigger = { NOT = { has_state_flag = crisis_HHE_entrench_line_built } } }
 	        	ROOT = {
 	        		controls_province = 9491
 	        	}
@@ -1569,6 +1630,7 @@
 	        remove_effect = {
 	            log = "[GetDateText]: [Root.GetName]: Decision remove crisis_HHE_entrench_state_78"
 	            78 = {
+	            	set_state_flag = crisis_HHE_entrench_line_built
 					add_building_construction = { type = trench_line province = 9491 level = 3 instant_build = yes }
 					add_building_construction = { type = bunker province = 9491 level = 1 instant_build = yes }
 	            }
@@ -1591,7 +1653,7 @@
 			highlight_states = { highlight_provinces = { 4460 9105 9106 } }
 
 	        available = {
-	        	79 = { is_controlled_by = ROOT }
+	        	79 = { is_controlled_by = ROOT hidden_trigger = { NOT = { has_state_flag = crisis_HHE_entrench_line_built } } }
 	        	ROOT = {
 	        		controls_province = 9105
 	        		controls_province = 9106
@@ -1617,6 +1679,7 @@
 	        remove_effect = {
 	            log = "[GetDateText]: [Root.GetName]: Decision remove crisis_HHE_entrench_state_79"
 	            79 = {
+	            	set_state_flag = crisis_HHE_entrench_line_built
 					add_building_construction = { type = trench_line province = 4460 level = 3 instant_build = yes }
 					add_building_construction = { type = trench_line province = 9105 level = 3 instant_build = yes }
 					add_building_construction = { type = bunker province = 9105 level = 1 instant_build = yes }
@@ -1641,7 +1704,7 @@
 			highlight_states = { highlight_provinces = { 5765 8821 8861 8943 } }
 
 	        available = {
-	        	80 = { is_controlled_by = ROOT }
+	        	80 = { is_controlled_by = ROOT hidden_trigger = { NOT = { has_state_flag = crisis_HHE_entrench_line_built } } }
 	        	ROOT = {
 	        		controls_province = 5765
 	        		controls_province = 8821
@@ -1671,6 +1734,7 @@
 	        remove_effect = {
 	            log = "[GetDateText]: [Root.GetName]: Decision remove crisis_HHE_entrench_state_80"
 	            80 = {
+	            	set_state_flag = crisis_HHE_entrench_line_built
 					add_building_construction = { type = trench_line province = 5765 level = 3 instant_build = yes }
 					add_building_construction = { type = trench_line province = 8821 level = 3 instant_build = yes }
 					add_building_construction = { type = trench_line province = 8861 level = 3 instant_build = yes }
@@ -1696,7 +1760,7 @@
 			highlight_states = { highlight_provinces = { 433 8554 8606 } }
 
 	        available = {
-	        	85 = { is_controlled_by = ROOT }
+	        	85 = { is_controlled_by = ROOT hidden_trigger = { NOT = { has_state_flag = crisis_HHE_entrench_line_built } } }
 	        	ROOT = {
 	        		controls_province = 433
 	        		controls_province = 8554
@@ -1724,6 +1788,7 @@
 	        remove_effect = {
 	            log = "[GetDateText]: [Root.GetName]: Decision remove crisis_HHE_entrench_state_85"
 	            85 = {
+	            	set_state_flag = crisis_HHE_entrench_line_built
 					add_building_construction = { type = trench_line province = 433 level = 3 instant_build = yes }
 					add_building_construction = { type = trench_line province = 8554 level = 3 instant_build = yes }
 					add_building_construction = { type = trench_line province = 8606 level = 3 instant_build = yes }
@@ -1748,7 +1813,7 @@
 			highlight_states = { highlight_provinces = { 1395 } }
 
 	        available = {
-	        	105 = { is_controlled_by = ROOT }
+	        	105 = { is_controlled_by = ROOT hidden_trigger = { NOT = { has_state_flag = crisis_HHE_entrench_line_built } } }
 	        	ROOT = {
 	        		controls_province = 1395
 	        	}
@@ -1772,6 +1837,7 @@
 	        remove_effect = {
 	            log = "[GetDateText]: [Root.GetName]: Decision remove crisis_HHE_entrench_state_105"
 	            105 = {
+	            	set_state_flag = crisis_HHE_entrench_line_built
 					add_building_construction = { type = trench_line province = 1395 level = 3 instant_build = yes }
 					add_building_construction = { type = bunker province = 1395 level = 1 instant_build = yes }
 				}
@@ -1782,6 +1848,115 @@
 	            	add = 1
 	            	factor = 1
 					105 = {
+						is_controlled_by = ROOT
+						any_neighbor_state = { is_controlled_by_ROOT_or_ally = no }
+					}
+	            }
+	        }
+		}
+		crisis_HHE_entrench_state_140 = {
+	        icon = generic_fortification
+
+			highlight_states = { highlight_provinces = { 1050 3116 3836 } }
+
+	        available = {
+	        	140 = { is_controlled_by = ROOT hidden_trigger = { NOT = { has_state_flag = crisis_HHE_entrench_line_built } } }
+	        	ROOT = {
+	        		controls_province = 1050
+	        		controls_province = 3116
+	        		controls_province = 3836
+	        	}
+	        }
+	        visible = { always = yes }
+
+	        fire_only_once = yes
+	        cost = 10
+
+	        days_remove = 35
+	        remove_trigger = { NOT = {
+	        	140 = { is_controlled_by = ROOT }
+	        	ROOT = {
+	        		controls_province = 1050
+	        		controls_province = 3116
+	        		controls_province = 3836
+	        	}
+	        } }
+
+	        complete_effect = {
+	            log = "[GetDateText]: [Root.GetName]: Decision crisis_HHE_entrench_state_140"
+	        }
+	        remove_effect = {
+	            log = "[GetDateText]: [Root.GetName]: Decision remove crisis_HHE_entrench_state_140"
+	            140 = {
+	            	set_state_flag = crisis_HHE_entrench_line_built
+					add_building_construction = { type = trench_line province = 1050 level = 3 instant_build = yes }
+					add_building_construction = { type = trench_line province = 3116 level = 3 instant_build = yes }
+					add_building_construction = { type = bunker province = 3116 level = 1 instant_build = yes }
+					add_building_construction = { type = trench_line province = 3836 level = 3 instant_build = yes }
+				}
+	        }
+	        ai_will_do = {
+	            base = 0
+	            modifier = {
+	            	add = 1
+	            	factor = 1
+					140 = {
+						is_controlled_by = ROOT
+						any_neighbor_state = { is_controlled_by_ROOT_or_ally = no }
+					}
+	            }
+	        }
+		}
+		crisis_HHE_entrench_state_159 = {
+	        icon = generic_fortification
+
+			highlight_states = { highlight_provinces = { 8914 8933 8985 9003 } }
+
+	        available = {
+	        	159 = { is_controlled_by = ROOT hidden_trigger = { NOT = { has_state_flag = crisis_HHE_entrench_line_built } } }
+	        	ROOT = {
+	        		controls_province = 8914
+	        		controls_province = 8933
+	        		controls_province = 8985
+	        		controls_province = 9003
+	        	}
+	        }
+	        visible = { always = yes }
+
+	        fire_only_once = yes
+	        cost = 10
+
+	        days_remove = 35
+	        remove_trigger = { NOT = {
+	        	159 = { is_controlled_by = ROOT }
+	        	ROOT = {
+	        		controls_province = 8914
+	        		controls_province = 8933
+	        		controls_province = 8985
+	        		controls_province = 9003
+	        	}
+	        } }
+
+	        complete_effect = {
+	            log = "[GetDateText]: [Root.GetName]: Decision crisis_HHE_entrench_state_159"
+	        }
+	        remove_effect = {
+	            log = "[GetDateText]: [Root.GetName]: Decision remove crisis_HHE_entrench_state_159"
+	            159 = {
+	            	set_state_flag = crisis_HHE_entrench_line_built
+					add_building_construction = { type = trench_line province = 8914 level = 1 instant_build = yes }
+					add_building_construction = { type = trench_line province = 8933 level = 1 instant_build = yes }
+					add_building_construction = { type = trench_line province = 8985 level = 1 instant_build = yes }
+					add_building_construction = { type = trench_line province = 9003 level = 3 instant_build = yes }
+					add_building_construction = { type = bunker province = 9003 level = 1 instant_build = yes }
+				}
+	        }
+	        ai_will_do = {
+	            base = 0
+	            modifier = {
+	            	add = 1
+	            	factor = 1
+					159 = {
 						is_controlled_by = ROOT
 						any_neighbor_state = { is_controlled_by_ROOT_or_ally = no }
 					}
