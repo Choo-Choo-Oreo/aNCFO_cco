@@ -1,57 +1,6 @@
-HHE_make_sure_MRC_is_ganked_before_we_move = {
-	allowed = { original_tag = HHE }
-	enable = {
-		has_war_with = MRC
-		MRC = { has_capitulated = no }
-		date < 1734.2.1
-	}
-	abort = {
-		OR = {
-			MRC = {
-				has_capitulated = yes
-                days_since_capitulated > 8
-			}
-			count_triggers = {
-				amount = 4
-				12  = { CONTROLLER = { has_war_with = ROOT } }
-				74  = { CONTROLLER = { has_war_with = ROOT } }
-				75  = { CONTROLLER = { has_war_with = ROOT } }
-				335 = { CONTROLLER = { has_war_with = ROOT } }
-				336 = { CONTROLLER = { has_war_with = ROOT } }
-				337 = { CONTROLLER = { has_war_with = ROOT } }
-				338 = { CONTROLLER = { has_war_with = ROOT } }
-			}
-			date > 1734.2.1
-		}
-	}
-
-	ai_strategy = {
-		type = declare_war
-		id = "RVV"
-		value = -2000
-	}
-	ai_strategy = {
-		type = declare_war
-		id = "CPV"
-		value = -2000
-	}
-	ai_strategy = {
-		type = declare_war
-		id = "GSD"
-		value = -2000
-	}
-	ai_strategy = {
-		type = declare_war
-		id = "SSD"
-		value = -2000
-	}
-}
-
 HHE_my_precisioussss = {
 	allowed = { original_tag = HHE }
-	enable = {
-		date < 1727.6.1
-	}
+	enable = { date < 1727.6.1 }
 	abort_when_not_enabled = yes
 
 	ai_strategy = {
@@ -123,6 +72,409 @@ HHE_my_precisioussss = {
 		type = send_lend_lease_desire
 		id = HWA
 		value = -999
+	}
+}
+
+HHE_make_sure_MRC_is_ganked_before_we_move = {
+	allowed = { is_harmonainus_imperious = yes }
+	enable = {
+		has_war_with = MRC
+		MRC = { has_capitulated = no }
+		date < 1734.2.1
+	}
+	abort = {
+		OR = {
+			MRC = {
+				has_capitulated = yes
+                days_since_capitulated > 31
+			}
+			count_triggers = {
+				amount = 6
+				12  = { CONTROLLER = { has_war_with = ROOT } }
+				74  = { CONTROLLER = { has_war_with = ROOT } }
+				75  = { CONTROLLER = { has_war_with = ROOT } }
+				76  = { CONTROLLER = { has_war_with = ROOT } }
+				335 = { CONTROLLER = { has_war_with = ROOT } }
+				336 = { CONTROLLER = { has_war_with = ROOT } }
+				337 = { CONTROLLER = { has_war_with = ROOT } }
+				338 = { CONTROLLER = { has_war_with = ROOT } }
+			}
+			date > 1734.2.1
+		}
+	}
+
+	ai_strategy = {
+		type = declare_war
+		id = "RVV"
+		value = -2000
+	}
+	ai_strategy = {
+		type = declare_war
+		id = "CPV"
+		value = -2000
+	}
+	ai_strategy = {
+		type = declare_war
+		id = "GSD"
+		value = -2000
+	}
+	ai_strategy = {
+		type = declare_war
+		id = "SSD"
+		value = -2000
+	}
+}
+
+HHE_eliminate_UFS_after_MRC = {
+	allowed = { is_harmonainus_imperious = yes }
+	enable = {
+		has_war_with = UFS
+		MRC = { has_capitulated = yes }
+		NOT = { OR = {
+			has_war_with = RVV
+			has_war_with = CPV
+			has_war_with = SFG
+			has_war_with = SRA
+			has_war_with = GSD
+			has_war_with = SSD
+			has_war_with = SEK
+		} }
+	}
+	abort = {
+		OR = {
+			MRC = {
+				has_capitulated = yes
+                days_since_capitulated > 31
+			}
+			AND = {
+				12  = { CONTROLLER = { has_war_with = ROOT } }
+				74  = { CONTROLLER = { has_war_with = ROOT } }
+				75  = { CONTROLLER = { has_war_with = ROOT } }
+				76  = { CONTROLLER = { has_war_with = ROOT } }
+				335 = { CONTROLLER = { has_war_with = ROOT } }
+				336 = { CONTROLLER = { has_war_with = ROOT } }
+				337 = { CONTROLLER = { has_war_with = ROOT } }
+				338 = { CONTROLLER = { has_war_with = ROOT } }
+			}
+			OR = { has_war_with = RVV has_war_with = CPV has_war_with = GSD has_war_with = SSD has_war_with = SEK }
+		}
+	}
+
+	ai_strategy = {
+		type = front_unit_request
+		tag = MJU
+		value = -10
+	}
+	ai_strategy = {
+		type = front_unit_request
+		tag = UFS
+		value = -10
+	}
+	ai_strategy = {
+		type = front_unit_request
+		tag = MRC
+		value = 100
+	}
+	ai_strategy = {
+		type = invade
+		id = "MRC"
+		value = 100
+	}
+}
+
+HHE_eliminate_UFS_after_MRC = {
+	allowed = { is_harmonainus_imperious = yes }
+	enable = {
+		has_war_with = UFS
+		MRC = { has_capitulated = yes }
+		NOT = { OR = {
+			has_war_with = RVV
+			has_war_with = CPV
+			has_war_with = SFG
+			has_war_with = SRA
+			has_war_with = GSD
+			has_war_with = SSD
+			has_war_with = SEK
+		} }
+	}
+	abort = {
+		OR = {
+			UFS = {
+				has_capitulated = yes
+                days_since_capitulated > 31
+			}
+			AND = {
+				4   = { CONTROLLER = { has_war_with = ROOT } }
+				280 = { CONTROLLER = { has_war_with = ROOT } }
+				413 = { CONTROLLER = { has_war_with = ROOT } }
+				414 = { CONTROLLER = { has_war_with = ROOT } }
+				415 = { CONTROLLER = { has_war_with = ROOT } }
+				416 = { CONTROLLER = { has_war_with = ROOT } }
+				417 = { CONTROLLER = { has_war_with = ROOT } }
+				418 = { CONTROLLER = { has_war_with = ROOT } }
+			}
+			OR = { has_war_with = RVV has_war_with = CPV has_war_with = GSD has_war_with = SSD has_war_with = SEK }
+		}
+	}
+
+	ai_strategy = {
+		type = front_unit_request
+		tag = MJU
+		value = -10
+	}
+	ai_strategy = {
+		type = front_unit_request
+		tag = MRC
+		value = -10
+	}
+	ai_strategy = {
+		type = front_unit_request
+		tag = UFS
+		value = 100
+	}
+	ai_strategy = {
+		type = invade
+		id = "UFS"
+		value = 100
+	}
+}
+
+HHE_eliminate_MJU_after_UFS = {
+	allowed = { is_harmonainus_imperious = yes }
+	enable = {
+		has_war_with = MJU
+		UFS = { has_capitulated = yes }
+		NOT = { OR = {
+			has_war_with = RVV
+			has_war_with = CPV
+			has_war_with = SFG
+			has_war_with = SRA
+			has_war_with = GSD
+			has_war_with = SSD
+			has_war_with = SEK
+		} }
+	}
+	abort = {
+		OR = {
+			MJU = {
+				has_capitulated = yes
+                days_since_capitulated > 31
+			}
+			AND = {
+				9   = { CONTROLLER = { has_war_with = ROOT } }
+				97  = { CONTROLLER = { has_war_with = ROOT } }
+				192 = { CONTROLLER = { has_war_with = ROOT } }
+				193 = { CONTROLLER = { has_war_with = ROOT } }
+				416 = { CONTROLLER = { has_war_with = ROOT } }
+				245 = { CONTROLLER = { has_war_with = ROOT } }
+			}
+			OR = { has_war_with = RVV has_war_with = CPV has_war_with = GSD has_war_with = SSD has_war_with = SEK }
+		}
+	}
+
+	ai_strategy = {
+		type = front_unit_request
+		tag = MRC
+		value = -10
+	}
+	ai_strategy = {
+		type = front_unit_request
+		tag = UFS
+		value = -10
+	}
+	ai_strategy = {
+		type = front_unit_request
+		tag = MJU
+		value = 100
+	}
+	ai_strategy = {
+		type = invade
+		id = "MJU"
+		value = 100
+	}
+}
+
+HHE_eliminate_the_north = {
+	allowed = { is_harmonainus_imperious = yes }
+	enable = { has_full_control_of_state = 77 OR = {
+		has_war_with = RVV
+		has_war_with = CPV
+		has_war_with = SFG
+		has_war_with = SRA
+		has_war_with = GSD
+		has_war_with = SSD
+		has_war_with = SEK
+	} }
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = front_unit_request
+		tag = RVV
+		value = 100
+	}
+	ai_strategy = {
+		type = front_unit_request
+		tag = CPV
+		value = 100
+	}
+	ai_strategy = {
+		type = front_unit_request
+		tag = GSD
+		value = 100
+	}
+	ai_strategy = {
+		type = front_unit_request
+		tag = SSD
+		value = 100
+	}
+	ai_strategy = {
+		type = front_unit_request
+		tag = SEK
+		value = 100
+	}
+}
+
+HHE_abandan_the_north = {
+	allowed = { is_harmonainus_imperious = yes }
+	enable = { OR = { 77 = { is_controlled_by_ROOT_or_ally = no } 437 = { is_controlled_by_ROOT_or_ally = no } } }
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+	    type = front_control
+	    state_trigger = { OR = {
+	        strategic_region = 105
+	        strategic_region = 106
+	        strategic_region = 113
+	        strategic_region = 114
+	        strategic_region = 115
+	        strategic_region = 117
+	        strategic_region = 118
+	        strategic_region = 121
+	        strategic_region = 178
+	        strategic_region = 249
+	    } }
+	    ratio = -10.0
+	    ordertype = front
+	}
+	# Most likely threat
+	ai_strategy = {
+		type = front_unit_request
+		tag = MJU
+		value = 20
+	}
+	ai_strategy = {
+		type = front_unit_request
+		tag = MRC
+		value = 20
+	}
+	ai_strategy = {
+		type = front_unit_request
+		tag = UFS
+		value = 20
+	}
+}
+
+HHE_leave_the_north = {
+	allowed = { is_harmonainus_imperious = yes }
+	enable = { OR = { 11 = { is_controlled_by_ROOT_or_ally = no } 448 = { is_controlled_by_ROOT_or_ally = no } } OR = {
+		has_war_with = RVV
+		has_war_with = CPV
+		has_war_with = SFG
+		has_war_with = SRA
+		has_war_with = GSD
+		has_war_with = SSD
+		has_war_with = SEK
+	} }
+	abort_when_not_enabled = yes
+
+	#ai_strategy = { # Probably not these two.
+	#	type = front_unit_request
+	#	tag = RVV
+	#	value = -100
+	#}
+	#ai_strategy = {
+	#	type = front_unit_request
+	#	tag = CPV
+	#	value = -100
+	#}
+	IF = { LIMIT = { NOT = {
+			SFG = { OR = { controls_state = 134 controls_state = 406 } }
+		} }
+		ai_strategy = {
+			type = front_unit_request
+			tag = SFG
+			value = -100
+		}
+	}
+	IF = { LIMIT = { NOT = {
+			SRA = { OR = { controls_state = 134 controls_state = 406 } }
+		} }
+		ai_strategy = {
+			type = front_unit_request
+			tag = SRA
+			value = -100
+		}
+	}
+	IF = { LIMIT = { NOT = {
+			GSD = { OR = { controls_state = 134 controls_state = 406 } }
+		} }
+		ai_strategy = {
+			type = front_unit_request
+			tag = GSD
+			value = -100
+		}
+	}
+	IF = { LIMIT = { NOT = {
+			SSD = { OR = { controls_state = 134 controls_state = 406 } }
+		} }
+		ai_strategy = {
+			type = front_unit_request
+			tag = SSD
+			value = -100
+		}
+	}
+	IF = { LIMIT = { NOT = {
+			SFG = { OR = { controls_state = 134 controls_state = 406 } }
+		} }
+		ai_strategy = {
+			type = front_unit_request
+			tag = SEK
+			value = -100
+		}
+	}
+	ai_strategy = {
+		type = front_unit_request
+		tag = IHS
+		value = -100
+	}
+	# Most likely threat
+	ai_strategy = {
+	    type = front_control
+	    state_trigger = { OR = {
+	        strategic_region = 6
+	        strategic_region = 110
+	        strategic_region = 243
+	        strategic_region = 244
+	        is_owned_by = CPV
+	        is_owned_by = RVV
+	    } }
+	    ratio = 1.0
+	    ordertype = front
+	}
+	ai_strategy = {
+		type = front_unit_request
+		tag = MJU
+		value = 20
+	}
+	ai_strategy = {
+		type = front_unit_request
+		tag = MRC
+		value = 20
+	}
+	ai_strategy = {
+		type = front_unit_request
+		tag = UFS
+		value = 20
 	}
 }
 

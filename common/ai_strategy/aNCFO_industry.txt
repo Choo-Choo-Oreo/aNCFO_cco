@@ -295,7 +295,7 @@ max_100_naval_factories = {
 			value = -36
 		}
 	}
-# Others
+# Others Production
 	default_pp_spend_amount = {
 		enable = {
 			always = yes
@@ -630,6 +630,115 @@ max_100_naval_factories = {
 		# End of equipment production
 	}
 
+	small_armor_army_offset = { # Factory Size
+		enable = { arms_factory > 15 }
+		abort_when_not_enabled = yes
+		ai_strategy = {
+			type = role_ratio
+			id = armor
+			value = 80
+		}
+	}
+	medium_armor_army_offset = { # Factory Size
+		enable = { arms_factory > 30 }
+		abort_when_not_enabled = yes
+		ai_strategy = {
+			type = role_ratio
+			id = armor
+			value = 80
+		}
+	}
+	large_armor_army_offset = { # Factory Size
+		enable = { arms_factory > 45 }
+		abort_when_not_enabled = yes
+		ai_strategy = {
+			type = role_ratio
+			id = armor
+			value = 80
+		}
+	}
+	large_armor_production_offset = { # Army Size
+		enable = {
+			num_divisions > 56
+			has_army_size = { size > 56 type = infantry }
+		}
+		abort_when_not_enabled = yes
+		ai_strategy = {
+			type = role_ratio
+			id = infantry
+			value = -40
+		}
+		ai_strategy = {
+			type = equipment_production_factor
+			id = infantry
+			value = -10
+		}
+		ai_strategy = {
+			type = role_ratio
+			id = armor
+			value = 80
+		}
+		ai_strategy = {
+			type = equipment_production_factor
+			id = armor
+			value = 40
+		}
+	}
+	massive_armor_production_offset = { # Army Size
+		enable = {
+			num_divisions > 112
+			has_army_size = { size > 112 type = infantry }
+		}
+		abort_when_not_enabled = yes
+		ai_strategy = {
+			type = role_ratio
+			id = infantry
+			value = -40
+		}
+		ai_strategy = {
+			type = equipment_production_factor
+			id = infantry
+			value = -10
+		}
+		ai_strategy = {
+			type = role_ratio
+			id = armor
+			value = 80
+		}
+		ai_strategy = {
+			type = equipment_production_factor
+			id = armor
+			value = 40
+		}
+	}
+	gigantic_armor_production_offset = { # Army Size
+		enable = {
+			num_divisions > 168
+			has_army_size = { size > 168 type = infantry }
+		}
+		abort_when_not_enabled = yes
+		ai_strategy = {
+			type = role_ratio
+			id = infantry
+			value = -40
+		}
+		ai_strategy = {
+			type = equipment_production_factor
+			id = infantry
+			value = -10
+		}
+		ai_strategy = {
+			type = role_ratio
+			id = armor
+			value = 80
+		}
+		ai_strategy = {
+			type = equipment_production_factor
+			id = armor
+			value = 40
+		}
+	}
+
 	default_equipment_production_min_factories = {
 		enable = {
 			OR = {
@@ -689,7 +798,6 @@ max_100_naval_factories = {
 			value = 10
 		}
 	}
-
 	coastal_equipment_production_min_factories = {
 		enable = {
 			OR = {
@@ -744,16 +852,12 @@ max_100_naval_factories = {
 		}
 	}
 
-	default_armored_production = {
+	early_armored_production = {
 		enable = {
 			date > 1727.8.1
-			ai_wants_divisions > 10 #Decreasing the amount of tanks the AI wants
+			ai_wants_divisions > 7 #Decreasing the amount of tanks the AI wants
 		}
-		abort = {
-			OR = {
-				ai_wants_divisions < 10 #Decreasing the amount of tanks the AI wants
-			}
-		}
+		abort = { ai_wants_divisions < 7 } #Decreasing the amount of tanks the AI wants
 
 		ai_strategy = {
 			type = role_ratio
@@ -761,8 +865,21 @@ max_100_naval_factories = {
 			value = 4
 		}
 	}
+	late_armored_production = {
+		enable = {
+			date > 1732.1.1
+			ai_wants_divisions > 14 #Decreasing the amount of tanks the AI wants
+		}
+		abort = { ai_wants_divisions < 14 } #Decreasing the amount of tanks the AI wants
 
-	default_halt_light_armor_production_in_transitioning = {
+		ai_strategy = {
+			type = role_ratio
+			id = armor
+			value = 8
+		}
+	}
+
+	early_halt_light_armor_production_in_transitioning = {
 		enable = {
 			has_template_majority_unit = medium_armor
 			OR = {
@@ -770,26 +887,46 @@ max_100_naval_factories = {
 				date > 1727.8.1
 			}
 		}
-		abort = {
-			always = no  # once we start we never go back to light armor
-		}
+		abort_when_not_enabled = yes
 
 		ai_strategy = {
 			type = equipment_variant_production_factor
 			id = light_tank_chassis
-			value = -100
+			value = -50
 		}
 		
 		ai_strategy = {
 			type = equipment_variant_production_factor
 			id = medium_tank_chassis
-			value = 67 # 50 to 67
+			value = 67
 		}
 		
 		ai_strategy = {
 			type = equipment_production_factor
 			id = artillery
-			value = -20 # Downprio this for some more tanks # -50 to -20
+			value = -20
+		}
+	}
+	late_halt_light_armor_production_in_transitioning = {
+		enable = {
+			has_template_majority_unit = medium_armor
+			OR = {
+				has_equipment = { light_tank_chassis > 600 }
+				date > 1732.1.1
+			}
+		}
+		abort_when_not_enabled = yes
+
+		ai_strategy = {
+			type = equipment_variant_production_factor
+			id = light_tank_chassis
+			value = -50
+		}
+		
+		ai_strategy = {
+			type = equipment_variant_production_factor
+			id = medium_tank_chassis
+			value = 67
 		}
 	}
 

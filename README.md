@@ -28,10 +28,10 @@ https://steamcommunity.com/workshop/filedetails/?id=2994645469
 	Better Mechanics : Battalion Limiter						6 Jan 2024
 	Better Mechanics : Camera									Not Used
 	Better Mechanics : Civilian and Military Laws				Not Used
-	Better Mechanics : Combat									Pre-Release
-	Better Mechanics : Divisional AI							3 Aug 2024			6.7
+	Better Mechanics : Combat									9 Aug 2024
+	Better Mechanics : Divisional AI							9 Aug 2024			6.8
 	Better Mechanics : Division Designer						18 Mar 2024
-	Better Mechanics : Frontline AI | Updated					3 Aug 2024			7.4
+	Better Mechanics : Frontline AI | Updated					9 Aug 2024			7.5
 	Better Mechanics : GFX Rework								Not Used
 	Better Mechanics : Intelligence Agency						Not Used
 	Better Mechanics : More Spies								Oct 10 2023
