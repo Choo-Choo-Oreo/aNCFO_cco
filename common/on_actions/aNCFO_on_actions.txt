@@ -328,12 +328,20 @@ on_actions = {
 	on_monthly = { # 12 per Year
 		effect = { # Maps
 			IF = {
+				limit = { OR = { has_tech = improved_artillery has_tech = interwar_heavy_artillery } } 
+				set_technology = { artillery1 = 1 popup = no }
+			}
+			IF = {
+				limit = { has_tech = advanced_heavy_artillery }
+				set_technology = { artillery5 = 1 popup = no }
+			}
+			IF = {
 				limit = { OR = { is_ai = no is_major = yes } }
 				log = "[GetDateText]: [Root.GetName]: on_monthly: force_update_map_mode"
-				force_update_map_mode = {
-					limit = { is_ai = no }
-					mapmode = country_primary_species_map
-				}
+				#force_update_map_mode = { # Won't updated till its added.
+				#	limit = { is_ai = no }
+				#	mapmode = country_primary_species_map
+				#}
 				force_update_map_mode = {
 					limit = { is_ai = no }
 					mapmode = country_true_ideology_map
@@ -355,7 +363,7 @@ on_actions = {
 	}
 	on_monthly_RVV = {
 		random_events = {
-		    2 = random_event.1
+		    0.1 = random_event.1
 		    100 = 0
 		}
 	}

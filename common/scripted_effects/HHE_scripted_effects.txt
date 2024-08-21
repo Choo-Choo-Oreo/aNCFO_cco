@@ -115,10 +115,34 @@
 			}
 		}
 	}
+	HHE_deeds_assassination = {
+		hidden_effect = {
+			set_global_flag = death_of_deed
+			mark_focus_tree_layout_dirty = yes
+			#load_focus_tree = hhe_election_focus
+			add_stability = -0.1
+			add_ideas = HHE_choas4
+			ROOT = {
+				kill_country_leader = yes
+				HHE_harmonainus_senate = {
+					add_country_leader_role = {
+						promote_leader = yes
+						country_leader = {
+							ideology = sub_harmonainism
+							traits = { harmonainus_senate }
+						}
+					}
+				}
+			}
+			news_event = HHE.0
+		}
+	}
 	HHE_deeds_assassination_row2 = {
 		if = {
 			limit = {
 				or = {
+					custom_trigger_tooltip = { tooltip = historically_locked_tt is_historical_focus_on = no }
+					has_game_rule = { rule = rule_developer_restrictions option = RULE_DEV_RESTRICTIONS_OFF }
 					not = {
 						has_country_flag = {
 							flag = the_divinipuer_1
@@ -148,6 +172,8 @@
 		if = {
 			limit = {
 				or = {
+					custom_trigger_tooltip = { tooltip = historically_locked_tt is_historical_focus_on = no }
+					has_game_rule = { rule = rule_developer_restrictions option = RULE_DEV_RESTRICTIONS_OFF }
 					not = {
 						has_country_flag = {
 							flag = the_divinipuer_2
@@ -171,27 +197,6 @@
 				}
 			}
 			HHE_deeds_assassination = yes
-		}
-	}
-	HHE_deeds_assassination = {
-		hidden_effect = {
-			set_global_flag = death_of_deed
-			add_stability = -0.1
-			add_ideas = HHE_choas4
-			load_focus_tree = hhe_election_focus
-			ROOT = {
-				kill_country_leader = yes
-				HHE_harmonainus_senate = {
-					add_country_leader_role = {
-						promote_leader = yes
-						country_leader = {
-							ideology = sub_harmonainism
-							traits = { harmonainus_senate }
-						}
-					}
-				}
-			}
-			news_event = HHE.0
 		}
 	}
 # Election Effects
@@ -292,7 +297,7 @@
 					add_country_leader_role = {
 						promote_leader = yes
 						country_leader = {
-							ideology = sub_authoritarian
+							ideology = sub_auth_harmonainism
 						}
 					}
 				}
@@ -319,7 +324,7 @@
 					add_country_leader_role = {
 						promote_leader = yes
 						country_leader = {
-							ideology = sub_authoritarian
+							ideology = sub_auth_harmonainism
 						}
 					}
 				}
@@ -751,7 +756,7 @@
 	civil_war_warmonger_effect = {
 		set_global_flag = HHE_collapse_of_the_nation # This one is Perma
 		hidden_effect = {
-			load_focus_tree = hhe_warmonger_focus_civil_war
+			mark_focus_tree_layout_dirty = yes
 			news_event = news.6
 			HHE_civil_war_begins = yes
 			8 = { set_demilitarized_zone = yes }
