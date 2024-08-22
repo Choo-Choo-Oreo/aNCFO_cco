@@ -1230,13 +1230,24 @@ form_harmonainus_imperious_category = {
 form_united_vally_category = {
 	form_united_vally_conquest = {
 		icon = generic_form_nation
-		allowed = { original_tag = CPV }
+		allowed = {
+			OR = {
+				original_tag = CPV
+				original_tag = RVV
+			}
+		}
 		available = {
 			is_subject = no
 		}
 		visible = {
-			original_tag = CPV
-			NOT = { country_exists = RVV }
+			OR = {
+				original_tag = CPV
+				original_tag = RVV
+			}
+			NOT = { OR = {
+				country_exists = CPV
+				country_exists = RVV
+			} }
 			NOT = { has_global_flag = form_united_vally_conquest_flag }
 		}
 		complete_effect = {

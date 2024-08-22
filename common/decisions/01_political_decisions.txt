@@ -146,7 +146,7 @@ political_actions = {
 		cost = 50
 
 		ai_will_do = {
-			base = 0
+			factor = 1
 			modifier = {
 				add = -9999
 				pre_civilwar_trigger = yes
@@ -166,6 +166,2437 @@ political_actions = {
 			#	has_available_idea_with_traits = { idea = silent_workhorse limit = 1 } 
 			#	NOT = { has_idea_with_trait = silent_workhorse } 
 			#}
+		}
+	}
+
+	targeted_race_for_the_bomb = {
+
+		icon = generic_research
+
+		allowed = {
+			always = yes
+		}
+
+		available = {
+			#Target is FROM
+			has_tech = atomic_research
+			NOT = { has_global_flag = first_nuke_dropped }
+			NOT = { has_idea = race_for_the_bomb }
+		}
+
+		target_root_trigger = {
+            has_tech = atomic_research
+            NOT = { has_global_flag = first_nuke_dropped }
+            NOT = { has_idea = race_for_the_bomb }
+		}
+
+		#If this trigger matches a country.
+		target_trigger = {
+			#Target is FROM
+			FROM = {
+        		NOT = { is_in_faction_with = ROOT }
+				has_tech = nuclear_reactor
+				any_owned_state = {
+					nuclear_reactor > 0
+				}
+			}
+		}
+
+		visible = {
+            #Target is FROM
+            has_tech = atomic_research
+            NOT = { has_global_flag = first_nuke_dropped }
+            NOT = { has_idea = race_for_the_bomb }
+            FROM = {
+        		NOT = { is_in_faction_with = ROOT }
+				has_tech = nuclear_reactor
+				any_owned_state = {
+					nuclear_reactor > 0
+				}
+			}
+		}
+
+		complete_effect = {
+			set_country_flag = racing_for_the_bomb
+			add_ideas = race_for_the_bomb
+		}
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0
+				any_other_country = { has_tech = nukes }
+			}
+		}
+	}
+
+	anti_pluralism_raids = {
+		icon = generic_civil_support
+		desc = anti_democratic_raids_desc
+
+		visible = {
+			NOT = { has_government = pluralism }
+		}
+
+		available = {
+	        pluralism > 0.1
+	    }
+
+		modifier = {
+			pluralism_drift = -0.03
+			stability_weekly = 0.006
+		}
+
+		days_remove = 120
+		cost = 50
+
+		complete_effect = {
+			add_stability = -0.1
+		}
+		
+		remove_effect = {
+		}
+		
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 20
+				OR = {
+					AND = {
+						has_government = pluralism
+						OR = {
+							pluralism < party_popularity@semidemocracy
+							pluralism < party_popularity@theocratism
+							pluralism < party_popularity@authoritarianism
+							pluralism < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = semidemocracy
+						OR = {
+							semidemocracy < party_popularity@pluralism
+							semidemocracy < party_popularity@theocratism
+							semidemocracy < party_popularity@authoritarianism
+							semidemocracy < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = theocratism
+						OR = {
+							theocratism < party_popularity@pluralism
+							theocratism < party_popularity@semidemocracy
+							theocratism < party_popularity@authoritarianism
+							theocratism < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = authoritarianism
+						OR = {
+							authoritarianism < party_popularity@pluralism
+							authoritarianism < party_popularity@semidemocracy
+							authoritarianism < party_popularity@theocratism
+							authoritarianism < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = unitism
+						OR = {
+							unitism < party_popularity@pluralism
+							unitism < party_popularity@semidemocracy
+							unitism < party_popularity@theocratism
+							unitism < party_popularity@authoritarianism
+						}
+					}
+				}
+				OR = {
+					has_country_leader_ideology = sub_illiberalism
+					has_country_leader_ideology = sub_radical_harmonainism
+					has_country_leader_ideology = sub_harmonainism
+					has_country_leader_ideology = sub_auth_harmonainism
+					has_country_leader_ideology = sub_oligarchy
+					has_country_leader_ideology = sub_ultra_nationalism
+					has_country_leader_ideology = sub_national_unitism
+					has_country_leader_ideology = sub_unitism
+				}
+			}
+			modifier = {
+				add = 200
+				has_political_power > 200
+				OR = {
+					AND = {
+						has_government = pluralism
+						OR = {
+							pluralism < party_popularity@semidemocracy
+							pluralism < party_popularity@theocratism
+							pluralism < party_popularity@authoritarianism
+							pluralism < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = semidemocracy
+						OR = {
+							semidemocracy < party_popularity@pluralism
+							semidemocracy < party_popularity@theocratism
+							semidemocracy < party_popularity@authoritarianism
+							semidemocracy < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = theocratism
+						OR = {
+							theocratism < party_popularity@pluralism
+							theocratism < party_popularity@semidemocracy
+							theocratism < party_popularity@authoritarianism
+							theocratism < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = authoritarianism
+						OR = {
+							authoritarianism < party_popularity@pluralism
+							authoritarianism < party_popularity@semidemocracy
+							authoritarianism < party_popularity@theocratism
+							authoritarianism < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = unitism
+						OR = {
+							unitism < party_popularity@pluralism
+							unitism < party_popularity@semidemocracy
+							unitism < party_popularity@theocratism
+							unitism < party_popularity@authoritarianism
+						}
+					}
+				}
+				OR = {
+					has_country_leader_ideology = sub_illiberalism
+					has_country_leader_ideology = sub_radical_harmonainism
+					has_country_leader_ideology = sub_harmonainism
+					has_country_leader_ideology = sub_auth_harmonainism
+					has_country_leader_ideology = sub_oligarchy
+					has_country_leader_ideology = sub_ultra_nationalism
+					has_country_leader_ideology = sub_national_unitism
+					has_country_leader_ideology = sub_unitism
+				}
+			}
+			modifier = {
+				factor = 10
+				has_stability < 0.50
+				OR = {
+					has_country_leader_ideology = sub_illiberalism
+					has_country_leader_ideology = sub_radical_harmonainism
+					has_country_leader_ideology = sub_harmonainism
+					has_country_leader_ideology = sub_auth_harmonainism
+					has_country_leader_ideology = sub_oligarchy
+					has_country_leader_ideology = sub_ultra_nationalism
+					has_country_leader_ideology = sub_national_unitism
+					has_country_leader_ideology = sub_unitism
+				}
+			}
+			modifier = {
+				factor = 10
+				has_stability < 0.25
+				OR = {
+					has_country_leader_ideology = sub_illiberalism
+					has_country_leader_ideology = sub_radical_harmonainism
+					has_country_leader_ideology = sub_harmonainism
+					has_country_leader_ideology = sub_auth_harmonainism
+					has_country_leader_ideology = sub_oligarchy
+					has_country_leader_ideology = sub_ultra_nationalism
+					has_country_leader_ideology = sub_national_unitism
+					has_country_leader_ideology = sub_unitism
+				}
+			}
+			modifier = {
+				factor = 10
+				has_stability < 0.01
+				OR = {
+					has_country_leader_ideology = sub_illiberalism
+					has_country_leader_ideology = sub_radical_harmonainism
+					has_country_leader_ideology = sub_harmonainism
+					has_country_leader_ideology = sub_auth_harmonainism
+					has_country_leader_ideology = sub_oligarchy
+					has_country_leader_ideology = sub_ultra_nationalism
+					has_country_leader_ideology = sub_national_unitism
+					has_country_leader_ideology = sub_unitism
+				}
+			}
+			modifier = {
+				add = 1000
+				OR = {
+					AND = {
+						has_stability < 0.75
+						has_political_power > 200
+					}
+					AND = {
+						has_stability < 0.99
+						has_political_power > 500
+					}
+				}
+				OR = {
+					has_country_leader_ideology = sub_illiberalism
+					has_country_leader_ideology = sub_radical_harmonainism
+					has_country_leader_ideology = sub_harmonainism
+					has_country_leader_ideology = sub_auth_harmonainism
+					has_country_leader_ideology = sub_oligarchy
+					has_country_leader_ideology = sub_ultra_nationalism
+					has_country_leader_ideology = sub_national_unitism
+					has_country_leader_ideology = sub_unitism
+				}
+			}
+		}
+	}
+
+	anti_semidemocracy_raids = {
+		icon = generic_civil_support
+		desc = anti_democratic_raids_desc
+
+		visible = {
+			NOT = { has_government = semidemocracy }
+		}
+
+		available = {
+	        semidemocracy > 0.1
+	    }
+
+		modifier = {
+			semidemocracy_drift = -0.03
+			stability_weekly = 0.006
+		}
+
+		days_remove = 120
+		cost = 50
+
+		complete_effect = {
+			add_stability = -0.1
+		}
+		
+		remove_effect = {
+		}
+		
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 20
+				OR = {
+					AND = {
+						has_government = pluralism
+						OR = {
+							pluralism < party_popularity@semidemocracy
+							pluralism < party_popularity@theocratism
+							pluralism < party_popularity@authoritarianism
+							pluralism < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = semidemocracy
+						OR = {
+							semidemocracy < party_popularity@pluralism
+							semidemocracy < party_popularity@theocratism
+							semidemocracy < party_popularity@authoritarianism
+							semidemocracy < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = theocratism
+						OR = {
+							theocratism < party_popularity@pluralism
+							theocratism < party_popularity@semidemocracy
+							theocratism < party_popularity@authoritarianism
+							theocratism < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = authoritarianism
+						OR = {
+							authoritarianism < party_popularity@pluralism
+							authoritarianism < party_popularity@semidemocracy
+							authoritarianism < party_popularity@theocratism
+							authoritarianism < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = unitism
+						OR = {
+							unitism < party_popularity@pluralism
+							unitism < party_popularity@semidemocracy
+							unitism < party_popularity@theocratism
+							unitism < party_popularity@authoritarianism
+						}
+					}
+				}
+				OR = {
+					has_country_leader_ideology = sub_illiberalism
+					has_country_leader_ideology = sub_radical_harmonainism
+					has_country_leader_ideology = sub_harmonainism
+					has_country_leader_ideology = sub_auth_harmonainism
+					has_country_leader_ideology = sub_oligarchy
+					has_country_leader_ideology = sub_ultra_nationalism
+					has_country_leader_ideology = sub_national_unitism
+					has_country_leader_ideology = sub_unitism
+				}
+			}
+			modifier = {
+				add = 200
+				has_political_power > 200
+				OR = {
+					AND = {
+						has_government = pluralism
+						OR = {
+							pluralism < party_popularity@semidemocracy
+							pluralism < party_popularity@theocratism
+							pluralism < party_popularity@authoritarianism
+							pluralism < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = semidemocracy
+						OR = {
+							semidemocracy < party_popularity@pluralism
+							semidemocracy < party_popularity@theocratism
+							semidemocracy < party_popularity@authoritarianism
+							semidemocracy < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = theocratism
+						OR = {
+							theocratism < party_popularity@pluralism
+							theocratism < party_popularity@semidemocracy
+							theocratism < party_popularity@authoritarianism
+							theocratism < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = authoritarianism
+						OR = {
+							authoritarianism < party_popularity@pluralism
+							authoritarianism < party_popularity@semidemocracy
+							authoritarianism < party_popularity@theocratism
+							authoritarianism < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = unitism
+						OR = {
+							unitism < party_popularity@pluralism
+							unitism < party_popularity@semidemocracy
+							unitism < party_popularity@theocratism
+							unitism < party_popularity@authoritarianism
+						}
+					}
+				}
+				OR = {
+					has_country_leader_ideology = sub_illiberalism
+					has_country_leader_ideology = sub_radical_harmonainism
+					has_country_leader_ideology = sub_harmonainism
+					has_country_leader_ideology = sub_auth_harmonainism
+					has_country_leader_ideology = sub_oligarchy
+					has_country_leader_ideology = sub_ultra_nationalism
+					has_country_leader_ideology = sub_national_unitism
+					has_country_leader_ideology = sub_unitism
+				}
+			}
+			modifier = {
+				factor = 10
+				has_stability < 0.50
+				OR = {
+					has_country_leader_ideology = sub_illiberalism
+					has_country_leader_ideology = sub_radical_harmonainism
+					has_country_leader_ideology = sub_harmonainism
+					has_country_leader_ideology = sub_auth_harmonainism
+					has_country_leader_ideology = sub_oligarchy
+					has_country_leader_ideology = sub_ultra_nationalism
+					has_country_leader_ideology = sub_national_unitism
+					has_country_leader_ideology = sub_unitism
+				}
+			}
+			modifier = {
+				factor = 10
+				has_stability < 0.25
+				OR = {
+					has_country_leader_ideology = sub_illiberalism
+					has_country_leader_ideology = sub_radical_harmonainism
+					has_country_leader_ideology = sub_harmonainism
+					has_country_leader_ideology = sub_auth_harmonainism
+					has_country_leader_ideology = sub_oligarchy
+					has_country_leader_ideology = sub_ultra_nationalism
+					has_country_leader_ideology = sub_national_unitism
+					has_country_leader_ideology = sub_unitism
+				}
+			}
+			modifier = {
+				factor = 10
+				has_stability < 0.01
+				OR = {
+					has_country_leader_ideology = sub_illiberalism
+					has_country_leader_ideology = sub_radical_harmonainism
+					has_country_leader_ideology = sub_harmonainism
+					has_country_leader_ideology = sub_auth_harmonainism
+					has_country_leader_ideology = sub_oligarchy
+					has_country_leader_ideology = sub_ultra_nationalism
+					has_country_leader_ideology = sub_national_unitism
+					has_country_leader_ideology = sub_unitism
+				}
+			}
+			modifier = {
+				add = 1000
+				OR = {
+					AND = {
+						has_stability < 0.75
+						has_political_power > 200
+					}
+					AND = {
+						has_stability < 0.99
+						has_political_power > 500
+					}
+				}
+				OR = {
+					has_country_leader_ideology = sub_illiberalism
+					has_country_leader_ideology = sub_radical_harmonainism
+					has_country_leader_ideology = sub_harmonainism
+					has_country_leader_ideology = sub_auth_harmonainism
+					has_country_leader_ideology = sub_oligarchy
+					has_country_leader_ideology = sub_ultra_nationalism
+					has_country_leader_ideology = sub_national_unitism
+					has_country_leader_ideology = sub_unitism
+				}
+			}
+		}
+	}
+
+	anti_theocratism_raids = {
+		icon = generic_civil_support
+		desc = anti_fascist_raids_desc
+
+		visible = {
+			NOT = { has_government = theocratism }
+		}
+
+		available = {
+	        theocratism > 0.1
+	    }
+
+		modifier = {
+			theocratism_drift = -0.03
+			stability_weekly = 0.006
+		}
+
+		days_remove = 120
+		cost = 50
+
+		complete_effect = {
+			add_stability = -0.1
+		}
+		
+		remove_effect = {
+		}
+		
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 20
+				OR = {
+					AND = {
+						has_government = pluralism
+						OR = {
+							pluralism < party_popularity@semidemocracy
+							pluralism < party_popularity@theocratism
+							pluralism < party_popularity@authoritarianism
+							pluralism < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = semidemocracy
+						OR = {
+							semidemocracy < party_popularity@pluralism
+							semidemocracy < party_popularity@theocratism
+							semidemocracy < party_popularity@authoritarianism
+							semidemocracy < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = theocratism
+						OR = {
+							theocratism < party_popularity@pluralism
+							theocratism < party_popularity@semidemocracy
+							theocratism < party_popularity@authoritarianism
+							theocratism < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = authoritarianism
+						OR = {
+							authoritarianism < party_popularity@pluralism
+							authoritarianism < party_popularity@semidemocracy
+							authoritarianism < party_popularity@theocratism
+							authoritarianism < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = unitism
+						OR = {
+							unitism < party_popularity@pluralism
+							unitism < party_popularity@semidemocracy
+							unitism < party_popularity@theocratism
+							unitism < party_popularity@authoritarianism
+						}
+					}
+				}
+				OR = {
+					has_country_leader_ideology = sub_illiberalism
+					has_country_leader_ideology = sub_radical_harmonainism
+					has_country_leader_ideology = sub_harmonainism
+					has_country_leader_ideology = sub_auth_harmonainism
+					has_country_leader_ideology = sub_oligarchy
+					has_country_leader_ideology = sub_ultra_nationalism
+					has_country_leader_ideology = sub_national_unitism
+					has_country_leader_ideology = sub_unitism
+				}
+			}
+			modifier = {
+				add = 200
+				has_political_power > 200
+				OR = {
+					AND = {
+						has_government = pluralism
+						OR = {
+							pluralism < party_popularity@semidemocracy
+							pluralism < party_popularity@theocratism
+							pluralism < party_popularity@authoritarianism
+							pluralism < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = semidemocracy
+						OR = {
+							semidemocracy < party_popularity@pluralism
+							semidemocracy < party_popularity@theocratism
+							semidemocracy < party_popularity@authoritarianism
+							semidemocracy < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = theocratism
+						OR = {
+							theocratism < party_popularity@pluralism
+							theocratism < party_popularity@semidemocracy
+							theocratism < party_popularity@authoritarianism
+							theocratism < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = authoritarianism
+						OR = {
+							authoritarianism < party_popularity@pluralism
+							authoritarianism < party_popularity@semidemocracy
+							authoritarianism < party_popularity@theocratism
+							authoritarianism < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = unitism
+						OR = {
+							unitism < party_popularity@pluralism
+							unitism < party_popularity@semidemocracy
+							unitism < party_popularity@theocratism
+							unitism < party_popularity@authoritarianism
+						}
+					}
+				}
+				OR = {
+					has_country_leader_ideology = sub_illiberalism
+					has_country_leader_ideology = sub_radical_harmonainism
+					has_country_leader_ideology = sub_harmonainism
+					has_country_leader_ideology = sub_auth_harmonainism
+					has_country_leader_ideology = sub_oligarchy
+					has_country_leader_ideology = sub_ultra_nationalism
+					has_country_leader_ideology = sub_national_unitism
+					has_country_leader_ideology = sub_unitism
+				}
+			}
+			modifier = {
+				factor = 10
+				has_stability < 0.50
+				OR = {
+					has_country_leader_ideology = sub_illiberalism
+					has_country_leader_ideology = sub_radical_harmonainism
+					has_country_leader_ideology = sub_harmonainism
+					has_country_leader_ideology = sub_auth_harmonainism
+					has_country_leader_ideology = sub_oligarchy
+					has_country_leader_ideology = sub_ultra_nationalism
+					has_country_leader_ideology = sub_national_unitism
+					has_country_leader_ideology = sub_unitism
+				}
+			}
+			modifier = {
+				factor = 10
+				has_stability < 0.25
+				OR = {
+					has_country_leader_ideology = sub_illiberalism
+					has_country_leader_ideology = sub_radical_harmonainism
+					has_country_leader_ideology = sub_harmonainism
+					has_country_leader_ideology = sub_auth_harmonainism
+					has_country_leader_ideology = sub_oligarchy
+					has_country_leader_ideology = sub_ultra_nationalism
+					has_country_leader_ideology = sub_national_unitism
+					has_country_leader_ideology = sub_unitism
+				}
+			}
+			modifier = {
+				factor = 10
+				has_stability < 0.01
+				OR = {
+					has_country_leader_ideology = sub_illiberalism
+					has_country_leader_ideology = sub_radical_harmonainism
+					has_country_leader_ideology = sub_harmonainism
+					has_country_leader_ideology = sub_auth_harmonainism
+					has_country_leader_ideology = sub_oligarchy
+					has_country_leader_ideology = sub_ultra_nationalism
+					has_country_leader_ideology = sub_national_unitism
+					has_country_leader_ideology = sub_unitism
+				}
+			}
+			modifier = {
+				add = 1000
+				OR = {
+					AND = {
+						has_stability < 0.75
+						has_political_power > 200
+					}
+					AND = {
+						has_stability < 0.99
+						has_political_power > 500
+					}
+				}
+				OR = {
+					has_country_leader_ideology = sub_illiberalism
+					has_country_leader_ideology = sub_radical_harmonainism
+					has_country_leader_ideology = sub_harmonainism
+					has_country_leader_ideology = sub_auth_harmonainism
+					has_country_leader_ideology = sub_oligarchy
+					has_country_leader_ideology = sub_ultra_nationalism
+					has_country_leader_ideology = sub_national_unitism
+					has_country_leader_ideology = sub_unitism
+				}
+			}
+		}
+	}
+
+	anti_authoritarianism_raids = {
+		icon = generic_civil_support
+		desc = anti_fascist_raids_desc
+
+		visible = {
+			NOT = { has_government = authoritarianism }
+		}
+
+		available = {
+	        authoritarianism > 0.1
+	    }
+
+		modifier = {
+			authoritarianism_drift = -0.03
+			stability_weekly = 0.006
+		}
+
+		days_remove = 120
+		cost = 50
+
+		complete_effect = {
+			add_stability = -0.1
+		}
+		
+		remove_effect = {
+		}
+		
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 20
+				OR = {
+					AND = {
+						has_government = pluralism
+						OR = {
+							pluralism < party_popularity@semidemocracy
+							pluralism < party_popularity@theocratism
+							pluralism < party_popularity@authoritarianism
+							pluralism < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = semidemocracy
+						OR = {
+							semidemocracy < party_popularity@pluralism
+							semidemocracy < party_popularity@theocratism
+							semidemocracy < party_popularity@authoritarianism
+							semidemocracy < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = theocratism
+						OR = {
+							theocratism < party_popularity@pluralism
+							theocratism < party_popularity@semidemocracy
+							theocratism < party_popularity@authoritarianism
+							theocratism < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = authoritarianism
+						OR = {
+							authoritarianism < party_popularity@pluralism
+							authoritarianism < party_popularity@semidemocracy
+							authoritarianism < party_popularity@theocratism
+							authoritarianism < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = unitism
+						OR = {
+							unitism < party_popularity@pluralism
+							unitism < party_popularity@semidemocracy
+							unitism < party_popularity@theocratism
+							unitism < party_popularity@authoritarianism
+						}
+					}
+				}
+				OR = {
+					has_country_leader_ideology = sub_illiberalism
+					has_country_leader_ideology = sub_radical_harmonainism
+					has_country_leader_ideology = sub_harmonainism
+					has_country_leader_ideology = sub_auth_harmonainism
+					has_country_leader_ideology = sub_oligarchy
+					has_country_leader_ideology = sub_ultra_nationalism
+					has_country_leader_ideology = sub_national_unitism
+					has_country_leader_ideology = sub_unitism
+				}
+			}
+			modifier = {
+				add = 200
+				has_political_power > 200
+				OR = {
+					AND = {
+						has_government = pluralism
+						OR = {
+							pluralism < party_popularity@semidemocracy
+							pluralism < party_popularity@theocratism
+							pluralism < party_popularity@authoritarianism
+							pluralism < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = semidemocracy
+						OR = {
+							semidemocracy < party_popularity@pluralism
+							semidemocracy < party_popularity@theocratism
+							semidemocracy < party_popularity@authoritarianism
+							semidemocracy < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = theocratism
+						OR = {
+							theocratism < party_popularity@pluralism
+							theocratism < party_popularity@semidemocracy
+							theocratism < party_popularity@authoritarianism
+							theocratism < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = authoritarianism
+						OR = {
+							authoritarianism < party_popularity@pluralism
+							authoritarianism < party_popularity@semidemocracy
+							authoritarianism < party_popularity@theocratism
+							authoritarianism < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = unitism
+						OR = {
+							unitism < party_popularity@pluralism
+							unitism < party_popularity@semidemocracy
+							unitism < party_popularity@theocratism
+							unitism < party_popularity@authoritarianism
+						}
+					}
+				}
+				OR = {
+					has_country_leader_ideology = sub_illiberalism
+					has_country_leader_ideology = sub_radical_harmonainism
+					has_country_leader_ideology = sub_harmonainism
+					has_country_leader_ideology = sub_auth_harmonainism
+					has_country_leader_ideology = sub_oligarchy
+					has_country_leader_ideology = sub_ultra_nationalism
+					has_country_leader_ideology = sub_national_unitism
+					has_country_leader_ideology = sub_unitism
+				}
+			}
+			modifier = {
+				factor = 10
+				has_stability < 0.50
+				OR = {
+					has_country_leader_ideology = sub_illiberalism
+					has_country_leader_ideology = sub_radical_harmonainism
+					has_country_leader_ideology = sub_harmonainism
+					has_country_leader_ideology = sub_auth_harmonainism
+					has_country_leader_ideology = sub_oligarchy
+					has_country_leader_ideology = sub_ultra_nationalism
+					has_country_leader_ideology = sub_national_unitism
+					has_country_leader_ideology = sub_unitism
+				}
+			}
+			modifier = {
+				factor = 10
+				has_stability < 0.25
+				OR = {
+					has_country_leader_ideology = sub_illiberalism
+					has_country_leader_ideology = sub_radical_harmonainism
+					has_country_leader_ideology = sub_harmonainism
+					has_country_leader_ideology = sub_auth_harmonainism
+					has_country_leader_ideology = sub_oligarchy
+					has_country_leader_ideology = sub_ultra_nationalism
+					has_country_leader_ideology = sub_national_unitism
+					has_country_leader_ideology = sub_unitism
+				}
+			}
+			modifier = {
+				factor = 10
+				has_stability < 0.01
+				OR = {
+					has_country_leader_ideology = sub_illiberalism
+					has_country_leader_ideology = sub_radical_harmonainism
+					has_country_leader_ideology = sub_harmonainism
+					has_country_leader_ideology = sub_auth_harmonainism
+					has_country_leader_ideology = sub_oligarchy
+					has_country_leader_ideology = sub_ultra_nationalism
+					has_country_leader_ideology = sub_national_unitism
+					has_country_leader_ideology = sub_unitism
+				}
+			}
+			modifier = {
+				add = 1000
+				OR = {
+					AND = {
+						has_stability < 0.75
+						has_political_power > 200
+					}
+					AND = {
+						has_stability < 0.99
+						has_political_power > 500
+					}
+				}
+				OR = {
+					has_country_leader_ideology = sub_illiberalism
+					has_country_leader_ideology = sub_radical_harmonainism
+					has_country_leader_ideology = sub_harmonainism
+					has_country_leader_ideology = sub_auth_harmonainism
+					has_country_leader_ideology = sub_oligarchy
+					has_country_leader_ideology = sub_ultra_nationalism
+					has_country_leader_ideology = sub_national_unitism
+					has_country_leader_ideology = sub_unitism
+				}
+			}
+		}
+	}
+
+	anti_unitism_raids = {
+		icon = generic_civil_support
+		desc = anti_communist_raids_desc
+
+		visible = {
+			NOT = { has_government = unitism }
+		}
+
+		available = {
+	        unitism > 0.1
+	    }
+
+		modifier = {
+			unitism_drift = -0.03
+			stability_weekly = 0.006
+		}
+
+		days_remove = 120
+		cost = 50
+
+		complete_effect = {
+			add_stability = -0.1
+		}
+		
+		remove_effect = {
+		}
+		
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 20
+				OR = {
+					AND = {
+						has_government = pluralism
+						OR = {
+							pluralism < party_popularity@semidemocracy
+							pluralism < party_popularity@theocratism
+							pluralism < party_popularity@authoritarianism
+							pluralism < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = semidemocracy
+						OR = {
+							semidemocracy < party_popularity@pluralism
+							semidemocracy < party_popularity@theocratism
+							semidemocracy < party_popularity@authoritarianism
+							semidemocracy < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = theocratism
+						OR = {
+							theocratism < party_popularity@pluralism
+							theocratism < party_popularity@semidemocracy
+							theocratism < party_popularity@authoritarianism
+							theocratism < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = authoritarianism
+						OR = {
+							authoritarianism < party_popularity@pluralism
+							authoritarianism < party_popularity@semidemocracy
+							authoritarianism < party_popularity@theocratism
+							authoritarianism < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = unitism
+						OR = {
+							unitism < party_popularity@pluralism
+							unitism < party_popularity@semidemocracy
+							unitism < party_popularity@theocratism
+							unitism < party_popularity@authoritarianism
+						}
+					}
+				}
+				OR = {
+					has_country_leader_ideology = sub_illiberalism
+					has_country_leader_ideology = sub_radical_harmonainism
+					has_country_leader_ideology = sub_harmonainism
+					has_country_leader_ideology = sub_auth_harmonainism
+					has_country_leader_ideology = sub_oligarchy
+					has_country_leader_ideology = sub_ultra_nationalism
+					has_country_leader_ideology = sub_national_unitism
+					has_country_leader_ideology = sub_unitism
+				}
+			}
+			modifier = {
+				add = 200
+				has_political_power > 200
+				OR = {
+					AND = {
+						has_government = pluralism
+						OR = {
+							pluralism < party_popularity@semidemocracy
+							pluralism < party_popularity@theocratism
+							pluralism < party_popularity@authoritarianism
+							pluralism < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = semidemocracy
+						OR = {
+							semidemocracy < party_popularity@pluralism
+							semidemocracy < party_popularity@theocratism
+							semidemocracy < party_popularity@authoritarianism
+							semidemocracy < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = theocratism
+						OR = {
+							theocratism < party_popularity@pluralism
+							theocratism < party_popularity@semidemocracy
+							theocratism < party_popularity@authoritarianism
+							theocratism < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = authoritarianism
+						OR = {
+							authoritarianism < party_popularity@pluralism
+							authoritarianism < party_popularity@semidemocracy
+							authoritarianism < party_popularity@theocratism
+							authoritarianism < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = unitism
+						OR = {
+							unitism < party_popularity@pluralism
+							unitism < party_popularity@semidemocracy
+							unitism < party_popularity@theocratism
+							unitism < party_popularity@authoritarianism
+						}
+					}
+				}
+				OR = {
+					has_country_leader_ideology = sub_illiberalism
+					has_country_leader_ideology = sub_radical_harmonainism
+					has_country_leader_ideology = sub_harmonainism
+					has_country_leader_ideology = sub_auth_harmonainism
+					has_country_leader_ideology = sub_oligarchy
+					has_country_leader_ideology = sub_ultra_nationalism
+					has_country_leader_ideology = sub_national_unitism
+					has_country_leader_ideology = sub_unitism
+				}
+			}
+			modifier = {
+				factor = 10
+				has_stability < 0.50
+				OR = {
+					has_country_leader_ideology = sub_illiberalism
+					has_country_leader_ideology = sub_radical_harmonainism
+					has_country_leader_ideology = sub_harmonainism
+					has_country_leader_ideology = sub_auth_harmonainism
+					has_country_leader_ideology = sub_oligarchy
+					has_country_leader_ideology = sub_ultra_nationalism
+					has_country_leader_ideology = sub_national_unitism
+					has_country_leader_ideology = sub_unitism
+				}
+			}
+			modifier = {
+				factor = 10
+				has_stability < 0.25
+				OR = {
+					has_country_leader_ideology = sub_illiberalism
+					has_country_leader_ideology = sub_radical_harmonainism
+					has_country_leader_ideology = sub_harmonainism
+					has_country_leader_ideology = sub_auth_harmonainism
+					has_country_leader_ideology = sub_oligarchy
+					has_country_leader_ideology = sub_ultra_nationalism
+					has_country_leader_ideology = sub_national_unitism
+					has_country_leader_ideology = sub_unitism
+				}
+			}
+			modifier = {
+				factor = 10
+				has_stability < 0.01
+				OR = {
+					has_country_leader_ideology = sub_illiberalism
+					has_country_leader_ideology = sub_radical_harmonainism
+					has_country_leader_ideology = sub_harmonainism
+					has_country_leader_ideology = sub_auth_harmonainism
+					has_country_leader_ideology = sub_oligarchy
+					has_country_leader_ideology = sub_ultra_nationalism
+					has_country_leader_ideology = sub_national_unitism
+					has_country_leader_ideology = sub_unitism
+				}
+			}
+			modifier = {
+				add = 1000
+				OR = {
+					AND = {
+						has_stability < 0.75
+						has_political_power > 200
+					}
+					AND = {
+						has_stability < 0.99
+						has_political_power > 500
+					}
+				}
+				OR = {
+					has_country_leader_ideology = sub_illiberalism
+					has_country_leader_ideology = sub_radical_harmonainism
+					has_country_leader_ideology = sub_harmonainism
+					has_country_leader_ideology = sub_auth_harmonainism
+					has_country_leader_ideology = sub_oligarchy
+					has_country_leader_ideology = sub_ultra_nationalism
+					has_country_leader_ideology = sub_national_unitism
+					has_country_leader_ideology = sub_unitism
+				}
+			}
+		}
+	}
+
+	ban_pluralism_party = {
+		icon = generic_civil_support
+		desc = ban_democratic_party_desc
+
+		available = { pluralism < 0.2 }
+
+		visible = {
+			NOT = { has_government = pluralism }
+			pluralism > 0
+		}
+
+		remove_trigger = { hidden_trigger = { has_government = pluralism } }
+	
+		modifier = { pluralism_drift = -0.03 }
+	
+		days_remove = -1
+		cost = 100
+		
+		complete_effect = {
+			hidden_effect = {
+				set_temp_variable = {
+					var = ban_ideology_var
+					value = party_popularity@pluralism
+				}
+				multiply_temp_variable = {
+					var = ban_ideology_var
+					value = -1
+				}
+				add_popularity = {
+					ideology = pluralism
+					popularity = ban_ideology_var
+				}
+				multiply_temp_variable = {
+					var = ban_ideology_var
+					value = 0.66
+				}
+				set_country_flag = banned_pluralism_flag				
+			}
+			remove_pluralism_spirits_effect = yes 
+			custom_effect_tooltip = ban_pluralism_party_tt
+			add_stability = ban_ideology_var
+		}
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 10
+				has_stability < 0.50
+				OR = {
+					has_country_leader_ideology = sub_illiberalism
+					has_country_leader_ideology = sub_radical_harmonainism
+					has_country_leader_ideology = sub_harmonainism
+					has_country_leader_ideology = sub_auth_harmonainism
+					has_country_leader_ideology = sub_oligarchy
+					has_country_leader_ideology = sub_ultra_nationalism
+					has_country_leader_ideology = sub_national_unitism
+					has_country_leader_ideology = sub_unitism
+				}
+			}
+			modifier = {
+				factor = 10
+				has_stability < 0.25
+				OR = {
+					has_country_leader_ideology = sub_illiberalism
+					has_country_leader_ideology = sub_radical_harmonainism
+					has_country_leader_ideology = sub_harmonainism
+					has_country_leader_ideology = sub_auth_harmonainism
+					has_country_leader_ideology = sub_oligarchy
+					has_country_leader_ideology = sub_ultra_nationalism
+					has_country_leader_ideology = sub_national_unitism
+					has_country_leader_ideology = sub_unitism
+				}
+			}
+			modifier = {
+				factor = 10
+				has_stability < 0.01
+				OR = {
+					has_country_leader_ideology = sub_illiberalism
+					has_country_leader_ideology = sub_radical_harmonainism
+					has_country_leader_ideology = sub_harmonainism
+					has_country_leader_ideology = sub_auth_harmonainism
+					has_country_leader_ideology = sub_oligarchy
+					has_country_leader_ideology = sub_ultra_nationalism
+					has_country_leader_ideology = sub_national_unitism
+					has_country_leader_ideology = sub_unitism
+				}
+			}
+			modifier = {
+				add = 1000
+				OR = {
+					AND = {
+						has_stability < 0.75
+						has_political_power > 200
+					}
+					AND = {
+						has_stability < 0.99
+						has_political_power > 500
+					}
+				}
+				OR = {
+					has_country_leader_ideology = sub_illiberalism
+					has_country_leader_ideology = sub_radical_harmonainism
+					has_country_leader_ideology = sub_harmonainism
+					has_country_leader_ideology = sub_auth_harmonainism
+					has_country_leader_ideology = sub_oligarchy
+					has_country_leader_ideology = sub_ultra_nationalism
+					has_country_leader_ideology = sub_national_unitism
+					has_country_leader_ideology = sub_unitism
+				}
+			}
+		}
+	}
+
+	ban_semidemocracy_party = {
+		icon = generic_civil_support
+		desc = ban_democratic_party_desc
+
+		available = { semidemocracy < 0.2 }
+
+		visible = {
+			NOT = { has_government = semidemocracy }
+			semidemocracy > 0
+		}
+
+		remove_trigger = { hidden_trigger = { has_government = semidemocracy } }
+	
+		modifier = { semidemocracy_drift = -0.03 }
+	
+		days_remove = -1
+		cost = 100
+		
+		complete_effect = {
+			hidden_effect = {
+				set_temp_variable = {
+					var = ban_ideology_var
+					value = party_popularity@semidemocracy
+				}
+				multiply_temp_variable = {
+					var = ban_ideology_var
+					value = -1
+				}
+				add_popularity = {
+					ideology = semidemocracy
+					popularity = ban_ideology_var
+				}
+				multiply_temp_variable = {
+					var = ban_ideology_var
+					value = 0.66
+				}
+				set_country_flag = banned_semidemocracy_flag				
+			}
+			remove_semidemocracy_spirits_effect = yes 
+			custom_effect_tooltip = ban_semidemocracy_party_tt
+			add_stability = ban_ideology_var
+		}
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 10
+				has_stability < 0.50
+				OR = {
+					has_country_leader_ideology = sub_illiberalism
+					has_country_leader_ideology = sub_radical_harmonainism
+					has_country_leader_ideology = sub_harmonainism
+					has_country_leader_ideology = sub_auth_harmonainism
+					has_country_leader_ideology = sub_oligarchy
+					has_country_leader_ideology = sub_ultra_nationalism
+					has_country_leader_ideology = sub_national_unitism
+					has_country_leader_ideology = sub_unitism
+				}
+			}
+			modifier = {
+				factor = 10
+				has_stability < 0.25
+				OR = {
+					has_country_leader_ideology = sub_illiberalism
+					has_country_leader_ideology = sub_radical_harmonainism
+					has_country_leader_ideology = sub_harmonainism
+					has_country_leader_ideology = sub_auth_harmonainism
+					has_country_leader_ideology = sub_oligarchy
+					has_country_leader_ideology = sub_ultra_nationalism
+					has_country_leader_ideology = sub_national_unitism
+					has_country_leader_ideology = sub_unitism
+				}
+			}
+			modifier = {
+				factor = 10
+				has_stability < 0.01
+				OR = {
+					has_country_leader_ideology = sub_illiberalism
+					has_country_leader_ideology = sub_radical_harmonainism
+					has_country_leader_ideology = sub_harmonainism
+					has_country_leader_ideology = sub_auth_harmonainism
+					has_country_leader_ideology = sub_oligarchy
+					has_country_leader_ideology = sub_ultra_nationalism
+					has_country_leader_ideology = sub_national_unitism
+					has_country_leader_ideology = sub_unitism
+				}
+			}
+			modifier = {
+				add = 1000
+				OR = {
+					AND = {
+						has_stability < 0.75
+						has_political_power > 200
+					}
+					AND = {
+						has_stability < 0.99
+						has_political_power > 500
+					}
+				}
+				OR = {
+					has_country_leader_ideology = sub_illiberalism
+					has_country_leader_ideology = sub_radical_harmonainism
+					has_country_leader_ideology = sub_harmonainism
+					has_country_leader_ideology = sub_auth_harmonainism
+					has_country_leader_ideology = sub_oligarchy
+					has_country_leader_ideology = sub_ultra_nationalism
+					has_country_leader_ideology = sub_national_unitism
+					has_country_leader_ideology = sub_unitism
+				}
+			}
+		}
+	}
+
+	ban_theocratism_party = {
+		icon = generic_civil_support
+		desc = ban_fascist_party_desc
+
+		available = { theocratism < 0.2 }
+
+		visible = {
+			NOT = { has_government = theocratism }
+			theocratism > 0
+		}
+
+		remove_trigger = { hidden_trigger = { has_government = theocratism } }
+	
+		modifier = { theocratism_drift = -0.03 }
+	
+		days_remove = -1
+		cost = 100
+		
+		complete_effect = {
+			hidden_effect = {
+				set_temp_variable = {
+					var = ban_ideology_var
+					value = party_popularity@theocratism
+				}
+				multiply_temp_variable = {
+					var = ban_ideology_var
+					value = -1
+				}
+				add_popularity = {
+					ideology = theocratism
+					popularity = ban_ideology_var
+				}
+				multiply_temp_variable = {
+					var = ban_ideology_var
+					value = 0.66
+				}
+				set_country_flag = banned_theocratism_flag				
+			}
+			remove_theocratism_spirits_effect = yes 
+			custom_effect_tooltip = ban_theocratism_party_tt
+			add_stability = ban_ideology_var
+		}
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 10
+				has_stability < 0.50
+				OR = {
+					has_country_leader_ideology = sub_illiberalism
+					has_country_leader_ideology = sub_radical_harmonainism
+					has_country_leader_ideology = sub_harmonainism
+					has_country_leader_ideology = sub_auth_harmonainism
+					has_country_leader_ideology = sub_oligarchy
+					has_country_leader_ideology = sub_ultra_nationalism
+					has_country_leader_ideology = sub_national_unitism
+					has_country_leader_ideology = sub_unitism
+				}
+			}
+			modifier = {
+				factor = 10
+				has_stability < 0.25
+				OR = {
+					has_country_leader_ideology = sub_illiberalism
+					has_country_leader_ideology = sub_radical_harmonainism
+					has_country_leader_ideology = sub_harmonainism
+					has_country_leader_ideology = sub_auth_harmonainism
+					has_country_leader_ideology = sub_oligarchy
+					has_country_leader_ideology = sub_ultra_nationalism
+					has_country_leader_ideology = sub_national_unitism
+					has_country_leader_ideology = sub_unitism
+				}
+			}
+			modifier = {
+				factor = 10
+				has_stability < 0.01
+				OR = {
+					has_country_leader_ideology = sub_illiberalism
+					has_country_leader_ideology = sub_radical_harmonainism
+					has_country_leader_ideology = sub_harmonainism
+					has_country_leader_ideology = sub_auth_harmonainism
+					has_country_leader_ideology = sub_oligarchy
+					has_country_leader_ideology = sub_ultra_nationalism
+					has_country_leader_ideology = sub_national_unitism
+					has_country_leader_ideology = sub_unitism
+				}
+			}
+			modifier = {
+				add = 1000
+				OR = {
+					AND = {
+						has_stability < 0.75
+						has_political_power > 200
+					}
+					AND = {
+						has_stability < 0.99
+						has_political_power > 500
+					}
+				}
+				OR = {
+					has_country_leader_ideology = sub_illiberalism
+					has_country_leader_ideology = sub_radical_harmonainism
+					has_country_leader_ideology = sub_harmonainism
+					has_country_leader_ideology = sub_auth_harmonainism
+					has_country_leader_ideology = sub_oligarchy
+					has_country_leader_ideology = sub_ultra_nationalism
+					has_country_leader_ideology = sub_national_unitism
+					has_country_leader_ideology = sub_unitism
+				}
+			}
+		}
+	}
+
+	ban_authoritarianism_party = {
+		icon = generic_civil_support
+		desc = ban_fascist_party_desc
+
+		available = { authoritarianism < 0.2 }
+
+		visible = {
+			NOT = { has_government = authoritarianism }
+			authoritarianism > 0
+		}
+
+		remove_trigger = { hidden_trigger = { has_government = authoritarianism } }
+	
+		modifier = { authoritarianism_drift = -0.03 }
+	
+		days_remove = -1
+		cost = 100
+		
+		complete_effect = {
+			hidden_effect = {
+				set_temp_variable = {
+					var = ban_ideology_var
+					value = party_popularity@authoritarianism
+				}
+				multiply_temp_variable = {
+					var = ban_ideology_var
+					value = -1
+				}
+				add_popularity = {
+					ideology = authoritarianism
+					popularity = ban_ideology_var
+				}
+				multiply_temp_variable = {
+					var = ban_ideology_var
+					value = 0.66
+				}
+				set_country_flag = banned_authoritarianism_flag				
+			}
+			remove_authoritarianism_spirits_effect = yes 
+			custom_effect_tooltip = ban_authoritarianism_party_tt
+			add_stability = ban_ideology_var
+		}
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 10
+				has_stability < 0.50
+				OR = {
+					has_country_leader_ideology = sub_illiberalism
+					has_country_leader_ideology = sub_radical_harmonainism
+					has_country_leader_ideology = sub_harmonainism
+					has_country_leader_ideology = sub_auth_harmonainism
+					has_country_leader_ideology = sub_oligarchy
+					has_country_leader_ideology = sub_ultra_nationalism
+					has_country_leader_ideology = sub_national_unitism
+					has_country_leader_ideology = sub_unitism
+				}
+			}
+			modifier = {
+				factor = 10
+				has_stability < 0.25
+				OR = {
+					has_country_leader_ideology = sub_illiberalism
+					has_country_leader_ideology = sub_radical_harmonainism
+					has_country_leader_ideology = sub_harmonainism
+					has_country_leader_ideology = sub_auth_harmonainism
+					has_country_leader_ideology = sub_oligarchy
+					has_country_leader_ideology = sub_ultra_nationalism
+					has_country_leader_ideology = sub_national_unitism
+					has_country_leader_ideology = sub_unitism
+				}
+			}
+			modifier = {
+				factor = 10
+				has_stability < 0.01
+				OR = {
+					has_country_leader_ideology = sub_illiberalism
+					has_country_leader_ideology = sub_radical_harmonainism
+					has_country_leader_ideology = sub_harmonainism
+					has_country_leader_ideology = sub_auth_harmonainism
+					has_country_leader_ideology = sub_oligarchy
+					has_country_leader_ideology = sub_ultra_nationalism
+					has_country_leader_ideology = sub_national_unitism
+					has_country_leader_ideology = sub_unitism
+				}
+			}
+			modifier = {
+				add = 1000
+				OR = {
+					AND = {
+						has_stability < 0.75
+						has_political_power > 200
+					}
+					AND = {
+						has_stability < 0.99
+						has_political_power > 500
+					}
+				}
+				OR = {
+					has_country_leader_ideology = sub_illiberalism
+					has_country_leader_ideology = sub_radical_harmonainism
+					has_country_leader_ideology = sub_harmonainism
+					has_country_leader_ideology = sub_auth_harmonainism
+					has_country_leader_ideology = sub_oligarchy
+					has_country_leader_ideology = sub_ultra_nationalism
+					has_country_leader_ideology = sub_national_unitism
+					has_country_leader_ideology = sub_unitism
+				}
+			}
+		}
+	}
+
+	ban_unitism_party = {
+		icon = generic_civil_support
+		desc = ban_communist_party_desc
+
+		available = { unitism < 0.2 }
+
+		visible = {
+			NOT = { has_government = unitism }
+			unitism > 0
+		}
+
+		remove_trigger = { hidden_trigger = { has_government = unitism } }
+	
+		modifier = { unitism_drift = -0.03 }
+	
+		days_remove = -1
+		cost = 100
+		
+		complete_effect = {
+			hidden_effect = {
+				set_temp_variable = {
+					var = ban_ideology_var
+					value = party_popularity@unitism
+				}
+				multiply_temp_variable = {
+					var = ban_ideology_var
+					value = -1
+				}
+				add_popularity = {
+					ideology = unitism
+					popularity = ban_ideology_var
+				}
+				multiply_temp_variable = {
+					var = ban_ideology_var
+					value = 0.66
+				}
+				set_country_flag = banned_unitism_flag				
+			}
+			remove_unitism_spirits_effect = yes 
+			custom_effect_tooltip = ban_unitism_party_tt
+			add_stability = ban_ideology_var
+		}
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 10
+				has_stability < 0.50
+				OR = {
+					has_country_leader_ideology = sub_illiberalism
+					has_country_leader_ideology = sub_radical_harmonainism
+					has_country_leader_ideology = sub_harmonainism
+					has_country_leader_ideology = sub_auth_harmonainism
+					has_country_leader_ideology = sub_oligarchy
+					has_country_leader_ideology = sub_ultra_nationalism
+					has_country_leader_ideology = sub_national_unitism
+					has_country_leader_ideology = sub_unitism
+				}
+			}
+			modifier = {
+				factor = 10
+				has_stability < 0.25
+				OR = {
+					has_country_leader_ideology = sub_illiberalism
+					has_country_leader_ideology = sub_radical_harmonainism
+					has_country_leader_ideology = sub_harmonainism
+					has_country_leader_ideology = sub_auth_harmonainism
+					has_country_leader_ideology = sub_oligarchy
+					has_country_leader_ideology = sub_ultra_nationalism
+					has_country_leader_ideology = sub_national_unitism
+					has_country_leader_ideology = sub_unitism
+				}
+			}
+			modifier = {
+				factor = 10
+				has_stability < 0.01
+				OR = {
+					has_country_leader_ideology = sub_illiberalism
+					has_country_leader_ideology = sub_radical_harmonainism
+					has_country_leader_ideology = sub_harmonainism
+					has_country_leader_ideology = sub_auth_harmonainism
+					has_country_leader_ideology = sub_oligarchy
+					has_country_leader_ideology = sub_ultra_nationalism
+					has_country_leader_ideology = sub_national_unitism
+					has_country_leader_ideology = sub_unitism
+				}
+			}
+			modifier = {
+				add = 1000
+				OR = {
+					AND = {
+						has_stability < 0.75
+						has_political_power > 200
+					}
+					AND = {
+						has_stability < 0.99
+						has_political_power > 500
+					}
+				}
+				OR = {
+					has_country_leader_ideology = sub_illiberalism
+					has_country_leader_ideology = sub_radical_harmonainism
+					has_country_leader_ideology = sub_harmonainism
+					has_country_leader_ideology = sub_auth_harmonainism
+					has_country_leader_ideology = sub_oligarchy
+					has_country_leader_ideology = sub_ultra_nationalism
+					has_country_leader_ideology = sub_national_unitism
+					has_country_leader_ideology = sub_unitism
+				}
+			}
+		}
+	}
+
+	institute_press_censorship_pluralism_state = {
+		icon = generic_political_discourse
+		name = institute_press_censorship_neutrality_state
+		desc = institute_press_censorship_neutrality_state_desc
+
+		visible = { has_government = pluralism }
+		
+		modifier = {
+			semidemocracy_drift = -0.01
+			theocratism_drift = -0.01
+			authoritarianism_drift = -0.01
+			unitism_drift = -0.01
+		}
+	
+		days_remove = 360
+		cost = 150
+	
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 20
+				OR = {
+					AND = {
+						has_government = pluralism
+						OR = {
+							pluralism < party_popularity@semidemocracy
+							pluralism < party_popularity@theocratism
+							pluralism < party_popularity@authoritarianism
+							pluralism < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = semidemocracy
+						OR = {
+							semidemocracy < party_popularity@pluralism
+							semidemocracy < party_popularity@theocratism
+							semidemocracy < party_popularity@authoritarianism
+							semidemocracy < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = theocratism
+						OR = {
+							theocratism < party_popularity@pluralism
+							theocratism < party_popularity@semidemocracy
+							theocratism < party_popularity@authoritarianism
+							theocratism < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = authoritarianism
+						OR = {
+							authoritarianism < party_popularity@pluralism
+							authoritarianism < party_popularity@semidemocracy
+							authoritarianism < party_popularity@theocratism
+							authoritarianism < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = unitism
+						OR = {
+							unitism < party_popularity@pluralism
+							unitism < party_popularity@semidemocracy
+							unitism < party_popularity@theocratism
+							unitism < party_popularity@authoritarianism
+						}
+					}
+				}
+				OR = {
+					has_country_leader_ideology = sub_illiberalism
+					has_country_leader_ideology = sub_radical_harmonainism
+					has_country_leader_ideology = sub_harmonainism
+					has_country_leader_ideology = sub_auth_harmonainism
+					has_country_leader_ideology = sub_oligarchy
+					has_country_leader_ideology = sub_ultra_nationalism
+					has_country_leader_ideology = sub_national_unitism
+					has_country_leader_ideology = sub_unitism
+				}
+			}
+			modifier = {
+				add = 200
+				has_political_power > 200
+				OR = {
+					AND = {
+						has_government = pluralism
+						OR = {
+							pluralism < party_popularity@semidemocracy
+							pluralism < party_popularity@theocratism
+							pluralism < party_popularity@authoritarianism
+							pluralism < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = semidemocracy
+						OR = {
+							semidemocracy < party_popularity@pluralism
+							semidemocracy < party_popularity@theocratism
+							semidemocracy < party_popularity@authoritarianism
+							semidemocracy < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = theocratism
+						OR = {
+							theocratism < party_popularity@pluralism
+							theocratism < party_popularity@semidemocracy
+							theocratism < party_popularity@authoritarianism
+							theocratism < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = authoritarianism
+						OR = {
+							authoritarianism < party_popularity@pluralism
+							authoritarianism < party_popularity@semidemocracy
+							authoritarianism < party_popularity@theocratism
+							authoritarianism < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = unitism
+						OR = {
+							unitism < party_popularity@pluralism
+							unitism < party_popularity@semidemocracy
+							unitism < party_popularity@theocratism
+							unitism < party_popularity@authoritarianism
+						}
+					}
+				}
+				OR = {
+					has_country_leader_ideology = sub_illiberalism
+					has_country_leader_ideology = sub_radical_harmonainism
+					has_country_leader_ideology = sub_harmonainism
+					has_country_leader_ideology = sub_auth_harmonainism
+					has_country_leader_ideology = sub_oligarchy
+					has_country_leader_ideology = sub_ultra_nationalism
+					has_country_leader_ideology = sub_national_unitism
+					has_country_leader_ideology = sub_unitism
+				}
+			}
+		}
+	}
+
+	institute_press_censorship_semidemocracy_state = {
+		icon = generic_political_discourse
+		name = institute_press_censorship_neutrality_state
+		desc = institute_press_censorship_neutrality_state_desc
+
+		visible = { has_government = semidemocracy }
+		
+		modifier = {
+			pluralism_drift = -0.01
+			theocratism_drift = -0.01
+			authoritarianism_drift = -0.01
+			unitism_drift = -0.01
+		}
+	
+		days_remove = 360
+		cost = 150
+	
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 20
+				OR = {
+					AND = {
+						has_government = pluralism
+						OR = {
+							pluralism < party_popularity@semidemocracy
+							pluralism < party_popularity@theocratism
+							pluralism < party_popularity@authoritarianism
+							pluralism < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = semidemocracy
+						OR = {
+							semidemocracy < party_popularity@pluralism
+							semidemocracy < party_popularity@theocratism
+							semidemocracy < party_popularity@authoritarianism
+							semidemocracy < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = theocratism
+						OR = {
+							theocratism < party_popularity@pluralism
+							theocratism < party_popularity@semidemocracy
+							theocratism < party_popularity@authoritarianism
+							theocratism < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = authoritarianism
+						OR = {
+							authoritarianism < party_popularity@pluralism
+							authoritarianism < party_popularity@semidemocracy
+							authoritarianism < party_popularity@theocratism
+							authoritarianism < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = unitism
+						OR = {
+							unitism < party_popularity@pluralism
+							unitism < party_popularity@semidemocracy
+							unitism < party_popularity@theocratism
+							unitism < party_popularity@authoritarianism
+						}
+					}
+				}
+				OR = {
+					has_country_leader_ideology = sub_illiberalism
+					has_country_leader_ideology = sub_radical_harmonainism
+					has_country_leader_ideology = sub_harmonainism
+					has_country_leader_ideology = sub_auth_harmonainism
+					has_country_leader_ideology = sub_oligarchy
+					has_country_leader_ideology = sub_ultra_nationalism
+					has_country_leader_ideology = sub_national_unitism
+					has_country_leader_ideology = sub_unitism
+				}
+			}
+			modifier = {
+				add = 200
+				has_political_power > 200
+				OR = {
+					AND = {
+						has_government = pluralism
+						OR = {
+							pluralism < party_popularity@semidemocracy
+							pluralism < party_popularity@theocratism
+							pluralism < party_popularity@authoritarianism
+							pluralism < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = semidemocracy
+						OR = {
+							semidemocracy < party_popularity@pluralism
+							semidemocracy < party_popularity@theocratism
+							semidemocracy < party_popularity@authoritarianism
+							semidemocracy < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = theocratism
+						OR = {
+							theocratism < party_popularity@pluralism
+							theocratism < party_popularity@semidemocracy
+							theocratism < party_popularity@authoritarianism
+							theocratism < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = authoritarianism
+						OR = {
+							authoritarianism < party_popularity@pluralism
+							authoritarianism < party_popularity@semidemocracy
+							authoritarianism < party_popularity@theocratism
+							authoritarianism < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = unitism
+						OR = {
+							unitism < party_popularity@pluralism
+							unitism < party_popularity@semidemocracy
+							unitism < party_popularity@theocratism
+							unitism < party_popularity@authoritarianism
+						}
+					}
+				}
+				OR = {
+					has_country_leader_ideology = sub_illiberalism
+					has_country_leader_ideology = sub_radical_harmonainism
+					has_country_leader_ideology = sub_harmonainism
+					has_country_leader_ideology = sub_auth_harmonainism
+					has_country_leader_ideology = sub_oligarchy
+					has_country_leader_ideology = sub_ultra_nationalism
+					has_country_leader_ideology = sub_national_unitism
+					has_country_leader_ideology = sub_unitism
+				}
+			}
+		}
+	}
+
+	institute_press_censorship_theocratism_state = {
+		icon = generic_political_discourse
+		name = institute_press_censorship_neutrality_state
+		desc = institute_press_censorship_neutrality_state_desc
+
+		visible = { has_government = theocratism }
+	
+		modifier = {
+			pluralism_drift = -0.01
+			semidemocracy_drift = -0.01
+			authoritarianism_drift = -0.01
+			unitism_drift = -0.01
+		}
+	
+		days_remove = 360
+		cost = 150
+	
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 20
+				OR = {
+					AND = {
+						has_government = pluralism
+						OR = {
+							pluralism < party_popularity@semidemocracy
+							pluralism < party_popularity@theocratism
+							pluralism < party_popularity@authoritarianism
+							pluralism < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = semidemocracy
+						OR = {
+							semidemocracy < party_popularity@pluralism
+							semidemocracy < party_popularity@theocratism
+							semidemocracy < party_popularity@authoritarianism
+							semidemocracy < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = theocratism
+						OR = {
+							theocratism < party_popularity@pluralism
+							theocratism < party_popularity@semidemocracy
+							theocratism < party_popularity@authoritarianism
+							theocratism < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = authoritarianism
+						OR = {
+							authoritarianism < party_popularity@pluralism
+							authoritarianism < party_popularity@semidemocracy
+							authoritarianism < party_popularity@theocratism
+							authoritarianism < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = unitism
+						OR = {
+							unitism < party_popularity@pluralism
+							unitism < party_popularity@semidemocracy
+							unitism < party_popularity@theocratism
+							unitism < party_popularity@authoritarianism
+						}
+					}
+				}
+				OR = {
+					has_country_leader_ideology = sub_illiberalism
+					has_country_leader_ideology = sub_radical_harmonainism
+					has_country_leader_ideology = sub_harmonainism
+					has_country_leader_ideology = sub_auth_harmonainism
+					has_country_leader_ideology = sub_oligarchy
+					has_country_leader_ideology = sub_ultra_nationalism
+					has_country_leader_ideology = sub_national_unitism
+					has_country_leader_ideology = sub_unitism
+				}
+			}
+			modifier = {
+				add = 200
+				has_political_power > 200
+				OR = {
+					AND = {
+						has_government = pluralism
+						OR = {
+							pluralism < party_popularity@semidemocracy
+							pluralism < party_popularity@theocratism
+							pluralism < party_popularity@authoritarianism
+							pluralism < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = semidemocracy
+						OR = {
+							semidemocracy < party_popularity@pluralism
+							semidemocracy < party_popularity@theocratism
+							semidemocracy < party_popularity@authoritarianism
+							semidemocracy < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = theocratism
+						OR = {
+							theocratism < party_popularity@pluralism
+							theocratism < party_popularity@semidemocracy
+							theocratism < party_popularity@authoritarianism
+							theocratism < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = authoritarianism
+						OR = {
+							authoritarianism < party_popularity@pluralism
+							authoritarianism < party_popularity@semidemocracy
+							authoritarianism < party_popularity@theocratism
+							authoritarianism < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = unitism
+						OR = {
+							unitism < party_popularity@pluralism
+							unitism < party_popularity@semidemocracy
+							unitism < party_popularity@theocratism
+							unitism < party_popularity@authoritarianism
+						}
+					}
+				}
+				OR = {
+					has_country_leader_ideology = sub_illiberalism
+					has_country_leader_ideology = sub_radical_harmonainism
+					has_country_leader_ideology = sub_harmonainism
+					has_country_leader_ideology = sub_auth_harmonainism
+					has_country_leader_ideology = sub_oligarchy
+					has_country_leader_ideology = sub_ultra_nationalism
+					has_country_leader_ideology = sub_national_unitism
+					has_country_leader_ideology = sub_unitism
+				}
+			}
+		}
+	}
+
+	institute_press_censorship_authoritarianism_state = {
+		icon = generic_political_discourse
+		name = institute_press_censorship_neutrality_state
+		desc = institute_press_censorship_neutrality_state_desc
+
+		visible = { has_government = authoritarianism }
+	
+		modifier = {
+			pluralism_drift = -0.01
+			semidemocracy_drift = -0.01
+			theocratism_drift = -0.01
+			unitism_drift = -0.01
+		}
+	
+		days_remove = 360
+		cost = 150
+		
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 20
+				OR = {
+					AND = {
+						has_government = pluralism
+						OR = {
+							pluralism < party_popularity@semidemocracy
+							pluralism < party_popularity@theocratism
+							pluralism < party_popularity@authoritarianism
+							pluralism < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = semidemocracy
+						OR = {
+							semidemocracy < party_popularity@pluralism
+							semidemocracy < party_popularity@theocratism
+							semidemocracy < party_popularity@authoritarianism
+							semidemocracy < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = theocratism
+						OR = {
+							theocratism < party_popularity@pluralism
+							theocratism < party_popularity@semidemocracy
+							theocratism < party_popularity@authoritarianism
+							theocratism < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = authoritarianism
+						OR = {
+							authoritarianism < party_popularity@pluralism
+							authoritarianism < party_popularity@semidemocracy
+							authoritarianism < party_popularity@theocratism
+							authoritarianism < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = unitism
+						OR = {
+							unitism < party_popularity@pluralism
+							unitism < party_popularity@semidemocracy
+							unitism < party_popularity@theocratism
+							unitism < party_popularity@authoritarianism
+						}
+					}
+				}
+				OR = {
+					has_country_leader_ideology = sub_illiberalism
+					has_country_leader_ideology = sub_radical_harmonainism
+					has_country_leader_ideology = sub_harmonainism
+					has_country_leader_ideology = sub_auth_harmonainism
+					has_country_leader_ideology = sub_oligarchy
+					has_country_leader_ideology = sub_ultra_nationalism
+					has_country_leader_ideology = sub_national_unitism
+					has_country_leader_ideology = sub_unitism
+				}
+			}
+			modifier = {
+				add = 200
+				has_political_power > 200
+				OR = {
+					AND = {
+						has_government = pluralism
+						OR = {
+							pluralism < party_popularity@semidemocracy
+							pluralism < party_popularity@theocratism
+							pluralism < party_popularity@authoritarianism
+							pluralism < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = semidemocracy
+						OR = {
+							semidemocracy < party_popularity@pluralism
+							semidemocracy < party_popularity@theocratism
+							semidemocracy < party_popularity@authoritarianism
+							semidemocracy < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = theocratism
+						OR = {
+							theocratism < party_popularity@pluralism
+							theocratism < party_popularity@semidemocracy
+							theocratism < party_popularity@authoritarianism
+							theocratism < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = authoritarianism
+						OR = {
+							authoritarianism < party_popularity@pluralism
+							authoritarianism < party_popularity@semidemocracy
+							authoritarianism < party_popularity@theocratism
+							authoritarianism < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = unitism
+						OR = {
+							unitism < party_popularity@pluralism
+							unitism < party_popularity@semidemocracy
+							unitism < party_popularity@theocratism
+							unitism < party_popularity@authoritarianism
+						}
+					}
+				}
+				OR = {
+					has_country_leader_ideology = sub_illiberalism
+					has_country_leader_ideology = sub_radical_harmonainism
+					has_country_leader_ideology = sub_harmonainism
+					has_country_leader_ideology = sub_auth_harmonainism
+					has_country_leader_ideology = sub_oligarchy
+					has_country_leader_ideology = sub_ultra_nationalism
+					has_country_leader_ideology = sub_national_unitism
+					has_country_leader_ideology = sub_unitism
+				}
+			}
+		}
+	}
+
+	institute_press_censorship_unitism_state = {
+		icon = generic_political_discourse
+		name = institute_press_censorship_neutrality_state
+		desc = institute_press_censorship_neutrality_state_desc
+
+		visible = { has_government = unitism }
+	
+		modifier = {
+			pluralism_drift = -0.01
+			semidemocracy_drift = -0.01
+			theocratism_drift = -0.01
+			authoritarianism_drift = -0.01
+		}
+	
+		days_remove = 360
+		cost = 150
+		
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 20
+				OR = {
+					AND = {
+						has_government = pluralism
+						OR = {
+							pluralism < party_popularity@semidemocracy
+							pluralism < party_popularity@theocratism
+							pluralism < party_popularity@authoritarianism
+							pluralism < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = semidemocracy
+						OR = {
+							semidemocracy < party_popularity@pluralism
+							semidemocracy < party_popularity@theocratism
+							semidemocracy < party_popularity@authoritarianism
+							semidemocracy < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = theocratism
+						OR = {
+							theocratism < party_popularity@pluralism
+							theocratism < party_popularity@semidemocracy
+							theocratism < party_popularity@authoritarianism
+							theocratism < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = authoritarianism
+						OR = {
+							authoritarianism < party_popularity@pluralism
+							authoritarianism < party_popularity@semidemocracy
+							authoritarianism < party_popularity@theocratism
+							authoritarianism < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = unitism
+						OR = {
+							unitism < party_popularity@pluralism
+							unitism < party_popularity@semidemocracy
+							unitism < party_popularity@theocratism
+							unitism < party_popularity@authoritarianism
+						}
+					}
+				}
+				OR = {
+					has_country_leader_ideology = sub_illiberalism
+					has_country_leader_ideology = sub_radical_harmonainism
+					has_country_leader_ideology = sub_harmonainism
+					has_country_leader_ideology = sub_auth_harmonainism
+					has_country_leader_ideology = sub_oligarchy
+					has_country_leader_ideology = sub_ultra_nationalism
+					has_country_leader_ideology = sub_national_unitism
+					has_country_leader_ideology = sub_unitism
+				}
+			}
+			modifier = {
+				add = 200
+				has_political_power > 200
+				OR = {
+					AND = {
+						has_government = pluralism
+						OR = {
+							pluralism < party_popularity@semidemocracy
+							pluralism < party_popularity@theocratism
+							pluralism < party_popularity@authoritarianism
+							pluralism < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = semidemocracy
+						OR = {
+							semidemocracy < party_popularity@pluralism
+							semidemocracy < party_popularity@theocratism
+							semidemocracy < party_popularity@authoritarianism
+							semidemocracy < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = theocratism
+						OR = {
+							theocratism < party_popularity@pluralism
+							theocratism < party_popularity@semidemocracy
+							theocratism < party_popularity@authoritarianism
+							theocratism < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = authoritarianism
+						OR = {
+							authoritarianism < party_popularity@pluralism
+							authoritarianism < party_popularity@semidemocracy
+							authoritarianism < party_popularity@theocratism
+							authoritarianism < party_popularity@unitism
+						}
+					}
+					AND = {
+						has_government = unitism
+						OR = {
+							unitism < party_popularity@pluralism
+							unitism < party_popularity@semidemocracy
+							unitism < party_popularity@theocratism
+							unitism < party_popularity@authoritarianism
+						}
+					}
+				}
+				OR = {
+					has_country_leader_ideology = sub_illiberalism
+					has_country_leader_ideology = sub_radical_harmonainism
+					has_country_leader_ideology = sub_harmonainism
+					has_country_leader_ideology = sub_auth_harmonainism
+					has_country_leader_ideology = sub_oligarchy
+					has_country_leader_ideology = sub_ultra_nationalism
+					has_country_leader_ideology = sub_national_unitism
+					has_country_leader_ideology = sub_unitism
+				}
+			}
 		}
 	}
 
@@ -204,14 +2635,17 @@ political_actions = {
 		}
 
 		ai_will_do = {
-			base = 0
+			factor = 1
 			modifier = {
-				add = 3
-				factor = 1
-				tag = RVV
+				factor = 100
+				OR = {
+					has_country_leader_ideology = sub_transitional_democracy
+					has_country_leader_ideology = sub_mercantile_republicism
+				}
 			}
 		}
 	}
+
 	semidemo_disallow_elections = {
 		icon = generic_prepare_civil_war
 
@@ -245,6 +2679,18 @@ political_actions = {
 				}
 			}
 			ROOT = { set_politics = { ruling_party = semidemocracy elections_allowed = no } }
+		}
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 100
+				OR = {
+					has_country_leader_ideology = sub_obscurism
+					has_country_leader_ideology = sub_traditionalism
+					has_country_leader_ideology = sub_illiberalism
+				}
+			}
 		}
 	}
 }
