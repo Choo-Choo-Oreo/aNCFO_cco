@@ -39,7 +39,7 @@ https://steamcommunity.com/workshop/filedetails/?id=2994645469
 	Better Mechanics : Production								18 Mar 2024
 	Better Mechanics : Resource Wars							Not Used
 	Better Mechanics : Battle Indicators						Not Used
-	Better Mechanics : Tactics & Urban Warfare					23 Mar 2024
+	Better Mechanics : Tactical Warfare							17 Aug 2024
 	Better Mechanics : Times of Peace							Not Used
 	Better Mechanics : Training and Experience					18 Mar 2024
 	Better Mechanics : War Exhaustion							Not Used
