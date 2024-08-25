@@ -1,6 +1,81 @@
-# Ideological/Religious Scripts #
-	update_unitism_fanaticism = {
-		log = "[GetDateText]: [Root.GetName]: update_unitism_fanaticism" # Log at location instead of here.
+# Ideological/Religious Scripts
+	update_religious_stance = { # +Map Update
+		log = "[GetDateText]: [Root.GetName]: update_religious_stance" # Log at location instead of here.
+		if = {
+			limit = { has_cosmetic_tag = VLADS_IMPERIOUS_UNIFIED }
+			add_ideas = vladaros_cult_religion_law
+		}
+		### Special Countries Countries First ###
+		else_if = {
+			limit = { has_government = unitism }
+			add_ideas = ideological_religion_law
+		}
+		else_if = {
+			limit = { has_country_flag = harmonainus_religion }
+			add_ideas = harmonainus_religion_law
+		}
+		else_if = {
+			limit = { has_country_flag = harmonainus_reformed_religion }
+			add_ideas = harmonainus_reformed_religion_law
+		}
+		else_if = {
+			limit = { has_country_flag = pullus_religion }
+			add_ideas = pullus_religion_law
+		}
+		else_if = {
+			limit = { has_country_flag = ideological_religion }
+			add_ideas = ideological_religion_law
+		}
+		else_if = {
+			limit = { has_country_flag = emperor_personality_religion }
+			add_ideas = emperor_personality_religion_law
+		}
+		else_if = {
+			limit = { has_country_flag = thalassaus_religion }
+			add_ideas = thalassaus_religion_law
+		}
+		else_if = {
+			limit = { has_country_flag = ager_montis_religion }
+			add_ideas = ager_montis_religion_law
+		}
+		else_if = {
+			limit = { has_country_flag = animaekin_religion }
+			add_ideas = animaekin_religion_law
+		}
+		else_if = { # Currently is planned with no name.
+			limit = { has_country_flag = yellow_reg_religion }
+			add_ideas = yellow_reg_religion_law
+		}
+		else_if = {
+			limit = { has_country_flag = secular_religion }
+			add_ideas = secular_religion_law
+		}
+		else_if = { # Just to have a default.
+			limit = {
+				OR = {
+					has_country_flag = nihilism_religion
+					NOT = { OR = {
+						has_country_flag = harmonainus_religion
+						has_country_flag = harmonainus_reformed_religion
+						has_country_flag = pullus_religion
+						has_country_flag = emperor_personality_religion
+						has_country_flag = thalassaus_religion
+						has_country_flag = ager_montis_religion
+						has_country_flag = animaekin_religion
+						has_country_flag = yellow_reg_religion
+						has_country_flag = secular_religion
+					} }
+				}
+			}
+			add_ideas = nihilism_religion_law
+		}
+		force_update_map_mode = { # We update with it here to reduce lag.
+			limit = { is_ai = no }
+			mapmode = country_religions_map
+		}
+	}
+	update_unitism_dogmata_stance = {
+		log = "[GetDateText]: [Root.GetName]: update_unitism_dogmata_stance" # Log at location instead of here.
 		if = {
 			limit = { AND = { has_government = unitism has_country_flag = harmonainus_religion } }
 			set_country_flag = harmonainus_religion_archived
@@ -136,81 +211,6 @@
 			set_country_flag = nihilism_religion
 		}
 	}
-	update_religious_stance = { # +Map Update
-		log = "[GetDateText]: [Root.GetName]: update_religious_stance" # Log at location instead of here.
-		if = {
-			limit = { has_cosmetic_tag = VLADS_IMPERIOUS_UNIFIED }
-			add_ideas = vladaros_cult_religion_law
-		}
-		### Special Countries Countries First ###
-		else_if = {
-			limit = { has_government = unitism }
-			add_ideas = ideological_religion_law
-		}
-		else_if = {
-			limit = { has_country_flag = harmonainus_religion }
-			add_ideas = harmonainus_religion_law
-		}
-		else_if = {
-			limit = { has_country_flag = harmonainus_reformed_religion }
-			add_ideas = harmonainus_reformed_religion_law
-		}
-		else_if = {
-			limit = { has_country_flag = pullus_religion }
-			add_ideas = pullus_religion_law
-		}
-		else_if = {
-			limit = { has_country_flag = ideological_religion }
-			add_ideas = ideological_religion_law
-		}
-		else_if = {
-			limit = { has_country_flag = emperor_personality_religion }
-			add_ideas = emperor_personality_religion_law
-		}
-		else_if = {
-			limit = { has_country_flag = thalassaus_religion }
-			add_ideas = thalassaus_religion_law
-		}
-		else_if = {
-			limit = { has_country_flag = ager_montis_religion }
-			add_ideas = ager_montis_religion_law
-		}
-		else_if = {
-			limit = { has_country_flag = animaekin_religion }
-			add_ideas = animaekin_religion_law
-		}
-		else_if = { # Currently is planned with no name.
-			limit = { has_country_flag = yellow_reg_religion }
-			add_ideas = yellow_reg_religion_law
-		}
-		else_if = {
-			limit = { has_country_flag = secular_religion }
-			add_ideas = secular_religion_law
-		}
-		else_if = { # Just to have a default.
-			limit = {
-				OR = {
-					has_country_flag = nihilism_religion
-					NOT = { OR = {
-						has_country_flag = harmonainus_religion
-						has_country_flag = harmonainus_reformed_religion
-						has_country_flag = pullus_religion
-						has_country_flag = emperor_personality_religion
-						has_country_flag = thalassaus_religion
-						has_country_flag = ager_montis_religion
-						has_country_flag = animaekin_religion
-						has_country_flag = yellow_reg_religion
-						has_country_flag = secular_religion
-					} }
-				}
-			}
-			add_ideas = nihilism_religion_law
-		}
-		force_update_map_mode = { # We update with it here to reduce lag.
-			limit = { is_ai = no }
-			mapmode = country_religions_map
-		}
-	}
 	update_ideological_dogmata_stance = { # +Map Update
 		log = "[GetDateText]: [Root.GetName]: update_ideological_dogmata_stance" # Log at location instead of here.
 		if = {
@@ -335,11 +335,95 @@
 		}
 	}
 	update_all_stances = {
-		update_unitism_fanaticism = yes
 		update_religious_stance = yes
+		update_unitism_dogmata_stance = yes
 		update_ideological_dogmata_stance = yes
 	}
-	# Switch Religion #
+	update_action_sub_ideology = {
+		IF = {
+			limit = { has_idea = sub_unradical_law NOT = { OR = {
+				has_country_leader_ideology = sub_illuminism
+				has_country_leader_ideology = sub_pluralism
+				has_country_leader_ideology = sub_constitutionalism
+				has_country_leader_ideology = sub_conservatism
+				has_country_leader_ideology = sub_liberalism
+				has_country_leader_ideology = sub_progressivism
+				has_country_leader_ideology = sub_populism
+				has_country_leader_ideology = sub_obscurism
+				has_country_leader_ideology = sub_transitional_democracy
+				has_country_leader_ideology = sub_traditionalism
+				has_country_leader_ideology = sub_mercantile_republicism
+				has_country_leader_ideology = sub_socialism
+				has_country_leader_ideology = sub_illiberalism
+			} } }
+			update_ideological_dogmata_stance = yes
+		}
+		IF = {
+			limit = { has_idea = sub_radical_harmonainism_law NOT = { has_country_leader_ideology = sub_radical_harmonainism } }
+			update_ideological_dogmata_stance = yes
+		}
+		IF = {
+			limit = { has_idea = sub_harmonainism_law NOT = { has_country_leader_ideology = sub_harmonainism } }
+			update_ideological_dogmata_stance = yes
+		}
+		IF = {
+			limit = { has_idea = sub_reformed_harmonainism_law NOT = { has_country_leader_ideology = sub_reformed_harmonainism } }
+			update_ideological_dogmata_stance = yes
+		}
+		IF = {
+			limit = { has_idea = sub_pullusism_law NOT = { has_country_leader_ideology = sub_pullusism } }
+			update_ideological_dogmata_stance = yes
+		}
+		IF = {
+			limit = { has_idea = sub_thalassaus_law NOT = { has_country_leader_ideology = sub_thalassaus } }
+			update_ideological_dogmata_stance = yes
+		}
+		IF = {
+			limit = { has_idea = sub_ager_montis_law NOT = { has_country_leader_ideology = sub_ager_montis } }
+			update_ideological_dogmata_stance = yes
+		}
+		IF = {
+			limit = { has_idea = sub_animaekin_law NOT = { has_country_leader_ideology = sub_animaekin } }
+			update_ideological_dogmata_stance = yes
+		}
+		IF = {
+			limit = { has_idea = sub_monarchy_law NOT = { has_country_leader_ideology = sub_monarchy } }
+			update_ideological_dogmata_stance = yes
+		}
+		IF = {
+			limit = { has_idea = sub_authoritarian_law NOT = { has_country_leader_ideology = sub_authoritarian } }
+			update_ideological_dogmata_stance = yes
+		}
+		IF = {
+			limit = { has_idea = sub_auth_harmonainism_law NOT = { has_country_leader_ideology = sub_auth_harmonainism } }
+			update_ideological_dogmata_stance = yes
+		}
+		IF = {
+			limit = { has_idea = sub_oligarchy_law NOT = { has_country_leader_ideology = sub_oligarchy } }
+			update_ideological_dogmata_stance = yes
+		}
+		IF = {
+			limit = { has_idea = sub_ultra_nationalism_law NOT = { has_country_leader_ideology = sub_ultra_nationalism } }
+			update_ideological_dogmata_stance = yes
+		}
+		IF = {
+			limit = { has_idea = sub_national_unitism_law NOT = { has_country_leader_ideology = sub_national_unitism } }
+			update_ideological_dogmata_stance = yes
+		}
+		IF = {
+			limit = { has_idea = sub_unitism_law NOT = { has_country_leader_ideology = sub_unitism } }
+			update_ideological_dogmata_stance = yes
+		}
+		IF = {
+			limit = { has_idea = sub_syndicalism_law NOT = { has_country_leader_ideology = sub_syndicalism } }
+			update_ideological_dogmata_stance = yes
+		}
+		IF = {
+			limit = { has_idea = sub_fascism_law NOT = { has_country_leader_ideology = sub_fascism } }
+			update_ideological_dogmata_stance = yes
+		}
+	}
+	# Switch Religion
 		switch_religion_harmonainus_religion = {
 			log = "[GetDateText]: [Root.GetName]: switch_religion_harmonainus_religion"
 			set_country_flag = harmonainus_religion

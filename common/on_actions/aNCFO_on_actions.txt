@@ -132,8 +132,6 @@ on_actions = {
 						PREV = { add_equipment_to_stockpile = { type = convoy amount = 25 } }
 					}
 				}
-			}
-			effect = {
 				IF = {
 					LIMIT = {
 						is_species_rhyniognatha = yes
@@ -144,6 +142,24 @@ on_actions = {
 						can_generate_female_unit_leaders  = yes
 						can_generate_female_country_leaders = yes
 					}
+				}
+			}
+		# Artificers
+			effect = {
+				every_state = {
+					limit = {
+						OR = {
+							state_is_in_the_kunstfertiger_sea = yes
+							state_is_in_the_mitti_sea = yes
+							#is_core_of = DOO
+							#is_core_of = MTR
+							#is_core_of = RDN
+							#is_core_of = ROM
+							#is_core_of = TRH
+						}
+					}
+					add_claim_by = ATC
+					add_claim_by = OAK
 				}
 			}
 		# Harmonainus Imperious
@@ -230,24 +246,6 @@ on_actions = {
 					add_core_of = LPR
 				}
 			}
-		# Artificers
-			effect = {
-				every_state = {
-					limit = {
-						OR = {
-							state_is_in_the_kunstfertiger_sea = yes
-							state_is_in_the_mitti_sea = yes
-							#is_core_of = DOO
-							#is_core_of = MTR
-							#is_core_of = RDN
-							#is_core_of = ROM
-							#is_core_of = TRH
-						}
-					}
-					add_claim_by = ATC
-					add_claim_by = OAK
-				}
-			}
 		# Romverjor Rihhi
 			effect = {
 				every_state = {
@@ -297,134 +295,54 @@ on_actions = {
 	#	effect = {
 	#		if = {
 	#			limit = {
-	#				FROM.FROM = {
-	#					state = 14
-	#				}
-	#				FROM = {
-	#					original_tag = MRC
-	#				}
-	#				ROOT = { 
-	#					NOT = { original_tag = MRC }
-	#				}
+	#				FROM.FROM = { state = 14 }
+	#				FROM = { original_tag = MRC }
+	#				ROOT = { NOT = { original_tag = MRC } }
 	#			}
+	#			log = "[GetDateText]: [Root.GetName]: on_state_control_changed: Fall of Aborroas"
 	#			set_global_flag = aborroas_is_lost
 	#		}
 	#	}
 	#}
-	on_daily = { # 7 per Week
-	}
-	on_weekly = { # 4 per Month
+	on_government_change = {
 		effect = {
 			IF = {
 				limit = { has_government = unitism NOT = { has_country_flag = ideological_religion } }
-				log = "[GetDateText]: [Root.GetName]: on_weekly: update_unitism_fanaticism n\Switch to"
-				update_unitism_fanaticism = yes
+				log = "[GetDateText]: [Root.GetName]: on_government_change: update_action_sub_unitism n\Switch to"
+				update_unitism_dogmata_stance = yes
+				update_religious_stance = yes # Must update.
 			}
 			IF = {
 				limit = { has_country_flag = ideological_religion NOT = { has_government = unitism } }
-				log = "[GetDateText]: [Root.GetName]: on_weekly: update_unitism_fanaticism n\Switch away"
-				update_unitism_fanaticism = yes
+				log = "[GetDateText]: [Root.GetName]: on_government_change: update_action_sub_unitism n\Switch away"
+				update_unitism_dogmata_stance = yes
+				update_religious_stance = yes # Must update.
 			}
-			IF = {
-				limit = { has_idea = sub_unradical_law NOT = { OR = {
-					has_country_leader_ideology = sub_illuminism
-					has_country_leader_ideology = sub_pluralism
-					has_country_leader_ideology = sub_constitutionalism
-					has_country_leader_ideology = sub_conservatism
-					has_country_leader_ideology = sub_liberalism
-					has_country_leader_ideology = sub_progressivism
-					has_country_leader_ideology = sub_populism
-					has_country_leader_ideology = sub_obscurism
-					has_country_leader_ideology = sub_transitional_democracy
-					has_country_leader_ideology = sub_traditionalism
-					has_country_leader_ideology = sub_mercantile_republicism
-					has_country_leader_ideology = sub_socialism
-					has_country_leader_ideology = sub_illiberalism
-				} } }
-				log = "[GetDateText]: [Root.GetName]: on_weekly: update_ideological_dogmata_stance"
-				update_ideological_dogmata_stance = yes
-			}
-			IF = {
-				limit = { has_idea = sub_radical_harmonainism_law NOT = { has_country_leader_ideology = sub_radical_harmonainism } }
-				log = "[GetDateText]: [Root.GetName]: on_weekly: update_ideological_dogmata_stance"
-				update_ideological_dogmata_stance = yes
-			}
-			IF = {
-				limit = { has_idea = sub_harmonainism_law NOT = { has_country_leader_ideology = sub_harmonainism } }
-				log = "[GetDateText]: [Root.GetName]: on_weekly: update_ideological_dogmata_stance"
-				update_ideological_dogmata_stance = yes
-			}
-			IF = {
-				limit = { has_idea = sub_reformed_harmonainism_law NOT = { has_country_leader_ideology = sub_reformed_harmonainism } }
-				log = "[GetDateText]: [Root.GetName]: on_weekly: update_ideological_dogmata_stance"
-				update_ideological_dogmata_stance = yes
-			}
-			IF = {
-				limit = { has_idea = sub_pullusism_law NOT = { has_country_leader_ideology = sub_pullusism } }
-				log = "[GetDateText]: [Root.GetName]: on_weekly: update_ideological_dogmata_stance"
-				update_ideological_dogmata_stance = yes
-			}
-			IF = {
-				limit = { has_idea = sub_thalassaus_law NOT = { has_country_leader_ideology = sub_thalassaus } }
-				log = "[GetDateText]: [Root.GetName]: on_weekly: update_ideological_dogmata_stance"
-				update_ideological_dogmata_stance = yes
-			}
-			IF = {
-				limit = { has_idea = sub_ager_montis_law NOT = { has_country_leader_ideology = sub_ager_montis } }
-				log = "[GetDateText]: [Root.GetName]: on_weekly: update_ideological_dogmata_stance"
-				update_ideological_dogmata_stance = yes
-			}
-			IF = {
-				limit = { has_idea = sub_animaekin_law NOT = { has_country_leader_ideology = sub_animaekin } }
-				log = "[GetDateText]: [Root.GetName]: on_weekly: update_ideological_dogmata_stance"
-				update_ideological_dogmata_stance = yes
-			}
-			IF = {
-				limit = { has_idea = sub_monarchy_law NOT = { has_country_leader_ideology = sub_monarchy } }
-				log = "[GetDateText]: [Root.GetName]: on_weekly: update_ideological_dogmata_stance"
-				update_ideological_dogmata_stance = yes
-			}
-			IF = {
-				limit = { has_idea = sub_authoritarian_law NOT = { has_country_leader_ideology = sub_authoritarian } }
-				log = "[GetDateText]: [Root.GetName]: on_weekly: update_ideological_dogmata_stance"
-				update_ideological_dogmata_stance = yes
-			}
-			IF = {
-				limit = { has_idea = sub_auth_harmonainism_law NOT = { has_country_leader_ideology = sub_auth_harmonainism } }
-				log = "[GetDateText]: [Root.GetName]: on_weekly: update_ideological_dogmata_stance"
-				update_ideological_dogmata_stance = yes
-			}
-			IF = {
-				limit = { has_idea = sub_oligarchy_law NOT = { has_country_leader_ideology = sub_oligarchy } }
-				log = "[GetDateText]: [Root.GetName]: on_weekly: update_ideological_dogmata_stance"
-				update_ideological_dogmata_stance = yes
-			}
-			IF = {
-				limit = { has_idea = sub_ultra_nationalism_law NOT = { has_country_leader_ideology = sub_ultra_nationalism } }
-				log = "[GetDateText]: [Root.GetName]: on_weekly: update_ideological_dogmata_stance"
-				update_ideological_dogmata_stance = yes
-			}
-			IF = {
-				limit = { has_idea = sub_national_unitism_law NOT = { has_country_leader_ideology = sub_national_unitism } }
-				log = "[GetDateText]: [Root.GetName]: on_weekly: update_ideological_dogmata_stance"
-				update_ideological_dogmata_stance = yes
-			}
-			IF = {
-				limit = { has_idea = sub_unitism_law NOT = { has_country_leader_ideology = sub_unitism } }
-				log = "[GetDateText]: [Root.GetName]: on_weekly: update_ideological_dogmata_stance"
-				update_ideological_dogmata_stance = yes
-			}
-			IF = {
-				limit = { has_idea = sub_syndicalism_law NOT = { has_country_leader_ideology = sub_syndicalism } }
-				log = "[GetDateText]: [Root.GetName]: on_weekly: update_ideological_dogmata_stance"
-				update_ideological_dogmata_stance = yes
-			}
-			IF = {
-				limit = { has_idea = sub_fascism_law NOT = { has_country_leader_ideology = sub_fascism } }
-				log = "[GetDateText]: [Root.GetName]: on_weekly: update_ideological_dogmata_stance"
-				update_ideological_dogmata_stance = yes
-			}
+			update_action_sub_ideology = yes
+			log = "[GetDateText]: [Root.GetName]: on_government_change: update_ideological_dogmata_stance"
 		}
+	}
+	on_ruling_party_change = {
+		effect = {
+			IF = {
+				limit = { has_government = unitism NOT = { has_country_flag = ideological_religion } }
+				log = "[GetDateText]: [Root.GetName]: on_ruling_party_change: update_action_sub_unitism n\Switch to"
+				update_unitism_dogmata_stance = yes
+				update_religious_stance = yes # Must update.
+			}
+			IF = {
+				limit = { has_country_flag = ideological_religion NOT = { has_government = unitism } }
+				log = "[GetDateText]: [Root.GetName]: on_ruling_party_change: update_action_sub_unitism n\Switch away"
+				update_unitism_dogmata_stance = yes
+				update_religious_stance = yes # Must update.
+			}
+			update_action_sub_ideology = yes
+			log = "[GetDateText]: [Root.GetName]: on_ruling_party_change: update_ideological_dogmata_stance"
+		}
+	}
+	on_daily = { # 7 per Week
+	}
+	on_weekly = { # 4 per Month
 	}
 	on_monthly = { # 12 per Year
 		effect = { # Maps
