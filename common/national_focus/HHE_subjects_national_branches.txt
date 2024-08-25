@@ -1,9 +1,3 @@
-### search_filters = {FOCUS_FILTER_POLITICAL}
-### search_filters = {FOCUS_FILTER_INDUSTRY}
-### search_filters = {FOCUS_FILTER_STABILITY}
-### search_filters = {FOCUS_FILTER_WAR_SUPPORT}
-### search_filters = {FOCUS_FILTER_MANPOWER}
-
 focus_tree = {
 	id = hhe_subjects_focus
 	
@@ -3202,6 +3196,124 @@ focus_tree = { # Released
 			country_lock_all_division_template = no
 		}
 	}
+	# Follow
+		shared_focus = { # Follow the Central Government
+			id = HHI_subjects_follow_central_government
+			icon = GFX_goal_generic_improve_relations
+			prerequisite = { focus = HHI_subjects_clear_sight }
+			mutually_exclusive = { focus = HHI_subjects_betray_central_government }
+			relative_position_id = HHI_subjects_clear_sight
+			x = 3
+			y = 1
+			cost = 10
+
+			available = {
+				has_global_flag = HHE_central_government_agenda
+				NOT = { has_global_flag = HHE_collapse_of_the_nation }
+			}
+			bypass = {
+			}
+
+			ai_will_do = {
+				factor = 100
+			}
+
+			available_if_capitulated = yes
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus HHI_subjects_follow_central_government"
+				add_stability = 0.10
+			}
+		}
+	# Betray
+		shared_focus = { # Betray the Central Government
+			id = HHI_subjects_betray_central_government
+			icon = GFX_goal_generic_demand_territory
+			prerequisite = { focus = HHI_subjects_clear_sight }
+			mutually_exclusive = { focus = HHI_subjects_follow_central_government }
+			relative_position_id = HHI_subjects_clear_sight
+			x = -3
+			y = 1
+			cost = 10
+
+			available = {
+				has_global_flag = HHE_central_government_agenda
+				NOT = { has_global_flag = HHE_collapse_of_the_nation }
+			}
+			bypass = {
+			}
+
+			ai_will_do = {
+				factor = 3
+			}
+
+			available_if_capitulated = yes
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus HHI_subjects_betray_central_government"
+				add_stability = -0.05
+			}
+		}
+	# Nobles
+		shared_focus = { # Deal with Nobility Sellouts
+			id = HHE_subjects_nobility_industry_sellout
+			icon = GFX_goal_generic_neutrality_focus
+			prerequisite = { focus = HHI_subjects_follow_central_government focus = HHI_subjects_betray_central_government }
+			#mutually_exclusive = { focus =  }
+			relative_position_id = HHI_subjects_clear_sight
+			x = -3
+			y = 2
+			cost = 10
+
+			allow_branch = {
+				NOT = { has_global_flag = HHE_collapse_of_the_nation }
+			}
+			available = {
+			}
+			bypass = {
+			}
+
+			ai_will_do = {
+				factor = 3
+			}
+
+			available_if_capitulated = yes
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus HHE_subjects_nobility_industry_sellout"
+				remove_ideas = nobility_held_industry
+			}
+		}
+	# Bureaucrats
+		shared_focus = { # Outdated bureaucracy
+			id = HHE_subjects_outdated_bureaucracy
+			icon = GFX_goal_generic_neutrality_focus
+			prerequisite = { focus = HHI_subjects_follow_central_government focus = HHI_subjects_betray_central_government }
+			#mutually_exclusive = { focus =  }
+			relative_position_id = HHI_subjects_clear_sight
+			x = 3
+			y = 2
+			cost = 10
+
+			allow_branch = {
+				NOT = { has_global_flag = HHE_collapse_of_the_nation }
+			}
+			available = {
+			}
+			bypass = {
+			}
+
+			ai_will_do = {
+				factor = 3
+			}
+
+			available_if_capitulated = yes
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus HHE_subjects_outdated_bureaucracy"
+				remove_ideas = traditional_bureaucracy
+			}
+		}
 	# Minority Question
 		shared_focus = { # Deal with the Minority Species
 			id = HHI_subjects_minority_species
@@ -3605,68 +3717,6 @@ focus_tree = { # Released
 				}
 				add_stability = 0.05
 				add_war_support = 0.05
-			}
-		}
-	# Follow
-		shared_focus = { # Follow the Central Government
-			id = HHI_subjects_follow_central_government
-			icon = GFX_goal_generic_improve_relations
-			prerequisite = { focus = HHI_subjects_clear_sight }
-			mutually_exclusive = { focus = HHI_subjects_betray_central_government }
-			relative_position_id = HHI_subjects_clear_sight
-			x = 3
-			y = 1
-			cost = 10
-
-			available = {
-				has_global_flag = HHE_central_government_agenda
-				NOT = { has_global_flag = HHE_collapse_of_the_nation }
-			}
-			bypass = {
-			}
-
-			ai_will_do = {
-				factor = 100
-			}
-
-			available_if_capitulated = yes
-
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus HHI_subjects_follow_central_government"
-				add_stability = 0.10
-				remove_ideas = nobility_held_industry #Remove
-				remove_ideas = traditional_bureaucracy #Remove
-			}
-		}
-	# Betray
-		shared_focus = { # Betray the Central Government
-			id = HHI_subjects_betray_central_government
-			icon = GFX_goal_generic_demand_territory
-			prerequisite = { focus = HHI_subjects_clear_sight }
-			mutually_exclusive = { focus = HHI_subjects_follow_central_government }
-			relative_position_id = HHI_subjects_clear_sight
-			x = -3
-			y = 1
-			cost = 10
-
-			available = {
-				has_global_flag = HHE_central_government_agenda
-				NOT = { has_global_flag = HHE_collapse_of_the_nation }
-			}
-			bypass = {
-			}
-
-			ai_will_do = {
-				factor = 3
-			}
-
-			available_if_capitulated = yes
-
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus HHI_subjects_betray_central_government"
-				add_stability = -0.05
-				remove_ideas = nobility_held_industry #Remove
-				remove_ideas = traditional_bureaucracy #Remove
 			}
 		}
 	# Civil War

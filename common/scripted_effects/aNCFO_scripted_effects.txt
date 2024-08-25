@@ -1,10 +1,4 @@
 # Ideological/Religious Scripts #
-	update_all_stances = {
-		#log = "[GetDateText]: [Root.GetName]: update_all_stances" # Log at location instead of here.
-		update_unitism_fanaticism = yes
-		update_religious_stance = yes # Update with Switch Religion
-		update_ideological_dogmata_stance = yes
-	}
 	update_unitism_fanaticism = {
 		log = "[GetDateText]: [Root.GetName]: update_unitism_fanaticism" # Log at location instead of here.
 		if = {
@@ -127,7 +121,7 @@
 			set_country_flag = nihilism_religion
 			clr_country_flag = ideological_religion
 		}
-		else_if = { # Just to have a default.
+		else_if = { # Just to have a default. Will replace with a event.
 			limit = { NOT = { OR = {
 				has_country_flag = harmonainus_religion
 				has_country_flag = harmonainus_reformed_religion
@@ -142,7 +136,7 @@
 			set_country_flag = nihilism_religion
 		}
 	}
-	update_religious_stance = {
+	update_religious_stance = { # +Map Update
 		log = "[GetDateText]: [Root.GetName]: update_religious_stance" # Log at location instead of here.
 		if = {
 			limit = { has_cosmetic_tag = VLADS_IMPERIOUS_UNIFIED }
@@ -217,7 +211,7 @@
 			mapmode = country_religions_map
 		}
 	}
-	update_ideological_dogmata_stance = {
+	update_ideological_dogmata_stance = { # +Map Update
 		log = "[GetDateText]: [Root.GetName]: update_ideological_dogmata_stance" # Log at location instead of here.
 		if = {
 			limit = { has_country_leader_ideology = sub_illuminism }
@@ -335,6 +329,15 @@
 			limit = { has_country_leader_ideology = sub_fascism }
 			add_ideas = sub_fascism_law
 		}
+		force_update_map_mode = { # We update with it here to reduce lag.
+			limit = { is_ai = no }
+			mapmode = country_true_ideology_map
+		}
+	}
+	update_all_stances = {
+		update_unitism_fanaticism = yes
+		update_religious_stance = yes
+		update_ideological_dogmata_stance = yes
 	}
 	# Switch Religion #
 		switch_religion_harmonainus_religion = {
@@ -558,7 +561,7 @@
 				remove_ideas = weak_unitism_influence
 			}
 		}
-	# Add/Remove Popularity #
+	# Add/Remove Popularity
 		add_25_current_party_popularity = {
 			if = {
 				limit = { has_government = pluralism }
@@ -929,7 +932,7 @@
 				}
 			}
 		}
-# Generic Scripts #
+# Generic Scripts
 	trade_raise = {
 		if = {
 			limit = { has_idea = closed_economy }
@@ -1313,7 +1316,7 @@
 			multiply_temp_variable = { temp_doc = 1.0 }
 		}
 	}
-# Peace Deals Scripts #
+# Peace Deals Scripts
 	HHE_great_war_won = {
 		log = "[GetDateText]: [Root.GetName]: HHE_great_war_won"
 		# Nothing till more state/countries are added.
