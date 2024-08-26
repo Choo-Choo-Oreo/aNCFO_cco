@@ -16,273 +16,21 @@ shared_focus = { # Political Effort
 		add_political_power = 100
 	}
 }
-# Transitionist/Liberalization
-	shared_focus = { # Transitionist Effort
-		id = political_semidemocracy_effort
-		icon = GFX_focus_unknown_political
-		prerequisite = { focus = political_effort }
-		mutually_exclusive = { focus = political_theocratism_effort focus = political_authoritarianism_effort focus = political_unitism_effort }
-		available = {
-			OR = {
-				has_government = pluralism
-				has_government = semidemocracy
-				pluralism > 0.25
-				semidemocracy > 0.25
-			}
-		}
-		x = -4
-		y = 1
-		relative_position_id = political_effort
-		cost = 10
-
-		search_filters = { FOCUS_FILTER_POLITICAL }
-
-		ai_will_do = {
-			factor = 100
-			modifier = {
-				factor = 100
-				OR = {
-					has_government = pluralism
-					has_government = semidemocracy
-					pluralism > 0.34
-					semidemocracy > 0.34
-				}
-			}
-			modifier = {
-				factor = 0.1
-				any_neighbor_country = {
-						is_major = yes
-					OR = { has_government = pluralism has_government = semidemocracy }
-				}
-				NOT = {
-					any_neighbor_country = {
-						is_major = yes
-						OR = { has_government = theocratism has_government = authoritarianism has_government = unitism }
-					}
-				}
-			}
-		}
-
-		completion_reward = {
-			log = "[GetDateText]: [Root.GetName]: Focus political_semidemocracy_effort"
-			add_timed_idea = { idea = modern_state days = 720 }
-		}
-	}
-
-	shared_focus = { # Liberalize our Society
-		id = liberalize_our_society
-		icon = GFX_focus_unknown_political
-		prerequisite = { focus = political_semidemocracy_effort }
-		x = 2
-		y = 1
-		relative_position_id = political_semidemocracy_effort
-		cost = 10
-
-		search_filters = { FOCUS_FILTER_POLITICAL }
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-			log = "[GetDateText]: [Root.GetName]: Focus liberalize_our_society"
-		}
-	}
-
-	shared_focus = { # Freedom of Faith
-		id = liberalize_our_faith
-		icon = GFX_focus_unknown_political
-		prerequisite = { focus = liberalize_our_society }
-		x = 0
-		y = 1
-		relative_position_id = liberalize_our_society
-		cost = 10
-
-		search_filters = { FOCUS_FILTER_POLITICAL }
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-			log = "[GetDateText]: [Root.GetName]: Focus liberalize_our_faith"
-		}
-	}
-
-	shared_focus = { # Question of Attunments
-		id = attunements_question
-		icon = GFX_focus_unknown_political
-		prerequisite = { focus = liberalize_our_faith }
-		x = 0
-		y = 1
-		relative_position_id = liberalize_our_faith
-		cost = 10
-
-		search_filters = { FOCUS_FILTER_POLITICAL }
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-			log = "[GetDateText]: [Root.GetName]: Focus liberalize_our_society"
-			custom_effect_tooltip = attunement_status_focus_tt
-		}
-	}
-
-	shared_focus = { # Reinforce the Current State
-		id = reinforce_current_state
-		icon = GFX_focus_unknown_political
-		prerequisite = { focus = political_semidemocracy_effort }
-		mutually_exclusive = { focus = liberalize_the_state }
-		x = 0
-		y = 1
-		relative_position_id = political_semidemocracy_effort
-		cost = 10
-
-		search_filters = { FOCUS_FILTER_POLITICAL }
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-			log = "[GetDateText]: [Root.GetName]: Focus reinforce_current_state"
-			add_10_current_party_popularity = yes
-		}
-	}
-
-	shared_focus = { # Legal Rights
-		id = legal_rights
-		icon = GFX_focus_unknown_political
-		prerequisite = { focus = reinforce_current_state }
-		x = 0
-		y = 1
-		relative_position_id = reinforce_current_state
-		cost = 10
-
-		search_filters = { FOCUS_FILTER_POLITICAL }
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-			log = "[GetDateText]: [Root.GetName]: Focus legal_rights"
-		}
-	}
-
-	shared_focus = { # Unitary Foundation
-		id = unitary_foundation
-		icon = GFX_focus_unknown_political
-		prerequisite = { focus = legal_rights }
-		x = 0
-		y = 1
-		relative_position_id = legal_rights
-		cost = 10
-
-		search_filters = { FOCUS_FILTER_POLITICAL }
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-			log = "[GetDateText]: [Root.GetName]: Focus unitary_foundation"
-		}
-	}
-
-	shared_focus = { # Intrench the Party
-		id = stay_semiauthoritarian
-		icon = GFX_focus_unknown_political
-		prerequisite = { focus = unitary_foundation }
-		mutually_exclusive = { focus = political_pluralism_effort }
-		available = {
-			OR = {
-				NOT = { has_government = pluralism }
-				pluralism < 0.34
-			}
-		}
-		x = 0
-		y = 3
-		relative_position_id = reinforce_current_state
-		cost = 10
-
-		search_filters = { FOCUS_FILTER_POLITICAL }
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-			log = "[GetDateText]: [Root.GetName]: Focus stay_semiauthoritarian"
-			add_timed_idea = { idea = intrench_current_party days = 720 }
-		}
-	}
 # Pluralism
-	shared_focus = { # Liberalize the State
-		id = liberalize_the_state
-		icon = GFX_focus_unknown_political
-		prerequisite = { focus = political_semidemocracy_effort }
-		mutually_exclusive = { focus = reinforce_current_state }
-		x = -2
-		y = 1
-		relative_position_id = political_semidemocracy_effort
-		cost = 10
-
-		search_filters = { FOCUS_FILTER_POLITICAL }
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-			log = "[GetDateText]: [Root.GetName]: Focus liberalize_the_state"
-			IF = {
-				LIMIT = { has_government = pluralism }
-				add_10_current_party_popularity = yes
-				ELSE = {
-					remove_10_current_party_popularity = yes
-				}
-			}
-		}
-	}
-
-	shared_focus = { # Constitutional Rights
-		id = constitutional_rights
-		icon = GFX_focus_unknown_political
-		prerequisite = { focus = liberalize_the_state }
-		x = 0
-		y = 1
-		relative_position_id = liberalize_the_state
-		cost = 10
-
-		search_filters = { FOCUS_FILTER_POLITICAL }
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-			log = "[GetDateText]: [Root.GetName]: Focus constitutional_rights"
-		}
-	}
-
-	shared_focus = { # Constitutional Foundation
-		id = constitutional_foundation
-		icon = GFX_focus_unknown_political
-		prerequisite = { focus = constitutional_rights }
-		x = 0
-		y = 1
-		relative_position_id = constitutional_rights
-		cost = 10
-
-		search_filters = { FOCUS_FILTER_POLITICAL }
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-			log = "[GetDateText]: [Root.GetName]: Focus constitutional_foundation"
-		}
-	}
-
 	shared_focus = { # Pluralism Effort
 		id = political_pluralism_effort
 		icon = GFX_focus_unknown_political
 		prerequisite = { focus = political_effort }
-		prerequisite = { focus = constitutional_foundation }
-		mutually_exclusive = { focus = stay_semiauthoritarian }
+		mutually_exclusive = { focus = political_semidemocracy_effort focus = political_theocratism_effort focus = political_authoritarianism_effort focus = political_unitism_effort }
 		available = {
 			OR = {
 				has_government = pluralism
 				pluralism > 0.25
 			}
 		}
-		x = -3
-		y = 4
-		relative_position_id = political_semidemocracy_effort
+		x = -8
+		y = 1
+		relative_position_id = political_effort
 		cost = 10
 
 		search_filters = { FOCUS_FILTER_POLITICAL }
@@ -313,25 +61,56 @@ shared_focus = { # Political Effort
 
 		completion_reward = {
 			log = "[GetDateText]: [Root.GetName]: Focus political_pluralism_effort"
-			add_timed_idea = { idea = freedom_for_the_people days = 720 }
+			add_timed_idea = { idea = idea_strengthening_voting_rights days = 720 }
 		}
 	}
-# Shared Trans-Plural
-	shared_focus = { # Give us Liberty or give us Death
-		id = liberty_or_death
+# Transitionist
+	shared_focus = { # Transitionist Effort
+		id = political_semidemocracy_effort
 		icon = GFX_focus_unknown_political
-		prerequisite = { focus = stay_semiauthoritarian focus = political_pluralism_effort }
-		x = 1
-		y = 4
-		relative_position_id = political_pluralism_effort
+		prerequisite = { focus = political_effort }
+		mutually_exclusive = { focus = political_pluralism_effort focus = political_theocratism_effort focus = political_authoritarianism_effort focus = political_unitism_effort }
+		available = {
+			OR = {
+				has_government = semidemocracy
+				semidemocracy > 0.25
+			}
+		}
+		x = -3
+		y = 1
+		relative_position_id = political_effort
 		cost = 10
 
 		search_filters = { FOCUS_FILTER_POLITICAL }
 
-		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 100
+			modifier = {
+				factor = 100
+				OR = {
+					has_government = semidemocracy
+					pluralism > 0.34
+					semidemocracy > 0.34
+				}
+			}
+			modifier = {
+				factor = 0.1
+				any_neighbor_country = {
+						is_major = yes
+					OR = { has_government = pluralism has_government = semidemocracy }
+				}
+				NOT = {
+					any_neighbor_country = {
+						is_major = yes
+						OR = { has_government = theocratism has_government = authoritarianism has_government = unitism }
+					}
+				}
+			}
+		}
 
 		completion_reward = {
-			log = "[GetDateText]: [Root.GetName]: Focus liberty_or_death"
+			log = "[GetDateText]: [Root.GetName]: Focus political_semidemocracy_effort"
+			add_timed_idea = { idea = idea_democratization days = 720 }
 		}
 	}
 # Authoritarianism
@@ -339,14 +118,14 @@ shared_focus = { # Political Effort
 		id = political_authoritarianism_effort
 		icon = GFX_focus_unknown_political
 		prerequisite = { focus = political_effort }
-		mutually_exclusive = { focus = political_semidemocracy_effort focus = political_theocratism_effort focus = political_unitism_effort }
+		mutually_exclusive = { focus = political_pluralism_effort focus = political_semidemocracy_effort focus = political_theocratism_effort focus = political_unitism_effort }
 		available = {
 			OR = {
 				has_government = authoritarianism
 				authoritarianism > 0.25
 			}
 		}
-		x = 1
+		x = 2
 		y = 1
 		relative_position_id = political_effort
 		cost = 10
@@ -379,21 +158,114 @@ shared_focus = { # Political Effort
 
 		completion_reward = {
 			log = "[GetDateText]: [Root.GetName]: Focus political_authoritarianism_effort"
-			add_timed_idea = { idea = power_to_the_state days = 720 }
+			add_timed_idea = { idea = idea_totalitarianism days = 720 }
 		}
 	}
 
-	shared_focus = { # Our Monarch
-		id = political_our_monarch
+	shared_focus = { # Dominate Political Control
+		id = authoritarianism_oligarchy
+		icon = GFX_focus_unknown_political
+		prerequisite = { focus = political_semidemocracy_effort focus = political_authoritarianism_effort }
+		#mutually_exclusive = { focus =  }
+		available = {
+			OR = {
+				has_government = semidemocracy
+				semidemocracy > 0.33
+				has_government = authoritarianism
+				authoritarianism > 0.33
+			}
+			OR = {
+				# semidemocracy
+					has_country_leader_ideology = sub_obscurism
+					has_country_leader_ideology = sub_traditionalism
+					has_country_leader_ideology = sub_illiberalism
+				has_country_leader_ideology = sub_authoritarian
+			}
+		}
+		x = -3
+		y = 1
+		relative_position_id = political_authoritarianism_effort
+		cost = 10
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		ai_will_do = {
+			factor = 100
+			modifier = {
+				factor = 100
+				OR = {
+					has_government = authoritarianism
+					authoritarianism > 0.34
+				}
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus authoritarianism_oligarchy"
+			IF = {
+				LIMIT = { has_government = authoritarianism }
+				add_25_current_party_popularity = yes
+				add_stability = 0.05
+				ELSE = {
+					remove_25_current_party_popularity = yes
+					add_stability = -0.05
+				}
+			}
+		}
+	}
+
+		shared_focus = { # Strength Lobbies
+			id = authoritarianism_strength_lobbies
+			icon = GFX_focus_unknown_political
+			prerequisite = { focus = authoritarianism_oligarchy }
+			#mutually_exclusive = { focus =  }
+			available = {
+				OR = {
+					has_government = semidemocracy
+					semidemocracy > 0.33
+					has_government = authoritarianism
+					authoritarianism > 0.33
+				}
+				OR = {
+					has_country_leader_ideology = sub_illiberalism
+					has_country_leader_ideology = sub_authoritarian
+				}
+			}
+			x = 0
+			y = 1
+			relative_position_id = authoritarianism_oligarchy
+			cost = 10
+
+			search_filters = { FOCUS_FILTER_POLITICAL }
+
+			ai_will_do = {
+				factor = 100
+				modifier = {
+					factor = 100
+					OR = {
+						has_government = authoritarianism
+						authoritarianism > 0.34
+					}
+				}
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus authoritarianism_strength_lobbies"
+				add_country_leader_trait = dealbroker
+			}
+		}
+
+	shared_focus = { # Our Leader
+		id = authoritarianism_our_leader
 		icon = GFX_focus_unknown_political
 		prerequisite = { focus = political_authoritarianism_effort }
-		mutually_exclusive = { focus = political_our_leader }
+		mutually_exclusive = { focus = political_our_monarch }
 		available = {
 			OR = {
 				has_government = authoritarianism
-				authoritarianism > 0.25
+				authoritarianism > 0.33
 			}
-			has_country_leader_ideology = sub_monarchy
+			has_country_leader_ideology = sub_authoritarian
 		}
 		x = -1
 		y = 1
@@ -414,51 +286,60 @@ shared_focus = { # Political Effort
 		}
 
 		completion_reward = {
-			log = "[GetDateText]: [Root.GetName]: Focus political_our_monarch"
-		}
-	}
-
-	shared_focus = { # Crown fit for [ROOT.GetLeader.GetHeShe]
-		id = crown_fit_for_leader
-		icon = GFX_focus_unknown_political
-		prerequisite = { focus = political_our_monarch }
-		available = {
-		}
-		x = 0
-		y = 1
-		relative_position_id = political_our_monarch
-		cost = 10
-
-		search_filters = { FOCUS_FILTER_POLITICAL }
-
-		ai_will_do = {
-			factor = 100
-			modifier = {
-				factor = 100
-				OR = {
-					has_government = authoritarianism
-					authoritarianism > 0.34
+			log = "[GetDateText]: [Root.GetName]: Focus authoritarianism_our_leader"
+			add_war_support = 0.10
+			IF = {
+				LIMIT = { has_government = authoritarianism }
+				add_10_current_party_popularity = yes
+				ELSE = {
+					remove_10_current_party_popularity = yes
 				}
 			}
 		}
-
-		completion_reward = {
-			log = "[GetDateText]: [Root.GetName]: Focus political_our_monarch"
-			custom_effect_tooltip = attunement_status_focus_tt
-		}
 	}
 
-	shared_focus = { # Our Leader
-		id = political_our_leader
+		shared_focus = { # Powers for [ROOT.GetLeader.GetHeShe]
+			id = authoritarianism_leaders_power
+			icon = GFX_focus_unknown_political
+			prerequisite = { focus = authoritarianism_our_leader }
+			available = {
+				has_government = authoritarianism
+			}
+			x = 0
+			y = 1
+			relative_position_id = authoritarianism_our_leader
+			cost = 10
+
+			search_filters = { FOCUS_FILTER_POLITICAL }
+
+			ai_will_do = {
+				factor = 100
+				modifier = {
+					factor = 100
+					OR = {
+						has_government = authoritarianism
+						authoritarianism > 0.34
+					}
+				}
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus authoritarianism_leaders_power"
+				add_country_leader_trait = dictator
+			}
+		}
+
+	shared_focus = { # Our Monarch
+		id = authoritarianism_our_monarch
 		icon = GFX_focus_unknown_political
 		prerequisite = { focus = political_authoritarianism_effort }
-		mutually_exclusive = { focus = political_our_monarch }
+		mutually_exclusive = { focus = political_our_leader }
 		available = {
 			OR = {
 				has_government = authoritarianism
-				authoritarianism > 0.25
+				authoritarianism > 0.33
 			}
-			has_country_leader_ideology = sub_authoritarian
+			has_country_leader_ideology = sub_monarchy
 		}
 		x = 1
 		y = 1
@@ -479,19 +360,57 @@ shared_focus = { # Political Effort
 		}
 
 		completion_reward = {
-			log = "[GetDateText]: [Root.GetName]: Focus political_our_leader"
+			log = "[GetDateText]: [Root.GetName]: Focus authoritarianism_our_monarch"
+			add_stability = 0.10
+			IF = {
+				LIMIT = { has_government = authoritarianism }
+				add_10_current_party_popularity = yes
+				ELSE = {
+					remove_10_current_party_popularity = yes
+				}
+			}
 		}
 	}
 
-	shared_focus = { # [ROOT.GetLeader.GetHeShe] Powers
-		id = leaders_power
-		icon = GFX_focus_unknown_political
-		prerequisite = { focus = political_our_leader }
-		available = {
+		shared_focus = { # Crown fit for [ROOT.GetLeader.GetHeShe]
+			id = authoritarianism_crown_fit_for_leader
+			icon = GFX_focus_unknown_political
+			prerequisite = { focus = authoritarianism_our_monarch }
+			available = {
+				has_government = authoritarianism
+			}
+			x = 0
+			y = 1
+			relative_position_id = authoritarianism_our_monarch
+			cost = 10
+
+			search_filters = { FOCUS_FILTER_POLITICAL }
+
+			ai_will_do = {
+				factor = 100
+				modifier = {
+					factor = 100
+					OR = {
+						has_government = authoritarianism
+						authoritarianism > 0.34
+					}
+				}
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus authoritarianism_crown_fit_for_leader"
+				add_country_leader_trait = autocratic_imperialist
+			}
 		}
+
+	shared_focus = { # Expand Military Expenditure
+		id = authoritarianism_expand_military_expenditure
+		icon = GFX_focus_unknown_political
+		prerequisite = { focus = authoritarianism_our_leader focus = authoritarianism_our_monarch }
+		#mutually_exclusive = { focus =  }
 		x = 0
-		y = 1
-		relative_position_id = political_our_leader
+		y = 3
+		relative_position_id = political_authoritarianism_effort
 		cost = 10
 
 		search_filters = { FOCUS_FILTER_POLITICAL }
@@ -508,8 +427,114 @@ shared_focus = { # Political Effort
 		}
 
 		completion_reward = {
-			log = "[GetDateText]: [Root.GetName]: Focus leaders_power"
+			log = "[GetDateText]: [Root.GetName]: Focus authoritarianism_expand_military_expenditure"
 			custom_effect_tooltip = attunement_status_focus_tt
+			military_recruitment_raise = yes
+		}
+	}
+
+	shared_focus = { # Subsidized Growth
+		id = authoritarianism_subsidized_growth
+		icon = GFX_focus_unknown_political
+		prerequisite = { focus = authoritarianism_expand_military_expenditure }
+		prerequisite = { focus = authoritarianism_leaders_power }
+		available = {
+			has_government = authoritarianism
+		}
+		x = 0
+		y = 2
+		relative_position_id = authoritarianism_leaders_power
+		cost = 10
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		ai_will_do = {
+			factor = 100
+			modifier = {
+				factor = 100
+				OR = {
+					has_government = authoritarianism
+					authoritarianism > 0.34
+				}
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus authoritarianism_subsidized_growth"
+			add_timed_idea = { idea = subsidized_growth_idea days = 365 }
+		}
+	}
+
+	shared_focus = { # Titles for the Wealthy
+		id = authoritarianism_titles_for_wealthy
+		icon = GFX_focus_unknown_political
+		prerequisite = { focus = authoritarianism_expand_military_expenditure }
+		prerequisite = { focus = authoritarianism_crown_fit_for_leader }
+		available = {
+			has_government = authoritarianism
+		}
+		x = 0
+		y = 2
+		relative_position_id = authoritarianism_crown_fit_for_leader
+		cost = 10
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		ai_will_do = {
+			factor = 100
+			modifier = {
+				factor = 100
+				OR = {
+					has_government = authoritarianism
+					authoritarianism > 0.34
+				}
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus authoritarianism_titles_for_wealthy"
+			add_ideas = titles_for_wealthy_idea
+		}
+	}
+
+# Shared Pluralism+Transitionist
+	shared_focus = { # Give us Liberty or give us Death
+		id = liberty_or_death
+		icon = GFX_focus_unknown_political
+		prerequisite = { focus = political_pluralism_effort focus = political_semidemocracy_effort }
+		mutually_exclusive = { focus = loyalty_or_death }
+		x = -4
+		y = 6
+		relative_position_id = political_semidemocracy_effort
+		cost = 10
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus liberty_or_death"
+			add_ideas = idea_liberty_or_death
+		}
+	}
+# Shared Transitionist+Authoritarianism
+	shared_focus = { # Give us Loyality or you receive Death
+		id = loyalty_or_death
+		icon = GFX_focus_unknown_political
+		prerequisite = { focus = political_semidemocracy_effort focus = political_pluralism_effort }
+		mutually_exclusive = { focus = liberty_or_death }
+		x = -1
+		y = 6
+		relative_position_id = political_semidemocracy_effort
+		cost = 10
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus loyalty_or_death"
+			add_ideas = idea_loyalty_or_death
 		}
 	}
 # Theocratism
@@ -517,7 +542,7 @@ shared_focus = { # Political Effort
 		id = political_theocratism_effort
 		icon = GFX_focus_generic_catholic_dominion
 		prerequisite = { focus = political_effort }
-		mutually_exclusive = { focus = political_semidemocracy_effort focus = political_authoritarianism_effort focus = political_unitism_effort }
+		mutually_exclusive = { focus = political_pluralism_effort focus = political_semidemocracy_effort focus = political_authoritarianism_effort focus = political_unitism_effort }
 		available = {
 			OR = {
 				has_government = theocratism
@@ -531,7 +556,7 @@ shared_focus = { # Political Effort
 				has_country_flag = nihilism_religion
 			}
 		}
-		x = 9
+		x = 10
 		y = 1
 		relative_position_id = political_effort
 		cost = 10
@@ -564,9 +589,10 @@ shared_focus = { # Political Effort
 
 		completion_reward = {
 			log = "[GetDateText]: [Root.GetName]: Focus political_theocratism_effort"
-			add_timed_idea = { idea = clergy_in_the_state days = 720 }
+			add_timed_idea = { idea = idea_clergy days = 720 }
 		}
 	}
+
 	# Harmonainus
 		shared_focus = { # Harmonainus Faith
 			id = harmonainus_faith
@@ -619,6 +645,7 @@ shared_focus = { # Political Effort
 				add_10_current_party_popularity = yes
 			}
 		}
+
 	# Pullus
 		shared_focus = { # Pullus Faith
 			id = pullus_faith
@@ -668,6 +695,7 @@ shared_focus = { # Political Effort
 				add_10_current_party_popularity = yes
 			}
 		}
+
 	# Thalassaus
 		shared_focus = { # Thalassaus Faith
 			id = thalassaus_faith
@@ -787,6 +815,7 @@ shared_focus = { # Political Effort
 				custom_effect_tooltip = attunement_status_focus_tt
 			}
 		}
+
 	# Ager-Montis
 		shared_focus = { # Ager-Montis Faith
 			id = ager_montis_faith
@@ -906,6 +935,7 @@ shared_focus = { # Political Effort
 				custom_effect_tooltip = attunement_status_focus_tt
 			}
 		}
+
 	# Animaekin
 		shared_focus = { # Animaekin Faith
 			id = animaekin_faith
@@ -1177,7 +1207,7 @@ shared_focus = { # Political Effort
 		id = our_pantheistic_faith
 		icon = GFX_focus_unknown_political
 		prerequisite = { focus = domain_expansion }
-		x = 1
+		x = 0
 		y = 5
 		relative_position_id = animaekin_faith
 		cost = 10
@@ -1216,14 +1246,14 @@ shared_focus = { # Political Effort
 		id = political_unitism_effort
 		icon = GFX_focus_unknown_political
 		prerequisite = { focus = political_effort }
-		mutually_exclusive = { focus = political_semidemocracy_effort focus = political_theocratism_effort focus = political_authoritarianism_effort }
+		mutually_exclusive = { focus = political_pluralism_effort focus = political_semidemocracy_effort focus = political_theocratism_effort focus = political_authoritarianism_effort }
 		available = {
 			OR = {
 				has_government = unitism
 				unitism > 0.25
 			}
 		}
-		x = 16
+		x = 17
 		y = 1
 		relative_position_id = political_effort
 		cost = 10
@@ -1256,7 +1286,7 @@ shared_focus = { # Political Effort
 
 		completion_reward = {
 			log = "[GetDateText]: [Root.GetName]: Focus political_unitism_effort"
-			add_timed_idea = { idea = state_of_unity days = 720 }
+			add_timed_idea = { idea = idea_monism_unity days = 720 }
 		}
 	}
 

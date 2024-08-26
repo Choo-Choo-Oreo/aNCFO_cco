@@ -1,6 +1,6 @@
 # Ideological/Religious Scripts
 	update_religious_stance = { # +Map Update
-		log = "[GetDateText]: [Root.GetName]: update_religious_stance" # Log at location instead of here.
+		log = "[GetDateText]: [Root.GetName]: update_religious_stance"
 		if = {
 			limit = { has_cosmetic_tag = VLADS_IMPERIOUS_UNIFIED }
 			add_ideas = vladaros_cult_religion_law
@@ -75,7 +75,7 @@
 		}
 	}
 	update_unitism_dogmata_stance = {
-		log = "[GetDateText]: [Root.GetName]: update_unitism_dogmata_stance" # Log at location instead of here.
+		log = "[GetDateText]: [Root.GetName]: update_unitism_dogmata_stance"
 		if = {
 			limit = { AND = { has_government = unitism has_country_flag = harmonainus_religion } }
 			set_country_flag = harmonainus_religion_archived
@@ -356,71 +356,104 @@
 				has_country_leader_ideology = sub_socialism
 				has_country_leader_ideology = sub_illiberalism
 			} } }
+			log = "[GetDateText]: [Root.GetName]: Switch away from sub_unradical"
 			update_ideological_dogmata_stance = yes
 		}
 		IF = {
 			limit = { has_idea = sub_radical_harmonainism_law NOT = { has_country_leader_ideology = sub_radical_harmonainism } }
+			log = "[GetDateText]: [Root.GetName]: Switch away from sub_radical_harmonainism"
 			update_ideological_dogmata_stance = yes
 		}
 		IF = {
 			limit = { has_idea = sub_harmonainism_law NOT = { has_country_leader_ideology = sub_harmonainism } }
+			log = "[GetDateText]: [Root.GetName]: Switch away from sub_harmonainism"
 			update_ideological_dogmata_stance = yes
 		}
 		IF = {
 			limit = { has_idea = sub_reformed_harmonainism_law NOT = { has_country_leader_ideology = sub_reformed_harmonainism } }
+			log = "[GetDateText]: [Root.GetName]: Switch away from sub_reformed_harmonainism"
 			update_ideological_dogmata_stance = yes
 		}
 		IF = {
 			limit = { has_idea = sub_pullusism_law NOT = { has_country_leader_ideology = sub_pullusism } }
+			log = "[GetDateText]: [Root.GetName]: Switch away from sub_pullusism"
 			update_ideological_dogmata_stance = yes
 		}
 		IF = {
 			limit = { has_idea = sub_thalassaus_law NOT = { has_country_leader_ideology = sub_thalassaus } }
+			log = "[GetDateText]: [Root.GetName]: Switch away from sub_thalassaus"
 			update_ideological_dogmata_stance = yes
 		}
 		IF = {
 			limit = { has_idea = sub_ager_montis_law NOT = { has_country_leader_ideology = sub_ager_montis } }
+			log = "[GetDateText]: [Root.GetName]: Switch away from sub_ager_montis"
 			update_ideological_dogmata_stance = yes
 		}
 		IF = {
 			limit = { has_idea = sub_animaekin_law NOT = { has_country_leader_ideology = sub_animaekin } }
+			log = "[GetDateText]: [Root.GetName]: Switch away from sub_animaekin"
 			update_ideological_dogmata_stance = yes
 		}
 		IF = {
 			limit = { has_idea = sub_monarchy_law NOT = { has_country_leader_ideology = sub_monarchy } }
+			log = "[GetDateText]: [Root.GetName]: Switch away from sub_monarchy"
 			update_ideological_dogmata_stance = yes
 		}
 		IF = {
 			limit = { has_idea = sub_authoritarian_law NOT = { has_country_leader_ideology = sub_authoritarian } }
+			log = "[GetDateText]: [Root.GetName]: Switch away from sub_authoritarian"
 			update_ideological_dogmata_stance = yes
 		}
 		IF = {
 			limit = { has_idea = sub_auth_harmonainism_law NOT = { has_country_leader_ideology = sub_auth_harmonainism } }
+			log = "[GetDateText]: [Root.GetName]: Switch away from sub_auth_harmonainism"
 			update_ideological_dogmata_stance = yes
 		}
 		IF = {
 			limit = { has_idea = sub_oligarchy_law NOT = { has_country_leader_ideology = sub_oligarchy } }
+			log = "[GetDateText]: [Root.GetName]: Switch away from sub_oligarchy"
 			update_ideological_dogmata_stance = yes
 		}
 		IF = {
 			limit = { has_idea = sub_ultra_nationalism_law NOT = { has_country_leader_ideology = sub_ultra_nationalism } }
+			log = "[GetDateText]: [Root.GetName]: Switch away from sub_ultra_nationalism"
 			update_ideological_dogmata_stance = yes
 		}
 		IF = {
 			limit = { has_idea = sub_national_unitism_law NOT = { has_country_leader_ideology = sub_national_unitism } }
+			log = "[GetDateText]: [Root.GetName]: Switch away from sub_national_unitism"
 			update_ideological_dogmata_stance = yes
 		}
 		IF = {
 			limit = { has_idea = sub_unitism_law NOT = { has_country_leader_ideology = sub_unitism } }
+			log = "[GetDateText]: [Root.GetName]: Switch away from sub_unitism"
 			update_ideological_dogmata_stance = yes
 		}
 		IF = {
 			limit = { has_idea = sub_syndicalism_law NOT = { has_country_leader_ideology = sub_syndicalism } }
+			log = "[GetDateText]: [Root.GetName]: Switch away from sub_syndicalism"
 			update_ideological_dogmata_stance = yes
 		}
 		IF = {
 			limit = { has_idea = sub_fascism_law NOT = { has_country_leader_ideology = sub_fascism } }
+			log = "[GetDateText]: [Root.GetName]: Switch away from sub_fascism"
 			update_ideological_dogmata_stance = yes
+		}
+	}
+	update_all_dogmata_on_focus_complete = {
+		log = "[GetDateText]: [Root.GetName]: on_focus_complete: update_all_dogmata_on_focus_complete"
+		update_action_sub_ideology = yes
+		IF = {
+			limit = { has_government = unitism NOT = { has_country_flag = ideological_religion } }
+			log = "[GetDateText]: [Root.GetName]: on_focus_complete: update_unitism_dogmata_stance Switch to"
+			update_unitism_dogmata_stance = yes
+			update_religious_stance = yes # Must update.
+		}
+		IF = {
+			limit = { has_country_flag = ideological_religion NOT = { has_government = unitism } }
+			log = "[GetDateText]: [Root.GetName]: on_focus_complete: update_unitism_dogmata_stance Switch away"
+			update_unitism_dogmata_stance = yes
+			update_religious_stance = yes # Must update.
 		}
 	}
 	# Switch Religion
@@ -1068,6 +1101,458 @@
 		}
 		else_if = {
 			limit = { has_idea = closed_economy }
+			add_political_power = 100
+		}
+	}
+	military_recruitment_raise = {
+		army_readiness_raise = yes
+		army_training_standards_raise = yes
+		army_mobilization_raise = yes
+		conscripts_age_raise = yes
+		conscripts_foreign_raise = yes
+		#womens_rights_raise = yes
+	}
+	military_recruitment_lower = {
+		army_readiness_lower = yes
+		army_training_standards_lower = yes
+		army_mobilization_lower = yes
+		conscripts_age_lower = yes
+		conscripts_foreign_lower = yes
+		#womens_rights_lower = yes
+	}
+	army_readiness_raise = {
+		if = {
+			limit = { has_idea = army_readiness_reserve }
+			swap_ideas = {
+			    remove_idea = army_readiness_reserve
+			    add_idea = army_readiness_standing
+			}
+		}
+		else_if = {
+			limit = { has_idea = army_readiness_standing }
+			swap_ideas = {
+			    remove_idea = army_readiness_standing
+			    add_idea = army_readiness_light_mobilize
+			}
+		}
+		else_if = {
+			limit = { has_idea = army_readiness_light_mobilize }
+			swap_ideas = {
+			    remove_idea = army_readiness_light_mobilize
+			    add_idea = army_readiness_mobilize
+			}
+		}
+		else_if = {
+			limit = { has_idea = army_readiness_mobilize }
+			swap_ideas = {
+			    remove_idea = army_readiness_mobilize
+			    add_idea = army_readiness_heavy_mobilize
+			}
+		}
+		else_if = {
+			limit = { has_idea = army_readiness_heavy_mobilize }
+			add_political_power = 100
+		}
+	}
+	army_readiness_lower = {
+		if = {
+			limit = { has_idea = army_readiness_heavy_mobilize }
+			swap_ideas = {
+			    remove_idea = army_readiness_heavy_mobilize
+			    add_idea = army_readiness_mobilize
+			}
+		}
+		else_if = {
+			limit = { has_idea = army_readiness_mobilize }
+			swap_ideas = {
+			    remove_idea = army_readiness_mobilize
+			    add_idea = army_readiness_light_mobilize
+			}
+		}
+		else_if = {
+			limit = { has_idea = army_readiness_light_mobilize }
+			swap_ideas = {
+			    remove_idea = army_readiness_light_mobilize
+			    add_idea = army_readiness_standing
+			}
+		}
+		else_if = {
+			limit = { has_idea = army_readiness_standing }
+			swap_ideas = {
+			    remove_idea = army_readiness_standing
+			    add_idea = army_readiness_reserve
+			}
+		}		
+		else_if = {
+			limit = { has_idea = army_readiness_reserve }
+			add_political_power = 100
+		}
+	}
+	army_training_standards_raise = {
+		if = {
+			limit = { has_idea = training_standards_subpar }
+			swap_ideas = {
+			    remove_idea = training_standards_subpar
+			    add_idea = training_standards_capable
+			}
+		}
+		else_if = {
+			limit = { has_idea = training_standards_capable }
+			swap_ideas = {
+			    remove_idea = training_standards_capable
+			    add_idea = training_standards_competent
+			}
+		}
+		else_if = {
+			limit = { has_idea = training_standards_competent }
+			swap_ideas = {
+			    remove_idea = training_standards_competent
+			    add_idea = training_standards_distinguish
+			}
+		}
+		else_if = {
+			limit = { has_idea = training_standards_distinguish }
+			swap_ideas = {
+			    remove_idea = training_standards_distinguish
+			    add_idea = training_standards_elite
+			}
+		}
+		else_if = {
+			limit = { has_idea = training_standards_elite }
+			add_political_power = 100
+		}
+	}
+	army_training_standards_lower = {
+		if = {
+			limit = { has_idea = training_standards_elite }
+			swap_ideas = {
+			    remove_idea = training_standards_elite
+			    add_idea = training_standards_distinguish
+			}
+		}
+		else_if = {
+			limit = { has_idea = training_standards_distinguish }
+			swap_ideas = {
+			    remove_idea = training_standards_distinguish
+			    add_idea = training_standards_competent
+			}
+		}
+		else_if = {
+			limit = { has_idea = training_standards_competent }
+			swap_ideas = {
+			    remove_idea = training_standards_competent
+			    add_idea = training_standards_capable
+			}
+		}
+		else_if = {
+			limit = { has_idea = training_standards_capable }
+			swap_ideas = {
+			    remove_idea = training_standards_capable
+			    add_idea = training_standards_subpar
+			}
+		}		
+		else_if = {
+			limit = { has_idea = training_standards_subpar }
+			add_political_power = 100
+		}
+	}
+	army_mobilization_raise = {
+		if = {
+			limit = { has_idea = disarmed_nation }
+			swap_ideas = {
+			    remove_idea = disarmed_nation
+			    add_idea = volunteer_only
+			}
+		}
+		else_if = {
+			limit = { has_idea = volunteer_only }
+			swap_ideas = {
+			    remove_idea = volunteer_only
+			    add_idea = limited_conscription
+			}
+		}
+		else_if = {
+			limit = { has_idea = limited_conscription }
+			swap_ideas = {
+			    remove_idea = limited_conscription
+			    add_idea = extensive_conscription
+			}
+		}
+		else_if = {
+			limit = { has_idea = extensive_conscription }
+			swap_ideas = {
+			    remove_idea = extensive_conscription
+			    add_idea = service_by_requirement
+			}
+		}
+		else_if = {
+			limit = { has_idea = service_by_requirement }
+			swap_ideas = {
+			    remove_idea = service_by_requirement
+			    add_idea = all_adults_serve
+			}
+		}
+		else_if = {
+			limit = { has_idea = all_adults_serve }
+			swap_ideas = {
+			    remove_idea = all_adults_serve
+			    add_idea = scraping_the_barrel
+			}
+		}
+		else_if = {
+			limit = { has_idea = scraping_the_barrel }
+			add_political_power = 100
+		}
+	}
+	army_mobilization_lower = {
+		if = {
+			limit = { has_idea = scraping_the_barrel }
+			swap_ideas = {
+			    remove_idea = scraping_the_barrel
+			    add_idea = all_adults_serve
+			}
+		}
+		else_if = {
+			limit = { has_idea = all_adults_serve }
+			swap_ideas = {
+			    remove_idea = all_adults_serve
+			    add_idea = service_by_requirement
+			}
+		}
+		else_if = {
+			limit = { has_idea = service_by_requirement }
+			swap_ideas = {
+			    remove_idea = service_by_requirement
+			    add_idea = extensive_conscription
+			}
+		}
+		else_if = {
+			limit = { has_idea = extensive_conscription }
+			swap_ideas = {
+			    remove_idea = extensive_conscription
+			    add_idea = limited_conscription
+			}
+		}
+		else_if = {
+			limit = { has_idea = limited_conscription }
+			swap_ideas = {
+			    remove_idea = limited_conscription
+			    add_idea = volunteer_only
+			}
+		}
+		else_if = {
+			limit = { has_idea = volunteer_only }
+			swap_ideas = {
+			    remove_idea = volunteer_only
+			    add_idea = disarmed_nation
+			}
+		}
+		else_if = {
+			limit = { has_idea = disarmed_nation }
+			add_political_power = 100
+		}
+	}
+	conscripts_age_raise = {
+		if = {
+			limit = { has_idea = age_19_30 }
+			swap_ideas = {
+			    remove_idea = age_19_30
+			    add_idea = age_18_40
+			}
+		}
+		else_if = {
+			limit = { has_idea = age_18_40 }
+			swap_ideas = {
+			    remove_idea = age_18_40
+			    add_idea = age_17_50
+			}
+		}
+		else_if = {
+			limit = { has_idea = age_17_50 }
+			swap_ideas = {
+			    remove_idea = age_17_50
+			    add_idea = age_16_60
+			}
+		}
+		else_if = {
+			limit = { has_idea = age_16_60 }
+			swap_ideas = {
+			    remove_idea = age_16_60
+			    add_idea = age_14_70
+			}
+		}
+		else_if = {
+			limit = { has_idea = age_14_70 }
+			swap_ideas = {
+			    remove_idea = age_14_70
+			    add_idea = age_12_80
+			}
+		}
+		else_if = {
+			limit = { has_idea = age_12_80 }
+			add_political_power = 100
+		}
+	}
+	conscripts_age_lower = {
+		if = {
+			limit = { has_idea = age_12_80 }
+			swap_ideas = {
+			    remove_idea = age_12_80
+			    add_idea = age_14_70
+			}
+		}
+		else_if = {
+			limit = { has_idea = age_14_70 }
+			swap_ideas = {
+			    remove_idea = age_14_70
+			    add_idea = age_16_60
+			}
+		}
+		else_if = {
+			limit = { has_idea = age_16_60 }
+			swap_ideas = {
+			    remove_idea = age_16_60
+			    add_idea = age_17_50
+			}
+		}
+		else_if = {
+			limit = { has_idea = age_17_50 }
+			swap_ideas = {
+			    remove_idea = age_17_50
+			    add_idea = age_18_40
+			}
+		}
+		else_if = {
+			limit = { has_idea = age_18_40 }
+			swap_ideas = {
+			    remove_idea = age_18_40
+			    add_idea = age_19_30
+			}
+		}
+		else_if = {
+			limit = { has_idea = age_19_30 }
+			add_political_power = 100
+		}
+	}
+	conscripts_foreign_raise = {
+		if = {
+			limit = { has_idea = conscripts_foreign_none }
+			swap_ideas = {
+			    remove_idea = conscripts_foreign_none
+			    add_idea = conscripts_foreign_volunteers
+			}
+		}
+		else_if = {
+			limit = { has_idea = conscripts_foreign_volunteers }
+			swap_ideas = {
+			    remove_idea = conscripts_foreign_volunteers
+			    add_idea = conscripts_foreign_encouraged
+			}
+		}
+		else_if = {
+			limit = { has_idea = conscripts_foreign_encouraged }
+			swap_ideas = {
+			    remove_idea = conscripts_foreign_encouraged
+			    add_idea = conscripts_foreign_conscript
+			}
+		}
+		else_if = {
+			limit = { has_idea = conscripts_foreign_conscript }
+			add_political_power = 100
+		}
+	}
+	conscripts_foreign_lower = {
+		if = {
+			limit = { has_idea = conscripts_foreign_conscript }
+			swap_ideas = {
+			    remove_idea = conscripts_foreign_conscript
+			    add_idea = conscripts_foreign_encouraged
+			}
+		}
+		else_if = {
+			limit = { has_idea = conscripts_foreign_encouraged }
+			swap_ideas = {
+			    remove_idea = conscripts_foreign_encouraged
+			    add_idea = conscripts_foreign_volunteers
+			}
+		}
+		else_if = {
+			limit = { has_idea = conscripts_foreign_volunteers }
+			swap_ideas = {
+			    remove_idea = conscripts_foreign_volunteers
+			    add_idea = conscripts_foreign_none
+			}
+		}
+		else_if = {
+			limit = { has_idea = conscripts_foreign_none }
+			add_political_power = 100
+		}
+	}
+	womens_rights_raise = {
+		if = {
+			limit = { has_idea = women_at_home }
+			swap_ideas = {
+			    remove_idea = women_at_home
+			    add_idea = women_in_the_workforce
+			}
+		}
+		else_if = {
+			limit = { has_idea = women_in_the_workforce }
+			swap_ideas = {
+			    remove_idea = women_in_the_workforce
+			    add_idea = women_in_the_army
+			}
+		}
+		else_if = {
+			limit = { has_idea = women_in_the_army }
+			swap_ideas = {
+			    remove_idea = women_in_the_army
+			    add_idea = women_in_the_frontlines
+			}
+		}
+		else_if = {
+			limit = { has_idea = women_in_the_frontlines }
+			swap_ideas = {
+			    remove_idea = women_in_the_frontlines
+			    add_idea = egalitarian
+			}
+		}
+		else_if = {
+			limit = { has_idea = egalitarian }
+			add_political_power = 100
+		}
+	}
+	womens_rights_lower = {
+		if = {
+			limit = { has_idea = egalitarian }
+			swap_ideas = {
+			    remove_idea = egalitarian
+			    add_idea = women_in_the_frontlines
+			}
+		}
+		else_if = {
+			limit = { has_idea = women_in_the_frontlines }
+			swap_ideas = {
+			    remove_idea = women_in_the_frontlines
+			    add_idea = women_in_the_army
+			}
+		}
+		else_if = {
+			limit = { has_idea = women_in_the_army }
+			swap_ideas = {
+			    remove_idea = women_in_the_army
+			    add_idea = women_in_the_workforce
+			}
+		}
+		else_if = {
+			limit = { has_idea = women_in_the_workforce }
+			swap_ideas = {
+			    remove_idea = women_in_the_workforce
+			    add_idea = limited_women_in_the_workforce
+			}
+		}		
+		else_if = {
+			limit = { has_idea = limited_women_in_the_workforce }
 			add_political_power = 100
 		}
 	}
