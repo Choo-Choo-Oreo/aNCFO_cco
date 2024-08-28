@@ -15,6 +15,7 @@ https://steamcommunity.com/sharedfiles/filedetails/?id=1778255798
 https://steamcommunity.com/sharedfiles/filedetails/?id=1826643372
 
 -Elouda Mod Graphics
+https://steamcommunity.com/sharedfiles/filedetails/?id=714919100
 https://steamcommunity.com/sharedfiles/filedetails/?id=1687056790
 
 - Edouard_Saladier Mod Graphics

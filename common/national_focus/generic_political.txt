@@ -1,7 +1,7 @@
 shared_focus = { # Political Effort
 	id = political_effort
 	icon = GFX_goal_generic_demand_territory
-	x = 25
+	x = 30
 	y = 0
 	cost = 10
 
@@ -28,7 +28,7 @@ shared_focus = { # Political Effort
 				pluralism > 0.25
 			}
 		}
-		x = -8
+		x = -12
 		y = 1
 		relative_position_id = political_effort
 		cost = 10
@@ -36,9 +36,9 @@ shared_focus = { # Political Effort
 		search_filters = { FOCUS_FILTER_POLITICAL }
 
 		ai_will_do = {
-			factor = 100
+			factor = 10
 			modifier = {
-				factor = 100
+				factor = 10
 				OR = {
 					has_government = pluralism
 					pluralism > 0.34
@@ -64,6 +64,329 @@ shared_focus = { # Political Effort
 			add_timed_idea = { idea = idea_strengthening_voting_rights days = 720 }
 		}
 	}
+
+	shared_focus = { # Federalism
+		id = pluralism_federalism
+		icon = GFX_focus_unknown_political
+		prerequisite = { focus = political_pluralism_effort }
+		#mutually_exclusive = { focus =  }
+		available = {
+			has_government = pluralism
+			OR = {
+				has_country_leader_ideology = sub_illuminism
+				has_country_leader_ideology = sub_pluralism
+				has_country_leader_ideology = sub_liberalism
+			}
+		}
+		x = -1
+		y = 1
+		relative_position_id = political_pluralism_effort
+		cost = 10
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		ai_will_do = {
+			factor = 10
+			modifier = {
+				factor = 10
+				OR = {
+					has_government = pluralism
+					authoritarianism > 0.34
+				}
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus pluralism_federalism"
+			IF = {
+				LIMIT = { has_government = pluralism }
+				add_15_current_party_popularity = yes
+				add_stability = -0.05
+				ELSE = {
+					remove_15_current_party_popularity = yes
+					add_stability = 0.05
+				}
+			}
+		}
+	}
+
+		shared_focus = { # Local Flexibility
+			id = pluralism_local_flexibility
+			icon = GFX_focus_unknown_political
+			prerequisite = { focus = pluralism_federalism }
+			#mutually_exclusive = { focus =  }
+			available = {
+			}
+			x = 0
+			y = 1
+			relative_position_id = pluralism_federalism
+			cost = 10
+
+			search_filters = { FOCUS_FILTER_POLITICAL }
+
+			ai_will_do = {
+				factor = 10
+				modifier = {
+					factor = 10
+					OR = {
+						has_government = pluralism
+						authoritarianism > 0.34
+					}
+				}
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus pluralism_oversight_committee"
+				add_ideas = idea_local_flexibility
+			}
+		}
+
+	shared_focus = { # Constitutionalism
+		id = pluralism_constitutionalism
+		icon = GFX_focus_unknown_political
+		prerequisite = { focus = political_pluralism_effort }
+		#mutually_exclusive = { focus =  }
+		available = {
+			has_government = pluralism
+			OR = {
+				has_country_leader_ideology = sub_constitutionalism
+				has_country_leader_ideology = sub_conservatism
+				has_country_leader_ideology = sub_populism
+			}
+		}
+		x = 1
+		y = 1
+		relative_position_id = political_pluralism_effort
+		cost = 10
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		ai_will_do = {
+			factor = 10
+			modifier = {
+				factor = 10
+				OR = {
+					has_government = pluralism
+					authoritarianism > 0.34
+				}
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus pluralism_constitutionalism"
+			IF = {
+				LIMIT = { has_government = pluralism }
+				add_15_current_party_popularity = yes
+				add_stability = -0.05
+				ELSE = {
+					remove_15_current_party_popularity = yes
+					add_stability = 0.05
+				}
+			}
+		}
+	}
+
+		shared_focus = { # Laws for the Government
+			id = pluralism_laws_for_government
+			icon = GFX_focus_unknown_political
+			prerequisite = { focus = pluralism_constitutionalism }
+			#mutually_exclusive = { focus =  }
+			available = {
+			}
+			x = 0
+			y = 1
+			relative_position_id = pluralism_constitutionalism
+			cost = 10
+
+			search_filters = { FOCUS_FILTER_POLITICAL }
+
+			ai_will_do = {
+				factor = 10
+				modifier = {
+					factor = 10
+					OR = {
+						has_government = pluralism
+						authoritarianism > 0.34
+					}
+				}
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus pluralism_oversight_committee"
+				add_ideas = idea_laws_for_government
+			}
+		}
+
+	shared_focus = { # Free Market
+		id = pluralism_economical_development
+		icon = GFX_focus_unknown_political
+		prerequisite = { focus = pluralism_federalism focus = pluralism_constitutionalism }
+		#mutually_exclusive = { focus =  }
+		available = {
+		}
+		x = 0
+		y = 3
+		relative_position_id = political_pluralism_effort
+		cost = 10
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		ai_will_do = {
+			factor = 10
+			modifier = {
+				factor = 10
+				OR = {
+					has_government = pluralism
+					authoritarianism > 0.34
+				}
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus pluralism_economical_development"
+            set_country_flag = lf_lv0
+            set_country_flag = start_EcoDevelopment
+            set_variable = { LFdate = 180 }
+            activate_mission = EcoDevelopment_free_market
+		}
+	}
+
+	shared_focus = { # Judicial Reforms
+		id = pluralism_judicial_reforms
+		icon = GFX_focus_unknown_political
+		prerequisite = { focus = pluralism_economical_development }
+		#mutually_exclusive = { focus =  }
+		available = {
+			OR = { has_completed_focus = pluralism_local_flexibility has_completed_focus = pluralism_laws_for_government }
+		}
+		x = -1
+		y = 1
+		relative_position_id = pluralism_economical_development
+		cost = 10
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		ai_will_do = {
+			factor = 10
+			modifier = {
+				factor = 10
+				OR = {
+					has_government = pluralism
+					authoritarianism > 0.34
+				}
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus pluralism_judicial_reforms"
+			add_ideas = idea_judicial_system
+		}
+	}
+
+	shared_focus = { # Oversight Committee
+		id = pluralism_oversight_committee
+		icon = GFX_focus_unknown_political
+		prerequisite = { focus = pluralism_economical_development }
+		#mutually_exclusive = { focus =  }
+		available = {
+			OR = { has_completed_focus = pluralism_local_flexibility has_completed_focus = pluralism_laws_for_government }
+		}
+		x = 1
+		y = 1
+		relative_position_id = pluralism_economical_development
+		cost = 10
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		ai_will_do = {
+			factor = 10
+			modifier = {
+				factor = 10
+				OR = {
+					has_government = pluralism
+					authoritarianism > 0.34
+				}
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus pluralism_oversight_committee"
+			add_ideas = idea_civilian_oversight
+		}
+	}
+
+	shared_focus = { # The Peoples Nation
+		id = pluralism_peoples_nation
+		icon = GFX_focus_unknown_political
+		prerequisite = { focus = pluralism_judicial_reforms }
+		prerequisite = { focus = pluralism_oversight_committee }
+		#mutually_exclusive = { focus =  }
+		available = {
+		}
+		x = 0
+		y = 2
+		relative_position_id = pluralism_economical_development
+		cost = 10
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		ai_will_do = {
+			factor = 10
+			modifier = {
+				factor = 10
+				OR = {
+					has_government = pluralism
+					authoritarianism > 0.34
+				}
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus pluralism_peoples_nation"
+			remove_ideas = { idea_judicial_system idea_civilian_oversight }
+			add_ideas = idea_nation_of_the_people
+			add_stability = 0.10
+    		add_war_support = 0.10
+		}
+	}
+
+	shared_focus = { # Welfare and Civil Rights Reforms
+		id = pluralism_welfare_rights_reforms
+		icon = GFX_focus_unknown_political
+		prerequisite = { focus = pluralism_federalism focus = pluralism_constitutionalism focus = semidemocracy_unitist_pluralism }
+		#mutually_exclusive = { focus =  }
+		available = {
+		}
+		x = -1
+		y = 2
+		relative_position_id = semidemocracy_unitist_pluralism
+		cost = 10
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		ai_will_do = {
+			factor = 10
+			modifier = {
+				factor = 10
+				OR = {
+					has_government = pluralism
+					pluralism > 0.34
+				}
+			}
+			modifier = {
+				factor = 10
+				OR = {
+					has_government = semidemocracy
+					semidemocracy > 0.34
+				}
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus pluralism_economical_development"
+			add_ideas = idea_welfare_civil_rights
+		}
+	}
 # Transitionist
 	shared_focus = { # Transitionist Effort
 		id = political_semidemocracy_effort
@@ -76,7 +399,7 @@ shared_focus = { # Political Effort
 				semidemocracy > 0.25
 			}
 		}
-		x = -3
+		x = -7
 		y = 1
 		relative_position_id = political_effort
 		cost = 10
@@ -84,9 +407,9 @@ shared_focus = { # Political Effort
 		search_filters = { FOCUS_FILTER_POLITICAL }
 
 		ai_will_do = {
-			factor = 100
+			factor = 10
 			modifier = {
-				factor = 100
+				factor = 10
 				OR = {
 					has_government = semidemocracy
 					pluralism > 0.34
@@ -113,6 +436,395 @@ shared_focus = { # Political Effort
 			add_timed_idea = { idea = idea_democratization days = 720 }
 		}
 	}
+
+	shared_focus = { # Unitist Pluralism
+		id = semidemocracy_unitist_pluralism
+		icon = GFX_focus_unknown_political
+		prerequisite = { focus = political_pluralism_effort focus = political_semidemocracy_effort }
+		#mutually_exclusive = { focus =  }
+		available = {
+			OR = {
+				has_government = pluralism
+				has_government = semidemocracy
+			}
+			OR = {
+				has_country_leader_ideology = sub_progressivism
+				has_country_leader_ideology = sub_socialism
+			}
+		}
+		x = -2
+		y = 1
+		relative_position_id = political_semidemocracy_effort
+		cost = 10
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		ai_will_do = {
+			factor = 10
+			modifier = {
+				factor = 10
+				OR = {
+					has_government = pluralism
+					pluralism > 0.34
+				}
+			}
+			modifier = {
+				factor = 10
+				OR = {
+					has_government = semidemocracy
+					semidemocracy > 0.34
+				}
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus pluralism_unitist_pluralism"
+			IF = {
+				LIMIT = { OR = { has_government = pluralism has_government = semidemocracy } }
+				add_15_current_party_popularity = yes
+				add_stability = -0.05
+				ELSE = {
+					remove_15_current_party_popularity = yes
+					add_stability = 0.05
+				}
+			}
+			add_popularity = { ideology = unitism popularity = 0.05 }
+		}
+	}
+
+		shared_focus = { # Expansive Bureaucracy
+			id = semidemocracy_expansive_bureaucracy
+			icon = GFX_focus_unknown_political
+			prerequisite = { focus = semidemocracy_unitist_pluralism }
+			#mutually_exclusive = { focus =  }
+			available = {
+			}
+			x = 0
+			y = 1
+			relative_position_id = semidemocracy_unitist_pluralism
+			cost = 10
+
+			search_filters = { FOCUS_FILTER_POLITICAL }
+
+			ai_will_do = {
+				factor = 10
+				modifier = {
+					factor = 10
+					OR = {
+						has_government = pluralism
+						pluralism > 0.34
+					}
+				}
+				modifier = {
+					factor = 10
+					OR = {
+						has_government = semidemocracy
+						semidemocracy > 0.34
+					}
+				}
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus pluralism_economical_development"
+				add_political_power = 100
+			}
+		}
+
+	shared_focus = { # Market Interventionism
+		id = semidemocracy_market_interventionism
+		icon = GFX_focus_unknown_political
+		prerequisite = { focus = semidemocracy_unitist_pluralism focus = semidemocracy_classical_pluralism }
+		#mutually_exclusive = { focus =  }
+		available = {
+		}
+		x = 1
+		y = 2
+		relative_position_id = semidemocracy_unitist_pluralism
+		cost = 10
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		ai_will_do = {
+			factor = 10
+			modifier = {
+				factor = 10
+				OR = {
+					has_government = pluralism
+					pluralism > 0.34
+				}
+			}
+			modifier = {
+				factor = 10
+				OR = {
+					has_government = semidemocracy
+					semidemocracy > 0.34
+				}
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus pluralism_economical_development"
+            set_country_flag = lf_lv0
+            set_country_flag = start_EcoDevelopment
+            set_country_flag = market_interventionism # Allow government Intervention
+            set_variable = { LFdate = 180 }
+            activate_mission = EcoDevelopment_free_market
+		}
+	}
+
+		shared_focus = { # Public Works Programs
+			id = semidemocracy_public_works
+			icon = GFX_focus_unknown_political
+			prerequisite = { focus = semidemocracy_expansive_bureaucracy }
+			prerequisite = { focus = pluralism_welfare_rights_reforms }
+			prerequisite = { focus = semidemocracy_market_interventionism }
+			#mutually_exclusive = { focus =  }
+			available = {
+			}
+			x = 0
+			y = 2
+			relative_position_id = semidemocracy_expansive_bureaucracy
+			cost = 10
+
+			search_filters = { FOCUS_FILTER_POLITICAL }
+
+			ai_will_do = {
+				factor = 10
+				modifier = {
+					factor = 10
+					OR = {
+						has_government = pluralism
+						pluralism > 0.34
+					}
+				}
+				modifier = {
+					factor = 10
+					OR = {
+						has_government = semidemocracy
+						semidemocracy > 0.34
+					}
+				}
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus pluralism_economical_development"
+				add_timed_idea = { idea = idea_public_works days = 1095 }
+			}
+		}
+
+		shared_focus = { # Civilian Welfare
+			id = semidemocracy_civilian_welfare
+			icon = GFX_focus_unknown_political
+			prerequisite = { focus = semidemocracy_public_works }
+			#mutually_exclusive = { focus =  }
+			available = {
+			}
+			x = 0
+			y = 1
+			relative_position_id = semidemocracy_public_works
+			cost = 10
+
+			search_filters = { FOCUS_FILTER_POLITICAL }
+
+			ai_will_do = {
+				factor = 10
+				modifier = {
+					factor = 10
+					OR = {
+						has_government = pluralism
+						pluralism > 0.34
+					}
+				}
+				modifier = {
+					factor = 10
+					OR = {
+						has_government = semidemocracy
+						semidemocracy > 0.34
+					}
+				}
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus semidemocracy_civilian_welfare"
+				add_ideas = idea_civil_welfare
+			}
+		}
+
+	shared_focus = { # Classical Pluralism
+		id = semidemocracy_classical_pluralism
+		icon = GFX_focus_unknown_political
+		prerequisite = { focus = political_semidemocracy_effort }
+		#mutually_exclusive = { focus =  }
+		available = {
+			has_government = semidemocracy
+			OR = {
+				has_country_leader_ideology = sub_transitional_democracy
+				has_country_leader_ideology = sub_mercantile_republicism
+				has_country_leader_ideology = sub_socialism
+			}
+		}
+		x = 0
+		y = 1
+		relative_position_id = political_semidemocracy_effort
+		cost = 10
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		ai_will_do = {
+			factor = 10
+			modifier = {
+				factor = 10
+				OR = {
+					has_government = semidemocracy
+					authoritarianism > 0.34
+				}
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus semidemocracy_classical_pluralism"
+			IF = {
+				LIMIT = { has_government = semidemocracy }
+				add_15_current_party_popularity = yes
+				add_stability = -0.05
+				ELSE = {
+					remove_15_current_party_popularity = yes
+					add_stability = 0.05
+				}
+			}
+		}
+	}
+
+		shared_focus = { # Merit-Base Appointments
+			id = semidemocracy_merit_appointments
+			icon = GFX_focus_unknown_political
+			prerequisite = { focus = semidemocracy_classical_pluralism }
+			#mutually_exclusive = { focus =  }
+			available = {
+			}
+			x = 0
+			y = 1
+			relative_position_id = semidemocracy_classical_pluralism
+			cost = 10
+
+			search_filters = { FOCUS_FILTER_POLITICAL }
+
+			ai_will_do = {
+				factor = 10
+				modifier = {
+					factor = 10
+					OR = {
+						has_government = semidemocracy
+						semidemocracy > 0.34
+					}
+				}
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus semidemocracy_merit_appointments"
+				add_ideas = idea_merit_appointments
+			}
+		}
+
+		shared_focus = { # Bureaucratic Efficiency
+			id = semidemocracy_bureaucratic_efficiency
+			icon = GFX_focus_unknown_political
+			prerequisite = { focus = authoritarianism_press_censorship }
+			prerequisite = { focus = semidemocracy_merit_appointments }
+			#mutually_exclusive = { focus =  }
+			available = {
+			}
+			x = 0
+			y = 2
+			relative_position_id = semidemocracy_merit_appointments
+			cost = 10
+
+			search_filters = { FOCUS_FILTER_POLITICAL }
+
+			ai_will_do = {
+				factor = 10
+				modifier = {
+					factor = 10
+					OR = {
+						has_government = semidemocracy
+						semidemocracy > 0.34
+					}
+				}
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus semidemocracy_bureaucratic_efficiency"
+				add_political_power = 150
+				add_stability = 0.15
+			}
+		}
+
+		shared_focus = { # Military Industry
+			id = semidemocracy_military_industry
+			icon = GFX_focus_unknown_political
+			prerequisite = { focus = semidemocracy_bureaucratic_efficiency }
+			#mutually_exclusive = { focus =  }
+			available = {
+			}
+			x = 0
+			y = 1
+			relative_position_id = semidemocracy_bureaucratic_efficiency
+			cost = 10
+
+			search_filters = { FOCUS_FILTER_POLITICAL }
+
+			ai_will_do = {
+				factor = 10
+				modifier = {
+					factor = 10
+					OR = {
+						has_government = semidemocracy
+						semidemocracy > 0.34
+					}
+				}
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus semidemocracy_military_industry"
+				add_ideas = idea_military_industry_complex
+			}
+		}
+
+	shared_focus = { # National Patriotism
+		id = semidemocracy_patriotism
+		icon = GFX_focus_unknown_political
+		prerequisite = { focus = semidemocracy_bureaucratic_efficiency focus = authoritarianism_corporate_patronage }
+		mutually_exclusive = { focus = authoritarianism_concocted_patriotism }
+		x = 3
+		y = 1
+		relative_position_id = semidemocracy_military_industry
+		cost = 10
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		ai_will_do = {
+			factor = 10
+			modifier = {
+				factor = 10
+				OR = {
+					has_government = semidemocracy
+					semidemocracy > 0.34
+				}
+			}
+			modifier = {
+				factor = 10
+				OR = {
+					has_government = authoritarianism
+					authoritarianism > 0.34
+				}
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus authoritarianism_concocted_patriotism"
+			add_ideas = idea_patriotism
+		}
+	}
 # Authoritarianism
 	shared_focus = { # Authoritarianism Effort
 		id = political_authoritarianism_effort
@@ -125,7 +837,7 @@ shared_focus = { # Political Effort
 				authoritarianism > 0.25
 			}
 		}
-		x = 2
+		x = -2
 		y = 1
 		relative_position_id = political_effort
 		cost = 10
@@ -133,9 +845,9 @@ shared_focus = { # Political Effort
 		search_filters = { FOCUS_FILTER_POLITICAL }
 
 		ai_will_do = {
-			factor = 100
+			factor = 10
 			modifier = {
-				factor = 100
+				factor = 10
 				OR = {
 					has_government = authoritarianism
 					authoritarianism > 0.34
@@ -166,20 +878,25 @@ shared_focus = { # Political Effort
 		id = authoritarianism_oligarchy
 		icon = GFX_focus_unknown_political
 		prerequisite = { focus = political_semidemocracy_effort focus = political_authoritarianism_effort }
-		#mutually_exclusive = { focus =  }
+		mutually_exclusive = { focus = authoritarianism_our_leader focus = authoritarianism_our_monarch }
 		available = {
 			OR = {
-				has_government = semidemocracy
-				semidemocracy > 0.33
-				has_government = authoritarianism
-				authoritarianism > 0.33
-			}
-			OR = {
-				# semidemocracy
-					has_country_leader_ideology = sub_obscurism
-					has_country_leader_ideology = sub_traditionalism
-					has_country_leader_ideology = sub_illiberalism
-				has_country_leader_ideology = sub_authoritarian
+				# Semi-Democracy
+				AND = {
+					has_government = semidemocracy
+					OR = {
+						NOT = { has_country_leader_ideology = sub_transitional_democracy }
+						NOT = { has_country_leader_ideology = sub_mercantile_republicism }
+						NOT = { has_country_leader_ideology = sub_socialism }
+					}
+				}
+				AND = {
+					has_government = authoritarianism
+					OR = {
+						has_country_leader_ideology = sub_authoritarian
+						has_country_leader_ideology = sub_oligarchy
+					}
+				}
 			}
 		}
 		x = -3
@@ -190,9 +907,16 @@ shared_focus = { # Political Effort
 		search_filters = { FOCUS_FILTER_POLITICAL }
 
 		ai_will_do = {
-			factor = 100
+			factor = 10
 			modifier = {
-				factor = 100
+				factor = 10
+				OR = {
+					has_government = semidemocracy
+					semidemocracy > 0.34
+				}
+			}
+			modifier = {
+				factor = 10
 				OR = {
 					has_government = authoritarianism
 					authoritarianism > 0.34
@@ -220,16 +944,6 @@ shared_focus = { # Political Effort
 			prerequisite = { focus = authoritarianism_oligarchy }
 			#mutually_exclusive = { focus =  }
 			available = {
-				OR = {
-					has_government = semidemocracy
-					semidemocracy > 0.33
-					has_government = authoritarianism
-					authoritarianism > 0.33
-				}
-				OR = {
-					has_country_leader_ideology = sub_illiberalism
-					has_country_leader_ideology = sub_authoritarian
-				}
 			}
 			x = 0
 			y = 1
@@ -239,9 +953,16 @@ shared_focus = { # Political Effort
 			search_filters = { FOCUS_FILTER_POLITICAL }
 
 			ai_will_do = {
-				factor = 100
+				factor = 10
 				modifier = {
-					factor = 100
+					factor = 10
+					OR = {
+						has_government = semidemocracy
+						semidemocracy > 0.34
+					}
+				}
+				modifier = {
+					factor = 10
 					OR = {
 						has_government = authoritarianism
 						authoritarianism > 0.34
@@ -255,16 +976,137 @@ shared_focus = { # Political Effort
 			}
 		}
 
+	shared_focus = { # Press Censorship
+		id = authoritarianism_press_censorship
+		icon = GFX_focus_unknown_political
+		prerequisite = { focus = authoritarianism_oligarchy focus = semidemocracy_classical_pluralism }
+		#mutually_exclusive = { focus =  }
+		available = {
+		}
+		x = -1
+		y = 2
+		relative_position_id = authoritarianism_oligarchy
+		cost = 10
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		ai_will_do = {
+			factor = 10
+			modifier = {
+				factor = 10
+				OR = {
+					has_government = semidemocracy
+					semidemocracy > 0.34
+				}
+			}
+			modifier = {
+				factor = 10
+				OR = {
+					has_government = authoritarianism
+					authoritarianism > 0.34
+				}
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus authoritarianism_press_censorship"
+			IF = {
+				LIMIT = { OR = { has_government = semidemocracy has_government = authoritarianism } }
+				add_10_current_party_popularity = yes
+				ELSE = {
+					remove_10_current_party_popularity = yes
+				}
+			}
+			add_stability = -0.05
+			add_war_support = 0.10
+			add_political_power = 100
+		}
+	}
+
+		shared_focus = { # Corporate Patronage
+			id = authoritarianism_corporate_patronage
+			icon = GFX_focus_unknown_political
+			prerequisite = { focus = authoritarianism_press_censorship }
+			prerequisite = { focus = authoritarianism_strength_lobbies }
+			#mutually_exclusive = { focus =  }
+			available = {
+			}
+			x = 0
+			y = 2
+			relative_position_id = authoritarianism_strength_lobbies
+			cost = 10
+
+			search_filters = { FOCUS_FILTER_POLITICAL }
+
+			ai_will_do = {
+				factor = 10
+				modifier = {
+					factor = 10
+					OR = {
+						has_government = semidemocracy
+						semidemocracy > 0.34
+					}
+				}
+				modifier = {
+					factor = 10
+					OR = {
+						has_government = authoritarianism
+						authoritarianism > 0.34
+					}
+				}
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus authoritarianism_corporate_patronage"
+				add_timed_idea = { idea = idea_subsidized_growth days = 365 }
+			}
+		}
+
+		shared_focus = { # Foreign Manpower
+			id = authoritarianism_foreign_manpower
+			icon = GFX_focus_unknown_political
+			prerequisite = { focus = authoritarianism_corporate_patronage }
+			#mutually_exclusive = { focus =  }
+			available = {
+			}
+			x = 0
+			y = 1
+			relative_position_id = authoritarianism_corporate_patronage
+			cost = 10
+
+			search_filters = { FOCUS_FILTER_POLITICAL }
+
+			ai_will_do = {
+				factor = 10
+				modifier = {
+					factor = 10
+					OR = {
+						has_government = semidemocracy
+						semidemocracy > 0.34
+					}
+				}
+				modifier = {
+					factor = 10
+					OR = {
+						has_government = authoritarianism
+						authoritarianism > 0.34
+					}
+				}
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus authoritarianism_foreign_manpower"
+				add_ideas = idea_foreign_manpower
+			}
+		}
+
 	shared_focus = { # Our Leader
 		id = authoritarianism_our_leader
 		icon = GFX_focus_unknown_political
 		prerequisite = { focus = political_authoritarianism_effort }
-		mutually_exclusive = { focus = political_our_monarch }
+		mutually_exclusive = { focus = authoritarianism_oligarchy focus = authoritarianism_our_monarch }
 		available = {
-			OR = {
-				has_government = authoritarianism
-				authoritarianism > 0.33
-			}
+			has_government = authoritarianism
 			has_country_leader_ideology = sub_authoritarian
 		}
 		x = -1
@@ -275,9 +1117,9 @@ shared_focus = { # Political Effort
 		search_filters = { FOCUS_FILTER_POLITICAL }
 
 		ai_will_do = {
-			factor = 100
+			factor = 10
 			modifier = {
-				factor = 100
+				factor = 10
 				OR = {
 					has_government = authoritarianism
 					authoritarianism > 0.34
@@ -303,7 +1145,6 @@ shared_focus = { # Political Effort
 			icon = GFX_focus_unknown_political
 			prerequisite = { focus = authoritarianism_our_leader }
 			available = {
-				has_government = authoritarianism
 			}
 			x = 0
 			y = 1
@@ -311,11 +1152,12 @@ shared_focus = { # Political Effort
 			cost = 10
 
 			search_filters = { FOCUS_FILTER_POLITICAL }
+			dynamic = yes
 
 			ai_will_do = {
-				factor = 100
+				factor = 10
 				modifier = {
-					factor = 100
+					factor = 10
 					OR = {
 						has_government = authoritarianism
 						authoritarianism > 0.34
@@ -333,12 +1175,9 @@ shared_focus = { # Political Effort
 		id = authoritarianism_our_monarch
 		icon = GFX_focus_unknown_political
 		prerequisite = { focus = political_authoritarianism_effort }
-		mutually_exclusive = { focus = political_our_leader }
+		mutually_exclusive = { focus = authoritarianism_oligarchy focus = authoritarianism_our_leader }
 		available = {
-			OR = {
-				has_government = authoritarianism
-				authoritarianism > 0.33
-			}
+			has_government = authoritarianism
 			has_country_leader_ideology = sub_monarchy
 		}
 		x = 1
@@ -349,9 +1188,9 @@ shared_focus = { # Political Effort
 		search_filters = { FOCUS_FILTER_POLITICAL }
 
 		ai_will_do = {
-			factor = 100
+			factor = 10
 			modifier = {
-				factor = 100
+				factor = 10
 				OR = {
 					has_government = authoritarianism
 					authoritarianism > 0.34
@@ -377,7 +1216,6 @@ shared_focus = { # Political Effort
 			icon = GFX_focus_unknown_political
 			prerequisite = { focus = authoritarianism_our_monarch }
 			available = {
-				has_government = authoritarianism
 			}
 			x = 0
 			y = 1
@@ -385,11 +1223,12 @@ shared_focus = { # Political Effort
 			cost = 10
 
 			search_filters = { FOCUS_FILTER_POLITICAL }
+			dynamic = yes
 
 			ai_will_do = {
-				factor = 100
+				factor = 10
 				modifier = {
-					factor = 100
+					factor = 10
 					OR = {
 						has_government = authoritarianism
 						authoritarianism > 0.34
@@ -416,9 +1255,9 @@ shared_focus = { # Political Effort
 		search_filters = { FOCUS_FILTER_POLITICAL }
 
 		ai_will_do = {
-			factor = 100
+			factor = 10
 			modifier = {
-				factor = 100
+				factor = 10
 				OR = {
 					has_government = authoritarianism
 					authoritarianism > 0.34
@@ -439,7 +1278,6 @@ shared_focus = { # Political Effort
 		prerequisite = { focus = authoritarianism_expand_military_expenditure }
 		prerequisite = { focus = authoritarianism_leaders_power }
 		available = {
-			has_government = authoritarianism
 		}
 		x = 0
 		y = 2
@@ -449,9 +1287,9 @@ shared_focus = { # Political Effort
 		search_filters = { FOCUS_FILTER_POLITICAL }
 
 		ai_will_do = {
-			factor = 100
+			factor = 10
 			modifier = {
-				factor = 100
+				factor = 10
 				OR = {
 					has_government = authoritarianism
 					authoritarianism > 0.34
@@ -461,9 +1299,39 @@ shared_focus = { # Political Effort
 
 		completion_reward = {
 			log = "[GetDateText]: [Root.GetName]: Focus authoritarianism_subsidized_growth"
-			add_timed_idea = { idea = subsidized_growth_idea days = 365 }
+			add_timed_idea = { idea = idea_subsidized_growth days = 365 }
 		}
 	}
+
+		shared_focus = { # National Security
+			id = authoritarianism_national_security
+			icon = GFX_focus_unknown_political
+			prerequisite = { focus = authoritarianism_subsidized_growth }
+			available = {
+			}
+			x = 0
+			y = 1
+			relative_position_id = authoritarianism_subsidized_growth
+			cost = 10
+
+			search_filters = { FOCUS_FILTER_POLITICAL }
+
+			ai_will_do = {
+				factor = 10
+				modifier = {
+					factor = 10
+					OR = {
+						has_government = authoritarianism
+						authoritarianism > 0.34
+					}
+				}
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus authoritarianism_national_security"
+				add_ideas = idea_national_security
+			}
+		}
 
 	shared_focus = { # Titles for the Wealthy
 		id = authoritarianism_titles_for_wealthy
@@ -471,7 +1339,6 @@ shared_focus = { # Political Effort
 		prerequisite = { focus = authoritarianism_expand_military_expenditure }
 		prerequisite = { focus = authoritarianism_crown_fit_for_leader }
 		available = {
-			has_government = authoritarianism
 		}
 		x = 0
 		y = 2
@@ -481,9 +1348,9 @@ shared_focus = { # Political Effort
 		search_filters = { FOCUS_FILTER_POLITICAL }
 
 		ai_will_do = {
-			factor = 100
+			factor = 10
 			modifier = {
-				factor = 100
+				factor = 10
 				OR = {
 					has_government = authoritarianism
 					authoritarianism > 0.34
@@ -493,22 +1360,106 @@ shared_focus = { # Political Effort
 
 		completion_reward = {
 			log = "[GetDateText]: [Root.GetName]: Focus authoritarianism_titles_for_wealthy"
-			add_ideas = titles_for_wealthy_idea
+			add_ideas = idea_titles_for_wealthy
 		}
 	}
 
+		shared_focus = { # Divine Right
+			id = authoritarianism_divine_right
+			icon = GFX_focus_unknown_political
+			prerequisite = { focus = authoritarianism_titles_for_wealthy }
+			available = {
+			}
+			x = 0
+			y = 1
+			relative_position_id = authoritarianism_titles_for_wealthy
+			cost = 10
+
+			search_filters = { FOCUS_FILTER_POLITICAL }
+
+			ai_will_do = {
+				factor = 10
+				modifier = {
+					factor = 10
+					OR = {
+						has_government = authoritarianism
+						authoritarianism > 0.34
+					}
+				}
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus authoritarianism_divine_right"
+				unlock_decision_tooltip = divine_right_coring
+				custom_effect_tooltip = allow_coring_use_5x_tt
+			}
+		}
+
+	shared_focus = { # Concoct Patriotism
+		id = authoritarianism_concocted_patriotism
+		icon = GFX_focus_unknown_political
+		prerequisite = { focus = authoritarianism_subsidized_growth focus = authoritarianism_titles_for_wealthy }
+		mutually_exclusive = { focus = semidemocracy_patriotism }
+		x = 0
+		y = 6
+		relative_position_id = political_authoritarianism_effort
+		cost = 10
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		ai_will_do = {
+			factor = 10
+			modifier = {
+				factor = 10
+				OR = {
+					has_government = authoritarianism
+					authoritarianism > 0.34
+				}
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus authoritarianism_concocted_patriotism"
+			add_ideas = idea_concocted_patriotism
+		}
+	}
 # Shared Pluralism+Transitionist
 	shared_focus = { # Give us Liberty or give us Death
 		id = liberty_or_death
 		icon = GFX_focus_unknown_political
-		prerequisite = { focus = political_pluralism_effort focus = political_semidemocracy_effort }
+		prerequisite = { focus = pluralism_peoples_nation focus = semidemocracy_civilian_welfare }
 		mutually_exclusive = { focus = loyalty_or_death }
-		x = -4
+		x = 0
 		y = 6
-		relative_position_id = political_semidemocracy_effort
+		relative_position_id = political_pluralism_effort
 		cost = 10
 
 		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		ai_will_do = {
+			factor = 7.5
+			modifier = {
+				factor = 7.5
+				OR = {
+					has_government = pluralism
+					pluralism > 0.34
+				}
+			}
+			modifier = {
+				factor = 7.5
+				OR = {
+					has_government = semidemocracy
+					semidemocracy > 0.34
+				}
+			}
+			modifier = {
+				factor = -10
+				OR = {
+					has_government = authoritarianism
+					authoritarianism > 0.34
+				}
+			}
+		}
 
 		available_if_capitulated = yes
 
@@ -521,14 +1472,38 @@ shared_focus = { # Political Effort
 	shared_focus = { # Give us Loyality or you receive Death
 		id = loyalty_or_death
 		icon = GFX_focus_unknown_political
-		prerequisite = { focus = political_semidemocracy_effort focus = political_pluralism_effort }
-		mutually_exclusive = { focus = liberty_or_death }
-		x = -1
+		prerequisite = { focus = semidemocracy_civilian_welfare focus = semidemocracy_military_industry focus = authoritarianism_foreign_manpower }
+		x = 1
 		y = 6
 		relative_position_id = political_semidemocracy_effort
 		cost = 10
 
 		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		ai_will_do = {
+			factor = 10
+			modifier = {
+				factor = -7.5
+				OR = {
+					has_government = pluralism
+					pluralism > 0.34
+				}
+			}
+			modifier = {
+				factor = 10
+				OR = {
+					has_government = semidemocracy
+					semidemocracy > 0.34
+				}
+			}
+			modifier = {
+				factor = 10
+				OR = {
+					has_government = authoritarianism
+					authoritarianism > 0.34
+				}
+			}
+		}
 
 		available_if_capitulated = yes
 
@@ -556,7 +1531,7 @@ shared_focus = { # Political Effort
 				has_country_flag = nihilism_religion
 			}
 		}
-		x = 10
+		x = 6
 		y = 1
 		relative_position_id = political_effort
 		cost = 10
@@ -564,9 +1539,9 @@ shared_focus = { # Political Effort
 		search_filters = { FOCUS_FILTER_POLITICAL }
 
 		ai_will_do = {
-			factor = 100
+			factor = 10
 			modifier = {
-				factor = 100
+				factor = 10
 				OR = {
 					has_government = theocratism
 					theocratism > 0.34
@@ -592,7 +1567,6 @@ shared_focus = { # Political Effort
 			add_timed_idea = { idea = idea_clergy days = 720 }
 		}
 	}
-
 	# Harmonainus
 		shared_focus = { # Harmonainus Faith
 			id = harmonainus_faith
@@ -617,9 +1591,9 @@ shared_focus = { # Political Effort
 			search_filters = { FOCUS_FILTER_POLITICAL }
 
 			ai_will_do = {
-				factor = 100
+				factor = 10
 				modifier = {
-					factor = 100
+					factor = 10
 					OR = {
 						has_government = theocratism
 						theocratism > 0.34
@@ -667,9 +1641,9 @@ shared_focus = { # Political Effort
 			search_filters = { FOCUS_FILTER_POLITICAL }
 
 			ai_will_do = {
-				factor = 100
+				factor = 10
 				modifier = {
-					factor = 100
+					factor = 10
 					OR = {
 						has_government = theocratism
 						theocratism > 0.34
@@ -717,9 +1691,9 @@ shared_focus = { # Political Effort
 			search_filters = { FOCUS_FILTER_POLITICAL }
 
 			ai_will_do = {
-				factor = 100
+				factor = 10
 				modifier = {
-					factor = 100
+					factor = 10
 					OR = {
 						has_government = theocratism
 						theocratism > 0.34
@@ -837,9 +1811,9 @@ shared_focus = { # Political Effort
 			search_filters = { FOCUS_FILTER_POLITICAL }
 
 			ai_will_do = {
-				factor = 100
+				factor = 10
 				modifier = {
-					factor = 100
+					factor = 10
 					OR = {
 						has_government = theocratism
 						theocratism > 0.34
@@ -957,9 +1931,9 @@ shared_focus = { # Political Effort
 			search_filters = { FOCUS_FILTER_POLITICAL }
 
 			ai_will_do = {
-				factor = 100
+				factor = 10
 				modifier = {
-					factor = 100
+					factor = 10
 					OR = {
 						has_government = theocratism
 						theocratism > 0.34
@@ -1253,7 +2227,7 @@ shared_focus = { # Political Effort
 				unitism > 0.25
 			}
 		}
-		x = 17
+		x = 14
 		y = 1
 		relative_position_id = political_effort
 		cost = 10
@@ -1261,9 +2235,9 @@ shared_focus = { # Political Effort
 		search_filters = { FOCUS_FILTER_POLITICAL }
 
 		ai_will_do = {
-			factor = 100
+			factor = 10
 			modifier = {
-				factor = 100
+				factor = 10
 				OR = {
 					has_government = unitism
 					unitism > 0.34
@@ -1294,7 +2268,7 @@ shared_focus = { # Political Effort
 		id = revolutionary_warfare_over_mind
 		icon = GFX_focus_generic_join_comintern
 		prerequisite = { focus = political_unitism_effort }
-		x = 0
+		x = -1
 		y = 1
 		relative_position_id = political_unitism_effort
 		cost = 10
@@ -1329,7 +2303,7 @@ shared_focus = { # Political Effort
 		id = countryside_gorilla_warfare
 		icon = GFX_focus_ETH_freedom_at_gunpoint
 		prerequisite = { focus = political_unitism_effort }
-		x = 2
+		x = 1
 		y = 1
 		relative_position_id = political_unitism_effort
 		cost = 10
@@ -1631,7 +2605,7 @@ shared_focus = { # Political Effort
 			NOT = { has_country_flag = thalassaus_religion }
 			NOT = { has_country_flag = ager_montis_religion }
 		}
-		x = -2
+		x = -3
 		y = 1
 		relative_position_id = political_unitism_effort
 		cost = 10

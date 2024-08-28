@@ -53,6 +53,9 @@
 	NDefines.NBuildings.INFRASTRUCTURE_RESOURCE_BONUS = 0.20
 	NDefines.NBuildings.SUPPLY_ROUTE_RESOURCE_BONUS = 0.20
 
+	NDefines.NMilitary.RELIABILITY_WEATHER = 6.0,	-- how much reliability is afffecting weather impact
+	NDefines.NMilitary.BASE_FORT_PENALTY = -0.10
+
 	NDefines.NNavy.MAX_CAPITALS_PER_AUTO_TASK_FORCE = 10
 	NDefines.NNavy.BEST_CAPITALS_TO_CARRIER_RATIO = 2
 
@@ -298,7 +301,7 @@
 
 	NDefines.NMilitary.LAND_COMBAT_COLLATERAL_INFRA_FACTOR = 0.007
 
-	NDefines.NMilitary.FLANKED_PROVINCES_COUNT = 3
+	NDefines.NMilitary.FLANKED_PROVINCES_COUNT = 5
 
 	--------------------------------------------------------------------------------------------------------------
 	-- AIR COMBAT REWORK
@@ -486,7 +489,7 @@
 	NDefines.NMilitary.RIVER_CROSSING_PENALTY_LARGE = -0.7          -- large river crossing
 	NDefines.NMilitary.RIVER_CROSSING_SPEED_PENALTY = -0.30           -- small river crossing
 	NDefines.NMilitary.RIVER_CROSSING_SPEED_PENALTY_LARGE = -0.65     -- large river crossing
-	NDefines.NMilitary.BASE_FORT_PENALTY = -0.20 					   -- fort penalty		#HOI4TGW ::: BASE_FORT_PENALTY = -0.15
+	-- NDefines.NMilitary.BASE_FORT_PENALTY = -0.20 					   -- fort penalty		#HOI4TGW ::: BASE_FORT_PENALTY = -0.15
 	NDefines.NMilitary.MULTIPLE_COMBATS_PENALTY = -0.6               -- defender penalty if attacked from multiple directions
 	NDefines.NMilitary.ENCIRCLED_PENALTY = -0.25
 
@@ -540,7 +543,7 @@
 	NDefines.NMilitary.TRAINING_ATTRITION = 0.033 		  			   -- amount of extra attrition from being in training
 	NDefines.NMilitary.REINFORCE_CHANCE = 0.033                  	   -- base chance to join combat from back line when empty
 	NDefines.NMilitary.SPEED_REINFORCEMENT_BONUS = 0.011               -- chance to join combat bonus by each 100% larger than infantry base (up to 200%)
-	NDefines.NMilitary.FLANKED_PROVINCES_COUNT = 3 					-- Attacker has to attack from that many provinces for the attack to be considered as flanking
+	NDefines.NMilitary.FLANKED_PROVINCES_COUNT = 5 					-- Attacker has to attack from that many provinces for the attack to be considered as flanking
 	NDefines.NMilitary.MIN_DIVISION_DEPLOYMENT_TRAINING = 0.30 			-- Min level of division training	
 	NDefines.NMilitary.FIELD_MARSHAL_ARMY_BONUS_RATIO = 0.7            -- ratio to apply regular bonuses FM bonuses to armies
 	NDefines.NMilitary.FIELD_MARSHAL_XP_RATIO = 0.7					-- xp gain ratio for army group leaders

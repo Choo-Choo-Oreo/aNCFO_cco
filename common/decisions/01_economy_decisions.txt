@@ -225,71 +225,1333 @@ economy_decisions = {
         }
     }
 
-    #infrastructure_building_slot = {
+    seize_some_trains_woo = { #repeating train seize
 
-    #    icon = generic_construction
+        icon = GFX_decision_hol_draw_up_staff_plans 
 
-    #    allowed = {
-    #        always = yes
-    #    }
+        visible = { 
+            num_of_factories < 60
+        }
+        
+        available = {
+            has_equipment = { train_equipment < 101 }
+            has_tech = basic_train
+        }
+        
+        days_remove = 180
 
-    #    cost = 100
-    #    fire_only_once = no
+        ai_will_do = {
+            factor = 0
+            modifier = {
+                factor = 5
+                has_stability > 0.74
+            }
+            modifier = {
+                factor = 5
+                has_equipment = { train_equipment < 101 }
+            }
+        }
 
-    #    days_re_enable = 30
+        complete_effect = {
+            add_equipment_to_stockpile = {
+                type = train_equipment
+                amount = 15
+            }
+            add_stability = -0.05
+        }
+    }
+    seize_some_trucks_woo = { #repeating truck seize
 
-    #    available = {
-    #        any_owned_state = {
-    #            NOT = { has_state_flag = infrastructure_building_slot_flag }
-    #            is_fully_controlled_by = ROOT
-    #            free_building_slots = {
-    #                building = infrastructure
-    #                size < 1
-    #            }
-    #        }
-    #    }
+        icon = GFX_decision_hol_draw_up_staff_plans
 
-    #    visible = {
-    #        any_owned_state = {
-    #            NOT = { has_state_flag = infrastructure_building_slot_flag }
-    #            is_fully_controlled_by = ROOT
-    #            free_building_slots = {
-    #                building = infrastructure
-    #                size < 1
-    #            }
-    #        }
-    #    }
+        visible = {
+            num_of_factories < 60
+        }
 
-    #    complete_effect = {
-    #        random_owned_state = {
-    #            limit = {
-    #                is_fully_controlled_by = ROOT
-    #                is_owned_by = ROOT
-    #                free_building_slots = {
-    #                    building = industrial_complex
-    #                    size > 1
-    #                    include_locked = yes
-    #                }
-    #                free_building_slots = {
-    #                    building = infrastructure
-    #                    size < 1
-    #                }
-    #                NOT = { has_state_flag = infrastructure_building_slot_flag }
-    #            }
-    #            add_extra_state_shared_building_slots = 1
-    #            set_state_flag = infrastructure_building_slot_flag
-    #        }
-    #    }
-    #    ai_will_do = {
-    #        factor = 1
-    #        modifier = {
-    #            add = -9999
-    #            pre_civilwar_trigger = yes
-    #        }
-    #        modifier = {
-    #            factor = 10
-    #            any_owned_state = { free_building_slots = { building = industrial_complex size < 1 include_locked = no } }
-    #        }
-    #    }
-    #}
+        available = {
+            has_equipment = { motorized_equipment < 1001 }
+            has_tech = tech_trucks
+        }
+
+        days_remove = 180
+
+        ai_will_do = {
+            factor = 0
+            modifier = {
+                factor = 5
+                has_stability > 0.74
+            }
+            modifier = {
+                factor = 5
+                has_equipment = { motorized_equipment < 1001 }
+            }
+        }
+
+        complete_effect = {
+            add_equipment_to_stockpile = {
+                type = motorized_equipment
+                amount = 500
+            }
+            add_stability = -0.05
+        }
+    }
+
+    debug_independent_development = {
+        fire_only_once = no
+        allowed = {
+            always = yes
+        }
+        visible = { AND = { is_debug = yes is_ai = no } }
+        ai_will_do = { factor = 0 }
+        cost = 0
+
+        complete_effect = {
+            set_country_flag = lf_lv0
+            set_country_flag = start_EcoDevelopment
+            set_variable = { LFdate = 180 }
+            activate_mission = EcoDevelopment_free_market
+        }
+    }
+    debug_market_interventionism = {
+        fire_only_once = no
+        allowed = {
+            always = yes
+        }
+        visible = { AND = { is_debug = yes is_ai = no } }
+        ai_will_do = { factor = 0 }
+        cost = 0
+
+        complete_effect = {
+            set_country_flag = market_interventionism
+        }
+    }
+
+    EcoDevelopment_free_market = {
+        fire_only_once = no
+        icon = GFX_decision_gre_paying_ifc_debt
+        allowed = {
+        }
+        visible = {
+            has_country_flag = start_EcoDevelopment
+        }
+        is_good = yes
+        available = { hidden_trigger = { is_ai = yes } }
+        ai_will_do = {
+            factor = 0
+            modifier = {
+                has_global_flag = allow_ai_LF
+                add = 50
+            }
+            modifier = {
+                has_global_flag = allow_ai_player_LF
+                is_subject = yes
+                OVERLORD = { is_ai = no }
+                add = 50
+            }
+        }
+        activation = {
+            always = no
+        }
+        days_mission_timeout = ROOT.LFdate
+        complete_effect = {
+            clr_country_flag = start_EcoDevelopment
+        }
+        timeout_effect = {
+
+            custom_effect_tooltip = EcoDevelopment_free_market_stats
+
+            random_state = {
+                limit = {
+                    is_controlled_by = ROOT
+                    impassable = no
+                    free_building_slots = {
+                        building = industrial_complex
+                        size > 0
+                    }
+                }
+                random_list = {
+                    seed = random 
+                    1.25 = {
+                        modifier = {
+                            free_building_slots = {
+                                building = industrial_complex
+                                size < 1
+                            }
+                            factor = 0
+                        }
+                        modifier = {
+                            has_variable = ROOT.is_literally_not_a_factory
+                            add = var:ROOT.is_literally_not_a_factory
+                        }
+                        modifier = {
+                            ROOT = {
+                                has_country_flag = embrace_civilian
+                            }
+                            factor = 8
+                        }
+                        if = {
+                            limit = {
+                                has_variable = ROOT.is_literally_not_a_factory
+                            }
+                            clear_variable = ROOT.is_literally_not_a_factory
+                        }
+                        add_building_construction = {
+                            type = industrial_complex
+                            level = 1
+                            instant_build = yes
+                        }
+
+                        ROOT = { add_to_variable = { built_a_civ = 1 } }
+                    }
+                    1.25 = {
+                        modifier = {
+                            free_building_slots = {
+                                building = steel_complex
+                                size < 1
+                            }
+                            factor = 0
+                        }
+                        modifier = {
+                            has_variable = ROOT.is_literally_not_a_factory
+                            add = var:ROOT.is_literally_not_a_factory
+                        }
+                        modifier = {
+                            ROOT = {
+                                has_country_flag = embrace_steel
+                            }
+                            factor = 8
+                        }
+                        if = {
+                            limit = {
+                                has_variable = ROOT.is_literally_not_a_factory
+                            }
+                            clear_variable = ROOT.is_literally_not_a_factory
+                        }
+                        add_building_construction = {
+                            type = steel_complex
+                            level = 1
+                            instant_build = yes
+                        }
+
+                        ROOT = { add_to_variable = { built_a_steel = 1 } }
+                    }
+                    0.67 = {
+                        modifier = {
+                            free_building_slots = {
+                                building = aluminium_complex
+                                size < 1
+                            }
+                            factor = 0
+                        }
+                        modifier = {
+                            has_variable = ROOT.is_literally_not_a_factory
+                            add = var:ROOT.is_literally_not_a_factory
+                        }
+                        modifier = {
+                            ROOT = {
+                                has_country_flag = embrace_aluminium
+                            }
+                            factor = 8
+                        }
+                        if = {
+                            limit = {
+                                has_variable = ROOT.is_literally_not_a_factory
+                            }
+                            clear_variable = ROOT.is_literally_not_a_factory
+                        }
+                        add_building_construction = {
+                            type = aluminium_complex
+                            level = 1
+                            instant_build = yes
+                        }
+
+                        ROOT = { add_to_variable = { built_a_aluminium = 1 } }
+                    }
+                    1.25 = {
+                        modifier = {
+                            free_building_slots = {
+                                building = arms_factory
+                                size < 1  
+                            }
+                            factor = 0
+                        }
+                        modifier = {
+                            ROOT = {
+                                has_country_flag = embrace_arms
+                            }
+                            factor = 8
+                        }
+                        modifier = {
+                            has_variable = ROOT.is_literally_not_a_factory
+                            add = var:ROOT.is_literally_not_a_factory
+                        }
+                        if = {
+                            limit = {
+                                has_variable = ROOT.is_literally_not_a_factory
+                            }
+                            clear_variable = ROOT.is_literally_not_a_factory
+                        }
+
+                        add_building_construction = {
+                            type = arms_factory
+                            level = 1
+                            instant_build = yes
+                        }
+
+                        ROOT = { add_to_variable = { built_a_mil = 1 } }
+                    }
+                    1.67 = {
+                        modifier = {
+                            ROOT = {
+                                has_country_flag = embrace_dock
+                            }
+                            factor = 8
+                        }
+                        modifier = {
+                            free_building_slots = {
+                                building = dockyard
+                                size < 1 
+                            }
+                            factor = 0
+                        }
+                        modifier = {
+                            ROOT = {
+                                any_core_state = {
+                                    is_coastal = no
+                                }
+                            }
+                            factor = 0
+                        }
+                        add_building_construction = {
+                            type = dockyard
+                            level = 1
+                            instant_build = yes
+                        }
+                        add_to_variable = { ROOT.is_literally_not_a_factory = 0.1 }
+                        ROOT = { add_to_variable = { built_a_dockyard = 1 } }
+                    }
+                    2.5 = {
+                        modifier = {
+                            infrastructure > 4
+                            factor = 0
+                        }
+                        modifier = {
+                            ROOT = {
+                                has_country_flag = embrace_infrastructure
+                            }
+                            factor = 8
+                        }
+                        add_building_construction = {
+                            type = infrastructure
+                            level = 1
+                            instant_build = yes
+                        }
+                        add_to_variable = { ROOT.is_literally_not_a_factory = 0.15 }
+                        ROOT = { add_to_variable = { built_a_infra = 1 } }
+                    }
+                    2.5 = {
+                        modifier = {
+                            ROOT = {
+                                has_country_flag = embrace_air_base
+                            }
+                            factor = 8
+                        }
+                        modifier = {
+                            air_base > 9
+                            factor = 0
+                        }
+                        add_building_construction = {
+                            type = air_base
+                            level = 1
+                            instant_build = yes
+                        }
+                        add_to_variable = { ROOT.is_literally_not_a_factory = 0.25 }
+                        ROOT = { add_to_variable = { built_an_airbase = 1 } }
+                    }
+                    2.5 = {
+                        modifier = {
+                            anti_air_building > 4
+                            factor = 0
+                        }
+                        modifier = {
+                            ROOT = {
+                                has_country_flag = embrace_anti_airs
+                            }
+                            factor = 8
+                        }
+                        modifier = {
+                            ROOT = { NOT = {  has_tech = interwar_antiair } }
+                            factor = 0
+                        }
+                        add_building_construction = {
+                            type = anti_air_building
+                            level = 1
+                            instant_build = yes
+                        }
+                        add_to_variable = { ROOT.is_literally_not_a_factory = 0.2 }
+                        ROOT = { add_to_variable = { built_an_aa = 1 } }
+                    }
+                    1.5 = {
+                        modifier = {
+                            radar_station > 4
+                            factor = 0
+                        }
+                        modifier = {
+                            ROOT = {
+                                has_country_flag = embrace_radar_station
+                            }
+                            factor = 8
+                        }
+                        modifier = { #level 1
+                            ROOT = { NOT = {  has_tech = radio_detection } }
+                            factor = 0
+                        }
+
+                        modifier = { #level 2
+                            radar_station > 0
+                            ROOT = { NOT = {  has_tech = decimetric_radar } }
+                            factor = 0
+                        }
+
+                        modifier = { #level 3
+                            radar_station > 2
+                            ROOT = { NOT = {  has_tech = improved_decimetric_radar } }
+                            factor = 0
+                        }
+
+                        modifier = { #level 4
+                            radar_station > 3
+                            ROOT = { NOT = {  has_tech = centimetric_radar } }
+                            factor = 0
+                        }
+                        modifier = { #level 5
+                            radar_station > 4
+                            ROOT = { NOT = {  has_tech = improved_centimetric_radar } }
+                            factor = 0
+                        }
+
+                        modifier = { #level 6
+                            radar_station > 4
+                            ROOT = { NOT = {  has_tech = advanced_centimetric_radar } }
+                            factor = 0
+                        }
+
+                        add_building_construction = {
+                            type = radar_station
+                            level = 1
+                            instant_build = yes
+                        }
+                        add_to_variable = { ROOT.is_literally_not_a_factory = 0.25 }
+                        ROOT = { add_to_variable = { built_a_radar = 1 } }
+                    }
+                    0.1 =   {
+                        add_building_construction = {
+                            type = supply_node
+                            province = {
+                                all_provinces = yes
+                            }
+                            level = 1
+                            instant_build = yes
+                        }
+                        modifier = {
+                            ROOT = {
+                                has_country_flag = embrace_supply_node
+                            }
+                            factor = 8
+                        }
+                        add_to_variable = { ROOT.is_literally_not_a_factory = 0.2 }
+                        ROOT = { add_to_variable = { built_a_hub = 1 } }
+                    }
+                    1.67 = {
+                        modifier = {
+                            free_building_slots = {
+                                building = industrial_complex
+                                size < 1 
+                            }
+                            factor = 2
+                        }
+                        modifier = {
+                            ROOT = {
+                                has_country_flag = embrace_slot
+                            }
+                            factor = 8
+                        }
+                        add_extra_state_shared_building_slots = 1
+                        add_to_variable = { ROOT.is_literally_not_a_factory = 0.1 }
+                        ROOT = { add_to_variable = { added_slot = 1 } }
+                    }
+                }
+            }
+            activate_mission = EcoDevelopment_free_market
+            hidden_effect = {
+                set_country_flag = lf_lv0
+                clr_country_flag = lf_lv1
+                clr_country_flag = lf_lv2
+                clr_country_flag = lf_lv3
+                clr_country_flag = lf_lv4
+                clr_country_flag = lf_lv5
+                clr_country_flag = lf_lv6
+                clr_country_flag = lf_lv7
+            }
+        }
+    }
+# Additional Subsidies
+    Start_Subsidies_1 = {
+        fire_only_once = no
+        allowed = {
+            always = yes
+        }
+        available = {
+            num_of_civilian_factories > 25
+        }
+        visible = {
+            OR = { has_war = yes has_country_flag = market_interventionism }
+            has_country_flag = start_EcoDevelopment
+            has_country_flag = lf_lv0
+        }
+        ai_will_do = {
+            factor = 0
+            modifier = {
+                has_global_flag = allow_ai_LF
+                add = 50
+            }
+            modifier = {
+                has_global_flag = allow_ai_player_LF
+                is_subject = yes
+                OVERLORD = { is_ai = no }
+                add = 50
+            }
+        }
+        cost = 10
+        complete_effect = {
+            clr_country_flag = lf_lv0           
+            set_country_flag = lf_lv1
+            add_to_variable = {
+                LFdate = -20
+            }
+            add_days_mission_timeout = {
+                mission = EcoDevelopment_free_market
+                days = -20
+            }
+        }
+    }
+
+        Start_Subsidies_2 = {
+            fire_only_once = no
+            allowed = {
+                always = yes
+            }
+            available = {
+                num_of_civilian_factories > 34
+            }
+            visible = {
+                OR = { has_war = yes has_country_flag = market_interventionism }
+                has_country_flag = start_EcoDevelopment
+                has_country_flag = lf_lv1
+            }
+            ai_will_do = {
+                factor = 0
+                modifier = {
+                    has_global_flag = allow_ai_LF
+                    add = 50
+                }
+                modifier = {
+                    has_global_flag = allow_ai_player_LF
+                    is_subject = yes
+                    OVERLORD = { is_ai = no }
+                    add = 50
+                }
+            }
+            cost = 10
+            complete_effect = {
+                clr_country_flag = lf_lv1
+                set_country_flag = lf_lv2
+                add_to_variable = {
+                    LFdate = -20
+                }
+                add_days_mission_timeout = {
+                    mission = EcoDevelopment_free_market
+                    days = -20
+                }
+            }
+        }
+
+        Start_Subsidies_3 = {
+            fire_only_once = no
+            allowed = {
+                always = yes
+            }
+            available = {
+                num_of_civilian_factories > 50
+            }
+            visible = {
+                OR = { has_war = yes has_country_flag = market_interventionism }
+                has_country_flag = start_EcoDevelopment
+                has_country_flag = lf_lv2
+            }
+            ai_will_do = {
+                factor = 0
+                modifier = {
+                    has_global_flag = allow_ai_LF
+                    add = 50
+                }
+                modifier = {
+                    has_global_flag = allow_ai_player_LF
+                    is_subject = yes
+                    OVERLORD = { is_ai = no }
+                    add = 50
+                }
+            }
+            cost = 10
+            complete_effect = {
+                clr_country_flag = lf_lv2
+                set_country_flag = lf_lv3
+                add_to_variable = {
+                    LFdate = -20
+                }
+                add_days_mission_timeout = {
+                    mission = EcoDevelopment_free_market
+                    days = -20
+                }
+            }
+        }
+
+        Start_Subsidies_4 = {
+            fire_only_once = no
+            allowed = {
+                always = yes
+            }
+            available = {
+                num_of_civilian_factories > 67
+            }
+            visible = {
+                OR = { has_war = yes has_country_flag = market_interventionism }
+                has_country_flag = start_EcoDevelopment
+                has_country_flag = lf_lv3
+            }
+            ai_will_do = {
+                factor = 0
+                modifier = {
+                    has_global_flag = allow_ai_LF
+                    add = 50
+                }
+                modifier = {
+                    has_global_flag = allow_ai_player_LF
+                    is_subject = yes
+                    OVERLORD = { is_ai = no }
+                    add = 50
+                }
+            }
+            cost = 10
+            complete_effect = {
+                clr_country_flag = lf_lv3
+                set_country_flag = lf_lv4
+                add_to_variable = {
+                    LFdate = -20
+                }
+                add_days_mission_timeout = {
+                    mission = EcoDevelopment_free_market
+                    days = -20
+                }
+            }
+        }
+
+        Start_Subsidies_5 = {
+            fire_only_once = no
+            allowed = {
+                always = yes
+            }
+            available = {
+                num_of_civilian_factories > 75
+            }
+            visible = {
+                OR = { has_war = yes has_country_flag = market_interventionism }
+                has_country_flag = start_EcoDevelopment
+                has_country_flag = lf_lv4
+            }
+            ai_will_do = {
+                factor = 0
+                modifier = {
+                    has_global_flag = allow_ai_LF
+                    add = 50
+                }
+                modifier = {
+                    has_global_flag = allow_ai_player_LF
+                    is_subject = yes
+                    OVERLORD = { is_ai = no }
+                    add = 50
+                }
+            }
+            cost = 10
+            complete_effect = {
+                clr_country_flag = lf_lv4
+                set_country_flag = lf_lv5
+                add_to_variable = {
+                    LFdate = -20
+                }
+                add_days_mission_timeout = {
+                    mission = EcoDevelopment_free_market
+                    days = -20
+                }
+            }
+        }
+
+        Start_Subsidies_6 = {
+            fire_only_once = no
+            allowed = {
+                always = yes
+            }
+            available = {
+                num_of_civilian_factories > 87
+            }
+            visible = {
+                OR = { has_war = yes has_country_flag = market_interventionism }
+                has_country_flag = start_EcoDevelopment
+                has_country_flag = lf_lv5
+            }
+            ai_will_do = {
+                factor = 0
+                modifier = {
+                    has_global_flag = allow_ai_LF
+                    add = 50
+                }
+                modifier = {
+                    has_global_flag = allow_ai_player_LF
+                    is_subject = yes
+                    OVERLORD = { is_ai = no }
+                    add = 50
+                }
+            }
+            cost = 10
+            complete_effect = {
+                clr_country_flag = lf_lv5
+                set_country_flag = lf_lv6
+                add_to_variable = {
+                    LFdate = -20
+                }
+                add_days_mission_timeout = {
+                    mission = EcoDevelopment_free_market
+                    days = -20
+                }
+            }
+        }
+
+        Start_Subsidies_7 = {
+            fire_only_once = no
+            allowed = {
+                always = yes
+            }
+            available = {
+                num_of_civilian_factories > 100
+            }
+            visible = {
+                OR = { has_war = yes has_country_flag = market_interventionism }
+                has_country_flag = start_EcoDevelopment
+                has_country_flag = lf_lv6
+            }
+            ai_will_do = {
+                factor = 0
+                modifier = {
+                    has_global_flag = allow_ai_LF
+                    add = 50
+                }
+                modifier = {
+                    has_global_flag = allow_ai_player_LF
+                    is_subject = yes
+                    OVERLORD = { is_ai = no }
+                    add = 50
+                }
+            }
+            cost = 10
+            complete_effect = {
+                clr_country_flag = lf_lv6
+                set_country_flag = lf_lv7
+                add_to_variable = {
+                    LFdate = -20
+                }
+                add_days_mission_timeout = {
+                    mission = EcoDevelopment_free_market
+                    days = -20
+                }
+            }
+        }
+# Start Subsidies
+    Start_Subsidies_civil = {
+        fire_only_once = no
+        allowed = {
+            always = yes
+        }
+        visible = {
+            OR = { has_war = yes has_country_flag = market_interventionism }
+            not = {
+                has_country_flag = embrace_civilian
+            }
+            has_country_flag = start_EcoDevelopment
+        }
+        ai_will_do = {
+            factor = 0
+        }
+        cost = 150
+        complete_effect = {
+            set_country_flag = embrace_civilian
+        }
+    }
+
+    Start_Subsidies_steel = {
+        fire_only_once = no
+        allowed = {
+            always = yes
+        }
+        visible = {
+            OR = { has_war = yes has_country_flag = market_interventionism }
+            not = {
+                has_country_flag = embrace_steel
+            }
+            has_country_flag = start_EcoDevelopment
+        }
+        ai_will_do = {
+            factor = 0
+        }
+        cost = 150
+        complete_effect = {
+            set_country_flag = embrace_steel
+        }
+    }
+
+    Start_Subsidies_aluminium = {
+        fire_only_once = no
+        allowed = {
+            always = yes
+        }
+        visible = {
+            OR = { has_war = yes has_country_flag = market_interventionism }
+            not = {
+                has_country_flag = embrace_aluminium
+            }
+            has_country_flag = start_EcoDevelopment
+        }
+        ai_will_do = {
+            factor = 0
+        }
+        cost = 150
+        complete_effect = {
+            set_country_flag = embrace_aluminium
+        }
+    }
+
+    Start_Subsidies_arms = {
+        fire_only_once = no
+        allowed = {
+            always = yes
+        }
+        visible = {
+            OR = { has_war = yes has_country_flag = market_interventionism }
+            has_country_flag = start_EcoDevelopment
+            not = {
+                has_country_flag = embrace_arms
+            }
+        }
+        ai_will_do = {
+            factor = 0
+        }
+        cost = 150
+        complete_effect = {
+            set_country_flag = embrace_arms
+        }
+    }
+
+    Start_Subsidies_dock = {
+        fire_only_once = no
+        allowed = {
+            always = yes
+        }
+        visible = {
+            OR = { has_war = yes has_country_flag = market_interventionism }
+            has_country_flag = start_EcoDevelopment
+            not = {
+                has_country_flag = embrace_dock
+            }
+        }
+        ai_will_do = {
+            factor = 0
+        }
+        cost = 150
+        complete_effect = {
+            set_country_flag = embrace_dock
+        }
+    }
+
+    Start_Subsidies_istru = {
+        fire_only_once = no
+        allowed = {
+            always = yes
+            
+        }
+        visible = {
+            OR = { has_war = yes has_country_flag = market_interventionism }
+            has_country_flag = start_EcoDevelopment
+            not = {
+                has_country_flag = embrace_infrastructure
+            }
+        }
+        ai_will_do = {
+            factor = 0
+        }
+        cost = 150
+        complete_effect = {
+            set_country_flag = embrace_infrastructure   
+        }
+    }
+
+    Start_Subsidies_abase = {
+        fire_only_once = no
+        allowed = {
+            always = yes
+        }
+        visible = {
+            OR = { has_war = yes has_country_flag = market_interventionism }
+            has_country_flag = start_EcoDevelopment
+            not = {
+                has_country_flag = embrace_air_base
+            }
+        }
+        ai_will_do = {
+            factor = 0
+        }
+        cost = 150
+        complete_effect = {
+            set_country_flag = embrace_air_base
+        }
+    }
+
+    Start_Subsidies_aair = {
+        fire_only_once = no
+        allowed = {
+            always = yes
+            
+        }
+        visible = {
+            OR = { has_war = yes has_country_flag = market_interventionism }
+            has_country_flag = start_EcoDevelopment
+            not = {
+                has_country_flag = embrace_anti_airs
+            }
+        }
+        ai_will_do = {
+            factor = 0
+        }
+        cost = 150
+        complete_effect = {
+            set_country_flag = embrace_anti_airs
+        }
+    }
+
+    Start_Subsidies_radarstation = {
+        fire_only_once = no
+        allowed = {
+            always = yes
+            
+        }
+        visible = {
+            OR = { has_war = yes has_country_flag = market_interventionism }
+            has_country_flag = start_EcoDevelopment
+            not = {
+                has_country_flag = embrace_radar_station
+            }
+        }
+        ai_will_do = {
+            factor = 0
+        }
+        cost = 150
+        complete_effect = {
+            set_country_flag = embrace_radar_station
+        }
+    }
+
+    Start_Subsidies_supply = {
+        fire_only_once = no
+        allowed = {
+            always = yes
+        }
+        visible = {
+            OR = { has_war = yes has_country_flag = market_interventionism }
+            not = {
+                has_country_flag = embrace_supply_node
+            }
+            has_country_flag = start_EcoDevelopment
+        }
+        ai_will_do = {
+            factor = 0
+        }
+        cost = 150
+        complete_effect = {
+
+            set_country_flag = embrace_supply_node
+        }
+    }
+
+    Start_Subsidies_slot = {
+        fire_only_once = no
+        allowed = {
+            always = yes
+        }
+        visible = {
+            OR = { has_war = yes has_country_flag = market_interventionism }
+            has_country_flag = start_EcoDevelopment
+            not = {
+                has_country_flag = embrace_slot
+            }
+        }
+        ai_will_do = {
+            factor = 0
+        }
+        cost = 150
+        complete_effect = {
+            set_country_flag = embrace_slot
+        }
+    }
+
+    Start_Subsidies_factory = {
+        fire_only_once = no
+        allowed = {
+            always = yes
+        }
+        available = {
+            num_of_civilian_factories > 5
+            check_variable = {
+                LFdate > 9
+            }
+        }
+        visible = {
+            OR = { has_war = yes has_country_flag = market_interventionism }
+            has_country_flag = lf_lv4
+        }
+        ai_will_do = {
+            factor = 0
+            modifier = {
+                has_global_flag = allow_ai_LF
+                add = 50
+            }
+            modifier = {
+                has_global_flag = allow_ai_player_LF
+                is_subject = yes
+                OVERLORD = { is_ai = no }
+                add = 50
+            }
+        }
+        cost = 10
+        complete_effect = {
+            add_to_variable = {
+                LFdate = -10
+            }
+            add_days_mission_timeout = {
+                mission = EcoDevelopment_free_market
+                days = -10
+            }
+            random_state = {
+                limit = {
+                    is_core_of = ROOT
+                    is_owned_and_controlled_by = ROOT
+                    industrial_complex > 0
+                }
+                remove_building = { type = industrial_complex level = 1 }
+            }
+            random_state = {
+                limit = {
+                    is_core_of = ROOT
+                    is_owned_and_controlled_by = ROOT
+                    industrial_complex > 0
+                }
+                remove_building = { type = industrial_complex level = 1 }
+            }
+            random_state = {
+                limit = {
+                    is_core_of = ROOT
+                    is_owned_and_controlled_by = ROOT
+                    industrial_complex > 0
+                }
+                remove_building = { type = industrial_complex level = 1 }
+            }
+            random_state = {
+                limit = {
+                    is_core_of = ROOT
+                    is_owned_and_controlled_by = ROOT
+                    industrial_complex > 0
+                }
+                remove_building = { type = industrial_complex level = 1 }
+            }
+            random_state = {
+                limit = {
+                    is_core_of = ROOT
+                    is_owned_and_controlled_by = ROOT
+                    industrial_complex > 0
+                }
+                remove_building = { type = industrial_complex level = 1 }
+            }
+        }
+    }
+# Revoke Subsidies
+    Revoke_Subsidies_civil = {
+        fire_only_once = no
+        allowed = {
+            always = yes
+        }
+        visible = {
+            
+                has_country_flag = embrace_civilian
+            
+            has_country_flag = start_EcoDevelopment
+        }
+        ai_will_do = {
+            factor = 0
+            modifier = {
+                NOT = { has_country_flag = market_interventionism }
+                add = 50
+            }
+        }
+        cost = 10
+        complete_effect = {
+            clr_country_flag = embrace_civilian
+        }
+    }
+
+    Revoke_Subsidies_steel = {
+        fire_only_once = no
+        allowed = {
+            always = yes
+        }
+        visible = {
+            
+                has_country_flag = embrace_steel
+            
+            has_country_flag = start_EcoDevelopment
+        }
+        ai_will_do = {
+            factor = 0
+            modifier = {
+                NOT = { has_country_flag = market_interventionism }
+                add = 50
+            }
+        }
+        cost = 10
+        complete_effect = {
+            clr_country_flag = embrace_steel
+        }
+    }
+
+    Revoke_Subsidies_aluminium = {
+        fire_only_once = no
+        allowed = {
+            always = yes
+        }
+        visible = {
+            
+                has_country_flag = embrace_aluminium
+            
+            has_country_flag = start_EcoDevelopment
+        }
+        ai_will_do = {
+            factor = 0
+            modifier = {
+                NOT = { has_country_flag = market_interventionism }
+                add = 50
+            }
+        }
+        cost = 10
+        complete_effect = {
+            clr_country_flag = embrace_aluminium
+        }
+    }
+
+    Revoke_Subsidies_arms = {
+        fire_only_once = no
+        allowed = {
+            always = yes
+        }
+        visible = {
+            has_country_flag = start_EcoDevelopment
+            has_country_flag = embrace_arms
+        }
+        ai_will_do = {
+            factor = 0
+            modifier = {
+                NOT = { has_country_flag = market_interventionism }
+                add = 50
+            }
+        }
+        cost = 10
+        complete_effect = {
+            clr_country_flag = embrace_arms
+        }
+    }
+
+    Revoke_Subsidies_dock = {
+        fire_only_once = no
+        allowed = {
+            always = yes
+        }
+        visible = {
+            has_country_flag = start_EcoDevelopment
+            has_country_flag = embrace_dock
+        }
+        ai_will_do = {
+            factor = 0
+            modifier = {
+                NOT = { has_country_flag = market_interventionism }
+                add = 50
+            }
+        }
+        cost = 10
+        complete_effect = {
+            clr_country_flag = embrace_dock
+        }
+    }
+
+    Revoke_Subsidies_istru = {
+        fire_only_once = no
+        allowed = {
+            always = yes
+            
+        }
+        visible = {
+            has_country_flag = start_EcoDevelopment
+            
+                has_country_flag = embrace_infrastructure
+        
+        }
+        ai_will_do = {
+            factor = 0
+            modifier = {
+                NOT = { has_country_flag = market_interventionism }
+                add = 50
+            }
+        }
+        cost = 10
+        complete_effect = {
+            clr_country_flag = embrace_infrastructure   
+        }
+    }
+
+    Revoke_Subsidies_abase = {
+        fire_only_once = no
+        allowed = {
+            always = yes
+        }
+        visible = {
+            has_country_flag = start_EcoDevelopment
+            
+                has_country_flag = embrace_air_base
+            
+        }
+        ai_will_do = {
+            factor = 0
+            modifier = {
+                NOT = { has_country_flag = market_interventionism }
+                add = 50
+            }
+        }
+        cost = 10
+        complete_effect = {
+            clr_country_flag = embrace_air_base
+        }
+    }
+
+    Revoke_Subsidies_aair = {
+        fire_only_once = no
+        allowed = {
+            always = yes
+            
+        }
+        visible = {
+            has_country_flag = start_EcoDevelopment
+            
+                has_country_flag = embrace_anti_airs
+            
+        }
+        ai_will_do = {
+            factor = 0
+            modifier = {
+                NOT = { has_country_flag = market_interventionism }
+                add = 50
+            }
+        }
+        cost = 10
+        complete_effect = {
+            clr_country_flag = embrace_anti_airs
+        }
+    }
+
+    Revoke_Subsidies_radarstation = {
+        fire_only_once = no
+        allowed = {
+            always = yes
+            
+        }
+        visible = {
+            has_country_flag = start_EcoDevelopment
+            
+                has_country_flag = embrace_radar_station
+            
+        }
+        ai_will_do = {
+            factor = 0
+            modifier = {
+                NOT = { has_country_flag = market_interventionism }
+                add = 50
+            }
+        }
+        cost = 10
+        complete_effect = {
+            clr_country_flag = embrace_radar_station
+        }
+    }
+
+    Revoke_Subsidies_supply = {
+        fire_only_once = no
+        allowed = {
+            always = yes
+        }
+        visible = {
+            
+                has_country_flag = embrace_supply_node
+            
+            has_country_flag = start_EcoDevelopment
+        }
+        ai_will_do = {
+            factor = 0
+            modifier = {
+                NOT = { has_country_flag = market_interventionism }
+                add = 50
+            }
+        }
+        cost = 10
+        complete_effect = {
+            
+            clr_country_flag = embrace_supply_node
+        }
+    }
+
+    Revoke_Subsidies_slot = {
+        fire_only_once = no
+        allowed = {
+            always = yes
+        }
+        visible = {
+            has_country_flag = start_EcoDevelopment
+            
+                has_country_flag = embrace_slot
+            
+        }
+        ai_will_do = {
+            factor = 0
+            modifier = {
+                NOT = { has_country_flag = market_interventionism }
+                add = 50
+            }
+        }
+        cost = 10
+        complete_effect = {
+            clr_country_flag = embrace_slot
+        }
+    }
 }
