@@ -53,7 +53,7 @@
 	NDefines.NBuildings.INFRASTRUCTURE_RESOURCE_BONUS = 0.20
 	NDefines.NBuildings.SUPPLY_ROUTE_RESOURCE_BONUS = 0.20
 
-	NDefines.NMilitary.RELIABILITY_WEATHER = 6.0,	-- how much reliability is afffecting weather impact
+	NDefines.NMilitary.RELIABILITY_WEATHER = 6.0	-- how much reliability is afffecting weather impact
 	NDefines.NMilitary.BASE_FORT_PENALTY = -0.10
 
 	NDefines.NNavy.MAX_CAPITALS_PER_AUTO_TASK_FORCE = 10
