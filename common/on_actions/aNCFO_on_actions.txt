@@ -122,6 +122,89 @@ on_actions = {
 					set_garrison_strength = 0.8
 				}
 			}
+		# Gamerules Setup
+			effect = {
+				IF = { # Harmonainus Imperious: Dismantled
+					LIMIT = {
+						has_game_rule = {
+							rule = rule_territory_harmonainus_imperious
+							option = RULE_TERRITORY_HHE_DISMANTLED
+						}
+					}
+					HHE = { release = HFR }
+					HET = { release = ETF }
+					ETF = { annex_country = { target = HET transfer_troops = yes } }
+					HPP = { release = ETF }
+					HST = { release = ETF }
+					HUM = { release = ETF }
+					HUM = { release = HDW }
+					HDW = { transfer_navy = { target = HUM }
+						annex_country = { target = HUM transfer_troops = yes } }
+					HLF = { release = POL }
+					POL = { transfer_navy = { target = HLF }
+						annex_country = { target = HLF transfer_troops = yes } }
+					HBB = { release = NEP }
+					NEP = { transfer_navy = { target = HBB }
+						annex_country = { target = HBB transfer_troops = yes } }
+					HLF = { release = NEP }
+					HNO = { release = NEP }
+					NEP = { annex_country = { target = HNO transfer_troops = yes } }
+					HUP = { release = SFG }
+					MRC = { transfer_navy = { target = HSP }
+						annex_country = { target = HSP transfer_troops = yes } }
+					114 = { add_core_of = MRC }
+					123 = { add_core_of = MRC }
+					124 = { add_core_of = MRC }
+					180 = { add_core_of = MRC }
+					HHE = { release = MRC }
+					HTP = { release = MRC }
+					117 = { transfer_state_to = MJU add_core_of = MJU }
+					UFS = { transfer_navy = { target = HCR }
+						annex_country = { target = HCR transfer_troops = yes } }
+					8   = { add_core_of = HCR }
+					168 = { add_core_of = HCR }
+					281 = { add_core_of = HCR }
+					282 = { add_core_of = HCR }
+					285 = { add_core_of = HCR }
+					287 = { add_core_of = HCR }
+					719 = { add_core_of = HCR }
+					UFS = { transfer_navy = { target = HWA }
+						annex_country = { target = HWA transfer_troops = yes } }
+					every_state = { limit = { is_core_of = HWA } add_core_of = UFS }
+					UFS = { release = NPP }
+					HPP = { release = NPP }
+					NPP = { transfer_navy = { target = HPP }
+						annex_country = { target = HPP transfer_troops = yes } }
+					279 = { transfer_state_to = UFS add_core_of = UFS }
+					397 = { transfer_state_to = UFS add_core_of = UFS }
+					98  = { add_core_of = CPV add_core_of = RVV }
+					134 = { add_core_of = CPV add_core_of = RVV }
+					135 = { add_core_of = CPV add_core_of = RVV }
+					138 = { add_core_of = CPV add_core_of = RVV }
+					406 = { add_core_of = CPV add_core_of = RVV }
+					HST = { release = RVV }
+					DOC = { annex_country = { target = HRF transfer_troops = yes } }
+					REP = { transfer_navy = { target = HRF } }
+					194 = { transfer_state_to = REP }
+					195 = { transfer_state_to = REP }
+					220 = { transfer_state_to = REP }
+					KGK = { annex_country = { target = HER transfer_troops = yes } }
+					every_state = { limit = { is_core_of = HER } add_core_of = KGK }
+					612 = { transfer_state_to = SMK add_core_of = SMK }
+					613 = { transfer_state_to = NMR add_core_of = NMR }
+					263 = { transfer_state_to = REP add_core_of = REP }
+					614 = { transfer_state_to = REP add_core_of = REP }
+					615 = { transfer_state_to = REP add_core_of = REP }
+				}
+				IF = { # Harmonainus Imperious: Unified
+					LIMIT = {
+						has_game_rule = {
+							rule = rule_territory_harmonainus_imperious
+							option = RULE_TERRITORY_HHE_DISMANTLED
+						}
+					}
+				}
+			}
 		# Country Setup
 			effect = {
 				every_country = {
@@ -247,34 +330,34 @@ on_actions = {
 					}
 				}
 			# Romverjor Rihhi
-			effect = {
-				every_state = {
-					limit = {
-						OR = {
-							is_core_of = DOO
-							is_core_of = FDN
-							is_core_of = HNT
-							is_core_of = KST
-							is_core_of = MTR
-							is_core_of = NWE
-							is_core_of = RDN # Should just be neighbor.
-							is_core_of = SHT
-							#is_core_of = TRH
+				effect = {
+					every_state = {
+						limit = {
+							OR = {
+								is_core_of = DOO
+								is_core_of = FDN
+								is_core_of = HNT
+								is_core_of = KST
+								is_core_of = MTR
+								is_core_of = NWE
+								is_core_of = RDN # Should just be neighbor.
+								is_core_of = SHT
+								#is_core_of = TRH
+							}
 						}
+						add_core_of = ROM
 					}
-					add_core_of = ROM
-				}
-				every_state = {
-					limit = {
-						NOT = { is_core_of = ROM }
-						OR = {
-							state_is_in_the_kunstfertiger_sea = yes
-							state_is_in_the_mitti_sea = yes
+					every_state = {
+						limit = {
+							NOT = { is_core_of = ROM }
+							OR = {
+								state_is_in_the_kunstfertiger_sea = yes
+								state_is_in_the_mitti_sea = yes
+							}
 						}
+						add_claim_by = ROM
 					}
-					add_claim_by = ROM
 				}
-			}
 	}
 	on_new_term_election = {
 		random_events = {

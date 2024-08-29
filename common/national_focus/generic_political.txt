@@ -71,7 +71,7 @@ shared_focus = { # Political Effort
 		prerequisite = { focus = political_pluralism_effort }
 		#mutually_exclusive = { focus =  }
 		available = {
-			has_government = pluralism
+			pluralism > 0.34
 			OR = {
 				has_country_leader_ideology = sub_illuminism
 				has_country_leader_ideology = sub_pluralism
@@ -147,7 +147,7 @@ shared_focus = { # Political Effort
 		prerequisite = { focus = political_pluralism_effort }
 		#mutually_exclusive = { focus =  }
 		available = {
-			has_government = pluralism
+			pluralism > 0.34
 			OR = {
 				has_country_leader_ideology = sub_constitutionalism
 				has_country_leader_ideology = sub_conservatism
@@ -444,8 +444,8 @@ shared_focus = { # Political Effort
 		#mutually_exclusive = { focus =  }
 		available = {
 			OR = {
-				has_government = pluralism
-				has_government = semidemocracy
+				pluralism > 0.34
+				semidemocracy > 0.34
 			}
 			OR = {
 				has_country_leader_ideology = sub_progressivism
@@ -654,9 +654,9 @@ shared_focus = { # Political Effort
 		id = semidemocracy_classical_pluralism
 		icon = GFX_focus_unknown_political
 		prerequisite = { focus = political_semidemocracy_effort }
-		#mutually_exclusive = { focus =  }
+		mutually_exclusive = { focus = authoritarianism_oligarchy focus = authoritarianism_our_leader focus = authoritarianism_our_monarch }
 		available = {
-			has_government = semidemocracy
+			semidemocracy > 0.34
 			OR = {
 				has_country_leader_ideology = sub_transitional_democracy
 				has_country_leader_ideology = sub_mercantile_republicism
@@ -878,25 +878,18 @@ shared_focus = { # Political Effort
 		id = authoritarianism_oligarchy
 		icon = GFX_focus_unknown_political
 		prerequisite = { focus = political_semidemocracy_effort focus = political_authoritarianism_effort }
-		mutually_exclusive = { focus = authoritarianism_our_leader focus = authoritarianism_our_monarch }
+		mutually_exclusive = { focus = semidemocracy_classical_pluralism focus = authoritarianism_our_leader focus = authoritarianism_our_monarch }
 		available = {
 			OR = {
-				# Semi-Democracy
-				AND = {
-					has_government = semidemocracy
-					OR = {
-						NOT = { has_country_leader_ideology = sub_transitional_democracy }
-						NOT = { has_country_leader_ideology = sub_mercantile_republicism }
-						NOT = { has_country_leader_ideology = sub_socialism }
-					}
-				}
-				AND = {
-					has_government = authoritarianism
-					OR = {
-						has_country_leader_ideology = sub_authoritarian
-						has_country_leader_ideology = sub_oligarchy
-					}
-				}
+				semidemocracy > 0.34
+				authoritarianism > 0.34
+			}
+			OR = {
+				has_country_leader_ideology = sub_obscurism
+				has_country_leader_ideology = sub_traditionalism
+				has_country_leader_ideology = sub_illiberalism
+				has_country_leader_ideology = sub_authoritarian
+				has_country_leader_ideology = sub_oligarchy
 			}
 		}
 		x = -3
@@ -944,6 +937,10 @@ shared_focus = { # Political Effort
 			prerequisite = { focus = authoritarianism_oligarchy }
 			#mutually_exclusive = { focus =  }
 			available = {
+				OR = {
+					has_government = semidemocracy
+					has_government = authoritarianism
+				}
 			}
 			x = 0
 			y = 1
@@ -960,6 +957,7 @@ shared_focus = { # Political Effort
 						has_government = semidemocracy
 						semidemocracy > 0.34
 					}
+					NOT = { has_completed_focus = political_authoritarianism_effort }
 				}
 				modifier = {
 					factor = 10
@@ -967,6 +965,7 @@ shared_focus = { # Political Effort
 						has_government = authoritarianism
 						authoritarianism > 0.34
 					}
+					NOT = { has_completed_focus = political_semidemocracy_effort }
 				}
 			}
 
@@ -1104,9 +1103,9 @@ shared_focus = { # Political Effort
 		id = authoritarianism_our_leader
 		icon = GFX_focus_unknown_political
 		prerequisite = { focus = political_authoritarianism_effort }
-		mutually_exclusive = { focus = authoritarianism_oligarchy focus = authoritarianism_our_monarch }
+		mutually_exclusive = { focus = semidemocracy_classical_pluralism focus = authoritarianism_oligarchy focus = authoritarianism_our_monarch }
 		available = {
-			has_government = authoritarianism
+			authoritarianism > 0.34
 			has_country_leader_ideology = sub_authoritarian
 		}
 		x = -1
@@ -1175,9 +1174,9 @@ shared_focus = { # Political Effort
 		id = authoritarianism_our_monarch
 		icon = GFX_focus_unknown_political
 		prerequisite = { focus = political_authoritarianism_effort }
-		mutually_exclusive = { focus = authoritarianism_oligarchy focus = authoritarianism_our_leader }
+		mutually_exclusive = { focus = semidemocracy_classical_pluralism focus = authoritarianism_oligarchy focus = authoritarianism_our_leader }
 		available = {
-			has_government = authoritarianism
+			authoritarianism > 0.34
 			has_country_leader_ideology = sub_monarchy
 		}
 		x = 1
@@ -1575,10 +1574,7 @@ shared_focus = { # Political Effort
 			prerequisite = { focus = political_theocratism_effort }
 			mutually_exclusive = { focus = pullus_faith focus = thalassaus_faith focus = ager_montis_faith focus = animaekin_faith }
 			available = {
-				OR = {
-					has_government = theocratism
-					theocratism > 0.25
-				}
+				theocratism > 0.34
 				OR = {
 					has_country_flag = harmonainus_religion
 					has_country_flag = harmonainus_reformed_religion
@@ -1626,7 +1622,6 @@ shared_focus = { # Political Effort
 				}
 			}
 		}
-
 	# Pullus
 		shared_focus = { # Pullus Faith
 			id = pullus_faith
@@ -1634,10 +1629,7 @@ shared_focus = { # Political Effort
 			prerequisite = { focus = political_theocratism_effort }
 			mutually_exclusive = { focus = harmonainus_faith focus = thalassaus_faith focus = ager_montis_faith focus = animaekin_faith }
 			available = {
-				OR = {
-					has_government = theocratism
-					theocratism > 0.25
-				}
+				theocratism > 0.34
 				has_country_flag = pullus_religion
 			}
 			x = -3
@@ -1682,7 +1674,6 @@ shared_focus = { # Political Effort
 				}
 			}
 		}
-
 	# Thalassaus
 		shared_focus = { # Thalassaus Faith
 			id = thalassaus_faith
@@ -1690,10 +1681,7 @@ shared_focus = { # Political Effort
 			prerequisite = { focus = political_theocratism_effort }
 			mutually_exclusive = { focus = harmonainus_faith focus = pullus_faith focus = ager_montis_faith focus = animaekin_faith }
 			available = {
-				OR = {
-					has_government = theocratism
-					theocratism > 0.25
-				}
+				theocratism > 0.34
 				has_country_flag = thalassaus_religion
 			}
 			x = -1
@@ -1808,7 +1796,6 @@ shared_focus = { # Political Effort
 				custom_effect_tooltip = attunement_status_focus_tt
 			}
 		}
-
 	# Ager-Montis
 		shared_focus = { # Ager-Montis Faith
 			id = ager_montis_faith
@@ -1816,10 +1803,7 @@ shared_focus = { # Political Effort
 			prerequisite = { focus = political_theocratism_effort }
 			mutually_exclusive = { focus = harmonainus_faith focus = pullus_faith focus = thalassaus_faith focus = animaekin_faith }
 			available = {
-				OR = {
-					has_government = theocratism
-					theocratism > 0.25
-				}
+				theocratism > 0.34
 				has_country_flag = ager_montis_religion
 			}
 			x = 1
@@ -1934,7 +1918,6 @@ shared_focus = { # Political Effort
 				custom_effect_tooltip = attunement_status_focus_tt
 			}
 		}
-
 	# Animaekin
 		shared_focus = { # Animaekin Faith
 			id = animaekin_faith
@@ -1942,10 +1925,7 @@ shared_focus = { # Political Effort
 			prerequisite = { focus = political_theocratism_effort }
 			mutually_exclusive = { focus = harmonainus_faith focus = pullus_faith focus = thalassaus_faith focus = ager_montis_faith }
 			available = {
-				OR = {
-					has_government = theocratism
-					theocratism > 0.25
-				}
+				theocratism > 0.34
 				has_country_flag = animaekin_religion
 			}
 			x = 3
