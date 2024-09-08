@@ -253,6 +253,7 @@ add_namespace = HHE_warmonger # Warmonger
 				name = HHE_warmonger.0.b
 			}
 		}
+
 		country_event = { # Corridor Supply Preparation
 			id = HHE_warmonger.1
 			title = HHE_warmonger.1.t
@@ -296,7 +297,7 @@ add_namespace = HHE_warmonger # Warmonger
 			id = HHE_warmonger.3
 			title = HHE_warmonger.3.t
 			desc = HHE_warmonger.3.d
-			picture = GFX_report_event_usa_election_generic
+			picture = GFX_report_event_hitler_handshake
 			is_triggered_only = yes
 
 			option = {
@@ -316,7 +317,7 @@ add_namespace = HHE_warmonger # Warmonger
 			id = HHE_warmonger.4
 			title = HHE_warmonger.4.t
 			desc = HHE_warmonger.4.d
-			picture = GFX_report_event_usa_election_generic
+			picture = GFX_report_event_hitler_handshake
 			is_triggered_only = yes
 			immediate = { set_country_flag = HHE_rejects_intergration }
 			option = {
@@ -336,7 +337,7 @@ add_namespace = HHE_warmonger # Warmonger
 			id = HHE_warmonger.5
 			title = HHE_warmonger.5.t
 			desc = HHE_warmonger.5.d
-			picture = GFX_report_event_usa_election_generic
+			picture = GFX_report_event_hitler_handshake
 			is_triggered_only = yes
 			immediate = { set_country_flag = HHE_accepts_intergration }
 			option = {
@@ -346,6 +347,135 @@ add_namespace = HHE_warmonger # Warmonger
 					transfer_navy = { target = HTP }
 					annex_country = { target = HTP transfer_troops = yes }
 				}
+			}
+		}
+
+		country_event = { # Demand Outerlands
+			id = HHE_warmonger.6
+			title = HHE_warmonger.6.t
+			desc = HHE_warmonger.6.d
+			picture = GFX_report_event_polish_tanks_01
+			is_triggered_only = yes
+			immediate = { log = "[GetDateText]: [Root.GetName]: Event HHE_warmonger.6" }
+			option = { # rejects
+				name = HHE_warmonger.6.optA
+				ai_chance = {
+					modifier = {
+						add = 100
+						has_war_with = HHE
+					}
+				}
+				HHE = { country_event = { id = HHE_warmonger.7 } }
+			}
+			option = { # accepts
+				name = HHE_warmonger.6.optB
+				ai_chance = {
+					modifier = {
+						add = 100
+						NOT = { has_war_with = HHE }
+					}
+				}
+				HHE = { country_event = { id = HHE_warmonger.8 } }
+				IF = {
+					LIMIT = { controls_state = 388 }
+					HHE = { transfer_state = 388 }
+				}
+				IF = {
+					LIMIT = { controls_state = 423 }
+					HHE = { transfer_state = 423 }
+				}
+				IF = {
+					LIMIT = { controls_state = 424 }
+					HHE = { transfer_state = 424 }
+				}
+				IF = {
+					LIMIT = { controls_state = 435 }
+					HHE = { transfer_state = 435 }
+				}
+				IF = {
+					LIMIT = { controls_state = 436 }
+					HHE = { transfer_state = 436 }
+				}
+				IF = {
+					LIMIT = { controls_state = 459 }
+					HHE = { transfer_state = 459 }
+				}
+				IF = {
+					LIMIT = { controls_state = 659 }
+					HHE = { transfer_state = 659 }
+				}
+			}
+		}
+
+		country_event = { # Outerlands rejects
+			id = HHE_warmonger.7
+			title = HHE_warmonger.7.t
+			desc = HHE_warmonger.7.d
+			picture = GFX_report_event_polish_tanks_01
+			is_triggered_only = yes
+			immediate = { log = "[GetDateText]: [Root.GetName]: Event HHE_warmonger.7" }
+			option = {
+				name = HHE_warmonger.7.optA
+			}
+		}
+
+		country_event = { # Outerlands accepts
+			id = HHE_warmonger.8
+			title = HHE_warmonger.8.t
+			desc = HHE_warmonger.8.d
+			picture = GFX_report_event_polish_tanks_01
+			is_triggered_only = yes
+			immediate = { log = "[GetDateText]: [Root.GetName]: Event HHE_warmonger.8" }
+			option = {
+				name = HHE_warmonger.8.optA
+			}
+		}
+
+		country_event = { # Homeland Region
+			id = HHE_warmonger.9
+			title = HHE_warmonger.9.t
+			desc = HHE_warmonger.9.d
+			picture = GFX_report_event_polish_tanks_01
+			is_triggered_only = yes
+			immediate = { log = "[GetDateText]: [Root.GetName]: Event HHE_warmonger.9" }
+			option = {
+				name = HHE_warmonger.9.optA
+			}
+		}
+
+		country_event = { # High Importance Region
+			id = HHE_warmonger.10
+			title = HHE_warmonger.10.t
+			desc = HHE_warmonger.10.d
+			picture = GFX_report_event_polish_tanks_01
+			is_triggered_only = yes
+			immediate = { log = "[GetDateText]: [Root.GetName]: Event HHE_warmonger.10" }
+			option = {
+				name = HHE_warmonger.10.optA
+			}
+		}
+
+		country_event = { # Importance Region
+			id = HHE_warmonger.11
+			title = HHE_warmonger.11.t
+			desc = HHE_warmonger.11.d
+			picture = GFX_report_event_polish_tanks_01
+			is_triggered_only = yes
+			immediate = { log = "[GetDateText]: [Root.GetName]: Event HHE_warmonger.11" }
+			option = {
+				name = HHE_warmonger.11.optA
+			}
+		}
+
+		country_event = { # Low Importance Region
+			id = HHE_warmonger.12
+			title = HHE_warmonger.12.t
+			desc = HHE_warmonger.12.d
+			picture = GFX_report_event_polish_tanks_01
+			is_triggered_only = yes
+			immediate = { log = "[GetDateText]: [Root.GetName]: Event HHE_warmonger.12" }
+			option = {
+				name = HHE_warmonger.12.optA
 			}
 		}
 	# Civil-War

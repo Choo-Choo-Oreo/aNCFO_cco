@@ -89,6 +89,7 @@ form_harmonainus_imperious_category = {
 			}
 		}
 	}
+
 	harmonainus_imperious_triumph_for_center_lands = { # Center Region
 		icon = generic_form_nation
 		allowed = { always = yes }
@@ -151,6 +152,7 @@ form_harmonainus_imperious_category = {
 			}
 		}
 	}
+
 	harmonainus_imperious_triumph_for_western_lands = { # Western Region
 		icon = generic_form_nation
 		allowed = { always = yes }
@@ -274,6 +276,7 @@ form_harmonainus_imperious_category = {
 				}
 			}
 		}
+
 		harmonainus_imperious_hst_integration = {
 			icon = generic_form_nation
 			fire_only_once = yes
@@ -332,6 +335,7 @@ form_harmonainus_imperious_category = {
 				}
 			}
 		}
+
 		harmonainus_imperious_hpp_integration = {
 			icon = generic_form_nation
 			fire_only_once = yes
@@ -390,6 +394,7 @@ form_harmonainus_imperious_category = {
 				}
 			}
 		}
+
 		harmonainus_imperious_hcr_integration = {
 			icon = generic_form_nation
 			fire_only_once = yes
@@ -448,6 +453,7 @@ form_harmonainus_imperious_category = {
 				}
 			}
 		}
+
 		harmonainus_imperious_het_integration = {
 			icon = generic_form_nation
 			fire_only_once = yes
@@ -510,6 +516,7 @@ form_harmonainus_imperious_category = {
 				}
 			}
 		}
+
 		harmonainus_imperious_hum_integration = {
 			icon = generic_form_nation
 			fire_only_once = yes
@@ -569,6 +576,7 @@ form_harmonainus_imperious_category = {
 				}
 			}
 		}
+
 		harmonainus_imperious_hum1_integration = {
 			icon = generic_form_nation
 			fire_only_once = yes
@@ -628,6 +636,7 @@ form_harmonainus_imperious_category = {
 				}
 			}
 		}
+
 		harmonainus_imperious_hum2_integration = {
 			icon = generic_form_nation
 			fire_only_once = yes
@@ -687,6 +696,7 @@ form_harmonainus_imperious_category = {
 				}
 			}
 		}
+
 		harmonainus_imperious_hwa_integration = {
 			icon = generic_form_nation
 			fire_only_once = yes
@@ -745,6 +755,7 @@ form_harmonainus_imperious_category = {
 				}
 			}
 		}
+
 		harmonainus_imperious_hlf_integration = {
 			icon = generic_form_nation
 			fire_only_once = yes
@@ -803,6 +814,7 @@ form_harmonainus_imperious_category = {
 				}
 			}
 		}
+
 		harmonainus_imperious_htp_integration = {
 			icon = generic_form_nation
 			fire_only_once = yes
@@ -861,6 +873,7 @@ form_harmonainus_imperious_category = {
 				}
 			}
 		}
+
 		harmonainus_imperious_hbb_integration = {
 			icon = generic_form_nation
 			fire_only_once = yes
@@ -921,6 +934,7 @@ form_harmonainus_imperious_category = {
 				}
 			}
 		}
+
 		harmonainus_imperious_her_integration = {
 			icon = generic_form_nation
 			fire_only_once = yes
@@ -981,6 +995,7 @@ form_harmonainus_imperious_category = {
 				}
 			}
 		}
+
 		harmonainus_imperious_hno_integration = {
 			icon = generic_form_nation
 			fire_only_once = yes
@@ -1039,6 +1054,7 @@ form_harmonainus_imperious_category = {
 				}
 			}
 		}
+
 		harmonainus_imperious_hsp_integration = {
 			icon = generic_form_nation
 			fire_only_once = yes
@@ -1097,89 +1113,6 @@ form_harmonainus_imperious_category = {
 				}
 			}
 		}
-	supreme_harmonainus_imperious = { # Global Hegemony
-		icon = generic_form_nation
-		allowed = { always = yes }
-		available = {
-			is_subject = no
-			custom_trigger_tooltip = {
-	            tooltip = ALL_NEIGHBORS_SUBJECT_EXCEPTIONS
-				OR = {
-					check_variable = { neighbors^num = 0 }
-					all_neighbor_country = {
-						OR = {
-							is_subject_of = ROOT
-							original_tag = ZZZ
-						}
-					}
-				}
-	        }
-			OR = {
-				AND = {
-					has_government = theocratism
-					NOT = { original_tag = HHE }
-				}
-				AND = {
-					has_government = theocratism
-					original_tag = HHE
-					NOT = { has_global_flag = elected_warmonger }
-				}
-				AND = {
-					OR = {
-						has_government = theocratism
-						has_government = authoritarianism
-					}
-					original_tag = HHE
-					has_global_flag = elected_warmonger
-					has_completed_focus = HHE_warmonger_one_nation
-				}
-			}
-			NOT = {
-				has_country_leader = {
-					character = HHE_luke_deed
-					ruling_only = yes
-				}
-			}
-		}
-		visible = {
-			AND = {
-				has_country_flag = form_harmonainus_imperious_flag
-				has_country_flag = form_harmonainus_imperious_center_flag
-				has_country_flag = form_harmonainus_imperious_west_flag
-			}
-			NOT = { has_country_flag = form_harmonainus_imperious_hegemony_flag }
-		}
-		days_remove = 365
-		remove_effect = {
-			log = "[GetDateText]: [Root.GetName]: Decision supreme_harmonainus_imperious"
-			custom_effect_tooltip = form_country_core_territories_tt
-			set_cosmetic_tag = HARMONAINUS_GLOBAL_UNIFIED
-			every_country = {
-				LIMIT = { is_subject_of = FROM }
-				FROM = {
-					transfer_navy = { target = ROOT }
-					annex_country = { target = PREV transfer_troops = yes }
-				}
-			}
-			hidden_effect = {
-				set_country_flag = form_harmonainus_imperious_hegemony_flag
-				every_state = {
-					limit = {
-						NOT = { is_core_of = ROOT }
-					}
-					add_core_of = ROOT
-				}
-			}
-		}
-		cost = 200
-		ai_will_do = {
-			base = 100
-			modifier = {
-				factor = 10
-				is_historical_focus_on = yes
-			}
-		}
-	}
 }
 
 form_united_vally_category = {
@@ -1215,6 +1148,7 @@ form_united_vally_category = {
 			}
 		}
 	}
+
 	form_united_vally = {
 		icon = generic_form_nation
 		allowed = {
@@ -1281,6 +1215,7 @@ form_united_vally_category = {
 			}
 		}
 	}
+
 	form_united_vally_coast = {
 		icon = generic_form_nation
 		allowed = {
@@ -1322,6 +1257,7 @@ form_united_vally_category = {
 			}
 		}
 	}
+
 	form_united_vally_coast_impassable = {
 		icon = generic_form_nation
 		allowed = {
@@ -1355,6 +1291,7 @@ form_united_vally_category = {
 			}
 		}
 	}
+
 	form_united_vally_northern_mountains = {
 		icon = generic_form_nation
 		allowed = {
@@ -1396,6 +1333,7 @@ form_united_vally_category = {
 			}
 		}
 	}
+
 	form_united_vally_northern_plains = {
 		icon = generic_form_nation
 		allowed = {
@@ -1448,6 +1386,7 @@ form_united_vally_category = {
 			}
 		}
 	}
+
 	form_united_vally_dwarf_forges = {
 		icon = generic_form_nation
 		name = integrated_dwarf_forges
@@ -1979,6 +1918,7 @@ form_kahnkermoy_category = {
 			base = 5
 		}
 	}
+	
 	form_kahnkermoy_kingdom_dwarf_forges = {
 		icon = generic_form_nation
 		name = integrated_dwarf_forges
