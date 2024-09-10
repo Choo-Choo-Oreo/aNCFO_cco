@@ -107,6 +107,7 @@
 	-- NCharacter
 
 	-- NSupply
+		NDefines.NSupply.MAX_RAILWAY_LEVEL = 5
 
 	-- NAITheatre
 

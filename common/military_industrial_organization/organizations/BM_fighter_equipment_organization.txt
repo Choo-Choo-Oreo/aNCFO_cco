@@ -8,27 +8,18 @@ BM_fighter_equipment_1 = {
 		bm_only_fighter_eq
 		bm_only_cv_fighter_eq
 	}
-	research_categories = { mio_cat_eq_only_light_fighter }
+	research_categories = { mio_cat_all_light_fighter_and_modules }
 
 	allowed = {
-		has_dlc = "Arms Against Tyranny"
-		#every_possible_country = {
-		#	has_dlc = "Arms Against Tyranny"
-		#}
+			has_dlc = "Arms Against Tyranny"
 	}
 	visible = {
-		has_dlc = "Arms Against Tyranny"
-		#every_possible_country = {
-		#	has_dlc = "Arms Against Tyranny"
-		#	always = yes			
-		#}
+			has_dlc = "Arms Against Tyranny"
+			always = yes
 	}
 	available = {
-		has_dlc = "Arms Against Tyranny"
-		#every_possible_country = {
-		#	has_dlc = "Arms Against Tyranny"
-		#	always = yes			
-		#}
+			has_dlc = "Arms Against Tyranny"
+			always = yes
 	}
 
 	research_bonus = 0.05
@@ -63,6 +54,11 @@ BM_fighter_equipment_1 = {
 		icon = GFX_reliability_1
 
 		position = { x=3 y=0 }
+		mutually_exclusive = {
+            BM_fighter_equipment_1_production_1
+            BM_fighter_equipment_1_air_attack_defense
+            BM_fighter_equipment_1_air_agilty_superiority
+		}
 
 		equipment_bonus = {
 			reliability = 0.03
@@ -135,6 +131,11 @@ BM_fighter_equipment_1 = {
 		icon = GFX_air_attack_defense
 
 		position = { x=7 y=0 }
+		mutually_exclusive = {
+            BM_fighter_equipment_1_reliabilty_1
+            BM_fighter_equipment_1_production_1
+            BM_fighter_equipment_1_air_agilty_superiority
+		}
 
 		equipment_bonus = {
 			air_attack = 0.02
@@ -276,6 +277,11 @@ BM_fighter_equipment_1 = {
 		icon = GFX_production_cost_1
 
 		position = { x=5 y=0 }
+		mutually_exclusive = {
+			BM_fighter_equipment_1_reliabilty_1
+            BM_fighter_equipment_1_air_attack_defense
+            BM_fighter_equipment_1_air_agilty_superiority
+		}
 
 		equipment_bonus = {
 			build_cost_ic = -0.01
@@ -348,6 +354,11 @@ BM_fighter_equipment_1 = {
 		icon = GFX_air_agilty_superiority
 
 		position = { x=1 y=0 }
+		mutually_exclusive = {
+			BM_fighter_equipment_1_reliabilty_1
+			BM_fighter_equipment_1_production_1
+			BM_fighter_equipment_1_air_attack_defense
+		}
 
 		equipment_bonus = {
             air_agility = 0.02
@@ -364,6 +375,9 @@ BM_fighter_equipment_1 = {
 		relative_position_id = BM_fighter_equipment_1_air_agilty_superiority
 		all_parents = {
 			BM_fighter_equipment_1_air_agilty_superiority
+		}
+		mutually_exclusive = {
+			BM_fighter_equipment_1_air_superiority_1
 		}
 
 		equipment_bonus = {
@@ -485,12 +499,11 @@ BM_fighter_equipment_1 = {
 		name = BM_fighter_equipment_1_mixed_1
 		icon = GFX_factory_output_1
 
-		position = { x=4 y=0 }
-		mutually_exclusive = {
-			BM_fighter_equipment_1_production_1
+		position = { x=4 y=1 }
+		any_parent = {
 			BM_fighter_equipment_1_reliabilty_1
+			BM_fighter_equipment_1_production_1
 		}
-
 		production_bonus = {
 			production_capacity_factor = 0.02
 		}
@@ -538,21 +551,6 @@ BM_fighter_equipment_1 = {
 
 		equipment_bonus = {
 			fuel_consumption = -0.02
-		}
-	}
-	trait = {
-		token = BM_fighter_equipment_1_mixed_5
-		name = BM_fighter_equipment_1_mixed_5
-		icon = GFX_factory_output_2
-
-		position = { x=0 y=1 }
-		relative_position_id = BM_fighter_equipment_1_mixed_4
-		all_parents = {
-			BM_fighter_equipment_1_mixed_4
-		}
-
-		production_bonus = {
-			production_capacity_factor = 0.04
 		}
 	}
 }
