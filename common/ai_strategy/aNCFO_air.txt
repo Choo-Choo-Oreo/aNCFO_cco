@@ -1,7 +1,5 @@
 default_air_unit_production = {
-	enable = {
-		always = yes
-	}
+	enable = { always = yes }
 	abort_when_not_enabled = yes
 	ai_strategy = {
 		type = unit_ratio
@@ -204,194 +202,51 @@ bba_air_prod_2 = {
 	}
 }
 
-#bba_air_prod_1 = { # GER production # TODO
-#	# TODO BFW:
-#	allowed = { original_tag = GER }
-#	enable = {
-#		date < 1940.1.1
-#	}
+aNCFO_air_production = {
+	allowed = { is_major = yes }
+	enable = { always = yes }
+	abort_when_not_enabled = yes
+	
+	ai_strategy = { type = air_factory_balance value = 125 }
+}
 
-#	abort_when_not_enabled = yes
+aNCFO_focus_on_fighters = {
+	allowed = { is_major = yes }
+	enable = { 
+		has_tech = basic_small_airframe
+		has_deployed_air_force_size = { size < 3000 type = fighter }
+	}
+	abort = {
+		NOT = {
+			AND = {
+				has_tech = basic_small_airframe
+				has_deployed_air_force_size = { size < 3500 type = fighter }
+			}
+		}
+	}
 
-#	# Air unit factors
-#	ai_strategy = {
-#		type = unit_ratio
-#		id = fighter
-#		value = 200
-#	}
+	ai_strategy = { type = unit_ratio id = fighter value = 100 }
+}
 
-#	ai_strategy = {
-#		type = equipment_production_factor
-#		id = fighter
-#		value = 15
-#	}
+aNCFO_naval_bombers = {
+	allowed = { is_major = yes }
+	enable = { 
+		has_tech = basic_small_airframe
+		has_deployed_air_force_size = { size < 400 type = naval_bomber }
+		num_of_military_factories > 50
+	}
+	abort = {
+		NOT = {
+			AND = {
+				has_tech = basic_small_airframe
+				has_deployed_air_force_size = { size < 800 type = naval_bomber }
+				num_of_military_factories > 50
+			}
+		}	
+	}
 
-#	ai_strategy = {
-#		type = equipment_production_min_factories
-#		id = fighter
-#		value = 6  # Germany needs a minimum production of fighters
-#	}
-
-#	ai_strategy = {
-#		type = unit_ratio
-#		id = cas
-#		value = 25 # because doctrine this = 15
-#	}
-
-# 	ai_strategy = {
-#		type = equipment_production_factor
-#		id = cas
-#		value = 10
-#	}
-
-#	ai_strategy = {
-#		type = equipment_production_min_factories
-#		id = cas
-#		value = 3  # Germany needs a minimum production of CAS planes
-#	}
-
-#	ai_strategy = {
-#		type = unit_ratio
-#		id = naval_bomber
-#		value = 5
-#	}
-
-#	ai_strategy = {
-#		type = unit_ratio
-#		id = tactical_bomber
-#		value = 10
-#	}
-
-#	ai_strategy = {
-#		type = equipment_production_factor
-#		id = tactical_bomber
-#		value = 5
-#	}
-
-#	ai_strategy = {
-#		type = unit_ratio
-#		id = strategic_bomber
-#		value = 1
-#	}
-
-#	ai_strategy = {
-#		type = equipment_production_factor
-#		id = strategic_bomber
-#		value = 1
-#	}
-
-#	ai_strategy = {
-#		type = equipment_variant_production_factor
-#		id = large_plane_airframe
-#		value = 0
-#	}
-
-#	ai_strategy = {
-#		type = equipment_production_factor
-#		id = heavy_fighter
-#		value = 2
-#	}
-
-#	ai_strategy = {
-#		type = unit_ratio
-#		id = heavy_fighter
-#		value = 2
-#	}
-#}
-
-#bba_air_prod_2 = { # GER production # TODO
-#	# TODO BFW:
-#	allowed = { original_tag = GER }
-#	enable = {
-#		date > 1940.1.1
-#	}
-#	abort_when_not_enabled = yes
-
-#	#Air unit factors
-#	ai_strategy = {
-#		type = unit_ratio
-#		id = fighter
-#		value = 300
-#	}
-
-#	ai_strategy = {
-#		type = equipment_production_factor
-#		id = fighter
-#		value = 25
-#	}
-
-#	ai_strategy = {
-#		type = equipment_production_min_factories
-#		id = fighter
-#		value = 8
-#	}
-
-#	ai_strategy = {
-#		type = unit_ratio
-#		id = cas
-#		value = 25 #because doctrine this = 15
-#	}
-
-#	ai_strategy = {
-#		type = equipment_production_factor
-#		id = cas
-#		value = 15
-#	}
-
-#	ai_strategy = {
-#		type = equipment_production_min_factories
-#		id = cas
-#		value = 3
-#	}
-
-#	ai_strategy = {
-#		type = unit_ratio
-#		id = naval_bomber
-#		value = 5
-#	}
-
-#	ai_strategy = {
-#		type = unit_ratio
-#		id = tactical_bomber
-#		value = 15
-#	}
-
-#	ai_strategy = {
-#		type = equipment_production_factor
-#		id = tactical_bomber
-#		value = 5
-#	}
-
-#	ai_strategy = {
-#		type = unit_ratio
-#		id = strategic_bomber
-#		value = 1
-#	}
-
-#	ai_strategy = {
-#		type = equipment_production_factor
-#		id = strategic_bomber
-#		value = 0
-#	}
-
-#	ai_strategy = {
-#		type = equipment_variant_production_factor
-#		id = large_plane_airframe
-#		value = 0
-#	}
-
-#	ai_strategy = {
-#		type = equipment_production_factor
-#		id = heavy_fighter
-#		value = 3
-#	}
-
-#	ai_strategy = {
-#		type = unit_ratio
-#		id = heavy_fighter
-#		value = 3
-#	}
-#}
+	ai_strategy = { type = equipment_production_min_factories id = naval_bomber value = 5 }
+}
 
 build_patrol_bombers = {
 	enable = {
@@ -411,20 +266,20 @@ build_patrol_bombers = {
 
 default_spyplanes_production = {
 	enable = {
-		OR = {
-			has_tech = scout_plane1
-			has_tech = photo_reconnaisance
-		}
 		is_major = yes
-		#OR = {
-		#	has_equipment = {
-		#		scout_plane_equipment > 50
-		#	}
-		#	has_deployed_air_force_size = {
-		#		size > 50
-		#		type = scout_plane
-		#	}
-		#}
+		OR = {
+			OR = {
+				has_tech = scout_plane1
+				has_tech = photo_reconnaisance
+			}
+			has_equipment = {
+				scout_plane_equipment > 50
+			}
+			has_deployed_air_force_size = {
+				size > 50
+				type = scout_plane
+			}
+		}
 	}
 
 	abort_when_not_enabled = yes
@@ -495,6 +350,7 @@ minors_dont_spy = {
 			value = 100
 		}
 	}
+
 	location_airbase_2 = {
 		enable = {
 			2 = {
@@ -524,6 +380,7 @@ minors_dont_spy = {
 			value = 100
 		}
 	}
+
 	location_airbase_4 = {
 		enable = {
 			4 = {
@@ -553,6 +410,7 @@ minors_dont_spy = {
 			value = 100
 		}
 	}
+
 	location_airbase_5 = {
 		enable = {
 			5 = {
@@ -582,6 +440,7 @@ minors_dont_spy = {
 			value = 100
 		}
 	}
+
 	location_airbase_11 = {
 		enable = {
 			11 = {
@@ -611,6 +470,7 @@ minors_dont_spy = {
 			value = 100
 		}
 	}
+
 	location_airbase_13 = {
 		enable = {
 			13 = {
@@ -640,6 +500,7 @@ minors_dont_spy = {
 			value = 100
 		}
 	}
+
 	location_airbase_14 = {
 		enable = {
 			14 = {
@@ -669,6 +530,7 @@ minors_dont_spy = {
 			value = 100
 		}
 	}
+
 	location_airbase_15 = {
 		enable = {
 			15 = {
@@ -698,6 +560,7 @@ minors_dont_spy = {
 			value = 100
 		}
 	}
+
 	location_airbase_16 = {
 		enable = {
 			16 = {
@@ -727,6 +590,7 @@ minors_dont_spy = {
 			value = 100
 		}
 	}
+
 	location_airbase_17 = {
 		enable = {
 			17 = {
@@ -756,6 +620,7 @@ minors_dont_spy = {
 			value = 100
 		}
 	}
+
 	location_airbase_18 = {
 		enable = {
 			18 = {
@@ -785,6 +650,7 @@ minors_dont_spy = {
 			value = 100
 		}
 	}
+
 	location_airbase_22 = {
 		enable = {
 			22 = {
@@ -814,6 +680,7 @@ minors_dont_spy = {
 			value = 100
 		}
 	}
+
 	location_airbase_28 = {
 		enable = {
 			28 = {
@@ -843,6 +710,7 @@ minors_dont_spy = {
 			value = 100
 		}
 	}
+
 	location_airbase_30 = {
 		enable = {
 			30 = {
@@ -872,6 +740,7 @@ minors_dont_spy = {
 			value = 100
 		}
 	}
+
 	location_airbase_36 = {
 		enable = {
 			36 = {
@@ -901,6 +770,7 @@ minors_dont_spy = {
 			value = 100
 		}
 	}
+
 	location_airbase_72 = {
 		enable = {
 			72 = {
@@ -930,6 +800,7 @@ minors_dont_spy = {
 			value = 100
 		}
 	}
+
 	location_airbase_75 = {
 		enable = {
 			75 = {
@@ -959,6 +830,7 @@ minors_dont_spy = {
 			value = 100
 		}
 	}
+
 	location_airbase_96 = {
 		enable = {
 			96 = {
@@ -988,6 +860,7 @@ minors_dont_spy = {
 			value = 100
 		}
 	}
+
 	location_airbase_97 = {
 		enable = {
 			97 = {
@@ -1017,6 +890,7 @@ minors_dont_spy = {
 			value = 100
 		}
 	}
+
 	location_airbase_105 = {
 		enable = {
 			105 = {
@@ -1046,6 +920,7 @@ minors_dont_spy = {
 			value = 100
 		}
 	}
+
 	location_airbase_106 = {
 		enable = {
 			106 = {
@@ -1075,6 +950,7 @@ minors_dont_spy = {
 			value = 100
 		}
 	}
+
 	location_airbase_110 = {
 		enable = {
 			110 = {
@@ -1104,6 +980,7 @@ minors_dont_spy = {
 			value = 100
 		}
 	}
+
 	location_airbase_114 = {
 		enable = {
 			114 = {
@@ -1133,6 +1010,7 @@ minors_dont_spy = {
 			value = 100
 		}
 	}
+
 	location_airbase_122 = {
 		enable = {
 			122 = {
@@ -1162,6 +1040,7 @@ minors_dont_spy = {
 			value = 100
 		}
 	}
+
 	location_airbase_123 = {
 		enable = {
 			123 = {
@@ -1191,6 +1070,7 @@ minors_dont_spy = {
 			value = 100
 		}
 	}
+
 	location_airbase_124 = {
 		enable = {
 			124 = {
@@ -1220,6 +1100,7 @@ minors_dont_spy = {
 			value = 100
 		}
 	}
+
 	location_airbase_128 = {
 		enable = {
 			128 = {
@@ -1249,6 +1130,7 @@ minors_dont_spy = {
 			value = 100
 		}
 	}
+
 	location_airbase_134 = {
 		enable = {
 			134 = {
@@ -1278,6 +1160,7 @@ minors_dont_spy = {
 			value = 100
 		}
 	}
+
 	location_airbase_135 = {
 		enable = {
 			135 = {
@@ -1307,6 +1190,7 @@ minors_dont_spy = {
 			value = 100
 		}
 	}
+
 	location_airbase_159 = {
 		enable = {
 			159 = {
@@ -1336,6 +1220,7 @@ minors_dont_spy = {
 			value = 100
 		}
 	}
+
 	location_airbase_168 = {
 		enable = {
 			168 = {
@@ -1365,6 +1250,7 @@ minors_dont_spy = {
 			value = 100
 		}
 	}
+
 	location_airbase_170 = {
 		enable = {
 			170 = {
@@ -1394,6 +1280,7 @@ minors_dont_spy = {
 			value = 100
 		}
 	}
+
 	location_airbase_187 = {
 		enable = {
 			187 = {
@@ -1423,6 +1310,7 @@ minors_dont_spy = {
 			value = 100
 		}
 	}
+
 	location_airbase_190 = {
 		enable = {
 			190 = {
@@ -1452,6 +1340,7 @@ minors_dont_spy = {
 			value = 100
 		}
 	}
+
 	location_airbase_193 = {
 		enable = {
 			193 = {
@@ -1481,6 +1370,7 @@ minors_dont_spy = {
 			value = 100
 		}
 	}
+
 	location_airbase_214 = {
 		enable = {
 			214 = {
@@ -1510,6 +1400,7 @@ minors_dont_spy = {
 			value = 100
 		}
 	}
+
 	location_airbase_216 = {
 		enable = {
 			216 = {
@@ -1539,6 +1430,7 @@ minors_dont_spy = {
 			value = 100
 		}
 	}
+
 	location_airbase_217 = {
 		enable = {
 			217 = {
@@ -1568,6 +1460,7 @@ minors_dont_spy = {
 			value = 100
 		}
 	}
+
 	location_airbase_219 = {
 		enable = {
 			219 = {
@@ -1597,6 +1490,7 @@ minors_dont_spy = {
 			value = 100
 		}
 	}
+
 	location_airbase_239 = {
 		enable = {
 			239 = {
@@ -1626,6 +1520,7 @@ minors_dont_spy = {
 			value = 100
 		}
 	}
+
 	location_airbase_245 = {
 		enable = {
 			245 = {
@@ -1655,6 +1550,7 @@ minors_dont_spy = {
 			value = 100
 		}
 	}
+
 	location_airbase_271 = {
 		enable = {
 			271 = {
@@ -1684,6 +1580,7 @@ minors_dont_spy = {
 			value = 100
 		}
 	}
+
 	location_airbase_288 = {
 		enable = {
 			288 = {
@@ -1713,6 +1610,7 @@ minors_dont_spy = {
 			value = 100
 		}
 	}
+
 	location_airbase_290 = {
 		enable = {
 			290 = {
@@ -1742,6 +1640,7 @@ minors_dont_spy = {
 			value = 100
 		}
 	}
+
 	location_airbase_293 = {
 		enable = {
 			293 = {
@@ -1771,6 +1670,7 @@ minors_dont_spy = {
 			value = 100
 		}
 	}
+
 	location_airbase_294 = {
 		enable = {
 			294 = {
@@ -1800,6 +1700,7 @@ minors_dont_spy = {
 			value = 100
 		}
 	}
+
 	location_airbase_295 = {
 		enable = {
 			295 = {
@@ -1829,6 +1730,7 @@ minors_dont_spy = {
 			value = 100
 		}
 	}
+
 	location_airbase_300 = {
 		enable = {
 			300 = {
@@ -1858,6 +1760,7 @@ minors_dont_spy = {
 			value = 100
 		}
 	}
+
 	location_airbase_309 = {
 		enable = {
 			309 = {
@@ -1887,6 +1790,7 @@ minors_dont_spy = {
 			value = 100
 		}
 	}
+
 	location_airbase_317 = {
 		enable = {
 			317 = {
@@ -1916,6 +1820,7 @@ minors_dont_spy = {
 			value = 100
 		}
 	}
+
 	location_airbase_324 = {
 		enable = {
 			324 = {
@@ -1945,6 +1850,7 @@ minors_dont_spy = {
 			value = 100
 		}
 	}
+
 	location_airbase_346 = {
 		enable = {
 			346 = {
@@ -1974,6 +1880,7 @@ minors_dont_spy = {
 			value = 100
 		}
 	}
+
 	location_airbase_335 = {
 		enable = {
 			335 = {
@@ -2003,6 +1910,7 @@ minors_dont_spy = {
 			value = 100
 		}
 	}
+
 	location_airbase_339 = {
 		enable = {
 			339 = {
@@ -2032,6 +1940,7 @@ minors_dont_spy = {
 			value = 100
 		}
 	}
+
 	location_airbase_351 = {
 		enable = {
 			351 = {
@@ -2061,6 +1970,7 @@ minors_dont_spy = {
 			value = 100
 		}
 	}
+
 	location_airbase_363 = {
 		enable = {
 			363 = {
@@ -2090,6 +2000,7 @@ minors_dont_spy = {
 			value = 100
 		}
 	}
+
 	location_airbase_402 = {
 		enable = {
 			402 = {
@@ -2119,6 +2030,7 @@ minors_dont_spy = {
 			value = 100
 		}
 	}
+
 	location_airbase_406 = {
 		enable = {
 			406 = {
@@ -2148,6 +2060,7 @@ minors_dont_spy = {
 			value = 100
 		}
 	}
+
 	location_airbase_417 = {
 		enable = {
 			417 = {
@@ -2177,6 +2090,7 @@ minors_dont_spy = {
 			value = 100
 		}
 	}
+
 	location_airbase_418 = {
 		enable = {
 			418 = {
@@ -2206,6 +2120,7 @@ minors_dont_spy = {
 			value = 100
 		}
 	}
+
 	location_airbase_419 = {
 		enable = {
 			419 = {
@@ -2235,6 +2150,7 @@ minors_dont_spy = {
 			value = 100
 		}
 	}
+
 	location_airbase_445 = {
 		enable = {
 			445 = {
@@ -2264,6 +2180,7 @@ minors_dont_spy = {
 			value = 100
 		}
 	}
+
 	location_airbase_448 = {
 		enable = {
 			448 = {
@@ -2293,6 +2210,7 @@ minors_dont_spy = {
 			value = 100
 		}
 	}
+
 	location_airbase_467 = {
 		enable = {
 			467 = {
@@ -2322,6 +2240,7 @@ minors_dont_spy = {
 			value = 100
 		}
 	}
+
 	location_airbase_483 = {
 		enable = {
 			483 = {
@@ -2351,6 +2270,7 @@ minors_dont_spy = {
 			value = 100
 		}
 	}
+
 	location_airbase_484 = {
 		enable = {
 			484 = {
@@ -2380,6 +2300,7 @@ minors_dont_spy = {
 			value = 100
 		}
 	}
+
 	location_airbase_488 = {
 		enable = {
 			488 = {
@@ -2409,6 +2330,7 @@ minors_dont_spy = {
 			value = 100
 		}
 	}
+
 	location_airbase_492 = {
 		enable = {
 			492 = {
@@ -2438,6 +2360,7 @@ minors_dont_spy = {
 			value = 100
 		}
 	}
+
 	location_airbase_493 = {
 		enable = {
 			493 = {
@@ -2467,6 +2390,7 @@ minors_dont_spy = {
 			value = 100
 		}
 	}
+
 	location_airbase_663 = {
 		enable = {
 			663 = {
@@ -2496,6 +2420,7 @@ minors_dont_spy = {
 			value = 100
 		}
 	}
+
 	location_airbase_706 = {
 		enable = {
 			706 = {
