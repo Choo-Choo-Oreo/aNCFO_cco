@@ -144,3 +144,32 @@ ally_against_HHE = {
 		value = 200
 	}
 }
+
+MRC_defend_against_HHE = {
+	allowed = { original_tag = MRC }
+	enable = {
+		original_tag = MRC
+		
+		date < 1730.1.1
+		
+		has_war = no
+		
+		OR = {
+			HHE = { has_wargoal_against = MRC }
+			HHE = { is_justifying_wargoal_against = MRC }
+			HHE = { focus_progress = { focus = HHE_influencer_reenter_global_stage progress > 0 } }
+			HHE = { focus_progress = { focus = HHE_warmonger_trilateral_crusade progress > 0 } }
+		}
+	}
+	abort = {
+		OR = {
+			has_war = yes
+			
+			NOT = { date < 1730.1.1 }
+		}
+	}
+	
+	ai_strategy = { type = prepare_for_war id = "HHE" value = 200 }
+	ai_strategy = { type = prepare_for_war id = "HSP" value = 200 }
+	ai_strategy = { type = prepare_for_war id = "HER" value = 200 }
+}

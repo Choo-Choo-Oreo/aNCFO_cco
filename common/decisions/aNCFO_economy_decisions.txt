@@ -27,6 +27,7 @@ economy_decisions = {
         cost = 100
 
         complete_effect = {
+            log = "[GetDateText]: [Root.GetName]: Decision minor_demobilization_factory_conversion"
             replace_arms_with_civ_factories = yes
             add_stability = 0.01
         }
@@ -83,6 +84,7 @@ economy_decisions = {
         cost = 100
 
         complete_effect = {
+            log = "[GetDateText]: [Root.GetName]: Decision major_demobilization_factory_conversion"
             replace_arms_with_civ_factories = yes
             add_war_support = 0.01
             add_stability = 0.03
@@ -141,6 +143,7 @@ economy_decisions = {
         cost = 100
 
         complete_effect = {
+            log = "[GetDateText]: [Root.GetName]: Decision minor_demobilization_factory_conversion_ai"
             replace_arms_with_civ_factories = yes
             add_stability = 0.01
         }
@@ -198,6 +201,7 @@ economy_decisions = {
         cost = 100
 
         complete_effect = {
+            log = "[GetDateText]: [Root.GetName]: Decision major_demobilization_factory_conversion_ai"
             replace_arms_with_civ_factories = yes
             add_war_support = 0.01
             add_stability = 0.03
@@ -255,6 +259,7 @@ economy_decisions = {
         }
 
         complete_effect = {
+            log = "[GetDateText]: [Root.GetName]: Decision seize_some_trains_woo"
             add_equipment_to_stockpile = {
                 type = train_equipment
                 amount = 15
@@ -291,6 +296,7 @@ economy_decisions = {
         }
 
         complete_effect = {
+            log = "[GetDateText]: [Root.GetName]: Decision seize_some_trucks_woo"
             add_equipment_to_stockpile = {
                 type = motorized_equipment
                 amount = 500
@@ -310,6 +316,7 @@ economy_decisions = {
 
         complete_effect = {
             set_country_flag = start_EcoDevelopment
+            log = "[GetDateText]: [Root.GetName]: Decision debug_independent_development"
             IF = {
                 LIMIT = { NOT = { OR = {
                     has_country_flag = lf_lv0
@@ -339,6 +346,7 @@ economy_decisions = {
 
         complete_effect = {
             set_country_flag = market_interventionism
+            log = "[GetDateText]: [Root.GetName]: Decision debug_market_interventionism"
         }
     }
 
@@ -347,11 +355,17 @@ economy_decisions = {
         allowed = { NOT = { TAG = ZZZ } }
         visible = { NOT = { has_active_mission = EcoDevelopment_free_market } }
         is_good = yes
-        ai_will_do = { factor = 100 }
+        ai_will_do = { factor = 100
+            modifier = { # Meta-Puppets
+                factor = 2.5
+                is_subject = yes
+            }
+        }
         cost = 50
 
         complete_effect = {
             set_country_flag = start_EcoDevelopment
+            log = "[GetDateText]: [Root.GetName]: Decision EcoDevelopment_open_market"
             IF = {
                 LIMIT = { NOT = { OR = {
                     has_country_flag = lf_lv0
@@ -391,6 +405,7 @@ economy_decisions = {
         activation = { always = no }
         days_mission_timeout = ROOT.EcoDevelopmentTimer
         timeout_effect = {
+            log = "[GetDateText]: [Root.GetName]: Decision Timeout EcoDevelopment_free_market"
             custom_effect_tooltip = EcoDevelopment_free_market_stats
             IF = {
                 limit = {
@@ -760,6 +775,10 @@ economy_decisions = {
         allowed = { always = yes }
         available = {
             num_of_civilian_factories > 12
+            custom_trigger_tooltip = {
+                tooltip = greater_than_30d_tt
+                check_variable = { days_mission_timeout@EcoDevelopment_free_market > 30 }
+            }
         }
         visible = {
             has_active_mission = EcoDevelopment_free_market
@@ -787,15 +806,11 @@ economy_decisions = {
         }
         cost = 10
         complete_effect = {
-            set_country_flag = lf_lv0
-            add_to_variable = {
-                EcoDevelopmentTimer = -15
-            }
-            add_days_mission_timeout = {
-                mission = EcoDevelopment_free_market
-                days = -15
-            }
             log = "[GetDateText]: [Root.GetName]: Decision Start_Subsidies_0"
+            set_country_flag = lf_lv0
+            custom_effect_tooltip = EcoDevelopmentTimer_ReduceBy15_tt
+            add_to_variable = { EcoDevelopmentTimer = -15 }
+            add_days_mission_timeout = { mission = EcoDevelopment_free_market days = -15 }
         }
     }
 
@@ -804,6 +819,10 @@ economy_decisions = {
             allowed = { always = yes }
             available = {
                 num_of_civilian_factories > 25
+                custom_trigger_tooltip = {
+                    tooltip = greater_than_30d_tt
+                    check_variable = { days_mission_timeout@EcoDevelopment_free_market > 30 }
+                }
             }
             visible = {
                 has_active_mission = EcoDevelopment_free_market
@@ -824,14 +843,10 @@ economy_decisions = {
             complete_effect = {
                 clr_country_flag = lf_lv0
                 set_country_flag = lf_lv1
-                add_to_variable = {
-                    EcoDevelopmentTimer = -15
-                }
-                add_days_mission_timeout = {
-                    mission = EcoDevelopment_free_market
-                    days = -15
-                }
                 log = "[GetDateText]: [Root.GetName]: Decision Start_Subsidies_1"
+                custom_effect_tooltip = EcoDevelopmentTimer_ReduceBy15_tt
+                add_to_variable = { EcoDevelopmentTimer = -15 }
+                add_days_mission_timeout = { mission = EcoDevelopment_free_market days = -15 }
             }
         }
 
@@ -840,6 +855,10 @@ economy_decisions = {
             allowed = { always = yes }
             available = {
                 num_of_civilian_factories > 34
+                custom_trigger_tooltip = {
+                    tooltip = greater_than_30d_tt
+                    check_variable = { days_mission_timeout@EcoDevelopment_free_market > 30 }
+                }
             }
             visible = {
                 has_active_mission = EcoDevelopment_free_market
@@ -860,14 +879,10 @@ economy_decisions = {
             complete_effect = {
                 clr_country_flag = lf_lv1
                 set_country_flag = lf_lv2
-                add_to_variable = {
-                    EcoDevelopmentTimer = -15
-                }
-                add_days_mission_timeout = {
-                    mission = EcoDevelopment_free_market
-                    days = -15
-                }
                 log = "[GetDateText]: [Root.GetName]: Decision Start_Subsidies_2"
+                custom_effect_tooltip = EcoDevelopmentTimer_ReduceBy15_tt
+                add_to_variable = { EcoDevelopmentTimer = -15 }
+                add_days_mission_timeout = { mission = EcoDevelopment_free_market days = -15 }
             }
         }
 
@@ -876,6 +891,10 @@ economy_decisions = {
             allowed = { always = yes }
             available = {
                 num_of_civilian_factories > 50
+                custom_trigger_tooltip = {
+                    tooltip = greater_than_30d_tt
+                    check_variable = { days_mission_timeout@EcoDevelopment_free_market > 30 }
+                }
             }
             visible = {
                 has_active_mission = EcoDevelopment_free_market
@@ -896,14 +915,10 @@ economy_decisions = {
             complete_effect = {
                 clr_country_flag = lf_lv2
                 set_country_flag = lf_lv3
-                add_to_variable = {
-                    EcoDevelopmentTimer = -15
-                }
-                add_days_mission_timeout = {
-                    mission = EcoDevelopment_free_market
-                    days = -15
-                }
                 log = "[GetDateText]: [Root.GetName]: Decision Start_Subsidies_3"
+                custom_effect_tooltip = EcoDevelopmentTimer_ReduceBy15_tt
+                add_to_variable = { EcoDevelopmentTimer = -15 }
+                add_days_mission_timeout = { mission = EcoDevelopment_free_market days = -15 }
             }
         }
 
@@ -912,6 +927,10 @@ economy_decisions = {
             allowed = { always = yes }
             available = {
                 num_of_civilian_factories > 67
+                custom_trigger_tooltip = {
+                    tooltip = greater_than_30d_tt
+                    check_variable = { days_mission_timeout@EcoDevelopment_free_market > 30 }
+                }
             }
             visible = {
                 has_active_mission = EcoDevelopment_free_market
@@ -932,14 +951,10 @@ economy_decisions = {
             complete_effect = {
                 clr_country_flag = lf_lv3
                 set_country_flag = lf_lv4
-                add_to_variable = {
-                    EcoDevelopmentTimer = -15
-                }
-                add_days_mission_timeout = {
-                    mission = EcoDevelopment_free_market
-                    days = -15
-                }
                 log = "[GetDateText]: [Root.GetName]: Decision Start_Subsidies_4"
+                custom_effect_tooltip = EcoDevelopmentTimer_ReduceBy15_tt
+                add_to_variable = { EcoDevelopmentTimer = -15 }
+                add_days_mission_timeout = { mission = EcoDevelopment_free_market days = -15 }
             }
         }
 
@@ -948,6 +963,10 @@ economy_decisions = {
             allowed = { always = yes }
             available = {
                 num_of_civilian_factories > 75
+                custom_trigger_tooltip = {
+                    tooltip = greater_than_30d_tt
+                    check_variable = { days_mission_timeout@EcoDevelopment_free_market > 30 }
+                }
             }
             visible = {
                 has_active_mission = EcoDevelopment_free_market
@@ -968,14 +987,10 @@ economy_decisions = {
             complete_effect = {
                 clr_country_flag = lf_lv4
                 set_country_flag = lf_lv5
-                add_to_variable = {
-                    EcoDevelopmentTimer = -15
-                }
-                add_days_mission_timeout = {
-                    mission = EcoDevelopment_free_market
-                    days = -15
-                }
                 log = "[GetDateText]: [Root.GetName]: Decision Start_Subsidies_5"
+                custom_effect_tooltip = EcoDevelopmentTimer_ReduceBy15_tt
+                add_to_variable = { EcoDevelopmentTimer = -15 }
+                add_days_mission_timeout = { mission = EcoDevelopment_free_market days = -15 }
             }
         }
 
@@ -984,6 +999,10 @@ economy_decisions = {
             allowed = { always = yes }
             available = {
                 num_of_civilian_factories > 87
+                custom_trigger_tooltip = {
+                    tooltip = greater_than_30d_tt
+                    check_variable = { days_mission_timeout@EcoDevelopment_free_market > 30 }
+                }
             }
             visible = {
                 has_active_mission = EcoDevelopment_free_market
@@ -1004,14 +1023,10 @@ economy_decisions = {
             complete_effect = {
                 clr_country_flag = lf_lv5
                 set_country_flag = lf_lv6
-                add_to_variable = {
-                    EcoDevelopmentTimer = -15
-                }
-                add_days_mission_timeout = {
-                    mission = EcoDevelopment_free_market
-                    days = -15
-                }
                 log = "[GetDateText]: [Root.GetName]: Decision Start_Subsidies_6"
+                custom_effect_tooltip = EcoDevelopmentTimer_ReduceBy15_tt
+                add_to_variable = { EcoDevelopmentTimer = -15 }
+                add_days_mission_timeout = { mission = EcoDevelopment_free_market days = -15 }
             }
         }
 
@@ -1020,6 +1035,10 @@ economy_decisions = {
             allowed = { always = yes }
             available = {
                 num_of_civilian_factories > 100
+                custom_trigger_tooltip = {
+                    tooltip = greater_than_30d_tt
+                    check_variable = { days_mission_timeout@EcoDevelopment_free_market > 30 }
+                }
             }
             visible = {
                 has_active_mission = EcoDevelopment_free_market
@@ -1040,14 +1059,10 @@ economy_decisions = {
             complete_effect = {
                 clr_country_flag = lf_lv6
                 set_country_flag = lf_lv7
-                add_to_variable = {
-                    EcoDevelopmentTimer = -15
-                }
-                add_days_mission_timeout = {
-                    mission = EcoDevelopment_free_market
-                    days = -15
-                }
                 log = "[GetDateText]: [Root.GetName]: Decision Start_Subsidies_7"
+                custom_effect_tooltip = EcoDevelopmentTimer_ReduceBy15_tt
+                add_to_variable = { EcoDevelopmentTimer = -15 }
+                add_days_mission_timeout = { mission = EcoDevelopment_free_market days = -15 }
             }
         }
 # Start Subsidies
@@ -1057,7 +1072,7 @@ economy_decisions = {
             always = yes
         }
         visible = {
-            OR = { has_war = yes has_country_flag = market_interventionism }
+            OR = { has_war = yes has_government = unitism has_country_flag = market_interventionism }
             not = {
                 has_country_flag = embrace_civilian
             }
@@ -1065,9 +1080,20 @@ economy_decisions = {
         }
         ai_will_do = {
             factor = 0
+            modifier = {
+                has_country_flag = lf_lv7
+                add = 5
+            }
+            modifier = { OR = { has_country_flag = market_interventionism }
+                factor = 5
+            }
+            modifier = { has_war = yes
+                factor = 5
+            }
         }
         cost = 150
         complete_effect = {
+            log = "[GetDateText]: [Root.GetName]: Decision Start_Subsidies_civil"
             set_country_flag = embrace_civilian
         }
     }
@@ -1078,7 +1104,7 @@ economy_decisions = {
             always = yes
         }
         visible = {
-            OR = { has_war = yes has_country_flag = market_interventionism }
+            OR = { has_war = yes has_government = unitism has_country_flag = market_interventionism }
             not = {
                 has_country_flag = embrace_steel
             }
@@ -1086,9 +1112,17 @@ economy_decisions = {
         }
         ai_will_do = {
             factor = 0
+            modifier = {
+                has_government = unitism
+                add = 50
+            }
+            modifier = { has_war = yes
+                factor = 50
+            }
         }
         cost = 150
         complete_effect = {
+            log = "[GetDateText]: [Root.GetName]: Decision Start_Subsidies_steel"
             set_country_flag = embrace_steel
         }
     }
@@ -1099,7 +1133,7 @@ economy_decisions = {
             always = yes
         }
         visible = {
-            OR = { has_war = yes has_country_flag = market_interventionism }
+            OR = { has_war = yes has_government = unitism has_country_flag = market_interventionism }
             not = {
                 has_country_flag = embrace_aluminium
             }
@@ -1110,6 +1144,7 @@ economy_decisions = {
         }
         cost = 150
         complete_effect = {
+            log = "[GetDateText]: [Root.GetName]: Decision Start_Subsidies_aluminium"
             set_country_flag = embrace_aluminium
         }
     }
@@ -1120,7 +1155,7 @@ economy_decisions = {
             always = yes
         }
         visible = {
-            OR = { has_war = yes has_country_flag = market_interventionism }
+            OR = { has_war = yes has_government = unitism has_country_flag = market_interventionism }
             has_active_mission = EcoDevelopment_free_market
             not = {
                 has_country_flag = embrace_arms
@@ -1128,9 +1163,17 @@ economy_decisions = {
         }
         ai_will_do = {
             factor = 0
+            modifier = {
+                has_government = unitism
+                add = 50
+            }
+            modifier = { has_war = yes
+                factor = 50
+            }
         }
         cost = 150
         complete_effect = {
+            log = "[GetDateText]: [Root.GetName]: Decision Start_Subsidies_arms"
             set_country_flag = embrace_arms
         }
     }
@@ -1141,7 +1184,7 @@ economy_decisions = {
             always = yes
         }
         visible = {
-            OR = { has_war = yes has_country_flag = market_interventionism }
+            OR = { has_war = yes has_government = unitism has_country_flag = market_interventionism }
             has_active_mission = EcoDevelopment_free_market
             not = {
                 has_country_flag = embrace_dock
@@ -1152,6 +1195,7 @@ economy_decisions = {
         }
         cost = 150
         complete_effect = {
+            log = "[GetDateText]: [Root.GetName]: Decision Start_Subsidies_dock"
             set_country_flag = embrace_dock
         }
     }
@@ -1163,7 +1207,7 @@ economy_decisions = {
             
         }
         visible = {
-            OR = { has_war = yes has_country_flag = market_interventionism }
+            OR = { has_war = yes has_government = unitism has_country_flag = market_interventionism }
             has_active_mission = EcoDevelopment_free_market
             not = {
                 has_country_flag = embrace_infrastructure
@@ -1171,9 +1215,20 @@ economy_decisions = {
         }
         ai_will_do = {
             factor = 0
+            modifier = {
+                has_country_flag = lf_lv7
+                add = 5
+            }
+            modifier = { OR = { has_country_flag = market_interventionism }
+                factor = 5
+            }
+            modifier = { has_war = yes
+                factor = 5
+            }
         }
         cost = 150
         complete_effect = {
+            log = "[GetDateText]: [Root.GetName]: Decision Start_Subsidies_istru"
             set_country_flag = embrace_infrastructure   
         }
     }
@@ -1184,7 +1239,7 @@ economy_decisions = {
             always = yes
         }
         visible = {
-            OR = { has_war = yes has_country_flag = market_interventionism }
+            OR = { has_war = yes has_government = unitism has_country_flag = market_interventionism }
             has_active_mission = EcoDevelopment_free_market
             not = {
                 has_country_flag = embrace_air_base
@@ -1195,6 +1250,7 @@ economy_decisions = {
         }
         cost = 150
         complete_effect = {
+            log = "[GetDateText]: [Root.GetName]: Decision Start_Subsidies_abase"
             set_country_flag = embrace_air_base
         }
     }
@@ -1206,7 +1262,7 @@ economy_decisions = {
             
         }
         visible = {
-            OR = { has_war = yes has_country_flag = market_interventionism }
+            OR = { has_war = yes has_government = unitism has_country_flag = market_interventionism }
             has_active_mission = EcoDevelopment_free_market
             not = {
                 has_country_flag = embrace_anti_airs
@@ -1217,6 +1273,7 @@ economy_decisions = {
         }
         cost = 150
         complete_effect = {
+            log = "[GetDateText]: [Root.GetName]: Decision Start_Subsidies_aair"
             set_country_flag = embrace_anti_airs
         }
     }
@@ -1228,7 +1285,7 @@ economy_decisions = {
             
         }
         visible = {
-            OR = { has_war = yes has_country_flag = market_interventionism }
+            OR = { has_war = yes has_government = unitism has_country_flag = market_interventionism }
             has_active_mission = EcoDevelopment_free_market
             not = {
                 has_country_flag = embrace_radar_station
@@ -1239,6 +1296,7 @@ economy_decisions = {
         }
         cost = 150
         complete_effect = {
+            log = "[GetDateText]: [Root.GetName]: Decision Start_Subsidies_radarstation"
             set_country_flag = embrace_radar_station
         }
     }
@@ -1249,7 +1307,7 @@ economy_decisions = {
             always = yes
         }
         visible = {
-            OR = { has_war = yes has_country_flag = market_interventionism }
+            OR = { has_war = yes has_government = unitism has_country_flag = market_interventionism }
             not = {
                 has_country_flag = embrace_supply_node
             }
@@ -1260,7 +1318,7 @@ economy_decisions = {
         }
         cost = 150
         complete_effect = {
-
+            log = "[GetDateText]: [Root.GetName]: Decision Start_Subsidies_supply"
             set_country_flag = embrace_supply_node
         }
     }
@@ -1271,7 +1329,7 @@ economy_decisions = {
             always = yes
         }
         visible = {
-            OR = { has_war = yes has_country_flag = market_interventionism }
+            OR = { has_war = yes has_government = unitism has_country_flag = market_interventionism }
             has_active_mission = EcoDevelopment_free_market
             not = {
                 has_country_flag = embrace_slot
@@ -1279,9 +1337,20 @@ economy_decisions = {
         }
         ai_will_do = {
             factor = 0
+            modifier = {
+                has_country_flag = lf_lv7
+                add = 50
+            }
+            modifier = { OR = { has_government = unitism has_country_flag = market_interventionism }
+                factor = 50
+            }
+            modifier = { has_war = yes
+                factor = 50
+            }
         }
         cost = 150
         complete_effect = {
+            log = "[GetDateText]: [Root.GetName]: Decision Start_Subsidies_slot"
             set_country_flag = embrace_slot
         }
     }
@@ -1293,18 +1362,20 @@ economy_decisions = {
         }
         available = {
             num_of_civilian_factories > 5
-            check_variable = {
-                EcoDevelopmentTimer > 9
+            custom_trigger_tooltip = {
+                tooltip = greater_than_30d_tt
+                check_variable = { days_mission_timeout@EcoDevelopment_free_market > 30 }
             }
         }
         visible = {
             OR = { has_war = yes has_country_flag = market_interventionism }
-            has_country_flag = lf_lv4
+            has_country_flag = lf_lv7
         }
         ai_will_do = {
-            factor = 0
+            factor = 50
             modifier = {
-                add = 50
+                add = -40
+                num_of_available_civilian_factories < 60
             }
             modifier = {
                 is_subject = yes
@@ -1314,13 +1385,10 @@ economy_decisions = {
         }
         cost = 10
         complete_effect = {
-            add_to_variable = {
-                EcoDevelopmentTimer = -10
-            }
-            add_days_mission_timeout = {
-                mission = EcoDevelopment_free_market
-                days = -10
-            }
+            log = "[GetDateText]: [Root.GetName]: Decision Start_Subsidies_factory"
+            custom_effect_tooltip = EcoDevelopmentTimer_ReduceBy5_tt
+            add_to_variable = { EcoDevelopmentTimer = -5 }
+            add_days_mission_timeout = { mission = EcoDevelopment_free_market days = -5 }
             random_state = {
                 limit = {
                     is_core_of = ROOT
@@ -1378,12 +1446,13 @@ economy_decisions = {
         ai_will_do = {
             factor = 0
             modifier = {
-                NOT = { has_country_flag = market_interventionism }
+                NOT = { OR = { has_war = yes has_government = unitism has_country_flag = market_interventionism } }
                 add = 50
             }
         }
         cost = 10
         complete_effect = {
+            log = "[GetDateText]: [Root.GetName]: Decision Revoke_Subsidies_civil"
             clr_country_flag = embrace_civilian
         }
     }
@@ -1402,12 +1471,13 @@ economy_decisions = {
         ai_will_do = {
             factor = 0
             modifier = {
-                NOT = { has_country_flag = market_interventionism }
+                NOT = { OR = { has_war = yes has_government = unitism has_country_flag = market_interventionism } }
                 add = 50
             }
         }
         cost = 10
         complete_effect = {
+            log = "[GetDateText]: [Root.GetName]: Decision Revoke_Subsidies_steel"
             clr_country_flag = embrace_steel
         }
     }
@@ -1426,12 +1496,13 @@ economy_decisions = {
         ai_will_do = {
             factor = 0
             modifier = {
-                NOT = { has_country_flag = market_interventionism }
+                NOT = { OR = { has_war = yes has_government = unitism has_country_flag = market_interventionism } }
                 add = 50
             }
         }
         cost = 10
         complete_effect = {
+            log = "[GetDateText]: [Root.GetName]: Decision Revoke_Subsidies_aluminium"
             clr_country_flag = embrace_aluminium
         }
     }
@@ -1448,12 +1519,13 @@ economy_decisions = {
         ai_will_do = {
             factor = 0
             modifier = {
-                NOT = { has_country_flag = market_interventionism }
+                NOT = { OR = { has_war = yes has_government = unitism has_country_flag = market_interventionism } }
                 add = 50
             }
         }
         cost = 10
         complete_effect = {
+            log = "[GetDateText]: [Root.GetName]: Decision Revoke_Subsidies_arms"
             clr_country_flag = embrace_arms
         }
     }
@@ -1470,12 +1542,13 @@ economy_decisions = {
         ai_will_do = {
             factor = 0
             modifier = {
-                NOT = { has_country_flag = market_interventionism }
+                NOT = { OR = { has_war = yes has_government = unitism has_country_flag = market_interventionism } }
                 add = 50
             }
         }
         cost = 10
         complete_effect = {
+            log = "[GetDateText]: [Root.GetName]: Decision Revoke_Subsidies_dock"
             clr_country_flag = embrace_dock
         }
     }
@@ -1495,12 +1568,13 @@ economy_decisions = {
         ai_will_do = {
             factor = 0
             modifier = {
-                NOT = { has_country_flag = market_interventionism }
+                NOT = { OR = { has_war = yes has_government = unitism has_country_flag = market_interventionism } }
                 add = 50
             }
         }
         cost = 10
         complete_effect = {
+            log = "[GetDateText]: [Root.GetName]: Decision Revoke_Subsidies_istru"
             clr_country_flag = embrace_infrastructure   
         }
     }
@@ -1519,12 +1593,13 @@ economy_decisions = {
         ai_will_do = {
             factor = 0
             modifier = {
-                NOT = { has_country_flag = market_interventionism }
+                NOT = { OR = { has_war = yes has_government = unitism has_country_flag = market_interventionism } }
                 add = 50
             }
         }
         cost = 10
         complete_effect = {
+            log = "[GetDateText]: [Root.GetName]: Decision Revoke_Subsidies_abase"
             clr_country_flag = embrace_air_base
         }
     }
@@ -1544,12 +1619,13 @@ economy_decisions = {
         ai_will_do = {
             factor = 0
             modifier = {
-                NOT = { has_country_flag = market_interventionism }
+                NOT = { OR = { has_war = yes has_government = unitism has_country_flag = market_interventionism } }
                 add = 50
             }
         }
         cost = 10
         complete_effect = {
+            log = "[GetDateText]: [Root.GetName]: Decision Revoke_Subsidies_aair"
             clr_country_flag = embrace_anti_airs
         }
     }
@@ -1569,12 +1645,13 @@ economy_decisions = {
         ai_will_do = {
             factor = 0
             modifier = {
-                NOT = { has_country_flag = market_interventionism }
+                NOT = { OR = { has_war = yes has_government = unitism has_country_flag = market_interventionism } }
                 add = 50
             }
         }
         cost = 10
         complete_effect = {
+            log = "[GetDateText]: [Root.GetName]: Decision Revoke_Subsidies_radarstation"
             clr_country_flag = embrace_radar_station
         }
     }
@@ -1593,13 +1670,13 @@ economy_decisions = {
         ai_will_do = {
             factor = 0
             modifier = {
-                NOT = { has_country_flag = market_interventionism }
+                NOT = { OR = { has_war = yes has_government = unitism has_country_flag = market_interventionism } }
                 add = 50
             }
         }
         cost = 10
         complete_effect = {
-            
+            log = "[GetDateText]: [Root.GetName]: Decision Revoke_Subsidies_supply"
             clr_country_flag = embrace_supply_node
         }
     }
@@ -1618,12 +1695,13 @@ economy_decisions = {
         ai_will_do = {
             factor = 0
             modifier = {
-                NOT = { has_country_flag = market_interventionism }
+                NOT = { OR = { has_war = yes has_government = unitism has_country_flag = market_interventionism } }
                 add = 50
             }
         }
         cost = 10
         complete_effect = {
+            log = "[GetDateText]: [Root.GetName]: Decision Revoke_Subsidies_slot"
             clr_country_flag = embrace_slot
         }
     }
