@@ -3990,8 +3990,8 @@ focus_tree = { # Warmonger
 			icon = GFX_focus_unknown_political
 			x = 8
 			y = 6
-			cost = 5
-
+			cost = 0
+			available = { always = no }
 			allow_branch = {
 				is_subject = no
 				has_completed_focus = HHE_warmonger_military_under_vlad
@@ -4019,29 +4019,19 @@ focus_tree = { # Warmonger
 					}
 				}
 			}
-			available = {
-				or = {
-					has_country_flag = HHE_collapse_of_the_nation_country_no_more_failed
-					has_country_flag = HHE_collapse_of_the_nation_country_no_more_fixed
-				}
-			}
-			bypass = {
-			}
 
-			ai_will_do = {
-				factor = 1
-				modifier = {
-					factor = 10
-					ROOT = {
-						has_country_flag = collapse_of_the_nation_civil_war_regional
-					}
-				}
-			}
+			ai_will_do = { factor = 1 }
 
 			available_if_capitulated = yes
 
 			completion_reward = {
 				log = "[GetDateText]: [Root.GetName]: Focus HHE_warmonger_victory_parades"
+				set_power_balance = {
+				    id = power_balance_HHE_civil_war
+				    left_side = civil_war_progress_failing
+				    right_side = civil_war_progress_succeeding
+				}
+				hidden_effect = { add_power_balance_value = { id = power_balance_HHE_civil_war value = 1.0 } }
 				unlock_decision_category_tooltip = parade_HHE_victory_parades
 			}
 		}
