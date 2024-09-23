@@ -1,0 +1,76 @@
+bop_COA_v_OAK = {
+    COA_preemptive_strike = {
+        icon = GFX_decision_spr_political_assassination
+
+        available = { is_power_balance_in_range = { id = power_balance_OAK_v_COA range > OAK_established } }
+        visible = { original_tag = COA }
+        is_good = yes
+
+        fire_only_once = yes
+        days_re_enable = 30
+        days_remove = 30
+
+        cost = 10
+
+        remove_effect = {
+            log = "[GetDateText]: [Root.GetName]: Decision COA_preemptive_strike"
+            hidden_effect = { create_wargoal = { type = annex_everything target = OAK expire = 0 } }
+            declare_war_on = { type = annex_everything target = OAK }
+        }
+
+        ai_will_do = {
+            factor = 1
+            modifier = { factor = 2 original_tag = COA
+                power_balance_value = { id = power_balance_OAK_v_COA value < 0.00 } }
+            modifier = { factor = 2 original_tag = COA
+                power_balance_value = { id = power_balance_OAK_v_COA value < 0.05 } }
+            modifier = { factor = 3.5 original_tag = COA
+                power_balance_value = { id = power_balance_OAK_v_COA value < 0.15 } }
+            modifier = { factor = 3.5 original_tag = COA
+                power_balance_value = { id = power_balance_OAK_v_COA value < 0.45 } }
+            modifier = { factor = 5 original_tag = COA
+                power_balance_value = { id = power_balance_OAK_v_COA value < 0.90 } }
+        } 
+    }
+
+    COA_indepth_warfare = {
+        icon = GFX_decision_spr_political_assassination
+
+        available = {  }
+        visible = { original_tag = COA }
+        is_good = yes
+
+        fire_only_once = no
+        days_re_enable = 30
+        days_remove = 30
+
+        cost = 10
+
+        remove_effect = {
+            log = "[GetDateText]: [Root.GetName]: Decision COA_indepth_warfare"
+            COA_v_OAK_power_shift = yes
+        }
+
+        ai_will_do = {
+            factor = 1
+            modifier = { factor = 10
+                date > 1725.01.01 }
+            modifier = { factor = 30
+                date > 1726.01.01 }
+            modifier = { factor = 60
+                date > 1727.01.01 }
+            modifier = { factor = 100
+                date > 1728.01.01 }
+            modifier = { factor = 2 original_tag = COA
+                power_balance_value = { id = power_balance_OAK_v_COA value >  0.00 } }
+            modifier = { factor = 2 original_tag = COA
+                power_balance_value = { id = power_balance_OAK_v_COA value > -0.05 } }
+            modifier = { factor = 3.5 original_tag = COA
+                power_balance_value = { id = power_balance_OAK_v_COA value > -0.15 } }
+            modifier = { factor = 3.5 original_tag = COA
+                power_balance_value = { id = power_balance_OAK_v_COA value > -0.45 } }
+            modifier = { factor = 5 original_tag = COA
+                power_balance_value = { id = power_balance_OAK_v_COA value > -0.90 } }
+        }
+    }
+}

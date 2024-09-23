@@ -260,7 +260,7 @@ on_actions = {
 								#is_core_of = TRH
 							}
 						}
-						add_claim_by = ATC
+						add_claim_by = COA
 						add_claim_by = OAK
 					}
 				}
@@ -378,34 +378,30 @@ on_actions = {
 					}
 				}
 	}
-	on_new_term_election = {
+	on_daily = { # 7 per Week
+	}
+	on_weekly = { # 4 per Month
+	}
+	on_monthly = { # 12 per Year
+		effect = { # Maps
+			IF = {
+				limit = { OR = { has_tech = improved_artillery has_tech = interwar_heavy_artillery } } 
+				set_technology = { artillery1 = 1 popup = no }
+			}
+			IF = {
+				limit = { has_tech = advanced_heavy_artillery }
+				set_technology = { artillery5 = 1 popup = no }
+			}
+		}
 		random_events = {
-			100 = election.2
-			100 = election.3
-			100 = election.4
-			100 = election.5
-			100 = election.6
-			100 = election.11
-			100 = election.12
-			100 = election.13
-			100 = election.14
-			100 = election.15
+		    1 = random_event.2
+		    1 = random_event.3
+		    1 = random_event.4
+		    1 = random_event.5
+		    1 = random_event.6
+		    100 = 0
 		}
 	}
-	#on_state_control_changed = {
-	#	# Checking for Major City falling for overnight test.
-	#	effect = {
-	#		if = {
-	#			limit = {
-	#				FROM.FROM = { state = 14 }
-	#				FROM = { original_tag = MRC }
-	#				ROOT = { NOT = { original_tag = MRC } }
-	#			}
-	#			log = "[GetDateText]: [Root.GetName]: on_state_control_changed: Fall of Aborroas"
-	#			set_global_flag = aborroas_is_lost
-	#		}
-	#	}
-	#}
 	on_government_change = {
 		effect = {
 			IF = {
@@ -442,28 +438,66 @@ on_actions = {
 			log = "[GetDateText]: [Root.GetName]: on_ruling_party_change: update_ideological_dogmata_stance"
 		}
 	}
-	on_daily = { # 7 per Week
-	}
-	on_weekly = { # 4 per Month
-	}
-	on_monthly = { # 12 per Year
-		effect = { # Maps
-			IF = {
-				limit = { OR = { has_tech = improved_artillery has_tech = interwar_heavy_artillery } } 
-				set_technology = { artillery1 = 1 popup = no }
-			}
-			IF = {
-				limit = { has_tech = advanced_heavy_artillery }
-				set_technology = { artillery5 = 1 popup = no }
-			}
-		}
+	on_new_term_election = {
 		random_events = {
-		    1 = random_event.2
-		    1 = random_event.3
-		    1 = random_event.4
-		    1 = random_event.5
-		    1 = random_event.6
-		    100 = 0
+			100 = election.2
+			100 = election.3
+			100 = election.4
+			100 = election.5
+			100 = election.6
+			100 = election.11
+			100 = election.12
+			100 = election.13
+			100 = election.14
+			100 = election.15
+		}
+	}
+	on_declare_war = {
+	    effect = {
+	        log = "[GetDateText]: on_declare_war: ROOT [Root.GetName] FROM [FROM.GetName]"
+	        IF = {
+	        	limit = { OR = { tag = COA tag = OAK } FROM = { OR = { tag = COA tag = OAK } } }
+	        	HIDDEN_EFFECT = {
+		        	log = "[GetDateText]: [Root.GetName]: on_declare_war: Global Iron Shortage"
+		        	news_event = news.7
+					every_country = {
+						limit = { NOT = { OR = { tag = COA tag = OAK has_idea = closed_economy } } }
+						country_event = { id = Artificers.1 days = 1 }
+					}
+	        	}
+	        }
+	    }
+	}
+	on_war = {
+	    effect = {
+
+	    }
+	}
+	on_peace = {
+	    effect = {
+
+	    }
+	}
+	on_state_control_changed = {
+		effect = { # Checking for Major City falling for overnight test.
+			if = {
+				limit = {
+					FROM.FROM = { state = 14 }
+					FROM = { original_tag = MRC }
+					ROOT = { NOT = { original_tag = MRC } }
+				}
+				log = "[GetDateText]: [Root.GetName]: on_state_control_changed: Fall of Aborroas"
+				set_global_flag = aborroas_is_lost
+			}
+			if = {
+				limit = {
+					FROM.FROM = { state = 239 }
+					FROM = { original_tag = HHE }
+					ROOT = { NOT = { original_tag = HHE } }
+				}
+				log = "[GetDateText]: [Root.GetName]: on_state_control_changed: Fall of Concordia"
+				set_global_flag = concordia_is_lost
+			}
 		}
 	}
 }
