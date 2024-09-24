@@ -378,10 +378,13 @@ on_actions = {
 					}
 				}
 	}
+
 	on_daily = { # 7 per Week
 	}
+
 	on_weekly = { # 4 per Month
 	}
+
 	on_monthly = { # 12 per Year
 		effect = { # Maps
 			IF = {
@@ -402,6 +405,7 @@ on_actions = {
 		    100 = 0
 		}
 	}
+
 	on_government_change = {
 		effect = {
 			IF = {
@@ -420,6 +424,7 @@ on_actions = {
 			log = "[GetDateText]: [Root.GetName]: on_government_change: update_ideological_dogmata_stance"
 		}
 	}
+
 	on_ruling_party_change = {
 		effect = {
 			IF = {
@@ -438,6 +443,7 @@ on_actions = {
 			log = "[GetDateText]: [Root.GetName]: on_ruling_party_change: update_ideological_dogmata_stance"
 		}
 	}
+
 	on_new_term_election = {
 		random_events = {
 			100 = election.2
@@ -452,11 +458,17 @@ on_actions = {
 			100 = election.15
 		}
 	}
+
 	on_declare_war = {
 	    effect = {
 	        log = "[GetDateText]: on_declare_war: ROOT [Root.GetName] FROM [FROM.GetName]"
 	        IF = {
-	        	limit = { OR = { tag = COA tag = OAK } FROM = { OR = { tag = COA tag = OAK } } }
+	        	limit = {
+	        		OR = { tag = COA tag = OAK } FROM = { OR = { tag = COA tag = OAK } }
+	        		NOT = { any_other_country = {
+	        			check_variable = { resource_produced@steel > OAK.resource_produced@steel }
+	        		} }
+	        	}
 	        	HIDDEN_EFFECT = {
 		        	log = "[GetDateText]: [Root.GetName]: on_declare_war: Global Iron Shortage"
 		        	news_event = news.7
@@ -468,16 +480,19 @@ on_actions = {
 	        }
 	    }
 	}
+
 	on_war = {
 	    effect = {
 
 	    }
 	}
+
 	on_peace = {
 	    effect = {
 
 	    }
 	}
+
 	on_state_control_changed = {
 		effect = { # Checking for Major City falling for overnight test.
 			if = {

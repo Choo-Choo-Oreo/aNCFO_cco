@@ -58,5 +58,5 @@ tags={
 name="A New Chapter - Fantasy Overhaul"
 picture="thumbnail.png"
 supported_version="1.14.*"
-path="mod/aNCFO_cco"
+path="C:/Users/Orea/Documents/Paradox Interactive/Hearts of Iron IV/mod/aNCFO_cco"
 remote_file_id="3301072102"
