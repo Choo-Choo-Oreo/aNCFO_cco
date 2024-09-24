@@ -3,7 +3,7 @@ Artificers_global_iron_shortage_category = {
         icon = GFX_decision_generic_operation
 
         available = { political_power_daily > 0.90 }
-        visible = { NOT = { has_country_flag = divine_right_coring_num2 } }
+        visible = { NOT = { has_country_flag = Artificers_iron_crisis_num2 } }
         is_good = yes
 
         fire_only_once = no
@@ -30,6 +30,29 @@ Artificers_global_iron_shortage_category = {
         remove_effect = {
             log = "[GetDateText]: [Root.GetName]: Decision remove Artificers_iron_crisis"
             custom_effect_tooltip = use_3x_tt
+            Artificers_iron_crisis = yes
+        }
+
+        ai_will_do = {
+            factor = 100
+        }
+    }
+
+    Artificers_steel_rebound = {
+        icon = GFX_decision_generic_operation
+
+        available = { check_variable = { resource_produced@steel > old_steel_production } }
+        visible = {  }
+        is_good = yes
+
+        fire_only_once = yes
+        days_remove = 30
+        #modifier = { political_power_cost = 1.0 }
+
+        cost = 10
+
+        remove_effect = {
+            log = "[GetDateText]: [Root.GetName]: Decision remove Artificers_steel_rebound"
             Artificers_iron_crisis = yes
         }
 

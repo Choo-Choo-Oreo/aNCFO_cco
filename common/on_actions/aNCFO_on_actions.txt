@@ -214,9 +214,12 @@ on_actions = {
 						LIMIT = { is_coastal = yes is_controlled_by = PREV }
 						PREV = { add_equipment_to_stockpile = { type = convoy amount = 25 } }
 					}
-		            set_country_flag = start_EcoDevelopment
-		            set_variable = { EcoDevelopmentTimer = 365 }
-		            activate_mission = EcoDevelopment_free_market
+					IF = {
+						LIMIT = { NOT = { TAG = ZZZ } }
+			            set_country_flag = start_EcoDevelopment
+			            set_variable = { EcoDevelopmentTimer = 365 }
+			            activate_mission = EcoDevelopment_free_market
+					}
 					IF = { # Human
 						LIMIT = { is_species_human = yes }
 						#add_to_tech_sharing_group = human_individualism_and_openness_research # VERY LAGGY
@@ -474,7 +477,7 @@ on_actions = {
 		        	news_event = news.7
 					every_country = {
 						limit = { NOT = { OR = { tag = COA tag = OAK has_idea = closed_economy } } }
-						country_event = { id = Artificers.1 days = 1 }
+						country_event = { id = Artificers.1 days = 7 }
 					}
 	        	}
 	        }

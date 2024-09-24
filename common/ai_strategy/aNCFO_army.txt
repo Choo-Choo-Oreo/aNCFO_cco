@@ -66,6 +66,25 @@ wants_barracks_for_manpower_major = {
 	}
 }
 
+doesnt_want_garrisons = {
+	enable = {
+		any_neighbor_country = {
+			NOT = { has_war_with = ROOT }
+		}
+	}
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = role_ratio
+		id = garrison
+		value = -100
+	}
+	ai_strategy = {
+		type = garrison_reinforcement_priority
+		value = -100
+	}
+}
+
 bba_support_boosts = {
 	enable = {
 		is_historical_focus_on = yes
@@ -116,11 +135,12 @@ put_garrisons_on_low_prio = {
 
 put_garrisons_on_high_prio = {
 	enable = {
-		always = yes
+		any_state = {
+			is_owned_by = ROOT
+			is_coastal = yes
+		}
 	}
-	abort = {
-		always = no
-	}
+	abort_when_not_enabled = yes
 
 	ai_strategy = {
 		type = garrison_reinforcement_priority

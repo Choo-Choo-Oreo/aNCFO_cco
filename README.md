@@ -7,8 +7,9 @@ This item is not authorized for posting on Steam, except under the Steam account
 If you want utilized any of the CODE here for your own mod, you have permision to use it as you see fit.
 If you want to use any graphics from the mod, you are not permitted to use any of them.
 
-Other Mod Devs/Modders
-	 - Ringwraith Mod Partially
+Other Mod Devs/Modders the have ANY work added to this mod.
+
+	- Ringwraith Mod Partially
 	https://steamcommunity.com/sharedfiles/filedetails/?id=1778255798
 
 	- Equestria at War Team Mod Airtech+
