@@ -18,12 +18,13 @@ Text
 
 ## Country Flags
 
-* Flag
-* Flag
-* Flag
+* species.dwarf_openness
+* species.dwarf_isolationism
 
 ## Global Flags
 
+* Artificers.GlobalIronShortage
+* Artificers.GlobalIronSurplus
 * grand_canal_purchase_processing
 * death_of_deed
 * reforms_from_deed

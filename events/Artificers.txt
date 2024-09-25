@@ -1,5 +1,5 @@
 ﻿add_namespace = Artificers
-	country_event = { # Global Iron Shortage : OAK NO LONG NUM1 STEEL PRODUCER
+	country_event = { # Global Iron Shortage : DWARF COUNTRY
 		id = Artificers.0
 		title = Artificers.0.t
 		desc = Artificers.0.d
@@ -7,14 +7,22 @@
 
 		is_triggered_only = yes
 
-		immediate = { log = "[GetDateText]: [Root.GetName]: Event Artificers.0" }
+		immediate = { log = "[GetDateText]: [Root.GetName]: Event Artificers.0"
+			set_variable = { old_steel_production = resource_produced@steel } }
 
 		option = {
-			name = Artificers.0.a
+			name = Artificers.0.OptA
+			trade_lower = yes
+		}
+
+		option = {
+			name = Artificers.0.OptB
+			set_country_flag = species.dwarf_openness add_stability = -0.20
+			trade_raise = yes add_ideas = Artificers_idea_global_dwarven_iron_exports_0
 		}
 	}
 
-	country_event = { # Global Iron Shortage : COUNTRY
+	country_event = { # Global Iron Shortage : TRADE COUNTRY
 		id = Artificers.1
 		title = Artificers.1.t
 		desc = Artificers.1.d
@@ -23,12 +31,46 @@
 		is_triggered_only = yes
 
 		immediate = { log = "[GetDateText]: [Root.GetName]: Event Artificers.1"
-			add_ideas = Artificers_idea_global_iron_shortage_0 }
+			set_variable = { old_steel_production = resource_produced@steel }
+			set_variable = { total_civ_count = num_of_civilian_factories }
+			set_variable = { project_civ_count = num_of_civilian_factories_available_for_projects }
+			add_ideas = Artificers_idea_global_iron_shortage_0
+		}
 
 		option = {
-			name = Artificers.1.a
-			set_variable = { old_steel_production = resource_produced@steel }
+			name = Artificers.1.OptA
 			effect_tooltip = { add_ideas = Artificers_idea_global_iron_shortage_0 }
+		}
+	}
+
+	country_event = { # Global Iron Shortage : SURPLUS ON THE MARKET
+		id = Artificers.2
+		title = Artificers.2.t
+		desc = Artificers.2.d
+		picture = GFX_report_event_airplane_factory
+
+		is_triggered_only = yes
+
+		immediate = { log = "[GetDateText]: [Root.GetName]: Event Artificers.2" }
+
+		option = {
+			name = Artificers.2.OptA
+            IF = { LIMIT = { has_idea = Artificers_idea_global_iron_shortage_0 }
+                remove_ideas = Artificers_idea_global_iron_shortage_0 }
+            IF = { LIMIT = { has_idea = Artificers_idea_global_iron_shortage_1 }
+                remove_ideas = Artificers_idea_global_iron_shortage_1 }
+            IF = { LIMIT = { has_idea = Artificers_idea_global_iron_shortage_2 }
+                remove_ideas = Artificers_idea_global_iron_shortage_2 }
+            IF = { LIMIT = { has_idea = Artificers_idea_global_iron_shortage_3 }
+                remove_ideas = Artificers_idea_global_iron_shortage_3 }
+            IF = { LIMIT = { has_idea = Artificers_idea_global_dwarven_iron_exports_0 }
+                remove_ideas = Artificers_idea_global_dwarven_iron_exports_0 }
+            IF = { LIMIT = { has_idea = Artificers_idea_global_dwarven_iron_exports_1 }
+                remove_ideas = Artificers_idea_global_dwarven_iron_exports_1 }
+            IF = { LIMIT = { has_idea = Artificers_idea_global_dwarven_iron_exports_2 }
+                remove_ideas = Artificers_idea_global_dwarven_iron_exports_2 }
+            IF = { LIMIT = { has_idea = Artificers_idea_global_dwarven_iron_exports_3 }
+                remove_ideas = Artificers_idea_global_dwarven_iron_exports_3 }
 		}
 	}
 add_namespace = COA # Commune of Artificers

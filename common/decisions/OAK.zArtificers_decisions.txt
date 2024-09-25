@@ -1,19 +1,285 @@
 Artificers_global_iron_shortage_category = {
+# MAjor
+    Artificers_major_dissipate_tool_shortage = {
+        name = Artificers_dissipate_tool_shortage
+        icon = GFX_decision_generic_consumer_goods
+
+        available = {
+            #num_of_civilian_factories > total_civ_count
+            num_of_civilian_factories_available_for_projects > project_civ_count
+        }
+        visible = { is_major = yes }
+        is_good = yes
+
+        fire_only_once = yes
+        days_remove = 90
+        modifier = { civilian_factory_use = 10 }
+
+        cost = 50
+
+        remove_effect = {
+            log = "[GetDateText]: [Root.GetName]: Decision remove Artificers_major_iron_tool_shortage"
+            Artificers_iron_crisis = yes
+        }
+
+        ai_will_do = {
+            factor = 100
+        }
+    }
+
+    Artificers_major_rebound_steel_production = {
+        name = Artificers_rebound_steel_production
+        icon = GFX_decision_steel
+
+        available = { custom_trigger_tooltip = {
+            tooltip = produce_current_steel_greaterthan_previous_steel_tt
+            check_variable = { resource_produced@steel > old_steel_production }
+        } }
+        visible = { is_major = yes check_variable = { old_steel_production > 12 } }
+        is_good = yes
+
+        fire_only_once = yes
+        days_remove = 30
+
+        cost = 50
+
+        remove_effect = {
+            log = "[GetDateText]: [Root.GetName]: Decision remove Artificers_major_steel_rebound"
+            Artificers_iron_crisis = yes
+        }
+
+        ai_will_do = {
+            factor = 100
+        }
+    }
+
+    Artificers_major_reduce_construction_cost = {
+        name = Artificers_reduce_construction_cost
+        icon = GFX_decision_generic_construction
+
+        available = {
+            FROM = { set_temp_variable = { target_civ_count = total_civ_count } }
+            multiply_temp_variable = { target_civ_count = 1.67 }
+            num_of_civilian_factories > target_civ_count
+            #num_of_civilian_factories_available_for_projects > project_civ_count
+        } 
+        visible = { is_major = yes }
+        is_good = yes
+
+        fire_only_once = yes
+        days_remove = 30
+
+        cost = 50
+
+        remove_effect = {
+            log = "[GetDateText]: [Root.GetName]: Decision remove Artificers_major_steel_rebound"
+            Artificers_iron_crisis = yes
+        }
+
+        ai_will_do = {
+            factor = 100
+        }
+    }
+# Minor
+    Artificers_minor_dissipate_tool_shortage = {
+        name = Artificers_dissipate_tool_shortage
+        icon = GFX_decision_generic_consumer_goods
+
+        available = {
+            #num_of_civilian_factories > total_civ_count
+            num_of_civilian_factories_available_for_projects > project_civ_count
+        }
+        visible = { is_major = no }
+        is_good = yes
+
+        fire_only_once = yes
+        days_remove = 90
+        modifier = { civilian_factory_use = 5 }
+
+        cost = 50
+
+        remove_effect = {
+            log = "[GetDateText]: [Root.GetName]: Decision remove Artificers_minor_iron_tool_shortage"
+            Artificers_iron_crisis = yes
+        }
+
+        ai_will_do = {
+            factor = 100
+        }
+    }
+
+    Artificers_minor_rebound_steel_production = {
+        name = Artificers_rebound_steel_production
+        icon = GFX_decision_steel
+
+        available = { custom_trigger_tooltip = {
+            tooltip = produce_current_steel_greaterthan_previous_steel_tt
+            check_variable = { resource_produced@steel > old_steel_production }
+        } }
+        visible = { is_major = no check_variable = { old_steel_production > 12 } }
+        is_good = yes
+
+        fire_only_once = yes
+        days_remove = 30
+
+        cost = 50
+
+        remove_effect = {
+            log = "[GetDateText]: [Root.GetName]: Decision remove Artificers_major_steel_rebound"
+            Artificers_iron_crisis = yes
+        }
+
+        ai_will_do = {
+            factor = 100
+        }
+    }
+
+    Artificers_minor_reduce_construction_cost = {
+        name = Artificers_reduce_construction_cost
+        icon = GFX_decision_generic_construction
+
+        available = {
+            FROM = { set_temp_variable = { target_civ_count = total_civ_count } }
+            multiply_temp_variable = { target_civ_count = 1.34 }
+            num_of_civilian_factories > target_civ_count
+            #num_of_civilian_factories_available_for_projects > project_civ_count
+        } 
+        visible = { is_major = no }
+        is_good = yes
+
+        fire_only_once = yes
+        days_remove = 30
+
+        cost = 50
+
+        remove_effect = {
+            log = "[GetDateText]: [Root.GetName]: Decision remove Artificers_major_steel_rebound"
+            Artificers_iron_crisis = yes
+        }
+
+        ai_will_do = {
+            factor = 100
+        }
+    }
+# General
+    Artificers_improve_factory_conditions = {
+        icon = GFX_decision_generic_operation
+
+        available = { OR = { political_power_daily > 0.90 has_political_power > 100 } }
+        #visible = { NOT = { has_country_flag = Artificers_iron_crisis_num2 } }
+        is_good = yes
+
+        fire_only_once = no
+        days_remove = 180
+        modifier = { political_power_cost = 1.0 }
+
+        cost = 50
+
+        complete_effect = {
+            log = "[GetDateText]: [Root.GetName]: Decision Artificers_iron_crisis"
+            #IF = {
+            #    LIMIT = { NOT = { has_country_flag = Artificers_iron_crisis_num0 } }
+            #    set_country_flag = Artificers_iron_crisis_num0
+            #    ELSE = {
+            #        LIMIT = { NOT = { has_country_flag = Artificers_iron_crisis_num1 } }
+            #        set_country_flag = Artificers_iron_crisis_num1
+            #        ELSE = {
+            #            LIMIT = { NOT = { has_country_flag = Artificers_iron_crisis_num2 } }
+            #            set_country_flag = Artificers_iron_crisis_num2
+            #        }
+            #    }
+            #}
+        }
+        remove_effect = {
+            log = "[GetDateText]: [Root.GetName]: Decision remove Artificers_iron_crisis"
+            #custom_effect_tooltip = use_3x_tt
+            Artificers_iron_crisis = yes
+        }
+
+        ai_will_do = {
+            factor = 100
+        }
+    }
+
+    #Artificers_debug_iron_surplus_buff = {
+    #    icon = GFX_decision_steel
+
+    #    available = { AND = { is_debug = yes is_ai = no } }
+    #    visible = { AND = { is_debug = yes is_ai = no } }
+    #    is_good = yes
+
+    #    fire_only_once = yes
+
+    #    complete_effect = {
+    #        log = "[GetDateText]: [Root.GetName]: Decision remove Artificers_debug_iron_surplus_buff"
+    #        custom_effect_tooltip = convert_building_steel_complex_to_resource_steel_tt
+    #        HIDDEN_EFFECT = {
+    #            every_owned_state = {
+    #                set_temp_variable = { steel_complex_count = building_level@steel_complex }
+
+    #                remove_building = { type = steel_complex level = building_level@steel_complex }
+
+    #                multiply_temp_variable = { steel_complex_count = 12 }
+    #                add_resource = { type = steel amount = steel_complex_count }
+
+    #                log = "[THIS.GetName] steel complex count: [?building_level@steel_complex]"
+    #            }
+    #        }
+    #    }
+
+    #    ai_will_do = { factor = 0 }
+    #}
+}
+Artificers_global_dwarven_iron_exports_category = {
+    Artificers_dwarf_abandaned_openness = {
+        icon = GFX_decision_generic_operation
+
+        available = { political_power_daily > 0.90 }
+        visible = {  }
+        is_good = yes
+
+        fire_only_once = yes
+        days_remove = 30
+        modifier = { political_power_cost = 1.0 }
+
+        cost = 10
+
+        complete_effect = {
+            log = "[GetDateText]: [Root.GetName]: Decision Artificers_dwarf_abandaned_openness"
+            add_ideas = closed_economy clr_country_flag = species.dwarf_openness
+        }
+        remove_effect = {
+            log = "[GetDateText]: [Root.GetName]: Decision remove Artificers_dwarf_abandaned_openness"
+            IF = { LIMIT = { has_idea = Artificers_idea_global_dwarven_iron_exports_0 }
+                remove_ideas = Artificers_idea_global_dwarven_iron_exports_0 }
+            IF = { LIMIT = { has_idea = Artificers_idea_global_dwarven_iron_exports_1 }
+                remove_ideas = Artificers_idea_global_dwarven_iron_exports_1 }
+            IF = { LIMIT = { has_idea = Artificers_idea_global_dwarven_iron_exports_2 }
+                remove_ideas = Artificers_idea_global_dwarven_iron_exports_2 }
+            IF = { LIMIT = { has_idea = Artificers_idea_global_dwarven_iron_exports_3 }
+                remove_ideas = Artificers_idea_global_dwarven_iron_exports_3 }
+        }
+
+        ai_will_do = {
+            factor = 0
+        }
+    }
+
     Artificers_iron_crisis = {
         icon = GFX_decision_generic_operation
 
         available = { political_power_daily > 0.90 }
-        visible = { NOT = { has_country_flag = Artificers_iron_crisis_num2 } }
+        visible = { NOT = { has_country_flag = Artificers_iron_crisis_num3 } }
         is_good = yes
 
         fire_only_once = no
         days_remove = 90
         modifier = { political_power_cost = 1.0 }
 
-        cost = 10
+        cost = 50
 
         complete_effect = {
-            log = "[GetDateText]: [Root.GetName]: Decision divine_right_coring"
+            log = "[GetDateText]: [Root.GetName]: Decision Artificers_iron_crisis"
             IF = {
                 LIMIT = { NOT = { has_country_flag = Artificers_iron_crisis_num0 } }
                 set_country_flag = Artificers_iron_crisis_num0
@@ -23,84 +289,17 @@ Artificers_global_iron_shortage_category = {
                     ELSE = {
                         LIMIT = { NOT = { has_country_flag = Artificers_iron_crisis_num2 } }
                         set_country_flag = Artificers_iron_crisis_num2
+                        ELSE = {
+                            LIMIT = { NOT = { has_country_flag = Artificers_iron_crisis_num3 } }
+                            set_country_flag = Artificers_iron_crisis_num3
+                        }
                     }
                 }
             }
         }
         remove_effect = {
             log = "[GetDateText]: [Root.GetName]: Decision remove Artificers_iron_crisis"
-            custom_effect_tooltip = use_3x_tt
-            Artificers_iron_crisis = yes
-        }
-
-        ai_will_do = {
-            factor = 100
-        }
-    }
-
-    Artificers_steel_rebound = {
-        icon = GFX_decision_generic_operation
-
-        available = { check_variable = { resource_produced@steel > old_steel_production } }
-        visible = {  }
-        is_good = yes
-
-        fire_only_once = yes
-        days_remove = 30
-        #modifier = { political_power_cost = 1.0 }
-
-        cost = 10
-
-        remove_effect = {
-            log = "[GetDateText]: [Root.GetName]: Decision remove Artificers_steel_rebound"
-            Artificers_iron_crisis = yes
-        }
-
-        ai_will_do = {
-            factor = 100
-        }
-    }
-
-    Artificers_iron_tool_shortage_major = {
-        name = Artificers_iron_tool_shortage
-        icon = GFX_decision_steel
-
-        available = { num_of_civilian_factories_available_for_projects > 9 num_of_civilian_factories > 19 }
-        visible = { is_major = yes }
-        is_good = yes
-
-        fire_only_once = yes
-        days_remove = 90
-        modifier = { civilian_factory_use = 10 }
-
-        cost = 10
-
-        remove_effect = {
-            log = "[GetDateText]: [Root.GetName]: Decision remove Artificers_iron_tool_shortage_major"
-            Artificers_iron_crisis = yes
-        }
-
-        ai_will_do = {
-            factor = 100
-        }
-    }
-
-    Artificers_iron_tool_shortage_minor = {
-        name = Artificers_iron_tool_shortage
-        icon = GFX_decision_steel
-
-        available = { num_of_civilian_factories_available_for_projects > 4 num_of_civilian_factories > 9 }
-        visible = { is_major = no }
-        is_good = yes
-
-        fire_only_once = yes
-        days_remove = 90
-        modifier = { civilian_factory_use = 5 }
-
-        cost = 10
-
-        remove_effect = {
-            log = "[GetDateText]: [Root.GetName]: Decision remove Artificers_iron_tool_shortage_minor"
+            custom_effect_tooltip = use_4x_tt
             Artificers_iron_crisis = yes
         }
 

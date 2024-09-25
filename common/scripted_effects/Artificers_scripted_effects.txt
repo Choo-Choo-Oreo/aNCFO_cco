@@ -1,3 +1,34 @@
+Artificers_iron_crisis_recovery = {
+	HIDDEN_EFFECT = { # FLAG
+		if = { LIMIT = { NOT = { has_global_flag = { flag = Artificers.GlobalIronSurplus value < 1 } } }
+			set_global_flag = { flag = Artificers.GlobalIronSurplus value = 1 }
+		}
+		else_if = { LIMIT = { NOT = { has_global_flag = { flag = Artificers.GlobalIronSurplus value < 2 } } }
+			modify_global_flag = { flag = Artificers.GlobalIronSurplus value = 2 }
+		}
+		else_if = { LIMIT = { NOT = { has_global_flag = { flag = Artificers.GlobalIronSurplus value < 3 } } }
+			modify_global_flag = { flag = Artificers.GlobalIronSurplus value = 3 }
+		}
+		IF = { LIMIT = { has_global_flag = { flag = Artificers.GlobalIronSurplus value > 2 } }
+			clr_global_flag = Artificers.GlobalIronShortage
+	        news_event = news.9
+			every_country = {
+				limit = { OR = {
+					has_idea = Artificers_idea_global_iron_shortage_0
+					has_idea = Artificers_idea_global_iron_shortage_1
+					has_idea = Artificers_idea_global_iron_shortage_2
+					has_idea = Artificers_idea_global_iron_shortage_3
+					has_idea = Artificers_idea_global_dwarven_iron_exports_0
+					has_idea = Artificers_idea_global_dwarven_iron_exports_1
+					has_idea = Artificers_idea_global_dwarven_iron_exports_2
+					has_idea = Artificers_idea_global_dwarven_iron_exports_3
+				} }
+				country_event = { id = Artificers.2 days = 7 }
+			}
+		}
+	}
+}
+
 Artificers_iron_crisis = {
 	if = {
 		limit = { has_idea = Artificers_idea_global_iron_shortage_0 }
@@ -22,7 +53,44 @@ Artificers_iron_crisis = {
 	}
 	else_if = {
 		limit = { has_idea = Artificers_idea_global_iron_shortage_3 }
-		remove_ideas = Artificers_idea_global_iron_shortage_3
+		swap_ideas = {
+			remove_idea = Artificers_idea_global_iron_shortage_3
+			add_idea = OAK_idea_heart_of_iron
+		}
+		custom_effect_tooltip = convert_building_steel_complex_to_resource_steel_tt
+		HIDDEN_EFFECT = { every_owned_state = {
+		        set_temp_variable = { steel_complex_count = building_level@steel_complex }
+		        remove_building = { type = steel_complex level = building_level@steel_complex }
+		        multiply_temp_variable = { steel_complex_count = 12 }
+		        add_resource = { type = steel amount = steel_complex_count }
+		        log = "[THIS.GetName] steel complex count: [?building_level@steel_complex]"
+		} }
+		Artificers_iron_crisis_recovery = yes
+	}
+	if = {
+		limit = { has_idea = Artificers_idea_global_dwarven_iron_exports_0 }
+		swap_ideas = {
+			remove_idea = Artificers_idea_global_dwarven_iron_exports_0
+			add_idea = Artificers_idea_global_dwarven_iron_exports_1
+		}
+	}
+	else_if = {
+		limit = { has_idea = Artificers_idea_global_dwarven_iron_exports_1 }
+		swap_ideas = {
+			remove_idea = Artificers_idea_global_dwarven_iron_exports_1
+			add_idea = Artificers_idea_global_dwarven_iron_exports_2
+		}
+	}
+	else_if = {
+		limit = { has_idea = Artificers_idea_global_dwarven_iron_exports_2 }
+		swap_ideas = {
+			remove_idea = Artificers_idea_global_dwarven_iron_exports_2
+			add_idea = Artificers_idea_global_dwarven_iron_exports_3
+		}
+	}
+	else_if = {
+		limit = { has_idea = Artificers_idea_global_dwarven_iron_exports_3 }
+		remove_ideas = Artificers_idea_global_dwarven_iron_exports_3
 	}
 }
 

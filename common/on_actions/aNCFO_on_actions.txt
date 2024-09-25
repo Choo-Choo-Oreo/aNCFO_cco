@@ -467,18 +467,42 @@ on_actions = {
 	        log = "[GetDateText]: on_declare_war: ROOT [Root.GetName] FROM [FROM.GetName]"
 	        IF = {
 	        	limit = {
-	        		OR = { tag = COA tag = OAK } FROM = { OR = { tag = COA tag = OAK } }
-	        		NOT = { any_other_country = {
-	        			check_variable = { resource_produced@steel > OAK.resource_produced@steel }
-	        		} }
+	        		OR = { tag = COA tag = OAK }
+	        		FROM = { OR = { tag = COA tag = OAK } }
 	        	}
-	        	HIDDEN_EFFECT = {
-		        	log = "[GetDateText]: [Root.GetName]: on_declare_war: Global Iron Shortage"
+	        	IF = {
+	        		LIMIT = { NOT = { any_other_country = {
+		        		check_variable = { resource_produced@steel > OAK.resource_produced@steel }
+		        	} } }
+	        		log = "[GetDateText]: [Root.GetName]: on_declare_war: Global Iron Shortage"
 		        	news_event = news.7
-					every_country = {
-						limit = { NOT = { OR = { tag = COA tag = OAK has_idea = closed_economy } } }
+
+		        	set_global_flag = Artificers.GlobalIronShortage
+					every_country = { # Dwarf
+						limit = { is_species_dwarf = yes NOT = {
+							OR = { tag = COA tag = OAK }
+							has_country_flag = species.dwarf_isolationism
+						} }
+						log = "[GetDateText]: [Root.GetName]: Effected DWARF: Global Iron Shortage"
+						country_event = { id = Artificers.0 days = 3 }
+					}
+					every_country = { # Non-Dwarf+Rhyniognatha
+						limit = { NOT = { OR = { tag = COA tag = OAK }
+							has_idea = closed_economy
+							is_species_dwarf = yes
+							is_species_rhyniognatha = yes
+						} }
+						log = "[GetDateText]: [Root.GetName]: Effected NON-DWARF: Global Iron Shortage"
 						country_event = { id = Artificers.1 days = 7 }
 					}
+
+	        		ELSE = {
+		        		LIMIT = { any_other_country = {
+			        		check_variable = { resource_produced@steel > OAK.resource_produced@steel }
+			        	} }
+	        			log = "[GetDateText]: [Root.GetName]: on_declare_war: Global Iron Reshuffle"
+	        			news_event = news.8
+	        		}
 	        	}
 	        }
 	    }

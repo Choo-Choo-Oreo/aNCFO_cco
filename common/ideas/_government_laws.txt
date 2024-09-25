@@ -14,13 +14,16 @@ ideas = {
 				}
 				IF = { LIMIT = { is_species_dwarf = yes }
 			        custom_trigger_tooltip = {
-			            tooltip = species.dwarf_isolationism_TT
+			            tooltip = species.dwarf_openness_TT
 			            has_country_flag = species.dwarf_openness
 			            has_war = no
 			        }
-					has_idea = tot_economic_mobilisation
-				    has_stability > 0.83
-				    has_war_support > 0.75
+			        custom_trigger_tooltip = {
+			            tooltip = species.dwarf_true_isolationism_TT
+			            NOT = { has_country_flag = species.dwarf_isolationism }
+			        }
+				    has_stability > 0.90
+				    has_war_support > 0.83
 				}
 				IF = { LIMIT = { is_species_elf = yes }
 				}
@@ -85,14 +88,14 @@ ideas = {
 				}
 				IF = { LIMIT = { is_species_dwarf = yes }
 			        custom_trigger_tooltip = {
-			            tooltip = species.dwarf_isolationism_TT
+			            tooltip = species.dwarf_openness_TT
 			            has_country_flag = species.dwarf_openness
 			            has_war = no
 			        }
-					OR = {
-						has_idea = war_economy
-						has_idea = tot_economic_mobilisation
-					}
+			        custom_trigger_tooltip = {
+			            tooltip = species.dwarf_true_isolationism_TT
+			            NOT = { has_country_flag = species.dwarf_isolationism }
+			        }
 				    has_stability > 0.83
 				    has_war_support > 0.75
 				}
@@ -179,10 +182,21 @@ ideas = {
 						} }
 					}
 				}
-				IF = { LIMIT = { is_species_dwarf = yes }
-				    has_stability > 0.75
-				    has_war_support > 0.67
-				}
+				IF = { LIMIT = { is_species_dwarf = yes } OR = {
+			        custom_trigger_tooltip = {
+			            tooltip = species.dwarf_isolationism_TT
+			            NOT = { has_country_flag = species.dwarf_openness }
+			            has_war = yes
+			        }
+			        custom_trigger_tooltip = {
+			            tooltip = species.dwarf_true_isolationism_TT
+			            NOT = { has_country_flag = species.dwarf_isolationism }
+			        }
+			        AND = {
+					    has_stability > 0.75
+					    has_war_support > 0.67
+			        }
+				} }
 				IF = { LIMIT = { is_species_elf = yes }
 					OR = {
 						AND = { has_war = yes
@@ -276,7 +290,11 @@ ideas = {
 						OR = { has_government = pluralism has_government = semidemocracy } }
 				}
 				IF = { LIMIT = { is_species_dwarf = yes }
-					always = yes
+			        custom_trigger_tooltip = {
+			            tooltip = species.dwarf_isolationism_TT
+			            NOT = { has_country_flag = species.dwarf_openness }
+			            has_war = yes
+			        }
 				}
 				IF = { LIMIT = { is_species_elf = yes }
 					has_war = yes
