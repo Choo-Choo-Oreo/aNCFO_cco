@@ -20,11 +20,18 @@ Text
 
 * species.dwarf_openness
 * species.dwarf_isolationism
+* divine_right_coring_num0
+* divine_right_coring_num1
+* divine_right_coring_num2
+* divine_right_coring_num3
+* divine_right_coring_num4
 
 ## Global Flags
 
 * Artificers.GlobalIronShortage
-* Artificers.GlobalIronSurplus
+* Artificers.GlobalIronSurplus0
+* Artificers.GlobalIronSurplus1
+* Artificers.GlobalIronSurplus2
 * grand_canal_purchase_processing
 * death_of_deed
 * reforms_from_deed

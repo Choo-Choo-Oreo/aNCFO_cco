@@ -1,29 +1,28 @@
 Artificers_iron_crisis_recovery = {
-	HIDDEN_EFFECT = { # FLAG
-		if = { LIMIT = { NOT = { has_global_flag = { flag = Artificers.GlobalIronSurplus value < 1 } } }
-			set_global_flag = { flag = Artificers.GlobalIronSurplus value = 1 }
-		}
-		else_if = { LIMIT = { NOT = { has_global_flag = { flag = Artificers.GlobalIronSurplus value < 2 } } }
-			modify_global_flag = { flag = Artificers.GlobalIronSurplus value = 2 }
-		}
-		else_if = { LIMIT = { NOT = { has_global_flag = { flag = Artificers.GlobalIronSurplus value < 3 } } }
-			modify_global_flag = { flag = Artificers.GlobalIronSurplus value = 3 }
-		}
-		IF = { LIMIT = { has_global_flag = { flag = Artificers.GlobalIronSurplus value > 2 } }
-			clr_global_flag = Artificers.GlobalIronShortage
-	        news_event = news.9
-			every_country = {
-				limit = { OR = {
-					has_idea = Artificers_idea_global_iron_shortage_0
-					has_idea = Artificers_idea_global_iron_shortage_1
-					has_idea = Artificers_idea_global_iron_shortage_2
-					has_idea = Artificers_idea_global_iron_shortage_3
-					has_idea = Artificers_idea_global_dwarven_iron_exports_0
-					has_idea = Artificers_idea_global_dwarven_iron_exports_1
-					has_idea = Artificers_idea_global_dwarven_iron_exports_2
-					has_idea = Artificers_idea_global_dwarven_iron_exports_3
-				} }
-				country_event = { id = Artificers.2 days = 7 }
+	IF = {
+		LIMIT = { NOT = { has_global_flag = Artificers.GlobalIronSurplus0 } }
+		set_global_flag = Artificers.GlobalIronSurplus0
+		ELSE = {
+			LIMIT = { NOT = { has_global_flag = Artificers.GlobalIronSurplus1 } }
+			set_global_flag = Artificers.GlobalIronSurplus1
+			ELSE = {
+				LIMIT = { NOT = { has_global_flag = Artificers.GlobalIronSurplus2 } }
+				set_global_flag = Artificers.GlobalIronSurplus2
+				clr_global_flag = Artificers.GlobalIronShortage
+		        news_event = news.9
+				every_country = {
+					limit = { OR = {
+						has_idea = Artificers_idea_global_iron_shortage_0
+						has_idea = Artificers_idea_global_iron_shortage_1
+						has_idea = Artificers_idea_global_iron_shortage_2
+						has_idea = Artificers_idea_global_iron_shortage_3
+						has_idea = Artificers_idea_global_dwarven_iron_exports_0
+						has_idea = Artificers_idea_global_dwarven_iron_exports_1
+						has_idea = Artificers_idea_global_dwarven_iron_exports_2
+						has_idea = Artificers_idea_global_dwarven_iron_exports_3
+					} }
+					country_event = { id = Artificers.2 days = 7 }
+				}
 			}
 		}
 	}
