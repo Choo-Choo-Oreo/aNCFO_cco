@@ -404,34 +404,37 @@ focus_tree = { # Merchant-Republicism
 			}
 		} # Branch VVV
 
-		focus = { # Southern Financial Assistance
-			id = MRC_southern_financial_help
-			icon = GFX_
-			prerequisite = { focus = MRC_foreign_intervention_focus }
-			relative_position_id = MRC_foreign_intervention_focus
-			x = -9
-			y = 1
-		
-			cost = 10
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = no
-		
-			available = {
-			}
-			bypass = {
-			}
-		
-			ai_will_do = {
-				factor = 2
-			}
+			focus = { # Southern Financial Assistance
+				id = MRC_southern_financial_help
+				icon = GFX_
+				prerequisite = { focus = MRC_foreign_intervention_focus }
+				relative_position_id = MRC_foreign_intervention_focus
+				x = -9
+				y = 1
+			
+				cost = 10
+				cancel_if_invalid = yes
+				continue_if_invalid = no
+				available_if_capitulated = no
+			
+				available = {
+				}
+				bypass = {
+				}
+			
+				ai_will_do = {
+					factor = 2
+				}
 
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_southern_financial_help"
-				add_war_support = 0.05
-				add_political_power = -50
+				completion_reward = {
+					log = "[GetDateText]: [Root.GetName]: Focus MRC_southern_financial_help"
+					add_war_support = 0.05
+					add_political_power = -50
+				}
 			}
-		}
+		# Southern Financial Assistance Start
+
+
 	# Progressive Neutrality Branch - Right
 		focus = { # Neutrality Focus Foreign Diplomacy
 			id = MRC_foreign_neutrality_focus
@@ -520,37 +523,37 @@ focus_tree = { # Merchant-Republicism
 			}
 		} # Branch VVV
 
-		focus = { # Southern Military Withdrawal
-			id = MRC_southern_retreat
-			icon = GFX_
-			prerequisite = { focus = MRC_foreign_neutrality_focus }
-			relative_position_id = MRC_foreign_neutrality_focus
-			x = 9
-			y = 1
-		
-			cost = 10
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = no
-		
-			available = {
-			}
-			bypass = {
-			}
-		
-			ai_will_do = {
-				factor = 2
-			}
+			focus = { # Southern Military Withdrawal
+				id = MRC_southern_retreat
+				icon = GFX_
+				prerequisite = { focus = MRC_foreign_neutrality_focus }
+				relative_position_id = MRC_foreign_neutrality_focus
+				x = 9
+				y = 1
+			
+				cost = 10
+				cancel_if_invalid = yes
+				continue_if_invalid = no
+				available_if_capitulated = no
+			
+				available = {
+				}
+				bypass = {
+				}
+			
+				ai_will_do = {
+					factor = 2
+				}
 
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_southern_retreat"
-				add_war_support = -0.05
-				add_stability = 0.10
-				132 = { owner = { transfer_state = 250 } }
-				133 = { owner = { transfer_state = 249 } }
-				173 = { owner = { transfer_state = 252 } }
+				completion_reward = {
+					log = "[GetDateText]: [Root.GetName]: Focus MRC_southern_retreat"
+					add_war_support = -0.05
+					add_stability = 0.10
+					132 = { owner = { transfer_state = 250 } }
+					133 = { owner = { transfer_state = 249 } }
+					173 = { owner = { transfer_state = 252 } }
+				}
 			}
-		}
 		# Southern Military Withdrawal Start
 			focus = { # Reform the government
 				id = MRC_reform_government
@@ -579,6 +582,7 @@ focus_tree = { # Merchant-Republicism
 					set_cosmetic_tag = MRC_deplutocratization
 				}
 			}
+
 	# Early Industry Development Branch
 		focus = { # Industral Buildup Policies
 			id = MRC_industral_buildup_actions
@@ -1729,7 +1733,7 @@ focus_tree = { # Merchant-Republicism
 			} # Branch VVV
 		# Wartime Contingencies Branch
 			focus = { # Wartime Contingencies
-				id = MRC_wartime_contingencies_focus
+				id = MRC_constitution_amendments
 				icon = GFX_focus_unknown_political
 				prerequisite = { focus = MRC_peninsula_integration focus = MRC_setup_collaboration }
 				relative_position_id = MRC_peninsula_integration
@@ -1751,17 +1755,127 @@ focus_tree = { # Merchant-Republicism
 				}
 
 				completion_reward = {
-					log = "[GetDateText]: [Root.GetName]: Focus MRC_wartime_contingencies_focus"
+					log = "[GetDateText]: [Root.GetName]: Focus MRC_constitution_amendments"
 					add_research_slot = 1
 				}
 			} # Branch VVV
+			
+				focus = { # Wartime Contingencies
+					id = MRC_wartime_contingencies_focus
+					icon = GFX_focus_unknown_political
+					prerequisite = { focus = MRC_constitution_amendments }
+					relative_position_id = MRC_constitution_amendments
+					x = 0
+					y = 1
+				
+					cost = 5
+					cancel_if_invalid = yes
+					continue_if_invalid = no
+					available_if_capitulated = no
+				
+					available = {
+					}
+					bypass = {
+					}
+				
+					ai_will_do = {
+						factor = 2
+					}
+
+					completion_reward = {
+						log = "[GetDateText]: [Root.GetName]: Focus MRC_wartime_contingencies_focus"
+					}
+				}
+
+				focus = { # Doge Wartime Powers
+					id = MRC_doge_wartime_powers
+					icon = GFX_focus_unknown_political
+					prerequisite = { focus = MRC_wartime_contingencies_focus }
+					relative_position_id = MRC_wartime_contingencies_focus
+					x = -1
+					y = 1
+				
+					cost = 5
+					cancel_if_invalid = yes
+					continue_if_invalid = no
+					available_if_capitulated = no
+				
+					available = {
+						OR = {
+							has_war = yes
+							AND = {
+								has_war_support > 0.99
+								threat > 0.49
+							}
+							AND = {
+								has_war_support > 0.74
+								threat > 0.74
+							}
+							AND = {
+								has_war_support > 0.49
+								threat > 0.99
+							}
+						}
+					}
+					bypass = {
+					}
+				
+					ai_will_do = {
+						factor = 2
+					}
+
+					completion_reward = {
+						log = "[GetDateText]: [Root.GetName]: Focus MRC_doge_wartime_powers"
+						conscripts_age_raise = yes
+						conscripts_foreign_raise = yes
+					}
+				} # Branch VVV
+
+					focus = { # Wartime Readiness
+						id = MRC_wartime_readiness
+						icon = GFX_focus_unknown_political
+						prerequisite = { focus = MRC_doge_wartime_powers }
+						relative_position_id = MRC_doge_wartime_powers
+						x = 0
+						y = 1
+					
+						cost = 5
+						cancel_if_invalid = yes
+						continue_if_invalid = no
+						available_if_capitulated = no
+					
+						available = {
+							OR = {
+								has_war = yes
+								AND = {
+									has_war_support > 0.99
+									threat > 0.74
+								}
+								AND = {
+									has_war_support > 0.74
+									threat > 0.99
+								}
+							}
+						}
+						bypass = {
+						}
+					
+						ai_will_do = {
+							factor = 2
+						}
+
+						completion_reward = {
+							log = "[GetDateText]: [Root.GetName]: Focus MRC_wartime_readiness"
+							army_readiness_raise = yes
+						}
+					}
 
 				focus = { # Wartime Government
 					id = MRC_wartime_government_forcus
 					icon = GFX_focus_unknown_political
 					prerequisite = { focus = MRC_wartime_contingencies_focus }
 					relative_position_id = MRC_wartime_contingencies_focus
-					x = 0
+					x = 1
 					y = 1
 				
 					cost = 5
@@ -1792,6 +1906,126 @@ focus_tree = { # Merchant-Republicism
 						}
 					}
 				}
+	# Left+Middle
+		focus = { # Light Industry Construction
+			id = MRC_light_industry_construction
+			icon = GFX_focus_unknown_political
+			mutually_exclusive = { focus = MRC_heavy_industry_construction }
+			prerequisite = { focus = MRC_dealing_with_guilds_focus }
+			relative_position_id = MRC_dealing_with_guilds_focus
+			x = -4
+			y = 1
+		
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+		
+			available = {
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				factor = 2
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_light_industry_construction"
+			}
+		}
+
+		focus = { # Heavy Industry Construction
+			id = MRC_heavy_industry_construction
+			icon = GFX_focus_unknown_political
+			mutually_exclusive = { focus = MRC_light_industry_construction }
+			prerequisite = { focus = MRC_southern_financial_help }
+			relative_position_id = MRC_dealing_with_guilds_focus
+			x = -6
+			y = 1
+		
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+		
+			available = {
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				factor = 2
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_heavy_industry_construction"
+			}
+		}
+	# Right+Middle
+		focus = { # Enshrine Civil Rights
+			id = MRC_enshrine_civil_rights
+			icon = GFX_focus_unknown_political
+			mutually_exclusive = { focus = MRC_doge_gracia_constitutional_reforms }
+			prerequisite = { focus = MRC_constitution_amendments }
+			relative_position_id = MRC_constitution_amendments
+			x = 4
+			y = 1
+		
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+		
+			available = {
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				factor = 2
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_enshrine_civil_rights"
+				swap_ideas = {
+					remove_idea = MRC_independence_constitucion
+					add_idea = MRC_independence_constitucion_deplutocratization
+				}
+			}
+		}
+
+		focus = { # Doge Gracia Constitutional Reforms
+			id = MRC_doge_gracia_constitutional_reforms
+			icon = GFX_focus_unknown_political
+			mutually_exclusive = { focus = MRC_enshrine_civil_rights }
+			prerequisite = { focus = MRC_reform_government }
+			relative_position_id = MRC_constitution_amendments
+			x = 6
+			y = 1
+		
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+		
+			available = {
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				factor = 2
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_enshrine_civil_rights"
+				swap_ideas = {
+					remove_idea = MRC_independence_constitucion
+					add_idea = MRC_independence_constitucion_deplutocratization
+				}
+			}
+		}
 	continuous_focus_position = { x = 750 y = 100 }
 }
 
@@ -2015,7 +2249,7 @@ focus_tree = { # Unity
 				NOT = { OR = { has_completed_focus = MRC_isabella_delfina_the_influencer has_completed_focus = MRC_gaius_divitiis_the_authority has_completed_focus = MRC_archard_vlad_the_warmonger } }
 			}
 			available = {
-				always = no
+				NOT = { always = yes }
 			}
 			bypass = {
 			}
@@ -2047,7 +2281,7 @@ focus_tree = { # Unity
 				NOT = { OR = { has_completed_focus = MRC_gabriel_strongheart_the_tradition has_completed_focus = MRC_gaius_divitiis_the_authority has_completed_focus = MRC_archard_vlad_the_warmonger } }
 			}
 			available = {
-				always = no
+				NOT = { always = yes }
 			}
 			bypass = {
 			}
@@ -2079,7 +2313,7 @@ focus_tree = { # Unity
 				NOT = { OR = { has_completed_focus = MRC_gabriel_strongheart_the_tradition has_completed_focus = MRC_isabella_delfina_the_influencer has_completed_focus = MRC_archard_vlad_the_warmonger } }
 			}
 			available = {
-				always = no
+				NOT = { always = yes }
 			}
 			bypass = {
 			}
@@ -2111,7 +2345,7 @@ focus_tree = { # Unity
 				NOT = { OR = { has_completed_focus = MRC_gabriel_strongheart_the_tradition has_completed_focus = MRC_isabella_delfina_the_influencer has_completed_focus = MRC_gaius_divitiis_the_authority } }
 			}
 			available = {
-				always = no
+				NOT = { always = yes }
 			}
 			bypass = {
 			}

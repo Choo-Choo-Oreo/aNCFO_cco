@@ -92,6 +92,7 @@
 	-- NRailwayGun
 
 	-- NTrade
+		NDefines.NTrade.BASE_LAND_TRADE_RANGE = 200 -- 5x lower than base.
 
 	-- NAI
 		NDefines.NAI.WANTED_CARRIER_PLANES_PER_CARRIER_CAPACITY_FACTOR = 3.0 -- Scales how many carrier planes the AI want per carrier deck space.
