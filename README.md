@@ -15,6 +15,9 @@ Other Mod Devs/Modders the have ANY work added to this mod.
 	- Equestria at War Team Mod Airtech+
 	https://steamcommunity.com/sharedfiles/filedetails/?id=1826643372
 
+	-MrPunk Mod All
+	https://steamcommunity.com/sharedfiles/filedetails/?id=2993766165&searchtext=navy+rework
+
 	-Elouda Mod Graphics
 	https://steamcommunity.com/sharedfiles/filedetails/?id=714919100
 	https://steamcommunity.com/sharedfiles/filedetails/?id=1687056790

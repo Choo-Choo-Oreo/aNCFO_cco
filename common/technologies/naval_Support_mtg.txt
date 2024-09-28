@@ -1,128 +1,54 @@
 technologies = {
-		# Tech Pos
-	@1816 = -1
-	@1820 = 2
-	@1824 = 5 # Also 1822/1823
-	@1826 = 8
-	@1828 = 11
-	@1830 = 14
-	@1832 = 17
-	@1834 = 20
-	@1836 = 23
-	@1838 = 26
-	@1840 = 29
-	@1842 = 31
-		# Tech Date
-	@year_1720 = 1720
-	@year_1722 = 1722
-	@year_1724 = 1724
-	@year_1726 = 1726
-	@year_1728 = 1728
-	@year_1730 = 1730
-	@year_1732 = 1732
-	@year_1734 = 1734
-	@year_1736 = 1736
-	@year_1738 = 1738
-	@year_1740 = 1740
-	@year_1742 = 1742
+	 ##  ###  #   #  ##  #   # ### #  # ###  ##
+	#  # #  # ## ## #  # ## ## #   ## #  #  #
+	#### ###  # # # #### # # # ##  # ##  #   #
+	#  # #  # #   # #  # #   # #   #  #  #    #
+	#  # #  # #   # #  # #   # ### #  #  #  ##
 
-	early_engine = { # 1820
-		
+	basic_battery = {
+
 		research_cost = 1
 
-		start_year = @year_1720
+		start_year = 1714
 
 		path = {
-			leads_to_tech = improved_engine
+			leads_to_tech = multi_mounted_battery
 			research_cost_coeff = 1
 		}
-		
-		path = {
-			leads_to_tech = early_diesel
-			research_cost_coeff = 1
+		on_research_complete = {
+			custom_effect_tooltip = light_battery_advice_tt
+			custom_effect_tooltip = medium_battery_advice_tt
+			custom_effect_tooltip = heavy_battery_advice_tt
+			custom_effect_tooltip = secondary_battery_advice_tt
 		}
 
-		enable_equipment_modules = { 
-			nrm_capital_engine_S1_005
-			nrm_capital_engine_S1_010
-			nrm_capital_engine_S1_015
-			nrm_capital_engine_S1_020
-			nrm_capital_engine_S1_025
-			nrm_capital_engine_S1_030
-			nrm_capital_engine_S1_035
-			nrm_capital_engine_S1_040
-			nrm_capital_engine_S1_045
-			nrm_capital_engine_S1_050
-			nrm_capital_engine_S1_055
-			nrm_capital_engine_S1_060
-			nrm_capital_engine_S1_065
-			nrm_capital_engine_S1_070
-			nrm_capital_engine_S1_075
-			nrm_capital_engine_S1_080
-			nrm_capital_engine_S1_090
-			nrm_capital_engine_S1_100
-			nrm_capital_engine_S1_110
-			nrm_capital_engine_S1_120
-			nrm_capital_engine_S1_130
-			nrm_capital_engine_S1_140
-			nrm_capital_engine_S1_150
-			nrm_capital_engine_S1_160
-			nrm_capital_engine_S1_170
-			nrm_capital_engine_S1_180
+		enable_equipment_modules = {
+			ship_light_battery_1
+			ship_medium_battery_1_double
+			ship_medium_battery_1_single
+			ship_light_medium_battery_1_double
+			ship_light_medium_battery_1_single
+			ship_heavy_battery_1
+			ship_heavy_battery_big_1
+			ship_heavy_battery_small_1
+			ship_secondaries_1
+			ship_civilian_light_battery_1
+			ship_anti_air_1_h
 			
-			nrm_cruiser_engine_S1_005
-			nrm_cruiser_engine_S1_010
-			nrm_cruiser_engine_S1_015
-			nrm_cruiser_engine_S1_020
-			nrm_cruiser_engine_S1_025
-			nrm_cruiser_engine_S1_030
-			nrm_cruiser_engine_S1_035
-			nrm_cruiser_engine_S1_040
-			nrm_cruiser_engine_S1_045
-			nrm_cruiser_engine_S1_050
-			nrm_cruiser_engine_S1_055
-			nrm_cruiser_engine_S1_060
-			nrm_cruiser_engine_S1_065
-			nrm_cruiser_engine_S1_070
-			nrm_cruiser_engine_S1_075
-			nrm_cruiser_engine_S1_080
-			nrm_cruiser_engine_S1_090
-			nrm_cruiser_engine_S1_100
-			nrm_cruiser_engine_S1_110
-			nrm_cruiser_engine_S1_120
-			nrm_cruiser_engine_S1_130
-			nrm_cruiser_engine_S1_140
-			
-			nrm_destroyer_engine_S1_005
-			nrm_destroyer_engine_S1_010
-			nrm_destroyer_engine_S1_015
-			nrm_destroyer_engine_S1_020
-			nrm_destroyer_engine_S1_025
-			nrm_destroyer_engine_S1_030
-			nrm_destroyer_engine_S1_035
-			nrm_destroyer_engine_S1_040
-			nrm_destroyer_engine_S1_045
-			nrm_destroyer_engine_S1_050
-			nrm_destroyer_engine_S1_055
-			nrm_destroyer_engine_S1_060
-			
-			nrm_range_capital_3h
-			nrm_range_capital_4
-			nrm_range_cruiser_3h
-			nrm_range_cruiser_4
-			nrm_range_destroyer_3h
-			nrm_range_destroyer_4
+			# ship_ap_shell_1
+			# ship_ap_shell_2
+			# ship_ap_shell_3
 		}
-		
+
 
 
 		folder = {
 			name = mtgnavalsupportfolder
-			position = { x = 0 y = @1820 }
+			position = { x = 0 y = 1 }
 		}
-		
+
 		ai_will_do = {
-			factor = 10
+			factor = 1
 			modifier = {
 				OR = {
 					has_tech = early_ship_hull_light
@@ -132,458 +58,1336 @@ technologies = {
 				factor = 500
 			}
 		}
-		
+
 		categories = {
 			naval_equipment
+			ship_modules_tech
+			cat_ship_light_battery
+			cat_ship_medium_battery
+			cat_ship_heavy_battery
+			mio_cat_tech_all_capital_ship_and_modules
+			mio_cat_tech_all_screen_ship_and_modules
+			mio_cat_tech_all_cruiser_and_modules
+			mio_cat_tech_all_destroyer_and_modules
 		}
 	}
-	improved_engine = { # 1830
-		
-		research_cost = 1.5
 
-		start_year = @year_1730
+	multi_mounted_battery = {
+
+		research_cost = 1
+
+		start_year = 1718
 
 		path = {
-			leads_to_tech = advanced_engine
+			leads_to_tech = basic_light_battery
+			research_cost_coeff = 1
+		}
+		on_research_complete = {
+			custom_effect_tooltip = light_battery_advice_tt
+			custom_effect_tooltip = medium_battery_advice_tt
+			custom_effect_tooltip = heavy_battery_advice_tt
+			custom_effect_tooltip = secondary_battery_advice_tt
+		}
+
+		path = {
+			leads_to_tech = basic_medium_battery
 			research_cost_coeff = 1
 		}
 
-		enable_equipment_modules = { 
-			nrm_capital_engine_S2_005
-			nrm_capital_engine_S2_010
-			nrm_capital_engine_S2_015
-			nrm_capital_engine_S2_020
-			nrm_capital_engine_S2_025
-			nrm_capital_engine_S2_030
-			nrm_capital_engine_S2_035
-			nrm_capital_engine_S2_040
-			nrm_capital_engine_S2_045
-			nrm_capital_engine_S2_050
-			nrm_capital_engine_S2_055
-			nrm_capital_engine_S2_060
-			nrm_capital_engine_S2_065
-			nrm_capital_engine_S2_070
-			nrm_capital_engine_S2_075
-			nrm_capital_engine_S2_080
-			nrm_capital_engine_S2_090
-			nrm_capital_engine_S2_100
-			nrm_capital_engine_S2_110
-			nrm_capital_engine_S2_120
-			nrm_capital_engine_S2_130
-			nrm_capital_engine_S2_140
-			nrm_capital_engine_S2_150
-			nrm_capital_engine_S2_160
-			nrm_capital_engine_S2_170
-			nrm_capital_engine_S2_180
-			nrm_capital_engine_S2_190
-			nrm_capital_engine_S2_200
-			nrm_capital_engine_S2_210
-			
-			nrm_cruiser_engine_S2_005
-			nrm_cruiser_engine_S2_010
-			nrm_cruiser_engine_S2_015
-			nrm_cruiser_engine_S2_020
-			nrm_cruiser_engine_S2_025
-			nrm_cruiser_engine_S2_030
-			nrm_cruiser_engine_S2_035
-			nrm_cruiser_engine_S2_040
-			nrm_cruiser_engine_S2_045
-			nrm_cruiser_engine_S2_050
-			nrm_cruiser_engine_S2_055
-			nrm_cruiser_engine_S2_060
-			nrm_cruiser_engine_S2_065
-			nrm_cruiser_engine_S2_070
-			nrm_cruiser_engine_S2_075
-			nrm_cruiser_engine_S2_080
-			nrm_cruiser_engine_S2_090
-			nrm_cruiser_engine_S2_100
-			nrm_cruiser_engine_S2_110
-			nrm_cruiser_engine_S2_120
-			nrm_cruiser_engine_S2_130
-			nrm_cruiser_engine_S2_140
-			nrm_cruiser_engine_S2_150
-			nrm_cruiser_engine_S2_160
-			
-			nrm_destroyer_engine_S2_005
-			nrm_destroyer_engine_S2_010
-			nrm_destroyer_engine_S2_015
-			nrm_destroyer_engine_S2_020
-			nrm_destroyer_engine_S2_025
-			nrm_destroyer_engine_S2_030
-			nrm_destroyer_engine_S2_035
-			nrm_destroyer_engine_S2_040
-			nrm_destroyer_engine_S2_045
-			nrm_destroyer_engine_S2_050
-			nrm_destroyer_engine_S2_055
-			nrm_destroyer_engine_S2_060
-			nrm_destroyer_engine_S2_065
-			nrm_destroyer_engine_S2_070
-			nrm_destroyer_engine_S2_075
-			nrm_destroyer_engine_S2_080
+		path = {
+			leads_to_tech = basic_heavy_battery
+			research_cost_coeff = 1
+		}
+
+		path = {
+			leads_to_tech = ship_rocket_artillery
+			research_cost_coeff = 1
 		}
 		
+		enable_equipment_modules = {
+			ship_light_battery_1_double
+			ship_medium_battery_1
+			ship_light_medium_battery_1
+			ship_heavy_battery_1_triple
+			ship_heavy_battery_big_1_triple
+			ship_heavy_battery_small_1_triple
+			ship_heavy_battery_1_quad
+			ship_heavy_battery_big_1_quad
+			ship_heavy_battery_small_1_quad
+
+			ship_light_weight_shell
+		}
+
 
 
 		folder = {
 			name = mtgnavalsupportfolder
-			position = { x = 0 y = @1830 }
+			position = { x = 0 y = 4 }
 		}
-		
+
 		ai_will_do = {
-			factor = 20
+			factor = 1
 			modifier = {
 				OR = {
-					has_tech = improved_ship_hull_light
-					has_tech = improved_ship_hull_cruiser
-					has_tech = improved_ship_hull_heavy
+					has_tech = early_ship_hull_light
+					has_tech = early_ship_hull_cruiser
+					has_tech = early_ship_hull_heavy
 				}
-				factor = 5
+				factor = 500
 			}
 		}
-		
+
 		categories = {
 			naval_equipment
+			ship_modules_tech
+			cat_ship_light_battery
+			cat_ship_medium_battery
+			cat_ship_heavy_battery
 		}
 	}
-	advanced_engine = { # 1834
-		
-		research_cost = 2
 
-		start_year = @year_1734
+	basic_light_battery = {
 
-		enable_equipment_modules = { 
-			nrm_capital_engine_S3_005
-			nrm_capital_engine_S3_010
-			nrm_capital_engine_S3_015
-			nrm_capital_engine_S3_020
-			nrm_capital_engine_S3_025
-			nrm_capital_engine_S3_030
-			nrm_capital_engine_S3_035
-			nrm_capital_engine_S3_040
-			nrm_capital_engine_S3_045
-			nrm_capital_engine_S3_050
-			nrm_capital_engine_S3_055
-			nrm_capital_engine_S3_060
-			nrm_capital_engine_S3_065
-			nrm_capital_engine_S3_070
-			nrm_capital_engine_S3_075
-			nrm_capital_engine_S3_080
-			nrm_capital_engine_S3_090
-			nrm_capital_engine_S3_100
-			nrm_capital_engine_S3_110
-			nrm_capital_engine_S3_120
-			nrm_capital_engine_S3_130
-			nrm_capital_engine_S3_140
-			nrm_capital_engine_S3_150
-			nrm_capital_engine_S3_160
-			nrm_capital_engine_S3_170
-			nrm_capital_engine_S3_180
-			nrm_capital_engine_S3_190
-			nrm_capital_engine_S3_200
-			nrm_capital_engine_S3_210
-			nrm_capital_engine_S3_220
-			nrm_capital_engine_S3_230
-			nrm_capital_engine_S3_240
-			
-			nrm_cruiser_engine_S3_005
-			nrm_cruiser_engine_S3_010
-			nrm_cruiser_engine_S3_015
-			nrm_cruiser_engine_S3_020
-			nrm_cruiser_engine_S3_025
-			nrm_cruiser_engine_S3_030
-			nrm_cruiser_engine_S3_035
-			nrm_cruiser_engine_S3_040
-			nrm_cruiser_engine_S3_045
-			nrm_cruiser_engine_S3_050
-			nrm_cruiser_engine_S3_055
-			nrm_cruiser_engine_S3_060
-			nrm_cruiser_engine_S3_065
-			nrm_cruiser_engine_S3_070
-			nrm_cruiser_engine_S3_075
-			nrm_cruiser_engine_S3_080
-			nrm_cruiser_engine_S3_090
-			nrm_cruiser_engine_S3_100
-			nrm_cruiser_engine_S3_110
-			nrm_cruiser_engine_S3_120
-			nrm_cruiser_engine_S3_130
-			nrm_cruiser_engine_S3_140
-			nrm_cruiser_engine_S3_150
-			nrm_cruiser_engine_S3_160
-			nrm_cruiser_engine_S3_170
-			nrm_cruiser_engine_S3_180
-			
-			nrm_destroyer_engine_S3_005
-			nrm_destroyer_engine_S3_010
-			nrm_destroyer_engine_S3_015
-			nrm_destroyer_engine_S3_020
-			nrm_destroyer_engine_S3_025
-			nrm_destroyer_engine_S3_030
-			nrm_destroyer_engine_S3_035
-			nrm_destroyer_engine_S3_040
-			nrm_destroyer_engine_S3_045
-			nrm_destroyer_engine_S3_050
-			nrm_destroyer_engine_S3_055
-			nrm_destroyer_engine_S3_060
-			nrm_destroyer_engine_S3_065
-			nrm_destroyer_engine_S3_070
-			nrm_destroyer_engine_S3_075
-			nrm_destroyer_engine_S3_080
-			nrm_destroyer_engine_S3_090
-			nrm_destroyer_engine_S3_100
+		research_cost = 0.5
+
+		start_year = 1724
+
+		path = {
+			leads_to_tech = basic_light_shell
+			research_cost_coeff = 1
 		}
-		
+		path = {
+			leads_to_tech = basic_dp_light_battery
+			research_cost_coeff = 1
+		}
+
+		on_research_complete = {
+			custom_effect_tooltip = light_battery_advice_tt
+		}
+
+		enable_equipment_modules = {
+			ship_light_battery_2
+			ship_light_battery_2_double
+			dp_light_battery_1
+			dp_light_battery_1_single
+			dp_ship_secondaries_1
+			dp_ship_secondaries_1_bb
+			ship_anti_air_2_h
+		}
 
 
 		folder = {
 			name = mtgnavalsupportfolder
-			position = { x = 0 y = @1834 }
+			position = { x = -6 y = 7 }
 		}
-		
+
 		ai_will_do = {
-			factor = 20
+			factor = 1
 			modifier = {
-				OR = {
-					has_tech = advanced_ship_hull_cruiser
-					has_tech = advanced_ship_hull_heavy
-				}
+				has_tech = basic_ship_hull_light
+				factor = 20
+			}
+		}
+
+		categories = {
+			naval_equipment
+			ship_modules_tech
+			cat_ship_light_battery
+			mio_cat_tech_all_capital_ship_and_modules
+			mio_cat_tech_all_screen_ship_and_modules
+			mio_cat_tech_all_cruiser_and_modules
+			mio_cat_tech_all_destroyer_and_modules
+		}
+	}
+
+	basic_light_shell = {
+		
+		research_cost = 0.5
+
+		start_year = 1736
+
+		path = {
+			leads_to_tech = improved_light_battery
+			research_cost_coeff = 1
+		}
+
+
+		destroyer = {
+			lg_attack = 0.05
+			lg_armor_piercing = 0.05
+		}
+		light_cruiser = {
+			lg_attack = 0.05
+			lg_armor_piercing = 0.05
+		}
+		heavy_cruiser = {
+			lg_attack = 0.05
+			lg_armor_piercing = 0.05
+		}
+		medium_cruiser = {
+			lg_attack = 0.05
+			lg_armor_piercing = 0.05
+		}
+		##! armored_cruiser = {
+		##! 	lg_attack = 0.05
+		##! 	lg_armor_piercing = 0.05
+		##! }
+		battleship = {
+			lg_attack = 0.05
+			lg_armor_piercing = 0.05
+		}
+		battle_cruiser = {
+			lg_attack = 0.05
+			lg_armor_piercing = 0.05
+		}
+		carrier = {
+			lg_attack = 0.05
+			lg_armor_piercing = 0.05
+		}
+		SH_battleship = {
+			lg_attack = 0.05
+			lg_armor_piercing = 0.05
+		}
+		battlecarrier = {
+			lg_attack = 0.05
+			lg_armor_piercing = 0.05
+		}
+
+		folder = {
+			name = mtgnavalsupportfolder
+			position = { x = -6 y = 10 }
+		}
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				has_tech = interwar_ship_hull_light
 				factor = 5
 			}
+		}
+
+		categories = {
+			naval_equipment
+			ship_modules_tech
+			mio_cat_tech_all_screen_ship_and_modules
+			mio_cat_tech_all_destroyer_and_modules
+		}
+	}
+
+	improved_light_battery = {
+
+		research_cost = 0.5
+
+		start_year = 1739
+
+		path = {
+			leads_to_tech = improved_light_shell
+			research_cost_coeff = 1
+		}
+
+		on_research_complete = {
+			custom_effect_tooltip = light_battery_advice_tt
+		}
+
+		enable_equipment_modules = {
+			ship_light_battery_3
+			ship_light_battery_3_double
+			ship_anti_air_3_h
+		}
+
+		folder = {
+			name = mtgnavalsupportfolder
+			position = { x = -6 y = 13 }
+		}
+
+		ai_will_do = {
+			factor = 1
 			modifier = {
-				tag = MRC
+				has_tech = improved_ship_hull_light
+				factor = 20
+			}
+		}
+
+		categories = {
+			naval_equipment
+			ship_modules_tech
+			cat_ship_light_battery
+			mio_cat_tech_all_screen_ship_and_modules
+			mio_cat_tech_all_destroyer_and_modules
+		}
+	}
+
+	improved_light_shell = {
+
+		research_cost = 0.5
+
+		start_year = 1742
+
+		path = {
+			leads_to_tech = advanced_light_battery
+			research_cost_coeff = 1
+		}
+
+		destroyer = {
+			lg_attack = 0.05
+			lg_armor_piercing = 0.05
+		}
+		light_cruiser = {
+			lg_attack = 0.05
+			lg_armor_piercing = 0.05
+		}
+		heavy_cruiser = {
+			lg_attack = 0.05
+			lg_armor_piercing = 0.05
+		}
+		medium_cruiser = {
+			lg_attack = 0.05
+			lg_armor_piercing = 0.05
+		}
+		##! armored_cruiser = {
+		##! 	lg_attack = 0.05
+		##! 	lg_armor_piercing = 0.05
+		##! }
+		battleship = {
+			lg_attack = 0.05
+			lg_armor_piercing = 0.05
+		}
+		battle_cruiser = {
+			lg_attack = 0.05
+			lg_armor_piercing = 0.05
+		}
+		carrier = {
+			lg_attack = 0.05
+			lg_armor_piercing = 0.05
+		}
+		SH_battleship = {
+			lg_attack = 0.05
+			lg_armor_piercing = 0.05
+		}
+		battlecarrier = {
+			lg_attack = 0.05
+			lg_armor_piercing = 0.05
+		}
+
+		folder = {
+			name = mtgnavalsupportfolder
+			position = { x = -6 y = 16 }
+		}
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				has_tech = improved_ship_hull_light
+				factor = 2
+			}
+			modifier = {
+				has_war = yes
+				factor = 5
+			}
+		}
+
+		categories = {
+			naval_equipment
+			ship_modules_tech
+			mio_cat_tech_all_screen_ship_and_modules
+			mio_cat_tech_all_destroyer_and_modules
+		}
+	}
+
+	advanced_light_battery = {
+
+		research_cost = 0.5
+
+		start_year = 1744
+
+		enable_equipment_modules = {
+			ship_light_battery_4
+			ship_light_battery_4_double
+			ship_anti_air_4_h
+		}
+
+		on_research_complete = {
+			custom_effect_tooltip = light_battery_advice_tt
+		}
+
+		path = {
+			leads_to_tech = unmanned_gun_turret
+			research_cost_coeff = 1
+		}
+
+		folder = {
+			name = mtgnavalsupportfolder
+			position = { x = -6 y = 19 }
+		}
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				has_tech = advanced_ship_hull_light
+				factor = 20
+			}
+		}
+
+		categories = {
+			naval_equipment
+			ship_modules_tech
+			cat_ship_light_battery
+			mio_cat_tech_all_screen_ship_and_modules
+			mio_cat_tech_all_destroyer_and_modules
+		}
+	}
+
+	basic_medium_battery = {
+
+		research_cost = 0.75
+
+		start_year = 1736
+
+
+		on_research_complete = {
+			custom_effect_tooltip = medium_battery_advice_tt
+			custom_effect_tooltip = secondary_battery_advice_tt
+		}
+
+		path = {
+			leads_to_tech = basic_medium_shell
+			research_cost_coeff = 1
+		}
+
+		enable_equipment_modules = {
+			ship_medium_battery_2
+			ship_medium_battery_2_double
+			ship_medium_battery_2_single
+			ship_light_medium_battery_2
+			ship_light_medium_battery_2_double
+			ship_light_medium_battery_2_single
+			ship_medium_heavy_battery_1
+			ship_medium_heavy_battery_1_double
+			ship_secondaries_2
+
+			sub_battery_1
+		}
+
+
+
+		folder = {
+			name = mtgnavalsupportfolder
+			position = { x = 0 y = 7 }
+		}
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				has_tech = interwar_ship_hull_cruiser
+				factor = 10
+			}
+		}
+
+		categories = {
+			naval_equipment
+			ship_modules_tech
+			cat_ship_medium_battery
+			mio_cat_tech_all_cruiser_and_modules
+		}
+	}
+
+	basic_medium_shell = {
+
+		research_cost = 0.5
+
+		start_year = 1736
+
+		path = {
+			leads_to_tech = improved_medium_battery
+			research_cost_coeff = 1
+		}
+		
+
+		light_cruiser = {
+			lg_attack = 0.05
+			lg_armor_piercing = 0.05
+		}
+		heavy_cruiser = {
+			hg_attack = 0.05
+			hg_armor_piercing = 0.05
+		}
+		medium_cruiser = {
+			hg_attack = 0.05
+			hg_armor_piercing = 0.05
+		}
+
+		folder = {
+			name = mtgnavalsupportfolder
+			position = { x =0 y = 10 }
+		}
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				has_tech = interwar_ship_hull_cruiser
+				has_navy_size = {
+					archetype = ship_hull_cruiser
+					size > 5
+				}
+				factor = 7
+			}
+		}
+
+		categories = {
+			naval_equipment
+			mio_cat_tech_all_cruiser_and_modules
+		}
+	}
+
+	improved_medium_battery = {
+
+		research_cost = 0.75
+
+		start_year = 1739
+
+		path = {
+			leads_to_tech = improved_medium_shell
+			research_cost_coeff = 1
+		}
+		
+		
+		on_research_complete = {
+			custom_effect_tooltip = medium_battery_advice_tt
+		}
+		enable_equipment_modules = {
+			ship_medium_battery_3
+			ship_medium_battery_3_double
+			ship_medium_battery_3_single
+			ship_light_medium_battery_3
+			ship_light_medium_battery_3_double
+			ship_light_medium_battery_3_single
+			
+			ship_secondaries_3
+			
+		}
+
+
+
+		folder = {
+			name = mtgnavalsupportfolder
+			position = { x = 0 y = 13 }
+		}
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				has_tech = improved_ship_hull_cruiser
+				factor = 20
+			}
+		}
+
+		categories = {
+			naval_equipment
+			ship_modules_tech
+			cat_ship_medium_battery
+			mio_cat_tech_all_cruiser_and_modules
+		}
+	}
+
+	improved_medium_shell = {
+
+		research_cost = 0.5
+
+		start_year = 1742
+
+		path = {
+			leads_to_tech = advanced_medium_battery
+			research_cost_coeff = 1
+		}
+
+		path = {
+			leads_to_tech = basic_dp_medium_battery
+			research_cost_coeff = 1
+		}
+
+		light_cruiser = {
+			lg_attack = 0.05
+			lg_armor_piercing = 0.05
+		}
+		heavy_cruiser = {
+			hg_attack = 0.05
+			hg_armor_piercing = 0.05
+		}
+		medium_cruiser = {
+			hg_attack = 0.05
+			hg_armor_piercing = 0.05
+		}
+
+
+		folder = {
+			name = mtgnavalsupportfolder
+			position = { x = 0 y = 16 }
+		}
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				has_tech = improved_ship_hull_cruiser
+				factor = 3
+			}
+			modifier = {
+				has_war = yes
+				factor = 3
+			}
+		}
+
+		categories = {
+			naval_equipment
+			mio_cat_tech_all_cruiser_and_modules
+		}
+	}
+
+	advanced_medium_battery = {
+
+		research_cost = 0.75
+
+		start_year = 1744
+
+		enable_equipment_modules = {
+			ship_medium_battery_4
+			ship_medium_battery_4_double
+			ship_medium_battery_4_single
+			ship_light_medium_battery_4
+			ship_light_medium_battery_4_double
+			ship_light_medium_battery_4_single
+			ship_medium_heavy_battery_2
+			ship_medium_heavy_battery_2_double
+			ship_secondaries_4
+		}
+		on_research_complete = {
+			custom_effect_tooltip = medium_battery_advice_tt
+		}
+
+		path = {
+			leads_to_tech = unmanned_gun_turret
+			research_cost_coeff = 1
+		}
+
+		folder = {
+			name = mtgnavalsupportfolder
+			position = { x = 0 y = 19 }
+		}
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				has_tech = advanced_ship_hull_cruiser
+				factor = 7
+			}
+		}
+
+		categories = {
+			naval_equipment
+			ship_modules_tech
+			cat_ship_medium_battery
+			mio_cat_tech_all_cruiser_and_modules
+		}
+	}
+
+	basic_heavy_battery = {
+
+		research_cost = 1
+
+		start_year = 1724
+
+		path = {
+			leads_to_tech = basic_heavy_shell
+			research_cost_coeff = 1
+		}
+		path = {
+			leads_to_tech = basic_super_heavy_battery
+			research_cost_coeff = 1
+		}
+
+		enable_equipment_modules = {
+			ship_heavy_battery_2
+			ship_heavy_battery_2_triple
+			ship_heavy_battery_2_quad
+		}
+
+		on_research_complete = {
+			custom_effect_tooltip = heavy_battery_advice_tt
+		}
+
+		folder = {
+			name = mtgnavalsupportfolder
+			position = { x = 6 y = 7 }
+		}
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				has_tech = basic_ship_hull_heavy
+				factor = 20
+			}
+			modifier = {
+				OR = {
+					tag = MJU
+					tag = EPY
+				}
 				factor = 2
 			}
 		}
-		
+
 		categories = {
 			naval_equipment
+			ship_modules_tech
+			cat_ship_heavy_battery
+			mio_cat_tech_all_capital_ship_and_modules
 		}
 	}
 
-	early_diesel = { # 1828
-		
-		research_cost = 1.5
+	improved_heavy_battery = {
 
-		start_year = @year_1728
-
-		path = {
-			leads_to_tech = improved_diesel
-			research_cost_coeff = 1
-		}
-
-		enable_equipment_modules = { 
-			nrm_capital_engine_D1_005
-			nrm_capital_engine_D1_010
-			nrm_capital_engine_D1_015
-			nrm_capital_engine_D1_020
-			nrm_capital_engine_D1_025
-			nrm_capital_engine_D1_030
-			nrm_capital_engine_D1_035
-			nrm_capital_engine_D1_040
-			nrm_capital_engine_D1_045
-			nrm_capital_engine_D1_050
-			nrm_capital_engine_D1_055
-			nrm_capital_engine_D1_060
-			nrm_capital_engine_D1_065
-			nrm_capital_engine_D1_070
-			nrm_capital_engine_D1_075
-			nrm_capital_engine_D1_080
-			nrm_capital_engine_D1_090
-			nrm_capital_engine_D1_100
-			
-			nrm_cruiser_engine_D1_005
-			nrm_cruiser_engine_D1_010
-			nrm_cruiser_engine_D1_015
-			nrm_cruiser_engine_D1_020
-			nrm_cruiser_engine_D1_025
-			nrm_cruiser_engine_D1_030
-			nrm_cruiser_engine_D1_035
-			nrm_cruiser_engine_D1_040
-			nrm_cruiser_engine_D1_045
-			nrm_cruiser_engine_D1_050
-			nrm_cruiser_engine_D1_055
-			nrm_cruiser_engine_D1_060
-			nrm_cruiser_engine_D1_065
-			nrm_cruiser_engine_D1_070
-			nrm_cruiser_engine_D1_075
-			nrm_cruiser_engine_D1_080
-			
-			nrm_destroyer_engine_D1_005
-			nrm_destroyer_engine_D1_010
-			nrm_destroyer_engine_D1_015
-			nrm_destroyer_engine_D1_020
-			nrm_destroyer_engine_D1_025
-			nrm_destroyer_engine_D1_030
-			nrm_destroyer_engine_D1_035
-			nrm_destroyer_engine_D1_040
-			
-			nrm_submarine_engine_D1_04
-			nrm_submarine_engine_D1_06
-			nrm_submarine_engine_D1_08
-			nrm_submarine_engine_D1_10
-			nrm_submarine_engine_D1_12
-			nrm_submarine_engine_D1_16
-			nrm_submarine_engine_D1_20
-			nrm_submarine_engine_D1_25
-			nrm_submarine_engine_D1_30
-			nrm_submarine_engine_D1_35
-			nrm_submarine_engine_D1_40
-			nrm_submarine_engine_D1_45
-			nrm_submarine_engine_D1_50
-			nrm_submarine_engine_D1_55
-			nrm_submarine_engine_D1_60
-			nrm_submarine_engine_D1_70
-			nrm_submarine_engine_D1_80
-			
-			nrm_range_submarine_3h
-			nrm_range_submarine_4
-
-			nrm_range_submarine_cruiser_3h
-			nrm_range_submarine_cruiser_4
-		}
-		
-
-
-		folder = {
-			name = mtgnavalsupportfolder
-			position = { x = 1 y = @1828 }
-		}
-		
-		ai_will_do = {
-			factor = 10
-			modifier = {
-				OR = {
-					tag = MJU
-				}
-				factor = 10
-			}
-		}
-		
-		categories = {
-			naval_equipment
-		}
-	}
-	improved_diesel = { # 1834
-		
-		research_cost = 1.5
-
-		start_year = @year_1734
-
-		path = {
-			leads_to_tech = improved_diesel
-			research_cost_coeff = 1
-		}
-
-		enable_equipment_modules = { 
-			nrm_capital_engine_D2_005
-			nrm_capital_engine_D2_010
-			nrm_capital_engine_D2_015
-			nrm_capital_engine_D2_020
-			nrm_capital_engine_D2_025
-			nrm_capital_engine_D2_030
-			nrm_capital_engine_D2_035
-			nrm_capital_engine_D2_040
-			nrm_capital_engine_D2_045
-			nrm_capital_engine_D2_050
-			nrm_capital_engine_D2_055
-			nrm_capital_engine_D2_060
-			nrm_capital_engine_D2_065
-			nrm_capital_engine_D2_070
-			nrm_capital_engine_D2_075
-			nrm_capital_engine_D2_080
-			nrm_capital_engine_D2_090
-			nrm_capital_engine_D2_100
-			nrm_capital_engine_D2_110
-			nrm_capital_engine_D2_120
-			nrm_capital_engine_D2_130
-			nrm_capital_engine_D2_140
-			nrm_capital_engine_D2_150
-
-			nrm_cruiser_engine_D2_005
-			nrm_cruiser_engine_D2_010
-			nrm_cruiser_engine_D2_015
-			nrm_cruiser_engine_D2_020
-			nrm_cruiser_engine_D2_025
-			nrm_cruiser_engine_D2_030
-			nrm_cruiser_engine_D2_035
-			nrm_cruiser_engine_D2_040
-			nrm_cruiser_engine_D2_045
-			nrm_cruiser_engine_D2_050
-			nrm_cruiser_engine_D2_055
-			nrm_cruiser_engine_D2_060
-			nrm_cruiser_engine_D2_065
-			nrm_cruiser_engine_D2_070
-			nrm_cruiser_engine_D2_075
-			nrm_cruiser_engine_D2_080
-			nrm_cruiser_engine_D2_090
-			nrm_cruiser_engine_D2_100
-			nrm_cruiser_engine_D2_110
-			nrm_cruiser_engine_D2_120
-
-			nrm_destroyer_engine_D2_005
-			nrm_destroyer_engine_D2_010
-			nrm_destroyer_engine_D2_015
-			nrm_destroyer_engine_D2_020
-			nrm_destroyer_engine_D2_025
-			nrm_destroyer_engine_D2_030
-			nrm_destroyer_engine_D2_035
-			nrm_destroyer_engine_D2_040
-			nrm_destroyer_engine_D2_045
-			nrm_destroyer_engine_D2_050
-			nrm_destroyer_engine_D2_055
-			nrm_destroyer_engine_D2_060
-			
-			nrm_submarine_engine_D2_04
-			nrm_submarine_engine_D2_06
-			nrm_submarine_engine_D2_08
-			nrm_submarine_engine_D2_10
-			nrm_submarine_engine_D2_12
-			nrm_submarine_engine_D2_16
-			nrm_submarine_engine_D2_20
-			nrm_submarine_engine_D2_25
-			nrm_submarine_engine_D2_30
-			nrm_submarine_engine_D2_35
-			nrm_submarine_engine_D2_40
-			nrm_submarine_engine_D2_45
-			nrm_submarine_engine_D2_50
-			nrm_submarine_engine_D2_55
-			nrm_submarine_engine_D2_60
-			nrm_submarine_engine_D2_70
-			nrm_submarine_engine_D2_80
-		}
-		
-
-
-		folder = {
-			name = mtgnavalsupportfolder
-			position = { x = 1 y = @1834 }
-		}
-		
-		ai_will_do = {
-			factor = 10
-			modifier = {
-				OR = {
-					tag = MJU
-				}
-				factor = 10
-			}
-		}
-		
-		categories = {
-			naval_equipment
-		}
-	}
-
-###  ##  ###  ###  ### ###   ##      #   #  ##  ###   ##  ### ###  ###     
- #  #  # #  # #  # #   #  # #  #     #   # #  # #  # #  # #   #  # #       
- #  #  # ###  ###  ##  #  # #  #     # # # #### ###  #### ##  ###  ##      
- #  #  # #  # #    #   #  # #  #     # # # #  # #  # #  # #   #  # #       
- #   ##  #  # #    ### ###   ##       # #  #  # #  # #  # #   #  # ###
-
-	basic_torpedo = { # 1824
-		
 		research_cost = 1
 
-		start_year = @year_1724
+		start_year = 1739
+
+		path = {
+			leads_to_tech = improved_heavy_shell
+			research_cost_coeff = 1
+		}
+
+		enable_equipment_modules = {
+			ship_heavy_battery_3
+			ship_heavy_battery_3_triple
+			ship_heavy_battery_3_quad
+		}
+
+		on_research_complete = {
+			custom_effect_tooltip = heavy_battery_advice_tt
+		}
+
+		folder = {
+			name = mtgnavalsupportfolder
+			position = { x = 6 y = 13 }
+		}
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				has_tech = improved_ship_hull_heavy
+				factor = 20
+			}
+			modifier = {
+				OR = {
+					tag = MJU
+					tag = EPY
+				}
+				factor = 2
+			}
+		}
+
+		categories = {
+			naval_equipment
+			ship_modules_tech
+			cat_ship_heavy_battery
+			mio_cat_tech_all_capital_ship_and_modules
+		}
+	}
+
+	advanced_heavy_battery = {
+
+		research_cost = 1
+
+		start_year = 1744
+
+		enable_equipment_modules = {
+			ship_heavy_battery_4
+			ship_heavy_battery_4_triple
+			ship_heavy_battery_4_quad
+		}
+
+		on_research_complete = {
+			custom_effect_tooltip = heavy_battery_advice_tt
+		}
+		
+		
+		folder = {
+			name = mtgnavalsupportfolder
+			position = { x = 6 y = 19 }
+		}
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				has_tech = advanced_ship_hull_heavy
+				factor = 20
+			}
+			modifier = {
+				OR = {
+					tag = MJU
+					tag = EPY
+				}
+				factor = 2
+			}
+		}
+
+		categories = {
+			naval_equipment
+			ship_modules_tech
+			cat_ship_heavy_battery
+			mio_cat_tech_all_capital_ship_and_modules
+		}
+	}
+
+	basic_heavy_shell = {
+
+		research_cost = 0.5
+
+		start_year = 1736
+
+		path = {
+			leads_to_tech = improved_heavy_battery
+			research_cost_coeff = 1
+		}
+
+		battleship = {
+			hg_attack = 0.05
+			hg_armor_piercing = 0.05
+		}
+		battle_cruiser = {
+			hg_attack = 0.05
+			hg_armor_piercing = 0.05
+		}
+		SH_battleship = {
+			hg_attack = 0.05
+			hg_armor_piercing = 0.05
+		}
+		battlecarrier = {
+			hg_attack = 0.05
+			hg_armor_piercing = 0.05
+		}
+		##! armored_cruiser = {
+		##! 	hg_attack = 0.05
+		##! 	hg_armor_piercing = 0.05
+		##! }
+
+		enable_equipment_modules = {
+			ship_high_velocity_shell
+		}
+
+		folder = {
+			name = mtgnavalsupportfolder
+			position = { x = 6 y = 10 }
+		}
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				has_tech = interwar_ship_hull_heavy
+				factor = 3
+			}
+
+		}
+
+		categories = {
+			naval_equipment
+			mio_cat_tech_all_capital_ship_and_modules
+		}
+	}
+
+	improved_heavy_shell = {
+
+		research_cost = 0.5
+
+		start_year = 1742
+
+		path = {
+			leads_to_tech = advanced_heavy_battery
+			research_cost_coeff = 1
+		}
+
+		battleship = {
+			hg_attack = 0.05
+			hg_armor_piercing = 0.05
+		}
+		battle_cruiser = {
+			hg_attack = 0.05
+			hg_armor_piercing = 0.05
+		}
+		SH_battleship = {
+			hg_attack = 0.05
+			hg_armor_piercing = 0.05
+		}
+		battlecarrier = {
+			hg_attack = 0.05
+			hg_armor_piercing = 0.05
+		}
+		##! armored_cruiser = {
+		##! 	hg_attack = 0.05
+		##! 	hg_armor_piercing = 0.05
+		##! }
+
+		enable_equipment_modules = {
+			ship_super_heavy_weight_shell
+		}
+
+		folder = {
+			name = mtgnavalsupportfolder
+			position = { x = 6 y = 16 }
+		}
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				has_tech = improved_ship_hull_heavy
+				has_war = yes
+				factor = 10
+			}
+		}
+
+		categories = {
+			naval_equipment
+			mio_cat_tech_all_capital_ship_and_modules
+		}
+	}
+
+	basic_dp_light_battery = {
+
+		research_cost = 0.5
+
+		start_year = 1739
+
+		enable_equipment_modules = {
+			dp_light_battery_2
+			dp_light_battery_2_single
+			dp_ship_secondaries_2
+			dp_ship_secondaries_2_bb
+		}
+
+		path = {
+			leads_to_tech = improved_dp_light_battery
+			research_cost_coeff = 1
+		}
+
+		on_research_complete = {
+			custom_effect_tooltip = secondary_battery_advice_tt
+		}
+
+		folder = {
+			name = mtgnavalsupportfolder
+			position = { x = -3 y = 12 }
+		}
+
+		ai_will_do = {
+			factor = 2
+			modifier = {
+				OR = {
+					tag = HHE
+					tag = MRC
+					tag = EPY
+				}
+				factor = 20
+			}
+		}
+
+		categories = {
+			naval_equipment
+			ship_modules_tech
+			mio_cat_tech_all_screen_ship_and_modules
+			mio_cat_tech_all_destroyer_and_modules
+		}
+	}
+
+	improved_dp_light_battery = {
+
+		research_cost = 0.5
+
+		start_year = 1741
+
+		enable_equipment_modules = {
+			dp_light_battery_3
+			dp_light_battery_3_single
+			dp_ship_secondaries_3
+			dp_ship_secondaries_3_bb
+		}
+
+		on_research_complete = {
+			custom_effect_tooltip = secondary_battery_advice_tt
+		}
+
+		path = {
+			leads_to_tech = advanced_dp_light_battery
+			research_cost_coeff = 1
+		}
+
+		folder = {
+			name = mtgnavalsupportfolder
+			position = { x = -3 y = 15 }
+		}
+
+		ai_will_do = {
+			factor = 2
+			modifier = {
+				OR = {
+					tag = HHE
+					tag = MRC
+					tag = EPY
+				}
+				factor = 20
+			}
+		}
+
+		categories = {
+			naval_equipment
+			ship_modules_tech
+			mio_cat_tech_all_screen_ship_and_modules
+			mio_cat_tech_all_destroyer_and_modules
+		}
+	}
+
+	advanced_dp_light_battery = {
+
+		research_cost = 0.5
+
+		start_year = 1744
+
+		enable_equipment_modules = {
+			dp_light_battery_4
+			dp_light_battery_4_single
+			dp_ship_secondaries_4
+			dp_ship_secondaries_4_bb
+		}
+
+		on_research_complete = {
+			custom_effect_tooltip = secondary_battery_advice_tt
+		}
+
+		path = {
+			leads_to_tech = unmanned_gun_turret
+			research_cost_coeff = 1
+		}
+
+		folder = {
+			name = mtgnavalsupportfolder
+			position = { x = -3 y = 19 }
+		}
+
+		ai_will_do = {
+			factor = 2
+			modifier = {
+				OR = {
+					tag = HHE
+					tag = MRC
+					tag = EPY
+				}
+				factor = 20
+			}
+		}
+
+		categories = {
+			naval_equipment
+			ship_modules_tech
+			mio_cat_tech_all_screen_ship_and_modules
+			mio_cat_tech_all_destroyer_and_modules
+		}
+	}
+
+	basic_dp_medium_battery = {
+
+		research_cost = 0.75
+
+		start_year = 1744
+
+		enable_equipment_modules = {
+			dp_ship_medium_1
+		}
+
+		on_research_complete = {
+			custom_effect_tooltip = secondary_battery_advice_tt
+		}
+
+		folder = {
+			name = mtgnavalsupportfolder
+			position = { x = 3 y = 19 }
+		}
+
+		ai_will_do = {
+			factor = 2
+			modifier = {
+				OR = {
+					tag = HHE
+					tag = MRC
+					tag = EPY
+				}
+				factor = 20
+			}
+		}
+
+		categories = {
+			naval_equipment
+			ship_modules_tech
+			mio_cat_tech_all_screen_ship_and_modules
+			mio_cat_tech_all_cruiser_and_modules
+		}
+	}
+
+	basic_super_heavy_battery = {
+
+		research_cost = 1.25
+
+		start_year = 1721
+
+		path = {
+			leads_to_tech = experimental_super_heavy_battery
+			research_cost_coeff = 1
+		}
+		path = {
+			leads_to_tech = improved_super_heavy_battery
+			research_cost_coeff = 1
+		}
+
+		enable_equipment_modules = {
+			ship_super_heavy_battery_1
+			ship_super_heavy_battery_1_triple
+			ship_super_heavy_battery_1_quad
+		}
+
+		on_research_complete = {
+			custom_effect_tooltip = heavy_battery_advice_tt
+		}
+
+		folder = {
+			name = mtgnavalsupportfolder
+			position = { x = 9 y = 7 }
+		}
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				has_tech = ship_hull_super_heavy
+				factor = 20
+			}
+			modifier = {
+				OR = {
+					tag = MJU
+					tag = EPY
+				}
+				factor = 2
+			}
+		}
+
+		categories = {
+			naval_equipment
+			ship_modules_tech
+			cat_ship_heavy_battery
+			mio_cat_tech_all_capital_ship_and_modules
+		}
+	}
+
+	experimental_super_heavy_battery = {
+
+		research_cost = 2
+
+		start_year = 1728
+
+		enable_equipment_modules = {
+			ship_super_heavy_battery_big_1
+			ship_super_heavy_battery_big_1_triple
+			ship_super_heavy_battery_big_1_quad
+		}
+
+		on_research_complete = {
+			custom_effect_tooltip = heavy_battery_advice_tt
+		}
+
+		folder = {
+			name = mtgnavalsupportfolder
+			position = { x = 11 y = 10 }
+		}
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				has_tech = ship_hull_super_heavy
+				factor = 2
+			}
+		}
+
+		categories = {
+			naval_equipment
+			ship_modules_tech
+			cat_ship_heavy_battery
+			mio_cat_tech_all_capital_ship_and_modules
+		}
+	}
+
+	improved_super_heavy_battery = {
+		research_cost = 1.5
+
+		start_year = 1741
+
+		enable_equipment_modules = {
+			ship_super_heavy_battery_2
+			ship_super_heavy_battery_2_triple
+			ship_super_heavy_battery_2_quad
+		}
+
+		on_research_complete = {
+			custom_effect_tooltip = heavy_battery_advice_tt
+		}
+
+		folder = {
+			name = mtgnavalsupportfolder
+			position = { x = 9 y = 14 }
+		}
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				has_tech = ship_hull_super_heavy
+				factor = 4
+			}
+		}
+
+		categories = {
+			naval_equipment
+			ship_modules_tech
+			cat_ship_heavy_battery
+			mio_cat_tech_all_capital_ship_and_modules
+		}
+	}
+
+	ship_rocket_artillery = {
+		research_cost = 0.75
+		start_year = 1743
+
+		dependencies = {
+			rocket_artillery = 1
+		}
+
+		enable_equipment_modules = {
+			ship_anti_air_5
+			ship_rocket_launcher
+		}
+
+		on_research_complete = {
+			custom_effect_tooltip = heavy_battery_advice_tt
+		}
+
+		folder = {
+			name = mtgnavalsupportfolder
+			position = { x = 3 y = 15 }
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		categories = {
+			naval_equipment
+			ship_modules_tech
+			cat_ship_medium_battery
+			mio_cat_tech_all_cruiser_and_modules
+			mio_cat_tech_all_capital_ship_and_modules
+		}
+	}
+
+	unmanned_gun_turret = {
+		research_cost = 1
+		start_year = 1747
+
+		heavy_cruiser = {
+			naval_light_gun_hit_chance_factor = 0.05
+		}
+		medium_cruiser = {
+			naval_light_gun_hit_chance_factor = 0.05
+		}
+		light_cruiser = {
+			naval_light_gun_hit_chance_factor = 0.05
+		}
+		destroyer = {
+			naval_light_gun_hit_chance_factor = 0.05
+		}
+
+		dependencies = {
+			advanced_fire_control_system = 1
+			radio = 1
+		}
+
+		path = {
+			leads_to_tech = modern_generic_battery
+			research_cost_coeff = 1
+		}
+
+		folder = {
+			name = mtgnavalsupportfolder
+			position = { x = -3 y = 21 }
+		}
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				has_tech = modern_ship_hull_light
+				factor = 3
+			}
+		}
+
+		categories = {
+			naval_equipment
+			ship_modules_tech
+			cat_ship_light_battery
+			cat_ship_medium_battery
+			mio_cat_tech_all_cruiser_and_modules
+			mio_cat_tech_all_screen_ship_and_modules
+			mio_cat_tech_all_destroyer_and_modules
+		}
+	}
+
+	modern_generic_battery = {
+		research_cost = 1
+		start_year = 1749
+
+		on_research_complete = {
+			custom_effect_tooltip = light_battery_advice_tt
+		}
+
+		enable_equipment_modules = {
+			dp_light_battery_5
+			dp_light_battery_5_single
+		}
+
+		folder = {
+			name = mtgnavalsupportfolder
+			position = { x = -3 y = 23 }
+		}
+
+		ai_will_do = {
+			factor = 2
+			modifier = {
+				has_tech = modern_ship_hull_light
+				factor = 3
+			}
+		}
+
+		categories = {
+			naval_equipment
+			ship_modules_tech
+			cat_ship_light_battery
+			cat_ship_medium_battery
+			mio_cat_tech_all_cruiser_and_modules
+			mio_cat_tech_all_screen_ship_and_modules
+			mio_cat_tech_all_destroyer_and_modules
+		}
+	}
+
+###  ##  ###  ###  ### ###   ##      #   #  ##  ###   ##  ### ###  ###
+ #  #  # #  # #  # #   #  # #  #     #   # #  # #  # #  # #   #  # #  
+ #  #  # ###  ###  ##  #  # #  #     # # # #### ###  #### ##  ###  ## 
+ #  #  # #  # #    #   #  # #  #     # # # #  # #  # #  # #   #  # #  
+ #   ##  #  # #    ### ###   ##       # #  #  # #  # #  # #   #  # ###
+
+	basic_torpedo = {
+
+		research_cost = 0.5
+
+		start_year = 1722
 
 		path = {
 			leads_to_tech = magnetic_detonator
@@ -594,88 +1398,93 @@ technologies = {
 			leads_to_tech = improved_ship_torpedo_launcher
 			research_cost_coeff = 1
 		}
-		
+
+		enable_equipment_modules = {
+			ship_torpedo_1
+			torpedo_mounting
+			ship_torpedo_fire_control_1
+			ship_torpedo_bb
+			ship_torpedo_sub_1
+		}
+
+		on_research_complete = {
+			custom_effect_tooltip = torpedo_advice_tt
+		}
+
+		folder = {
+			name = mtgnavalsupportfolder
+			position = { x = 0 y = 1 }
+		}
+
+		ai_will_do = {
+			factor = 2
+			modifier = {
+				OR = {
+					tag = EPY
+					tag = MRC
+					tag = MJU
+				}
+				factor = 5
+			}
+			modifier = {
+				has_war = yes
+				factor = 3
+			}
+		}
+
+		categories = {
+			naval_equipment
+			ship_modules_tech
+			cat_torpedoes
+			mio_cat_tech_all_screen_ship_and_modules
+			mio_cat_tech_all_destroyer_and_modules
+		}
+	}
+
+	magnetic_detonator = {
+
+		xp_research_type = navy
+		xp_boost_cost = 20
+		xp_research_bonus = 1.50
+		research_cost = 0.5
+
+		start_year = 1732
+
+		path = {
+			leads_to_tech = oxygen_torpedo
+			research_cost_coeff = 1
+		}
 		path = {
 			leads_to_tech = electric_torpedo
 			research_cost_coeff = 1
 		}
 
-		enable_equipment_modules = { 
-			nrm_support_capital_TRP_21_1_x04
-			
-			nrm_support_cruiser_TRP_21_1_x04
-			
-			nrm_support_destroyer_TRP_21_C_1_x2
-			
-			nrm_support_destroyer_TRP_21_S_1_x4
-		
-			nrm_submarine_TRP_18_1_x1
-			nrm_submarine_TRP_18_1_x2
-			nrm_submarine_TRP_18_1_x3
-			nrm_submarine_TRP_18_1_x4
-			nrm_submarine_TRP_18_1_x5
-			nrm_submarine_TRP_18_1_x6
-			nrm_submarine_TRP_18_1_x8
+		destroyer = {
+			torpedo_attack = 0.1
 		}
-		
-
-
-		folder = {
-			name = mtgnavalsupportfolder
-			position = { x = 0 y = @1824 }
-		}
-		
-		ai_will_do = {
-			factor = 2
-			modifier = {
-				OR = {
-					tag = EPY
-					tag = MRC
-					tag = MJU
-				}
-				factor = 5
-			}
-			modifier = {
-				has_war = yes
-				factor = 3
-			}
-		}
-		
-		categories = {
-			naval_equipment
-		}
-	}
-
-	magnetic_detonator = { # 1832
-		
-		xp_research_type = navy
-		xp_boost_cost = 50
-		xp_research_bonus = 1
-		research_cost = 2.5
-
-		start_year = @year_1732
-
-		path = {
-			leads_to_tech = homing_torpedo
-			research_cost_coeff = 1
-		}
-		
-		path = {
-			leads_to_tech = improved_magnetic_detonator
-			research_cost_coeff = 1
-		}
-
 		submarine = {
 			torpedo_attack = 0.1
 		}
-		
-		
+		light_cruiser = {
+			torpedo_attack = 0.1
+		}
+		heavy_cruiser = {
+			torpedo_attack = 0.1
+		}
+		medium_cruiser = {
+			torpedo_attack = 0.1
+		}
+		##! armored_cruiser = {
+		##! 	torpedo_attack = 0.1
+		##! }
+
+
 
 		folder = {
 			name = mtgnavalsupportfolder
-			position = { x = 3 y = @1832 }
+			position = { x = 2 y = 7 }
 		}
-		
+
 		ai_will_do = {
 			factor = 2
 			modifier = {
@@ -695,93 +1504,55 @@ technologies = {
 				factor = 2
 			}
 		}
-		
+
 		categories = {
 			naval_equipment
+			ship_modules_tech
+			cat_torpedoes
+			mio_cat_tech_all_screen_ship_and_modules
+			mio_cat_tech_all_destroyer_and_modules
 		}
 	}
-	improved_magnetic_detonator = { # 1838
-		
-		xp_research_type = navy
-		xp_boost_cost = 50
-		xp_research_bonus = 1
-		research_cost = 2.5
 
-		start_year = @year_1738
-		
-		submarine = {
-			torpedo_attack = 0.1
-		}
+	homing_torpedo = {
+
+		xp_research_type = navy
+		xp_boost_cost = 20
+		xp_research_bonus = 1.50
+		research_cost = 0.75
+
+		start_year = 1742
 		destroyer = {
-			torpedo_attack = 0.1
+			naval_torpedo_hit_chance_factor = 0.05
+		}
+		submarine = {
+			naval_torpedo_hit_chance_factor = 0.05
 		}
 		light_cruiser = {
-			torpedo_attack = 0.1
+			naval_torpedo_hit_chance_factor = 0.05
 		}
 		heavy_cruiser = {
-			torpedo_attack = 0.1
+			naval_torpedo_hit_chance_factor = 0.05
 		}
-		battleship = {
-			torpedo_attack = 0.1
+		medium_cruiser = {
+			naval_torpedo_hit_chance_factor = 0.05
 		}
-		battle_cruiser = {
-			torpedo_attack = 0.1
-		}
-		
-
+		##! armored_cruiser = {
+		##! 	naval_torpedo_hit_chance_factor = 0.05
+		##! }
 		folder = {
 			name = mtgnavalsupportfolder
-			position = { x = 3 y = @1838 }
+			position = { x = 2 y = 16 }
 		}
-		
-		ai_will_do = {
-			factor = 2
-			modifier = {
-				OR = {
-					tag = EPY
-					tag = MRC
-					tag = MJU
-				}
-				factor = 5
-			}
-			modifier = {
-				has_war = yes
-				factor = 3
-			}
-			modifier = {
-				tag = EPY #Japan wants torpedoes EXTRA HARD
-				factor = 2
-			}
-		}
-		
-		categories = {
-			naval_equipment
-		}
-	}
-
-	homing_torpedo = { # 1834
-		
-		xp_research_type = navy
-		xp_boost_cost = 50
-		xp_research_bonus = 1
-		research_cost = 2
-
-		start_year = @year_1734
-		
 		path = {
-			leads_to_tech = improved_homing_torpedo
+			leads_to_tech = proximity_detonator
 			research_cost_coeff = 1
 		}
-		
-		submarine = {
-			torpedo_attack = 0.1
+		path = {
+			leads_to_tech = wire_guided_torpedo
+			research_cost_coeff = 1
 		}
-		
-		folder = {
-			name = mtgnavalsupportfolder
-			position = { x = 4 y = @1834 }
-		}
-		
+
 		ai_will_do = {
 			factor = 2
 			modifier = {
@@ -797,44 +1568,37 @@ technologies = {
 				factor = 3
 			}
 		}
-		
+
 		categories = {
 			naval_equipment
+			ship_modules_tech
+			cat_torpedoes
+			mio_cat_tech_all_screen_ship_and_modules
+			mio_cat_tech_all_destroyer_and_modules
 		}
 	}
-	improved_homing_torpedo = { # 1840
-		
-		xp_research_type = navy
-		xp_boost_cost = 50
-		xp_research_bonus = 1
-		research_cost = 2.5
 
-		start_year = @year_1740
-		
-		submarine = {
-			torpedo_attack = 0.2
+	wire_guided_torpedo = {
+		xp_research_type = navy
+		xp_boost_cost = 20
+		xp_research_bonus = 1.50
+		research_cost = 1
+		enable_equipment_modules = {
+			sub_wire_guided_torpedo
 		}
-		destroyer = {
-			torpedo_attack = 0.1
-		}
-		light_cruiser = {
-			torpedo_attack = 0.1
-		}
-		heavy_cruiser = {
-			torpedo_attack = 0.1
-		}
-		battleship = {
-			torpedo_attack = 0.1
-		}
-		battle_cruiser = {
-			torpedo_attack = 0.1
-		}
-		
+		naval_torpedo_screen_penetration_factor = 0.1
+
+		start_year = 1745
+
 		folder = {
 			name = mtgnavalsupportfolder
-			position = { x = 4 y = @1840 }
+			position = { x = 2 y = 20 }
 		}
-		
+		path = {
+			leads_to_tech = wake_homing_torpedo
+			research_cost_coeff = 1
+		}
+
 		ai_will_do = {
 			factor = 2
 			modifier = {
@@ -850,30 +1614,94 @@ technologies = {
 				factor = 3
 			}
 		}
-		
+
 		categories = {
 			naval_equipment
+			ss_tech
+			ship_modules_tech
+			cat_torpedoes
+			mio_cat_tech_all_submarine_and_modules
+		}
+	}
+
+	wake_homing_torpedo = {
+		xp_research_type = navy
+		xp_boost_cost = 20
+		xp_research_bonus = 1.50
+		research_cost = 1.25
+
+		start_year = 1751
+		destroyer = {
+			naval_torpedo_hit_chance_factor = 0.1
+		}
+		submarine = {
+			naval_torpedo_hit_chance_factor = 0.1
+		}
+		light_cruiser = {
+			naval_torpedo_hit_chance_factor = 0.1
+		}
+		heavy_cruiser = {
+			naval_torpedo_hit_chance_factor = 0.1
+		}
+		medium_cruiser = {
+			naval_torpedo_hit_chance_factor = 0.1
+		}
+		##! armored_cruiser = {
+		##! 	naval_torpedo_hit_chance_factor = 0.1
+		##! }
+		folder = {
+			name = mtgnavalsupportfolder
+			position = { x = 2 y = 25 }
+		}
+
+		ai_will_do = {
+			factor = 2
+			modifier = {
+				OR = {
+					tag = EPY
+					tag = MRC
+					tag = MJU
+				}
+				factor = 5
+			}
+			modifier = {
+				has_war = yes
+				factor = 3
+			}
+		}
+
+		categories = {
+			naval_equipment
+			ship_modules_tech
+			cat_torpedoes
+			mio_cat_tech_all_screen_ship_and_modules
+			mio_cat_tech_all_destroyer_and_modules
 		}
 	}
 
 	electric_torpedo = {
-		
+
 		xp_research_type = navy
-		xp_boost_cost = 50
-		xp_research_bonus = 1
-		research_cost = 2.5
+		xp_boost_cost = 20
+		xp_research_bonus = 1.50
+		research_cost = 0.75
 
-		start_year = @year_1734
+		start_year = 1736
 
+
+		naval_torpedo_reveal_chance_factor = -0.15
 		
-		naval_torpedo_reveal_chance_factor = -0.25
-		
+		path = {
+			leads_to_tech = homing_torpedo
+			research_cost_coeff = 1
+		}
 
+		xor = { oxygen_torpedo }
 		folder = {
 			name = mtgnavalsupportfolder
-			position = { x = 2 y = @1834 }
+			position = { x = 3 y = 10 }
 		}
-		
+
 		ai_will_do = {
 			factor = 2
 			modifier = {
@@ -885,2835 +1713,301 @@ technologies = {
 				factor = 5
 			}
 		}
-		
+
 		categories = {
 			naval_equipment
+			ship_modules_tech
+			cat_torpedoes
+			mio_cat_tech_all_screen_ship_and_modules
+			mio_cat_tech_all_destroyer_and_modules
 		}
 	}
 
-	improved_ship_torpedo_launcher = { # 1826
-		
-		research_cost = 1
+	oxygen_torpedo = {
 
-		start_year = @year_1726
+		xp_research_type = navy
+		xp_boost_cost = 20
+		xp_research_bonus = 1.50
+		research_cost = 0.75
+
+		start_year = 1736
+
+
+		naval_torpedo_screen_penetration_factor = 0.1
+		
+		path = {
+			leads_to_tech = homing_torpedo
+			research_cost_coeff = 1
+		}
+
+		xor = { electric_torpedo }
+		folder = {
+			name = mtgnavalsupportfolder
+			position = { x = 1 y = 10 }
+		}
+
+		ai_will_do = {
+			factor = 2
+			modifier = {
+				OR = {
+					tag = EPY
+					tag = MRC
+					tag = MJU
+				}
+				factor = 5
+			}
+		}
+
+		categories = {
+			naval_equipment
+			ship_modules_tech
+			cat_torpedoes
+			mio_cat_tech_all_screen_ship_and_modules
+			mio_cat_tech_all_destroyer_and_modules
+		}
+	}
+
+	proximity_detonator = {
+		xp_research_type = navy
+		xp_boost_cost = 20
+		xp_research_bonus = 1.50
+		research_cost = 0.75
+
+		start_year = 1743
+		dependencies = {
+			radio_detection = 1
+		}
+
+		destroyer = {
+			torpedo_attack = 0.1
+		}
+		submarine = {
+			torpedo_attack = 0.1
+		}
+		light_cruiser = {
+			torpedo_attack = 0.1
+		}
+		heavy_cruiser = {
+			torpedo_attack = 0.1
+		}
+		medium_cruiser = {
+			torpedo_attack = 0.1
+		}
+		##! armored_cruiser = {
+		##! 	torpedo_attack = 0.1
+		##! }
+
+
+		folder = {
+			name = mtgnavalsupportfolder
+			position = { x = 3 y = 18 }
+		}
+
+		ai_will_do = {
+			factor = 2
+			modifier = {
+				OR = {
+					tag = EPY
+					tag = MRC
+					tag = MJU
+				}
+				factor = 5
+			}
+			modifier = {
+				has_war = yes
+				factor = 3
+			}
+			modifier = {
+				tag = EPY #Japan wants torpedoes EXTRA HARD
+				factor = 2
+			}
+		}
+
+		categories = {
+			naval_equipment
+			ship_modules_tech
+			cat_torpedoes
+			mio_cat_tech_all_screen_ship_and_modules
+			mio_cat_tech_all_destroyer_and_modules
+		}
+	}
+
+	improved_ship_torpedo_launcher = {
+
+		research_cost = 0.5
+
+		start_year = 1732
 
 		path = {
 			leads_to_tech = advanced_ship_torpedo_launcher
 			research_cost_coeff = 1
 		}
-		path = {
-			leads_to_tech = improved_heavy_ship_torpedo_launcher
-			research_cost_coeff = 1
+
+		on_research_complete = {
+			custom_effect_tooltip = torpedo_advice_tt
 		}
 
-		enable_equipment_modules = { 
-			nrm_support_capital_TRP_21_1_x06
-			nrm_support_capital_TRP_21_1_x08
-			nrm_support_capital_TRP_21_1_x10
-			
-			nrm_support_cruiser_TRP_21_1_x06
-			nrm_support_cruiser_TRP_21_1_x08
-			nrm_support_cruiser_TRP_21_1_x10
-			
-			nrm_support_destroyer_TRP_21_C_1_x2
-			nrm_support_destroyer_TRP_21_C_1_x3
-			nrm_support_destroyer_TRP_21_C_1_x4
-			nrm_support_destroyer_TRP_21_C_1_x5
-			
-			nrm_support_destroyer_TRP_21_S_1_x6
-			nrm_support_destroyer_TRP_21_S_1_x8
-			
-			nrm_submarine_TRP_21_1_x1
-			nrm_submarine_TRP_21_1_x2
-			nrm_submarine_TRP_21_1_x3
-			nrm_submarine_TRP_21_1_x4
-			nrm_submarine_TRP_21_1_x5
-			nrm_submarine_TRP_21_1_x6
-			nrm_submarine_TRP_21_1_x8
+		enable_equipment_modules = {
+			ship_torpedo_2
+			ship_torpedo_sub_2
 		}
-		
+
 
 
 		folder = {
 			name = mtgnavalsupportfolder
-			position = { x = 0 y = @1826 }
+			position = { x = 0 y = 8 }
 		}
-		
+
 		ai_will_do = {
 			factor = 2
 			modifier = {
-				OR = {
-					tag = HHE
-					tag = MRC
-					tag = MJU
-				}
+				tag = EPY
 				factor = 5
 			}
 		}
-		
+
 		categories = {
 			naval_equipment
+			ship_modules_tech
+			cat_torpedoes
+			mio_cat_tech_all_screen_ship_and_modules
+			mio_cat_tech_all_destroyer_and_modules
 		}
 	}
-	advanced_ship_torpedo_launcher = { # 1830
-		
-		research_cost = 1.5
 
-		start_year = @year_1730
+	advanced_ship_torpedo_launcher = {
+
+		research_cost = 0.75
+
+		start_year = 1740
 
 		path = {
 			leads_to_tech = modern_ship_torpedo_launcher
 			research_cost_coeff = 1
 		}
 
-		enable_equipment_modules = { 
-			nrm_support_capital_TRP_21_2_x04
-			nrm_support_capital_TRP_21_2_x06
-			nrm_support_capital_TRP_21_2_x08
-			nrm_support_capital_TRP_21_2_x10
-			
-			nrm_support_cruiser_TRP_21_2_x04
-			nrm_support_cruiser_TRP_21_2_x06
-			nrm_support_cruiser_TRP_21_2_x08
-			nrm_support_cruiser_TRP_21_2_x10
-			
-			nrm_support_destroyer_TRP_21_C_2_x2
-			nrm_support_destroyer_TRP_21_C_2_x3
-			nrm_support_destroyer_TRP_21_C_2_x4
-			nrm_support_destroyer_TRP_21_C_2_x5
-			
-			nrm_support_destroyer_TRP_21_S_2_x4
-			nrm_support_destroyer_TRP_21_S_2_x6
-			nrm_support_destroyer_TRP_21_S_2_x8
-		
-			nrm_submarine_TRP_18_2_x1
-			nrm_submarine_TRP_18_2_x2
-			nrm_submarine_TRP_18_2_x3
-			nrm_submarine_TRP_18_2_x4
-			nrm_submarine_TRP_18_2_x5
-			nrm_submarine_TRP_18_2_x6
-			nrm_submarine_TRP_18_2_x8
-			
-			nrm_submarine_TRP_21_2_x1
-			nrm_submarine_TRP_21_2_x2
-			nrm_submarine_TRP_21_2_x3
-			nrm_submarine_TRP_21_2_x4
-			nrm_submarine_TRP_21_2_x5
-			nrm_submarine_TRP_21_2_x6
-			nrm_submarine_TRP_21_2_x8
+		on_research_complete = {
+			custom_effect_tooltip = torpedo_advice_tt
 		}
-		
+
+		enable_equipment_modules = {
+			ship_torpedo_3
+			ship_torpedo_sub_3
+			ship_torpedo_fire_control_2
+		}
+
 
 
 		folder = {
 			name = mtgnavalsupportfolder
-			position = { x = 0 y = @1830 }
-		}
-		
-		ai_will_do = {
-			factor = 2
-			modifier = {
-				OR = {
-					tag = HHE
-					tag = MRC
-					tag = MJU
-				}
-				factor = 5
-			}
-		}
-		
-		categories = {
-			naval_equipment
-		}
-	}
-	modern_ship_torpedo_launcher = { # 1834
-		
-		research_cost = 1.5
-
-		start_year = @year_1734
-
-		enable_equipment_modules = { 
-			nrm_support_capital_TRP_21_3_x04
-			nrm_support_capital_TRP_21_3_x06
-			nrm_support_capital_TRP_21_3_x08
-			nrm_support_capital_TRP_21_3_x10
-		
-			nrm_support_cruiser_TRP_21_3_x04
-			nrm_support_cruiser_TRP_21_3_x06
-			nrm_support_cruiser_TRP_21_3_x08
-			nrm_support_cruiser_TRP_21_3_x10
-		
-			nrm_support_destroyer_TRP_21_C_3_x2
-			nrm_support_destroyer_TRP_21_C_3_x3
-			nrm_support_destroyer_TRP_21_C_3_x4
-			nrm_support_destroyer_TRP_21_C_3_x5
-			
-			nrm_support_destroyer_TRP_21_S_3_x4
-			nrm_support_destroyer_TRP_21_S_3_x6
-			nrm_support_destroyer_TRP_21_S_3_x8
-			
-			nrm_submarine_TRP_18_3_x1
-			nrm_submarine_TRP_18_3_x2
-			nrm_submarine_TRP_18_3_x3
-			nrm_submarine_TRP_18_3_x4
-			nrm_submarine_TRP_18_3_x5
-			nrm_submarine_TRP_18_3_x6
-			nrm_submarine_TRP_18_3_x8
-
-			nrm_submarine_TRP_21_3_x1
-			nrm_submarine_TRP_21_3_x2
-			nrm_submarine_TRP_21_3_x3
-			nrm_submarine_TRP_21_3_x4
-			nrm_submarine_TRP_21_3_x5
-			nrm_submarine_TRP_21_3_x6
-			nrm_submarine_TRP_21_3_x8
-		}
-		
-
-
-		folder = {
-			name = mtgnavalsupportfolder
-			position = { x = 0 y = @1834 }
-		}
-		
-		ai_will_do = {
-			factor = 2
-			modifier = {
-				OR = {
-					tag = HHE
-					tag = MRC
-					tag = MJU
-				}
-				factor = 5
-			}
-		}
-		
-		categories = {
-			naval_equipment
-		}
-	}
-
-	improved_heavy_ship_torpedo_launcher = { # 1828
-		
-		research_cost = 3
-
-		start_year = @year_1728
-
-		path = {
-			leads_to_tech = advanced_heavy_ship_torpedo_launcher
-			research_cost_coeff = 1
+			position = { x = 0 y = 14 }
 		}
 
-		enable_equipment_modules = { 
-			nrm_support_capital_TRP_24_1_x04
-			nrm_support_capital_TRP_24_1_x06
-			nrm_support_capital_TRP_24_1_x08
-			nrm_support_capital_TRP_24_1_x10
-			
-			nrm_support_cruiser_TRP_24_1_x04
-			nrm_support_cruiser_TRP_24_1_x06
-			nrm_support_cruiser_TRP_24_1_x08
-			nrm_support_cruiser_TRP_24_1_x10
-			
-			nrm_support_destroyer_TRP_24_C_1_x2
-			nrm_support_destroyer_TRP_24_C_1_x3
-			nrm_support_destroyer_TRP_24_C_1_x4
-			nrm_support_destroyer_TRP_24_C_1_x5
-			
-			nrm_support_destroyer_TRP_24_S_1_x4
-			nrm_support_destroyer_TRP_24_S_1_x6
-			nrm_support_destroyer_TRP_24_S_1_x8
-		}
-		
-
-
-		folder = {
-			name = mtgnavalsupportfolder
-			position = { x = 1 y = @1828 }
-		}
-		
-		ai_will_do = {
-			factor = 0.1
-			modifier = {
-				tag = EPY
-				factor = 100
-			}
-		}
-		
-		categories = {
-			naval_equipment
-		}
-	}
-	advanced_heavy_ship_torpedo_launcher = { # 1832
-		
-		research_cost = 2
-
-		start_year = @year_1732
-
-		path = {
-			leads_to_tech = modern_heavy_ship_torpedo_launcher
-			research_cost_coeff = 1
-		}
-
-		enable_equipment_modules = { 
-			nrm_support_capital_TRP_24_2_x04
-			nrm_support_capital_TRP_24_2_x06
-			nrm_support_capital_TRP_24_2_x08
-			nrm_support_capital_TRP_24_2_x10
-			
-			nrm_support_cruiser_TRP_24_2_x04
-			nrm_support_cruiser_TRP_24_2_x06
-			nrm_support_cruiser_TRP_24_2_x08
-			nrm_support_cruiser_TRP_24_2_x10
-			
-			nrm_support_destroyer_TRP_24_C_2_x2
-			nrm_support_destroyer_TRP_24_C_2_x3
-			nrm_support_destroyer_TRP_24_C_2_x4
-			nrm_support_destroyer_TRP_24_C_2_x5
-			
-			nrm_support_destroyer_TRP_24_S_2_x4
-			nrm_support_destroyer_TRP_24_S_2_x6
-			nrm_support_destroyer_TRP_24_S_2_x8
-		}
-		
-
-
-		folder = {
-			name = mtgnavalsupportfolder
-			position = { x = 1 y = @1832 }
-		}
-		
 		ai_will_do = {
 			factor = 2
 			modifier = {
 				tag = EPY
-				factor = 10
-			}
-		}
-		
-		categories = {
-			naval_equipment
-		}
-	}
-	modern_heavy_ship_torpedo_launcher = { # 1836
-		
-		research_cost = 2
-
-		start_year = @year_1736
-
-		enable_equipment_modules = { 
-			nrm_support_capital_TRP_24_3_x04
-			nrm_support_capital_TRP_24_3_x06
-			nrm_support_capital_TRP_24_3_x08
-			nrm_support_capital_TRP_24_3_x10
-			
-			nrm_support_cruiser_TRP_24_3_x04
-			nrm_support_cruiser_TRP_24_3_x06
-			nrm_support_cruiser_TRP_24_3_x08
-			nrm_support_cruiser_TRP_24_3_x10
-			
-			nrm_support_destroyer_TRP_24_C_3_x2
-			nrm_support_destroyer_TRP_24_C_3_x3
-			nrm_support_destroyer_TRP_24_C_3_x4
-			nrm_support_destroyer_TRP_24_C_3_x5
-			
-			nrm_support_destroyer_TRP_24_S_3_x4
-			nrm_support_destroyer_TRP_24_S_3_x6
-			nrm_support_destroyer_TRP_24_S_3_x8
-		}
-		
-
-
-		folder = {
-			name = mtgnavalsupportfolder
-			position = { x = 1 y = @1836 }
-		}
-		
-		ai_will_do = {
-			factor = 2
-			modifier = {
-				tag = EPY
-				factor = 10
-			}
-		}
-		
-		categories = {
-			naval_equipment
-		}
-	}
-
- ##  ###  #   #  ##  #   # ### #  # ###  ## 
-#  # #  # ## ## #  # ## ## #   ## #  #  #   
-#### ###  # # # #### # # # ##  # ##  #   #  
-#  # #  # #   # #  # #   # #   #  #  #    # 
-#  # #  # #   # #  # #   # ### #  #  #  ##  
-
-	basic_battery = { # 1816
-		
-		research_cost = 2
-
-		start_year = @year_1720
-
-		path = {
-			leads_to_tech = nrm_early_antiair
-			research_cost_coeff = 1
-		}
-		
-		path = {
-			leads_to_tech = basic_light_shell
-			research_cost_coeff = 1
-		}
-		path = {
-			leads_to_tech = basic_medium_shell
-			research_cost_coeff = 1
-		}
-		path = {
-			leads_to_tech = basic_heavy_shell
-			research_cost_coeff = 1
-		}
-		
-		path = {
-			leads_to_tech = improved_light_battery
-			research_cost_coeff = 1
-		}
-		path = {
-			leads_to_tech = improved_light_battery_2
-			research_cost_coeff = 1
-		}
-
-		path = {
-			leads_to_tech = improved_medium_battery
-			research_cost_coeff = 1
-		}
-		path = {
-			leads_to_tech = basic_medium_battery_2
-			research_cost_coeff = 1
-		}
-
-		path = {
-			leads_to_tech = improved_heavy_battery
-			research_cost_coeff = 1
-		}
-		path = {
-			leads_to_tech = basic_heavy_battery_2
-			research_cost_coeff = 1
-		}
-
-		enable_equipment_modules = { 
-			nrm_capital_battery_11_1_2x2
-			nrm_capital_battery_11_1_2x3
-			nrm_capital_battery_11_1_2x4
-			nrm_capital_battery_11_1_2x5
-			nrm_capital_battery_11_1_2x6
-			nrm_capital_battery_11_1_3x2
-			nrm_capital_battery_11_1_3x3
-			nrm_capital_battery_11_1_3x4
-			nrm_capital_battery_11_1_4x2
-			nrm_capital_battery_11_1_4x3
-			nrm_capital_battery_11_1_a3x2_2x1
-			nrm_capital_battery_11_1_a3x2_2x2
-			nrm_capital_battery_11_1_a4x2_2x1
-			nrm_capital_battery_12_1_2x2
-			nrm_capital_battery_12_1_2x3
-			nrm_capital_battery_12_1_2x4
-			nrm_capital_battery_12_1_2x5
-			nrm_capital_battery_12_1_2x6
-			nrm_capital_battery_12_1_3x2
-			nrm_capital_battery_12_1_3x3
-			nrm_capital_battery_12_1_3x4
-			nrm_capital_battery_12_1_4x2
-			nrm_capital_battery_12_1_4x3
-			nrm_capital_battery_12_1_a3x2_2x1
-			nrm_capital_battery_12_1_a3x2_2x2
-			nrm_capital_battery_12_1_a4x2_2x1
-			nrm_capital_secondary_SB_5_1_x08
-			nrm_capital_secondary_SB_5_1_x12
-			nrm_capital_secondary_SB_5_1_x16
-			nrm_capital_secondary_SB_5_1_x20
-			nrm_capital_secondary_SB_5h_1_x08
-			nrm_capital_secondary_SB_5h_1_x12
-			nrm_capital_secondary_SB_5h_1_x16
-			nrm_capital_secondary_SB_5h_1_x20
-			nrm_capital_secondary_SB_6_1_x08
-			nrm_capital_secondary_SB_6_1_x12
-			nrm_capital_secondary_SB_6_1_x16
-			nrm_capital_secondary_SB_6_1_x20
-			nrm_cruiser_tertiary_SB_5_1_x04
-			nrm_cruiser_tertiary_SB_5_1_x08
-			nrm_cruiser_tertiary_SB_5_1_x12
-			nrm_cruiser_tertiary_SB_5h_1_x04
-			nrm_cruiser_tertiary_SB_5h_1_x08
-			nrm_cruiser_tertiary_SB_5h_1_x12
-			nrm_cruiser_tertiary_SB_6_1_x04
-			nrm_cruiser_tertiary_SB_6_1_x08
-			nrm_cruiser_tertiary_SB_6_1_x12
-			nrm_capital_tertiary_HA_3_1_x04
-			nrm_capital_tertiary_HA_3_1_x08
-			nrm_capital_tertiary_HA_3_1_x12
-			nrm_capital_tertiary_HA_3_1_x16
-			nrm_capital_tertiary_HA_4_1_x04
-			nrm_capital_tertiary_HA_4_1_x08
-			nrm_capital_tertiary_HA_4_1_x12
-			nrm_capital_tertiary_HA_4_1_x16
-			nrm_capital_tertiary_HA_5_1_x04
-			nrm_capital_tertiary_HA_5_1_x08
-			nrm_capital_tertiary_HA_5_1_x12
-			nrm_capital_tertiary_HA_5_1_x16
-			nrm_cruiser_battery_5_1_x04
-			nrm_cruiser_battery_5_1_x06
-			nrm_cruiser_battery_5_1_x08
-			nrm_cruiser_battery_5_1_x09
-			nrm_cruiser_battery_5_1_x10
-			nrm_cruiser_battery_5_1_x12
-			nrm_cruiser_battery_5_1_x15
-			nrm_cruiser_battery_5h_1_x04
-			nrm_cruiser_battery_5h_1_x06
-			nrm_cruiser_battery_5h_1_x08
-			nrm_cruiser_battery_5h_1_x09
-			nrm_cruiser_battery_5h_1_x10
-			nrm_cruiser_battery_5h_1_x12
-			nrm_cruiser_battery_5h_1_x15
-			nrm_cruiser_battery_6_1_x04
-			nrm_cruiser_battery_6_1_x06
-			nrm_cruiser_battery_6_1_x08
-			nrm_cruiser_battery_6_1_x09
-			nrm_cruiser_battery_6_1_x10
-			nrm_cruiser_battery_6_1_x12
-			nrm_cruiser_battery_6_1_x15
-			nrm_cruiser_battery_PB_11_1_2x2
-			nrm_cruiser_battery_PB_11_1_2x3
-			nrm_cruiser_battery_PB_11_1_2x4
-			nrm_cruiser_battery_PB_11_1_3x2
-			nrm_cruiser_battery_PB_11_1_3x3
-			nrm_cruiser_battery_PB_11_1_4x2
-			nrm_cruiser_battery_PB_12_1_2x2
-			nrm_cruiser_battery_PB_12_1_2x3
-			nrm_cruiser_battery_PB_12_1_2x4
-			nrm_cruiser_battery_PB_12_1_3x2
-			nrm_cruiser_battery_PB_12_1_3x3
-			nrm_cruiser_battery_PB_12_1_4x2
-			nrm_cruiser_tertiary_HA_3_1_x04
-			nrm_cruiser_tertiary_HA_3_1_x08
-			nrm_cruiser_tertiary_HA_3_1_x12
-			nrm_cruiser_tertiary_HA_4_1_x04
-			nrm_cruiser_tertiary_HA_4_1_x08
-			nrm_cruiser_tertiary_HA_4_1_x12
-			nrm_cruiser_tertiary_HA_5_1_x04
-			nrm_cruiser_tertiary_HA_5_1_x08
-			nrm_cruiser_tertiary_HA_5_1_x12
-			nrm_destroyer_battery_4_1_x3
-			nrm_destroyer_battery_4_1_x4
-			nrm_destroyer_battery_4_1_x5
-			nrm_destroyer_battery_4_1_x6
-			nrm_destroyer_battery_4_1_x8
-			nrm_destroyer_battery_5_1_x3
-			nrm_destroyer_battery_5_1_x4
-			nrm_destroyer_battery_5_1_x5
-			nrm_destroyer_battery_5_1_x6
-			nrm_destroyer_battery_5_1_x8
-			nrm_destroyer_battery_5h_1_x3
-			nrm_destroyer_battery_5h_1_x4
-			nrm_destroyer_battery_5h_1_x5
-			nrm_destroyer_battery_5h_1_x6
-			nrm_destroyer_battery_5h_1_x8
-			nrm_destroyer_battery_6_1_x3
-			nrm_destroyer_battery_6_1_x4
-			nrm_destroyer_battery_6_1_x5
-			nrm_destroyer_battery_6_1_x6
-			nrm_destroyer_battery_HA_3_1_x3
-			nrm_destroyer_battery_HA_3_1_x4
-			nrm_destroyer_battery_HA_3_1_x5
-			nrm_destroyer_battery_HA_3_1_x6
-			nrm_destroyer_battery_HA_3_1_x8
-			nrm_destroyer_battery_HA_4_1_x3
-			nrm_destroyer_battery_HA_4_1_x4
-			nrm_destroyer_battery_HA_4_1_x5
-			nrm_destroyer_battery_HA_4_1_x6
-			nrm_destroyer_battery_HA_4_1_x8
-			nrm_destroyer_battery_HA_5_1_x3
-			nrm_destroyer_battery_HA_5_1_x4
-			nrm_destroyer_battery_HA_5_1_x5
-			nrm_destroyer_battery_HA_5_1_x6
-			nrm_destroyer_battery_HA_5_1_x8
-			nrm_fire_control_1
-			nrm_fire_control_2
-			nrm_damagecontrol_1
-		}
-		
-
-
-		folder = {
-			name = mtgnavalsupportfolder
-			position = { x = 2 y = @1816 }
-		}
-		
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				OR = {
-					has_tech = early_ship_hull_light
-					has_tech = early_ship_hull_cruiser
-					has_tech = early_ship_hull_heavy
-				}
-				factor = 500
-			}
-		}
-		
-		categories = {
-			naval_equipment
-		}
-	}
-
-	nrm_early_antiair = { # 1826
-
-		enable_equipment_modules = {
-			nrm_support_capital_AA_1
-			nrm_support_cruiser_AA_1
-			nrm_support_destroyer_AA_1
-		}
-
-		path = {
-			leads_to_tech = nrm_basic_antiair
-			research_cost_coeff = 1
-		}
-		path = {
-			leads_to_tech = nrm_basic_heavy_antiair
-			research_cost_coeff = 1
-		}
-
-		research_cost = 0.5
-		start_year = @year_1726
-		folder = {
-			name = mtgnavalsupportfolder
-			position = { x = -5 y = @1826 }
-		}
-
-		ai_will_do = {
-			factor = 5
-			modifier = {
-				has_war = yes
 				factor = 5
 			}
 		}
+
 		categories = {
 			naval_equipment
+			ship_modules_tech
+			cat_torpedoes
+			mio_cat_tech_all_screen_ship_and_modules
+			mio_cat_tech_all_destroyer_and_modules
 		}
 	}
-	nrm_basic_antiair = { # 1830
 
-		enable_equipment_modules = {
-			nrm_support_capital_AA_2
-			nrm_support_cruiser_AA_2
-			nrm_support_destroyer_AA_2
-			nrm_submarine_AA_1
-		}
-
-		path = {
-			leads_to_tech = nrm_improved_antiair
-			research_cost_coeff = 1
-		}
-
-		research_cost = 0.75
-		start_year = @year_1730
-		folder = {
-			name = mtgnavalsupportfolder
-			position = { x = -5 y = @1830 }
-		}
-
-		ai_will_do = {
-			factor = 5
-			modifier = {
-				has_war = yes
-				factor = 5
-			}
-		}
-		categories = {
-			naval_equipment
-		}
-	}
-	nrm_improved_antiair = { # 1834
-
-		enable_equipment_modules = {
-			nrm_support_capital_AA_3
-			nrm_support_cruiser_AA_3
-			nrm_support_destroyer_AA_3
-			nrm_submarine_AA_2
-		}
-
-		path = {
-			leads_to_tech = nrm_advanced_antiair
-			research_cost_coeff = 1
-		}
-
-		research_cost = 0.75
-		start_year = @year_1734
-		folder = {
-			name = mtgnavalsupportfolder
-			position = { x = -5 y = @1834 }
-		}
-
-		ai_will_do = {
-			factor = 5
-			modifier = {
-				has_war = yes
-				factor = 5
-			}
-		}
-		categories = {
-			naval_equipment
-		}
-	}
-	nrm_advanced_antiair = { # 1838
-
-		enable_equipment_modules = {
-			nrm_support_capital_AA_4
-			nrm_support_cruiser_AA_4
-			nrm_support_destroyer_AA_4
-			nrm_submarine_AA_3
-		}
+	modern_ship_torpedo_launcher = {
 
 		research_cost = 1
-		start_year = @year_1738
-		folder = {
-			name = mtgnavalsupportfolder
-			position = { x = -5 y = @1838 }
-		}
 
-		ai_will_do = {
-			factor = 5
-			modifier = {
-				has_war = yes
-				factor = 5
-			}
-		}
-		categories = {
-			naval_equipment
-		}
-	}
-
-	nrm_basic_heavy_antiair = { # 1828
+		start_year = 1744
 
 		enable_equipment_modules = {
-			nrm_support_capital_HAA_1
-			nrm_support_cruiser_HAA_1
-			nrm_support_destroyer_HAA_1
+			ship_torpedo_4
+			ship_torpedo_sub_4
+			ship_torpedo_fire_control_3
+		}
+
+		on_research_complete = {
+			custom_effect_tooltip = torpedo_advice_tt
 		}
 
 		path = {
-			leads_to_tech = nrm_improved_heavy_antiair
+			leads_to_tech = coldwar_ship_torpedo_launcher
 			research_cost_coeff = 1
 		}
 
-		research_cost = 1.5
-		start_year = @year_1728
 		folder = {
 			name = mtgnavalsupportfolder
-			position = { x = -4 y = @1828 }
+			position = { x = 0 y = 19 }
 		}
 
-		ai_will_do = {
-			factor = 5
-			modifier = {
-				has_war = yes
-				factor = 5
-			}
-		}
-		categories = {
-			naval_equipment
-		}
-	}
-	nrm_improved_heavy_antiair = { # 1832
-
-		enable_equipment_modules = {
-			nrm_support_capital_HAA_2
-			nrm_support_cruiser_HAA_2
-			nrm_support_destroyer_HAA_2
-		}
-
-		path = {
-			leads_to_tech = nrm_advanced_heavy_antiair
-			research_cost_coeff = 1
-		}
-
-		research_cost = 1.5
-		start_year = @year_1732
-		folder = {
-			name = mtgnavalsupportfolder
-			position = { x = -4 y = @1832 }
-		}
-
-		ai_will_do = {
-			factor = 5
-			modifier = {
-				has_war = yes
-				factor = 5
-			}
-		}
-		categories = {
-			naval_equipment
-		}
-	}
-	nrm_advanced_heavy_antiair = { # 1836
-
-		enable_equipment_modules = {
-			nrm_support_capital_HAA_3
-			nrm_support_cruiser_HAA_3
-			nrm_support_destroyer_HAA_3
-		}
-
-		path = {
-			leads_to_tech = nrm_modern_heavy_antiair
-			research_cost_coeff = 1
-		}
-
-		research_cost = 1.5
-		start_year = @year_1736
-		folder = {
-			name = mtgnavalsupportfolder
-			position = { x = -4 y = @1836 }
-		}
-
-		ai_will_do = {
-			factor = 5
-			modifier = {
-				has_war = yes
-				factor = 5
-			}
-		}
-		categories = {
-			naval_equipment
-		}
-	}
-	nrm_modern_heavy_antiair = { # 1840
-
-		enable_equipment_modules = {
-			nrm_support_capital_HAA_4
-			nrm_support_cruiser_HAA_4
-			nrm_support_destroyer_HAA_4
-		}
-
-		research_cost = 1.5
-		start_year = @year_1740
-		folder = {
-			name = mtgnavalsupportfolder
-			position = { x = -4 y = @1840 }
-		}
-
-		ai_will_do = {
-			factor = 5
-			modifier = {
-				has_war = yes
-				factor = 5
-			}
-		}
-		categories = {
-			naval_equipment
-		}
-	}
-
-	improved_light_battery = { # 1830
-		
-		research_cost = 1
-
-		start_year = @year_1730
-
-		path = {
-			leads_to_tech = advanced_light_battery
-			research_cost_coeff = 1
-		}
-		path = {
-			leads_to_tech = improved_dp_light_battery
-			research_cost_coeff = 1
-		}
-
-		enable_equipment_modules = { 
-			nrm_capital_tertiary_HA_3_2_x04
-			nrm_capital_tertiary_HA_3_2_x08
-			nrm_capital_tertiary_HA_3_2_x12
-			nrm_capital_tertiary_HA_3_2_x16
-			nrm_capital_tertiary_HA_4_2_x04
-			nrm_capital_tertiary_HA_4_2_x08
-			nrm_capital_tertiary_HA_4_2_x12
-			nrm_capital_tertiary_HA_4_2_x16
-			nrm_cruiser_tertiary_HA_3_2_x04
-			nrm_cruiser_tertiary_HA_3_2_x08
-			nrm_cruiser_tertiary_HA_3_2_x12
-			nrm_cruiser_tertiary_HA_4_2_x04
-			nrm_cruiser_tertiary_HA_4_2_x08
-			nrm_cruiser_tertiary_HA_4_2_x12
-			nrm_destroyer_battery_4_2_x3
-			nrm_destroyer_battery_4_2_x4
-			nrm_destroyer_battery_4_2_x5
-			nrm_destroyer_battery_4_2_x6
-			nrm_destroyer_battery_4_2_x8
-			nrm_destroyer_battery_HA_3_2_x3
-			nrm_destroyer_battery_HA_3_2_x4
-			nrm_destroyer_battery_HA_3_2_x5
-			nrm_destroyer_battery_HA_3_2_x6
-			nrm_destroyer_battery_HA_3_2_x8
-			nrm_destroyer_battery_HA_4_2_x3
-			nrm_destroyer_battery_HA_4_2_x4
-			nrm_destroyer_battery_HA_4_2_x5
-			nrm_destroyer_battery_HA_4_2_x6
-			nrm_destroyer_battery_HA_4_2_x8
-		}
-		
-
-
-		folder = {
-			name = mtgnavalsupportfolder
-			position = { x = -2 y = @1830 }
-		}
-		
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				has_tech = improved_ship_hull_light
-				factor = 20
-			}
-		}
-		
-		categories = {
-			naval_equipment
-		}
-	}
-	improved_dp_light_battery = { # 1832
-		
-		research_cost = 2
-
-		start_year = @year_1732
-
-		path = {
-			leads_to_tech = advanced_dp_light_battery
-			research_cost_coeff = 1
-		}
-
-		enable_equipment_modules = { 
-			nrm_capital_secondary_DP_4_2_x08
-			nrm_capital_secondary_DP_4_2_x12
-			nrm_capital_tertiary_DP_4_2_x04
-			nrm_capital_tertiary_DP_4_2_x08
-			nrm_capital_tertiary_DP_4_2_x12
-			nrm_cruiser_tertiary_DP_4_2_x04
-			nrm_cruiser_tertiary_DP_4_2_x08
-			nrm_cruiser_tertiary_DP_4_2_x12
-			nrm_destroyer_battery_DP_4_2_x3
-			nrm_destroyer_battery_DP_4_2_x4
-			nrm_destroyer_battery_DP_4_2_x5
-			nrm_destroyer_battery_DP_4_2_x6
-			nrm_destroyer_battery_DP_4_2_x8
-		}
-		
-
-
-		folder = {
-			name = mtgnavalsupportfolder
-			position = { x = -3 y = @1832 }
-		}
-		
-		ai_will_do = {
-			factor = 5
-			modifier = {
-				has_tech = improved_ship_hull_light
-				factor = 20
-			}
-			modifier = {
-				tag = EPY
-				date > 1828.1.1
-				factor = 10
-			}
-			modifier = {
-				any_enemy_country = { has_navy_size = { size > 2 unit = carrier } }
-				factor = 10
-			}
-		}
-		
-		categories = {
-			naval_equipment
-		}
-	}
-	advanced_light_battery = { # 1834
-		
-		research_cost = 1
-
-		start_year = @year_1734
-
-		path = {
-			leads_to_tech = advanced_dp_light_battery
-			research_cost_coeff = 1
-		}
-		
-		path = {
-			leads_to_tech = modern_light_antiair
-			research_cost_coeff = 1
-		}
-
-		enable_equipment_modules = { 
-			nrm_capital_tertiary_HA_3_3_x04
-			nrm_capital_tertiary_HA_3_3_x08
-			nrm_capital_tertiary_HA_3_3_x12
-			nrm_capital_tertiary_HA_3_3_x16
-			nrm_capital_tertiary_HA_4_3_x04
-			nrm_capital_tertiary_HA_4_3_x08
-			nrm_capital_tertiary_HA_4_3_x12
-			nrm_capital_tertiary_HA_4_3_x16
-			nrm_cruiser_tertiary_HA_3_3_x04
-			nrm_cruiser_tertiary_HA_3_3_x08
-			nrm_cruiser_tertiary_HA_3_3_x12
-			nrm_cruiser_tertiary_HA_4_3_x04
-			nrm_cruiser_tertiary_HA_4_3_x08
-			nrm_cruiser_tertiary_HA_4_3_x12
-			nrm_destroyer_battery_4_3_x3
-			nrm_destroyer_battery_4_3_x4
-			nrm_destroyer_battery_4_3_x5
-			nrm_destroyer_battery_4_3_x6
-			nrm_destroyer_battery_4_3_x8
-			nrm_destroyer_battery_HA_3_3_x3
-			nrm_destroyer_battery_HA_3_3_x4
-			nrm_destroyer_battery_HA_3_3_x5
-			nrm_destroyer_battery_HA_3_3_x6
-			nrm_destroyer_battery_HA_3_3_x8
-			nrm_destroyer_battery_HA_4_3_x3
-			nrm_destroyer_battery_HA_4_3_x4
-			nrm_destroyer_battery_HA_4_3_x5
-			nrm_destroyer_battery_HA_4_3_x6
-			nrm_destroyer_battery_HA_4_3_x8
-		}
-		
-
-
-		folder = {
-			name = mtgnavalsupportfolder
-			position = { x = -2 y = @1834 }
-		}
-		
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				has_tech = improved_ship_hull_light
-				factor = 10
-			}
-		}
-		
-		categories = {
-			naval_equipment
-		}
-	}
-	advanced_dp_light_battery = { # 1836
-		
-		research_cost = 2
-
-		path = {
-			leads_to_tech = modern_light_antiair
-			research_cost_coeff = 1
-		}
-
-		start_year = @year_1736
-
-		enable_equipment_modules = {
-			nrm_capital_secondary_DP_4_3_x08
-			nrm_capital_secondary_DP_4_3_x12
-			nrm_capital_tertiary_DP_4_3_x04
-			nrm_capital_tertiary_DP_4_3_x08
-			nrm_capital_tertiary_DP_4_3_x12
-			nrm_cruiser_tertiary_DP_4_3_x04
-			nrm_cruiser_tertiary_DP_4_3_x08
-			nrm_cruiser_tertiary_DP_4_3_x12
-			nrm_destroyer_battery_DP_4_3_x3
-			nrm_destroyer_battery_DP_4_3_x4
-			nrm_destroyer_battery_DP_4_3_x5
-			nrm_destroyer_battery_DP_4_3_x6
-			nrm_destroyer_battery_DP_4_3_x8
-		}
-		
-
-
-		folder = {
-			name = mtgnavalsupportfolder
-			position = { x = -3 y = @1836 }
-		}
-		
-		ai_will_do = {
-			factor = 5
-			modifier = {
-				has_tech = improved_ship_hull_light
-				factor = 10
-			}
-			modifier = {
-				any_enemy_country = { has_navy_size = { size > 2 unit = carrier } }
-				factor = 10
-			}
-		}
-		
-		categories = {
-			naval_equipment
-		}
-	}
-
-	basic_light_shell = { # 1828
-		
-		xp_research_type = navy
-		xp_boost_cost = 50
-		xp_research_bonus = 1
-		research_cost = 2
-
-		start_year = @year_1728
-
-		path = {
-			leads_to_tech = improved_light_shell
-			research_cost_coeff = 1
-		}
-		
-		destroyer = {
-			lg_attack = 0.05
-			lg_armor_piercing = 0.05
-		}
-		light_cruiser = {
-			lg_attack = 0.05
-			lg_armor_piercing = 0.025
-		}
-		heavy_cruiser = {
-			lg_attack = 0.05
-			lg_armor_piercing = 0.05
-		}
-		battleship = {
-			lg_attack = 0.05
-			lg_armor_piercing = 0.05
-		}
-		battle_cruiser = {
-			lg_attack = 0.05
-			lg_armor_piercing = 0.05
-		}
-		carrier = {
-			lg_attack = 0.05
-			lg_armor_piercing = 0.05
-		}
-
-		folder = {
-			name = mtgnavalsupportfolder
-			position = { x = -1 y = @1828 }
-		}
-		
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				has_war = yes
-				factor = 10
-			}
-		}
-		
-		categories = {
-			naval_equipment
-		}
-	}
-	improved_light_shell = { # 1832
-		
-		xp_research_type = navy
-		xp_boost_cost = 50
-		xp_research_bonus = 1
-		research_cost = 2.5
-
-		start_year = @year_1732
-		
-		destroyer = {
-			lg_attack = 0.05
-			lg_armor_piercing = 0.05
-		}
-		light_cruiser = {
-			lg_attack = 0.05
-			lg_armor_piercing = 0.025
-		}
-		heavy_cruiser = {
-			lg_attack = 0.05
-			lg_armor_piercing = 0.05
-		}
-		battleship = {
-			lg_attack = 0.05
-			lg_armor_piercing = 0.05
-		}
-		battle_cruiser = {
-			lg_attack = 0.05
-			lg_armor_piercing = 0.05
-		}
-		carrier = {
-			lg_attack = 0.05
-			lg_armor_piercing = 0.05
-		}
-
-		folder = {
-			name = mtgnavalsupportfolder
-			position = { x = -1 y = @1832 }
-		}
-		
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				has_war = yes
-				factor = 10
-			}
-		}
-		
-		categories = {
-			naval_equipment
-		}
-	}
-
-	improved_light_battery_2 = { # 1830
-		
-		research_cost = 1
-
-		start_year = @year_1730
-
-		path = {
-			leads_to_tech = advanced_light_battery_2
-			research_cost_coeff = 1
-		}
-		
-		path = {
-			leads_to_tech = improved_dp_light_battery_2
-			research_cost_coeff = 1
-		}
-
-		enable_equipment_modules = { 
-			nrm_capital_secondary_SB_5_2_x08
-			nrm_capital_secondary_SB_5_2_x12
-			nrm_capital_secondary_SB_5_2_x16
-			nrm_capital_secondary_SB_5_2_x20
-			nrm_capital_tertiary_HA_5_2_x04
-			nrm_capital_tertiary_HA_5_2_x08
-			nrm_capital_tertiary_HA_5_2_x12
-			nrm_capital_tertiary_HA_5_2_x16
-			nrm_cruiser_tertiary_SB_5_2_x04
-			nrm_cruiser_tertiary_SB_5_2_x08
-			nrm_cruiser_tertiary_SB_5_2_x12
-			nrm_cruiser_tertiary_HA_5_2_x04
-			nrm_cruiser_tertiary_HA_5_2_x08
-			nrm_cruiser_tertiary_HA_5_2_x12
-			nrm_cruiser_battery_5_2_x04
-			nrm_cruiser_battery_5_2_x06
-			nrm_cruiser_battery_5_2_x08
-			nrm_cruiser_battery_5_2_x09
-			nrm_cruiser_battery_5_2_x10
-			nrm_cruiser_battery_5_2_x12
-			nrm_cruiser_battery_5_2_x15
-			nrm_destroyer_battery_5_2_x3
-			nrm_destroyer_battery_5_2_x4
-			nrm_destroyer_battery_5_2_x5
-			nrm_destroyer_battery_5_2_x6
-			nrm_destroyer_battery_5_2_x8
-			nrm_destroyer_battery_HA_5_2_x3
-			nrm_destroyer_battery_HA_5_2_x4
-			nrm_destroyer_battery_HA_5_2_x5
-			nrm_destroyer_battery_HA_5_2_x6
-			nrm_destroyer_battery_HA_5_2_x8
-		}
-		
-
-
-		folder = {
-			name = mtgnavalsupportfolder
-			position = { x = 0 y = @1830 }
-		}
-		
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				has_tech = improved_ship_hull_light
-				factor = 20
-			}
-		}
-		
-		categories = {
-			naval_equipment
-		}
-	}
-	improved_dp_light_battery_2 = { # 1832
-		
-		research_cost = 2.25
-
-		start_year = @year_1732
-
-		path = {
-			leads_to_tech = advanced_dp_light_battery_2
-			research_cost_coeff = 1
-		}
-
-		enable_equipment_modules = { 
-			nrm_capital_secondary_DP_5_2_x08
-			nrm_capital_secondary_DP_5_2_x12
-			nrm_capital_tertiary_DP_5_2_x04
-			nrm_capital_tertiary_DP_5_2_x08
-			nrm_capital_tertiary_DP_5_2_x12
-			nrm_cruiser_battery_DP_5_2_x06
-			nrm_cruiser_battery_DP_5_2_x08
-			nrm_cruiser_battery_DP_5_2_x10
-			nrm_cruiser_battery_DP_5_2_x12
-			nrm_cruiser_tertiary_DP_5_2_x04
-			nrm_cruiser_tertiary_DP_5_2_x08
-			nrm_cruiser_tertiary_DP_5_2_x12
-			nrm_destroyer_battery_DP_5_2_x3
-			nrm_destroyer_battery_DP_5_2_x4
-			nrm_destroyer_battery_DP_5_2_x5
-			nrm_destroyer_battery_DP_5_2_x6
-			nrm_destroyer_battery_DP_5_2_x8
-		}
-		
-
-
-		folder = {
-			name = mtgnavalsupportfolder
-			position = { x = 1 y = @1832 }
-		}
-		
-		ai_will_do = {
-			factor = 5
-			modifier = {
-				has_tech = improved_ship_hull_light
-				factor = 20
-			}
-			modifier = {
-				tag = MJU
-				date > 1829.1.1
-				factor = 5
-			}
-			modifier = {
-				tag = MJU
-				date < 1829.1.1
-				factor = 0
-			}
-			modifier = {
-				any_enemy_country = { has_navy_size = { size > 2 unit = carrier } }
-				factor = 10
-			}
-		}
-		
-		categories = {
-			naval_equipment
-		}
-	}
-	advanced_light_battery_2 = { # 1834
-		
-		research_cost = 1
-
-		start_year = @year_1734
-
-		path = {
-			leads_to_tech = advanced_dp_light_battery_2
-			research_cost_coeff = 1
-		}
-
-		enable_equipment_modules = { 
-			nrm_capital_secondary_SB_5_3_x08
-			nrm_capital_secondary_SB_5_3_x12
-			nrm_capital_secondary_SB_5_3_x16
-			nrm_capital_secondary_SB_5_3_x20
-			nrm_capital_tertiary_HA_5_3_x04
-			nrm_capital_tertiary_HA_5_3_x08
-			nrm_capital_tertiary_HA_5_3_x12
-			nrm_capital_tertiary_HA_5_3_x16
-			nrm_cruiser_tertiary_SB_5_3_x04
-			nrm_cruiser_tertiary_SB_5_3_x08
-			nrm_cruiser_tertiary_SB_5_3_x12
-			nrm_cruiser_tertiary_HA_5_3_x04
-			nrm_cruiser_tertiary_HA_5_3_x08
-			nrm_cruiser_tertiary_HA_5_3_x12
-			nrm_cruiser_battery_5_3_x04
-			nrm_cruiser_battery_5_3_x06
-			nrm_cruiser_battery_5_3_x08
-			nrm_cruiser_battery_5_3_x09
-			nrm_cruiser_battery_5_3_x10
-			nrm_cruiser_battery_5_3_x12
-			nrm_cruiser_battery_5_3_x15
-			nrm_destroyer_battery_5_3_x3
-			nrm_destroyer_battery_5_3_x4
-			nrm_destroyer_battery_5_3_x5
-			nrm_destroyer_battery_5_3_x6
-			nrm_destroyer_battery_5_3_x8
-			nrm_destroyer_battery_HA_5_3_x3
-			nrm_destroyer_battery_HA_5_3_x4
-			nrm_destroyer_battery_HA_5_3_x5
-			nrm_destroyer_battery_HA_5_3_x6
-			nrm_destroyer_battery_HA_5_3_x8
-		}
-		
-
-
-		folder = {
-			name = mtgnavalsupportfolder
-			position = { x = 0 y = @1834 }
-		}
-		
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				has_tech = improved_ship_hull_light
-				factor = 10
-			}
-		}
-		
-		categories = {
-			naval_equipment
-		}
-	}
-	advanced_dp_light_battery_2 = { # 1838
-		
-		research_cost = 2.25
-
-		start_year = @year_1738
-
-		enable_equipment_modules = { 
-			nrm_capital_secondary_DP_5_3_x08
-			nrm_capital_secondary_DP_5_3_x12
-			nrm_capital_tertiary_DP_5_3_x04
-			nrm_capital_tertiary_DP_5_3_x08
-			nrm_capital_tertiary_DP_5_3_x12
-			nrm_cruiser_battery_DP_5_3_x06
-			nrm_cruiser_battery_DP_5_3_x08
-			nrm_cruiser_battery_DP_5_3_x10
-			nrm_cruiser_battery_DP_5_3_x12
-			nrm_cruiser_tertiary_DP_5_3_x04
-			nrm_cruiser_tertiary_DP_5_3_x08
-			nrm_cruiser_tertiary_DP_5_3_x12
-			nrm_destroyer_battery_DP_5_3_x3
-			nrm_destroyer_battery_DP_5_3_x4
-			nrm_destroyer_battery_DP_5_3_x5
-			nrm_destroyer_battery_DP_5_3_x6
-			nrm_destroyer_battery_DP_5_3_x8
-		}
-		
-
-
-		folder = {
-			name = mtgnavalsupportfolder
-			position = { x = 1 y = @1838 }
-		}
-		
-		ai_will_do = {
-			factor = 5
-			modifier = {
-				has_tech = improved_ship_hull_light
-				factor = 10
-			}
-			modifier = {
-				tag = MRC
-				factor = 5
-			}
-			modifier = {
-				any_enemy_country = { has_navy_size = { size > 2 unit = carrier } }
-				factor = 10
-			}
-		}
-		
-		categories = {
-			naval_equipment
-		}
-	}
-
-	improved_medium_battery = { # 1830
-		
-		research_cost = 1.25
-
-		start_year = @year_1730
-
-		path = {
-			leads_to_tech = advanced_medium_battery
-			research_cost_coeff = 1
-		}
-		path = {
-			leads_to_tech = improved_dp_medium_battery
-			research_cost_coeff = 1
-		}
-
-		enable_equipment_modules = { 
-			nrm_capital_secondary_SB_5h_2_x08
-			nrm_capital_secondary_SB_5h_2_x12
-			nrm_capital_secondary_SB_5h_2_x16
-			nrm_capital_secondary_SB_5h_2_x20
-			nrm_capital_secondary_SB_6_2_x08
-			nrm_capital_secondary_SB_6_2_x12
-			nrm_capital_secondary_SB_6_2_x16
-			nrm_capital_secondary_SB_6_2_x20
-			nrm_cruiser_battery_5h_2_x04
-			nrm_cruiser_battery_5h_2_x06
-			nrm_cruiser_battery_5h_2_x08
-			nrm_cruiser_battery_5h_2_x09
-			nrm_cruiser_battery_5h_2_x10
-			nrm_cruiser_battery_5h_2_x12
-			nrm_cruiser_battery_5h_2_x15
-			nrm_cruiser_battery_6_2_x04
-			nrm_cruiser_battery_6_2_x06
-			nrm_cruiser_battery_6_2_x08
-			nrm_cruiser_battery_6_2_x09
-			nrm_cruiser_battery_6_2_x10
-			nrm_cruiser_battery_6_2_x12
-			nrm_cruiser_battery_6_2_x15
-			nrm_cruiser_tertiary_SB_5h_2_x04
-			nrm_cruiser_tertiary_SB_5h_2_x08
-			nrm_cruiser_tertiary_SB_5h_2_x12
-			nrm_cruiser_tertiary_SB_6_2_x04
-			nrm_cruiser_tertiary_SB_6_2_x08
-			nrm_cruiser_tertiary_SB_6_2_x12
-			nrm_destroyer_battery_5h_2_x3
-			nrm_destroyer_battery_5h_2_x4
-			nrm_destroyer_battery_5h_2_x5
-			nrm_destroyer_battery_5h_2_x6
-			nrm_destroyer_battery_5h_2_x8
-			nrm_destroyer_battery_6_2_x3
-			nrm_destroyer_battery_6_2_x4
-			nrm_destroyer_battery_6_2_x5
-			nrm_destroyer_battery_6_2_x6
-		}
-		
-
-
-		folder = {
-			name = mtgnavalsupportfolder
-			position = { x = 3 y = @1830 }
-		}
-		
-		ai_will_do = {
-			factor = 5
-			modifier = {
-				has_tech = advanced_ship_hull_cruiser
-				factor = 5
-			}
-		}
-		
-		categories = {
-			naval_equipment
-		}
-	}
-	improved_dp_medium_battery = { # 1832
-		
-		research_cost = 2.25
-
-		start_year = @year_1732
-
-		path = {
-			leads_to_tech = advanced_dp_medium_battery
-			research_cost_coeff = 1
-		}
-
-		enable_equipment_modules = { 
-			nrm_capital_secondary_DP_5h_2_x08
-			nrm_capital_secondary_DP_5h_2_x12
-			nrm_capital_tertiary_DP_5h_2_x04
-			nrm_capital_tertiary_DP_5h_2_x08
-			nrm_capital_tertiary_DP_5h_2_x12
-			nrm_cruiser_battery_DP_5h_2_x06
-			nrm_cruiser_battery_DP_5h_2_x08
-			nrm_cruiser_battery_DP_5h_2_x10
-			nrm_cruiser_battery_DP_5h_2_x12
-		}
-		
-
-
-		folder = {
-			name = mtgnavalsupportfolder
-			position = { x = 2 y = @1832 }
-		}
-		
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				tag = HHE
-				factor = 20
-			}
-			modifier = {
-				any_enemy_country = { has_navy_size = { size > 2 unit = carrier } }
-				factor = 10
-			}
-		}
-		
-		categories = {
-			naval_equipment
-		}
-	}
-	advanced_medium_battery = { # 1834
-		
-		research_cost = 1.25
-
-		start_year = @year_1734
-
-		path = {
-			leads_to_tech = modern_medium_battery
-			research_cost_coeff = 1
-		}
-		path = {
-			leads_to_tech = advanced_dp_medium_battery
-			research_cost_coeff = 1
-		}
-
-		enable_equipment_modules = { 
-			nrm_capital_secondary_SB_5h_3_x08
-			nrm_capital_secondary_SB_5h_3_x12
-			nrm_capital_secondary_SB_5h_3_x16
-			nrm_capital_secondary_SB_5h_3_x20
-			nrm_capital_secondary_SB_6_3_x08
-			nrm_capital_secondary_SB_6_3_x12
-			nrm_capital_secondary_SB_6_3_x16
-			nrm_capital_secondary_SB_6_3_x20
-			nrm_cruiser_battery_5h_3_x04
-			nrm_cruiser_battery_5h_3_x06
-			nrm_cruiser_battery_5h_3_x08
-			nrm_cruiser_battery_5h_3_x09
-			nrm_cruiser_battery_5h_3_x10
-			nrm_cruiser_battery_5h_3_x12
-			nrm_cruiser_battery_5h_3_x15
-			nrm_cruiser_battery_6_3_x04
-			nrm_cruiser_battery_6_3_x06
-			nrm_cruiser_battery_6_3_x08
-			nrm_cruiser_battery_6_3_x09
-			nrm_cruiser_battery_6_3_x10
-			nrm_cruiser_battery_6_3_x12
-			nrm_cruiser_battery_6_3_x15
-			nrm_cruiser_tertiary_SB_5h_3_x04
-			nrm_cruiser_tertiary_SB_5h_3_x08
-			nrm_cruiser_tertiary_SB_5h_3_x12
-			nrm_cruiser_tertiary_SB_6_3_x04
-			nrm_cruiser_tertiary_SB_6_3_x08
-			nrm_cruiser_tertiary_SB_6_3_x12
-			nrm_destroyer_battery_5h_3_x3
-			nrm_destroyer_battery_5h_3_x4
-			nrm_destroyer_battery_5h_3_x5
-			nrm_destroyer_battery_5h_3_x6
-			nrm_destroyer_battery_5h_3_x8
-			nrm_destroyer_battery_6_3_x3
-			nrm_destroyer_battery_6_3_x4
-			nrm_destroyer_battery_6_3_x5
-			nrm_destroyer_battery_6_3_x6
-		}
-		
-
-
-		folder = {
-			name = mtgnavalsupportfolder
-			position = { x = 3 y = @1834 }
-		}
-		
-		ai_will_do = {
-			factor = 5
-			modifier = {
-				tag = MRC
-				factor = 5
-			}
-		}
-		
-		categories = {
-			naval_equipment
-		}
-	}
-	advanced_dp_medium_battery = { # 1838
-		
-		research_cost = 2.25
-
-		start_year = @year_1738
-
-		enable_equipment_modules = { 
-			nrm_capital_secondary_DP_5h_3_x08
-			nrm_capital_secondary_DP_5h_3_x12
-			nrm_capital_secondary_DP_6_3_x08
-			nrm_capital_secondary_DP_6_3_x12
-			nrm_capital_tertiary_DP_5h_3_x04
-			nrm_capital_tertiary_DP_5h_3_x08
-			nrm_capital_tertiary_DP_5h_3_x12
-			nrm_capital_tertiary_DP_6_3_x04
-			nrm_capital_tertiary_DP_6_3_x08
-			nrm_capital_tertiary_DP_6_3_x12
-			nrm_cruiser_battery_DP_5h_3_x06
-			nrm_cruiser_battery_DP_5h_3_x08
-			nrm_cruiser_battery_DP_5h_3_x10
-			nrm_cruiser_battery_DP_5h_3_x12
-			nrm_cruiser_battery_DP_6_3_x06
-			nrm_cruiser_battery_DP_6_3_x08
-			nrm_cruiser_battery_DP_6_3_x10
-			nrm_cruiser_battery_DP_6_3_x12
-		}
-		
-
-
-		folder = {
-			name = mtgnavalsupportfolder
-			position = { x = 2 y = @1838 }
-		}
-		
-		ai_will_do = {
-			factor = 2
-			modifier = {
-				tag = HHE
-				factor = 20
-			}
-		}
-		
-		categories = {
-			naval_equipment
-		}
-	}
-	modern_medium_battery = { # 1839
-		
-		research_cost = 1.5
-
-		start_year = 1739
-
-		path = {
-			leads_to_tech = modern_dp_medium_battery
-			research_cost_coeff = 1
-		}
-
-		enable_equipment_modules = { 
-			nrm_cruiser_battery_6_4_x04
-			nrm_cruiser_battery_6_4_x06
-			nrm_cruiser_battery_6_4_x08
-			nrm_cruiser_battery_6_4_x09
-			nrm_cruiser_battery_6_4_x10
-			nrm_cruiser_battery_6_4_x12
-			nrm_cruiser_battery_6_4_x15
-		}
-		
-
-
-		folder = {
-			name = mtgnavalsupportfolder
-			position = { x = 3 y = 28 }
-		}
-		
-		ai_will_do = {
-			factor = 5
-			modifier = {
-				tag = MRC
-				factor = 5
-			}
-		}
-		
-		categories = {
-			naval_equipment
-		}
-	}
-	modern_dp_medium_battery = { # 1842
-		
-		research_cost = 2.5
-
-		start_year = @year_1742
-
-		enable_equipment_modules = { 
-			nrm_capital_secondary_DP_6_4_x08
-			nrm_capital_secondary_DP_6_4_x12
-			nrm_capital_tertiary_DP_6_4_x04
-			nrm_capital_tertiary_DP_6_4_x08
-			nrm_capital_tertiary_DP_6_4_x12
-			nrm_cruiser_battery_DP_6_4_x06
-			nrm_cruiser_battery_DP_6_4_x08
-			nrm_cruiser_battery_DP_6_4_x10
-			nrm_cruiser_battery_DP_6_4_x12
-		}
-		
-
-
-		folder = {
-			name = mtgnavalsupportfolder
-			position = { x = 3 y = @1842 }
-		}
-		
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				tag = MRC
-				factor = 10
-			}
-			modifier = {
-				any_enemy_country = { has_navy_size = { size > 2 unit = carrier } }
-				factor = 10
-			}
-		}
-		
-		categories = {
-			naval_equipment
-		}
-	}
-
-	basic_medium_shell = { # 1828
-		
-		xp_research_type = navy
-		xp_boost_cost = 50
-		xp_research_bonus = 1
-		research_cost = 2
-
-		start_year = @year_1728
-
-		path = {
-			leads_to_tech = improved_medium_shell
-			research_cost_coeff = 1
-		}
-		
-		light_cruiser = {
-			lg_attack = 0.05
-			lg_armor_piercing = 0.05
-		}
-		heavy_cruiser = {
-			hg_attack = 0.05
-			hg_armor_piercing = 0.05
-		}
-
-		folder = {
-			name = mtgnavalsupportfolder
-			position = { x = 4 y = @1828 }
-		}
-		
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				has_war = yes
-				factor = 7
-			}
-		}
-		
-		categories = {
-			naval_equipment
-		}
-	}
-	improved_medium_shell = { # 1832
-		
-		xp_research_type = navy
-		xp_boost_cost = 50
-		xp_research_bonus = 1
-		research_cost = 2.5
-
-		start_year = @year_1732
-		
-		
-		light_cruiser = {
-			lg_attack = 0.05
-			lg_armor_piercing = 0.05
-		}
-		heavy_cruiser = {
-			hg_attack = 0.05
-			hg_armor_piercing = 0.05
-		}
-		
-
-		folder = {
-			name = mtgnavalsupportfolder
-			position = { x = 4 y = @1832 }
-		}
-		
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				has_war = yes
-				factor = 7
-			}
-		}
-		
-		categories = {
-			naval_equipment
-		}
-	}
-
-	basic_medium_battery_2 = { # 1820
-		
-		research_cost = 1.25
-
-		start_year = @year_1720
-
-		path = {
-			leads_to_tech = improved_medium_battery_2
-			research_cost_coeff = 1
-		}
-
-		enable_equipment_modules = { 
-			nrm_capital_secondary_SBH_8_1_x06
-			nrm_capital_secondary_SBH_8_1_x08
-			nrm_capital_secondary_SBH_8_1_x10
-			nrm_capital_secondary_SBH_8_1_x12
-			nrm_cruiser_battery_8_1_x04
-			nrm_cruiser_battery_8_1_x06
-			nrm_cruiser_battery_8_1_x08
-			nrm_cruiser_battery_8_1_x09
-			nrm_cruiser_battery_8_1_x10
-			nrm_cruiser_battery_8_1_x12
-			nrm_submarine_deckgun_8
-		}
-		
-
-
-		folder = {
-			name = mtgnavalsupportfolder
-			position = { x = 5 y = @1820 }
-		}
-		
-		ai_will_do = {
-			factor = 5
-			modifier = {
-				has_tech = improved_ship_hull_cruiser
-				factor = 5
-			}
-		}
-		
-		categories = {
-			naval_equipment
-		}
-	}
-	improved_medium_battery_2 = { # 1828
-		
-		research_cost = 1.25
-
-		start_year = @year_1728
-
-		path = {
-			leads_to_tech = advanced_medium_battery_2
-			research_cost_coeff = 1
-		}
-
-		enable_equipment_modules = { 
-			nrm_capital_secondary_SBH_8_2_x06
-			nrm_capital_secondary_SBH_8_2_x08
-			nrm_capital_secondary_SBH_8_2_x10
-			nrm_capital_secondary_SBH_8_2_x12
-			nrm_cruiser_battery_8_2_x04
-			nrm_cruiser_battery_8_2_x06
-			nrm_cruiser_battery_8_2_x08
-			nrm_cruiser_battery_8_2_x09
-			nrm_cruiser_battery_8_2_x10
-			nrm_cruiser_battery_8_2_x12
-		}
-		
-
-
-		folder = {
-			name = mtgnavalsupportfolder
-			position = { x = 5 y = @1828 }
-		}
-		
-		ai_will_do = {
-			factor = 5
-			modifier = {
-				has_tech = advanced_ship_hull_cruiser
-				factor = 5
-			}
-		}
-		
-		categories = {
-			naval_equipment
-		}
-	}
-	advanced_medium_battery_2 = { # 1834
-		
-		research_cost = 1.25
-
-		start_year = @year_1734
-
-		path = {
-			leads_to_tech = modern_medium_battery_2
-			research_cost_coeff = 1
-		}
-
-		enable_equipment_modules = { 
-			nrm_capital_secondary_SBH_8_3_x06
-			nrm_capital_secondary_SBH_8_3_x08
-			nrm_capital_secondary_SBH_8_3_x10
-			nrm_capital_secondary_SBH_8_3_x12
-			nrm_cruiser_battery_8_3_x04
-			nrm_cruiser_battery_8_3_x06
-			nrm_cruiser_battery_8_3_x08
-			nrm_cruiser_battery_8_3_x09
-			nrm_cruiser_battery_8_3_x10
-			nrm_cruiser_battery_8_3_x12
-		}
-		
-
-
-		folder = {
-			name = mtgnavalsupportfolder
-			position = { x = 5 y = @1834 }
-		}
-		
-		ai_will_do = {
-			factor = 5
-			modifier = {
-				tag = MRC
-				factor = 5
-			}
-		}
-		
-		categories = {
-			naval_equipment
-		}
-	}
-	modern_medium_battery_2 = { # 1840
-		
-		research_cost = 2
-
-		start_year = @year_1740
-
-		enable_equipment_modules = { 
-			nrm_cruiser_battery_8_4_x04
-			nrm_cruiser_battery_8_4_x06
-			nrm_cruiser_battery_8_4_x08
-			nrm_cruiser_battery_8_4_x09
-			nrm_cruiser_battery_8_4_x10
-			nrm_cruiser_battery_8_4_x12
-		}
-		
-
-
-		folder = {
-			name = mtgnavalsupportfolder
-			position = { x = 5 y = @1840 }
-		}
-		
-		ai_will_do = {
-			factor = 4
-			modifier = {
-				tag = MRC
-				factor = 10
-			}
-		}
-		
-		categories = {
-			naval_equipment
-		}
-	}
-
-	improved_heavy_battery = { # 1830
-		
-		research_cost = 1.5
-
-		start_year = @year_1730
-
-		path = {
-			leads_to_tech = advanced_heavy_battery
-			research_cost_coeff = 1
-		}
-
-		enable_equipment_modules = { 
-			nrm_capital_battery_11_2_2x2
-			nrm_capital_battery_11_2_2x3
-			nrm_capital_battery_11_2_2x4
-			nrm_capital_battery_11_2_2x5
-			nrm_capital_battery_11_2_2x6
-			nrm_capital_battery_11_2_3x2
-			nrm_capital_battery_11_2_3x3
-			nrm_capital_battery_11_2_3x4
-			nrm_capital_battery_11_2_4x2
-			nrm_capital_battery_11_2_4x3
-			nrm_capital_battery_11_2_a3x2_2x1
-			nrm_capital_battery_11_2_a3x2_2x2
-			nrm_capital_battery_11_2_a4x2_2x1
-			nrm_capital_battery_12_2_2x2
-			nrm_capital_battery_12_2_2x3
-			nrm_capital_battery_12_2_2x4
-			nrm_capital_battery_12_2_2x5
-			nrm_capital_battery_12_2_2x6
-			nrm_capital_battery_12_2_3x2
-			nrm_capital_battery_12_2_3x3
-			nrm_capital_battery_12_2_3x4
-			nrm_capital_battery_12_2_4x2
-			nrm_capital_battery_12_2_4x3
-			nrm_capital_battery_12_2_a3x2_2x1
-			nrm_capital_battery_12_2_a3x2_2x2
-			nrm_capital_battery_12_2_a4x2_2x1
-			nrm_cruiser_battery_PB_11_2_2x2
-			nrm_cruiser_battery_PB_11_2_2x3
-			nrm_cruiser_battery_PB_11_2_2x4
-			nrm_cruiser_battery_PB_11_2_3x2
-			nrm_cruiser_battery_PB_11_2_3x3
-			nrm_cruiser_battery_PB_11_2_4x2
-			nrm_cruiser_battery_PB_12_2_2x2
-			nrm_cruiser_battery_PB_12_2_2x3
-			nrm_cruiser_battery_PB_12_2_2x4
-			nrm_cruiser_battery_PB_12_2_3x2
-			nrm_cruiser_battery_PB_12_2_3x3
-			nrm_cruiser_battery_PB_12_2_4x2
-		}
-		
-
-
-		folder = {
-			name = mtgnavalsupportfolder
-			position = { x = 6 y = @1830 }
-		}
-		
-		ai_will_do = {
-			factor = 2
-			modifier = {
-				has_tech = improved_ship_hull_heavy
-				factor = 5
-			}
-			modifier = {
-				OR = {
-					tag = MJU
-					tag = MRC
-					tag = RVV
-				}
-				factor = 10
-			}
-		}
-		
-		categories = {
-			naval_equipment
-		}
-	}
-	advanced_heavy_battery = { # 1834
-		
-		research_cost = 1.5
-
-		start_year = @year_1734
-
-		enable_equipment_modules = { 
-			nrm_capital_battery_11_3_2x2
-			nrm_capital_battery_11_3_2x3
-			nrm_capital_battery_11_3_2x4
-			nrm_capital_battery_11_3_2x5
-			nrm_capital_battery_11_3_2x6
-			nrm_capital_battery_11_3_3x2
-			nrm_capital_battery_11_3_3x3
-			nrm_capital_battery_11_3_3x4
-			nrm_capital_battery_11_3_4x2
-			nrm_capital_battery_11_3_4x3
-			nrm_capital_battery_11_3_a3x2_2x1
-			nrm_capital_battery_11_3_a3x2_2x2
-			nrm_capital_battery_11_3_a4x2_2x1
-			nrm_capital_battery_12_3_2x2
-			nrm_capital_battery_12_3_2x3
-			nrm_capital_battery_12_3_2x4
-			nrm_capital_battery_12_3_2x5
-			nrm_capital_battery_12_3_2x6
-			nrm_capital_battery_12_3_3x2
-			nrm_capital_battery_12_3_3x3
-			nrm_capital_battery_12_3_3x4
-			nrm_capital_battery_12_3_4x2
-			nrm_capital_battery_12_3_4x3
-			nrm_capital_battery_12_3_a3x2_2x1
-			nrm_capital_battery_12_3_a3x2_2x2
-			nrm_capital_battery_12_3_a4x2_2x1
-			nrm_cruiser_battery_PB_11_3_2x2
-			nrm_cruiser_battery_PB_11_3_2x3
-			nrm_cruiser_battery_PB_11_3_2x4
-			nrm_cruiser_battery_PB_11_3_3x2
-			nrm_cruiser_battery_PB_11_3_3x3
-			nrm_cruiser_battery_PB_11_3_4x2
-			nrm_cruiser_battery_PB_12_3_2x2
-			nrm_cruiser_battery_PB_12_3_2x3
-			nrm_cruiser_battery_PB_12_3_2x4
-			nrm_cruiser_battery_PB_12_3_3x2
-			nrm_cruiser_battery_PB_12_3_3x3
-			nrm_cruiser_battery_PB_12_3_4x2
-		}
-		
-
-
-		folder = {
-			name = mtgnavalsupportfolder
-			position = { x = 6 y = @1834 }
-		}
-		
-		ai_will_do = {
-			factor = 2
-			modifier = {
-				has_tech = advanced_ship_hull_heavy
-				factor = 5
-			}
-			modifier = {
-				OR = {
-					tag = MJU
-					tag = MRC
-				}
-				factor = 10
-			}
-		}
-		
-		categories = {
-			naval_equipment
-		}
-	}
-
-	basic_heavy_shell = { # 1828
-		
-		xp_research_type = navy
-		xp_boost_cost = 50
-		xp_research_bonus = 1
-		research_cost = 2
-
-		start_year = @year_1728
-
-		path = {
-			leads_to_tech = improved_heavy_shell
-			research_cost_coeff = 1
-		}
-		
-		battleship = {
-			hg_attack = 0.05
-			hg_armor_piercing = 0.05
-		}
-		battle_cruiser = {
-			hg_attack = 0.05
-			hg_armor_piercing = 0.05
-		}
-
-		folder = {
-			name = mtgnavalsupportfolder
-			position = { x = 7 y = @1828 }
-		}
-		
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				is_major = yes
-				has_war = yes
-				factor = 5
-			}
-
-		}
-		
-		categories = {
-			naval_equipment
-		}
-	}
-	improved_heavy_shell = { # 1832
-		
-		xp_research_type = navy
-		xp_boost_cost = 50
-		xp_research_bonus = 1
-		research_cost = 2.5
-
-		start_year = @year_1732
-		
-		
-		battleship = {
-			hg_attack = 0.05
-			hg_armor_piercing = 0.05
-		}
-		battle_cruiser = {
-			hg_attack = 0.05
-			hg_armor_piercing = 0.05
-		}
-
-		folder = {
-			name = mtgnavalsupportfolder
-			position = { x = 7 y = @1832 }
-		}
-		
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				is_major = yes
-				has_war = yes
-				factor = 5
-			}
-		}
-		
-		categories = {
-			naval_equipment
-		}
-	}
-
-	basic_heavy_battery_2 = { # 1820
-		
-		research_cost = 1.5
-
-		start_year = @year_1720
-
-		path = {
-			leads_to_tech = improved_heavy_battery_2
-			research_cost_coeff = 1
-		}
-		
-		path = {
-			leads_to_tech = basic_heavy_battery_3
-			research_cost_coeff = 1
-		}
-
-		enable_equipment_modules = { 
-			nrm_capital_battery_13_1_2x3
-			nrm_capital_battery_13_1_2x4
-			nrm_capital_battery_13_1_2x5
-			nrm_capital_battery_13_1_2x6
-			nrm_capital_battery_13_1_3x2
-			nrm_capital_battery_13_1_3x3
-			nrm_capital_battery_13_1_3x4
-			nrm_capital_battery_13_1_4x2
-			nrm_capital_battery_13_1_4x3
-			nrm_capital_battery_13_1_a3x2_2x1
-			nrm_capital_battery_13_1_a3x2_2x2
-			nrm_capital_battery_13_1_a4x2_2x1
-			nrm_capital_battery_14_1_2x3
-			nrm_capital_battery_14_1_2x4
-			nrm_capital_battery_14_1_2x5
-			nrm_capital_battery_14_1_2x6
-			nrm_capital_battery_14_1_3x2
-			nrm_capital_battery_14_1_3x3
-			nrm_capital_battery_14_1_3x4
-			nrm_capital_battery_14_1_4x2
-			nrm_capital_battery_14_1_4x3
-			nrm_capital_battery_14_1_a3x2_2x1
-			nrm_capital_battery_14_1_a3x2_2x2
-			nrm_capital_battery_14_1_a4x2_2x1
-		}
-		
-
-
-		folder = {
-			name = mtgnavalsupportfolder
-			position = { x = 8 y = @1820 }
-		}
-		
-		ai_will_do = {
-			factor = 2
-			modifier = {
-				has_tech = basic_ship_hull_heavy
-				factor = 5
-			}
-			modifier = {
-				OR = {
-					tag = FRA
-					tag = HHE
-				}
-				factor = 10
-			}
-		}
-		
-		categories = {
-			naval_equipment
-		}
-	}
-	improved_heavy_battery_2 = { # 1830
-		
-		research_cost = 1.5
-
-		start_year = @year_1730
-
-		path = {
-			leads_to_tech = advanced_heavy_battery_2
-			research_cost_coeff = 1
-		}
-
-		enable_equipment_modules = { 
-			nrm_capital_battery_13_2_2x3
-			nrm_capital_battery_13_2_2x4
-			nrm_capital_battery_13_2_2x5
-			nrm_capital_battery_13_2_2x6
-			nrm_capital_battery_13_2_3x2
-			nrm_capital_battery_13_2_3x3
-			nrm_capital_battery_13_2_3x4
-			nrm_capital_battery_13_2_4x2
-			nrm_capital_battery_13_2_4x3
-			nrm_capital_battery_13_2_a3x2_2x1
-			nrm_capital_battery_13_2_a3x2_2x2
-			nrm_capital_battery_13_2_a4x2_2x1
-			nrm_capital_battery_14_2_2x3
-			nrm_capital_battery_14_2_2x4
-			nrm_capital_battery_14_2_2x5
-			nrm_capital_battery_14_2_2x6
-			nrm_capital_battery_14_2_3x2
-			nrm_capital_battery_14_2_3x3
-			nrm_capital_battery_14_2_3x4
-			nrm_capital_battery_14_2_4x2
-			nrm_capital_battery_14_2_4x3
-			nrm_capital_battery_14_2_a3x2_2x1
-			nrm_capital_battery_14_2_a3x2_2x2
-			nrm_capital_battery_14_2_a4x2_2x1
-		}
-		
-
-
-		folder = {
-			name = mtgnavalsupportfolder
-			position = { x = 8 y = @1830 }
-		}
-		
-		ai_will_do = {
-			factor = 2
-			modifier = {
-				has_tech = improved_ship_hull_heavy
-				factor = 5
-			}
-			modifier = {
-				OR = {
-					tag = FRA
-					tag = HHE
-				}
-				factor = 10
-			}
-		}
-		
-		categories = {
-			naval_equipment
-		}
-	}
-	advanced_heavy_battery_2 = { # 1834
-		
-		research_cost = 1.5
-
-		start_year = @year_1734
-
-		enable_equipment_modules = { 
-			nrm_capital_battery_13_3_2x3
-			nrm_capital_battery_13_3_2x4
-			nrm_capital_battery_13_3_2x5
-			nrm_capital_battery_13_3_2x6
-			nrm_capital_battery_13_3_3x2
-			nrm_capital_battery_13_3_3x3
-			nrm_capital_battery_13_3_3x4
-			nrm_capital_battery_13_3_4x2
-			nrm_capital_battery_13_3_4x3
-			nrm_capital_battery_13_3_a3x2_2x1
-			nrm_capital_battery_13_3_a3x2_2x2
-			nrm_capital_battery_13_3_a4x2_2x1
-			nrm_capital_battery_14_3_2x3
-			nrm_capital_battery_14_3_2x4
-			nrm_capital_battery_14_3_2x5
-			nrm_capital_battery_14_3_2x6
-			nrm_capital_battery_14_3_3x2
-			nrm_capital_battery_14_3_3x3
-			nrm_capital_battery_14_3_3x4
-			nrm_capital_battery_14_3_4x2
-			nrm_capital_battery_14_3_4x3
-			nrm_capital_battery_14_3_a3x2_2x1
-			nrm_capital_battery_14_3_a3x2_2x2
-			nrm_capital_battery_14_3_a4x2_2x1
-		}
-		
-
-
-		folder = {
-			name = mtgnavalsupportfolder
-			position = { x = 8 y = @1834 }
-		}
-		
-		ai_will_do = {
-			factor = 2
-			modifier = {
-				has_tech = advanced_ship_hull_heavy
-				factor = 5
-			}
-			modifier = {
-				OR = {
-					tag = FRA
-					tag = HHE
-				}
-				factor = 10
-			}
-		}
-		
-		categories = {
-			naval_equipment
-		}
-	}
-
-	basic_heavy_battery_3 = { # 1820
-		
-		research_cost = 1.6
-
-		start_year = @year_1720
-
-		path = {
-			leads_to_tech = improved_heavy_battery_3
-			research_cost_coeff = 1
-		}
-		
-		path = {
-			leads_to_tech = improved_heavy_battery_4
-			research_cost_coeff = 1
-		}
-
-		enable_equipment_modules = { 
-			nrm_capital_battery_15_1_2x3
-			nrm_capital_battery_15_1_2x4
-			nrm_capital_battery_15_1_2x5
-			nrm_capital_battery_15_1_2x6
-			nrm_capital_battery_15_1_3x2
-			nrm_capital_battery_15_1_3x3
-			nrm_capital_battery_15_1_3x4
-			nrm_capital_battery_15_1_4x2
-			nrm_capital_battery_15_1_4x3
-			nrm_capital_battery_15_1_a3x2_2x1
-			nrm_capital_battery_15_1_a3x2_2x2
-			nrm_capital_battery_15_1_a4x2_2x1
-			nrm_capital_battery_16_1_2x3
-			nrm_capital_battery_16_1_2x4
-			nrm_capital_battery_16_1_2x5
-			nrm_capital_battery_16_1_2x6
-			nrm_capital_battery_16_1_3x2
-			nrm_capital_battery_16_1_3x3
-			nrm_capital_battery_16_1_3x4
-			nrm_capital_battery_16_1_4x2
-			nrm_capital_battery_16_1_4x3
-			nrm_capital_battery_16_1_a3x2_2x1
-			nrm_capital_battery_16_1_a3x2_2x2
-			nrm_capital_battery_16_1_a4x2_2x1
-		}
-		
-
-
-		folder = {
-			name = mtgnavalsupportfolder
-			position = { x = 9 y = @1820 }
-		}
-		
-		ai_will_do = {
-			factor = 2
-			modifier = {
-				has_tech = basic_ship_hull_heavy
-				factor = 5
-			}
-			modifier = {
-				OR = {
-					tag = MRC
-					tag = HHE
-					tag = MJU
-				}
-				factor = 10
-			}
-		}
-		
-		categories = {
-			naval_equipment
-		}
-	}
-	improved_heavy_battery_3 = { # 1830
-		
-		research_cost = 1.6
-
-		start_year = @year_1730
-
-		path = {
-			leads_to_tech = advanced_heavy_battery_3
-			research_cost_coeff = 1
-		}
-
-		enable_equipment_modules = { 
-			nrm_capital_battery_15_2_2x3
-			nrm_capital_battery_15_2_2x4
-			nrm_capital_battery_15_2_2x5
-			nrm_capital_battery_15_2_2x6
-			nrm_capital_battery_15_2_3x2
-			nrm_capital_battery_15_2_3x3
-			nrm_capital_battery_15_2_3x4
-			nrm_capital_battery_15_2_4x2
-			nrm_capital_battery_15_2_4x3
-			nrm_capital_battery_15_2_a3x2_2x1
-			nrm_capital_battery_15_2_a3x2_2x2
-			nrm_capital_battery_15_2_a4x2_2x1
-			nrm_capital_battery_16_2_2x3
-			nrm_capital_battery_16_2_2x4
-			nrm_capital_battery_16_2_2x5
-			nrm_capital_battery_16_2_2x6
-			nrm_capital_battery_16_2_3x2
-			nrm_capital_battery_16_2_3x3
-			nrm_capital_battery_16_2_3x4
-			nrm_capital_battery_16_2_4x2
-			nrm_capital_battery_16_2_4x3
-			nrm_capital_battery_16_2_a3x2_2x1
-			nrm_capital_battery_16_2_a3x2_2x2
-			nrm_capital_battery_16_2_a4x2_2x1
-		}
-		
-
-
-		folder = {
-			name = mtgnavalsupportfolder
-			position = { x = 9 y = @1830 }
-		}
-		
-		ai_will_do = {
-			factor = 2
-			modifier = {
-				has_tech = improved_ship_hull_heavy
-				factor = 5
-			}
-			modifier = {
-				OR = {
-					tag = MRC
-					tag = HHE
-					tag = MJU
-				}
-				factor = 20
-			}
-		}
-		
-		categories = {
-			naval_equipment
-		}
-	}
-	advanced_heavy_battery_3 = { # 1834
-		
-		research_cost = 1.6
-
-		start_year = @year_1734
-
-		enable_equipment_modules = { 
-			nrm_capital_battery_15_3_2x3
-			nrm_capital_battery_15_3_2x4
-			nrm_capital_battery_15_3_2x5
-			nrm_capital_battery_15_3_2x6
-			nrm_capital_battery_15_3_3x2
-			nrm_capital_battery_15_3_3x3
-			nrm_capital_battery_15_3_3x4
-			nrm_capital_battery_15_3_4x2
-			nrm_capital_battery_15_3_4x3
-			nrm_capital_battery_15_3_a3x2_2x1
-			nrm_capital_battery_15_3_a3x2_2x2
-			nrm_capital_battery_15_3_a4x2_2x1
-			nrm_capital_battery_16_3_2x3
-			nrm_capital_battery_16_3_2x4
-			nrm_capital_battery_16_3_2x5
-			nrm_capital_battery_16_3_2x6
-			nrm_capital_battery_16_3_3x2
-			nrm_capital_battery_16_3_3x3
-			nrm_capital_battery_16_3_3x4
-			nrm_capital_battery_16_3_4x2
-			nrm_capital_battery_16_3_4x3
-			nrm_capital_battery_16_3_a3x2_2x1
-			nrm_capital_battery_16_3_a3x2_2x2
-			nrm_capital_battery_16_3_a4x2_2x1
-		}
-		
-
-
-		folder = {
-			name = mtgnavalsupportfolder
-			position = { x = 9 y = @1834 }
-		}
-		
-		ai_will_do = {
-			factor = 2
-			modifier = {
-				has_tech = advanced_ship_hull_heavy
-				factor = 5
-			}
-			modifier = {
-				OR = {
-					tag = MRC
-					tag = MJU
-				}
-				factor = 20
-			}
-		}
-		
-		categories = {
-			naval_equipment
-		}
-	}
-
-	improved_heavy_battery_4 = { # 1832
-		
-		research_cost = 1.8
-
-		start_year = @year_1732
-
-		path = {
-			leads_to_tech = advanced_heavy_battery_4
-			research_cost_coeff = 1
-		}
-		path = {
-			leads_to_tech = improved_heavy_battery_5
-			research_cost_coeff = 1
-		}
-
-		enable_equipment_modules = { 
-			nrm_capital_battery_18_2_2x3
-			nrm_capital_battery_18_2_2x4
-			nrm_capital_battery_18_2_2x5
-			nrm_capital_battery_18_2_2x6
-			nrm_capital_battery_18_2_3x2
-			nrm_capital_battery_18_2_3x3
-			nrm_capital_battery_18_2_3x4
-			nrm_capital_battery_18_2_4x2
-			nrm_capital_battery_18_2_4x3
-			nrm_capital_battery_18_2_a3x2_2x1
-			nrm_capital_battery_18_2_a3x2_2x2
-			nrm_capital_battery_18_2_a4x2_2x1
-			
-		}
-		
-
-
-		folder = {
-			name = mtgnavalsupportfolder
-			position = { x = 10 y = @1832 }
-		}
-		
 		ai_will_do = {
 			factor = 2
 			modifier = {
 				tag = EPY
-				factor = 20
-			}
-			modifier = {
-				tag = MJU
 				factor = 5
 			}
 		}
-		
+
 		categories = {
 			naval_equipment
+			ship_modules_tech
+			cat_torpedoes
+			mio_cat_tech_all_screen_ship_and_modules
+			mio_cat_tech_all_destroyer_and_modules
 		}
 	}
-	advanced_heavy_battery_4 = { # 1836
-		
-		research_cost = 1.8
 
-		start_year = @year_1736
+	coldwar_ship_torpedo_launcher = {
+		research_cost = 1.25
+		start_year = 1749
 
-		enable_equipment_modules = { 
-			nrm_capital_battery_18_3_2x3
-			nrm_capital_battery_18_3_2x4
-			nrm_capital_battery_18_3_2x5
-			nrm_capital_battery_18_3_2x6
-			nrm_capital_battery_18_3_3x2
-			nrm_capital_battery_18_3_3x3
-			nrm_capital_battery_18_3_3x4
-			nrm_capital_battery_18_3_4x2
-			nrm_capital_battery_18_3_4x3
-			nrm_capital_battery_18_3_a3x2_2x1
-			nrm_capital_battery_18_3_a3x2_2x2
-			nrm_capital_battery_18_3_a4x2_2x1
+		enable_equipment_modules = {
+			ship_torpedo_5
+			ship_torpedo_sub_5
+			ship_torpedo_fire_control_4
 		}
-		
+
+		on_research_complete = {
+			custom_effect_tooltip = torpedo_advice_tt
+		}
 
 
 		folder = {
 			name = mtgnavalsupportfolder
-			position = { x = 10 y = @1836 }
-		}
-		
-		ai_will_do = {
-			factor = 2
-			modifier = {
-				tag = EPY
-				factor = 20
-			}
-			modifier = {
-				tag = MJU
-				factor = 5
-			}
-		}
-		
-		categories = {
-			naval_equipment
+			position = { x = 0 y = 23 }
 		}
 	}
 
-	improved_heavy_battery_5 = { # 1832
-		
-		research_cost = 2
-
-		start_year = @year_1732
-
-		path = {
-			leads_to_tech = advanced_heavy_battery_5
-			research_cost_coeff = 1
-		}
-
-		enable_equipment_modules = { 
-			nrm_capital_battery_20_2_2x3
-			nrm_capital_battery_20_2_2x4
-			nrm_capital_battery_20_2_2x5
-			nrm_capital_battery_20_2_2x6
-			nrm_capital_battery_20_2_3x2
-			nrm_capital_battery_20_2_3x3
-			nrm_capital_battery_20_2_3x4
-			nrm_capital_battery_20_2_4x2
-			nrm_capital_battery_20_2_4x3
-			nrm_capital_battery_20_2_a3x2_2x1
-			nrm_capital_battery_20_2_a3x2_2x2
-			nrm_capital_battery_20_2_a4x2_2x1
-		}
-		
-
-
-		folder = {
-			name = mtgnavalsupportfolder
-			position = { x = 11 y = @1832 }
-		}
-		
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				tag = EPY
-				factor = 10
-			}
-			modifier = {
-				tag = MJU
-				factor = 5
-			}
-		}
-		
-		categories = {
-			naval_equipment
-		}
-	}
-	advanced_heavy_battery_5 = { # 1836
-		
-		research_cost = 2
-
-		start_year = @year_1736
-
-		enable_equipment_modules = { 
-			nrm_capital_battery_20_3_2x3
-			nrm_capital_battery_20_3_2x4
-			nrm_capital_battery_20_3_2x5
-			nrm_capital_battery_20_3_2x6
-			nrm_capital_battery_20_3_3x2
-			nrm_capital_battery_20_3_3x3
-			nrm_capital_battery_20_3_3x4
-			nrm_capital_battery_20_3_4x2
-			nrm_capital_battery_20_3_4x3
-			nrm_capital_battery_20_3_a3x2_2x1
-			nrm_capital_battery_20_3_a3x2_2x2
-			nrm_capital_battery_20_3_a4x2_2x1
-		}
-		
-
-
-		folder = {
-			name = mtgnavalsupportfolder
-			position = { x = 11 y = @1836 }
-		}
-		
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				tag = EPY
-				factor = 5
-			}
-			modifier = {
-				tag = MJU
-				factor = 5
-			}
-		}
-		
-		categories = {
-			naval_equipment
-		}
-	}
-
-###   ##  #   #  ##   ##  ###      ##   ##  #  # ### ###   ##  #   
-#  # #  # ## ## #  # #    #       #  # #  # ## #  #  #  # #  # #   
-#  # #### # # # #### # ## ##      #    #  # # ##  #  ###  #  # #   
-#  # #  # #   # #  # #  # #       #  # #  # #  #  #  #  # #  # #   
-###  #  # #   # #  #  ##  ###      ##   ##  #  #  #  #  #  ##  ### 
+###   ##  #   #  ##   ##  ###      ##   ##  #  # ### ###   ##  #
+#  # #  # ## ## #  # #    #       #  # #  # ## #  #  #  # #  # #
+#  # #### # # # #### # ## ##      #    #  # # ##  #  ###  #  # #
+#  # #  # #   # #  # #  # #       #  # #  # #  #  #  #  # #  # #
+###  #  # #   # #  #  ##  ###      ##   ##  #  #  #  #  #  ##  ###
 
 	damage_control_1 = {
-		
-		research_cost = 2
+
+		research_cost = 0.75
 		path = {
 			leads_to_tech = damage_control_2
 			research_cost_coeff = 1
 		}
-		enable_equipment_modules = { 
-			nrm_damagecontrol_2
-		}
 		critical_receive_chance = -0.05
-		naval_critical_effect_factor = -0.05
+		naval_critical_effect_factor = -0.1
 		xp_research_type = navy
-		xp_boost_cost = 50
-		xp_research_bonus = 1
+		xp_boost_cost = 20
+		xp_research_bonus = 1.50
 		folder = {
 			name = mtgnavalsupportfolder
-			position = { x = 11 y = 2 }
+			position = { x = 0 y = 1 }
 		}
-		
+
 		ai_will_do = {
 			factor = 3
 			modifier = {
@@ -3730,31 +2024,30 @@ technologies = {
 				factor = 2
 			}
 		}
-		
+
 		categories = {
 			naval_equipment
+			ship_modules_tech
 		}
 	}
+
 	damage_control_2 = {
-		
-		research_cost = 2.5
+
+		research_cost = 0.75
 		path = {
 			leads_to_tech = damage_control_3
 			research_cost_coeff = 1
 		}
-		enable_equipment_modules = { 
-			nrm_damagecontrol_3
-		}
 		critical_receive_chance = -0.05
-		naval_critical_effect_factor = -0.05
+		naval_critical_effect_factor = -0.1
 		xp_research_type = navy
-		xp_boost_cost = 50
-		xp_research_bonus = 1
+		xp_boost_cost = 20
+		xp_research_bonus = 1.50
 		folder = {
 			name = mtgnavalsupportfolder
-			position = { x = 11 y = 6 }
+			position = { x = 0 y = 6 }
 		}
-		
+
 		ai_will_do = {
 			factor = 3
 			modifier = {
@@ -3771,31 +2064,26 @@ technologies = {
 				factor = 2
 			}
 		}
-		
+
 		categories = {
 			naval_equipment
+			ship_modules_tech
 		}
 	}
+
 	damage_control_3 = {
-		
-		research_cost = 3
-		path = {
-			leads_to_tech = damage_control_4
-			research_cost_coeff = 1
-		}
-		enable_equipment_modules = { 
-			nrm_damagecontrol_4
-		}
+
+		research_cost = 1
 		critical_receive_chance = -0.05
 		naval_critical_effect_factor = -0.1
 		xp_research_type = navy
-		xp_boost_cost = 50
-		xp_research_bonus = 1
+		xp_boost_cost = 20
+		xp_research_bonus = 1.50
 		folder = {
 			name = mtgnavalsupportfolder
-			position = { x = 11 y = 10 }
+			position = { x = 0 y = 12 }
 		}
-		
+
 		ai_will_do = {
 			factor = 3
 			modifier = {
@@ -3812,61 +2100,30 @@ technologies = {
 				factor = 2
 			}
 		}
-		
+
 		categories = {
 			naval_equipment
-		}
-	}
-	damage_control_4 = {
-		
-		research_cost = 3
-		critical_receive_chance = -0.05
-		naval_critical_effect_factor = -0.1
-		xp_research_type = navy
-		xp_boost_cost = 50
-		xp_research_bonus = 1
-		folder = {
-			name = mtgnavalsupportfolder
-			position = { x = 11 y = 14 }
-		}
-		
-		ai_will_do = {
-			factor = 3
-			modifier = {
-				is_historical_focus_on = yes
-				tag = EPY
-				factor = 0.25
-			}
-			modifier = {
-				tag = MRC
-				factor = 3
-			}
-			modifier = {
-				has_war = yes
-				factor = 2
-			}
-		}
-		
-		categories = {
-			naval_equipment
+			ship_modules_tech
 		}
 	}
 
-### ### ###  ###      ##   ##  #  # ### ###   ##  #       #   # ### ### #  #  ##  ###   ## 
-#    #  #  # #       #  # #  # ## #  #  #  # #  # #       ## ## #    #  #  # #  # #  # #   
-##   #  ###  ##      #    #  # # ##  #  ###  #  # #       # # # ##   #  #### #  # #  #  #  
-#    #  #  # #       #  # #  # #  #  #  #  # #  # #       #   # #    #  #  # #  # #  #   # 
-#   ### #  # ###      ##   ##  #  #  #  #  #  ##  ###     #   # ###  #  #  #  ##  ###  ##  
-
+### ### ###  ###      ##   ##  #  # ### ###   ##  #       #   # ### ### #  #  ##  ###   ##
+#    #  #  # #       #  # #  # ## #  #  #  # #  # #       ## ## #    #  #  # #  # #  # #
+##   #  ###  ##      #    #  # # ##  #  ###  #  # #       # # # ##   #  #### #  # #  #  #
+#    #  #  # #       #  # #  # #  #  #  #  # #  # #       #   # #    #  #  # #  # #  #   #
+#   ### #  # ###      ##   ##  #  #  #  #  #  ##  ###     #   # ###  #  #  #  ##  ###  ##
 	#NOTE: FIRE CONTROL SYSTEMS ARE IN ELECTROMECHANICAL ENGINEERING FOLDER!
-
 	fire_control_methods_1 = {
-		
-		research_cost = 2
+
+		research_cost = 1
 		path = {
 			leads_to_tech = fire_control_methods_2
 			research_cost_coeff = 1
 		}
+		SH_battleship = {
+			lg_attack = 0.05
+			hg_attack = 0.05
+		}
 		battleship = {
 			lg_attack = 0.05
 			hg_attack = 0.05
@@ -3875,14 +2132,18 @@ technologies = {
 			lg_attack = 0.05
 			hg_attack = 0.05
 		}
+		battlecarrier = {
+			lg_attack = 0.05
+			hg_attack = 0.05
+		}
 		xp_research_type = navy
-		xp_boost_cost = 50
-		xp_research_bonus = 1
+		xp_boost_cost = 20
+		xp_research_bonus = 1.50
 		folder = {
 			name = mtgnavalsupportfolder
-			position = { x = 12 y = 2 }
+			position = { x = 0 y = 1 }
 		}
-		
+
 		ai_will_do = {
 			factor = 3
 			modifier = {
@@ -3891,41 +2152,59 @@ technologies = {
 			}
 			modifier = {
 				tag = EPY
-				factor = 2
+				factor = 5
 			}
 		}
-		
+
 		categories = {
 			naval_equipment
+			ship_modules_tech
 		}
 	}
+
 	fire_control_methods_2 = {
 		xp_research_type = navy
-		xp_boost_cost = 50
-		xp_research_bonus = 1
-		research_cost = 3
+		xp_boost_cost = 20
+		xp_research_bonus = 1.50
+		research_cost = 1
 		path = {
 			leads_to_tech = fire_control_methods_3
 			research_cost_coeff = 1
 		}
+		SH_battleship = {
+			lg_attack = 0.05
+			hg_attack = 0.05
+		}
 		battleship = {
-			lg_attack = 0.075
-			hg_attack = 0.075
+			lg_attack = 0.05
+			hg_attack = 0.05
 		}
 		battle_cruiser = {
-			lg_attack = 0.075
-			hg_attack = 0.075
+			lg_attack = 0.05
+			hg_attack = 0.05
 		}
+		battlecarrier = {
+			lg_attack = 0.05
+			hg_attack = 0.05
+		}
+		##! armored_cruiser = {
+		##! 	lg_attack = 0.05
+		##! 	hg_attack = 0.05
+		##! }
 		heavy_cruiser = {
-			lg_attack = 0.075
-			hg_attack = 0.075
+			lg_attack = 0.05
+			hg_attack = 0.05
 		}
-		
+		medium_cruiser = {
+			lg_attack = 0.05
+			hg_attack = 0.05
+		}
+
 		folder = {
 			name = mtgnavalsupportfolder
-			position = { x = 12 y = 6 }
+			position = { x = 0 y = 6 }
 		}
-		
+
 		ai_will_do = {
 			factor = 3
 			modifier = {
@@ -3934,45 +2213,65 @@ technologies = {
 			}
 			modifier = {
 				tag = EPY
-				factor = 2
+				factor = 5
 			}
 		}
-		
+
 		categories = {
 			naval_equipment
+			ship_modules_tech
 		}
 	}
+
 	fire_control_methods_3 = {
-		
-		research_cost = 3
+		xp_research_type = navy
+		xp_boost_cost = 20
+		xp_research_bonus = 1.50
+		research_cost = 1
+		SH_battleship = {
+			lg_attack = 0.1
+			hg_attack = 0.1
+		}
 		battleship = {
-			lg_attack = 0.075
-			hg_attack = 0.075
+			lg_attack = 0.1
+			hg_attack = 0.1
 		}
 		battle_cruiser = {
-			lg_attack = 0.075
-			hg_attack = 0.075
+			lg_attack = 0.1
+			hg_attack = 0.1
 		}
+		battlecarrier = {
+			lg_attack = 0.1
+			hg_attack = 0.1
+		}
+		##! armored_cruiser = {
+		##! 	lg_attack = 0.05
+		##! 	hg_attack = 0.05
+		##! }
 		heavy_cruiser = {
-			lg_attack = 0.075
-			hg_attack = 0.075
+			lg_attack = 0.1
+			hg_attack = 0.1
+		}
+		medium_cruiser = {
+			lg_attack = 0.1
+			hg_attack = 0.1
 		}
 		light_cruiser = {
-			lg_attack = 0.075
-			hg_attack = 0.075
+			lg_attack = 0.1
+			hg_attack = 0.1
 		}
 		destroyer = {
 			lg_attack = 0.05
 			hg_attack = 0.05
 		}
 		xp_research_type = navy
-		xp_boost_cost = 50
-		xp_research_bonus = 1
+		xp_boost_cost = 20
+		xp_research_bonus = 1.50
 		folder = {
 			name = mtgnavalsupportfolder
-			position = { x = 12 y = 10 }
+			position = { x = 0 y = 12 }
 		}
-		
+
 		ai_will_do = {
 			factor = 3
 			modifier = {
@@ -3981,29 +2280,30 @@ technologies = {
 			}
 			modifier = {
 				tag = EPY
-				factor = 2
+				factor = 5
 			}
 		}
-		
+
 		categories = {
 			naval_equipment
+			ship_modules_tech
 		}
 	}
 
-#   # ### #  # ###  ## 
-## ##  #  ## # #   #   
-# # #  #  # ## ##   #  
-#   #  #  #  # #     # 
-#   # ### #  # ### ##  
+#   # ### #  # ###  ##
+## ##  #  ## # #   #
+# # #  #  # ## ##   #
+#   #  #  #  # #     #
+#   # ### #  # ### ##
 
-	basic_naval_mines = { # 1820
-		
-		research_cost = 2
+	basic_naval_mines = {
 
-		start_year = @year_1720
+		research_cost = 0.5
+
+		start_year = 1722
 
 		path = {
-			leads_to_tech = improved_naval_mines 
+			leads_to_tech = improved_naval_mines
 			research_cost_coeff = 1
 		}
 
@@ -4012,126 +2312,99 @@ technologies = {
 			research_cost_coeff = 1
 		}
 
-		enable_equipment_modules = { 
-			nrm_support_cruiser_ML_1
-			nrm_support_cruiser_MS_1
-			nrm_support_destroyer_ML_1
-			nrm_support_destroyer_MS_1
+		enable_equipment_modules = {
+			ship_mine_layer_1
+		}
+
+		enable_equipment_modules = {
+			ship_mine_sweeper_1
 		}
 
 		folder = {
 			name = mtgnavalsupportfolder
-			position = { x = 13 y = @1820 }
+			position = { x = 0 y = 1 }
 		}
-		
+
 		ai_will_do = {
 			factor = 1
-			modifier = {
-				OR = {
-					tag = MJU
-					tag = MRC
-					tag = HHE
-					tag = RVV
-				}
-				factor = 6
-			}
-			modifier = {
-				has_war = yes
-				factor = 2
-			}
-			modifier = {
-				is_major = no
-				factor = 2
-			}
 		}
-		
+
 		categories = {
 			naval_mines
 			naval_minelaying
 			naval_equipment
+			mio_cat_tech_all_screen_ship_and_modules
 		}
 	}
-	submarine_mine_laying = { # 1820
-		
-		research_cost = 2
 
-		start_year = @year_1720
+	submarine_mine_laying = {
+
+		research_cost = 0.75
+
+		start_year = 1722
 
 		path = {
-			leads_to_tech = improved_submarine_mine_laying 
+			leads_to_tech = improved_submarine_mine_laying
 			research_cost_coeff = 1
 		}
 
-		enable_equipment_modules = { 
-			nrm_submarine_ML_1
+		enable_equipment_modules = {
+			ship_mine_layer_sub
 		}
 
 		folder = {
 			name = mtgnavalsupportfolder
-			position = { x = 15 y = @1820 }
+			position = { x = 4 y = 1 }
 		}
-		
+
 		ai_will_do = {
 			factor = 1
-			modifier = {
-				OR = {
-					tag = MJU
-					tag = MRC
-					tag = HHE
-					tag = RVV
-				}
-				factor = 6
-			}
 		}
-		
+
 		categories = {
 			naval_mines
 			naval_minelaying
 			naval_equipment
+			ship_modules_tech
 		}
 	}
-	improved_submarine_mine_laying = { # 1834
-		
-		research_cost = 2
 
-		start_year = @year_1734
-		
+	improved_submarine_mine_laying = {
+
+		research_cost = 0.75
+
+		start_year = 1740
+
 		submarine = {
 			mines_planting = 0.2
 		}
 
 		folder = {
 			name = mtgnavalsupportfolder
-			position = { x = 15 y = @1834 }
+			position = { x = 4 y = 13 }
 		}
-		
+
 		ai_will_do = {
-			factor = 1.5
-			modifier = {
-				OR = {
-					tag = MJU
-					tag = MRC
-					tag = HHE
-					tag = RVV
-				}
-				factor = 6
-			}
+			factor = 1
 		}
-		
+
 		categories = {
 			naval_mines
 			naval_minelaying
 			naval_equipment
+			ship_modules_tech
+			mio_cat_tech_all_submarine_and_modules
 		}
 	}
-	improved_naval_mines = { # 1830
-		
-		research_cost = 2
 
-		start_year = @year_1730
+	improved_naval_mines = {
+
+		research_cost = 1
+
+		start_year = 1736
 
 		path = {
-			leads_to_tech = advanced_naval_mines 
+			leads_to_tech = advanced_naval_mines
 			research_cost_coeff = 1
 		}
 
@@ -4140,81 +2413,71 @@ technologies = {
 			research_cost_coeff = 1
 		}
 
-		
-		
+
+
 		naval_mines_damage_factor = 0.2 # more boom for the boom box
 		folder = {
 			name = mtgnavalsupportfolder
-			position = { x = 13 y = @1830 }
+			position = { x = 0 y = 6 }
 		}
-		
+
 		ai_will_do = {
 			factor = 1
-			modifier = {
-				OR = {
-					tag = MJU
-					tag = MRC
-					tag = HHE
-					tag = RVV
-				}
-				factor = 6
-			}
-			modifier = {
-				has_war = yes
-				factor = 2
-			}
-			modifier = {
-				is_major = no
-				factor = 2
-			}
 		}
-		
+
 		categories = {
 			naval_mines
 			naval_minelaying
 			naval_equipment
+			mio_cat_tech_all_screen_ship_and_modules
 		}
 	}
-	degaussing = { # 1832
-		
-		research_cost = 1
 
-		start_year = @year_1732
-		
+	degaussing = {
+
+		research_cost = 0.75
+
+		start_year = 1738
+
 		naval_mines_effect_reduction = 0.5
-		
+
 		folder = {
 			name = mtgnavalsupportfolder
-			position = { x = 14 y = @1832 }
+			position = { x = 2 y = 12 }
 		}
-		
+
 		ai_will_do = {
-			factor = 1
+			factor = 2
 			modifier = {
 				OR = {
 					tag = MJU
 					tag = MRC
 					tag = HHE
-					tag = RVV
+					tag = HST
 				}
 				factor = 5
 			}
 		}
-		
+
 		categories = {
 			naval_mines
 			naval_minesweeping
 			naval_equipment
+			mio_cat_tech_all_screen_ship_and_modules
+			mio_cat_tech_all_cruiser_and_modules
+			mio_cat_tech_all_capital_ship_and_modules
+			mio_cat_tech_all_carrier_and_modules
 		}
 	}
-	advanced_naval_mines = { # 1834
-		
-		research_cost = 2
 
-		start_year = @year_1734
+	advanced_naval_mines = {
+
+		research_cost = 1.25
+
+		start_year = 1742
 
 		path = {
-			leads_to_tech = modern_naval_mines 
+			leads_to_tech = modern_naval_mines
 			research_cost_coeff = 1
 		}
 
@@ -4222,246 +2485,252 @@ technologies = {
 			leads_to_tech = airdrop_mines
 			research_cost_coeff = 1
 		}
+		path = {
+			leads_to_tech = airdrop_mines_bba
+			research_cost_coeff = 1
+		}
 
 		naval_mines_damage_factor = 0.2 # more boom for the boom box
 		folder = {
 			name = mtgnavalsupportfolder
-			position = { x = 13 y = @1834 }
+			position = { x = 0 y = 15 }
 		}
-		
+
 		ai_will_do = {
 			factor = 1
-			modifier = {
-				OR = {
-					tag = MRC
-					tag = HHE
-				}
-				factor = 5
-			}
 		}
-		
+
+		categories = {
+			naval_mines
+			naval_minelaying
+			naval_equipment
+			mio_cat_tech_all_screen_ship_and_modules
+		}
+	}
+
+	airdrop_mines = {
+		allow_branch = {
+			NOT = { has_dlc = "By Blood Alone" }
+		}
+
+		research_cost = 0.5
+
+		start_year = 1742
+
+		category_nav_bomber = {
+			mines_planting = 0.05
+		}
+		category_tac_bomber = {
+			mines_planting = 0.08
+		}
+		category_strat_bomber = {
+			mines_planting = 0.13
+		}
+
+		folder = {
+			name = mtgnavalsupportfolder
+			position = { x = 2 y = 15 }
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+
 		categories = {
 			naval_mines
 			naval_minelaying
 			naval_equipment
 		}
 	}
-	airdrop_mines = { # 1836
-		
-		research_cost = 3
+
+	airdrop_mines_bba = {
+		allow_branch = {
+			has_dlc = "By Blood Alone"
+		}
+
+		research_cost = 0.5
+
+		start_year = 1742
+
+		enable_equipment_modules = {
+			airdropped_mines
+		}
+
+		folder = {
+			name = mtgnavalsupportfolder
+			position = { x = 2 y = 15 }
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		categories = {
+			naval_mines
+			naval_minelaying
+			naval_equipment
+		}
+	}
+
+	modern_naval_mines = {
+
+		research_cost = 1.5
+
+		start_year = 1745
 
 		path = {
 			leads_to_tech = airsweep_mines
 			research_cost_coeff = 1
 		}
-
-		start_year = @year_1736
-
-		category_nav_bomber = { 
-			mines_planting = 0.04 
-		}
-		category_tac_bomber = { 
-			mines_planting = 0.06 
-		}
-		category_strat_bomber = { 
-			mines_planting = 0.12 
+		path = {
+			leads_to_tech = airsweep_mines_bba
+			research_cost_coeff = 1
 		}
 
+		naval_mines_damage_factor = 0.2 # more boom for the boom box
 		folder = {
 			name = mtgnavalsupportfolder
-			position = { x = 14 y = @1836 }
+			position = { x = 0 y = 21 }
 		}
-		
+
 		ai_will_do = {
 			factor = 1
-			modifier = {
-				OR = {
-					tag = MJU
-					tag = MRC
-					tag = HHE
-				}
-				factor = 7
-			}
 		}
-		
+
 		categories = {
 			naval_mines
 			naval_minelaying
 			naval_equipment
+			mio_cat_tech_all_screen_ship_and_modules
 		}
 	}
-	airsweep_mines = { # 1842
-		
-		research_cost = 3
 
-		start_year = @year_1742
-
-		category_nav_bomber = { 
-			mines_sweeping = 0.05 
+	airsweep_mines = {
+		allow_branch = {
+			NOT = { has_dlc = "By Blood Alone" }
 		}
-		
-		category_tac_bomber = { 
+
+		research_cost = 0.5
+
+		start_year = 1744
+
+		category_nav_bomber = {
 			mines_sweeping = 0.1
+		}
+
+		category_tac_bomber = {
+			mines_sweeping = 0.15
 		}
 
 		folder = {
 			name = mtgnavalsupportfolder
-			position = { x = 14 y = @1842 }
+			position = { x = 2 y = 21 }
 		}
-		
+
 		ai_will_do = {
 			factor = 1
 		}
-		
+
 		categories = {
 			naval_mines
 			naval_minesweeping
 			naval_equipment
 		}
 	}
-	modern_naval_mines = { # 1840
-		
-		research_cost = 2
 
-		start_year = @year_1740
+	airsweep_mines_bba = {
+		allow_branch = {
+			has_dlc = "By Blood Alone"
+		}
 
-		naval_mines_damage_factor = 0.2 # more boom for the boom box
+		research_cost = 0.5
+
+		start_year = 1744
+
+		enable_equipment_modules = {
+			demining_coil
+		}
+
 		folder = {
 			name = mtgnavalsupportfolder
-			position = { x = 13 y = @1840 }
+			position = { x = 2 y = 21 }
 		}
-		
+
 		ai_will_do = {
 			factor = 1
-			modifier = {
-				tag = MRC
-				factor = 3
-			}
 		}
-		
+
 		categories = {
 			naval_mines
-			naval_minelaying
+			naval_minesweeping
 			naval_equipment
 		}
 	}
+	# WHEN BALANCING - ALSO FIX REGULAR NAVAL TREE
+	mtg_transport = {
 
-	mtg_transport = { # 1720 #WHEN BALANCING - ALSO FIX REGULAR NAVAL TREE
+		transport_capacity = -0.2
+		naval_invasion_capacity = 10
 
-		naval_invasion_capacity = 6
-		
 		path = {
-			leads_to_tech = mtg_transport_2 
+			leads_to_tech = mtg_landing_craft
 			research_cost_coeff = 1
 		}
-		
-		research_cost = 1.5
-		start_year = @year_1720
+		path = {
+			leads_to_tech = naval_combat_support
+			research_cost_coeff = 1
+		}
+
+		research_cost = 0.5
+		start_year = 1722
 
 		folder = {
 			name = mtgnavalsupportfolder
-			position = { x = 16 y = @1816 }
+			position = { x = 0 y = 1 }
 		}
-		
+
 		ai_will_do = {
 			factor = 1
+
 			modifier = {
 				factor = 0.5
 				has_war = no
 			}
+
 			modifier = {
-				add = 50
-				is_major = yes
-			}
-			modifier = {
-				OR ={
-					has_war_with = MRC
-					has_war_with = EPY
-				}
 				factor = 2
-			}
-			modifier = {
-				factor = 3
 				tag = MRC
 			}
+			modifier = {
+				has_war_with = EPY
+				factor = 2
+			}
+
 			modifier = {
 				factor = 3
 				tag = EPY
 			}
+
 			modifier = {
 				factor = 2
 				tag = HHE
 			}
 		}
-		
+
 		categories = {
 			naval_equipment
 			tp_tech
 		}
 	}
-	mtg_transport_2 = { # 1726
 
-		transport_capacity = -0.5
-		invasion_preparation = -0.1
-		naval_invasion_capacity = 12
-		
-		path = {
-			leads_to_tech = mtg_landing_craft 
-			research_cost_coeff = 1
-		}
-		
-		research_cost = 1.5
-		start_year = @year_1726
+	mtg_landing_craft = {
 
-		folder = {
-			name = mtgnavalsupportfolder
-			position = { x = 16 y = @1826 }
-		}
-		
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				factor = 0.5
-				has_war = no
-			}
-			modifier = {
-				add = 50
-				is_major = yes
-			}
-			modifier = {
-				OR ={
-					has_war_with = MRC
-					has_war_with = EPY
-				}
-				factor = 2
-			}
-			modifier = {
-				factor = 3
-				tag = MRC
-			}
-			modifier = {
-				factor = 3
-				tag = EPY
-			}
-			modifier = {
-				factor = 2
-				tag = HHE
-			}
-		}
-		
-		categories = {
-			naval_equipment
-			tp_tech
-		}
-	}
-	mtg_landing_craft = { # 1732
-
-		invasion_preparation = -0.3
+		invasion_preparation = -0.5
 		amphibious_invasion_defence = 0.15
-		naval_invasion_capacity = 24
+		naval_invasion_capacity = 40
 
 		path = {
-			leads_to_tech = mtg_tank_landing_craft 
+			leads_to_tech = mtg_tank_landing_craft
 			research_cost_coeff = 1
 		}
 
@@ -4470,99 +2739,719 @@ technologies = {
 		}
 		force_use_small_tech_layout = yes
 		show_equipment_icon = yes
-		
-		research_cost = 2
-		start_year = @year_1732
-		
+
+		research_cost = 1
+		start_year = 1740
+
 		folder = {
 			name = mtgnavalsupportfolder
-			position = { x = 16 y = @1832 }
+			position = { x = 0 y = 13 }
 		}
-		
+
 		ai_will_do = {
-			factor = 1
+			factor = 2
+
 			modifier = {
 				factor = 0.5
 				has_war = no
 			}
+
 			modifier = {
-				add = 50
-				is_major = yes
-			}
-			modifier = {
-				OR ={
-					has_war_with = MRC
-					has_war_with = EPY
-				}
 				factor = 2
-			}
-			modifier = {
-				factor = 3
 				tag = MRC
 			}
 			modifier = {
-				factor = 3
-				tag = EPY
+				has_war_with = EPY
+				factor = 2
 			}
+			modifier = {
+				factor = 50
+				tag = EPY
+				OR = {
+					has_war_with = MRC
+					LMN = {
+						OR = {
+							has_capitulated = yes
+							exists = no
+		                    is_subject_of = EPY
+						}
+					}
+				}
+			}
+
 			modifier = {
 				factor = 2
 				tag = HHE
 			}
+
+			modifier = {
+				factor = 10
+				OR = {
+					tag = HHE
+					tag = MRC
+				}
+				has_war_with = MJU
+				MJU = { has_war_with = HHE }
+			}
 		}
-		
+
 		categories = {
 			naval_equipment
 			tp_tech
 		}
 	}
-	mtg_tank_landing_craft = { # 1738
+
+	mtg_tank_landing_craft = {
 
 		amphibious_invasion = 0.25
-		invasion_preparation = -0.1
 		amphibious_invasion_defence = 0.5
 		naval_invasion_capacity = 100
 
-		research_cost = 2
-		start_year = @year_1738
+		research_cost = 1.5
+		start_year = 1744
 		folder = {
 			name = mtgnavalsupportfolder
-			position = { x = 16 y = @1838 }
+			position = { x = 0 y = 21 }
 		}
-		
+
 		ai_will_do = {
-			factor = 1
+			factor = 2
+
 			modifier = {
 				factor = 0.5
 				has_war = no
 			}
+
 			modifier = {
-				add = 50
-				is_major = yes
-			}
-			modifier = {
-				OR ={
-					has_war_with = MRC
-					has_war_with = EPY
-				}
 				factor = 2
+				tag = MRC
 			}
 			modifier = {
-				factor = 3
-				tag = MRC
+				factor = 2
+				has_war_with = EPY
 			}
 			modifier = {
 				factor = 3
 				tag = EPY
 			}
+
 			modifier = {
 				factor = 2
 				tag = HHE
 			}
 		}
-		
+
 		categories = {
 			naval_equipment
 			tp_tech
 		}
 	}
+
+	# naval integrated support tech tree
+	naval_combat_support = {
+		research_cost = 0.5
+		start_year = 1714
+		force_use_small_tech_layout = yes
+		show_equipment_icon = yes
+
+		path = {
+			leads_to_tech = basic_port_facility
+			research_cost_coeff = 1
+		}
+		path = {
+			leads_to_tech = speed_over_range
+			research_cost_coeff = 1
+		}
+		path = {
+			leads_to_tech = range_over_speed
+			research_cost_coeff = 1
+		}
+		path = {
+			leads_to_tech = repair_ship
+			research_cost_coeff = 1
+		}
+		path = {
+			leads_to_tech = hospital_ship
+			research_cost_coeff = 1
+		}
+		path = {
+			leads_to_tech = naval_fuel_complex
+			research_cost_coeff = 1
+		}
+		folder = {
+			name = mtgnavalsupportfolder
+			position = { x = 5 y = 1 }
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		enable_equipments = {
+			vnr_ship_hull_civilian_1
+		}
+		enable_equipment_modules = {
+			fuel_tanker_silo
+			dry_cargo_storage
+			civilian_ship_engine_1
+		}
+		categories = {
+			naval_equipment
+			logistics_tech
+		}
+	}
+	# port facility branch
+	basic_port_facility = {
+		research_cost = 0.3
+		start_year = 1718
+
+		path = {
+			leads_to_tech = large_shipyard
+			research_cost_coeff = 1
+		}
+		path = {
+			leads_to_tech = heavy_crane
+			research_cost_coeff = 1
+		}
+		path = {
+			leads_to_tech = dry_dock
+			research_cost_coeff = 1
+		}
+		folder = {
+			name = mtgnavalsupportfolder
+			position = { x = 2 y = 3 }
+		}
+
+		ai_will_do = {
+			factor = 0.25
+		}
+
+		production_speed_naval_base_factor = 0.1
+		categories = {
+			naval_equipment
+			industry
+		}
+	}
+
+	large_shipyard = {
+		research_cost = 0.6
+		start_year = 1726
+
+		path = {
+			leads_to_tech = port_construction_corps
+			research_cost_coeff = 1
+		}
+		folder = {
+			name = mtgnavalsupportfolder
+			position = { x = 2 y = 8 }
+		}
+
+		ai_will_do = {
+			factor = 0.25
+		}
+
+		production_speed_dockyard_factor = 0.1
+		categories = {
+			naval_equipment
+			industry
+		}
+	}
+
+	heavy_crane = {
+		research_cost = 0.3
+		start_year = 1724
+
+		ai_will_do = {
+			factor = 0
+		}
+		folder = {
+			name = mtgnavalsupportfolder
+			position = { x = 3 y = 5 }
+		}
+
+		refit_speed = 0.1
+		categories = {
+			naval_equipment
+			industry
+		}
+	}
+
+	dry_dock = {
+		research_cost = 0.45
+		start_year = 1722
+
+		ai_will_do = {
+			factor = 1
+		}
+		folder = {
+			name = mtgnavalsupportfolder
+			position = { x = 1 y = 5 }
+		}
+
+		repair_speed_factor = 0.1
+		categories = {
+			naval_equipment
+			industry
+		}
+	}
+
+	port_construction_corps = {
+		research_cost = 0.6
+		start_year = 1738
+
+		path = {
+			leads_to_tech = integrated_shipyard_complex
+			research_cost_coeff = 1
+		}
+
+		ai_will_do = {
+			factor = 0
+		}
+		folder = {
+			name = mtgnavalsupportfolder
+			position = { x = 2 y = 12 }
+		}
+
+		repair_speed_naval_base_factor = 0.1
+		repair_speed_dockyard_factor = 0.1
+		categories = {
+			naval_equipment
+			logistics_tech
+		}
+	}
+
+	integrated_shipyard_complex = {
+		research_cost = 1.25
+		start_year = 1742
+
+		ai_will_do = {
+			factor = 0
+		}
+		folder = {
+			name = mtgnavalsupportfolder
+			position = { x = 2 y = 16 }
+		}
+
+		industrial_capacity_dockyard = 0.1
+		categories = {
+			naval_equipment
+			industry
+		}
+	}
+	# auxiliary ship branch
+	speed_over_range = {
+		research_cost = 0.3
+		start_year = 1725
+		force_use_small_tech_layout = yes
+
+		ai_will_do = {
+			factor = 0
+		}
+		path = {
+			leads_to_tech = high_speed_civilian_engine
+			research_cost_coeff = 1
+		}
+		folder = {
+			name = mtgnavalsupportfolder
+			position = { x = 4 y = 7 }
+		}
+		xor = { range_over_speed }
+
+		auxiliary_ship = {
+			naval_speed = 0.2
+		}
+		categories = {
+			naval_equipment
+			logistics_tech
+		}
+	}
+
+	range_over_speed = {
+		research_cost = 0.3
+		start_year = 1725
+		force_use_small_tech_layout = yes
+
+		ai_will_do = {
+			factor = 0
+		}
+		path = {
+			leads_to_tech = armed_civilian_ship
+			research_cost_coeff = 1
+		}
+		folder = {
+			name = mtgnavalsupportfolder
+			position = { x = 6 y = 7 }
+		}
+		xor = { speed_over_range }
+
+		auxiliary_ship = {
+			naval_range = 0.2
+		}
+		categories = {
+			naval_equipment
+			logistics_tech
+		}
+	}
+
+	high_speed_civilian_engine = {
+		research_cost = 0.7
+		start_year = 1736
+
+		ai_will_do = {
+			factor = 0
+		}
+		path = {
+			leads_to_tech = fast_combat_support_ship
+			research_cost_coeff = 1
+		}
+		folder = {
+			name = mtgnavalsupportfolder
+			position = { x = 4 y = 10 }
+		}
+		auxiliary_ship = {
+			surface_visibility = -0.1
+		}
+		convoy_retreat_speed = 0.1
+
+		enable_equipment_modules = {
+			civilian_ship_engine_2
+		}
+		categories = {
+			naval_equipment
+			logistics_tech
+		}
+	}
+
+	fast_combat_support_ship = {
+		research_cost = 1
+		start_year = 1743
+
+		enable_equipments = {
+			vnr_ship_hull_civilian_2
+		}
+		enable_equipment_modules = {
+			supply_hub
+		}
+		folder = {
+			name = mtgnavalsupportfolder
+			position = { x = 4 y = 16 }
+		}
+
+		ai_will_do = {
+			factor = 0
+		}
+		categories = {
+			naval_equipment
+			logistics_tech
+		}
+	}
+
+	armed_civilian_ship = {
+		research_cost = 0.7
+		start_year = 1736
+
+		ai_will_do = {
+			factor = 0
+		}
+		path = {
+			leads_to_tech = integrated_supply_ship
+			research_cost_coeff = 1
+		}
+		folder = {
+			name = mtgnavalsupportfolder
+			position = { x = 6 y = 10 }
+		}
+		auxiliary_ship = {
+			max_strength = 0.1
+		}
+		navy_submarine_detection_factor = 0.05
+
+		enable_equipment_modules = {
+			ship_cruiser_camo_2
+		}
+		categories = {
+			naval_equipment
+			logistics_tech
+		}
+	}
+
+	integrated_supply_ship = {
+		research_cost = 1
+		start_year = 1743
+
+		ai_will_do = {
+			factor = 0
+		}
+		folder = {
+			name = mtgnavalsupportfolder
+			position = { x = 6 y = 16 }
+		}
+		enable_equipments = {
+			vnr_ship_hull_civilian_3
+		}
+		enable_equipment_modules = {
+			civilian_ship_engine_2
+			supply_hub
+		}
+
+		categories = {
+			naval_equipment
+			logistics_tech
+		}
+	}
+
+	repair_ship = {
+		research_cost = 0.3
+		start_year = 1720
+
+		ai_will_do = {
+			factor = 0.25
+		}
+		path = {
+			leads_to_tech = floating_dry_dock
+			research_cost_coeff = 1
+		}
+		folder = {
+			name = mtgnavalsupportfolder
+			position = { x = 8 y = 6 }
+		}
+
+		repair_speed_factor = 0.05
+		naval_accidents_chance = -0.05
+		heavy_cruiser = {
+			reliability = 0.1
+		}
+		medium_cruiser = {
+			reliability = 0.1
+		}
+		light_cruiser = {
+			reliability = 0.1
+		}
+		categories = {
+			naval_equipment
+		}
+	}
+
+	floating_dry_dock = {
+		research_cost = 0.5
+		start_year = 1736
+
+		ai_will_do = {
+			factor = 0.25
+		}
+		path = {
+			leads_to_tech = logistic_system_redundancy
+			research_cost_coeff = 1
+		}
+		folder = {
+			name = mtgnavalsupportfolder
+			position = { x = 8 y = 10 }
+		}
+
+		repair_speed_factor = 0.1
+		naval_accidents_chance = -0.05
+		battleship = {
+			reliability = 0.1
+		}
+		battle_cruiser = {
+			reliability = 0.1
+		}
+		SH_battleship = {
+			reliability = 0.1
+		}
+
+		categories = {
+			naval_equipment
+			industry
+		}
+	}
+
+	logistic_system_redundancy = {
+		research_cost = 0.8
+		start_year = 1742
+
+		ai_will_do = {
+			factor = 0.25
+		}
+		folder = {
+			name = mtgnavalsupportfolder
+			position = { x = 8 y = 16 }
+		}
+
+		auxiliary_ship = {
+			build_cost_ic = -0.1
+		}
+		destroyer = {
+			reliability = 0.1
+		}
+		submarine = {
+			reliability = 0.1
+		}
+		
+		categories = {
+			naval_equipment
+			logistics_tech
+		}
+	}
+
+	hospital_ship = {
+		research_cost = 0.35
+		start_year = 1718
+
+		ai_will_do = {
+			factor = 0
+		}
+		path = {
+			leads_to_tech = surgery_at_sea
+			research_cost_coeff = 1
+		}
+		
+		folder = {
+			name = mtgnavalsupportfolder
+			position = { x = 9 y = 4 }
+		}
+
+		naval_morale_factor = 0.05
+		categories = {
+			naval_equipment
+			hospital_tech
+		}
+	}
+
+	surgery_at_sea = {
+		research_cost = 0.5
+		start_year = 1732
+
+		ai_will_do = {
+			factor = 0
+		}
+		path = {
+			leads_to_tech = medical_supply_at_sea
+			research_cost_coeff = 1
+		}
+		path = {
+			leads_to_tech = joint_sea_hospital
+			research_cost_coeff = 1
+		}
+		folder = {
+			name = mtgnavalsupportfolder
+			position = { x = 9 y = 8 }
+		}
+
+		naval_morale_factor = 0.1
+
+		categories = {
+			naval_equipment
+			hospital_tech
+		}
+	}
+
+	medical_supply_at_sea = {
+		research_cost = 0.55
+		start_year = 1739
+		ai_will_do = {
+			factor = 0
+		}
+		folder = {
+			name = mtgnavalsupportfolder
+			position = { x = 9 y = 12 }
+		}
+
+		naval_invasion_penalty = -0.1
+		categories = {
+			naval_equipment
+			hospital_tech
+		}
+	}
+
+	joint_sea_hospital = {
+		research_cost = 0.75
+		start_year = 1743
+
+		ai_will_do = {
+			factor = 0
+		}
+		folder = {
+			name = mtgnavalsupportfolder
+			position = { x = 10 y = 17 }
+		}
+
+		experience_loss_factor = -0.1
+		categories = {
+			naval_equipment
+			hospital_tech
+		}
+	}
+	# naval fuel branch
+	naval_fuel_complex = {
+		research_cost = 0.2
+		start_year = 1725
+
+		ai_will_do = {
+			factor = 0
+		}
+		path = {
+			leads_to_tech = retardant_silo
+			research_cost_coeff = 1
+		}
+		path = {
+			leads_to_tech = integrated_fuel_base
+			research_cost_coeff = 1
+		}
+		folder = {
+			name = mtgnavalsupportfolder
+			position = { x = 12 y = 7 }
+		}
+
+		production_speed_fuel_silo_factor = 0.2
+		categories = {
+			naval_equipment
+		}
+	}
+
+	retardant_silo = {
+		research_cost = 0.75
+		start_year = 1736
+
+		ai_will_do = {
+			factor = 0
+		}
+		folder = {
+			name = mtgnavalsupportfolder
+			position = { x = 11 y = 10 }
+		}
+
+		repair_speed_fuel_silo_factor = 0.2
+		categories = {
+			naval_equipment
+		}
+	}
+
+	integrated_fuel_base = {
+		research_cost = 1
+		start_year = 1738
+
+		ai_will_do = {
+			factor = 0
+		}
+		folder = {
+			name = mtgnavalsupportfolder
+			position = { x = 12 y = 12 }
+		}
+
+		max_fuel_factor = 0.1
+		categories = {
+			naval_equipment
+		}
+	}
+
+	vnr_less_fuel_consumption = {
+        research_cost = 1
+		start_year = 1700
+
+		allow = {
+			always = no
+		}
+        navy_fuel_consumption_factor = -0.15
+    }
 }
