@@ -702,24 +702,6 @@ economy_decisions = {
                             add_to_variable = { ROOT.is_literally_not_a_factory = 0.25 }
                             ROOT = { add_to_variable = { built_a_radar = 1 } }
                         }
-                        0.1 =   {
-                            add_building_construction = {
-                                type = supply_node
-                                province = {
-                                    all_provinces = yes
-                                }
-                                level = 1
-                                instant_build = yes
-                            }
-                            modifier = {
-                                ROOT = {
-                                    has_country_flag = embrace_supply_node
-                                }
-                                factor = 8
-                            }
-                            add_to_variable = { ROOT.is_literally_not_a_factory = 0.2 }
-                            ROOT = { add_to_variable = { built_a_hub = 1 } }
-                        }
                         1.67 = {
                             modifier = {
                                 free_building_slots = {
@@ -1380,28 +1362,6 @@ economy_decisions = {
         }
     }
 
-    Start_Subsidies_supply = {
-        fire_only_once = no
-        allowed = {
-            always = yes
-        }
-        visible = {
-            OR = { has_war = yes has_government = unitism has_country_flag = market_interventionism }
-            not = {
-                has_country_flag = embrace_supply_node
-            }
-            has_active_mission = EcoDevelopment_free_market
-        }
-        ai_will_do = {
-            factor = 0
-        }
-        cost = 150
-        complete_effect = {
-            log = "[GetDateText]: [Root.GetName]: Decision Start_Subsidies_supply"
-            set_country_flag = embrace_supply_node
-        }
-    }
-
     Start_Subsidies_slot = {
         fire_only_once = no
         allowed = {
@@ -1655,31 +1615,6 @@ economy_decisions = {
         complete_effect = {
             log = "[GetDateText]: [Root.GetName]: Decision Revoke_Subsidies_radarstation"
             clr_country_flag = embrace_radar_station
-        }
-    }
-
-    Revoke_Subsidies_supply = {
-        fire_only_once = no
-        allowed = {
-            always = yes
-        }
-        visible = {
-            
-                has_country_flag = embrace_supply_node
-            
-            has_active_mission = EcoDevelopment_free_market
-        }
-        ai_will_do = {
-            factor = 0
-            modifier = {
-                NOT = { OR = { has_war = yes has_government = unitism has_country_flag = market_interventionism } }
-                add = 50
-            }
-        }
-        cost = 10
-        complete_effect = {
-            log = "[GetDateText]: [Root.GetName]: Decision Revoke_Subsidies_supply"
-            clr_country_flag = embrace_supply_node
         }
     }
 

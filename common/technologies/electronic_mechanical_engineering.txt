@@ -13,10 +13,6 @@ technologies = {
 			leads_to_tech = mechanical_computing 
 			research_cost_coeff = 1
 		}
-		path = {
-			leads_to_tech = early_fire_control_system
-			research_cost_coeff = 1
-		}
 
 		enable_equipment_modules = { 
 			nrm_fire_control_1
@@ -210,11 +206,6 @@ technologies = {
 			research_cost_coeff = 1
 		}
 		
-		path = {
-			leads_to_tech = modern_fire_control_system
-			research_cost_coeff = 1
-		}
-		
 		research_cost = 2.5
 		start_year = 1733
 		
@@ -244,6 +235,7 @@ technologies = {
 			building = radar_station
 			level = 1
 		}
+		coordination_bonus = 0.01
 
 		path = {
 			leads_to_tech = radio 
@@ -274,6 +266,7 @@ technologies = {
 	radio = {
 		# units with radios can more efficiently join combats when there is room
 		land_reinforce_rate = 0.05
+		coordination_bonus = 0.04
 		
 		research_cost = 1
 		
@@ -319,6 +312,10 @@ technologies = {
 			building = radar_station
 			level = 2
 		}
+		coordination_bonus = 0.01
+		enable_equipment_modules = { 
+			radio_navigation_2
+		}
 
 		path = {
 			leads_to_tech = improved_decimetric_radar 
@@ -353,6 +350,10 @@ technologies = {
 		enable_building = {
 			building = radar_station
 			level = 3
+		}
+		coordination_bonus = 0.01
+		enable_equipment_modules = { 
+			ship_radar_2
 		}
 
 		enable_equipment_modules = { 
@@ -392,12 +393,7 @@ technologies = {
 			building = radar_station
 			level = 4
 		}
-
-		enable_equipment_modules = { 
-			nrm_radar_3
-			nrm_radar_fc_3
-			nrm_submarine_radar_3
-		}
+		coordination_bonus = 0.01
 
 		path = {
 			leads_to_tech = centimetric_radar 
@@ -433,6 +429,7 @@ technologies = {
 	improved_radio = {
 		# units with radios can more efficiently join combats when there is room
 		land_reinforce_rate = 0.05
+		coordination_bonus = 0.04
 
 		enable_equipment_modules = { 
 			tank_radio_2
@@ -474,11 +471,9 @@ technologies = {
 			building = radar_station
 			level = 5
 		}
-
+		coordination_bonus = 0.01
 		enable_equipment_modules = { 
-			nrm_radar_4
-			nrm_radar_fc_4
-			nrm_submarine_radar_4
+			ship_radar_3
 		}
 
 		static_anti_air_hit_chance_factor = 0.2
@@ -515,11 +510,9 @@ technologies = {
 			building = radar_station
 			level = 6
 		}
-
-		enable_equipment_modules = { 
-			nrm_radar_5
-			nrm_radar_fc_5
-			nrm_submarine_radar_5
+		coordination_bonus = 0.01
+		enable_equipment_modules = {
+			air_ground_radar_1
 		}
 
 		static_anti_air_hit_chance_factor = 0.2
@@ -555,6 +548,10 @@ technologies = {
 		enable_building = {
 			building = radar_station
 			level = 7
+		}
+		coordination_bonus = 0.01
+		enable_equipment_modules = { 
+			ship_radar_4
 		}
 
 		enable_equipment_modules = { 
@@ -595,6 +592,7 @@ technologies = {
 	advanced_radio = {
 		# units with radios can more efficiently join combats when there is room
 		land_reinforce_rate = 0.05
+		coordination_bonus = 0.04
 		
 		research_cost = 1
 
@@ -630,41 +628,6 @@ technologies = {
 		}
 	}
 # Fire Control
-	early_fire_control_system = {
-
-		allow_branch = {
-			has_dlc = "Man the Guns"
-		}
-
-		enable_equipment_modules = { 
-			nrm_fire_control_4
-		}
-		
-		research_cost = 1
-		
-		folder = {
-			name = electronics_folder
-			position = { x = 2 y = 2 }
-		}
-		
-		ai_will_do = {
-			factor = 0.75
-			modifier = {
-				OR = {
-					can_research = improved_fire_control_system
-					has_tech = improved_fire_control_system
-				}
-				factor = 0
-			}
-		}
-		
-		categories = {
-			electronics
-			computing_tech
-			naval_equipment
-		}
-	}
-
 	basic_fire_control_system = {
 
 		allow_branch = {
@@ -672,8 +635,7 @@ technologies = {
 		}
 
 		enable_equipment_modules = { 
-			nrm_fire_control_5
-			nrm_fire_control_aa_1
+			ship_fire_control_system_1
 		}
 		
 		research_cost = 1
@@ -685,13 +647,6 @@ technologies = {
 		
 		ai_will_do = {
 			factor = 0.75
-			modifier = {
-				OR = {
-					can_research = improved_fire_control_system
-					has_tech = improved_fire_control_system
-				}
-				factor = 0
-			}
 		}
 		
 		categories = {
@@ -704,10 +659,11 @@ technologies = {
 	improved_fire_control_system = {
 
 		enable_equipment_modules = { 
-			nrm_fire_control_6
-			nrm_fire_control_aa_2
+			ship_fire_control_system_2
 		}
 		
+		dependencies = { basic_fire_control_system = 1 }
+
 		research_cost = 1
 		allow_branch = {
 			has_dlc = "Man the Guns"
@@ -719,13 +675,6 @@ technologies = {
 		
 		ai_will_do = {
 			factor = 0.75
-			modifier = {
-				OR = {
-					can_research = advanced_fire_control_system
-					has_tech = advanced_fire_control_system
-				}
-				factor = 0
-			}
 		}
 		
 		categories = {
@@ -738,9 +687,11 @@ technologies = {
 	advanced_fire_control_system = {
 
 		enable_equipment_modules = { 
-			nrm_fire_control_7
-			nrm_fire_control_aa_3
+			ship_fire_control_system_3
 		}
+
+		dependencies = { improved_fire_control_system = 1 }
+
 		allow_branch = {
 			has_dlc = "Man the Guns"
 		}
@@ -754,41 +705,6 @@ technologies = {
 		
 		ai_will_do = {
 			factor = 0.75
-			modifier = {
-				OR = {
-					can_research = modern_fire_control_system
-					has_tech = modern_fire_control_system
-				}
-				factor = 0
-			}
-		}
-		
-		categories = {
-			electronics
-			computing_tech
-			naval_equipment
-		}
-	}
-
-	modern_fire_control_system = {
-
-		enable_equipment_modules = { 
-			nrm_fire_control_aa_4
-		}
-		allow_branch = {
-			has_dlc = "Man the Guns"
-		}
-		
-		research_cost = 1
-		
-		folder = {
-			name = electronics_folder
-			position = { x = 2 y = 22 }
-		}
-		
-		ai_will_do = {
-			factor = 0.75
-			
 		}
 		
 		categories = {

@@ -12,6 +12,19 @@ wants_early_civilian_factories = {
 	}
 }
 
+more_large_planes_need_more_rubber = {
+	enable = {
+	    num_of_military_factories > 100
+		has_country_flag = Better_plane_production_fighter_1940
+	}
+	abort_when_not_enabled = yes
+	ai_strategy = {
+		type = building_target
+		id = synthetic_refinery
+		value = 30
+	}
+}
+
 max_100_naval_factories = {
 	enable = {
 		num_of_naval_factories > 100
@@ -430,11 +443,11 @@ max_100_naval_factories = {
 					id = anti_tank
 					value = 10 # 20 to 10, less for minor.
 				}
-				ai_strategy = {
-					type = equipment_production_min_factories
-					id = artillery
-					value = 2
-				}
+				#ai_strategy = { # They build Light+Heavy
+				#	type = equipment_production_min_factories
+				#	id = artillery
+				#	value = 2
+				#}
 			# Tank equipment factors
 				ai_strategy = {
 					type = role_ratio
@@ -557,10 +570,15 @@ max_100_naval_factories = {
 				id = infantry
 				value = 5
 			}
+			ai_strategy = {
+				type = equipment_variant_production_factor
+				id = support_equipment
+				value = 30
+			}
 			#ai_strategy = {
 			#	type = equipment_production_min_factories
-			#	id = support_equipment
-			#	value = 3
+			#	id = support
+			#	value = 1
 			#}
 			ai_strategy = {
 				type = equipment_production_min_factories
@@ -583,17 +601,17 @@ max_100_naval_factories = {
 					id = anti_tank
 					value = 20
 				}
-				ai_strategy = {
+				#ai_strategy = { # They build Light+Heavy
+				#	type = equipment_production_min_factories
+				#	id = artillery
+				#	value = 4
+				#}
+				ai_strategy = { # Build these up over time, don't stall
 					type = equipment_production_min_factories
-					id = artillery
-					value = 4
-				}
-				ai_strategy = {
-					type = equipment_production_min_factories # Build these up over time, don't stall
 					id = anti_air
-					value = 2
+					value = 1
 				}
-				ai_strategy = {
+				ai_strategy = { # Build these up over time, don't stall
 					type = equipment_production_min_factories
 					id = anti_tank
 					value = 1

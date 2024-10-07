@@ -136,7 +136,12 @@
 	}
 
 	advanced_starting_techs = {
-		advanced_starting_naval_techs = yes
+		if = {
+			limit = {
+				any_state = { is_owned_by = ROOT is_coastal = yes }
+			}
+			advanced_starting_naval_techs = yes
+		}
 		if = {
 			limit = {
 				has_dlc = "La Resistance"
@@ -202,7 +207,9 @@
 			tech_engineers = 1
 			tech_field_hospital = 1
 			gw_artillery = 1
-			interwar_artillery = 1
+			gw_light_artillery = 1
+			gw_heavy_artillery = 1
+			interwar_antiair = 1
 			electronic_mechanical_engineering = 1
 			mechanical_computing = 1
 			fuel_silos = 1
@@ -210,7 +217,12 @@
 	}
 
 	improved_starting_techs = {
-		improved_starting_naval_techs = yes
+		if = {
+			limit = {
+				any_state = { is_owned_by = ROOT is_coastal = yes }
+			}
+			improved_starting_naval_techs = yes
+		}
 		if = {
 			limit = {
 				has_dlc = "La Resistance"
@@ -266,7 +278,12 @@
 	}
 
 	mediocre_starting_techs = {
-		mediocre_starting_naval_techs = yes
+		if = {
+			limit = {
+				any_state = { is_owned_by = ROOT is_coastal = yes }
+			}
+			mediocre_starting_naval_techs = yes
+		}
 		if = {
 			limit = { has_dlc = "By Blood Alone" }
 				set_technology = {
@@ -310,7 +327,12 @@
 	}
 
 	basic_starting_techs = {
-		basic_starting_naval_techs = yes
+		if = {
+			limit = {
+				any_state = { is_owned_by = ROOT is_coastal = yes }
+			}
+			basic_starting_naval_techs = yes
+		}
 		if = {
 			limit = { has_dlc = "By Blood Alone" }
 				set_technology = {
@@ -487,7 +509,8 @@
 			tech_engineers = 1
 			tech_field_hospital = 1
 			gw_artillery = 1
-			interwar_artillery = 1
+			gw_light_artillery = 1
+			gw_heavy_artillery = 1
 			electronic_mechanical_engineering = 1
 			mechanical_computing = 1
 			fuel_silos = 1
@@ -534,41 +557,10 @@
 			}
 	}
 # Harmonainus Imperium
+	HHI_air_equipment_BBA = {
+	}
+
 	HHI_HHE_starting_air_techs = {
-	}
-
-	HHI_HHE_starting_naval_techs = {
-		improved_starting_naval_techs = yes
-		if = {
-			limit = { has_dlc = "Man the Guns" }
-			HHI_naval_equipment_MTG = yes
-			set_technology = {
-				early_ship_hull_submarine = 1
-				# Support
-				basic_heavy_battery = 1
-			}
-			else = {
-			}
-		}
-	}
-
-	HHI_HHE_starting_armor_techs = {
-		if = {
-			limit = { has_dlc = "No Step Back" }
-			set_technology = {
-				gw_light_tank_chassis = 1
-			}
-			else = {
-				set_technology = {
-					gwtank = 1
-				}
-			}
-		}
-	}
-
-	HHI_HHE_starting_techs = {
-		HHI_HHE_starting_naval_techs = yes
-		HHI_HHE_starting_armor_techs = yes
 		if = {
 			limit = { has_dlc = "By Blood Alone" }
 			set_technology = {
@@ -587,6 +579,282 @@
 				}
 			}
 		}
+		HHI_air_equipment_BBA = yes
+	}
+
+	HHI_naval_equipment_MTG = {
+		# Auxiliaries
+			create_equipment_variant = {
+				name = "Auxiliary Class"
+				type = vnr_ship_hull_civilian_1
+				parent_version = 0
+				role_icon_index = 1
+				modules = {
+					fixed_ship_secondaries_slot = empty
+					fixed_ship_anti_air_slot = empty
+					fixed_ship_engine_slot = civilian_ship_engine_1
+					front_1_custom_slot = empty
+					mid_1_custom_slot = empty
+					mid_2_custom_slot = empty
+					rear_1_custom_slot = empty
+				}
+			}
+		# Submarines
+			create_equipment_variant = {
+				name = "Protectorate Class"
+				type = vnr_ship_hull_submarine_1
+				parent_version = 0
+				role_icon_index = 8
+				modules = {
+					fixed_ship_torpedo_slot = ship_torpedo_sub_1
+					fixed_ship_engine_slot = sub_ship_engine_1
+					fixed_ship_armor_slot = pressure_hull_1
+					fixed_ship_extra_secondaries_slot = empty
+					mid_1_custom_slot = sub_ship_periscope_0
+					rear_1_custom_slot = empty
+				}
+			}
+
+			create_equipment_variant = {
+				name = "Peninsula Class"
+				type = vnr_ship_hull_submarine_1
+				parent_version = 1
+				role_icon_index = 8
+				modules = {
+					fixed_ship_torpedo_slot = ship_torpedo_sub_1
+					fixed_ship_engine_slot = sub_ship_engine_1
+					fixed_ship_armor_slot = pressure_hull_1
+					fixed_ship_extra_secondaries_slot = empty
+					mid_1_custom_slot = sub_ship_periscope_0
+					rear_1_custom_slot = ship_torpedo_sub_1
+				}
+			}
+		# Destroyers
+			create_equipment_variant = {
+				name = "Thala Class"
+				type = vnr_ship_hull_light_1
+				parent_version = 0
+				role_icon_index = 31
+				modules = {
+					fixed_ship_battery_slot = ship_light_battery_1
+					fixed_ship_anti_air_slot = empty
+					fixed_ship_fire_control_system_slot = ship_torpedo_fire_control_1
+					fixed_ship_radar_slot = ship_mast_1
+					fixed_ship_torpedo_slot = ship_torpedo_1
+					fixed_ship_engine_slot = light_ship_engine_1
+					fixed_ship_role_slot = ship_hull_light_role_dd
+					fixed_ship_extra_secondaries_slot = ship_smoke_generator
+					front_1_custom_slot = empty
+					front_2_custom_slot = ship_light_battery_1
+					mid_1_custom_slot = ship_torpedo_1
+					mid_2_custom_slot = ship_light_battery_1
+					rear_1_custom_slot = ship_torpedo_1
+					rear_2_custom_slot = empty
+				}
+			}
+
+			create_equipment_variant = {
+				name = "Pyrov Class"
+				type = vnr_ship_hull_light_1
+				parent_version = 0
+				role_icon_index = 31
+				modules = {
+					fixed_ship_battery_slot = ship_light_battery_1
+					fixed_ship_anti_air_slot = empty
+					fixed_ship_fire_control_system_slot = empty
+					fixed_ship_radar_slot = ship_mast_1
+					fixed_ship_torpedo_slot = empty
+					fixed_ship_engine_slot = light_ship_engine_1
+					fixed_ship_role_slot = ship_hull_light_role_dd
+					fixed_ship_extra_secondaries_slot = ship_smoke_generator
+					front_1_custom_slot = empty
+					front_2_custom_slot = ship_light_battery_1
+					mid_1_custom_slot = ship_light_battery_1
+					mid_2_custom_slot = ship_light_battery_1
+					rear_1_custom_slot = empty
+					rear_2_custom_slot = ship_light_battery_1
+				}
+			}
+		# Light Cruisers
+			create_equipment_variant = {
+				name = "Kocomi Class"
+				type = vnr_ship_hull_cruiser_1
+				parent_version = 0
+				role_icon_index = 25
+				modules = {
+					fixed_ship_battery_slot = ship_light_medium_battery_2
+					fixed_ship_anti_air_slot = ship_anti_air_2_h
+					fixed_ship_fire_control_system_slot = empty
+					fixed_ship_radar_slot = ship_mast_1
+					fixed_ship_engine_slot = cruiser_ship_engine_1
+					fixed_ship_secondaries_slot = dp_ship_secondaries_1
+					fixed_ship_armor_slot = ship_armor_cruiser_1
+					fixed_ship_airplane_launcher_slot = empty
+					fixed_ship_role_slot = ship_hull_cruiser_role_c
+					fixed_ship_extra_secondaries_slot = ship_smoke_generator
+					front_1_custom_slot = ship_anti_air_2_h
+					front_2_custom_slot = ship_light_medium_battery_2
+					mid_1_custom_slot = dp_ship_secondaries_1
+					mid_2_custom_slot = dp_ship_secondaries_1
+					mid_3_custom_slot = dp_ship_secondaries_1
+					rear_1_custom_slot = ship_light_medium_battery_2
+					rear_2_custom_slot = ship_light_medium_battery_2
+				}
+			}
+
+			create_equipment_variant = {
+				name = "Blood-Fild Class"
+				type = vnr_ship_hull_cruiser_1
+				parent_version = 0
+				role_icon_index = 25
+				modules = {
+					fixed_ship_battery_slot = ship_light_medium_battery_2
+					fixed_ship_anti_air_slot = ship_anti_air_2_h
+					fixed_ship_fire_control_system_slot = empty
+					fixed_ship_radar_slot = ship_mast_1
+					fixed_ship_engine_slot = cruiser_ship_engine_1
+					fixed_ship_secondaries_slot = dp_ship_secondaries_1
+					fixed_ship_armor_slot = ship_armor_cruiser_1
+					fixed_ship_airplane_launcher_slot = empty
+					fixed_ship_role_slot = ship_hull_cruiser_role_c
+					fixed_ship_extra_secondaries_slot = ship_smoke_generator
+					front_1_custom_slot = ship_anti_air_2_h
+					front_2_custom_slot = ship_light_medium_battery_2
+					mid_1_custom_slot = dp_ship_secondaries_1
+					mid_2_custom_slot = dp_ship_secondaries_1
+					mid_3_custom_slot = dp_ship_secondaries_1
+					rear_1_custom_slot = ship_light_medium_battery_2
+					rear_2_custom_slot = ship_light_medium_battery_2
+				}
+			}
+		# Heavy Cruisers
+			create_equipment_variant = {
+				name = "Red-Rivers Class"
+				type = vnr_ship_hull_cruiser_1
+				parent_version = 0
+				role_icon_index = 27
+				modules = {
+					fixed_ship_battery_slot = ship_medium_battery_2
+					fixed_ship_anti_air_slot = ship_anti_air_2_h
+					fixed_ship_fire_control_system_slot = empty
+					fixed_ship_radar_slot = ship_mast_1
+					fixed_ship_engine_slot = cruiser_ship_engine_1
+					fixed_ship_secondaries_slot = dp_ship_secondaries_1
+					fixed_ship_armor_slot = ship_armor_cruiser_1
+					fixed_ship_airplane_launcher_slot = ship_airplane_launcher_1
+					fixed_ship_role_slot = ship_hull_cruiser_role_ca
+					fixed_ship_extra_secondaries_slot = ship_smoke_generator
+					front_1_custom_slot = ship_anti_air_2_h
+					front_2_custom_slot = ship_medium_battery_2
+					mid_1_custom_slot = dp_ship_secondaries_1
+					mid_2_custom_slot = dp_ship_secondaries_1
+					mid_3_custom_slot = dp_ship_secondaries_1
+					rear_1_custom_slot = ship_medium_battery_2
+					rear_2_custom_slot = ship_medium_battery_2
+				}
+			}
+		# Battleships
+			create_equipment_variant = {
+				name = "Leowa Class"
+				type = vnr_ship_hull_pre_dreadnought
+				parent_version = 0
+				role_icon_index = 3
+				modules = {
+					fixed_ship_battery_slot = ship_heavy_battery_small_1
+					fixed_ship_anti_air_slot = empty
+					fixed_ship_fire_control_system_slot = empty
+					fixed_ship_radar_slot = ship_mast_1
+					fixed_ship_engine_slot = heavy_ship_engine_1
+					fixed_ship_secondaries_slot = ship_secondaries_1
+					fixed_ship_armor_slot = ship_armor_bb_1
+					fixed_ship_airplane_launcher_slot = empty
+					fixed_ship_extra_secondaries_slot = ship_light_weight_shell
+					fixed_ship_armor_scheme_slot = ship_scheme_incremental
+					fixed_ship_torpedo_defense_system_slot = empty
+					front_1_custom_slot = empty
+					#front_2_custom_slot = empty
+					mid_1_custom_slot = ship_secondaries_1
+					#mid_2_custom_slot = empty
+					#mid_3_custom_slot = empty
+					rear_1_custom_slot = ship_heavy_battery_small_1
+					#rear_2_custom_slot = empty
+				}
+			}
+
+			create_equipment_variant = {
+				name = "Geowa Class"
+				type = vnr_ship_hull_pre_dreadnought
+				parent_version = 0
+				role_icon_index = 3
+				modules = {
+					fixed_ship_battery_slot = ship_heavy_battery_small_1
+					fixed_ship_anti_air_slot = empty
+					fixed_ship_fire_control_system_slot = empty
+					fixed_ship_radar_slot = ship_mast_1
+					fixed_ship_engine_slot = heavy_ship_engine_1
+					fixed_ship_secondaries_slot = ship_secondaries_1
+					fixed_ship_armor_slot = ship_armor_bb_1
+					fixed_ship_airplane_launcher_slot = empty
+					fixed_ship_extra_secondaries_slot = empty
+					fixed_ship_armor_scheme_slot = ship_scheme_incremental
+					fixed_ship_torpedo_defense_system_slot = pugliese_system
+					front_1_custom_slot = empty
+					#front_2_custom_slot = empty
+					mid_1_custom_slot = ship_secondaries_1
+					#mid_2_custom_slot = empty
+					#mid_3_custom_slot = empty
+					rear_1_custom_slot = ship_heavy_battery_small_1
+					#rear_2_custom_slot = empty
+				}
+			}
+	}
+
+	HHI_HHE_starting_naval_techs = {
+		if = {
+			limit = { has_dlc = "Man the Guns" }
+			HHI_naval_equipment_MTG = yes
+			set_technology = {
+				early_ship_hull_submarine = 1
+				# Support
+				basic_heavy_battery = 1
+			}
+			else = {
+			}
+		}
+		improved_starting_naval_techs = yes
+	}
+
+	HHI_armor_equipment_NSB = {
+	}
+
+	HHI_HHE_starting_armor_techs = {
+		if = {
+			limit = {
+				has_dlc = "La Resistance"
+			}
+			set_technology = {
+				iw_armored_car0 = 1
+				iw_armored_car1 = 1
+			}
+		}
+		if = {
+			limit = { has_dlc = "No Step Back" }
+			set_technology = {
+				gw_light_tank_chassis = 1
+			}
+			else = {
+				set_technology = {
+					gwtank = 1
+				}
+			}
+		}
+		HHI_armor_equipment_NSB = yes
+	}
+
+	HHI_HHE_starting_techs = {
+		HHI_HHE_starting_air_techs = yes
+		HHI_HHE_starting_naval_techs = yes
+		HHI_HHE_starting_armor_techs = yes
 		set_technology = {
 			alloy_refining = 1
 			concentrated_industry = 1
@@ -604,38 +872,12 @@
 			electronic_mechanical_engineering = 1
 			fuel_silos = 1
 		}
-		if = {
-			limit = {
-				has_dlc = "La Resistance"
-			}
-			set_technology = {
-				iw_armored_car0 = 1
-				iw_armored_car1 = 1
-			}
-		}
 	}
 
 	HHI_HBB_starting_techs = {
+		HHI_HHE_starting_air_techs = yes
 		HHI_HHE_starting_naval_techs = yes
 		HHI_HHE_starting_armor_techs = yes
-		if = {
-			limit = { has_dlc = "By Blood Alone" }
-			set_technology = {
-				aa_lmg = 1
-				engines_1 = 1
-				engines_2 = 1
-				early_bombs = 1
-				iw_small_airframe = 1
-				iw_medium_airframe = 1
-			}
-			else = {
-				set_technology = {
-					early_fighter = 1
-					naval_bomber1 = 1
-					early_bomber = 1
-				}
-			}
-		}
 		set_technology = {
 			alloy_refining = 1
 			dispersed_industry = 1
@@ -649,38 +891,12 @@
 			electronic_mechanical_engineering = 1
 			fuel_silos = 1
 		}
-		if = {
-			limit = {
-				has_dlc = "La Resistance"
-			}
-			set_technology = {
-				iw_armored_car0 = 1
-				iw_armored_car1 = 1
-			}
-		}
 	}
 
 	HHI_HCR_starting_techs = {
+		HHI_HHE_starting_air_techs = yes
 		HHI_HHE_starting_naval_techs = yes
 		HHI_HHE_starting_armor_techs = yes
-		if = {
-			limit = { has_dlc = "By Blood Alone" }
-			set_technology = {
-				aa_lmg = 1
-				engines_1 = 1
-				engines_2 = 1
-				early_bombs = 1
-				iw_small_airframe = 1
-				iw_medium_airframe = 1
-			}
-			else = {
-				set_technology = {
-					early_fighter = 1
-					naval_bomber1 = 1
-					early_bomber = 1
-				}
-			}
-		}
 		set_technology = {
 			alloy_refining = 1
 			concentrated_industry = 1
@@ -696,39 +912,13 @@
 			gw_artillery = 1
 			electronic_mechanical_engineering = 1
 			fuel_silos = 1
-		}
-		if = {
-			limit = {
-				has_dlc = "La Resistance"
-			}
-			set_technology = {
-				iw_armored_car0 = 1
-				iw_armored_car1 = 1
-			}
 		}
 	}
 
 	HHI_HER_starting_techs = {
+		HHI_HHE_starting_air_techs = yes
 		HHI_HHE_starting_naval_techs = yes
 		HHI_HHE_starting_armor_techs = yes
-		if = {
-			limit = { has_dlc = "By Blood Alone" }
-			set_technology = {
-				aa_lmg = 1
-				engines_1 = 1
-				engines_2 = 1
-				early_bombs = 1
-				iw_small_airframe = 1
-				iw_medium_airframe = 1
-			}
-			else = {
-				set_technology = {
-					early_fighter = 1
-					naval_bomber1 = 1
-					early_bomber = 1
-				}
-			}
-		}
 		set_technology = {
 			alloy_refining = 1
 			concentrated_industry = 1
@@ -744,39 +934,13 @@
 			gw_artillery = 1
 			electronic_mechanical_engineering = 1
 			fuel_silos = 1
-		}
-		if = {
-			limit = {
-				has_dlc = "La Resistance"
-			}
-			set_technology = {
-				iw_armored_car0 = 1
-				iw_armored_car1 = 1
-			}
 		}
 	}
 
 	HHI_HET_starting_techs = {
+		HHI_HHE_starting_air_techs = yes
 		HHI_HHE_starting_naval_techs = yes
 		HHI_HHE_starting_armor_techs = yes
-		if = {
-			limit = { has_dlc = "By Blood Alone" }
-			set_technology = {
-				aa_lmg = 1
-				engines_1 = 1
-				engines_2 = 1
-				early_bombs = 1
-				iw_small_airframe = 1
-				iw_medium_airframe = 1
-			}
-			else = {
-				set_technology = {
-					early_fighter = 1
-					naval_bomber1 = 1
-					early_bomber = 1
-				}
-			}
-		}
 		set_technology = {
 			alloy_refining = 1
 			concentrated_industry = 1
@@ -792,39 +956,13 @@
 			gw_artillery = 1
 			electronic_mechanical_engineering = 1
 			fuel_silos = 1
-		}
-		if = {
-			limit = {
-				has_dlc = "La Resistance"
-			}
-			set_technology = {
-				iw_armored_car0 = 1
-				iw_armored_car1 = 1
-			}
 		}
 	}
 
 	HHI_HLF_starting_techs = {
+		HHI_HHE_starting_air_techs = yes
 		HHI_HHE_starting_naval_techs = yes
 		HHI_HHE_starting_armor_techs = yes
-		if = {
-			limit = { has_dlc = "By Blood Alone" }
-			set_technology = {
-				aa_lmg = 1
-				engines_1 = 1
-				engines_2 = 1
-				early_bombs = 1
-				iw_small_airframe = 1
-				iw_medium_airframe = 1
-			}
-			else = {
-				set_technology = {
-					early_fighter = 1
-					naval_bomber1 = 1
-					early_bomber = 1
-				}
-			}
-		}
 		set_technology = {
 			alloy_refining = 1
 			concentrated_industry = 1
@@ -841,39 +979,13 @@
 			gw_artillery = 1
 			electronic_mechanical_engineering = 1
 			fuel_silos = 1
-		}
-		if = {
-			limit = {
-				has_dlc = "La Resistance"
-			}
-			set_technology = {
-				iw_armored_car0 = 1
-				iw_armored_car1 = 1
-			}
 		}
 	}
 
 	HHI_HNO_starting_techs = {
+		HHI_HHE_starting_air_techs = yes
 		HHI_HHE_starting_naval_techs = yes
 		HHI_HHE_starting_armor_techs = yes
-		if = {
-			limit = { has_dlc = "By Blood Alone" }
-			set_technology = {
-				aa_lmg = 1
-				engines_1 = 1
-				engines_2 = 1
-				early_bombs = 1
-				iw_small_airframe = 1
-				iw_medium_airframe = 1
-			}
-			else = {
-				set_technology = {
-					early_fighter = 1
-					naval_bomber1 = 1
-					early_bomber = 1
-				}
-			}
-		}
 		set_technology = {
 			alloy_refining = 1
 			concentrated_industry = 1
@@ -889,39 +1001,13 @@
 			gw_artillery = 1
 			electronic_mechanical_engineering = 1
 			fuel_silos = 1
-		}
-		if = {
-			limit = {
-				has_dlc = "La Resistance"
-			}
-			set_technology = {
-				iw_armored_car0 = 1
-				iw_armored_car1 = 1
-			}
 		}
 	}
 
 	HHI_HPP_starting_techs = {
+		HHI_HHE_starting_air_techs = yes
 		HHI_HHE_starting_naval_techs = yes
 		HHI_HHE_starting_armor_techs = yes
-		if = {
-			limit = { has_dlc = "By Blood Alone" }
-			set_technology = {
-				aa_lmg = 1
-				engines_1 = 1
-				engines_2 = 1
-				early_bombs = 1
-				iw_small_airframe = 1
-				iw_medium_airframe = 1
-			}
-			else = {
-				set_technology = {
-					early_fighter = 1
-					naval_bomber1 = 1
-					early_bomber = 1
-				}
-			}
-		}
 		set_technology = {
 			alloy_refining = 1
 			concentrated_industry = 1
@@ -937,39 +1023,13 @@
 			gw_artillery = 1
 			electronic_mechanical_engineering = 1
 			fuel_silos = 1
-		}
-		if = {
-			limit = {
-				has_dlc = "La Resistance"
-			}
-			set_technology = {
-				iw_armored_car0 = 1
-				iw_armored_car1 = 1
-			}
 		}
 	}
 
 	HHI_HRF_starting_techs = {
+		HHI_HHE_starting_air_techs = yes
 		HHI_HHE_starting_naval_techs = yes
 		HHI_HHE_starting_armor_techs = yes
-		if = {
-			limit = { has_dlc = "By Blood Alone" }
-			set_technology = {
-				aa_lmg = 1
-				engines_1 = 1
-				engines_2 = 1
-				early_bombs = 1
-				iw_small_airframe = 1
-				iw_medium_airframe = 1
-			}
-			else = {
-				set_technology = {
-					early_fighter = 1
-					naval_bomber1 = 1
-					early_bomber = 1
-				}
-			}
-		}
 		set_technology = {
 			alloy_refining = 1
 			concentrated_industry = 1
@@ -985,39 +1045,13 @@
 			gw_artillery = 1
 			electronic_mechanical_engineering = 1
 			fuel_silos = 1
-		}
-		if = {
-			limit = {
-				has_dlc = "La Resistance"
-			}
-			set_technology = {
-				iw_armored_car0 = 1
-				iw_armored_car1 = 1
-			}
 		}
 	}
 
 	HHI_HSP_starting_techs = {
+		HHI_HHE_starting_air_techs = yes
 		HHI_HHE_starting_naval_techs = yes
 		HHI_HHE_starting_armor_techs = yes
-		if = {
-			limit = { has_dlc = "By Blood Alone" }
-			set_technology = {
-				aa_lmg = 1
-				engines_1 = 1
-				engines_2 = 1
-				early_bombs = 1
-				iw_small_airframe = 1
-				iw_medium_airframe = 1
-			}
-			else = {
-				set_technology = {
-					early_fighter = 1
-					naval_bomber1 = 1
-					early_bomber = 1
-				}
-			}
-		}
 		set_technology = {
 			alloy_refining = 1
 			concentrated_industry = 1
@@ -1034,39 +1068,13 @@
 			gw_artillery = 1
 			electronic_mechanical_engineering = 1
 			fuel_silos = 1
-		}
-		if = {
-			limit = {
-				has_dlc = "La Resistance"
-			}
-			set_technology = {
-				iw_armored_car0 = 1
-				iw_armored_car1 = 1
-			}
 		}
 	}
 
 	HHI_HST_starting_techs = {
+		HHI_HHE_starting_air_techs = yes
 		HHI_HHE_starting_naval_techs = yes
 		HHI_HHE_starting_armor_techs = yes
-		if = {
-			limit = { has_dlc = "By Blood Alone" }
-			set_technology = {
-				aa_lmg = 1
-				engines_1 = 1
-				engines_2 = 1
-				early_bombs = 1
-				iw_small_airframe = 1
-				iw_medium_airframe = 1
-			}
-			else = {
-				set_technology = {
-					early_fighter = 1
-					naval_bomber1 = 1
-					early_bomber = 1
-				}
-			}
-		}
 		set_technology = {
 			alloy_refining = 1
 			concentrated_industry = 1
@@ -1083,39 +1091,13 @@
 			gw_artillery = 1
 			electronic_mechanical_engineering = 1
 			fuel_silos = 1
-		}
-		if = {
-			limit = {
-				has_dlc = "La Resistance"
-			}
-			set_technology = {
-				iw_armored_car0 = 1
-				iw_armored_car1 = 1
-			}
 		}
 	}
 
 	HHI_HTP_starting_techs = {
+		HHI_HHE_starting_air_techs = yes
 		HHI_HHE_starting_naval_techs = yes
 		HHI_HHE_starting_armor_techs = yes
-		if = {
-			limit = { has_dlc = "By Blood Alone" }
-			set_technology = {
-				aa_lmg = 1
-				engines_1 = 1
-				engines_2 = 1
-				early_bombs = 1
-				iw_small_airframe = 1
-				iw_medium_airframe = 1
-			}
-			else = {
-				set_technology = {
-					early_fighter = 1
-					naval_bomber1 = 1
-					early_bomber = 1
-				}
-			}
-		}
 		set_technology = {
 			alloy_refining = 1
 			concentrated_industry = 1
@@ -1133,38 +1115,12 @@
 			electronic_mechanical_engineering = 1
 			fuel_silos = 1
 		}
-		if = {
-			limit = {
-				has_dlc = "La Resistance"
-			}
-			set_technology = {
-				iw_armored_car0 = 1
-				iw_armored_car1 = 1
-			}
-		}
 	}
 
 	HHI_HUM_starting_techs = {
+		HHI_HHE_starting_air_techs = yes
 		HHI_HHE_starting_naval_techs = yes
 		HHI_HHE_starting_armor_techs = yes
-		if = {
-			limit = { has_dlc = "By Blood Alone" }
-			set_technology = {
-				aa_lmg = 1
-				engines_1 = 1
-				engines_2 = 1
-				early_bombs = 1
-				iw_small_airframe = 1
-				iw_medium_airframe = 1
-			}
-			else = {
-				set_technology = {
-					early_fighter = 1
-					naval_bomber1 = 1
-					early_bomber = 1
-				}
-			}
-		}
 		set_technology = {
 			alloy_refining = 1
 			concentrated_industry = 1
@@ -1180,39 +1136,13 @@
 			gw_artillery = 1
 			electronic_mechanical_engineering = 1
 			fuel_silos = 1
-		}
-		if = {
-			limit = {
-				has_dlc = "La Resistance"
-			}
-			set_technology = {
-				iw_armored_car0 = 1
-				iw_armored_car1 = 1
-			}
 		}
 	}
 
 	HHI_HUP_starting_techs = {
+		HHI_HHE_starting_air_techs = yes
 		HHI_HHE_starting_naval_techs = yes
 		HHI_HHE_starting_armor_techs = yes
-		if = {
-			limit = { has_dlc = "By Blood Alone" }
-			set_technology = {
-				aa_lmg = 1
-				engines_1 = 1
-				engines_2 = 1
-				early_bombs = 1
-				iw_small_airframe = 1
-				iw_medium_airframe = 1
-			}
-			else = {
-				set_technology = {
-					early_fighter = 1
-					naval_bomber1 = 1
-					early_bomber = 1
-				}
-			}
-		}
 		set_technology = {
 			alloy_refining = 1
 			concentrated_industry = 1
@@ -1228,39 +1158,13 @@
 			gw_artillery = 1
 			electronic_mechanical_engineering = 1
 			fuel_silos = 1
-		}
-		if = {
-			limit = {
-				has_dlc = "La Resistance"
-			}
-			set_technology = {
-				iw_armored_car0 = 1
-				iw_armored_car1 = 1
-			}
 		}
 	}
 
 	HHI_HWA_starting_techs = {
+		HHI_HHE_starting_air_techs = yes
 		HHI_HHE_starting_naval_techs = yes
 		HHI_HHE_starting_armor_techs = yes
-		if = {
-			limit = { has_dlc = "By Blood Alone" }
-			set_technology = {
-				aa_lmg = 1
-				engines_1 = 1
-				engines_2 = 1
-				early_bombs = 1
-				iw_small_airframe = 1
-				iw_medium_airframe = 1
-			}
-			else = {
-				set_technology = {
-					early_fighter = 1
-					naval_bomber1 = 1
-					early_bomber = 1
-				}
-			}
-		}
 		set_technology = {
 			alloy_refining = 1
 			concentrated_industry = 1
@@ -1277,243 +1181,7 @@
 			electronic_mechanical_engineering = 1
 			fuel_silos = 1
 		}
-		if = {
-			limit = {
-				has_dlc = "La Resistance"
-			}
-			set_technology = {
-				iw_armored_car0 = 1
-				iw_armored_car1 = 1
-			}
-		}
 	}
-	# Harmonainus Imperium Equipment
-		HHI_naval_equipment_MTG = {
-			# Auxiliaries
-				create_equipment_variant = {
-					name = "Auxiliary - Class"
-					type = vnr_ship_hull_civilian_1
-					parent_version = 0
-					role_icon_index = 1
-					modules = {
-						fixed_ship_secondaries_slot = empty
-						fixed_ship_anti_air_slot = empty
-						fixed_ship_engine_slot = civilian_ship_engine_1
-						front_1_custom_slot = empty
-						mid_1_custom_slot = empty
-						mid_2_custom_slot = empty
-						rear_1_custom_slot = empty
-					}
-				}
-			# Submarines
-				create_equipment_variant = {
-					name = "Protectorate Class"
-					type = vnr_ship_hull_submarine_1
-					parent_version = 0
-					role_icon_index = 8
-					modules = {
-						fixed_ship_torpedo_slot = ship_torpedo_sub_1
-						fixed_ship_engine_slot = sub_ship_engine_1
-						fixed_ship_armor_slot = pressure_hull_1
-						fixed_ship_extra_secondaries_slot = empty
-						mid_1_custom_slot = sub_ship_periscope_0
-						rear_1_custom_slot = empty
-					}
-				}
-
-				create_equipment_variant = {
-					name = "Peninsula Class"
-					type = vnr_ship_hull_submarine_1
-					parent_version = 1
-					role_icon_index = 8
-					modules = {
-						fixed_ship_torpedo_slot = ship_torpedo_sub_1
-						fixed_ship_engine_slot = sub_ship_engine_1
-						fixed_ship_armor_slot = pressure_hull_1
-						fixed_ship_extra_secondaries_slot = empty
-						mid_1_custom_slot = sub_ship_periscope_0
-						rear_1_custom_slot = ship_torpedo_sub_1
-					}
-				}
-			# Destroyers
-				create_equipment_variant = {
-					name = "Thala Class"
-					type = vnr_ship_hull_light_1
-					parent_version = 0
-					role_icon_index = 31
-					modules = {
-						fixed_ship_battery_slot = ship_light_battery_1
-						fixed_ship_anti_air_slot = empty
-						fixed_ship_fire_control_system_slot = ship_torpedo_fire_control_1
-						fixed_ship_radar_slot = ship_mast_1
-						fixed_ship_torpedo_slot = ship_torpedo_1
-						fixed_ship_engine_slot = light_ship_engine_1
-						fixed_ship_role_slot = ship_hull_light_role_dd
-						fixed_ship_extra_secondaries_slot = ship_smoke_generator
-						front_1_custom_slot = empty
-						front_2_custom_slot = ship_light_battery_1
-						mid_1_custom_slot = ship_torpedo_1
-						mid_2_custom_slot = ship_light_battery_1
-						rear_1_custom_slot = ship_torpedo_1
-						rear_2_custom_slot = empty
-					}
-				}
-
-				create_equipment_variant = {
-					name = "Pyrov Class"
-					type = vnr_ship_hull_light_1
-					parent_version = 0
-					role_icon_index = 31
-					modules = {
-						fixed_ship_battery_slot = ship_light_battery_1
-						fixed_ship_anti_air_slot = empty
-						fixed_ship_fire_control_system_slot = empty
-						fixed_ship_radar_slot = ship_mast_1
-						fixed_ship_torpedo_slot = empty
-						fixed_ship_engine_slot = light_ship_engine_1
-						fixed_ship_role_slot = ship_hull_light_role_dd
-						fixed_ship_extra_secondaries_slot = ship_smoke_generator
-						front_1_custom_slot = empty
-						front_2_custom_slot = ship_light_battery_1
-						mid_1_custom_slot = ship_light_battery_1
-						mid_2_custom_slot = ship_light_battery_1
-						rear_1_custom_slot = empty
-						rear_2_custom_slot = ship_light_battery_1
-					}
-				}
-			# Light Cruisers
-				create_equipment_variant = {
-					name = "Kocomi Class"
-					type = vnr_ship_hull_cruiser_1
-					parent_version = 0
-					role_icon_index = 25
-					modules = {
-						fixed_ship_battery_slot = ship_light_medium_battery_2
-						fixed_ship_anti_air_slot = ship_anti_air_2_h
-						fixed_ship_fire_control_system_slot = empty
-						fixed_ship_radar_slot = ship_mast_1
-						fixed_ship_engine_slot = cruiser_ship_engine_1
-						fixed_ship_secondaries_slot = dp_ship_secondaries_1
-						fixed_ship_armor_slot = ship_armor_cruiser_1
-						fixed_ship_airplane_launcher_slot = empty
-						fixed_ship_role_slot = ship_hull_cruiser_role_c
-						fixed_ship_extra_secondaries_slot = ship_smoke_generator
-						front_1_custom_slot = ship_anti_air_2_h
-						front_2_custom_slot = ship_light_medium_battery_2
-						mid_1_custom_slot = dp_ship_secondaries_1
-						mid_2_custom_slot = dp_ship_secondaries_1
-						mid_3_custom_slot = dp_ship_secondaries_1
-						rear_1_custom_slot = ship_light_medium_battery_2
-						rear_2_custom_slot = ship_light_medium_battery_2
-					}
-				}
-
-				create_equipment_variant = {
-					name = "Blood-Fild Class"
-					type = vnr_ship_hull_cruiser_1
-					parent_version = 0
-					role_icon_index = 25
-					modules = {
-						fixed_ship_battery_slot = ship_light_medium_battery_2
-						fixed_ship_anti_air_slot = ship_anti_air_2_h
-						fixed_ship_fire_control_system_slot = empty
-						fixed_ship_radar_slot = ship_mast_1
-						fixed_ship_engine_slot = cruiser_ship_engine_1
-						fixed_ship_secondaries_slot = dp_ship_secondaries_1
-						fixed_ship_armor_slot = ship_armor_cruiser_1
-						fixed_ship_airplane_launcher_slot = empty
-						fixed_ship_role_slot = ship_hull_cruiser_role_c
-						fixed_ship_extra_secondaries_slot = ship_smoke_generator
-						front_1_custom_slot = ship_anti_air_2_h
-						front_2_custom_slot = ship_light_medium_battery_2
-						mid_1_custom_slot = dp_ship_secondaries_1
-						mid_2_custom_slot = dp_ship_secondaries_1
-						mid_3_custom_slot = dp_ship_secondaries_1
-						rear_1_custom_slot = ship_light_medium_battery_2
-						rear_2_custom_slot = ship_light_medium_battery_2
-					}
-				}
-			# Heavy Cruisers
-				create_equipment_variant = {
-					name = "Red-Rivers Class"
-					type = vnr_ship_hull_cruiser_1
-					parent_version = 0
-					role_icon_index = 27
-					modules = {
-						fixed_ship_battery_slot = ship_medium_battery_2
-						fixed_ship_anti_air_slot = ship_anti_air_2_h
-						fixed_ship_fire_control_system_slot = empty
-						fixed_ship_radar_slot = ship_mast_1
-						fixed_ship_engine_slot = cruiser_ship_engine_1
-						fixed_ship_secondaries_slot = dp_ship_secondaries_1
-						fixed_ship_armor_slot = ship_armor_cruiser_1
-						fixed_ship_airplane_launcher_slot = ship_airplane_launcher_1
-						fixed_ship_role_slot = ship_hull_cruiser_role_ca
-						fixed_ship_extra_secondaries_slot = ship_smoke_generator
-						front_1_custom_slot = ship_anti_air_2_h
-						front_2_custom_slot = ship_medium_battery_2
-						mid_1_custom_slot = dp_ship_secondaries_1
-						mid_2_custom_slot = dp_ship_secondaries_1
-						mid_3_custom_slot = dp_ship_secondaries_1
-						rear_1_custom_slot = ship_medium_battery_2
-						rear_2_custom_slot = ship_medium_battery_2
-					}
-				}
-			# Battleships
-				create_equipment_variant = {
-					name = "Leowa Class"
-					type = vnr_ship_hull_pre_dreadnought
-					parent_version = 0
-					role_icon_index = 3
-					modules = {
-						fixed_ship_battery_slot = ship_heavy_battery_small_1
-						fixed_ship_anti_air_slot = empty
-						fixed_ship_fire_control_system_slot = empty
-						fixed_ship_radar_slot = ship_mast_1
-						fixed_ship_engine_slot = heavy_ship_engine_1
-						fixed_ship_secondaries_slot = ship_secondaries_1
-						fixed_ship_armor_slot = ship_armor_bb_1
-						fixed_ship_airplane_launcher_slot = empty
-						fixed_ship_extra_secondaries_slot = ship_light_weight_shell
-						fixed_ship_armor_scheme_slot = ship_scheme_incremental
-						fixed_ship_torpedo_defense_system_slot = empty
-						front_1_custom_slot = empty
-						#front_2_custom_slot = empty
-						mid_1_custom_slot = ship_secondaries_1
-						#mid_2_custom_slot = empty
-						#mid_3_custom_slot = empty
-						rear_1_custom_slot = ship_heavy_battery_small_1
-						#rear_2_custom_slot = empty
-					}
-				}
-
-				create_equipment_variant = {
-					name = "Geowa Class"
-					type = vnr_ship_hull_pre_dreadnought
-					parent_version = 0
-					role_icon_index = 3
-					modules = {
-						fixed_ship_battery_slot = ship_heavy_battery_small_1
-						fixed_ship_anti_air_slot = empty
-						fixed_ship_fire_control_system_slot = empty
-						fixed_ship_radar_slot = ship_mast_1
-						fixed_ship_engine_slot = heavy_ship_engine_1
-						fixed_ship_secondaries_slot = ship_secondaries_1
-						fixed_ship_armor_slot = ship_armor_bb_1
-						fixed_ship_airplane_launcher_slot = empty
-						fixed_ship_extra_secondaries_slot = empty
-						fixed_ship_armor_scheme_slot = ship_scheme_incremental
-						fixed_ship_torpedo_defense_system_slot = pugliese_system
-						front_1_custom_slot = empty
-						#front_2_custom_slot = empty
-						mid_1_custom_slot = ship_secondaries_1
-						#mid_2_custom_slot = empty
-						#mid_3_custom_slot = empty
-						rear_1_custom_slot = ship_heavy_battery_small_1
-						#rear_2_custom_slot = empty
-					}
-				}
-		}
 # Liming Mandate
 	LMN_starting_techs = {
 		basic_starting_naval_techs = yes
@@ -1541,12 +1209,12 @@
 	}
 # Merchant-Republica
 	MRC_starting_techs = {
-		advanced_starting_naval_techs = yes
+		advanced_starting_techs = yes
 		if = {
 			limit = { has_dlc = "Man the Guns" }
 			# Auxiliaries
 				create_equipment_variant = {
-					name = "Auxiliary - Class"
+					name = "Auxiliary Class"
 					type = vnr_ship_hull_civilian_1
 					parent_version = 0
 					role_icon_index = 1
@@ -1562,7 +1230,7 @@
 				}
 			# Submarines
 				create_equipment_variant = {
-					name = "SS - Class"
+					name = "SS Class"
 					type = vnr_ship_hull_submarine_1
 					parent_version = 0
 					role_icon_index = 8
@@ -1577,7 +1245,7 @@
 				}
 			# Destroyers
 				create_equipment_variant = {
-					name = "MMSDF Cobalorum - Class"
+					name = "MMSDF Cobalorum Class"
 					type = vnr_ship_hull_light_1
 					parent_version = 0
 					role_icon_index = 31
@@ -1600,7 +1268,7 @@
 				}
 
 				create_equipment_variant = {
-					name = "MMSDF Troglodytarum - Class"
+					name = "MMSDF Troglodytarum Class"
 					type = vnr_ship_hull_light_1
 					parent_version = 1
 					role_icon_index = 31
@@ -1623,7 +1291,7 @@
 				}
 			# Light Cruisers
 				create_equipment_variant = {
-					name = "MMSDF 1724 - Class"
+					name = "MMSDF 1724 Class"
 					type = vnr_ship_hull_cruiser_1
 					parent_version = 0
 					role_icon_index = 25
@@ -1649,7 +1317,7 @@
 				}
 			# Heavy Cruisers
 				create_equipment_variant = {
-					name = "MMSDF Republica - Class"
+					name = "MMSDF Republica Class"
 					type = vnr_ship_hull_cruiser_1
 					parent_version = 0
 					role_icon_index = 27
@@ -1675,7 +1343,7 @@
 				}
 			# Battleships
 				create_equipment_variant = {
-					name = "MMSDF Proelium - Class"
+					name = "MMSDF Proelium Class"
 					type = vnr_ship_hull_pre_dreadnought
 					parent_version = 0
 					role_icon_index = 3
@@ -1702,7 +1370,7 @@
 				}
 			# Carriers
 				create_equipment_variant = {
-					name = "MMSDF Portitorem - Class"
+					name = "MMSDF Portitorem Class"
 					type = vnr_ship_hull_carrier_conversion_bb
 					parent_version = 0
 					role_icon_index = 9
@@ -1717,15 +1385,13 @@
 						fixed_ship_carrier_miscellaneous_slot_1 = carrier_spared_squad
 						fixed_ship_carrier_miscellaneous_slot_2 = empty
 						fixed_ship_flight_deck_slot = carrier_wooden_deck
-						#front_1_custom_slot = empty
-						mid_1_custom_slot = empty
 					}
 				}
 
 				create_equipment_variant = {
-					name = "MMSDF Proiectura - Class"
-					type = vnr_ship_hull_carrier_1
-					parent_version = 1
+					name = "MMSDF Proiectura Class"
+					type = vnr_ship_hull_carrier_conversion_ca
+					parent_version = 0
 					role_icon_index = 9
 					modules = {
 						fixed_ship_deck_slot_1 = ship_deck_space_more
@@ -1733,13 +1399,11 @@
 			            fixed_ship_anti_air_slot = ship_anti_air_2_h
 						#fixed_ship_radar_slot = empty
 						fixed_ship_engine_slot = carrier_ship_engine_1
-						fixed_ship_secondaries_slot = dp_ship_secondaries_1
+						fixed_ship_secondaries_slot = dp_ship_secondaries_1_bb
 						fixed_ship_armor_slot = ship_armor_cruiser_1
 						fixed_ship_carrier_miscellaneous_slot_1 = carrier_spared_squad
 						fixed_ship_carrier_miscellaneous_slot_2 = empty
-			            fixed_ship_flight_deck_slot = carrier_armor_deck
-						front_1_custom_slot = ship_deck_space
-						#mid_1_custom_slot = empty
+			            fixed_ship_flight_deck_slot = carrier_wooden_deck
 					}
 				}
 			else = {
@@ -1751,6 +1415,7 @@
 			}
 			set_technology = {
 				iw_armored_car0 = 1
+				iw_armored_car1 = 1
 			}
 		}
 		if = {
@@ -1980,7 +1645,8 @@
 			tech_engineers = 1
 			tech_field_hospital = 1
 			gw_artillery = 1
-			interwar_artillery = 1
+			gw_light_artillery = 1
+			gw_heavy_artillery = 1
 			radio_detection = 1
 			radio = 1
 			electronic_mechanical_engineering = 1

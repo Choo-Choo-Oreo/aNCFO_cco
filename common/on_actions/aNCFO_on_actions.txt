@@ -132,6 +132,9 @@ on_actions = {
 						}
 					}
 					HHE = { release = HFR }
+					HHE = { release = CNO }
+					CNO = { annex_country = { target = HHE transfer_troops = yes } }
+					2 = { transfer_state_to = CNO add_core_of = CNO }
 					HET = { release = ETF }
 					ETF = { annex_country = { target = HET transfer_troops = yes } }
 					HPP = { release = ETF }
@@ -150,14 +153,15 @@ on_actions = {
 					HNO = { release = NEP }
 					NEP = { annex_country = { target = HNO transfer_troops = yes } }
 					HUP = { release = SFG }
-					MRC = { transfer_navy = { target = HSP }
+					HFR = { transfer_navy = { target = HSP }
 						annex_country = { target = HSP transfer_troops = yes } }
-					114 = { add_core_of = MRC }
-					123 = { add_core_of = MRC }
-					124 = { add_core_of = MRC }
-					180 = { add_core_of = MRC }
-					HHE = { release = MRC }
-					HTP = { release = MRC }
+					96 = { add_core_of = MRC }
+					107 = { add_core_of = MRC }
+					449 = { add_core_of = MRC }
+					HFR = { release = MRC }
+					HTP = { release = TIC }
+					TIC = { annex_country = { target = HTP transfer_troops = yes } }
+					116 = { transfer_state_to = TIC add_core_of = TIC }
 					117 = { transfer_state_to = MJU add_core_of = MJU }
 					UFS = { transfer_navy = { target = HCR }
 						annex_country = { target = HCR transfer_troops = yes } }
@@ -190,11 +194,14 @@ on_actions = {
 					220 = { transfer_state_to = REP }
 					KGK = { annex_country = { target = HER transfer_troops = yes } }
 					every_state = { limit = { is_core_of = HER } add_core_of = KGK }
+					KGK = { release = HFR }
 					612 = { transfer_state_to = SMK add_core_of = SMK }
 					613 = { transfer_state_to = NMR add_core_of = NMR }
 					263 = { transfer_state_to = REP add_core_of = REP }
 					614 = { transfer_state_to = REP add_core_of = REP }
 					615 = { transfer_state_to = REP add_core_of = REP }
+					HFR = { release = HFS }
+					TIC = { release = HFS }
 				}
 				IF = { # Harmonainus Imperious: Unified
 					LIMIT = {
@@ -207,6 +214,9 @@ on_actions = {
 			}
 		# Country Setup
 			effect = {
+				#15  = { transfer_state_to = MRC }
+				#445 = { transfer_state_to = MRC }
+				#MER = { become_exiled_in = { target = MRC legitimacy = 100 } }
 				every_country = {
 					update_all_stances = yes
 					country_event = random_event.0
@@ -403,16 +413,6 @@ on_actions = {
 	}
 
 	on_monthly = { # 12 per Year
-		effect = { # Maps
-			IF = {
-				limit = { OR = { has_tech = improved_artillery has_tech = interwar_heavy_artillery } } 
-				set_technology = { artillery1 = 1 popup = no }
-			}
-			IF = {
-				limit = { has_tech = advanced_heavy_artillery }
-				set_technology = { artillery5 = 1 popup = no }
-			}
-		}
 		random_events = {
 		    1 = random_event.2
 		    1 = random_event.3

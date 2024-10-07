@@ -13,7 +13,9 @@ focus_tree = { # Merchant-Republicism
 
 	shared_focus = MRC_intervention_military # Policy
 	shared_focus = MRC_neutrality_rearmement # Policy
-	shared_focus = MRC_military_defensive_advancements # Modifers
+	shared_focus = MRC_military_learn_crystallo_peninsula_failures # Modifers
+	shared_focus = MRC_military_third_dimensional # Modifers
+	shared_focus = MRC_ambitious_great_fleet # Modifers
 	# Party Elections Branch
 		focus = { # Political Lobbying
 			id = MRC_political_lobbying
@@ -431,7 +433,7 @@ focus_tree = { # Merchant-Republicism
 
 				completion_reward = {
 					log = "[GetDateText]: [Root.GetName]: Focus MRC_southern_financial_help"
-					swap_ideas = { remove_idea = MRC_balanced_guilds add_idea = MRC_economic_guilds }
+					swap_ideas = { remove_idea = MRC_idea_balanced_guilds add_idea = MRC_idea_economic_guilds }
 					add_war_support = 0.05
 					add_political_power = -50
 				}
@@ -478,7 +480,7 @@ focus_tree = { # Merchant-Republicism
 				set_politics = { ruling_party = pluralism elections_allowed = yes }
 				add_political_power = 25
 				add_war_support = -0.15
-				add_ideas = MRC_trade_neutrality
+				add_ideas = MRC_idea_trade_neutrality
 			}
 		}
 
@@ -551,7 +553,7 @@ focus_tree = { # Merchant-Republicism
 
 				completion_reward = {
 					log = "[GetDateText]: [Root.GetName]: Focus MRC_southern_retreat"
-					swap_ideas = { remove_idea = MRC_balanced_guilds add_idea = MRC_workers_guilds }
+					swap_ideas = { remove_idea = MRC_idea_balanced_guilds add_idea = MRC_idea_workers_guilds }
 					add_war_support = -0.05
 					add_stability = 0.10
 					132 = { owner = { transfer_state = 250 } }
@@ -585,7 +587,7 @@ focus_tree = { # Merchant-Republicism
 				log = "[GetDateText]: [Root.GetName]: Focus MRC_industral_buildup_actions"
 				unlock_decision_tooltip = urbanize_state_MRC
 				add_timed_idea = {
-					idea = MRC_homeland_buildup
+					idea = MRC_idea_homeland_buildup
 					days = 360
 				}
 			}
@@ -883,7 +885,7 @@ focus_tree = { # Merchant-Republicism
 
 			completion_reward = {
 				log = "[GetDateText]: [Root.GetName]: Focus MRC_foreign_trade"
-				add_ideas = MRC_global_trade_idea0
+				add_ideas = MRC_idea_global_trade_idea0
 			}
 		}
 
@@ -1025,10 +1027,10 @@ focus_tree = { # Merchant-Republicism
 					}
 				}
 
-				focus = { # Mercanaries Government Rights
-					id = MRC_mercanaries_government_rights
+				focus = { # Guilds Empower
+					id = MRC_guilds_empower_focus
 					icon = GFX_focus_unknown_industry
-					mutually_exclusive = { focus = MRC_mercanaries_regulations }
+					mutually_exclusive = { focus = MRC_guilds_workers_focus }
 					prerequisite = { focus = MRC_economic_status_quo }
 					relative_position_id = MRC_economic_status_quo
 					x = 0
@@ -1049,8 +1051,8 @@ focus_tree = { # Merchant-Republicism
 					}
 
 					completion_reward = {
-						log = "[GetDateText]: [Root.GetName]: Focus MRC_mercanaries_government_rights"
-						swap_ideas = { remove_idea = MRC_mercenaries_notable add_idea = MRC_mercenaries_powerful }
+						log = "[GetDateText]: [Root.GetName]: Focus MRC_guilds_empower_focus"
+						swap_ideas = { remove_idea = MRC_idea_balanced_guilds add_idea = MRC_idea_economic_guilds }
 					}
 				}
 
@@ -1115,10 +1117,10 @@ focus_tree = { # Merchant-Republicism
 					}
 				}
 
-				focus = { # Mercanaries Regulations
-					id = MRC_mercanaries_regulations
+				focus = { # Guilds Workers
+					id = MRC_guilds_workers_focus
 					icon = GFX_focus_unknown_industry
-					mutually_exclusive = { focus = MRC_mercanaries_government_rights }
+					mutually_exclusive = { focus = MRC_guilds_empower_focus }
 					prerequisite = { focus = MRC_economic_reform }
 					relative_position_id = MRC_economic_reform
 					x = 0
@@ -1136,11 +1138,16 @@ focus_tree = { # Merchant-Republicism
 				
 					ai_will_do = {
 						factor = 2
+						modifier = {
+							add = 0.10
+							factor = 1
+							is_historical_focus_on = yes
+						}
 					}
 
 					completion_reward = {
-						log = "[GetDateText]: [Root.GetName]: Focus MRC_mercanaries_regulations"
-						swap_ideas = { remove_idea = MRC_mercenaries_notable add_idea = MRC_mercenaries_weak }
+						log = "[GetDateText]: [Root.GetName]: Focus MRC_guilds_workers_focus"
+						swap_ideas = { remove_idea = MRC_idea_balanced_guilds add_idea = MRC_idea_workers_guilds }
 					}
 				}
 
@@ -1201,7 +1208,7 @@ focus_tree = { # Merchant-Republicism
 
 				completion_reward = {
 					log = "[GetDateText]: [Root.GetName]: Focus MRC_steady_couse"
-					add_timed_idea = { idea = MRC_steady_as_she_goes_idea days = 365 }
+					add_timed_idea = { idea = MRC_idea_steady_as_she_goes days = 365 }
 				}
 			} # Branch VVV
 
@@ -1368,7 +1375,7 @@ focus_tree = { # Merchant-Republicism
 
 				completion_reward = {
 					log = "[GetDateText]: [Root.GetName]: Focus MRC_change_couse"
-					add_timed_idea = { idea = MRC_change_in_course_idea days = 365 }
+					add_timed_idea = { idea = MRC_idea_change_in_course days = 365 }
 				}
 			} # Branch VVV
 
@@ -1591,11 +1598,11 @@ focus_tree = { # Merchant-Republicism
 	# Foreign Intervention Branch - Left Chapter 2
 	# Progressive Neutrality Branch - Right Chapter 2
 	# Merchant-Republicism Equilibrium Branch - Middle Chapter 2
-		focus = { # Deal with the Guilds
-			id = MRC_dealing_with_guilds_focus
+		focus = { # Deal with Independent Factionalism
+			id = MRC_dealing_with_independent_factionalism_focus
 			icon = GFX_focus_unknown_political
-			prerequisite = { focus = MRC_mercanaries_government_rights focus = MRC_mercanaries_regulations }
-			relative_position_id = MRC_mercanaries_government_rights
+			prerequisite = { focus = MRC_guilds_empower_focus focus = MRC_guilds_workers_focus }
+			relative_position_id = MRC_guilds_empower_focus
 			x = 1
 			y = 1
 		
@@ -1618,12 +1625,12 @@ focus_tree = { # Merchant-Republicism
 			}
 		} # Branch VVV
 
-			focus = { # Guilds Empower
-				id = MRC_guilds_empower_focus
+			focus = { # Mercanaries Government Rights
+				id = MRC_mercanaries_government_rights
 				icon = GFX_focus_unknown_industry
-				mutually_exclusive = { focus = MRC_guilds_workers_focus }
-				prerequisite = { focus = MRC_dealing_with_guilds_focus }
-				relative_position_id = MRC_dealing_with_guilds_focus
+				mutually_exclusive = { focus = MRC_mercanaries_regulations }
+				prerequisite = { focus = MRC_dealing_with_independent_factionalism_focus }
+				relative_position_id = MRC_dealing_with_independent_factionalism_focus
 				x = -1
 				y = 1
 			
@@ -1642,17 +1649,17 @@ focus_tree = { # Merchant-Republicism
 				}
 
 				completion_reward = {
-					log = "[GetDateText]: [Root.GetName]: Focus MRC_guilds_empower_focus"
-					swap_ideas = { remove_idea = MRC_balanced_guilds add_idea = MRC_economic_guilds }
+					log = "[GetDateText]: [Root.GetName]: Focus MRC_mercanaries_government_rights"
+					swap_ideas = { remove_idea = MRC_idea_mercenaries_notable add_idea = MRC_idea_mercenaries_powerful }
 				}
 			}
 
-			focus = { # Guilds Workers
-				id = MRC_guilds_workers_focus
+			focus = { # Mercanaries Regulations
+				id = MRC_mercanaries_regulations
 				icon = GFX_focus_unknown_industry
-				mutually_exclusive = { focus = MRC_guilds_empower_focus }
-				prerequisite = { focus = MRC_dealing_with_guilds_focus }
-				relative_position_id = MRC_dealing_with_guilds_focus
+				mutually_exclusive = { focus = MRC_mercanaries_government_rights }
+				prerequisite = { focus = MRC_dealing_with_independent_factionalism_focus }
+				relative_position_id = MRC_dealing_with_independent_factionalism_focus
 				x = 1
 				y = 1
 			
@@ -1668,16 +1675,11 @@ focus_tree = { # Merchant-Republicism
 			
 				ai_will_do = {
 					factor = 2
-					modifier = {
-						add = 0.10
-						factor = 1
-						is_historical_focus_on = yes
-					}
 				}
 
 				completion_reward = {
-					log = "[GetDateText]: [Root.GetName]: Focus MRC_guilds_workers_focus"
-					swap_ideas = { remove_idea = MRC_balanced_guilds add_idea = MRC_workers_guilds }
+					log = "[GetDateText]: [Root.GetName]: Focus MRC_mercanaries_regulations"
+					swap_ideas = { remove_idea = MRC_idea_mercenaries_notable add_idea = MRC_idea_mercenaries_weak }
 				}
 			}
 
@@ -1910,151 +1912,12 @@ focus_tree = { # Merchant-Republicism
 				}
 			}
 	# Industrial Complex - Left+Middle
-		focus = { # Light Industry Construction
-			id = MRC_light_industry_construction
-			icon = GFX_focus_unknown_industry
-			mutually_exclusive = { focus = MRC_heavy_industry_construction }
-			prerequisite = { focus = MRC_dealing_with_guilds_focus }
-			relative_position_id = MRC_dealing_with_guilds_focus
-			x = -5
-			y = 1
-		
-			cost = 5
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = no
-		
-			available = {
-			}
-			bypass = {
-			}
-		
-			ai_will_do = {
-				factor = 2
-			}
-
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_light_industry_construction"
-			}
-		} # Branch VVV
-
-			focus = { # Civilian Districts
-				id = MRC_civilian_districts
-				icon = GFX_focus_unknown_industry
-				prerequisite = { focus = MRC_light_industry_construction }
-				relative_position_id = MRC_light_industry_construction
-				x = 1
-				y = 1
-			
-				cost = 5
-				cancel_if_invalid = yes
-				continue_if_invalid = no
-				available_if_capitulated = no
-			
-				available = {
-				}
-				bypass = {
-				}
-			
-				ai_will_do = {
-					factor = 2
-				}
-
-				completion_reward = {
-					log = "[GetDateText]: [Root.GetName]: Focus MRC_civilian_districts"
-					13 = {
-						add_extra_state_shared_building_slots = 1
-						add_building_construction = { type = construction_complex level = 1 instant_build = yes }
-						add_building_construction = { type = industrial_complex level = 1 instant_build = yes }
-					}
-
-					14 = {
-						add_extra_state_shared_building_slots = 1
-						add_building_construction = { type = construction_complex level = 1 instant_build = yes }
-						add_building_construction = { type = industrial_complex level = 1 instant_build = yes }
-					}
-
-					71 = {
-						add_extra_state_shared_building_slots = 1
-						add_building_construction = { type = construction_complex level = 1 instant_build = yes }
-						add_building_construction = { type = industrial_complex level = 1 instant_build = yes }
-					}
-
-					72 = {
-						add_extra_state_shared_building_slots = 1
-						add_building_construction = { type = construction_complex level = 1 instant_build = yes }
-						add_building_construction = { type = industrial_complex level = 1 instant_build = yes }
-					}
-				}
-			}
-
-			focus = { # Construction Efforts
-				id = MRC_construction_efforts
-				icon = GFX_focus_unknown_industry
-				prerequisite = { focus = MRC_civilian_districts }
-				relative_position_id = MRC_civilian_districts
-				x = 0
-				y = 1
-			
-				cost = 5
-				cancel_if_invalid = yes
-				continue_if_invalid = no
-				available_if_capitulated = no
-			
-				available = {
-				}
-				bypass = {
-				}
-			
-				ai_will_do = {
-					factor = 2
-				}
-
-				completion_reward = {
-					log = "[GetDateText]: [Root.GetName]: Focus MRC_construction_efforts"
-					add_tech_bonus = {
-						name = GER_four_year_plan
-						bonus = 1.0
-						uses = 2
-						category = industry
-					}
-				}
-			}
-
-			focus = { # Power of Global Trade
-				id = MRC_power_global_trade
-				icon = GFX_focus_unknown_industry
-				prerequisite = { focus = MRC_construction_efforts }
-				relative_position_id = MRC_construction_efforts
-				x = 0
-				y = 1
-			
-				cost = 5
-				cancel_if_invalid = yes
-				continue_if_invalid = no
-				available_if_capitulated = no
-			
-				available = {
-				}
-				bypass = {
-				}
-			
-				ai_will_do = {
-					factor = 2
-				}
-
-				completion_reward = {
-					log = "[GetDateText]: [Root.GetName]: Focus MRC_power_global_trade"
-					swap_ideas = { remove_idea = MRC_global_trade_idea0 add_idea = MRC_global_trade_idea1 }
-				}
-			}
-
 		focus = { # Heavy Industry Construction
 			id = MRC_heavy_industry_construction
 			icon = GFX_focus_unknown_industry
 			mutually_exclusive = { focus = MRC_light_industry_construction }
-			prerequisite = { focus = MRC_dealing_with_guilds_focus focus = MRC_southern_financial_help }
-			relative_position_id = MRC_dealing_with_guilds_focus
+			prerequisite = { focus = MRC_dealing_with_independent_factionalism_focus focus = MRC_southern_financial_help }
+			relative_position_id = MRC_dealing_with_independent_factionalism_focus
 			x = -7
 			y = 1
 		
@@ -2064,6 +1927,7 @@ focus_tree = { # Merchant-Republicism
 			available_if_capitulated = no
 		
 			available = {
+				has_idea = MRC_idea_economic_guilds
 			}
 			bypass = {
 			}
@@ -2193,7 +2057,147 @@ focus_tree = { # Merchant-Republicism
 				completion_reward = {
 					log = "[GetDateText]: [Root.GetName]: Focus MRC_international_supply_chain"
 					add_offsite_building = { type = arms_factory level = 6 }
-					add_ideas = MRC_international_supply_chains
+					add_ideas = MRC_idea_international_supply_chains
+				}
+			}
+
+		focus = { # Light Industry Construction
+			id = MRC_light_industry_construction
+			icon = GFX_focus_unknown_industry
+			mutually_exclusive = { focus = MRC_heavy_industry_construction }
+			prerequisite = { focus = MRC_dealing_with_independent_factionalism_focus }
+			relative_position_id = MRC_dealing_with_independent_factionalism_focus
+			x = -5
+			y = 1
+		
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+		
+			available = {
+				has_idea = MRC_idea_workers_guilds
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				factor = 2
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_light_industry_construction"
+			}
+		} # Branch VVV
+
+			focus = { # Civilian Districts
+				id = MRC_civilian_districts
+				icon = GFX_focus_unknown_industry
+				prerequisite = { focus = MRC_light_industry_construction }
+				relative_position_id = MRC_light_industry_construction
+				x = 1
+				y = 1
+			
+				cost = 5
+				cancel_if_invalid = yes
+				continue_if_invalid = no
+				available_if_capitulated = no
+			
+				available = {
+				}
+				bypass = {
+				}
+			
+				ai_will_do = {
+					factor = 2
+				}
+
+				completion_reward = {
+					log = "[GetDateText]: [Root.GetName]: Focus MRC_civilian_districts"
+					13 = {
+						add_extra_state_shared_building_slots = 1
+						add_building_construction = { type = construction_complex level = 1 instant_build = yes }
+						add_building_construction = { type = industrial_complex level = 1 instant_build = yes }
+					}
+
+					14 = {
+						add_extra_state_shared_building_slots = 1
+						add_building_construction = { type = construction_complex level = 1 instant_build = yes }
+						add_building_construction = { type = industrial_complex level = 1 instant_build = yes }
+					}
+
+					71 = {
+						add_extra_state_shared_building_slots = 1
+						add_building_construction = { type = construction_complex level = 1 instant_build = yes }
+						add_building_construction = { type = industrial_complex level = 1 instant_build = yes }
+					}
+
+					72 = {
+						add_extra_state_shared_building_slots = 1
+						add_building_construction = { type = construction_complex level = 1 instant_build = yes }
+						add_building_construction = { type = industrial_complex level = 1 instant_build = yes }
+					}
+				}
+			}
+
+			focus = { # Construction Efforts
+				id = MRC_construction_efforts
+				icon = GFX_focus_unknown_industry
+				prerequisite = { focus = MRC_civilian_districts }
+				relative_position_id = MRC_civilian_districts
+				x = 0
+				y = 1
+			
+				cost = 5
+				cancel_if_invalid = yes
+				continue_if_invalid = no
+				available_if_capitulated = no
+			
+				available = {
+				}
+				bypass = {
+				}
+			
+				ai_will_do = {
+					factor = 2
+				}
+
+				completion_reward = {
+					log = "[GetDateText]: [Root.GetName]: Focus MRC_construction_efforts"
+					add_tech_bonus = {
+						name = GER_four_year_plan
+						bonus = 1.0
+						uses = 2
+						category = industry
+					}
+				}
+			}
+
+			focus = { # Power of Global Trade
+				id = MRC_power_global_trade
+				icon = GFX_focus_unknown_industry
+				prerequisite = { focus = MRC_construction_efforts }
+				relative_position_id = MRC_construction_efforts
+				x = 0
+				y = 1
+			
+				cost = 5
+				cancel_if_invalid = yes
+				continue_if_invalid = no
+				available_if_capitulated = no
+			
+				available = {
+				}
+				bypass = {
+				}
+			
+				ai_will_do = {
+					factor = 2
+				}
+
+				completion_reward = {
+					log = "[GetDateText]: [Root.GetName]: Focus MRC_power_global_trade"
+					swap_ideas = { remove_idea = MRC_idea_global_trade_0 add_idea = MRC_idea_global_trade_1 }
 				}
 			}
 		# Left+Middle Shared
@@ -2222,6 +2226,66 @@ focus_tree = { # Merchant-Republicism
 				completion_reward = {
 					log = "[GetDateText]: [Root.GetName]: Focus MRC_industrial_research"
 					add_research_slot = 1
+				}
+			}
+
+			focus = { # Corporate Guilds 
+				id = MRC_guilds_corporate_focus
+				icon = GFX_focus_unknown_industry
+				mutually_exclusive = { focus = MRC_guilds_balance_focus focus = MRC_guilds_union_focus }
+				prerequisite = { focus = MRC_industrial_research }
+				prerequisite = { focus = MRC_international_supply_chain }
+				relative_position_id = MRC_industrial_research
+				x = -2
+				y = 1
+			
+				cost = 10
+				cancel_if_invalid = yes
+				continue_if_invalid = no
+				available_if_capitulated = no
+			
+				available = {
+				}
+				bypass = {
+				}
+			
+				ai_will_do = {
+					factor = 2
+				}
+
+				completion_reward = {
+					log = "[GetDateText]: [Root.GetName]: Focus MRC_guilds_corporate_focus"
+					swap_ideas = { remove_idea = MRC_idea_economic_guilds add_idea = MRC_idea_corporate_guilds }
+				}
+			}
+
+			focus = { # Guilds Balance
+				id = MRC_guilds_balance_focus
+				icon = GFX_focus_unknown_industry
+				mutually_exclusive = { focus = MRC_guilds_corporate_focus focus = MRC_guilds_union_focus }
+				prerequisite = { focus = MRC_industrial_research }
+				prerequisite = { focus = MRC_power_global_trade focus = MRC_international_supply_chain }
+				relative_position_id = MRC_industrial_research
+				x = 0
+				y = 1
+			
+				cost = 10
+				cancel_if_invalid = yes
+				continue_if_invalid = no
+				available_if_capitulated = no
+			
+				available = {
+				}
+				bypass = {
+				}
+			
+				ai_will_do = {
+					factor = 2
+				}
+
+				completion_reward = {
+					log = "[GetDateText]: [Root.GetName]: Focus MRC_guilds_balance_focus"
+					add_political_power = 100
 				}
 			}
 
@@ -2256,67 +2320,7 @@ focus_tree = { # Merchant-Republicism
 
 				completion_reward = {
 					log = "[GetDateText]: [Root.GetName]: Focus MRC_guilds_union_focus"
-					swap_ideas = { remove_idea = MRC_workers_guilds add_idea = MRC_union_guilds }
-				}
-			}
-
-			focus = { # Guilds Balance
-				id = MRC_guilds_balance_focus
-				icon = GFX_focus_unknown_industry
-				mutually_exclusive = { focus = MRC_guilds_corporate_focus focus = MRC_guilds_union_focus }
-				prerequisite = { focus = MRC_industrial_research }
-				prerequisite = { focus = MRC_power_global_trade focus = MRC_international_supply_chain }
-				relative_position_id = MRC_industrial_research
-				x = 0
-				y = 1
-			
-				cost = 10
-				cancel_if_invalid = yes
-				continue_if_invalid = no
-				available_if_capitulated = no
-			
-				available = {
-				}
-				bypass = {
-				}
-			
-				ai_will_do = {
-					factor = 2
-				}
-
-				completion_reward = {
-					log = "[GetDateText]: [Root.GetName]: Focus MRC_guilds_balance_focus"
-					add_political_power = 100
-				}
-			}
-
-			focus = { # Corporate Guilds 
-				id = MRC_guilds_corporate_focus
-				icon = GFX_focus_unknown_industry
-				mutually_exclusive = { focus = MRC_guilds_balance_focus focus = MRC_guilds_union_focus }
-				prerequisite = { focus = MRC_industrial_research }
-				prerequisite = { focus = MRC_international_supply_chain }
-				relative_position_id = MRC_industrial_research
-				x = -2
-				y = 1
-			
-				cost = 10
-				cancel_if_invalid = yes
-				continue_if_invalid = no
-				available_if_capitulated = no
-			
-				available = {
-				}
-				bypass = {
-				}
-			
-				ai_will_do = {
-					factor = 2
-				}
-
-				completion_reward = {
-					log = "[GetDateText]: [Root.GetName]: Focus MRC_guilds_corporate_focus"
-					swap_ideas = { remove_idea = MRC_economic_guilds add_idea = MRC_corporate_guilds }
+					swap_ideas = { remove_idea = MRC_idea_workers_guilds add_idea = MRC_idea_union_guilds }
 				}
 			}
 	# Isle Constitution - Right+Middle
@@ -2346,8 +2350,8 @@ focus_tree = { # Merchant-Republicism
 			completion_reward = {
 				log = "[GetDateText]: [Root.GetName]: Focus MRC_enshrine_civil_rights"
 				swap_ideas = {
-					remove_idea = MRC_independence_constitucion
-					add_idea = MRC_independence_constitucion_deplutocratization_merchant
+					remove_idea = MRC_idea_independence_constitucion
+					add_idea = MRC_idea_independence_constitucion_deplutocratization_merchant
 				}
 			}
 		} # Branch VVV
@@ -2405,8 +2409,8 @@ focus_tree = { # Merchant-Republicism
 			completion_reward = {
 				log = "[GetDateText]: [Root.GetName]: Focus MRC_enshrine_civil_rights"
 				swap_ideas = {
-					remove_idea = MRC_independence_constitucion
-					add_idea = MRC_independence_constitucion_deplutocratization_progressive
+					remove_idea = MRC_idea_independence_constitucion
+					add_idea = MRC_idea_independence_constitucion_deplutocratization_progressive
 				}
 				set_cosmetic_tag = MRC_deplutocratization
 			}
@@ -2463,7 +2467,7 @@ focus_tree = { # Merchant-Republicism
 
 				completion_reward = {
 					log = "[GetDateText]: [Root.GetName]: Focus MRC_proper_education"
-					add_ideas = MRC_center_of_knowledge0
+					add_ideas = MRC_idea_center_of_knowledge0
 				}
 			}
 
@@ -2491,7 +2495,7 @@ focus_tree = { # Merchant-Republicism
 
 				completion_reward = {
 					log = "[GetDateText]: [Root.GetName]: Focus MRC_subsidized_education"
-					swap_ideas = { remove_idea = MRC_center_of_knowledge0 add_idea = MRC_center_of_knowledge1 }
+					swap_ideas = { remove_idea = MRC_idea_center_of_knowledge0 add_idea = MRC_idea_center_of_knowledge1 }
 				}
 			}
 
@@ -2546,7 +2550,9 @@ focus_tree = { # Theocratic
 
 	shared_focus = MRC_intervention_military # Policy
 	shared_focus = MRC_neutrality_rearmement # Policy
-	shared_focus = MRC_military_defensive_advancements # Modifers
+	shared_focus = MRC_military_learn_crystallo_peninsula_failures # Modifers
+	shared_focus = MRC_military_third_dimensional # Modifers
+	shared_focus = MRC_ambitious_great_fleet # Modifers
 	continuous_focus_position = { x = 750 y = 100 }
 }
 
@@ -2568,7 +2574,9 @@ focus_tree = { # Unity
 
 	shared_focus = MRC_intervention_military # Policy
 	shared_focus = MRC_neutrality_rearmement # Policy
-	shared_focus = MRC_military_defensive_advancements # Modifers
+	shared_focus = MRC_military_learn_crystallo_peninsula_failures # Modifers
+	shared_focus = MRC_military_third_dimensional # Modifers
+	shared_focus = MRC_ambitious_great_fleet # Modifers
 	continuous_focus_position = { x = 750 y = 100 }
 }
 
@@ -2889,14 +2897,14 @@ focus_tree = { # Unity
 				custom_effect_tooltip = MRC_WARMONGER_UNLOCK_VOLUNTEER_TROOPS_TT
 			}
 		}
-# Military Branches
-	shared_focus = { # Military Defensive Advancements
-		id = MRC_military_defensive_advancements
+# Army Branches
+	shared_focus = { # Learn from the Crystallo Peninsula Failures
+		id = MRC_military_learn_crystallo_peninsula_failures
 		icon = GFX_focus_unknown_military
 		#prerequisite = { focus =  }
 		#mutually_exclusive = { focus =  }
 		#relative_position_id = 
-		x = 17
+		x = 15
 		y = 0
 
 		cost = 5
@@ -2904,13 +2912,40 @@ focus_tree = { # Unity
 		continue_if_invalid = no
 		available_if_capitulated = yes
 
+		available = { OR = {
+			has_completed_focus = MRC_foreign_intervention_focus
+			has_completed_focus = MRC_intervention_policy
+			has_completed_focus = MRC_foreign_neutrality_focus
+			has_completed_focus = MRC_neutrality_policy
+		} }
+		bypass = {
+		}
+
+		ai_will_do = {
+			base = 2
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_military_learn_crystallo_peninsula_failures"
+			army_experience = 25
+		}
+	}
+
+	shared_focus = { # Mobile Infantry Groups
+		id = MRC_mobile_infantry
+		icon = GFX_focus_unknown_military
+		prerequisite = { focus = MRC_military_learn_crystallo_peninsula_failures }
+		#mutually_exclusive = { focus =  }
+		relative_position_id = MRC_military_learn_crystallo_peninsula_failures
+		x = -1
+		y = 1
+
+		cost = 10
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = yes
+
 		available = {
-			OR = {
-				has_completed_focus = MRC_foreign_intervention_focus
-				has_completed_focus = MRC_intervention_policy
-				has_completed_focus = MRC_foreign_neutrality_focus
-				has_completed_focus = MRC_neutrality_policy
-			}
 		}
 		bypass = {
 		}
@@ -2920,200 +2955,855 @@ focus_tree = { # Unity
 		}
 
 		completion_reward = {
-			log = "[GetDateText]: [Root.GetName]: Focus MRC_military_defensive_advancements"
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_mobile_infantry"
 		}
 	}
-	# Army Branches
-		shared_focus = { # Learn from Independence War Tactics
-			id = MRC_independence_war_tactics
-			icon = GFX_focus_unknown_military
-			prerequisite = { focus = MRC_military_defensive_advancements }
-			#mutually_exclusive = { focus =  }
-			relative_position_id = MRC_military_defensive_advancements
-			x = -5
-			y = 1
 
-			cost = 5
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = yes
+	shared_focus = { # Renew Tank Production Focus
+		id = MRC_renew_tank_focus
+		icon = GFX_focus_unknown_military
+		prerequisite = { focus = MRC_military_learn_crystallo_peninsula_failures }
+		#mutually_exclusive = { focus =  }
+		relative_position_id = MRC_military_learn_crystallo_peninsula_failures
+		x = 1
+		y = 1
 
-			available = {
-			}
-			bypass = {
-			}
+		cost = 10
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = yes
 
-			ai_will_do = {
-				base = 2
-			}
-
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_independence_war_tactics"
-				army_experience = 25
-			}
+		available = {
+		}
+		bypass = {
 		}
 
-		shared_focus = { # Mobile Infantry Groups
-			id = MRC_mobile_infantry
-			icon = GFX_focus_unknown_military
-			prerequisite = { focus = MRC_independence_war_tactics }
-			#mutually_exclusive = { focus =  }
-			relative_position_id = MRC_independence_war_tactics
-			x = -1
-			y = 1
-
-			cost = 10
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = yes
-
-			available = {
-			}
-			bypass = {
-			}
-
-			ai_will_do = {
-				base = 2
-			}
-
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_mobile_infantry"
-			}
+		ai_will_do = {
+			base = 2
 		}
 
-		shared_focus = { # Renew Tank Production Focus
-			id = MRC_renew_tank_focus
-			icon = GFX_focus_unknown_military
-			prerequisite = { focus = MRC_independence_war_tactics }
-			#mutually_exclusive = { focus =  }
-			relative_position_id = MRC_independence_war_tactics
-			x = 1
-			y = 1
-
-			cost = 10
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = yes
-
-			available = {
-			}
-			bypass = {
-			}
-
-			ai_will_do = {
-				base = 2
-			}
-
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_renew_tank_focus"
-			}
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_renew_tank_focus"
 		}
-	# Air Branches
-		shared_focus = { # Third Dimension Project
-			id = MRC_three_dimensional
-			icon = GFX_focus_unknown_military
-			prerequisite = { focus = MRC_military_defensive_advancements }
-			#mutually_exclusive = { focus =  }
-			relative_position_id = MRC_military_defensive_advancements
-			x = 0
-			y = 1
+	}
+# Air Branches
+	shared_focus = { # Third Dimension Project
+		id = MRC_military_third_dimensional
+		icon = GFX_focus_unknown_military
+		#prerequisite = { focus =  }
+		#mutually_exclusive = { focus =  }
+		#relative_position_id = 
+		x = 22
+		y = 0
 
-			cost = 5
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = yes
+		cost = 5
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = yes
 
-			available = {
-			}
-			bypass = {
-			}
-
-			ai_will_do = {
-				base = 2
-			}
-
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_three_dimensional"
-				air_experience = 25
-			}
+		available = { OR = {
+			has_completed_focus = MRC_foreign_intervention_focus
+			has_completed_focus = MRC_intervention_policy
+			has_completed_focus = MRC_foreign_neutrality_focus
+			has_completed_focus = MRC_neutrality_policy
+		} }
+		bypass = {
 		}
 
-		shared_focus = { # Synthetics
-			id = MRC_synthetics
-			icon = GFX_focus_unknown_military
-			prerequisite = { focus = MRC_three_dimensional }
-			#mutually_exclusive = { focus =  }
-			relative_position_id = MRC_three_dimensional
-			x = 0
-			y = 1
+		ai_will_do = {
+			base = 2
+		}
 
-			cost = 5
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = yes
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_military_third_dimensional"
+			air_experience = 25
+		}
+	}
 
-			available = {
+	shared_focus = { # Synthetics
+		id = MRC_synthetics
+		icon = GFX_focus_unknown_military
+		prerequisite = { focus = MRC_military_third_dimensional }
+		#mutually_exclusive = { focus =  }
+		relative_position_id = MRC_military_third_dimensional
+		x = 0
+		y = 1
+
+		cost = 5
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = yes
+
+		available = {
+		}
+		bypass = {
+		}
+
+		ai_will_do = {
+			base = 2
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_synthetics"
+			add_tech_bonus = {
+				name = GER_coal_liquidization
+				bonus = 2.0
+				uses = 2
+				category = synth_resources
 			}
-			bypass = {
-			}
+        	modify_building_resources = {
+        	   building = synthetic_refinery
+        	   resource = rubber
+        	   amount = 2
+        	}
+		}
+	}
+# Naval Branches
+	shared_focus = { # Ambition of a Great Mesi Fleet
+		id = MRC_ambitious_great_fleet
+		icon = GFX_focus_unknown_military
+		#prerequisite = { focus =  }
+		#mutually_exclusive = { focus =  }
+		#relative_position_id = 
+		x = 29
+		y = 0
 
-			ai_will_do = {
-				base = 2
-			}
+		cost = 5
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = yes
 
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_synthetics"
-				add_tech_bonus = {
-					name = GER_coal_liquidization
-					bonus = 2.0
-					uses = 2
-					category = synth_resources
+		available = { OR = {
+			has_completed_focus = MRC_foreign_intervention_focus
+			has_completed_focus = MRC_intervention_policy
+			has_completed_focus = MRC_foreign_neutrality_focus
+			has_completed_focus = MRC_neutrality_policy
+		} }
+		bypass = {
+		}
+
+		ai_will_do = {
+			base = 2
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_ambitious_great_fleet"
+			navy_experience = 25
+		}
+	}
+
+	shared_focus = { # Expand Naval Dockyards
+		id = MRC_expand_naval_dockyards
+		icon = GFX_focus_unknown_industry
+		prerequisite = { focus = MRC_ambitious_great_fleet }
+		#mutually_exclusive = { focus =  }
+		relative_position_id = MRC_ambitious_great_fleet
+		x = 0
+		y = 2
+
+		cost = 10
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = yes
+
+		available = {
+		}
+		bypass = {
+		}
+
+		ai_will_do = {
+			base = 2
+		}
+
+		complete_tooltip = {
+			add_extra_state_shared_building_slots = 4
+			add_building_construction = {
+				type = dockyard
+				level = 4
+				instant_build = yes
+			}
+		}
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_expand_naval_dockyards"
+			if = {
+				limit = {
+					NOT = {
+						any_owned_state = {
+							dockyard > 0
+							free_building_slots = {
+								building = dockyard
+								size > 1
+								include_locked = yes
+							}
+						}
+					}
+					any_owned_state = {
+						is_coastal = yes
+					}
 				}
-	        	modify_building_resources = {
-	        	   building = synthetic_refinery
-	        	   resource = rubber
-	        	   amount = 2
-	        	}
+				random_owned_controlled_state = {
+					limit = {
+						is_coastal = yes
+						free_building_slots = {
+							building = dockyard
+							size > 1
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = dockyard
+						level = 2
+						instant_build = yes
+					}
+				}
+				set_country_flag = naval_effort_built
+			}
+			if = {
+				limit = {
+					NOT = { has_country_flag = naval_effort_built }
+					any_owned_state = {
+						dockyard > 0
+						free_building_slots = {
+							building = dockyard
+							size > 1
+							include_locked = yes
+						}
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						dockyard > 0
+						free_building_slots = {
+							building = dockyard
+							size > 1
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = dockyard
+						level = 2
+						instant_build = yes
+					}
+				}
+				set_country_flag = naval_effort_built
+			}
+			if = {
+				limit = {
+					NOT = { has_country_flag = naval_effort_built }
+					NOT = {
+						any_owned_state = {
+							free_building_slots = {
+								building = dockyard
+								size > 1
+								include_locked = yes
+							}
+						}
+					}
+				}
+				random_state = {
+					limit = {
+						controller = { tag = ROOT }
+						free_building_slots = {
+							building = dockyard
+							size > 1
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = dockyard
+						level = 2
+						instant_build = yes
+					}
+				}
+			}
+			if = {
+				limit = {
+					NOT = {
+						any_owned_state = {
+							dockyard > 0
+							free_building_slots = {
+								building = dockyard
+								size > 1
+								include_locked = yes
+							}
+						}
+					}
+					any_owned_state = {
+						is_coastal = yes
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						is_coastal = yes
+						free_building_slots = {
+							building = dockyard
+							size > 1
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = dockyard
+						level = 2
+						instant_build = yes
+					}
+				}
+				set_country_flag = naval_effort_built
+			}
+			if = {
+				limit = {
+					NOT = { has_country_flag = naval_effort_built }
+					any_owned_state = {
+						dockyard > 0
+						free_building_slots = {
+							building = dockyard
+							size > 1
+							include_locked = yes
+						}
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						dockyard > 0
+						free_building_slots = {
+							building = dockyard
+							size > 1
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = dockyard
+						level = 2
+						instant_build = yes
+					}
+				}
+				set_country_flag = naval_effort_built
+			}
+			if = {
+				limit = {
+					NOT = { has_country_flag = naval_effort_built }
+					NOT = {
+						any_owned_state = {
+							free_building_slots = {
+								building = dockyard
+								size > 1
+								include_locked = yes
+							}
+						}
+					}
+				}
+				random_state = {
+					limit = {
+						controller = { tag = ROOT }
+						free_building_slots = {
+							building = dockyard
+							size > 1
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = dockyard
+						level = 2
+						instant_build = yes
+					}
+				}
 			}
 		}
-	# Naval Branches
-		shared_focus = { # Ambition of a Great Mesi Fleet
-			id = MRC_ambitious_great_fleet
+	}
+	# Screening Focus Fleet
+		#shared_focus = { # 
+		#	id = MRC_
+		#	icon = GFX_focus_unknown_military
+		#	#prerequisite = { focus =  }
+		#	#mutually_exclusive = { focus =  }
+		#	#relative_position_id = 
+		#	x = 0
+		#	y = 0
+		#
+		#	cost = 10
+		#	cancel_if_invalid = yes
+		#	continue_if_invalid = no
+		#	available_if_capitulated = yes
+		#
+		#	available = {
+		#	}
+		#	bypass = {
+		#	}
+		#
+		#	ai_will_do = {
+		#		base = 2
+		#	}
+		#
+		#	completion_reward = {
+		#		log = "[GetDateText]: [Root.GetName]: Focus MRC_"
+		#	}
+		#}
+
+		#shared_focus = { # 
+		#	id = MRC_
+		#	icon = GFX_focus_unknown_military
+		#	#prerequisite = { focus =  }
+		#	#mutually_exclusive = { focus =  }
+		#	#relative_position_id = 
+		#	x = 0
+		#	y = 0
+		#
+		#	cost = 10
+		#	cancel_if_invalid = yes
+		#	continue_if_invalid = no
+		#	available_if_capitulated = yes
+		#
+		#	available = {
+		#	}
+		#	bypass = {
+		#	}
+		#
+		#	ai_will_do = {
+		#		base = 2
+		#	}
+		#
+		#	completion_reward = {
+		#		log = "[GetDateText]: [Root.GetName]: Focus MRC_"
+		#	}
+		#}
+
+		#shared_focus = { # 
+		#	id = MRC_
+		#	icon = GFX_focus_unknown_military
+		#	#prerequisite = { focus =  }
+		#	#mutually_exclusive = { focus =  }
+		#	#relative_position_id = 
+		#	x = 0
+		#	y = 0
+		#
+		#	cost = 10
+		#	cancel_if_invalid = yes
+		#	continue_if_invalid = no
+		#	available_if_capitulated = yes
+		#
+		#	available = {
+		#	}
+		#	bypass = {
+		#	}
+		#
+		#	ai_will_do = {
+		#		base = 2
+		#	}
+		#
+		#	completion_reward = {
+		#		log = "[GetDateText]: [Root.GetName]: Focus MRC_"
+		#	}
+		#}
+
+		#shared_focus = { # 
+		#	id = MRC_
+		#	icon = GFX_focus_unknown_military
+		#	#prerequisite = { focus =  }
+		#	#mutually_exclusive = { focus =  }
+		#	#relative_position_id = 
+		#	x = 0
+		#	y = 0
+		#
+		#	cost = 10
+		#	cancel_if_invalid = yes
+		#	continue_if_invalid = no
+		#	available_if_capitulated = yes
+		#
+		#	available = {
+		#	}
+		#	bypass = {
+		#	}
+		#
+		#	ai_will_do = {
+		#		base = 2
+		#	}
+		#
+		#	completion_reward = {
+		#		log = "[GetDateText]: [Root.GetName]: Focus MRC_"
+		#	}
+		#}
+	# Capital Focus Fleet
+		#shared_focus = { # 
+		#	id = MRC_
+		#	icon = GFX_focus_unknown_military
+		#	#prerequisite = { focus =  }
+		#	#mutually_exclusive = { focus =  }
+		#	#relative_position_id = 
+		#	x = 0
+		#	y = 0
+		#
+		#	cost = 10
+		#	cancel_if_invalid = yes
+		#	continue_if_invalid = no
+		#	available_if_capitulated = yes
+		#
+		#	available = {
+		#	}
+		#	bypass = {
+		#	}
+		#
+		#	ai_will_do = {
+		#		base = 2
+		#	}
+		#
+		#	completion_reward = {
+		#		log = "[GetDateText]: [Root.GetName]: Focus MRC_"
+		#	}
+		#}
+
+		#shared_focus = { # 
+		#	id = MRC_
+		#	icon = GFX_focus_unknown_military
+		#	#prerequisite = { focus =  }
+		#	#mutually_exclusive = { focus =  }
+		#	#relative_position_id = 
+		#	x = 0
+		#	y = 0
+		#
+		#	cost = 10
+		#	cancel_if_invalid = yes
+		#	continue_if_invalid = no
+		#	available_if_capitulated = yes
+		#
+		#	available = {
+		#	}
+		#	bypass = {
+		#	}
+		#
+		#	ai_will_do = {
+		#		base = 2
+		#	}
+		#
+		#	completion_reward = {
+		#		log = "[GetDateText]: [Root.GetName]: Focus MRC_"
+		#	}
+		#}
+
+		#shared_focus = { # 
+		#	id = MRC_
+		#	icon = GFX_focus_unknown_military
+		#	#prerequisite = { focus =  }
+		#	#mutually_exclusive = { focus =  }
+		#	#relative_position_id = 
+		#	x = 0
+		#	y = 0
+		#
+		#	cost = 10
+		#	cancel_if_invalid = yes
+		#	continue_if_invalid = no
+		#	available_if_capitulated = yes
+		#
+		#	available = {
+		#	}
+		#	bypass = {
+		#	}
+		#
+		#	ai_will_do = {
+		#		base = 2
+		#	}
+		#
+		#	completion_reward = {
+		#		log = "[GetDateText]: [Root.GetName]: Focus MRC_"
+		#	}
+		#}
+
+		#shared_focus = { # 
+		#	id = MRC_
+		#	icon = GFX_focus_unknown_military
+		#	#prerequisite = { focus =  }
+		#	#mutually_exclusive = { focus =  }
+		#	#relative_position_id = 
+		#	x = 0
+		#	y = 0
+		#
+		#	cost = 10
+		#	cancel_if_invalid = yes
+		#	continue_if_invalid = no
+		#	available_if_capitulated = yes
+		#
+		#	available = {
+		#	}
+		#	bypass = {
+		#	}
+		#
+		#	ai_will_do = {
+		#		base = 2
+		#	}
+		#
+		#	completion_reward = {
+		#		log = "[GetDateText]: [Root.GetName]: Focus MRC_"
+		#	}
+		#}
+		# Greatest Fleet
+			shared_focus = { # The Greatest Fleet of the Seas
+				id = MRC_fleet_of_seas
+				icon = GFX_focus_unknown_industry
+				prerequisite = { focus = MRC_expand_naval_dockyards }
+				#mutually_exclusive = { focus =  }
+				relative_position_id = MRC_expand_naval_dockyards
+				x = 0
+				y = 3
+
+				cost = 10
+				cancel_if_invalid = yes
+				continue_if_invalid = no
+				available_if_capitulated = yes
+
+				available = {
+				}
+				bypass = {
+				}
+
+				ai_will_do = {
+					base = 2
+				}
+
+				complete_tooltip = {
+					add_extra_state_shared_building_slots = 4
+					add_building_construction = {
+						type = dockyard
+						level = 4
+						instant_build = yes
+					}
+				}
+				completion_reward = {
+					log = "[GetDateText]: [Root.GetName]: Focus MRC_fleet_of_seas"
+					if = {
+						limit = {
+							NOT = {
+								any_owned_state = {
+									dockyard > 0
+									free_building_slots = {
+										building = dockyard
+										size > 1
+										include_locked = yes
+									}
+								}
+							}
+							any_owned_state = {
+								is_coastal = yes
+							}
+						}
+						random_owned_controlled_state = {
+							limit = {
+								is_coastal = yes
+								free_building_slots = {
+									building = dockyard
+									size > 1
+									include_locked = yes
+								}
+							}
+							add_extra_state_shared_building_slots = 2
+							add_building_construction = {
+								type = dockyard
+								level = 2
+								instant_build = yes
+							}
+						}
+						set_country_flag = naval_effort_built2
+					}
+					if = {
+						limit = {
+							NOT = { has_country_flag = naval_effort_built2 }
+							any_owned_state = {
+								dockyard > 0
+								free_building_slots = {
+									building = dockyard
+									size > 1
+									include_locked = yes
+								}
+							}
+						}
+						random_owned_controlled_state = {
+							limit = {
+								dockyard > 0
+								free_building_slots = {
+									building = dockyard
+									size > 1
+									include_locked = yes
+								}
+							}
+							add_extra_state_shared_building_slots = 2
+							add_building_construction = {
+								type = dockyard
+								level = 2
+								instant_build = yes
+							}
+						}
+						set_country_flag = naval_effort_built2
+					}
+					if = {
+						limit = {
+							NOT = { has_country_flag = naval_effort_built2 }
+							NOT = {
+								any_owned_state = {
+									free_building_slots = {
+										building = dockyard
+										size > 1
+										include_locked = yes
+									}
+								}
+							}
+						}
+						random_state = {
+							limit = {
+								controller = { tag = ROOT }
+								free_building_slots = {
+									building = dockyard
+									size > 1
+									include_locked = yes
+								}
+							}
+							add_extra_state_shared_building_slots = 2
+							add_building_construction = {
+								type = dockyard
+								level = 2
+								instant_build = yes
+							}
+						}
+					}
+					if = {
+						limit = {
+							NOT = {
+								any_owned_state = {
+									dockyard > 0
+									free_building_slots = {
+										building = dockyard
+										size > 1
+										include_locked = yes
+									}
+								}
+							}
+							any_owned_state = {
+								is_coastal = yes
+							}
+						}
+						random_owned_controlled_state = {
+							limit = {
+								is_coastal = yes
+								free_building_slots = {
+									building = dockyard
+									size > 1
+									include_locked = yes
+								}
+							}
+							add_extra_state_shared_building_slots = 2
+							add_building_construction = {
+								type = dockyard
+								level = 2
+								instant_build = yes
+							}
+						}
+						set_country_flag = naval_effort_built2
+					}
+					if = {
+						limit = {
+							NOT = { has_country_flag = naval_effort_built2 }
+							any_owned_state = {
+								dockyard > 0
+								free_building_slots = {
+									building = dockyard
+									size > 1
+									include_locked = yes
+								}
+							}
+						}
+						random_owned_controlled_state = {
+							limit = {
+								dockyard > 0
+								free_building_slots = {
+									building = dockyard
+									size > 1
+									include_locked = yes
+								}
+							}
+							add_extra_state_shared_building_slots = 2
+							add_building_construction = {
+								type = dockyard
+								level = 2
+								instant_build = yes
+							}
+						}
+						set_country_flag = naval_effort_built2
+					}
+					if = {
+						limit = {
+							NOT = { has_country_flag = naval_effort_built2 }
+							NOT = {
+								any_owned_state = {
+									free_building_slots = {
+										building = dockyard
+										size > 1
+										include_locked = yes
+									}
+								}
+							}
+						}
+						random_state = {
+							limit = {
+								controller = { tag = ROOT }
+								free_building_slots = {
+									building = dockyard
+									size > 1
+									include_locked = yes
+								}
+							}
+							add_extra_state_shared_building_slots = 2
+							add_building_construction = {
+								type = dockyard
+								level = 2
+								instant_build = yes
+							}
+						}
+					}
+				}
+			}
+	# International Navy
+		shared_focus = { # The International Fleet 
+			id = MRC_international_fleet
 			icon = GFX_focus_unknown_military
-			prerequisite = { focus = MRC_military_defensive_advancements }
-			#mutually_exclusive = { focus =  }
-			relative_position_id = MRC_military_defensive_advancements
-			x = 5
-			y = 1
-
-			cost = 5
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = yes
-
-			available = {
-			}
-			bypass = {
-			}
-
-			ai_will_do = {
-				base = 2
-			}
-
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_ambitious_great_fleet"
-				navy_experience = 25
-			}
-		}
-
-		shared_focus = { # Expand Naval Dockyards
-			id = MRC_expand_naval_dockyards
-			icon = GFX_focus_unknown_industry
 			prerequisite = { focus = MRC_ambitious_great_fleet }
-			#mutually_exclusive = { focus =  }
+			mutually_exclusive = { focus = MRC_national_fleet }
 			relative_position_id = MRC_ambitious_great_fleet
+			x = -2
+			y = 1
+
+			cost = 10
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = yes
+
+			available = {
+				OR = {
+					has_completed_focus = MRC_foreign_intervention_focus
+					has_completed_focus = MRC_intervention_policy
+				}
+			}
+			bypass = {
+			}
+
+			ai_will_do = {
+				base = 2
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_international_fleet"
+			}
+		}
+
+		shared_focus = { # Continental Range
+			id = MRC_continental_range
+			icon = GFX_focus_unknown_military
+			prerequisite = { focus = MRC_international_fleet }
+			#mutually_exclusive = { focus =  }
+			relative_position_id = MRC_international_fleet
 			x = 0
-			y = 2
+			y = 1
 
 			cost = 10
 			cancel_if_invalid = yes
@@ -3129,829 +3819,125 @@ focus_tree = { # Unity
 				base = 2
 			}
 
-			complete_tooltip = {
-				add_extra_state_shared_building_slots = 4
-				add_building_construction = {
-					type = dockyard
-					level = 4
-					instant_build = yes
-				}
-			}
 			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_expand_naval_dockyards"
-				if = {
-					limit = {
-						NOT = {
-							any_owned_state = {
-								dockyard > 0
-								free_building_slots = {
-									building = dockyard
-									size > 1
-									include_locked = yes
-								}
-							}
-						}
-						any_owned_state = {
-							is_coastal = yes
-						}
-					}
-					random_owned_controlled_state = {
-						limit = {
-							is_coastal = yes
-							free_building_slots = {
-								building = dockyard
-								size > 1
-								include_locked = yes
-							}
-						}
-						add_extra_state_shared_building_slots = 2
-						add_building_construction = {
-							type = dockyard
-							level = 2
-							instant_build = yes
-						}
-					}
-					set_country_flag = naval_effort_built
-				}
-				if = {
-					limit = {
-						NOT = { has_country_flag = naval_effort_built }
-						any_owned_state = {
-							dockyard > 0
-							free_building_slots = {
-								building = dockyard
-								size > 1
-								include_locked = yes
-							}
-						}
-					}
-					random_owned_controlled_state = {
-						limit = {
-							dockyard > 0
-							free_building_slots = {
-								building = dockyard
-								size > 1
-								include_locked = yes
-							}
-						}
-						add_extra_state_shared_building_slots = 2
-						add_building_construction = {
-							type = dockyard
-							level = 2
-							instant_build = yes
-						}
-					}
-					set_country_flag = naval_effort_built
-				}
-				if = {
-					limit = {
-						NOT = { has_country_flag = naval_effort_built }
-						NOT = {
-							any_owned_state = {
-								free_building_slots = {
-									building = dockyard
-									size > 1
-									include_locked = yes
-								}
-							}
-						}
-					}
-					random_state = {
-						limit = {
-							controller = { tag = ROOT }
-							free_building_slots = {
-								building = dockyard
-								size > 1
-								include_locked = yes
-							}
-						}
-						add_extra_state_shared_building_slots = 2
-						add_building_construction = {
-							type = dockyard
-							level = 2
-							instant_build = yes
-						}
-					}
-				}
-				if = {
-					limit = {
-						NOT = {
-							any_owned_state = {
-								dockyard > 0
-								free_building_slots = {
-									building = dockyard
-									size > 1
-									include_locked = yes
-								}
-							}
-						}
-						any_owned_state = {
-							is_coastal = yes
-						}
-					}
-					random_owned_controlled_state = {
-						limit = {
-							is_coastal = yes
-							free_building_slots = {
-								building = dockyard
-								size > 1
-								include_locked = yes
-							}
-						}
-						add_extra_state_shared_building_slots = 2
-						add_building_construction = {
-							type = dockyard
-							level = 2
-							instant_build = yes
-						}
-					}
-					set_country_flag = naval_effort_built
-				}
-				if = {
-					limit = {
-						NOT = { has_country_flag = naval_effort_built }
-						any_owned_state = {
-							dockyard > 0
-							free_building_slots = {
-								building = dockyard
-								size > 1
-								include_locked = yes
-							}
-						}
-					}
-					random_owned_controlled_state = {
-						limit = {
-							dockyard > 0
-							free_building_slots = {
-								building = dockyard
-								size > 1
-								include_locked = yes
-							}
-						}
-						add_extra_state_shared_building_slots = 2
-						add_building_construction = {
-							type = dockyard
-							level = 2
-							instant_build = yes
-						}
-					}
-					set_country_flag = naval_effort_built
-				}
-				if = {
-					limit = {
-						NOT = { has_country_flag = naval_effort_built }
-						NOT = {
-							any_owned_state = {
-								free_building_slots = {
-									building = dockyard
-									size > 1
-									include_locked = yes
-								}
-							}
-						}
-					}
-					random_state = {
-						limit = {
-							controller = { tag = ROOT }
-							free_building_slots = {
-								building = dockyard
-								size > 1
-								include_locked = yes
-							}
-						}
-						add_extra_state_shared_building_slots = 2
-						add_building_construction = {
-							type = dockyard
-							level = 2
-							instant_build = yes
-						}
-					}
-				}
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_continental_range"
+				add_ideas = MRC_idea_continetal_naval_range
 			}
 		}
-		# Screening Focus Fleet
-			#shared_focus = { # 
-			#	id = MRC_
-			#	icon = GFX_focus_unknown_military
-			#	#prerequisite = { focus =  }
-			#	#mutually_exclusive = { focus =  }
-			#	#relative_position_id = 
-			#	x = 0
-			#	y = 0
-			#
-			#	cost = 10
-			#	cancel_if_invalid = yes
-			#	continue_if_invalid = no
-			#	available_if_capitulated = yes
-			#
-			#	available = {
-			#	}
-			#	bypass = {
-			#	}
-			#
-			#	ai_will_do = {
-			#		base = 2
-			#	}
-			#
-			#	completion_reward = {
-			#		log = "[GetDateText]: [Root.GetName]: Focus MRC_"
-			#	}
-			#}
 
-			#shared_focus = { # 
-			#	id = MRC_
-			#	icon = GFX_focus_unknown_military
-			#	#prerequisite = { focus =  }
-			#	#mutually_exclusive = { focus =  }
-			#	#relative_position_id = 
-			#	x = 0
-			#	y = 0
-			#
-			#	cost = 10
-			#	cancel_if_invalid = yes
-			#	continue_if_invalid = no
-			#	available_if_capitulated = yes
-			#
-			#	available = {
-			#	}
-			#	bypass = {
-			#	}
-			#
-			#	ai_will_do = {
-			#		base = 2
-			#	}
-			#
-			#	completion_reward = {
-			#		log = "[GetDateText]: [Root.GetName]: Focus MRC_"
-			#	}
-			#}
+		shared_focus = { # Fortify Trade Ports
+			id = MRC_fortify_trade_ports
+			icon = GFX_focus_unknown_military
+			prerequisite = { focus = MRC_international_fleet }
+			#mutually_exclusive = { focus =  }
+			relative_position_id = MRC_international_fleet
+			x = -2
+			y = 1
 
-			#shared_focus = { # 
-			#	id = MRC_
-			#	icon = GFX_focus_unknown_military
-			#	#prerequisite = { focus =  }
-			#	#mutually_exclusive = { focus =  }
-			#	#relative_position_id = 
-			#	x = 0
-			#	y = 0
-			#
-			#	cost = 10
-			#	cancel_if_invalid = yes
-			#	continue_if_invalid = no
-			#	available_if_capitulated = yes
-			#
-			#	available = {
-			#	}
-			#	bypass = {
-			#	}
-			#
-			#	ai_will_do = {
-			#		base = 2
-			#	}
-			#
-			#	completion_reward = {
-			#		log = "[GetDateText]: [Root.GetName]: Focus MRC_"
-			#	}
-			#}
+			cost = 10
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = yes
 
-			#shared_focus = { # 
-			#	id = MRC_
-			#	icon = GFX_focus_unknown_military
-			#	#prerequisite = { focus =  }
-			#	#mutually_exclusive = { focus =  }
-			#	#relative_position_id = 
-			#	x = 0
-			#	y = 0
-			#
-			#	cost = 10
-			#	cancel_if_invalid = yes
-			#	continue_if_invalid = no
-			#	available_if_capitulated = yes
-			#
-			#	available = {
-			#	}
-			#	bypass = {
-			#	}
-			#
-			#	ai_will_do = {
-			#		base = 2
-			#	}
-			#
-			#	completion_reward = {
-			#		log = "[GetDateText]: [Root.GetName]: Focus MRC_"
-			#	}
-			#}
-		# Capital Focus Fleet
-			#shared_focus = { # 
-			#	id = MRC_
-			#	icon = GFX_focus_unknown_military
-			#	#prerequisite = { focus =  }
-			#	#mutually_exclusive = { focus =  }
-			#	#relative_position_id = 
-			#	x = 0
-			#	y = 0
-			#
-			#	cost = 10
-			#	cancel_if_invalid = yes
-			#	continue_if_invalid = no
-			#	available_if_capitulated = yes
-			#
-			#	available = {
-			#	}
-			#	bypass = {
-			#	}
-			#
-			#	ai_will_do = {
-			#		base = 2
-			#	}
-			#
-			#	completion_reward = {
-			#		log = "[GetDateText]: [Root.GetName]: Focus MRC_"
-			#	}
-			#}
-
-			#shared_focus = { # 
-			#	id = MRC_
-			#	icon = GFX_focus_unknown_military
-			#	#prerequisite = { focus =  }
-			#	#mutually_exclusive = { focus =  }
-			#	#relative_position_id = 
-			#	x = 0
-			#	y = 0
-			#
-			#	cost = 10
-			#	cancel_if_invalid = yes
-			#	continue_if_invalid = no
-			#	available_if_capitulated = yes
-			#
-			#	available = {
-			#	}
-			#	bypass = {
-			#	}
-			#
-			#	ai_will_do = {
-			#		base = 2
-			#	}
-			#
-			#	completion_reward = {
-			#		log = "[GetDateText]: [Root.GetName]: Focus MRC_"
-			#	}
-			#}
-
-			#shared_focus = { # 
-			#	id = MRC_
-			#	icon = GFX_focus_unknown_military
-			#	#prerequisite = { focus =  }
-			#	#mutually_exclusive = { focus =  }
-			#	#relative_position_id = 
-			#	x = 0
-			#	y = 0
-			#
-			#	cost = 10
-			#	cancel_if_invalid = yes
-			#	continue_if_invalid = no
-			#	available_if_capitulated = yes
-			#
-			#	available = {
-			#	}
-			#	bypass = {
-			#	}
-			#
-			#	ai_will_do = {
-			#		base = 2
-			#	}
-			#
-			#	completion_reward = {
-			#		log = "[GetDateText]: [Root.GetName]: Focus MRC_"
-			#	}
-			#}
-
-			#shared_focus = { # 
-			#	id = MRC_
-			#	icon = GFX_focus_unknown_military
-			#	#prerequisite = { focus =  }
-			#	#mutually_exclusive = { focus =  }
-			#	#relative_position_id = 
-			#	x = 0
-			#	y = 0
-			#
-			#	cost = 10
-			#	cancel_if_invalid = yes
-			#	continue_if_invalid = no
-			#	available_if_capitulated = yes
-			#
-			#	available = {
-			#	}
-			#	bypass = {
-			#	}
-			#
-			#	ai_will_do = {
-			#		base = 2
-			#	}
-			#
-			#	completion_reward = {
-			#		log = "[GetDateText]: [Root.GetName]: Focus MRC_"
-			#	}
-			#}
-			# Greatest Fleet
-				shared_focus = { # The Greatest Fleet of the Seas
-					id = MRC_fleet_of_seas
-					icon = GFX_focus_unknown_industry
-					prerequisite = { focus = MRC_expand_naval_dockyards }
-					#mutually_exclusive = { focus =  }
-					relative_position_id = MRC_expand_naval_dockyards
-					x = 0
-					y = 3
-
-					cost = 10
-					cancel_if_invalid = yes
-					continue_if_invalid = no
-					available_if_capitulated = yes
-
-					available = {
-					}
-					bypass = {
-					}
-
-					ai_will_do = {
-						base = 2
-					}
-
-					complete_tooltip = {
-						add_extra_state_shared_building_slots = 4
-						add_building_construction = {
-							type = dockyard
-							level = 4
-							instant_build = yes
-						}
-					}
-					completion_reward = {
-						log = "[GetDateText]: [Root.GetName]: Focus MRC_fleet_of_seas"
-						if = {
-							limit = {
-								NOT = {
-									any_owned_state = {
-										dockyard > 0
-										free_building_slots = {
-											building = dockyard
-											size > 1
-											include_locked = yes
-										}
-									}
-								}
-								any_owned_state = {
-									is_coastal = yes
-								}
-							}
-							random_owned_controlled_state = {
-								limit = {
-									is_coastal = yes
-									free_building_slots = {
-										building = dockyard
-										size > 1
-										include_locked = yes
-									}
-								}
-								add_extra_state_shared_building_slots = 2
-								add_building_construction = {
-									type = dockyard
-									level = 2
-									instant_build = yes
-								}
-							}
-							set_country_flag = naval_effort_built2
-						}
-						if = {
-							limit = {
-								NOT = { has_country_flag = naval_effort_built2 }
-								any_owned_state = {
-									dockyard > 0
-									free_building_slots = {
-										building = dockyard
-										size > 1
-										include_locked = yes
-									}
-								}
-							}
-							random_owned_controlled_state = {
-								limit = {
-									dockyard > 0
-									free_building_slots = {
-										building = dockyard
-										size > 1
-										include_locked = yes
-									}
-								}
-								add_extra_state_shared_building_slots = 2
-								add_building_construction = {
-									type = dockyard
-									level = 2
-									instant_build = yes
-								}
-							}
-							set_country_flag = naval_effort_built2
-						}
-						if = {
-							limit = {
-								NOT = { has_country_flag = naval_effort_built2 }
-								NOT = {
-									any_owned_state = {
-										free_building_slots = {
-											building = dockyard
-											size > 1
-											include_locked = yes
-										}
-									}
-								}
-							}
-							random_state = {
-								limit = {
-									controller = { tag = ROOT }
-									free_building_slots = {
-										building = dockyard
-										size > 1
-										include_locked = yes
-									}
-								}
-								add_extra_state_shared_building_slots = 2
-								add_building_construction = {
-									type = dockyard
-									level = 2
-									instant_build = yes
-								}
-							}
-						}
-						if = {
-							limit = {
-								NOT = {
-									any_owned_state = {
-										dockyard > 0
-										free_building_slots = {
-											building = dockyard
-											size > 1
-											include_locked = yes
-										}
-									}
-								}
-								any_owned_state = {
-									is_coastal = yes
-								}
-							}
-							random_owned_controlled_state = {
-								limit = {
-									is_coastal = yes
-									free_building_slots = {
-										building = dockyard
-										size > 1
-										include_locked = yes
-									}
-								}
-								add_extra_state_shared_building_slots = 2
-								add_building_construction = {
-									type = dockyard
-									level = 2
-									instant_build = yes
-								}
-							}
-							set_country_flag = naval_effort_built2
-						}
-						if = {
-							limit = {
-								NOT = { has_country_flag = naval_effort_built2 }
-								any_owned_state = {
-									dockyard > 0
-									free_building_slots = {
-										building = dockyard
-										size > 1
-										include_locked = yes
-									}
-								}
-							}
-							random_owned_controlled_state = {
-								limit = {
-									dockyard > 0
-									free_building_slots = {
-										building = dockyard
-										size > 1
-										include_locked = yes
-									}
-								}
-								add_extra_state_shared_building_slots = 2
-								add_building_construction = {
-									type = dockyard
-									level = 2
-									instant_build = yes
-								}
-							}
-							set_country_flag = naval_effort_built2
-						}
-						if = {
-							limit = {
-								NOT = { has_country_flag = naval_effort_built2 }
-								NOT = {
-									any_owned_state = {
-										free_building_slots = {
-											building = dockyard
-											size > 1
-											include_locked = yes
-										}
-									}
-								}
-							}
-							random_state = {
-								limit = {
-									controller = { tag = ROOT }
-									free_building_slots = {
-										building = dockyard
-										size > 1
-										include_locked = yes
-									}
-								}
-								add_extra_state_shared_building_slots = 2
-								add_building_construction = {
-									type = dockyard
-									level = 2
-									instant_build = yes
-								}
-							}
-						}
-					}
-				}
-		# International Navy
-			shared_focus = { # The International Fleet 
-				id = MRC_international_fleet
-				icon = GFX_focus_unknown_military
-				prerequisite = { focus = MRC_ambitious_great_fleet }
-				mutually_exclusive = { focus = MRC_national_fleet }
-				relative_position_id = MRC_ambitious_great_fleet
-				x = -2
-				y = 1
-
-				cost = 10
-				cancel_if_invalid = yes
-				continue_if_invalid = no
-				available_if_capitulated = yes
-
-				available = {
-					OR = {
-						has_completed_focus = MRC_foreign_intervention_focus
-						has_completed_focus = MRC_intervention_policy
-					}
-				}
-				bypass = {
-				}
-
-				ai_will_do = {
-					base = 2
-				}
-
-				completion_reward = {
-					log = "[GetDateText]: [Root.GetName]: Focus MRC_international_fleet"
-				}
+			available = {
+			}
+			bypass = {
 			}
 
-			shared_focus = { # Continental Range
-				id = MRC_continental_range
-				icon = GFX_focus_unknown_military
-				prerequisite = { focus = MRC_international_fleet }
-				#mutually_exclusive = { focus =  }
-				relative_position_id = MRC_international_fleet
-				x = 0
-				y = 1
-
-				cost = 10
-				cancel_if_invalid = yes
-				continue_if_invalid = no
-				available_if_capitulated = yes
-
-				available = {
-				}
-				bypass = {
-				}
-
-				ai_will_do = {
-					base = 2
-				}
-
-				completion_reward = {
-					log = "[GetDateText]: [Root.GetName]: Focus MRC_continental_range"
-					add_ideas = MRC_continetal_naval_range
-				}
+			ai_will_do = {
+				base = 2
 			}
 
-			shared_focus = { # Fortify Trade Ports
-				id = MRC_fortify_trade_ports
-				icon = GFX_focus_unknown_military
-				prerequisite = { focus = MRC_international_fleet }
-				#mutually_exclusive = { focus =  }
-				relative_position_id = MRC_international_fleet
-				x = -2
-				y = 1
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_fortify_trade_ports"
+			}
+		}
+	# Local Navy
+		shared_focus = { # The National Fleet
+			id = MRC_national_fleet
+			icon = GFX_focus_unknown_military
+			prerequisite = { focus = MRC_ambitious_great_fleet }
+			mutually_exclusive = { focus = MRC_international_fleet }
+			relative_position_id = MRC_ambitious_great_fleet
+			x = 2
+			y = 1
 
-				cost = 10
-				cancel_if_invalid = yes
-				continue_if_invalid = no
-				available_if_capitulated = yes
+			cost = 10
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = yes
 
-				available = {
-				}
-				bypass = {
-				}
-
-				ai_will_do = {
-					base = 2
-				}
-
-				completion_reward = {
-					log = "[GetDateText]: [Root.GetName]: Focus MRC_fortify_trade_ports"
+			available = {
+				OR = {
+					has_completed_focus = MRC_neutrality_policy
+					has_completed_focus = MRC_foreign_neutrality_focus
 				}
 			}
-		# Local Navy
-			shared_focus = { # The National Fleet
-				id = MRC_national_fleet
-				icon = GFX_focus_unknown_military
-				prerequisite = { focus = MRC_ambitious_great_fleet }
-				mutually_exclusive = { focus = MRC_international_fleet }
-				relative_position_id = MRC_ambitious_great_fleet
-				x = 2
-				y = 1
-
-				cost = 10
-				cancel_if_invalid = yes
-				continue_if_invalid = no
-				available_if_capitulated = yes
-
-				available = {
-					OR = {
-						has_completed_focus = MRC_neutrality_policy
-						has_completed_focus = MRC_foreign_neutrality_focus
-					}
-				}
-				bypass = {
-				}
-
-				ai_will_do = {
-					base = 2
-				}
-
-				completion_reward = {
-					log = "[GetDateText]: [Root.GetName]: Focus MRC_national_fleet"
-				}
+			bypass = {
 			}
 
-			shared_focus = { # Naval Security
-				id = MRC_naval_security
-				icon = GFX_focus_unknown_military
-				prerequisite = { focus = MRC_national_fleet }
-				#mutually_exclusive = { focus =  }
-				relative_position_id = MRC_national_fleet
-				x = 0
-				y = 1
-
-				cost = 10
-				cancel_if_invalid = yes
-				continue_if_invalid = no
-				available_if_capitulated = yes
-
-				available = {
-				}
-				bypass = {
-				}
-
-				ai_will_do = {
-					base = 2
-				}
-
-				completion_reward = {
-					log = "[GetDateText]: [Root.GetName]: Focus MRC_naval_security"
-					add_ideas = MRC_local_security_naval_range
-				}
+			ai_will_do = {
+				base = 2
 			}
 
-			shared_focus = { # Fortify Home Ports
-				id = MRC_fortify_home_ports
-				icon = GFX_focus_unknown_military
-				prerequisite = { focus = MRC_national_fleet }
-				#mutually_exclusive = { focus =  }
-				relative_position_id = MRC_national_fleet
-				x = 2
-				y = 1
-
-				cost = 10
-				cancel_if_invalid = yes
-				continue_if_invalid = no
-				available_if_capitulated = yes
-
-				available = {
-				}
-				bypass = {
-				}
-
-				ai_will_do = {
-					base = 2
-				}
-
-				completion_reward = {
-					log = "[GetDateText]: [Root.GetName]: Focus MRC_fortify_home_ports"
-				}
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_national_fleet"
 			}
+		}
+
+		shared_focus = { # Naval Security
+			id = MRC_naval_security
+			icon = GFX_focus_unknown_military
+			prerequisite = { focus = MRC_national_fleet }
+			#mutually_exclusive = { focus =  }
+			relative_position_id = MRC_national_fleet
+			x = 0
+			y = 1
+
+			cost = 10
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = yes
+
+			available = {
+			}
+			bypass = {
+			}
+
+			ai_will_do = {
+				base = 2
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_naval_security"
+				add_ideas = MRC_idea_local_security_naval_range
+			}
+		}
+
+		shared_focus = { # Fortify Home Ports
+			id = MRC_fortify_home_ports
+			icon = GFX_focus_unknown_military
+			prerequisite = { focus = MRC_national_fleet }
+			#mutually_exclusive = { focus =  }
+			relative_position_id = MRC_national_fleet
+			x = 2
+			y = 1
+
+			cost = 10
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = yes
+
+			available = {
+			}
+			bypass = {
+			}
+
+			ai_will_do = {
+				base = 2
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_fortify_home_ports"
+			}
+		}
