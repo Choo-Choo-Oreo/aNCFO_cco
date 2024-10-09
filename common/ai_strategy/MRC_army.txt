@@ -1,0 +1,64 @@
+MRC_lifeline_of_the_empire = {
+	allowed = { original_tag = MRC }
+	enable = { always = yes }
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = area_priority
+		id = lifeline_canal
+		value = 80 # this is extra on top of 50 base (now equal to other territory)
+	}
+
+	ai_strategy = {
+		type = area_priority
+		id = lifeline_straits
+		value = 80 # this is extra on top of 50 base (now equal to other territory)
+	}
+}
+
+MRC_onto_the_southern_beaches = {
+	allowed = {
+		OR = {
+			original_tag = MRC
+			original_tag = AGC
+			original_tag = AUC
+			original_tag = SDP
+			original_tag = SMP
+			original_tag = SPP
+		}
+	}
+	enable = { date > 1732.6.1 }
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = naval_invasion_focus
+		value = 10
+	}
+
+	ai_strategy = {
+		type = invasion_unit_request
+		area = southern_landing_zone
+		value = 20
+	}
+}
+
+MRC_onto_the_eastern_beaches = {
+	allowed = {
+		original_tag = MRC
+		75  = { is_controlled_by = ROOT }
+		335 = { is_controlled_by = ROOT }
+	}
+	enable = { date > 1732.6.1 }
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = naval_invasion_focus
+		value = 20
+	}
+
+	ai_strategy = {
+		type = invasion_unit_request
+		area = southern_landing_zone
+		value = 40
+	}
+}

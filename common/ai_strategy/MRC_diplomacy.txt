@@ -1,19 +1,63 @@
-# befriend
-# conquer
-# antagonize
-# build_ship
-# build_army
-# unit_ratio
-# build_building
-# research_tech
-# garrison
-# protect
-# influence
+MRC_support_DMP_against_threats = {
+	allowed = { original_tag = MRC }
+	enable = {
+		OR = {
+			has_government = pluralism
+			has_government = semidemocracy
+		}
+		OAK = { NOT = { has_government = unitism } }
+		country_exists = DMP
+	}
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = support
+		id = "DMP"
+		value = 1000
+	}
+	ai_strategy = {
+		type = send_volunteers_desire
+		id = "DMP"
+		value = 1000
+	}
+	ai_strategy = {
+		type = protect
+		id = "DMP"
+		value = 10
+	}
+}
+
+MRC_support_OAK_against_threats = {
+	allowed = { original_tag = MRC }
+	enable = {
+		OR = {
+			has_government = pluralism
+			has_government = semidemocracy
+		}
+		OAK = { NOT = { has_government = unitism } }
+		country_exists = OAK
+	}
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = support
+		id = "OAK"
+		value = 1000
+	}
+	ai_strategy = {
+		type = send_volunteers_desire
+		id = "OAK"
+		value = 1000
+	}
+	ai_strategy = {
+		type = protect
+		id = "OAK"
+		value = 10
+	}
+}
 
 MRC_support_RVV_against_threats = {
-	allowed = {
-		original_tag = MRC
-	}
+	allowed = { original_tag = MRC }
 	enable = {
 		OR = {
 			has_government = pluralism
@@ -27,22 +71,25 @@ MRC_support_RVV_against_threats = {
 	ai_strategy = {
 		type = support
 		id = "RVV"
-		value = 200
+		value = 1000
 	}
 	ai_strategy = {
 		type = send_volunteers_desire
 		id = "RVV"
-		value = 200
+		value = 1000
 	}
-	#ai_strategy = {
-	#	type = protect
-	#	id = "RVV"
-	#	value = 200
-	#}
+	ai_strategy = {
+		type = protect
+		id = "RVV"
+		value = 10
+	}
 }
 
 MRC_defend_UFS_against_threats = {
-	allowed = { original_tag = MRC original_tag = UFS }
+	allowed = { OR = {
+		original_tag = MRC
+		original_tag = UFS
+	} }
 	enable = {
 		HHE = { has_war_with = UFS }
 		97 = { is_controlled_by = UFS }
@@ -75,45 +122,11 @@ MRC_defend_UFS_against_threats = {
 	}
 }
 
-iron_pact_befriend = {
-	allowed = {
-		OR = {
-			original_tag = MRC
-			original_tag = MJU
-		}
-	}
-	enable = {
-		OR = {
-			country_exists = MRC
-			country_exists = MJU
-		}
-	}
-	abort = {
-		OR = {
-			NOT = { country_exists = MRC }
-			NOT = { country_exists = MJU }
-		}
-	}
-	
-	ai_strategy = {
-		type = befriend
-		id = "MRC"			
-		value = 200
-	}
-	ai_strategy = {
-		type = befriend
-		id = "MJU"			
-		value = 200
-	}
-}
-
 ally_against_HHE = {
-	allowed = {
-		OR = {
-			original_tag = MRC
-			original_tag = MJU
-		}
-	}
+	allowed = { OR = {
+		original_tag = MRC
+		original_tag = MJU
+	} }
 	enable = {
 		or = {
 			HHE = {
@@ -164,11 +177,8 @@ MRC_defend_against_HHE = {
 	allowed = { original_tag = MRC }
 	enable = {
 		original_tag = MRC
-		
 		date < 1730.1.1
-		
 		has_war = no
-		
 		OR = {
 			HHE = { has_wargoal_against = MRC }
 			HHE = { is_justifying_wargoal_against = MRC }
@@ -179,11 +189,10 @@ MRC_defend_against_HHE = {
 	abort = {
 		OR = {
 			has_war = yes
-			
 			NOT = { date < 1730.1.1 }
 		}
 	}
-	
+
 	ai_strategy = { type = prepare_for_war id = "HHE" value = 200 }
 	ai_strategy = { type = prepare_for_war id = "HSP" value = 200 }
 	ai_strategy = { type = prepare_for_war id = "HER" value = 200 }

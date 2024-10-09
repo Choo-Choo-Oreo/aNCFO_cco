@@ -207,7 +207,7 @@ aNCFO_air_production = {
 	enable = { always = yes }
 	abort_when_not_enabled = yes
 	
-	ai_strategy = { type = air_factory_balance value = 125 }
+	ai_strategy = { type = air_factory_balance value = 100 }
 }
 
 aNCFO_focus_on_fighters = {
@@ -248,19 +248,38 @@ aNCFO_naval_bombers = {
 	ai_strategy = { type = equipment_production_min_factories id = naval_bomber value = 5 }
 }
 
-build_patrol_bombers = {
+aNCFO_build_patrol_bombers = {
 	enable = {
 		has_dlc = "By Blood Alone"
-		has_navy_size = {
-			size > 1
-		}
+		has_navy_size = { size > 25 }
 	}
 	abort_when_not_enabled = yes
 
 	ai_strategy = {
 		type = unit_ratio
 		id = maritime_patrol_plane
-		value = 1
+		value = 3
+	}
+}
+
+aNCFO_build_more_patrol_bombers = {
+	enable = {
+		has_dlc = "By Blood Alone"
+		has_navy_size = { size > 100 }
+		is_major = yes
+	}
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = unit_ratio
+		id = maritime_patrol_plane
+		value = 10
+	}
+
+	ai_strategy = {
+		type = equipment_production_factor
+		id = maritime_patrol_plane
+		value = 15
 	}
 }
 

@@ -13,7 +13,7 @@ focus_tree = { # Merchant-Republicism
 
 	shared_focus = MRC_intervention_military # Policy
 	shared_focus = MRC_neutrality_rearmement # Policy
-	shared_focus = MRC_military_learn_crystallo_peninsula_failures # Modifers
+	shared_focus = MRC_military_learn_cyrstallo_peninsula_failures # Modifers
 	shared_focus = MRC_military_third_dimensional # Modifers
 	shared_focus = MRC_ambitious_great_fleet # Modifers
 	# Party Elections Branch
@@ -371,12 +371,18 @@ focus_tree = { # Merchant-Republicism
 				relative_position_id = MRC_foreign_intervention_focus
 				x = -4
 				y = 1
-			
+
 				cost = 8
 				cancel_if_invalid = yes
 				continue_if_invalid = no
 				available_if_capitulated = no
-			
+
+				allow_branch = {
+					NOT = { OR = {
+						has_completed_focus = MRC_internal_balanced_focus
+						has_completed_focus = MRC_foreign_neutrality_focus
+					} }
+				}
 				available = {
 					count_triggers = {
 					    amount = 4
@@ -390,7 +396,7 @@ focus_tree = { # Merchant-Republicism
 				}
 				bypass = {
 				}
-			
+
 				ai_will_do = {
 					factor = 2
 				}
@@ -420,7 +426,10 @@ focus_tree = { # Merchant-Republicism
 				available_if_capitulated = no
 
 				allow_branch = {
-					NOT = { has_completed_focus = MRC_internal_balanced_focus }
+					NOT = { OR = {
+						has_completed_focus = MRC_internal_balanced_focus
+						has_completed_focus = MRC_foreign_neutrality_focus
+					} }
 				}
 				available = {
 				}
@@ -491,12 +500,18 @@ focus_tree = { # Merchant-Republicism
 				relative_position_id = MRC_foreign_neutrality_focus
 				x = 4
 				y = 1
-			
+
 				cost = 10
 				cancel_if_invalid = yes
 				continue_if_invalid = no
 				available_if_capitulated = no
-			
+
+				allow_branch = {
+					NOT = { OR = {
+						has_completed_focus = MRC_foreign_intervention_focus
+						has_completed_focus = MRC_internal_balanced_focus
+					} }
+				}
 				available = {
 					count_triggers = {
 					    amount = 4
@@ -510,7 +525,7 @@ focus_tree = { # Merchant-Republicism
 				}
 				bypass = {
 				}
-			
+
 				ai_will_do = {
 					factor = 2
 				}
@@ -540,7 +555,10 @@ focus_tree = { # Merchant-Republicism
 				available_if_capitulated = no
 
 				allow_branch = {
-					NOT = { has_completed_focus = MRC_internal_balanced_focus }
+					NOT = { OR = {
+						has_completed_focus = MRC_foreign_intervention_focus
+						has_completed_focus = MRC_internal_balanced_focus
+					} }
 				}
 				available = {
 				}
@@ -885,7 +903,7 @@ focus_tree = { # Merchant-Republicism
 
 			completion_reward = {
 				log = "[GetDateText]: [Root.GetName]: Focus MRC_foreign_trade"
-				add_ideas = MRC_idea_global_trade_idea0
+				add_ideas = MRC_idea_global_trade_0
 			}
 		}
 
@@ -974,7 +992,13 @@ focus_tree = { # Merchant-Republicism
 				cancel_if_invalid = yes
 				continue_if_invalid = no
 				available_if_capitulated = no
-			
+
+				allow_branch = {
+					NOT = { OR = {
+						has_completed_focus = MRC_foreign_intervention_focus
+						has_completed_focus = MRC_foreign_neutrality_focus
+					} }
+				}
 				available = {
 					NOT = { OR = {
 						has_completed_focus = MRC_regulate_mercenaries
@@ -1070,7 +1094,13 @@ focus_tree = { # Merchant-Republicism
 				cancel_if_invalid = yes
 				continue_if_invalid = no
 				available_if_capitulated = no
-			
+
+				allow_branch = {
+					NOT = { OR = {
+						has_completed_focus = MRC_foreign_intervention_focus
+						has_completed_focus = MRC_foreign_neutrality_focus
+					} }
+				}
 				available = {
 					OR = {
 						has_completed_focus = MRC_regulate_mercenaries
@@ -1192,7 +1222,13 @@ focus_tree = { # Merchant-Republicism
 				cancel_if_invalid = yes
 				continue_if_invalid = no
 				available_if_capitulated = no
-			
+
+				allow_branch = {
+					NOT = { OR = {
+						has_completed_focus = MRC_foreign_intervention_focus
+						has_completed_focus = MRC_foreign_neutrality_focus
+					} }
+				}
 				available = {
 					NOT = { OR = {
 						has_completed_focus = MRC_support_progressive_movement
@@ -1354,7 +1390,13 @@ focus_tree = { # Merchant-Republicism
 				cancel_if_invalid = yes
 				continue_if_invalid = no
 				available_if_capitulated = no
-			
+
+				allow_branch = {
+					NOT = { OR = {
+						has_completed_focus = MRC_foreign_intervention_focus
+						has_completed_focus = MRC_foreign_neutrality_focus
+					} }
+				}
 				available = {
 					OR = {
 						has_completed_focus = MRC_support_progressive_movement
@@ -1540,7 +1582,7 @@ focus_tree = { # Merchant-Republicism
 					log = "[GetDateText]: [Root.GetName]: Focus MRC_setup_collaboration"
 					IF = {
 						LIMIT = { country_exists = HSP }
-						custom_effect_tooltip = MRC_create_crystallo_peninsula_subject_tt
+						custom_effect_tooltip = MRC_create_cyrstallo_peninsula_subject_tt
 						hidden_effect = {
 							create_dynamic_country = {
 								original_tag = HSP
@@ -1575,7 +1617,7 @@ focus_tree = { # Merchant-Republicism
 					}
 					IF = {
 						LIMIT = { NOT = { country_exists = HSP } }
-						custom_effect_tooltip = MRC_create_crystallo_peninsula_subject_tt
+						custom_effect_tooltip = MRC_create_cyrstallo_peninsula_subject_tt
 						hidden_effect = { release_autonomy = { target = HSP autonomy_state = autonomy_integrated_puppet freedom_level = 0.34 }
 							set_capital = { state = 338 remember_old_capital = yes }
 							set_politics = { ruling_party = semidemocracy }
@@ -1596,7 +1638,11 @@ focus_tree = { # Merchant-Republicism
 				}
 			}
 	# Foreign Intervention Branch - Left Chapter 2
+
+
 	# Progressive Neutrality Branch - Right Chapter 2
+
+
 	# Merchant-Republicism Equilibrium Branch - Middle Chapter 2
 		focus = { # Deal with Independent Factionalism
 			id = MRC_dealing_with_independent_factionalism_focus
@@ -2280,7 +2326,7 @@ focus_tree = { # Merchant-Republicism
 				}
 			
 				ai_will_do = {
-					factor = 2
+					factor = 1
 				}
 
 				completion_reward = {
@@ -2312,8 +2358,7 @@ focus_tree = { # Merchant-Republicism
 				ai_will_do = {
 					factor = 2
 					modifier = {
-						add = 0.10
-						factor = 1
+						factor = 2
 						is_historical_focus_on = yes
 					}
 				}
@@ -2550,7 +2595,7 @@ focus_tree = { # Theocratic
 
 	shared_focus = MRC_intervention_military # Policy
 	shared_focus = MRC_neutrality_rearmement # Policy
-	shared_focus = MRC_military_learn_crystallo_peninsula_failures # Modifers
+	shared_focus = MRC_military_learn_cyrstallo_peninsula_failures # Modifers
 	shared_focus = MRC_military_third_dimensional # Modifers
 	shared_focus = MRC_ambitious_great_fleet # Modifers
 	continuous_focus_position = { x = 750 y = 100 }
@@ -2574,7 +2619,7 @@ focus_tree = { # Unity
 
 	shared_focus = MRC_intervention_military # Policy
 	shared_focus = MRC_neutrality_rearmement # Policy
-	shared_focus = MRC_military_learn_crystallo_peninsula_failures # Modifers
+	shared_focus = MRC_military_learn_cyrstallo_peninsula_failures # Modifers
 	shared_focus = MRC_military_third_dimensional # Modifers
 	shared_focus = MRC_ambitious_great_fleet # Modifers
 	continuous_focus_position = { x = 750 y = 100 }
@@ -2898,8 +2943,8 @@ focus_tree = { # Unity
 			}
 		}
 # Army Branches
-	shared_focus = { # Learn from the Crystallo Peninsula Failures
-		id = MRC_military_learn_crystallo_peninsula_failures
+	shared_focus = { # Learn from the Cyrstallo Peninsula Failures
+		id = MRC_military_learn_cyrstallo_peninsula_failures
 		icon = GFX_focus_unknown_military
 		#prerequisite = { focus =  }
 		#mutually_exclusive = { focus =  }
@@ -2926,7 +2971,7 @@ focus_tree = { # Unity
 		}
 
 		completion_reward = {
-			log = "[GetDateText]: [Root.GetName]: Focus MRC_military_learn_crystallo_peninsula_failures"
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_military_learn_cyrstallo_peninsula_failures"
 			army_experience = 25
 		}
 	}
@@ -2934,9 +2979,9 @@ focus_tree = { # Unity
 	shared_focus = { # Mobile Infantry Groups
 		id = MRC_mobile_infantry
 		icon = GFX_focus_unknown_military
-		prerequisite = { focus = MRC_military_learn_crystallo_peninsula_failures }
+		prerequisite = { focus = MRC_military_learn_cyrstallo_peninsula_failures }
 		#mutually_exclusive = { focus =  }
-		relative_position_id = MRC_military_learn_crystallo_peninsula_failures
+		relative_position_id = MRC_military_learn_cyrstallo_peninsula_failures
 		x = -1
 		y = 1
 
@@ -2962,9 +3007,9 @@ focus_tree = { # Unity
 	shared_focus = { # Renew Tank Production Focus
 		id = MRC_renew_tank_focus
 		icon = GFX_focus_unknown_military
-		prerequisite = { focus = MRC_military_learn_crystallo_peninsula_failures }
+		prerequisite = { focus = MRC_military_learn_cyrstallo_peninsula_failures }
 		#mutually_exclusive = { focus =  }
-		relative_position_id = MRC_military_learn_crystallo_peninsula_failures
+		relative_position_id = MRC_military_learn_cyrstallo_peninsula_failures
 		x = 1
 		y = 1
 
