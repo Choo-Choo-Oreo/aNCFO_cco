@@ -2,7 +2,7 @@
 	HHE_early_light_tanks = {
 		category = land
 
-		blocked_for = {  }
+		#blocked_for = {  }
 		available_for = { HHE }
 
 		roles = {
@@ -11,60 +11,19 @@
 
 		priority = {
 			factor = 1000
-		}
-
-		independence_war_tank_artificers = {
-			priority = {
-				base = 0
-				modifier = { 
-					OR = { tag = OAK tag = COA }
-					add = 1
-					factor = 100
-				}
-				modifier = { 
-					has_tech = basic_light_tank_chassis
-					factor = 0 #let's not waste XP here
-				}
+			modifier = {
+				num_of_factories > 30
+				factor = 0.5
 			}
-
-			target_variant = {
-				match_value = 1000
-				type = light_tank_chassis_0
-				modules = {
-					main_armament_slot = tank_close_support_gun
-					turret_type_slot = tank_light_one_man_tank_turret
-					suspension_type_slot = tank_bogie_suspension
-					armor_type_slot = tank_riveted_armor
-					engine_type_slot = tank_diesel_engine
-					special_type_slot_1 = extra_ammo_storage
-					special_type_slot_2 = extra_ammo_storage
-					special_type_slot_3 = extra_ammo_storage
-					special_type_slot_4 = empty
-				}
-				upgrades = {
-					tank_nsb_engine_upgrade = 4
-					tank_nsb_armor_upgrade = 4
-				}
-			}
-
-			allowed_modules = {
-				tank_close_support_gun
-				tank_light_one_man_tank_turret
-				tank_bogie_suspension
-				tank_riveted_armor
-				tank_diesel_engine
-				extra_ammo_storage
+			modifier = {
+				num_of_factories > 50
+				factor = 0.0
 			}
 		}
 
-		independence_war_tank_default = {
+		independence_war_tank_HHE = {
 			priority = {
 				factor = 100
-				modifier = { 
-					NOT = { OR = { tag = OAK tag = COA } }
-					add = -1
-					factor = 0
-				}
 				modifier = { 
 					has_tech = basic_light_tank_chassis
 					factor = 0 #let's not waste XP here
@@ -106,7 +65,7 @@
 	HHE_early_light_tank_destroyers = {
 		category = land
 
-		blocked_for = {  }
+		#blocked_for = {  }
 		available_for = { HHE }
 
 		roles = {
@@ -116,48 +75,12 @@
 		priority = {
 			factor = 100
 			modifier = {
-				NOT = { has_tech = basic_medium_tank_chassis } 
-				any_enemy_country = {
-					has_tech = basic_medium_tank_chassis
-				}
-				factor = 15
+				num_of_factories > 30
+				factor = 0.5
 			}
-		}
-	}
-
-	HHE_early_light_tank_artillery = {
-		category = land
-
-		blocked_for = {  }
-		available_for = { HHE }
-
-		roles = {
-			land_light_tank_artillery
-		}
-
-		priority = {
-			factor = 500
-		}
-	}
-
-	HHE_early_light_tank_anti_air = {
-		category = land
-
-		blocked_for = {  }
-		available_for = { HHE }
-
-		roles = {
-			land_light_tank_anti_air
-		}
-
-		priority = {
-			factor = 50
 			modifier = {
-				NOT = { has_tech = fighter2 } #we should probably do something about that air superiority...
-				any_enemy_country = {
-					has_tech = fighter2
-				}
-				factor = 3
+				num_of_factories > 50
+				factor = 0.0
 			}
 		}
 	}
@@ -165,7 +88,7 @@
 	HHE_early_medium_tanks = {
 		category = land
 
-		blocked_for = {  }
+		#blocked_for = {  }
 		available_for = { HHE }
 
 		roles = {
@@ -173,21 +96,21 @@
 		}
 
 		priority = {
-			factor = 5000
+			factor = 2000
 			modifier = {
 				num_of_factories < 30
-				factor = 0.5
+				factor = 0.0
 			}
 			modifier = {
 				num_of_factories < 50
-				factor = 0
+				factor = 0.5
 			}
 		}
 		
-		independence_war_tank_default_medium = { # HHE
+		independence_war_tank_HHE_medium = { # HHE
 			priority = {
 				factor = 100
-				modifier = { 
+				modifier = {
 					has_tech = basic_medium_tank_chassis
 					factor = 0 #let's not waste XP here
 				}
@@ -197,15 +120,21 @@
 				match_value = 1000
 				type = medium_tank_chassis_0
 				modules = {
-					main_armament_slot = tank_small_cannon
+					suspension_type_slot = tank_torsion_bar_suspension
+					armor_type_slot = tank_riveted_armor
+					engine_type_slot = tank_gasoline_engine
 					turret_type_slot = tank_medium_one_man_tank_turret
-					suspension_type_slot = tank_christie_suspension
-					armor_type_slot = tank_cast_armor
-					engine_type_slot = tank_diesel_engine
-					special_type_slot_1 = additional_machine_guns
-					special_type_slot_2 = smoke_launchers
+					main_armament_slot = { 
+						any_of = {
+							tank_small_cannon
+							tank_high_velocity_cannon
+							tank_medium_cannon
+						}
+					}
+					special_type_slot_1 = secondary_turret_small_cannon
+					special_type_slot_2 = empty
 					special_type_slot_3 = empty
-					special_type_slot_4 = empty
+					special_type_slot_4 = { any_of = { tank_radio_3 tank_radio_2 tank_radio_1 } }
 				}
 				upgrades = {
 					tank_nsb_engine_upgrade = 9 # We will try 9, over 4.
@@ -214,41 +143,46 @@
 			}
 
 			allowed_modules = {
-				tank_small_cannon
+				tank_torsion_bar_suspension
+				tank_riveted_armor
+				tank_gasoline_engine
 				tank_medium_one_man_tank_turret
-				tank_christie_suspension
-				tank_cast_armor
-				tank_diesel_engine
-				additional_machine_guns
-				smoke_launchers
+				tank_small_cannon
+				tank_high_velocity_cannon
+				tank_medium_cannon
+				secondary_turret_small_cannon
+				tank_radio_3
+				tank_radio_2
+				tank_radio_1
 			}
 		}
-		second_independence_war_tank_default_medium = { # HHE
+
+		second_independence_war_tank_HHE_medium = { # HHE
 			priority = {
 				factor = 600
-				modifier = { 
+				modifier = {
 					has_tech = improved_medium_tank_chassis
 					factor = 0 #let's not waste XP here
 				}
 			}
 
 			target_variant = {
-				match_value = 5000
+				match_value = 2000
 				type = medium_tank_chassis_1
 				modules = {
-					main_armament_slot = { 
-						any_of = {  
-							tank_small_cannon_2 
-							tank_medium_cannon
-						} 
-					}
 					turret_type_slot = tank_medium_two_man_tank_turret
-					suspension_type_slot = tank_christie_suspension
-					armor_type_slot = tank_cast_armor
-					engine_type_slot = tank_diesel_engine
-					special_type_slot_1 = additional_machine_guns
-					special_type_slot_2 = smoke_launchers
-					special_type_slot_3 = sloped_armor
+					suspension_type_slot = tank_torsion_bar_suspension
+					armor_type_slot = tank_riveted_armor
+					engine_type_slot = tank_gasoline_engine
+					main_armament_slot = { 
+						any_of = {
+							tank_high_velocity_cannon
+							tank_medium_cannon
+						}
+					}
+					special_type_slot_1 = secondary_turret_small_cannon
+					special_type_slot_2 = empty
+					special_type_slot_3 = easy_maintenance
 					special_type_slot_4 = { any_of = { tank_radio_3 tank_radio_2 tank_radio_1 } }
 				}
 				upgrades = {
@@ -258,21 +192,112 @@
 			}
 
 			allowed_modules = {
-				tank_small_cannon_2
+				tank_torsion_bar_suspension
+				tank_riveted_armor
+				tank_gasoline_engine
+				tank_medium_two_man_tank_turret
+				tank_high_velocity_cannon
 				tank_medium_cannon
-
+				secondary_turret_small_cannon
+				easy_maintenance
+				tank_radio_3
+				tank_radio_2
+				tank_radio_1
 			}
 		}
-		endstage_independence_war_tank_default_medium = { # HHE
+
+		endstage_independence_war_tank_HHE_medium = { # HHE
+			priority = {
+				factor = 600
+				modifier = {
+					has_tech = advanced_medium_tank_chassis
+					factor = 0 #let's not waste XP here
+				}
+			}
+
+			target_variant = {
+				match_value = 3000
+				type = medium_tank_chassis_1
+				modules = {
+					suspension_type_slot = tank_torsion_bar_suspension
+					armor_type_slot = tank_riveted_armor
+					engine_type_slot = tank_gasoline_engine
+					turret_type_slot = tank_medium_three_man_tank_turret
+					main_armament_slot = { 
+						any_of = {
+							tank_high_velocity_cannon_2
+							tank_medium_cannon_2
+						}
+					}
+					special_type_slot_1 = secondary_turret_small_cannon
+					special_type_slot_2 = empty
+					special_type_slot_3 = easy_maintenance
+					special_type_slot_4 = { any_of = { tank_radio_3 tank_radio_2 } }
+				}
+				upgrades = {
+					tank_nsb_engine_upgrade = 17
+					tank_nsb_armor_upgrade = 17
+				}
+			}
+
+			allowed_modules = {
+				tank_torsion_bar_suspension
+				tank_riveted_armor
+				tank_gasoline_engine
+				tank_medium_three_man_tank_turret
+				tank_high_velocity_cannon
+				tank_medium_cannon
+				secondary_turret_small_cannon
+				easy_maintenance
+				tank_radio_3
+				tank_radio_2
+			}
 		}
-		post_war_tank_default_medium = { # HHE
+
+		post_war_tank_HHE_medium = { # HHE
+			priority = {
+				factor = 600
+			}
+
+			target_variant = {
+				match_value = 4000
+				type = medium_tank_chassis_1
+				modules = {
+					suspension_type_slot = tank_torsion_bar_suspension
+					armor_type_slot = tank_riveted_armor
+					engine_type_slot = tank_gasoline_engine
+					turret_type_slot = tank_medium_three_man_tank_turret
+					main_armament_slot = tank_high_velocity_cannon_2
+					special_type_slot_1 = secondary_turret_small_cannon
+					special_type_slot_2 = empty
+					special_type_slot_3 = easy_maintenance
+					special_type_slot_4 = tank_radio_3
+				}
+				upgrades = {
+					tank_nsb_engine_upgrade = 25
+					tank_nsb_armor_upgrade = 25
+				}
+			}
+
+			allowed_modules = {
+				tank_torsion_bar_suspension
+				tank_riveted_armor
+				tank_gasoline_engine
+				tank_medium_three_man_tank_turret
+				tank_high_velocity_cannon_2
+				tank_high_velocity_cannon
+				tank_medium_cannon
+				secondary_turret_small_cannon
+				easy_maintenance
+				tank_radio_3
+			}
 		}
 	}
 
 	HHE_early_medium_tank_destroyer = {
 		category = land
 
-		blocked_for = {  }
+		#blocked_for = {  }
 		available_for = { HHE }
 
 		roles = {
@@ -280,50 +305,14 @@
 		}
 
 		priority = {
-			factor = 500
+			factor = 5000
 			modifier = {
-				NOT = { has_tech = basic_heavy_tank_chassis } 
-				any_enemy_country = {
-					has_tech = basic_heavy_tank_chassis
-				}
-				factor = 3
+				num_of_factories < 30
+				factor = 0.0
 			}
-		}
-	}
-
-	HHE_early_medium_tank_artillery = {
-		category = land
-
-		blocked_for = {  }
-		available_for = { HHE }
-
-		roles = {
-			land_medium_tank_artillery
-		}
-
-		priority = {
-			factor = 500
-		}
-	}
-
-	HHE_early_medium_tank_anti_air = {
-		category = land
-
-		blocked_for = {  }
-		available_for = { HHE }
-
-		roles = {
-			land_medium_tank_anti_air
-		}
-
-		priority = {
-			factor = 50
 			modifier = {
-				NOT = { has_tech = fighter2 } #we should probably do something about that air superiority...
-				any_enemy_country = {
-					has_tech = fighter2
-				}
-				factor = 3
+				num_of_factories < 50
+				factor = 0.5
 			}
 		}
 	}
@@ -331,7 +320,7 @@
 	HHE_early_heavy_tanks = {
 		category = land
 
-		blocked_for = {  }
+		#blocked_for = {  }
 		available_for = { HHE }
 
 		roles = {
@@ -341,12 +330,16 @@
 		priority = {
 			factor = 200
 			modifier = {
+				num_of_factories < 30
+				factor = 0.0
+			}
+			modifier = {
 				num_of_factories < 50
-				factor = 0
+				factor = 0.5
 			}
 		}
 		
-		independence_war_tank_default_heavy = {
+		independence_war_tank_HHE_heavy = {
 			priority = {
 				factor = 100
 				modifier = { 
@@ -389,7 +382,7 @@
 	HHE_early_heavy_tank_destroyer = {
 		category = land
 
-		blocked_for = {  }
+		#blocked_for = {  }
 		available_for = { HHE }
 
 		roles = {
@@ -399,48 +392,12 @@
 		priority = {
 			factor = 500
 			modifier = {
-				NOT = { has_tech = basic_heavy_tank_chassis } 
-				any_enemy_country = {
-					has_tech = basic_heavy_tank_chassis
-				}
-				factor = 3
+				num_of_factories < 30
+				factor = 0.0
 			}
-		}
-	}
-
-	HHE_early_heavy_tank_artillery = {
-		category = land
-
-		blocked_for = {  }
-		available_for = { HHE }
-
-		roles = {
-			land_heavy_tank_artillery
-		}
-
-		priority = {
-			factor = 500
-		}
-	}
-
-	HHE_early_heavy_tank_anti_air = {
-		category = land
-
-		blocked_for = {  }
-		available_for = { HHE }
-
-		roles = {
-			land_heavy_tank_anti_air
-		}
-
-		priority = {
-			factor = 5
 			modifier = {
-				NOT = { has_tech = fighter2 } #we should probably do something about that air superiority...
-				any_enemy_country = {
-					has_tech = fighter2
-				}
-				factor = 3
+				num_of_factories < 50
+				factor = 0.5
 			}
 		}
 	}
