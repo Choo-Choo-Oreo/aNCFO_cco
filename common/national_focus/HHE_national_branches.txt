@@ -2989,6 +2989,7 @@ focus_tree = { # Warmonger
 			completion_reward = {
 				log = "[GetDateText]: [Root.GetName]: Focus HHE_warmonger_military_under_vlad"
 				HHE = { country_event = { id = HHE_warmonger.2 } }
+				add_political_power = 200
 				civil_war_warmonger_effect = yes
 				hidden_effect = {
 					if = {
@@ -3034,7 +3035,7 @@ focus_tree = { # Warmonger
 			relative_position_id = HHE_warmonger_stability_in_choas
 			x = -1
 			y = 1
-			cost = 5
+			cost = 4
 
 			allow_branch = {
 			}
@@ -3063,7 +3064,7 @@ focus_tree = { # Warmonger
 			relative_position_id = HHE_warmonger_clampdowns
 			x = 1
 			y = 1
-			cost = 5
+			cost = 4
 
 			allow_branch = {
 			}
@@ -3119,6 +3120,11 @@ focus_tree = { # Warmonger
 				effect_tooltip = {
 					transfer_navy = { target = HTP }
 					annex_country = { target = HTP transfer_troops = yes }
+					1   = { add_core_of = ROOT }
+					94  = { add_core_of = ROOT }
+					95  = { add_core_of = ROOT }
+					105 = { add_core_of = ROOT }
+					566 = { add_core_of = ROOT }
 				}
 				HTP = { country_event = { id = HHE_warmonger.3 } }
 			}
@@ -3538,7 +3544,7 @@ focus_tree = { # Warmonger
 			relative_position_id = HHE_warmonger_mobilize_the_nobility
 			x = 1
 			y = 1
-			cost = 8
+			cost = 5
 
 			allow_branch = {
 			}
@@ -3551,7 +3557,7 @@ focus_tree = { # Warmonger
 			}
 
 			ai_will_do = {
-				factor = 1
+				factor = 100
 				modifier = {
 					add = -10
 					NOT = {
@@ -3606,7 +3612,7 @@ focus_tree = { # Warmonger
 			relative_position_id = HHE_warmonger_capital_panic
 			x = 1
 			y = 1
-			cost = 8
+			cost = 5
 
 			allow_branch = {
 			}
@@ -3618,7 +3624,7 @@ focus_tree = { # Warmonger
 			}
 
 			ai_will_do = {
-				factor = 1
+				factor = 100
 				modifier = {
 					add = -10
 					NOT = {
@@ -3679,7 +3685,7 @@ focus_tree = { # Warmonger
 			relative_position_id = HHE_warmonger_militarization_the_nation
 			x = -1
 			y = 1
-			cost = 5
+			cost = 4
 
 			allow_branch = {
 			}
@@ -4094,8 +4100,8 @@ focus_tree = { # Warmonger
 			}
 		}
 
-		focus = { # Filler A2
-			id = HHE_warmonger_filler_a2
+		focus = { # National Mobilization
+			id = HHE_warmonger_national_mobilization
 			icon = GFX_focus_unknown_political
 			prerequisite = { focus = HHE_warmonger_railways_to_the_front }
 			#mutually_exclusive = { focus =  }
@@ -4135,7 +4141,10 @@ focus_tree = { # Warmonger
 			available_if_capitulated = yes
 
 			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus HHE_warmonger_filler_a2"
+				log = "[GetDateText]: [Root.GetName]: Focus HHE_warmonger_national_mobilization"
+				economy_raise = yes
+				army_readiness_raise = yes
+				army_training_standards_raise = yes
 			}
 		}
 
@@ -4185,8 +4194,8 @@ focus_tree = { # Warmonger
 			}
 		}
 
-		focus = { # Filler B2
-			id = HHE_warmonger_filler_b2
+		focus = { # Fan the Archaigan Militarism
+			id = HHE_warmonger_fan_the_archaigan_militarism
 			icon = GFX_focus_unknown_political
 			prerequisite = { focus = HHE_warmonger_fill_the_lines }
 			#mutually_exclusive = { focus =  }
@@ -4226,15 +4235,16 @@ focus_tree = { # Warmonger
 			available_if_capitulated = yes
 
 			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus HHE_warmonger_filler_b2"
+				log = "[GetDateText]: [Root.GetName]: Focus HHE_warmonger_fan_the_archaigan_militarism"
+				add_ideas = HHE_idea_archaigan_militarism_0
 			}
 		}
 
 		focus = { # Great Victory Parades
 			id = HHE_warmonger_great_victory_parades
 			icon = GFX_focus_unknown_political
-			prerequisite = { focus = HHE_warmonger_filler_a2 }
-			prerequisite = { focus = HHE_warmonger_filler_b2 }
+			prerequisite = { focus = HHE_warmonger_national_mobilization }
+			prerequisite = { focus = HHE_warmonger_fan_the_archaigan_militarism }
 			#mutually_exclusive = { focus =  }
 			relative_position_id = HHE_warmonger_victory_parades
 			x = 0
@@ -4778,6 +4788,16 @@ focus_tree = { # Warmonger
 
 			ai_will_do = {
 				factor = 1
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HHE }
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HST }
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HPP }
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HLF }
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HTP }
 				modifier = { # Do during War
 					factor = 10
 					has_war = yes
@@ -4824,6 +4844,16 @@ focus_tree = { # Warmonger
 
 			ai_will_do = {
 				factor = 1
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HHE }
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HST }
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HPP }
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HLF }
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HTP }
 				modifier = { # Do during war.
 					add = 1
 					factor = 10
@@ -4867,6 +4897,16 @@ focus_tree = { # Warmonger
 
 			ai_will_do = {
 				factor = 1
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HHE }
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HST }
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HPP }
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HLF }
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HTP }
 				modifier = { # Do during war.
 					add = 1
 					factor = 10
@@ -4922,6 +4962,16 @@ focus_tree = { # Warmonger
 
 			ai_will_do = {
 				factor = 1
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HHE }
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HST }
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HPP }
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HLF }
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HTP }
 				modifier = { # Do during war.
 					add = 1
 					factor = 10
@@ -4965,6 +5015,16 @@ focus_tree = { # Warmonger
 
 			ai_will_do = {
 				factor = 1
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HHE }
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HST }
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HPP }
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HLF }
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HTP }
 				modifier = { # Do during war.
 					add = 1
 					factor = 10
@@ -5008,6 +5068,16 @@ focus_tree = { # Warmonger
 
 			ai_will_do = {
 				factor = 1
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HHE }
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HST }
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HPP }
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HLF }
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HTP }
 				modifier = { # Do during war.
 					add = 1
 					factor = 10
@@ -5051,6 +5121,16 @@ focus_tree = { # Warmonger
 
 			ai_will_do = {
 				factor = 1
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HHE }
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HST }
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HPP }
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HLF }
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HTP }
 				modifier = { # Do during War
 					factor = 10
 					has_war = yes
@@ -5083,6 +5163,16 @@ focus_tree = { # Warmonger
 
 			ai_will_do = {
 				factor = 1
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HHE }
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HST }
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HPP }
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HLF }
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HTP }
 				modifier = { # Do during War
 					factor = 10
 					has_war = yes
@@ -5118,6 +5208,16 @@ focus_tree = { # Warmonger
 
 				ai_will_do = {
 					factor = 2
+					modifier = { factor = 1.25
+						has_completed_focus = HHE_warmonger_integrate_HHE }
+					modifier = { factor = 1.25
+						has_completed_focus = HHE_warmonger_integrate_HST }
+					modifier = { factor = 1.25
+						has_completed_focus = HHE_warmonger_integrate_HPP }
+					modifier = { factor = 1.25
+						has_completed_focus = HHE_warmonger_integrate_HLF }
+					modifier = { factor = 1.25
+						has_completed_focus = HHE_warmonger_integrate_HTP }
 					modifier = { # Do during War
 						factor = 10
 						has_war = yes
@@ -5215,6 +5315,16 @@ focus_tree = { # Warmonger
 
 				ai_will_do = {
 					factor = 2
+					modifier = { factor = 1.25
+						has_completed_focus = HHE_warmonger_integrate_HHE }
+					modifier = { factor = 1.25
+						has_completed_focus = HHE_warmonger_integrate_HST }
+					modifier = { factor = 1.25
+						has_completed_focus = HHE_warmonger_integrate_HPP }
+					modifier = { factor = 1.25
+						has_completed_focus = HHE_warmonger_integrate_HLF }
+					modifier = { factor = 1.25
+						has_completed_focus = HHE_warmonger_integrate_HTP }
 					modifier = { # Do during War
 						factor = 10
 						has_war = yes
@@ -5268,6 +5378,16 @@ focus_tree = { # Warmonger
 
 				ai_will_do = {
 					factor = 2
+					modifier = { factor = 1.25
+						has_completed_focus = HHE_warmonger_integrate_HHE }
+					modifier = { factor = 1.25
+						has_completed_focus = HHE_warmonger_integrate_HST }
+					modifier = { factor = 1.25
+						has_completed_focus = HHE_warmonger_integrate_HPP }
+					modifier = { factor = 1.25
+						has_completed_focus = HHE_warmonger_integrate_HLF }
+					modifier = { factor = 1.25
+						has_completed_focus = HHE_warmonger_integrate_HTP }
 					modifier = { # Do during War
 						factor = 10
 						has_war = yes
@@ -5357,7 +5477,7 @@ focus_tree = { # Warmonger
 			}
 
 			ai_will_do = {
-				factor = 1
+				factor = 100
 				modifier = { # Do during War
 					factor = 10
 					has_war = yes
@@ -5392,7 +5512,17 @@ focus_tree = { # Warmonger
 			}
 
 			ai_will_do = {
-				factor = 1 # Must do.
+				factor = 2.5 # Must do.
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HHE }
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HST }
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HPP }
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HLF }
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HTP }
 			}
 
 			available_if_capitulated = yes
@@ -5423,6 +5553,16 @@ focus_tree = { # Warmonger
 
 			ai_will_do = {
 				factor = 1
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HHE }
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HST }
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HPP }
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HLF }
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HTP }
 				modifier = { # Do during war.
 					add = 1
 					factor = 10
@@ -5467,6 +5607,16 @@ focus_tree = { # Warmonger
 
 			ai_will_do = {
 				factor = 1
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HHE }
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HST }
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HPP }
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HLF }
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HTP }
 				modifier = { # Do during war.
 					add = 1
 					factor = 10
@@ -5510,6 +5660,16 @@ focus_tree = { # Warmonger
 
 			ai_will_do = {
 				factor = 1
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HHE }
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HST }
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HPP }
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HLF }
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HTP }
 				modifier = { # Do during war.
 					add = 1
 					factor = 10
@@ -5562,6 +5722,16 @@ focus_tree = { # Warmonger
 
 			ai_will_do = {
 				factor = 1
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HHE }
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HST }
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HPP }
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HLF }
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HTP }
 				modifier = { # Do during war.
 					add = 1
 					factor = 10
@@ -5607,6 +5777,16 @@ focus_tree = { # Warmonger
 
 			ai_will_do = {
 				factor = 1
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HHE }
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HST }
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HPP }
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HLF }
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HTP }
 				modifier = { # Do during war.
 					add = 1
 					factor = 10
@@ -5645,6 +5825,16 @@ focus_tree = { # Warmonger
 
 			ai_will_do = {
 				factor = 1
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HHE }
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HST }
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HPP }
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HLF }
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HTP }
 				modifier = { # Do during war.
 					add = 1
 					factor = 10
@@ -5690,6 +5880,16 @@ focus_tree = { # Warmonger
 
 			ai_will_do = {
 				factor = 1
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HHE }
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HST }
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HPP }
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HLF }
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HTP }
 				modifier = { # Do during war.
 					add = 1
 					factor = 10
@@ -5733,6 +5933,16 @@ focus_tree = { # Warmonger
 
 			ai_will_do = {
 				factor = 1
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HHE }
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HST }
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HPP }
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HLF }
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HTP }
 				modifier = { # Do during war.
 					add = 1
 					factor = 10
@@ -5782,6 +5992,16 @@ focus_tree = { # Warmonger
 
 			ai_will_do = {
 				factor = 1
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HHE }
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HST }
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HPP }
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HLF }
+				modifier = { factor = 1.25
+					has_completed_focus = HHE_warmonger_integrate_HTP }
 				modifier = { # Do during war.
 					add = 1
 					factor = 10
@@ -6591,7 +6811,7 @@ focus_tree = { # Warmonger
 			}
 
 			ai_will_do = {
-				factor = 1
+				factor = 100
 				modifier = { # Do during War
 					factor = 10
 					has_war = yes
@@ -7052,8 +7272,8 @@ focus_tree = { # Warmonger
 			}
 		}
 
-		focus = { # Minority Question
-			id = HHE_warmonger_minority_question
+		focus = { # True Archaigan Militarism
+			id = HHE_warmonger_true_archaigan_militarism
 			icon = GFX_focus_unknown_political
 			prerequisite = { focus = HHE_warmonger_pillar_social }
 			#mutually_exclusive = { focus =  }
@@ -7084,15 +7304,16 @@ focus_tree = { # Warmonger
 			available_if_capitulated = yes
 
 			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus HHE_warmonger_minority_question"
+				log = "[GetDateText]: [Root.GetName]: Focus HHE_warmonger_true_archaigan_militarism"
+				swap_ideas = { remove_idea = HHE_idea_archaigan_militarism_0 add_idea = HHE_idea_archaigan_militarism_1 }
 			}
 		}
 
-		focus = { # Filler Social1
-			id = HHE_warmonger_filler_social1
+		focus = { # Minority Question
+			id = HHE_warmonger_minority_question
 			icon = GFX_focus_unknown_political
 			prerequisite = { focus = HHE_warmonger_suspicious_citizen }
-			prerequisite = { focus = HHE_warmonger_minority_question }
+			prerequisite = { focus = HHE_warmonger_true_archaigan_militarism }
 			#mutually_exclusive = { focus =  }
 			relative_position_id = HHE_warmonger_pillar_social
 			x = 0
@@ -7117,8 +7338,7 @@ focus_tree = { # Warmonger
 			available_if_capitulated = yes
 
 			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus HHE_warmonger_filler_social1"
-				HHE_piller_social = yes
+				log = "[GetDateText]: [Root.GetName]: Focus HHE_warmonger_minority_question"
 				custom_effect_tooltip = attunement_status_focus_tt
 			}
 		}
@@ -7126,9 +7346,9 @@ focus_tree = { # Warmonger
 		focus = { # Project prospecting
 			id = HHE_warmonger_project_prospecting
 			icon = GFX_focus_unknown_political
-			prerequisite = { focus = HHE_warmonger_filler_social1 }
+			prerequisite = { focus = HHE_warmonger_minority_question }
 			#mutually_exclusive = { focus =  }
-			relative_position_id = HHE_warmonger_filler_social1
+			relative_position_id = HHE_warmonger_minority_question
 			x = -1
 			y = 1
 			cost = 5
@@ -7156,6 +7376,7 @@ focus_tree = { # Warmonger
 
 			completion_reward = {
 				log = "[GetDateText]: [Root.GetName]: Focus HHE_warmonger_project_prospecting"
+				HHE_piller_social = yes
 			}
 		}
 
@@ -7164,7 +7385,7 @@ focus_tree = { # Warmonger
 			icon = GFX_focus_unknown_political
 			prerequisite = { focus = HHE_warmonger_project_prospecting }
 			#mutually_exclusive = { focus =  }
-			relative_position_id = HHE_warmonger_filler_social1
+			relative_position_id = HHE_warmonger_minority_question
 			x = 0
 			y = 2
 			cost = 5
@@ -7425,11 +7646,12 @@ focus_tree = { # Warmonger
 
 			completion_reward = {
 				log = "[GetDateText]: [Root.GetName]: Focus HHE_warmonger_expand_paradise"
+				HHE_piller_social = yes
 			}
 		}
 
-		focus = { # Filler Social4
-			id = HHE_warmonger_filler_social4
+		focus = { # Expand Usage of Arcana Ordo
+			id = HHE_warmonger_expand_usage_ordo
 			icon = GFX_focus_unknown_political
 			prerequisite = { focus = HHE_warmonger_expand_paradise }
 			#mutually_exclusive = { focus =  }
@@ -7460,8 +7682,7 @@ focus_tree = { # Warmonger
 			available_if_capitulated = yes
 
 			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus HHE_warmonger_filler_social4"
-				HHE_piller_social = yes
+				log = "[GetDateText]: [Root.GetName]: Focus HHE_warmonger_expand_usage_ordo"
 				custom_effect_tooltip = attunement_status_focus_tt
 			}
 		}
@@ -7472,7 +7693,7 @@ focus_tree = { # Warmonger
 				prerequisite = { focus = HHE_warmonger_ipsa_contemplatur_project }
 				prerequisite = { focus = HHE_warmonger_our_own_syndicates }
 				prerequisite = { focus = HHE_warmonger_suspicious_citizen }
-				prerequisite = { focus = HHE_warmonger_minority_question }
+				prerequisite = { focus = HHE_warmonger_true_archaigan_militarism }
 				#mutually_exclusive = { focus =  }
 				relative_position_id = HHE_warmonger_pillar_civil_liberties
 				x = 2
@@ -7655,7 +7876,7 @@ focus_tree = { # Warmonger
 		focus = { # Talent Hooks
 			id = HHE_warmonger_talent_hooks
 			icon = GFX_focus_SWE_organize_a_putsch
-			prerequisite = { focus = HHE_warmonger_filler_social4 }
+			prerequisite = { focus = HHE_warmonger_expand_usage_ordo }
 			prerequisite = { focus = HHE_warmonger_our_own_underground }
 			#mutually_exclusive = { focus =  }
 			relative_position_id = HHE_warmonger_our_own_underground
@@ -7671,7 +7892,7 @@ focus_tree = { # Warmonger
 			}
 
 			ai_will_do = {
-				factor = 1
+				factor = 100
 				modifier = { # Do during War
 					factor = 10
 					has_war = yes

@@ -82,7 +82,8 @@ war_measures = {
 
 		visible = {
 			has_defensive_war = yes
-			has_offensive_war = no			
+			has_offensive_war = no
+			is_ai = no
 		}
 
 		fire_only_once = no
@@ -115,6 +116,7 @@ war_measures = {
 
 		visible = {
 			has_offensive_war = yes
+			is_ai = no
 		}
 
 		fire_only_once = no
@@ -131,6 +133,86 @@ war_measures = {
 		}
 		ai_will_do = {
 			factor = 0
+			modifier = {
+				add = -9999
+				pre_civilwar_trigger = yes
+			}
+		}
+	}
+
+	emergency_factory_conversion_defensive_ai = {
+
+		icon = generic_industry
+
+		available = {
+			num_of_civilian_factories > 5 #Change this if amount of factories change
+		}
+
+		visible = {
+			has_defensive_war = yes
+			has_offensive_war = no
+			is_ai = yes
+		}
+
+		fire_only_once = no
+
+		days_re_enable = 90
+
+		cost = 100
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision emergency_factory_conversion_defensive"
+			replace_civ_with_arms_factories = yes
+			add_war_support = -0.05
+			set_country_flag = has_clicked_emergency_factory_conversion_defensive
+		}
+		ai_will_do = {
+			factor = 0
+			modifier = {
+				add = 9999
+				OR = { tag = HHE tag = HPP tag = HST }
+				NOT = { has_country_flag = has_clicked_emergency_factory_conversion_defensive }
+			}
+			modifier = {
+				add = -9999
+				pre_civilwar_trigger = yes
+			}
+		}
+	}
+
+	emergency_factory_conversion_offensive_ai = {
+
+		icon = generic_industry
+
+		available = {
+			num_of_civilian_factories > 5 #Change this if amount of factories change
+		}
+
+		visible = {
+			has_offensive_war = yes
+			is_ai = yes
+		}
+
+		fire_only_once = no
+
+		days_re_enable = 90
+
+		cost = 100
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision emergency_factory_conversion_offensive"
+			replace_civ_with_arms_factories = yes
+			add_war_support = -0.05
+			add_stability = -0.03
+			set_country_flag = has_clicked_emergency_factory_conversion_offensive
+		}
+		ai_will_do = {
+			factor = 0
+			modifier = {
+				add = 9999
+				OR = { tag = HHE tag = HPP tag = HST }
+				NOT = { has_country_flag = has_clicked_emergency_factory_conversion_offensive }
+			}
 			modifier = {
 				add = -9999
 				pre_civilwar_trigger = yes

@@ -129,6 +129,7 @@ HHE_ignore_claim = {
 	    value = 1
 	}
 }
+
 HHE_puppets_of_MRC = {
 	allowed = { original_tag = HHE }
 	enable = {
@@ -268,6 +269,33 @@ HHE_consider_weak = {
 		id = "UFS"
 		value = 100
 	}
+}
+
+HHE_move_against_CRUSADE = {
+	allowed = { original_tag = HHE }
+	enable = {
+		original_tag = HHE
+		date < 1730.1.1
+		has_war = no
+		OR = {
+			MRC = { has_wargoal_against = HHE }
+			MRC = { is_justifying_wargoal_against = HHE }
+			HHE = { has_wargoal_against = MRC }
+			HHE = { is_justifying_wargoal_against = MRC }
+			HHE = { focus_progress = { focus = HHE_influencer_reenter_global_stage progress > 0 } }
+			HHE = { focus_progress = { focus = HHE_warmonger_trilateral_crusade progress > 0 } }
+		}
+	}
+	abort = {
+		OR = {
+			has_war = yes
+			NOT = { date < 1730.1.1 }
+		}
+	}
+
+	ai_strategy = { type = prepare_for_war id = "MJU" value = 200 }
+	ai_strategy = { type = prepare_for_war id = "MRC" value = 200 }
+	ai_strategy = { type = prepare_for_war id = "UFS" value = 200 }
 }
 
 HHE_great_threat = {

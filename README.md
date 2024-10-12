@@ -61,3 +61,12 @@ Other Mod Devs/Modders the have ANY work added to this mod.
 		Carpet Bombing												Not Used
 		Extensive Generic Aircraft Icons							Not Used
 		Additional Plane Models										Not Used
+
+	- Jeremiah12198 (HOI4 Improved Collection) Mod All
+	https://steamcommunity.com/workshop/filedetails/?id=3259297019
+		Always Declare War											Not Used
+		Better Air FX												Not Used
+		Coring with Compliance										Not Used
+		Defensive Pacts												Oct 21, 2023
+		Unlock Research Slots										Not Used
+		Realistic Damage and Civilian Evacuation					Not Used

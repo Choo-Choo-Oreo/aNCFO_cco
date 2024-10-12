@@ -103,7 +103,46 @@ scripted_diplomatic_actions = {
 				}
 				add = -10
 			}
-				
+
+			modifier = {
+				AND = {
+					tag = HHE
+					HHE = { has_government = theocratism }
+					ROOT = {
+						tag = MRC
+						NOT = { has_government = HHE }
+					}
+				}
+				add = -70
+			}
+
+			modifier = {
+				AND = {
+					tag = MRC
+					MRC = { OR = { has_government = semidemocracy has_government = authoritarianism } }
+					ROOT = { tag = MJU }
+				}
+				add = 50
+			}
+
+			modifier = {
+				AND = {
+					tag = MRC
+					MRC = { OR = { has_government = semidemocracy has_government = authoritarianism } }
+					ROOT = { tag = UFS }
+				}
+				add = 50
+			}
+
+			modifier = {
+				AND = {
+					tag = SDP
+					SDP = { OR = { has_government = pluralism has_government = semidemocracy } }
+					ROOT = { tag = UFS }
+				}
+				add = 50
+			}
+
 			modifier = { # distance
 				is_neighbor_of = ROOT
 				add = 2
@@ -136,16 +175,19 @@ scripted_diplomatic_actions = {
 				}
 				add = 4
 			}
+
 			modifier = {
 				ROOT = {
 					land_doctrine_level > 10
 				}
 				add = 4
 			}
+
 			modifier = { # slight friendliness bonus if same government
 				has_government = ROOT
 				add = 5
 			}
+
 			modifier = { # government style differences
 				NOT = {
 					has_government = ROOT
@@ -157,22 +199,74 @@ scripted_diplomatic_actions = {
 				has_non_aggression_pact_with = ROOT
 				add = 10
 			}
-				
+
 			modifier = {
 				is_guaranteed_by = ROOT
 				add = 10
 			}
-				
+
 			modifier = {
 				has_military_access_to = ROOT
 				add = 10
 			}
-				
+
 			modifier = {
 				gives_military_access_to = ROOT
 				add = 10
 			}
-				
+
+			modifier = { add = 50 OR = {
+				AND = {
+					tag = MRC
+					MRC = { OR = { has_completed_focus = MRC_foreign_intervention_focus has_completed_focus = MRC_intervention_policy } }
+					ROOT = { tag = KGK }
+				}
+				AND = {
+					tag = KGK
+					MRC = { OR = { has_completed_focus = MRC_foreign_intervention_focus has_completed_focus = MRC_intervention_policy } }
+					ROOT = { tag = MRC }
+				}
+			} }
+
+			modifier = { add = 50 OR = {
+				AND = {
+					tag = MRC
+					MRC = { OR = { has_completed_focus = MRC_foreign_intervention_focus has_completed_focus = MRC_intervention_policy } }
+					ROOT = { tag = REP }
+				}
+				AND = {
+					tag = REP
+					MRC = { OR = { has_completed_focus = MRC_foreign_intervention_focus has_completed_focus = MRC_intervention_policy } }
+					ROOT = { tag = MRC }
+				}
+			} }
+
+			modifier = { add = 50 OR = {
+				AND = {
+					tag = MRC
+					MRC = { OR = { has_completed_focus = MRC_foreign_intervention_focus has_completed_focus = MRC_intervention_policy } }
+					ROOT = { tag = RVV }
+				}
+				AND = {
+					tag = RVV
+					MRC = { OR = { has_completed_focus = MRC_foreign_intervention_focus has_completed_focus = MRC_intervention_policy } }
+					ROOT = { tag = MRC }
+				}
+			} }
+
+			modifier = { add = 50 OR = {
+				AND = {
+					tag = MRC
+					MRC = { OR = { has_completed_focus = MRC_foreign_intervention_focus has_completed_focus = MRC_intervention_policy } }
+					ROOT = { tag = UFS }
+				}
+				AND = {
+					tag = UFS
+					MRC = { OR = { has_completed_focus = MRC_foreign_intervention_focus has_completed_focus = MRC_intervention_policy } }
+					ROOT = { tag = MRC }
+				}
+			} }
+
 			modifier = {
 				has_opinion = {
 					target = ROOT
