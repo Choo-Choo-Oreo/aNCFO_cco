@@ -1,15 +1,3 @@
-# befriend
-# conquer
-# antagonize
-# build_ship
-# build_army
-# unit_ratio
-# build_building
-# research_tech
-# garrison
-# protect
-# influence
-
 HHE_ignore_claim = {
 	allowed = { original_tag = HHE }
 	enable = {
@@ -271,31 +259,20 @@ HHE_consider_weak = {
 	}
 }
 
-HHE_move_against_CRUSADE = {
+HHE_move_against_TRI_CRUSADE = {
 	allowed = { original_tag = HHE }
 	enable = {
 		original_tag = HHE
-		date < 1730.1.1
-		has_war = no
 		OR = {
-			MRC = { has_wargoal_against = HHE }
-			MRC = { is_justifying_wargoal_against = HHE }
-			HHE = { has_wargoal_against = MRC }
-			HHE = { is_justifying_wargoal_against = MRC }
 			HHE = { focus_progress = { focus = HHE_influencer_reenter_global_stage progress > 0 } }
 			HHE = { focus_progress = { focus = HHE_warmonger_trilateral_crusade progress > 0 } }
 		}
 	}
-	abort = {
-		OR = {
-			has_war = yes
-			NOT = { date < 1730.1.1 }
-		}
-	}
+	abort_when_not_enabled = yes
 
-	ai_strategy = { type = prepare_for_war id = "MJU" value = 200 }
-	ai_strategy = { type = prepare_for_war id = "MRC" value = 200 }
-	ai_strategy = { type = prepare_for_war id = "UFS" value = 200 }
+	ai_strategy = { type = prepare_for_war id = "MJU" value = 1000 }
+	ai_strategy = { type = prepare_for_war id = "MRC" value = 1000 }
+	ai_strategy = { type = prepare_for_war id = "UFS" value = 1000 }
 }
 
 HHE_great_threat = {
