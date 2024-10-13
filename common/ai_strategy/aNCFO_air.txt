@@ -65,7 +65,7 @@ bba_air_prod_1 = {
 	ai_strategy = {
 		type = unit_ratio
 		id = cas
-		value = -35 #because doctrine this = 15
+		value = -25 #because doctrine this = 15
 	}
 
 	ai_strategy = {
@@ -95,7 +95,7 @@ bba_air_prod_1 = {
 	ai_strategy = {
 		type = equipment_production_factor
 		id = cas
-		value = -40
+		value = -20
 	}
 
 	ai_strategy = {
@@ -144,7 +144,7 @@ bba_air_prod_2 = {
 	ai_strategy = {
 		type = unit_ratio
 		id = cas
-		value = -35 #because doctrine this = 15
+		value = -25 #because doctrine this = 15
 	}
 
 	ai_strategy = {
@@ -174,7 +174,7 @@ bba_air_prod_2 = {
 	ai_strategy = {
 		type = equipment_production_factor
 		id = cas
-		value = -60
+		value = -45
 	}
 
 	ai_strategy = {
@@ -207,7 +207,7 @@ aNCFO_air_production = {
 	enable = { always = yes }
 	abort_when_not_enabled = yes
 	
-	ai_strategy = { type = air_factory_balance value = 100 }
+	ai_strategy = { type = air_factory_balance value = 80 }
 }
 
 aNCFO_focus_on_fighters = {
@@ -226,6 +226,63 @@ aNCFO_focus_on_fighters = {
 	}
 
 	ai_strategy = { type = unit_ratio id = fighter value = 100 }
+}
+
+aNCFO_sideline_on_fighters_deployed = {
+	allowed = { is_major = yes }
+	enable = { 
+		has_tech = basic_small_airframe
+		has_deployed_air_force_size = { size > 12000 type = fighter }
+	}
+	abort = {
+		NOT = {
+			AND = {
+				has_tech = basic_small_airframe
+				has_deployed_air_force_size = { size > 15000 type = fighter }
+			}
+		}
+	}
+
+	ai_strategy = { type = unit_ratio id = fighter value = -110 }
+
+	ai_strategy = { type = equipment_production_factor id = fighter value = -110 }
+
+	ai_strategy = { type = unit_ratio id = cas value = 20 }
+
+	ai_strategy = { type = equipment_production_factor id = cas value = 20 }
+
+	ai_strategy = { type = unit_ratio id = tactical_bomber value = 40 }
+
+	ai_strategy = { type = equipment_production_factor id = tactical_bomber value = 40 }
+
+	ai_strategy = { type = unit_ratio id = strategic_bomber value = 30 }
+
+	ai_strategy = { type = equipment_production_factor id = strategic_bomber value = 30 }
+}
+
+aNCFO_sideline_on_fighters_stockpile = {
+	allowed = { is_major = yes }
+	enable = {  OR = {
+		has_deployed_air_force_size = { size > 18000 type = fighter }
+		has_equipment = { small_plane_airframe > 21000 }
+	} }
+	abort_when_not_enabled = yes
+
+	ai_strategy = { type = unit_ratio id = fighter value = -110 }
+
+	ai_strategy = { type = equipment_production_factor id = fighter value = -110 }
+
+	ai_strategy = { type = unit_ratio id = cas value = 20 }
+
+	ai_strategy = { type = equipment_production_factor id = cas value = 20 }
+
+	ai_strategy = { type = unit_ratio id = tactical_bomber value = 40 }
+
+	ai_strategy = { type = equipment_production_factor id = tactical_bomber value = 40 }
+
+	ai_strategy = { type = unit_ratio id = strategic_bomber value = 30 }
+
+	ai_strategy = { type = equipment_production_factor id = strategic_bomber value = 30 }
 }
 
 aNCFO_naval_bombers = {
@@ -339,6 +396,116 @@ minors_dont_spy = {
 		value = -10
 	}
 }
+# Location Radar Station
+	location_radarstation_7 = {
+		enable = {
+			7 = { is_controlled_by = ROOT }
+			has_tech = basic_small_airframe
+			has_deployed_air_force_size = { size > 3000 type = fighter }
+			OR = {
+				has_war_with_major = yes
+				AND = {
+					is_major = yes
+					has_war = yes
+				}
+			}
+		}
+		abort_when_not_enabled = yes
+		ai_strategy = {
+			type = build_building
+			id = radar_station
+			target = 7
+			value = 100
+		}
+	}
+
+	location_radarstation_105 = {
+		enable = {
+			105 = { is_controlled_by = ROOT }
+			has_tech = basic_small_airframe
+			has_deployed_air_force_size = { size > 3000 type = fighter }
+			OR = {
+				has_war_with_major = yes
+				AND = {
+					is_major = yes
+					has_war = yes
+				}
+			}
+		}
+		abort_when_not_enabled = yes
+		ai_strategy = {
+			type = build_building
+			id = radar_station
+			target = 105
+			value = 100
+		}
+	}
+
+	location_radarstation_106 = {
+		enable = {
+			106 = { is_controlled_by = ROOT }
+			has_tech = basic_small_airframe
+			has_deployed_air_force_size = { size > 3000 type = fighter }
+			OR = {
+				has_war_with_major = yes
+				AND = {
+					is_major = yes
+					has_war = yes
+				}
+			}
+		}
+		abort_when_not_enabled = yes
+		ai_strategy = {
+			type = build_building
+			id = radar_station
+			target = 106
+			value = 100
+		}
+	}
+
+	location_radarstation_122 = {
+		enable = {
+			122 = { is_controlled_by = ROOT }
+			has_tech = basic_small_airframe
+			has_deployed_air_force_size = { size > 3000 type = fighter }
+			OR = {
+				has_war_with_major = yes
+				AND = {
+					is_major = yes
+					has_war = yes
+				}
+			}
+		}
+		abort_when_not_enabled = yes
+		ai_strategy = {
+			type = build_building
+			id = radar_station
+			target = 122
+			value = 100
+		}
+	}
+
+	location_radarstation_400 = {
+		enable = {
+			400 = { is_controlled_by = ROOT }
+			has_tech = basic_small_airframe
+			has_deployed_air_force_size = { size > 3000 type = fighter }
+			OR = {
+				has_war_with_major = yes
+				AND = {
+					is_major = yes
+					has_war = yes
+				}
+			}
+		}
+		abort_when_not_enabled = yes
+		ai_strategy = {
+			type = build_building
+			id = radar_station
+			target = 400
+			value = 100
+		}
+	}
 # Location Airbases
 	location_airbase_1 = {
 		enable = {
