@@ -1005,7 +1005,8 @@
 	NDefines.NAI.FALLBACK_LOSING_FACTOR = 0.0					                    -- The lower this number  the longer the AI will hold the line before sending them to the fallback line
 	NDefines.NAI.SCARY_LEVEL_AVERAGE_DEFENSE = -0.6                               -- average front defense modifier to make it consider it as a PITA to go for
 	NDefines.NAI.ATTACK_HEAVILY_DEFENDED_LIMIT = 0.6 			                -- AI will not launch attacks against heavily defended fronts unless they consider to have this level of advantage (1.0 = 100%)
-	NDefines.NAI.HOUR_BAD_COMBAT_REEVALUATE = 42                                 	-- if we are in combat for this amount and it goes shitty then try skipping it
+	NDefines.NAI.CANCEL_COMBAT_MIN_DURATION_HOURS = 42                                 	-- if we are in combat for this amount and it goes shitty then try skipping it
+	NDefines.NAI.CANCEL_COMBAT_DISADVANTAGE_RATIO = 1.4                                 	-- If the enemy's advantage ratio over us during (normal) combat is more than <value>, allow canceling the attack
 
 	NDefines.NAI.MAX_MICRO_ATTACKS_PER_ORDER = 12 				                    -- AI goes through its orders and checks if there are situations to take advantage of
 	NDefines.NAI.MICRO_POCKET_SIZE = 3					-- Pockets with a size equal to or lower than this will be mocroed by the AI, for efficiency.
@@ -1203,7 +1204,6 @@
 	NDefines.NAI.RELATIVE_STRENGTH_TO_INVADE_DEFENSIVE = 0.5 ---0.4	-- Compares the estimated strength of the country/faction compared to it's enemies to see if it should invade or stay at home to defend, but while being a defensive country.
 
 
-	NDefines.NAI.INVASION_DISTANCE_RANDOMNESS = 300									-- This higher the value the more unpredictable the invasions. Compares to actual map distance in pixels.
 	NDefines.NAI.INVASION_COASTAL_PROVS_PER_ORDER = 12 --24								-- AI will consider one extra invasion per number of provinces stated here (num orders = total coast / this)
 
 	-------------------------
