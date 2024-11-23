@@ -1,11 +1,16 @@
 technologies = {
-	@1800 = 0
-	@1824 = 3
-	@1828 = 6
-	@1832 = 9
-	@1836 = 12
-	@1840 = 15
-	@1844 = 18
+	@1700 = 0
+	@1724 = 2
+	@1726 = 4
+	@1728 = 6
+	@1732 = 9
+	@1736 = 12
+	@1740 = 15
+	@1744 = 18
+
+	@field_hospital_x = 9
+	@logistic_x = 11
+	@signal_x = 13
 
 tech_support = {
 
@@ -46,7 +51,7 @@ tech_support = {
 	start_year = 1700
 	folder = {
 		name = support_folder
-		position = { x = 0 y = @1800 }
+		position = { x = 0 y = @1700 }
 	}
 
 	categories = {
@@ -80,11 +85,16 @@ tech_engineers = {
 		research_cost_coeff = 1
 	}
 
+	path = {
+		leads_to_tech = sp_armored_engineer_tech
+		research_cost_coeff = 1
+	}
+
 	research_cost = 2
 	start_year = 1724
 	folder = {
 		name = support_folder
-		position = { x = 0 y = @1824 }
+		position = { x = 0 y = @1724 }
 	}
 	
 	categories = {
@@ -142,7 +152,7 @@ tech_engineers = {
 		start_year = 1728
 		folder = {
 			name = support_folder
-			position = { x = 0 y = @1828 }
+			position = { x = 0 y = @1728 }
 		}
 		
 		categories = {
@@ -194,7 +204,7 @@ tech_engineers = {
 		start_year = 1732
 		folder = {
 			name = support_folder
-			position = { x = 0 y = @1832 }
+			position = { x = 0 y = @1732 }
 		}
 		
 		categories = {
@@ -241,7 +251,7 @@ tech_engineers = {
 		start_year = 1736
 		folder = {
 			name = support_folder
-			position = { x = 0 y = @1836 }
+			position = { x = 0 y = @1736 }
 		}
 		
 		categories = {
@@ -288,7 +298,7 @@ tech_engineers = {
 		start_year = 1740
 		folder = {
 			name = support_folder
-			position = { x = 0 y = @1840 }
+			position = { x = 0 y = @1740 }
 		}
 		
 		categories = {
@@ -331,7 +341,7 @@ tech_engineers = {
 		start_year = 1744
 		folder = {
 			name = support_folder
-			position = { x = 0 y = @1844 }
+			position = { x = 0 y = @1744 }
 		}
 		
 		categories = {
@@ -360,6 +370,60 @@ tech_engineers = {
 		}
 	}
 
+sp_armored_engineer_tech = {
+	allow = {
+ 		ROOT = {
+			is_special_project_completed = sp:sp_land_military_engineering_vehicles
+		}
+	}
+
+	is_special_project_tech = yes
+
+	research_cost = 2.0
+	start_year = 1726
+	folder = {
+		name = support_folder
+		position = { x = 1 y = @1726 }
+	}
+	
+	categories = {
+		support_tech
+		engineers_tech
+	}
+
+	enable_subunits = {
+		armored_engineer
+	}
+
+	on_research_complete = {
+		if = {
+			limit = {
+				has_dlc = "Gotterdammerung"
+			}
+			SP_create_variant_based_on_country_armored_engineer = yes
+		}
+	}
+	
+	ai_will_do = {
+		base = 2
+
+		modifier = {
+			factor = 2
+			is_major = yes
+		}
+		
+		modifier = {
+			factor = 1.5
+			date > "1940.1.1"
+		}
+		
+		modifier = {
+			factor = 1.5
+			date > "1944.1.1"
+		}
+	}
+}
+
 tech_recon = {
 
 	enable_subunits = {
@@ -374,11 +438,16 @@ tech_recon = {
 		research_cost_coeff = 1
 	}
 
+	path = {
+		leads_to_tech = sp_helicopter_artillery_observers_tech
+		research_cost_coeff = 1
+	}
+
 	research_cost = 2
 	start_year = 1724
 	folder = {
 		name = support_folder
-		position = { x = 2 y = @1824 }
+		position = { x = 2 y = @1724 }
 	}
 	
 	categories = {
@@ -422,7 +491,7 @@ tech_recon = {
 		start_year = 1728
 		folder = {
 			name = support_folder
-			position = { x = 2 y = @1828 }
+			position = { x = 2 y = @1728 }
 		}
 		
 		categories = {
@@ -465,7 +534,7 @@ tech_recon = {
 		start_year = 1732
 		folder = {
 			name = support_folder
-			position = { x = 2 y = @1832 }
+			position = { x = 2 y = @1732 }
 		}
 		
 		categories = {
@@ -508,7 +577,7 @@ tech_recon = {
 		start_year = 1736
 		folder = {
 			name = support_folder
-			position = { x = 2 y = @1836 }
+			position = { x = 2 y = @1736 }
 		}
 		
 		categories = {
@@ -551,7 +620,7 @@ tech_recon = {
 		start_year = 1740
 		folder = {
 			name = support_folder
-			position = { x = 2 y = @1840 }
+			position = { x = 2 y = @1740 }
 		}
 		
 		categories = {
@@ -590,7 +659,7 @@ tech_recon = {
 		start_year = 1744
 		folder = {
 			name = support_folder
-			position = { x = 2 y = @1844 }
+			position = { x = 2 y = @1744 }
 		}
 		
 		categories = {
@@ -619,6 +688,56 @@ tech_recon = {
 		}
 	}
 
+sp_helicopter_artillery_observers_tech = {
+	allow_branch = {
+		 has_dlc = "Gotterdammerung"
+	}
+
+	allow = {
+ 		ROOT = {
+			is_special_project_completed = sp:sp_air_helicopter
+		}
+	}
+
+	is_special_project_tech = yes
+
+	enable_subunits = {
+		helicopter_recon
+	}
+	
+	research_cost = 2.0
+	start_year = 1726
+	folder = {
+		name = support_folder
+		position = { x = 3 y = @1726 }
+	}
+	
+	categories = {
+		support_tech
+		recon_tech
+		helicopter_tech
+	}
+	
+	ai_will_do = {
+		base = 1
+		
+		modifier = {
+			factor = 2
+			is_major = yes
+		}
+		
+		modifier = {
+			factor = 2
+			date > "1939.1.1"
+		}
+
+		modifier = {
+			factor = 4
+			date > "1940.1.1"
+		}
+	}
+}
+
 tech_military_police = {
 
 	enable_subunits = {
@@ -629,11 +748,16 @@ tech_military_police = {
 		research_cost_coeff = 1
 	}
 
+	path = {
+		leads_to_tech = sp_armored_motorized_military_police_tech
+		research_cost_coeff = 1
+	}
+
 	research_cost = 2
 	start_year = 1724
 	folder = {
 		name = support_folder
-		position = { x = 4 y = @1824 }
+		position = { x = 4 y = @1724 }
 	}
 
 	categories = {
@@ -678,7 +802,7 @@ tech_military_police = {
 		start_year = 1728
 		folder = {
 			name = support_folder
-			position = { x = 4 y = @1828 }
+			position = { x = 4 y = @1728 }
 		}
 		
 		categories = {
@@ -723,7 +847,7 @@ tech_military_police = {
 		start_year = 1732
 		folder = {
 			name = support_folder
-			position = { x = 4 y = @1832 }
+			position = { x = 4 y = @1732 }
 		}
 		
 		categories = {
@@ -768,7 +892,7 @@ tech_military_police = {
 		start_year = 1736
 		folder = {
 			name = support_folder
-			position = { x = 4 y = @1836 }
+			position = { x = 4 y = @1736 }
 		}
 		
 		categories = {
@@ -813,7 +937,7 @@ tech_military_police = {
 		start_year = 1740
 		folder = {
 			name = support_folder
-			position = { x = 4 y = @1840 }
+			position = { x = 4 y = @1740 }
 		}
 		
 		categories = {
@@ -854,7 +978,7 @@ tech_military_police = {
 		start_year = 1744
 		folder = {
 			name = support_folder
-			position = { x = 4 y = @1844 }
+			position = { x = 4 y = @1744 }
 		}
 		
 		categories = {
@@ -885,6 +1009,52 @@ tech_military_police = {
 		}
 	}
 
+sp_armored_motorized_military_police_tech = {
+	allow_branch = {
+		 has_dlc = "Gotterdammerung"
+	}
+	
+	allow = {
+ 		ROOT = {
+			is_special_project_completed = sp:sp_land_military_engineering_vehicles
+		}
+	}
+
+	is_special_project_tech = yes
+
+	force_use_small_tech_layout = yes
+	show_equipment_icon = yes
+
+	research_cost = 2.0
+	start_year = 1726
+	folder = {
+		name = support_folder
+		position = { x = 5 y = @1726 }
+	}
+	
+	categories = {
+		support_tech
+		military_police_tech
+	}
+
+	enable_subunits = {
+		motorized_military_police
+	}
+
+	enable_equipments = {
+		motorbike_equipment_1
+	}
+	
+	ai_will_do = {
+		base = 2
+
+		modifier = {
+			factor = 2
+			is_major = yes
+		}
+	}
+}
+
 tech_maintenance_company = {
 
 	enable_subunits = {
@@ -895,11 +1065,17 @@ tech_maintenance_company = {
 		research_cost_coeff = 1
 	}
 
+
+	path = {
+		leads_to_tech = sp_armored_maintenance_tech
+		research_cost_coeff = 1
+	}
+
 	research_cost = 2
 	start_year = 1724
 	folder = {
 		name = support_folder
-		position = { x = 6 y = @1824 }
+		position = { x = 6 y = @1724 }
 	}
 	
 	categories = {
@@ -959,7 +1135,7 @@ tech_maintenance_company = {
 		start_year = 1728
 		folder = {
 			name = support_folder
-			position = { x = 6 y = @1828 }
+			position = { x = 6 y = @1728 }
 		}
 		
 		categories = {
@@ -1023,7 +1199,7 @@ tech_maintenance_company = {
 		start_year = 1732
 		folder = {
 			name = support_folder
-			position = { x = 6 y = @1832 }
+			position = { x = 6 y = @1732 }
 		}
 		
 		categories = {
@@ -1083,7 +1259,7 @@ tech_maintenance_company = {
 		start_year = 1736
 		folder = {
 			name = support_folder
-			position = { x = 6 y = @1836 }
+			position = { x = 6 y = @1736 }
 		}
 		
 		categories = {
@@ -1143,7 +1319,7 @@ tech_maintenance_company = {
 		start_year = 1740
 		folder = {
 			name = support_folder
-			position = { x = 6 y = @1840 }
+			position = { x = 6 y = @1740 }
 		}
 		
 		categories = {
@@ -1199,7 +1375,7 @@ tech_maintenance_company = {
 		start_year = 1744
 		folder = {
 			name = support_folder
-			position = { x = 6 y = @1844 }
+			position = { x = 6 y = @1744 }
 		}
 		
 		categories = {
@@ -1244,6 +1420,60 @@ tech_maintenance_company = {
 		}
 	}
 
+sp_armored_maintenance_tech = {
+	allow = {
+ 		ROOT = {
+			is_special_project_completed = sp:sp_land_military_engineering_vehicles
+		}
+	}
+
+	is_special_project_tech = yes
+
+	research_cost = 2.0
+	start_year = 1726
+	folder = {
+		name = support_folder
+		position = { x = 7 y = @1726 }
+	}
+	
+	categories = {
+		support_tech
+		maintenance_company_tech
+	}
+
+	enable_subunits = {
+		armored_maintenance
+	}
+
+	on_research_complete = {
+		if = {
+			limit = {
+				has_dlc = "Gotterdammerung"
+			}
+			SP_create_variant_based_on_country_armored_maintenance = yes
+		}
+	}
+	
+	ai_will_do = {
+		base = 2
+
+		modifier = {
+			factor = 2
+			is_major = yes
+		}
+		
+		modifier = {
+			factor = 1.5
+			date > "1940.1.1"
+		}
+		
+		modifier = {
+			factor = 1.5
+			date > "1944.1.1"
+		}
+	}
+}
+
 tech_field_hospital = {
 
 	enable_subunits = {
@@ -1251,6 +1481,11 @@ tech_field_hospital = {
 	}
 	path = {
 		leads_to_tech = tech_field_hospital2
+		research_cost_coeff = 1
+	}
+
+	path = {
+		leads_to_tech = sp_helicopter_med_evac_tech
 		research_cost_coeff = 1
 	}
 
@@ -1262,7 +1497,7 @@ tech_field_hospital = {
 	start_year = 1724
 	folder = {
 		name = support_folder
-		position = { x = 8 y = @1824 }
+		position = { x = @field_hospital_x y = @1724 }
 	}
 	
 	categories = {
@@ -1291,7 +1526,7 @@ tech_field_hospital = {
 		start_year = 1728
 		folder = {
 			name = support_folder
-			position = { x = 8 y = @1828 }
+			position = { x = @field_hospital_x y = @1728 }
 		}
 		
 		categories = {
@@ -1320,7 +1555,7 @@ tech_field_hospital = {
 		start_year = 1732
 		folder = {
 			name = support_folder
-			position = { x = 8 y = @1832 }
+			position = { x = @field_hospital_x y = @1732 }
 		}
 		
 		categories = {
@@ -1349,7 +1584,7 @@ tech_field_hospital = {
 		start_year = 1736
 		folder = {
 			name = support_folder
-			position = { x = 8 y = @1836 }
+			position = { x = @field_hospital_x y = @1736 }
 		}
 		
 		categories = {
@@ -1378,7 +1613,7 @@ tech_field_hospital = {
 		start_year = 1740
 		folder = {
 			name = support_folder
-			position = { x = 8 y = @1840 }
+			position = { x = @field_hospital_x y = @1740 }
 		}
 		
 		categories = {
@@ -1403,7 +1638,7 @@ tech_field_hospital = {
 		start_year = 1744
 		folder = {
 			name = support_folder
-			position = { x = 8 y = @1844 }
+			position = { x = @field_hospital_x y = @1744 }
 		}
 		
 		categories = {
@@ -1417,6 +1652,61 @@ tech_field_hospital = {
 		}
 	}
 
+sp_helicopter_med_evac_tech = {
+	allow_branch = {
+		 has_dlc = "Gotterdammerung"
+	}
+
+	allow = {
+ 		ROOT = {
+			is_special_project_completed = sp:sp_air_helicopter
+		}
+	}
+
+	is_special_project_tech = yes
+
+	research_cost = 2.0
+	start_year = 1726
+	folder = {
+		name = support_folder
+		position = { x = 10 y = @1726 }
+	}
+	
+	categories = {
+		support_tech
+		hospital_tech
+		helicopter_tech
+	}
+
+	enable_subunits = {
+		helicopter_field_hospital
+	}
+	
+	ai_will_do = {
+		base = 2
+
+		modifier = {
+			factor = 2
+			is_major = yes
+		}
+		
+		modifier = {
+			factor = 1.5
+			date > "1826.1.1"
+		}
+		
+		modifier = {
+			factor = 1.5
+			date > "1940.1.1"
+		}
+		
+		modifier = {
+			factor = 1.5
+			date > "1944.1.1"
+		}
+	}
+}
+
 tech_logistics_company = {
 
 	enable_subunits = {
@@ -1424,6 +1714,11 @@ tech_logistics_company = {
 	}
 	path = {
 		leads_to_tech = tech_logistics_company2
+		research_cost_coeff = 1
+	}
+
+	path = {
+		leads_to_tech = sp_helicopter_transport_pods_tech
 		research_cost_coeff = 1
 	}
 
@@ -1435,7 +1730,7 @@ tech_logistics_company = {
 	start_year = 1724
 	folder = {
 		name = support_folder
-		position = { x = 10 y = @1824 }
+		position = { x = @logistic_x y = @1724 }
 	}
 	
 	categories = {
@@ -1496,7 +1791,7 @@ tech_logistics_company = {
 		start_year = 1728
 		folder = {
 			name = support_folder
-			position = { x = 10 y = @1828 }
+			position = { x = @logistic_x y = @1728 }
 		}
 		
 		categories = {
@@ -1557,7 +1852,7 @@ tech_logistics_company = {
 		start_year = 1732
 		folder = {
 			name = support_folder
-			position = { x = 10 y = @1832 }
+			position = { x = @logistic_x y = @1732 }
 		}
 		
 		categories = {
@@ -1618,7 +1913,7 @@ tech_logistics_company = {
 		start_year = 1736
 		folder = {
 			name = support_folder
-			position = { x = 10 y = @1836 }
+			position = { x = @logistic_x y = @1736 }
 		}
 
 		categories = {
@@ -1679,7 +1974,7 @@ tech_logistics_company = {
 		start_year = 1740
 		folder = {
 			name = support_folder
-			position = { x = 10 y = @1840 }
+			position = { x = @logistic_x y = @1740 }
 		}
 
 		categories = {
@@ -1736,7 +2031,7 @@ tech_logistics_company = {
 		start_year = 1744
 		folder = {
 			name = support_folder
-			position = { x = 10 y = @1844 }
+			position = { x = @logistic_x y = @1744 }
 		}
 
 		categories = {
@@ -1782,6 +2077,51 @@ tech_logistics_company = {
 		}
 	}
 
+sp_helicopter_transport_pods_tech = {
+	allow_branch = {
+		 has_dlc = "Gotterdammerung"
+	}
+
+	allow = {
+ 		ROOT = {
+			is_special_project_completed = sp:sp_air_helicopter
+		}
+	}
+
+	is_special_project_tech = yes
+
+	research_cost = 2.0
+	start_year = 1726
+	folder = {
+		name = support_folder
+		position = { x = 12 y = @1726 }
+	}
+	
+	categories = {
+		support_tech
+		logistics_tech
+		helicopter_tech
+	}
+
+	enable_subunits = {
+		helicopter_transport
+	}
+	
+	ai_will_do = {
+		base = 2
+
+		modifier = {
+			factor = 2
+			is_major = yes
+		}
+		
+		modifier = {
+			factor = 3
+			date > "1944.1.1"
+		}
+	}
+}
+
 tech_signal_company = {
 
 	enable_subunits = {
@@ -1789,6 +2129,11 @@ tech_signal_company = {
 	}
 	path = {
 		leads_to_tech = tech_signal_company2
+		research_cost_coeff = 1
+	}
+
+	path = {
+		leads_to_tech = sp_armored_signal_tech
 		research_cost_coeff = 1
 	}
 
@@ -1801,7 +2146,7 @@ tech_signal_company = {
 	start_year = 1724
 	folder = {
 		name = support_folder
-		position = { x = 12 y = @1824 }
+		position = { x = @signal_x y = @1724 }
 	}
 	
 	categories = {
@@ -1845,7 +2190,7 @@ tech_signal_company = {
 		start_year = 1728
 		folder = {
 			name = support_folder
-			position = { x = 12 y = @1828 }
+			position = { x = @signal_x y = @1728 }
 		}
 		
 		categories = {
@@ -1889,7 +2234,7 @@ tech_signal_company = {
 		start_year = 1732
 		folder = {
 			name = support_folder
-			position = { x = 12 y = @1832 }
+			position = { x = @signal_x y = @1732 }
 		}
 		
 		categories = {
@@ -1933,7 +2278,7 @@ tech_signal_company = {
 		start_year = 1736
 		folder = {
 			name = support_folder
-			position = { x = 12 y = @1836 }
+			position = { x = @signal_x y = @1736 }
 		}
 		
 		categories = {
@@ -1977,7 +2322,7 @@ tech_signal_company = {
 		start_year = 1740
 		folder = {
 			name = support_folder
-			position = { x = 12 y = @1840 }
+			position = { x = @signal_x y = @1740 }
 		}
 		
 		categories = {
@@ -2017,7 +2362,7 @@ tech_signal_company = {
 		start_year = 1744
 		folder = {
 			name = support_folder
-			position = { x = 12 y = @1844 }
+			position = { x = @signal_x y = @1744 }
 		}
 		
 		categories = {
@@ -2046,4 +2391,63 @@ tech_signal_company = {
 			}
 		}
 	}
+
+sp_armored_signal_tech = {
+	allow = {
+ 		ROOT = {
+			is_special_project_completed = sp:sp_land_military_engineering_vehicles
+		}
+	}
+
+	is_special_project_tech = yes
+
+	research_cost = 2.0
+	start_year = 1726
+	folder = {
+		name = support_folder
+		position = { x = 14 y = @1726 }
+	}
+	
+	categories = {
+		support_tech
+		signal_company_tech
+		electronics
+	}
+
+	enable_subunits = {
+		armored_signal
+	}
+
+	enable_equipment_modules = { #TODO_Manu: This shouldn't show up without NSB OR GOT
+		lc_command_center #Module for Land Cruiser
+	}
+
+	on_research_complete = {
+		if = {
+			limit = {
+				has_dlc = "Gotterdammerung"
+			}
+			SP_create_variant_based_on_country_armored_signal = yes
+		}
+	}
+	
+	ai_will_do = {
+		base = 2
+
+		modifier = {
+			factor = 2
+			is_major = yes
+		}
+		
+		modifier = {
+			factor = 1.5
+			date > "1940.1.1"
+		}
+		
+		modifier = {
+			factor = 1.5
+			date > "1944.1.1"
+		}
+	}
+}
 }

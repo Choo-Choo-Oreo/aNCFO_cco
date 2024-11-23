@@ -126,130 +126,64 @@ DAI_PROD_ARMY_MA_motorized_army_production_strategy = {
 
 
 ########################################################
-#	AIR PRODUCTION
-########################################################
-
-
-default_air_production = {
-
-	enable = {
-		always = yes  
-	}
-	abort_when_not_enabled = yes
-
-
-	#Air unit factors
-
-	ai_strategy = {
-		type = unit_ratio
-		id = fighter
-		value = 100
-	}
-
-	ai_strategy = {
-		type = unit_ratio
-		id = cas
-		value = 100
-	}
-
-	ai_strategy = {
-		type = unit_ratio
-		id = tactical_bomber
-		value = 75
-	}
-
-	ai_strategy = {
-		type = unit_ratio
-		id = strategic_bomber
-		value = 75
-	}
-
-	ai_strategy = {
-		type = unit_ratio
-		id = cv_fighter
-		value = 10
-	}
-
-	ai_strategy = {
-		type = unit_ratio
-		id = cv_naval_bomber
-		value = 10
-	}
-
-	ai_strategy = {
-		type = unit_ratio
-		id = cv_cas
-		value = 10
-	}
-
-	ai_strategy = {
-		type = unit_ratio
-		id = scout_plane
-		value = 25
-	}
-
-	ai_strategy = {
-		type = unit_ratio
-		id = maritime_patrol_plane
-		value = 30
-	}
-	
-##	ai_strategy = {
-##		type = equipment_production_factor
-##		id = armor
-##		value = 150
-##    }
-	
-	
-##	ai_strategy = {
-##		type = equipment_production_factor
-##		id = motorized
-##		value = 150
-##   }
-##
-}
-
-##produce_ART_AA_SUPPORT_EQ_AI_for_fuck_sake = {
-##
-##	enable = {
-##		always = yes  
-##	}
-##	abort_when_not_enabled = yes
-##	
-##	ai_strategy = {
-##		type = equipment_variant_production_factor
-##		id = anti_air_equipment
-##		value = 150
-##    }
-##	
-##	ai_strategy = {
-##		type = equipment_variant_production_factor
-##		id = anti_tank_equipment
-##		value = 200
-##    }
-##	
-##	ai_strategy = {
-##		type = equipment_variant_production_factor
-##		id = support_equipment
-##		value = 100
-##   }
-##	
-##	ai_strategy = {
-##		type = equipment_variant_production_factor
-##		id = artillery_equipment
-##		value = 15
-##   }
-##	
-##	
-##
-##}
-
-
-
-########################################################
 #	PRODUCTION MANAGEMENT
 ########################################################
 
+produce_AT_AI_for_fuck_sake = {
+
+	enable = {
+		has_equipment = { anti_tank_equipment < 0 }  
+	}
+	abort_when_not_enabled = yes
+	
+	ai_strategy = {
+		type = equipment_variant_production_factor
+		id = anti_tank_equipment
+		value = 250
+    }
+}
+
+produce_AA_AI_for_fuck_sake = {
+
+	enable = {
+		has_equipment = { anti_air_equipment < 0 }
+	}
+	abort_when_not_enabled = yes
+	
+	ai_strategy = {
+		type = equipment_variant_production_factor
+		id = anti_air_equipment
+		value = 250
+    }
+}
+
+produce_SUPPORT_EQ_AI_for_fuck_sake = {
+
+	enable = {
+		has_equipment = { support_equipment < 0 } 
+	}
+	abort_when_not_enabled = yes
+	
+	ai_strategy = {
+		type = equipment_variant_production_factor
+		id = support_equipment
+		value = 100
+    }
+}
+
+produce_MOTORIZED_EQ_for_fuck_sake = {
+
+	enable = {
+		has_equipment = { motorized_equipment < 0 } 
+	}
+	abort_when_not_enabled = yes
+	
+	ai_strategy = {
+		type = equipment_variant_production_factor
+		id = motorized_equipment
+		value = 100
+    }
+}
 
 default_produce_floating_harbors = {
 	enable = {
@@ -272,11 +206,9 @@ default_heavy_tank_production = {
 			has_tech = improved_heavy_tank_chassis  
 			has_tech = improved_heavy_tank 
 		}
-	num_of_military_factories > 174
+		num_of_military_factories > 174
 	}
-	abort = {
-		num_of_military_factories < 175
-	}
+	abort_when_not_enabled = yes
 
 	ai_strategy = {
 		type = unit_ratio

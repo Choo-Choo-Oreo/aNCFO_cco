@@ -13,18 +13,20 @@ buildings = {
 		level_cap = {
 			state_max = 5
 		}
-		state_modifiers = { modifiers = {
+		state_modifiers = {
 			local_supplies = 0.03
-		} }
-		country_modifiers = { modifiers = {
-			max_fuel_building = 1.5 #k
-		} }
+		}
+		country_modifiers = {
+			modifiers = {
+				max_fuel_building = 1.5 #k
+			}
+		}
 	}
 
 	construction_complex = { # Construction Sector
 		base_cost = 6400
 		per_level_extra_cost = 2400
-		icon_frame = 22
+		icon_frame = 31
 		value = 2
 
 		show_modifier = yes
@@ -33,19 +35,17 @@ buildings = {
 		level_cap = {
 			state_max = 10
 		}
-		state_modifiers = { modifiers = {
+		state_modifiers = {
 			local_building_slots = 1.0
 			local_building_slots_factor = 0.02
-			industry_repair_factor = 0.02
-			state_production_speed_buildings_factor = 0.02
-		} }
+			state_production_speed_buildings_factor = 0.04
+		}
 	}
 
 	barracks = { # Conscription Center
 		base_cost = 6400
 		per_level_extra_cost = 2400
-		icon_frame = 23
-		max_level = 5
+		icon_frame = 32
 		value = 2
 
 		disabled_in_dmz = yes
@@ -55,54 +55,14 @@ buildings = {
 		level_cap = {
 			state_max = 5
 		}
-		state_modifiers = { modifiers = {
+		state_modifiers = {
 			local_manpower = 0.04
 			local_non_core_manpower = 0.04
-		} }
-		country_modifiers = { modifiers = {
-			weekly_manpower = 20
-		} }
-	}
-
-	mega_gun_emplacement = {
-		dlc_allowed = { has_dlc = Gotterdammerung }
-		hide_if_missing_tech = yes
-		show_on_map = 1
-		base_cost = 20000
-		damage_factor = 0 # This building can't be damaged by regular strat bombing
-		icon_frame = 24
-		value = 1
-
-		disabled_in_dmz = yes
-		gun_emplacement = yes
-
-		infrastructure_construction_effect = yes
-		spawn_point = rocket_site_spawn
-		level_cap = {
-			state_max = 1
-			shares_slots = yes
-			exclusive_with = rocket_site
 		}
-		#Building utilizes equipment "explosive_ammo_equipment" as ammunition for the air mission barrage
-	}
-
-	rocket_site = { # Rocket Site
-		show_on_map = 1
-		base_cost = 7680
-		icon_frame = 12
-		rocket_production = 0
-		rocket_launch_capacity = 1
-		value = 1
-		tags = {}
-
-		disabled_in_dmz = yes
-
-		infrastructure_construction_effect = yes
-		spawn_point = rocket_site_spawn
-		level_cap = {
-			state_max = 3
-			shares_slots = yes
-			exclusive_with = mega_gun_emplacement
+		country_modifiers = {
+			modifiers = {
+				weekly_manpower = 20
+			}
 		}
 	}
 
@@ -173,19 +133,22 @@ buildings = {
 		infrastructure_construction_effect = yes
 		level_cap = {
 			shares_slots = yes
-			state_max = 50
+			state_max = 60
 		}
-		country_modifiers = { modifiers = {
-			fuel_cost = 10
-			country_resource_cost_steel = 2
-		} }
+		country_modifiers = {
+			modifiers = {
+				fuel_cost = 20
+				country_resource_cost_steel = 2
+			}
+		}
 	}
 
 	steel_complex = { # Steel Complex
 		show_on_map = 6
 		has_destroyed_mesh = no
 		base_cost = 12800
-		icon_frame = 17
+		icon_frame = 28
+		local_resources_steel = 12
 		value = 8
 
 		refinery = yes
@@ -196,19 +159,22 @@ buildings = {
 			shares_slots = yes
 			state_max = 5
 		}
-		state_modifiers = { modifiers = {
-			local_resources_steel = 12
-		} }
-		country_modifiers = { modifiers = {
-			country_resource_cost_chromium = 2
-		} }
+		state_modifiers = {
+		}
+		country_modifiers = {
+			modifiers = {
+				#country_resource_cost_iron = 18
+				country_resource_cost_chromium = 2
+			}
+		}
 	}
 
 	aluminium_complex = { # Aluminium Complex
 		show_on_map = 6
 		has_destroyed_mesh = no
 		base_cost = 12800
-		icon_frame = 18
+		icon_frame = 29
+		local_resources_aluminium = 8
 		value = 8
 
 		refinery = yes
@@ -219,11 +185,13 @@ buildings = {
 			shares_slots = yes
 			state_max = 5
 		}
-		state_modifiers = { modifiers = {
-			local_resources_aluminium = 8
-		} }
-		country_modifiers = { modifiers = {
-		} }
+		state_modifiers = {
+		}
+		country_modifiers = {
+			modifiers = {
+				#country_resource_cost_bauxite = 12
+			}
+		}
 	}
 
 	arms_factory = { # Military Factory
@@ -237,10 +205,8 @@ buildings = {
 		infrastructure_construction_effect = yes
 		level_cap = {
 			shares_slots = yes
-			state_max = 50
+			state_max = 60
 		}
-		country_modifiers = { modifiers = {
-		} }
 	}
 
 	dockyard = { # Naval Dockyard
@@ -249,7 +215,6 @@ buildings = {
 		base_cost = 19200
 		naval_production = 1
 		icon_frame = 4
-		max_level = 50
 		value = 6
 
 		only_costal = yes
@@ -257,7 +222,49 @@ buildings = {
 		infrastructure_construction_effect = yes
 		level_cap = {
 			shares_slots = yes
-			state_max = 20
+			state_max = 30
+		}
+	}
+
+	mega_gun_emplacement = { # Multi-Charge Large Caliber Gun
+		dlc_allowed = { has_dlc = Gotterdammerung }
+		hide_if_missing_tech = yes
+		show_on_map = 1
+		base_cost = 20000
+		damage_factor = 0 # This building can't be damaged by regular strat bombing
+		icon_frame = 24
+		value = 1
+
+		disabled_in_dmz = yes
+		gun_emplacement = yes
+
+		infrastructure_construction_effect = yes
+		spawn_point = rocket_site_spawn
+		level_cap = {
+			state_max = 1
+			shares_slots = yes
+			exclusive_with = rocket_site
+		}
+		#Building utilizes equipment "explosive_ammo_equipment" as ammunition for the air mission barrage
+	}
+
+	rocket_site = { # Rocket Site
+		show_on_map = 1
+		base_cost = 7680
+		icon_frame = 12
+		rocket_production = 0
+		rocket_launch_capacity = 1
+		value = 1
+		tags = {}
+
+		disabled_in_dmz = yes
+
+		infrastructure_construction_effect = yes
+		spawn_point = rocket_site_spawn
+		level_cap = {
+			state_max = 3
+			shares_slots = yes
+			exclusive_with = mega_gun_emplacement
 		}
 	}
 
@@ -300,7 +307,7 @@ buildings = {
 		}
 		spawn_point = nuclear_reactor_spawn
 		show_on_map = 1
-		base_cost = 25000
+		base_cost = 48000
 		icon_frame = 13
 		nuclear_reactor = yes
 		value = 10
@@ -352,7 +359,7 @@ buildings = {
 
 		level_cap = {
 			state_max = 1
-			shares_slots = no
+			shares_slots = yes
 			group_by = reactors
 		}
 	}
@@ -381,6 +388,7 @@ buildings = {
 	fuel_silo = { # Fuel Silo
 		show_on_map = 1
 		base_cost = 6400
+		per_level_extra_cost = -512
 		icon_frame = 14
 
 		fuel_silo = yes
@@ -417,7 +425,6 @@ buildings = {
 		per_level_extra_cost = 192
 		disabled_in_dmz = yes
 		icon_frame = 16
-		max_level = 1
 		infrastructure_construction_effect = yes
 		level_cap = {
 			province_max = 1
@@ -439,17 +446,6 @@ buildings = {
 		disabled_in_dmz = yes
 		only_display_if_exists = yes
 		special_icon = GFX_specialization_nuclear
-		#state_damage_modifier = { conscription_exemptions_granted }
-		#construction_speed_factor = {
-		#	trigger = {
-		#		OR = {
-		#			state = 56
-		#			state = 59
-		#			state = 64
-		#		}
-		#	}
-		#	factor = 10
-		#}
 		level_cap = {
 			province_max = 1
 			state_max = 1
@@ -527,24 +523,6 @@ buildings = {
 		only_costal = yes
 	}
 
-	naval_base = { # Naval Base
-		show_on_map = 1
-		show_on_map_meshes = 3
-		always_shown = yes
-		base_cost = 1720
-		per_level_extra_cost = 172
-		spawn_point = naval_base_spawn 
-		only_costal = yes
-		is_port = yes
-		icon_frame = 6
-		value = 1
-		allied_build = yes
-		infrastructure_construction_effect = yes
-		level_cap = {
-			province_max = 10
-		}
-	}
-
 	bunker = { # Land Fort
 		show_on_map = 1
 		has_destroyed_mesh = yes
@@ -566,9 +544,27 @@ buildings = {
 		base_cost = 256
 		per_level_extra_cost = 64
 		disabled_in_dmz = yes
-		icon_frame = 7
+		icon_frame = 30
 		land_fort = 1
 		value = 1
+		infrastructure_construction_effect = yes
+		level_cap = {
+			province_max = 10
+		}
+	}
+
+	naval_base = { # Naval Base
+		show_on_map = 1
+		show_on_map_meshes = 3
+		always_shown = yes
+		base_cost = 1720
+		per_level_extra_cost = 172
+		spawn_point = naval_base_spawn 
+		only_costal = yes
+		is_port = yes
+		icon_frame = 6
+		value = 1
+		allied_build = yes
 		infrastructure_construction_effect = yes
 		level_cap = {
 			province_max = 10
@@ -638,7 +634,7 @@ buildings = {
 		state_modifiers = {
 			state_production_speed_buildings_factor = 0.15
 			local_building_slots_factor = 0.15
-			state_resources_factor = 0.1
+			state_resources_factor = 0.10
 		}
 	}
 
@@ -664,7 +660,7 @@ buildings = {
 		state_modifiers = {
 			state_production_speed_buildings_factor = 0.15
 			local_building_slots_factor = 0.15
-			state_resources_factor = 0.1
+			state_resources_factor = 0.10
 		}
 	}
 
