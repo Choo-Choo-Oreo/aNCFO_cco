@@ -33,7 +33,7 @@ Other Mod Devs/Modders the have ANY work added to this mod.
 		Better Mechanics : Battalion Limiter						6 Jan 2024
 		Better Mechanics : Camera									Not Used
 		Better Mechanics : Civilian and Military Laws				Not Used
-		Better Mechanics : Combat									9 Aug 2024
+		Better Mechanics : Combat									23 Nov 2024
 		Better Mechanics : Divisional AI							9 Aug 2024			6.8
 		Better Mechanics : Division Designer						18 Mar 2024
 		Better Mechanics : Frontline AI | Updated					9 Aug 2024			7.5

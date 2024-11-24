@@ -1,0 +1,102 @@
+on_actions = {
+	on_startup = {
+		effect = {
+			every_country = {
+				IF = {
+					limit = { check_variable = { num_ships < 100 }
+						check_variable = { num_ships > 49 } }
+					log = "[GetDateText]: [Root.GetName]: Navy: Small"
+					set_country_flag = ai_action_navy_small
+				}
+				ELSE_IF = {
+					limit = { check_variable = { num_ships < 200 }
+						check_variable = { num_ships > 99 } }
+					log = "[GetDateText]: [Root.GetName]: Navy: Medium"
+					set_country_flag = ai_action_navy_medium
+				}
+				ELSE_IF = {
+					limit = { check_variable = { num_ships > 200 } }
+					log = "[GetDateText]: [Root.GetName]: Navy: Large"
+					set_country_flag = ai_action_navy_large
+				}
+				IF = {
+					limit = { check_variable = { num_deployed_planes < 1000 }
+						check_variable = { num_deployed_planes > 499 } }
+					log = "[GetDateText]: [Root.GetName]: Navy: Small"
+					set_country_flag = ai_action_air_small
+				}
+				ELSE_IF = {
+					limit = { check_variable = { num_deployed_planes < 2000 }
+						check_variable = { num_deployed_planes > 999 } }
+					log = "[GetDateText]: [Root.GetName]: Navy: Medium"
+					set_country_flag = ai_action_air_medium
+				}
+				ELSE_IF = {
+					limit = { check_variable = { num_deployed_planes > 2000 } }
+					log = "[GetDateText]: [Root.GetName]: Navy: Large"
+					set_country_flag = ai_action_air_large
+				}
+			}
+		}
+	}
+
+	on_daily = { # 7 per Week
+	}
+
+	on_weekly = { # 4 per Month
+	}
+
+	on_monthly = { # 12 per Year
+		effect = {
+			IF = {
+				LIMIT = { is_ai = yes }
+				IF = {
+					limit = { check_variable = { num_ships < 100 }
+						check_variable = { num_ships > 49 } }
+					log = "[GetDateText]: [Root.GetName]: Navy: Small"
+					set_country_flag = ai_action_navy_small
+					clr_country_flag = ai_action_navy_medium
+					clr_country_flag = ai_action_navy_large
+				}
+				ELSE_IF = {
+					limit = { check_variable = { num_ships < 200 }
+						check_variable = { num_ships > 99 } }
+					log = "[GetDateText]: [Root.GetName]: Navy: Medium"
+					clr_country_flag = ai_action_navy_small
+					set_country_flag = ai_action_navy_medium
+					clr_country_flag = ai_action_navy_large
+				}
+				ELSE_IF = {
+					limit = { check_variable = { num_ships > 200 } }
+					log = "[GetDateText]: [Root.GetName]: Navy: Large"
+					clr_country_flag = ai_action_navy_small
+					clr_country_flag = ai_action_navy_medium
+					set_country_flag = ai_action_navy_large
+				}
+				IF = {
+					limit = { check_variable = { num_deployed_planes < 1000 }
+						check_variable = { num_deployed_planes > 499 } }
+					log = "[GetDateText]: [Root.GetName]: Navy: Small"
+					set_country_flag = ai_action_air_small
+					set_country_flag = ai_action_air_medium
+					set_country_flag = ai_action_air_large
+				}
+				ELSE_IF = {
+					limit = { check_variable = { num_deployed_planes < 2000 }
+						check_variable = { num_deployed_planes > 999 } }
+					log = "[GetDateText]: [Root.GetName]: Navy: Medium"
+					set_country_flag = ai_action_air_small
+					set_country_flag = ai_action_air_medium
+					set_country_flag = ai_action_air_large
+				}
+				ELSE_IF = {
+					limit = { check_variable = { num_deployed_planes > 2000 } }
+					log = "[GetDateText]: [Root.GetName]: Navy: Large"
+					set_country_flag = ai_action_air_small
+					set_country_flag = ai_action_air_medium
+					set_country_flag = ai_action_air_large
+				}
+			}
+		}
+	}
+}

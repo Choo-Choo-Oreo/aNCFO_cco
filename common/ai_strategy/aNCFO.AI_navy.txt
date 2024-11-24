@@ -1,0 +1,906 @@
+# Naval Missions
+	aNCFO_AI_NAVAL_peace_time_naval_missions = {
+		enable = { has_war = no }
+		abort_when_not_enabled = yes
+
+		ai_strategy = { type = naval_mission_threshold id = "MISSION_PATROL" value = 50000 }
+		ai_strategy = { type = naval_mission_threshold id = "MISSION_STRIKE_FORCE" value = 50000 }
+		ai_strategy = { type = naval_mission_threshold id = "MISSION_CONVOY_ESCORT" value = 50000 }
+		ai_strategy = { type = naval_mission_threshold id = "MISSION_CONVOY_RAIDING" value = 50000 }
+	}
+
+	aNCFO_AI_NAVAL_conserve_fuel = {
+		enable = { is_major = yes fuel_ratio < 0.25 }
+		abort = { NOT = { fuel_ratio < 0.5 } }
+
+		ai_strategy = { type = naval_mission_threshold id = "MISSION_CONVOY_RAIDING" value = 200000 }
+		ai_strategy = { type = naval_mission_threshold id = "MISSION_MINES_PLANTING" value = 200000 }
+		ai_strategy = { type = naval_mission_threshold id = "MISSION_MINES_SWEEPING" value = 200000 }
+	}
+# Naval Avoid
+	aNCFO_AI_NAVAL_avoid_harmonainus_sea = {
+		enable = { 
+			has_war = yes
+			OR = {
+				11  = { CONTROLLER = { has_war_with = ROOT } }
+				75  = { CONTROLLER = { has_war_with = ROOT } }
+				106 = { CONTROLLER = { has_war_with = ROOT } }
+			}
+		}
+		abort_when_not_enabled = yes
+
+		ai_strategy = { type = naval_avoid_region id = 26 value = 50 }
+	}
+
+	aNCFO_AI_NAVAL_avoid_heavens_gate = {
+		enable = { 
+			has_war = yes
+			OR = {
+				1   = { CONTROLLER = { has_war_with = ROOT } }
+				2   = { CONTROLLER = { has_war_with = ROOT } }
+				5   = { CONTROLLER = { has_war_with = ROOT } }
+				78  = { CONTROLLER = { has_war_with = ROOT } }
+				105 = { CONTROLLER = { has_war_with = ROOT } }
+				239 = { CONTROLLER = { has_war_with = ROOT } }
+			}
+		}
+		abort_when_not_enabled = yes
+
+		ai_strategy = { type = naval_avoid_region id = 2 value = 50 }
+	}
+
+	aNCFO_AI_NAVAL_avoid_merchants_paradise = {
+		enable = { 
+			has_war = yes
+			OR = {
+				13  = { CONTROLLER = { has_war_with = ROOT } }
+				14  = { CONTROLLER = { has_war_with = ROOT } }
+				71  = { CONTROLLER = { has_war_with = ROOT } }
+				446 = { CONTROLLER = { has_war_with = ROOT } }
+			}
+		}
+		abort_when_not_enabled = yes
+
+		ai_strategy = { type = naval_avoid_region id = 89 value = 50 }
+	}
+
+	aNCFO_AI_NAVAL_avoid_grand_pearl_sea = {
+		enable = { 
+			has_war = yes
+			OR = {
+				6   = { CONTROLLER = { has_war_with = ROOT } }
+				92  = { CONTROLLER = { has_war_with = ROOT } }
+				118 = { CONTROLLER = { has_war_with = ROOT } }
+			}
+		}
+		abort_when_not_enabled = yes
+
+		ai_strategy = { type = naval_avoid_region id = 24 value = 50 }
+	}
+
+	aNCFO_AI_NAVAL_avoid_sinus_sea = {
+		enable = { 
+			has_war = yes
+			OR = {
+				7   = { CONTROLLER = { has_war_with = ROOT } }
+				134 = { CONTROLLER = { has_war_with = ROOT } }
+				339 = { CONTROLLER = { has_war_with = ROOT } }
+			}
+		}
+		abort_when_not_enabled = yes
+
+		ai_strategy = { type = naval_avoid_region id = 120 value = 50 }
+	}
+
+	aNCFO_AI_NAVAL_avoid_pullas_sea = {
+		enable = { 
+			has_war = yes
+			616 = { CONTROLLER = { has_war_with = ROOT } }
+		}
+		abort_when_not_enabled = yes
+
+		ai_strategy = { type = naval_avoid_region id = 176 value = 50 }
+	}
+# Generic
+	save_admiral_pp_for_later = {
+		enable = {
+			has_war = no
+			threat < 0.3
+			has_political_power < 200
+		}
+		abort = {
+			OR = {
+				has_war = yes
+				threat > 0.3
+				has_political_power > 200
+			}
+		}
+
+		ai_strategy = { # dont burn PP on admirals (can still get free ones)
+			type = pp_spend_priority
+			id = admiral
+			value = -100
+		}
+	}
+
+	default_navy_unit_production = {
+		enable = {
+			always = yes
+		}
+		abort_when_not_enabled = yes
+		ai_strategy = {
+			type = unit_ratio
+			id = convoy
+			value = 12
+		}
+		ai_strategy = {
+			type = unit_ratio
+			id = capital_ship
+			value = 12
+		}
+		ai_strategy = {
+			type = unit_ratio
+			id = screen_ship
+			value = 36
+		}
+		ai_strategy = {
+			type = unit_ratio
+			id = submarine
+			value = 12
+		}
+	}
+
+	default_role_ratios_vanilla = {
+		enable = {
+			not = {
+				has_dlc = "Man the Guns"
+			}
+		}
+		abort_when_not_enabled = yes
+
+		ai_strategy = {
+			type = role_ratio
+			id = naval_capital
+			value = 125
+		}
+
+		ai_strategy = {
+			type = role_ratio
+			id = naval_carrier
+			value = 125
+		}
+
+		ai_strategy = {
+			type = role_ratio
+			id = naval_sub
+			value = 125
+		}
+
+		ai_strategy = {
+			type = role_ratio
+			id = naval_screen
+			value = 100
+		}
+	}
+
+	default_role_ratios_mtg = {
+		enable = {
+			has_dlc = "Man the Guns"
+		}
+		abort_when_not_enabled = yes
+
+		ai_strategy = {
+			type = role_ratio
+			id = naval_capital_bb
+			value = -20 # 40
+		}
+
+		ai_strategy = {
+			type = role_ratio
+			id = naval_capital_bc
+			value = -20
+		}
+
+		ai_strategy = {
+			type = role_ratio
+			id = naval_carrier
+			value = -15 # 35
+		}
+
+		ai_strategy = {
+			type = role_ratio
+			id = naval_submarine
+			value = 50
+		}
+
+		ai_strategy = {
+			type = role_ratio
+			id = naval_screen
+			value = 40
+		}
+
+		ai_strategy = {
+			type = role_ratio
+			id = naval_escort
+			value = 25
+		}
+
+		ai_strategy = {
+			type = role_ratio
+			id = naval_cruiser_light
+			value = 15
+		}
+
+		ai_strategy = {
+			type = role_ratio
+			id = naval_cruiser_heavy
+			value = 10
+		}
+
+		ai_strategy = {
+			type = role_ratio
+			id = naval_mine_sweeper
+			value = 10
+		}
+
+		ai_strategy = {
+			type = role_ratio
+			id = naval_mine_layer
+			value = 15
+		}
+	}
+
+	convoy_unit_production = {
+		enable = {
+			has_equipment = {
+				convoy < 1073 # A solid 1k should be enough.
+			}
+		}
+		abort_when_not_enabled = yes
+		ai_strategy = { 
+			type = equipment_production_min_factories 
+			id = convoy 
+			value = 2
+		}
+	}
+
+	overflow_equipment_convoy = {
+		enable = {
+			has_equipment = {
+				convoy > 2146 # A solid 2k should be more than enough.
+			}
+		}
+		abort_when_not_enabled = yes
+		ai_strategy = {
+			type = equipment_production_factor
+			id = convoy
+			value = -100
+		}
+	}
+
+	convoy_voy_voy_voy = {
+		enable = {
+			has_dlc = "Man the Guns"
+			convoy_threat > 0.2
+		}
+		abort = {
+			convoy_threat < 0.2
+		}
+
+		ai_strategy = {
+			type = role_ratio
+			id = naval_escort
+			value = 24
+		}
+		ai_strategy = {
+			type = unit_ratio
+			id = screen_ship
+			value = 32
+		}
+		ai_strategy = {
+			type = unit_ratio
+			id = capital_ship
+			value = -10
+		}
+	}
+
+	ill_show_you_mine = {
+		enable = {
+			has_dlc = "Man the Guns"
+			mine_threat > 0.2
+		}
+		abort = {
+			mine_threat < 0.2
+		}
+
+		ai_strategy = {
+			type = role_ratio
+			id = naval_mine_sweeper
+			value = 24
+		}
+	}
+
+	ill_show_you_mine_2 = {
+		enable = {
+			has_dlc = "Man the Guns"
+			mine_threat > 0.5
+		}
+		abort = {
+			mine_threat < 0.5
+		}
+
+		ai_strategy = {
+			type = role_ratio
+			id = naval_mine_sweeper
+			value = 24
+		}
+	}
+# Naval Fleet Ratios
+	very_low_naval_focused_nation = {
+		enable = {
+			num_of_naval_factories > 6
+			num_of_naval_factories < 13
+		}
+		abort_when_not_enabled = yes
+
+		ai_strategy = {
+			type = dockyard_to_military_factory_ratio
+			value = -20
+		}
+		# Heavy Ships
+		#ai_strategy = {
+		#	type = role_ratio
+		#	id = naval_capital_bb
+		#	value = -12
+		#}
+		#ai_strategy = {
+		#	type = role_ratio
+		#	id = naval_capital_bc
+		#	value = -6
+		#}
+		## Carriers
+		#ai_strategy = {
+		#	type = role_ratio
+		#	id = naval_carrier
+		#	value = -12
+		#}
+		#ai_strategy = {
+		#	type = role_ratio
+		#	id = naval_carrier_light
+		#	value = -6
+		#}
+		# Cruisers
+		ai_strategy = {
+			type = role_ratio
+			id = naval_cruiser_heavy
+			value = -6
+		}
+		ai_strategy = {
+			type = role_ratio
+			id = naval_cruiser_light
+			value = 80
+		}
+		ai_strategy = {
+			type = role_ratio
+			id = naval_screen
+			value = 100
+		}
+		# Destroyers
+		ai_strategy = {
+			type = role_ratio
+			id = naval_escort
+			value = 80
+		}
+		ai_strategy = {
+			type = role_ratio
+			id = naval_mine_sweeper
+			value = 10
+		}
+		ai_strategy = {
+			type = role_ratio
+			id = naval_mine_layer
+			value = 30
+		}
+		# Submarines
+		ai_strategy = {
+			type = role_ratio
+			id = naval_submarine
+			value = 50
+		}
+	}
+
+	low_naval_focused_nation = {
+		enable = {
+			num_of_naval_factories > 12
+			num_of_naval_factories < 19
+		}
+		abort_when_not_enabled = yes
+
+		ai_strategy = {
+			type = dockyard_to_military_factory_ratio
+			value = -10
+		}
+		# Heavy Ships
+		#ai_strategy = {
+		#	type = role_ratio
+		#	id = naval_capital_bb
+		#	value = -3
+		#}
+		ai_strategy = {
+			type = role_ratio
+			id = naval_capital_bc
+			value = 9
+		}
+		# Carriers
+		#ai_strategy = {
+		#	type = role_ratio
+		#	id = naval_carrier
+		#	value = -3
+		#}
+		ai_strategy = {
+			type = role_ratio
+			id = naval_carrier_light
+			value = 9
+		}
+		# Cruisers
+		ai_strategy = {
+			type = role_ratio
+			id = naval_cruiser_heavy
+			value = 9
+		}
+		ai_strategy = {
+			type = role_ratio
+			id = naval_cruiser_light
+			value = 80
+		}
+		ai_strategy = {
+			type = role_ratio
+			id = naval_screen
+			value = 150
+		}
+		# Destroyers
+		ai_strategy = {
+			type = role_ratio
+			id = naval_escort
+			value = 40
+		}
+		ai_strategy = {
+			type = role_ratio
+			id = naval_mine_sweeper
+			value = 10
+		}
+		ai_strategy = {
+			type = role_ratio
+			id = naval_mine_layer
+			value = 20
+		}
+		# Submarines
+		ai_strategy = {
+			type = role_ratio
+			id = naval_submarine
+			value = 25
+		}
+	}
+
+	medium_naval_focused_nation = {
+		enable = {
+			num_of_naval_factories > 18
+			num_of_naval_factories < 25
+		}
+		abort_when_not_enabled = yes
+
+		ai_strategy = {
+			type = dockyard_to_military_factory_ratio
+			value = 0
+		}
+		# Heavy Ships
+		ai_strategy = {
+			type = role_ratio
+			id = naval_capital_bb
+			value = 0
+		}
+		ai_strategy = {
+			type = role_ratio
+			id = naval_capital_bc
+			value = 18
+		}
+		# Carriers
+		ai_strategy = {
+			type = role_ratio
+			id = naval_carrier
+			value = 0
+		}
+		ai_strategy = {
+			type = role_ratio
+			id = naval_carrier_light
+			value = 18
+		}
+		# Cruisers
+		ai_strategy = {
+			type = role_ratio
+			id = naval_cruiser_heavy
+			value = 18
+		}
+		ai_strategy = {
+			type = role_ratio
+			id = naval_cruiser_light
+			value = 80
+		}
+		ai_strategy = {
+			type = role_ratio
+			id = naval_screen
+			value = 200
+		}
+		# Destroyers
+		ai_strategy = {
+			type = role_ratio
+			id = naval_escort
+			value = 20
+		}
+		ai_strategy = {
+			type = role_ratio
+			id = naval_mine_sweeper
+			value = 20
+		}
+		ai_strategy = {
+			type = role_ratio
+			id = naval_mine_layer
+			value = 10
+		}
+		# Submarines
+		ai_strategy = {
+			type = role_ratio
+			id = naval_submarine
+			value = 0
+		}
+	}
+
+	high_naval_focused_nation = {
+		enable = {
+			num_of_naval_factories > 24
+			num_of_naval_factories < 31
+		}
+		abort_when_not_enabled = yes
+
+		ai_strategy = {
+			type = dockyard_to_military_factory_ratio
+			value = 10
+		}
+		# Heavy Ships
+		ai_strategy = {
+			type = role_ratio
+			id = naval_capital_bb
+			value = 8
+		}
+		ai_strategy = {
+			type = role_ratio
+			id = naval_capital_bc
+			value = 36
+		}
+		# Carriers
+		ai_strategy = {
+			type = role_ratio
+			id = naval_carrier
+			value = 8
+		}
+		ai_strategy = {
+			type = role_ratio
+			id = naval_carrier_light
+			value = 36
+		}
+		# Cruisers
+		ai_strategy = {
+			type = role_ratio
+			id = naval_cruiser_heavy
+			value = 36
+		}
+		ai_strategy = {
+			type = role_ratio
+			id = naval_cruiser_light
+			value = 80
+		}
+		ai_strategy = {
+			type = role_ratio
+			id = naval_screen
+			value = 200
+		}
+		# Destroyers
+		ai_strategy = {
+			type = role_ratio
+			id = naval_escort
+			value = 20
+		}
+		ai_strategy = {
+			type = role_ratio
+			id = naval_mine_sweeper
+			value = 20
+		}
+		ai_strategy = {
+			type = role_ratio
+			id = naval_mine_layer
+			value = 10
+		}
+		# Submarines
+		ai_strategy = {
+			type = role_ratio
+			id = naval_submarine
+			value = -50
+		}
+	}
+
+	very_high_naval_focused_nation = {
+		enable = {
+			num_of_naval_factories > 30
+			num_of_naval_factories < 49
+		}
+		abort_when_not_enabled = yes
+
+		ai_strategy = {
+			type = dockyard_to_military_factory_ratio
+			value = 20
+		}
+		# Heavy Ships
+		ai_strategy = {
+			type = role_ratio
+			id = naval_capital_bb
+			value = 36
+		}
+		ai_strategy = {
+			type = role_ratio
+			id = naval_capital_bc
+			value = 72
+		}
+		# Carriers
+		ai_strategy = {
+			type = role_ratio
+			id = naval_carrier
+			value = 36
+		}
+		ai_strategy = {
+			type = role_ratio
+			id = naval_carrier_light
+			value = 72
+		}
+		# Cruisers
+		ai_strategy = {
+			type = role_ratio
+			id = naval_cruiser_heavy
+			value = 72
+		}
+		ai_strategy = {
+			type = role_ratio
+			id = naval_cruiser_light
+			value = 80
+		}
+		ai_strategy = {
+			type = role_ratio
+			id = naval_screen
+			value = 200
+		}
+		# Destroyers
+		ai_strategy = {
+			type = role_ratio
+			id = naval_escort
+			value = 20
+		}
+		ai_strategy = {
+			type = role_ratio
+			id = naval_mine_sweeper
+			value = 20
+		}
+		ai_strategy = {
+			type = role_ratio
+			id = naval_mine_layer
+			value = 10
+		}
+		# Submarines
+		ai_strategy = {
+			type = role_ratio
+			id = naval_submarine
+			value = -100
+		}
+	}
+
+	unnaturally_high_naval_focused_nation = { # Extra for rare super naval states.
+		enable = {
+			num_of_naval_factories > 48
+		}
+		abort_when_not_enabled = yes
+
+		ai_strategy = {
+			type = dockyard_to_military_factory_ratio
+			value = 35
+		}
+		# Heavy Ships
+		ai_strategy = {
+			type = role_ratio
+			id = naval_capital_bb
+			value = 96
+		}
+		ai_strategy = {
+			type = role_ratio
+			id = naval_capital_bc
+			value = 48
+		}
+		# Carriers
+		ai_strategy = {
+			type = role_ratio
+			id = naval_carrier
+			value = 96
+		}
+		ai_strategy = {
+			type = role_ratio
+			id = naval_carrier_light
+			value = 48
+		}
+		# Cruisers
+		ai_strategy = {
+			type = role_ratio
+			id = naval_cruiser_heavy
+			value = 96
+		}
+		ai_strategy = {
+			type = role_ratio
+			id = naval_cruiser_light
+			value = 60
+		}
+		ai_strategy = {
+			type = role_ratio
+			id = naval_screen
+			value = 300
+		}
+		# Destroyers
+		ai_strategy = {
+			type = role_ratio
+			id = naval_escort
+			value = -50
+		}
+		ai_strategy = {
+			type = role_ratio
+			id = naval_mine_sweeper
+			value = 35
+		}
+		ai_strategy = {
+			type = role_ratio
+			id = naval_mine_layer
+			value = 35
+		}
+		# Submarines
+		ai_strategy = {
+			type = role_ratio
+			id = naval_submarine
+			value = 100
+		}
+	}
+
+	stall_naval_capital_bb_production = {
+		enable = {
+			has_navy_size = {
+				unit = battleship
+				size > 16
+			}
+		}
+		abort_when_not_enabled = yes
+
+		ai_strategy = {
+			type = unit_ratio
+			id = capital_ship
+			value = -32
+		}
+		ai_strategy = {
+			type = role_ratio
+			id = naval_capital_bc
+			value = 16
+		}
+	}
+
+	stop_naval_capital_bb_production = {
+		enable = {
+			has_navy_size = {
+				unit = battleship
+				size > 48
+			}
+		}
+		abort_when_not_enabled = yes
+
+		ai_strategy = {
+			type = unit_ratio
+			id = capital_ship
+			value = -1000
+		}
+		ai_strategy = {
+			type = role_ratio
+			id = naval_capital_bc
+			value = 48
+		}
+	}
+
+	stall_naval_capital_bc_production = {
+		enable = {
+			has_navy_size = {
+				unit = battle_cruiser
+				size > 24
+			}
+		}
+		abort_when_not_enabled = yes
+
+		ai_strategy = {
+			type = role_ratio
+			id = naval_capital_bc
+			value = -24
+		}
+	}
+
+	stop_naval_capital_bc_production = {
+		enable = {
+			has_navy_size = {
+				unit = battle_cruiser
+				size > 96
+			}
+		}
+		abort_when_not_enabled = yes
+
+		ai_strategy = {
+			type = role_ratio
+			id = naval_capital_bc
+			value = -1000
+		}
+	}
+
+	stall_naval_carrier_production = {
+		enable = {
+			has_navy_size = {
+				unit = carrier
+				size > 8 # Was 12
+			}
+		}
+		abort_when_not_enabled = yes
+
+		ai_strategy = {
+			type = role_ratio
+			id = naval_carrier
+			value = -32
+		}
+		ai_strategy = {
+			type = role_ratio
+			id = naval_carrier_light
+			value = -16
+		}
+	}
+
+	stop_naval_carrier_production = {
+		enable = {
+			has_navy_size = {
+				unit = carrier
+				size > 14 # Was 18
+			}
+		}
+		abort_when_not_enabled = yes
+
+		ai_strategy = {
+			type = role_ratio
+			id = naval_carrier
+			value = -1000
+		}
+		ai_strategy = {
+			type = role_ratio
+			id = naval_carrier_light
+			value = -500
+		}
+	}
+
+	stall_naval_cruiser_heavy_production = {
+		enable = {
+			has_navy_size = {
+				unit = heavy_cruiser
+				size > 64
+			}
+		}
+		abort_when_not_enabled = yes
+
+		ai_strategy = {
+			type = role_ratio
+			id = naval_cruiser_heavy
+			value = -16
+		}
+	}
