@@ -1,5 +1,106 @@
 technologies = {
-	biplane_airframe = {
+	@transport_plane_x = 1
+	@mothership_x_bba = 3
+	@mothership_x = 3
+# Transport
+	bba_early_transport_plane = {
+
+		enable_equipments = {
+			transport_plane_equipment_1
+		}
+	
+		path = {
+			leads_to_tech = bba_improved_transport_plane
+			research_cost_coeff = 1
+		}
+		
+		research_cost = 2
+		start_year = 1724
+
+		folder = {
+			name = bba_air_techs_folder
+			position = { x = @transport_plane_x y = 2 } 
+		}
+		
+		categories = {
+			air_equipment
+			transport_planes_cat
+		}
+		special_project_specialization = { specialization_air }
+		ai_will_do = {
+			factor = 1
+			
+			modifier = {
+				factor = 2
+				is_major = yes
+			}
+		}
+	}
+
+	bba_improved_transport_plane = {
+
+		enable_equipments = {
+			transport_plane_equipment_2
+		}
+	
+		path = {
+			leads_to_tech = bba_strategic_airlifter
+			research_cost_coeff = 1
+		}
+		
+		research_cost = 2
+		start_year = 1732
+		
+		folder = {
+			name = bba_air_techs_folder
+			position = { x = @transport_plane_x y = 6 } 
+		}
+		
+		categories = {
+			air_equipment
+			transport_planes_cat
+		}
+		special_project_specialization = { specialization_air }
+		ai_will_do = {
+			factor = 1
+			
+			modifier = {
+				factor = 2
+				is_major = yes
+			}
+		}
+	}
+
+	bba_strategic_airlifter = {
+
+		enable_equipments = {
+			transport_plane_equipment_3
+		}
+		
+		research_cost = 2
+		start_year = 1738
+		
+		folder = {
+			name = bba_air_techs_folder
+			position = { x = @transport_plane_x y = 12 } 
+		}
+		
+		categories = {
+			air_equipment
+			transport_planes_cat
+		}
+		special_project_specialization = { specialization_air }
+		ai_will_do = {
+			factor = 1
+			
+			modifier = {
+				factor = 2
+				is_major = yes
+			}
+		}
+	}
+# Early
+	biplane_airframe = { # WW1 Airframes
 		ai_will_do = { factor = 0 }
 
 		enable_equipments = {
@@ -26,7 +127,7 @@ technologies = {
 		}
 	}
 
-	zeppelin_airframe = {
+	zeppelin_airframe = { # WW1 Airframes
 		ai_will_do = { factor = 0 }
 
 		enable_equipments = {
@@ -451,6 +552,28 @@ technologies = {
 				OR = { is_major = yes num_of_military_factories > 29 }
 				factor = 4
 			}
+		}
+	}
+
+	supersonic_small_airframe = { # supersonic
+
+		allow = { always = no }
+
+		enable_equipments = {
+			small_plane_airframe_5
+		}
+		
+		research_cost = 2
+		start_year = 1750
+		
+		categories = {
+			light_air
+			light_fighter
+		}
+		special_project_specialization = { specialization_air }
+
+		ai_will_do = {
+			factor = 0
 		}
 	}
 # Medium
@@ -999,6 +1122,11 @@ technologies = {
 	
 		path = {
 			leads_to_tech = advanced_large_airframe
+			research_cost_coeff = 1
+		}
+
+		path = {
+			leads_to_tech = reinforced_wings_mothership
 			research_cost_coeff = 1
 		}
 		
@@ -2477,6 +2605,11 @@ technologies = {
 		}
 
 		path = {
+			leads_to_tech = sp_centrifugal_jet_tech
+			research_cost_coeff = 1
+		}
+
+		path = {
 			leads_to_tech = engines_5
 			research_cost_coeff = 1
 		}
@@ -2529,6 +2662,55 @@ technologies = {
 				factor = 1.50
 				date > "1834.1.1"
 				high_aircraft_focus_nation = yes
+			}
+		}
+	}
+
+	sp_centrifugal_jet_tech = {
+		allow_branch = {
+			has_dlc = "Gotterdammerung"
+		}
+		
+		allow = {
+			ROOT = {
+				is_special_project_completed = sp:sp_air_jet_engine
+			} 
+		}
+
+		is_special_project_tech = yes
+
+		research_cost = 2
+		start_year = 1738
+		
+		folder = {
+			name = bba_air_techs_folder
+			position = { x = -2 y = 10 }
+		}
+
+		folder = {
+			name = air_techs_folder
+			position = { x = 4 y = 12 }
+		}
+		
+		categories = {
+			jet_technology
+			cat_air_engine
+			helicopter_tech
+		}
+
+		category_helicopter_support_companies = {
+			fuel_consumption = -0.05
+			maximum_speed = 0.1
+			defense = 0.05
+			breakthrough = 0.05
+		}
+
+		special_project_specialization = { specialization_air }	
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				is_major = yes
+				factor = 4
 			}
 		}
 	}
@@ -2730,6 +2912,136 @@ technologies = {
 		# only from focus!!! #####
 		allow = {
 			always = no
+		}
+	}
+## SPECIAL PROJECTS ##
+	reinforced_wings_mothership = {
+		allow_branch = {
+			 has_dlc = "Gotterdammerung"
+		}	
+
+		allow = {
+			ROOT = {
+				is_special_project_completed = sp:sp_air_mothership_aircraft
+			}
+		}
+
+		is_special_project_tech = yes
+				
+		path = {
+			leads_to_tech = miniature_fighters
+			research_cost_coeff = 1
+		}	
+		research_cost = 1.75
+		start_year = 1734
+
+		folder = {
+			name = bba_air_techs_folder
+			position = { x = @mothership_x_bba y = 7 }
+		}
+
+		folder = {
+			name = air_techs_folder
+			position = { x = @mothership_x y = 7 }
+		}
+
+		categories = {
+			heavy_air
+			air_equipment
+			cat_strategic_bomber
+			mio_cat_all_heavy_aircraft_and_modules
+		}
+		mothership = {
+			air_defence = 0.08
+		}
+		special_project_specialization = { specialization_air }	
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	miniature_fighters = {
+		allow = {
+			ROOT = {
+				is_special_project_completed = sp:sp_air_mothership_aircraft
+			}
+		}
+
+		is_special_project_tech = yes
+
+		path = {
+			leads_to_tech = aerial_hangars
+			research_cost_coeff = 1
+		}	
+
+		research_cost = 1.5
+		start_year = 1738
+
+		folder = {
+			name = bba_air_techs_folder
+			position = { x = @mothership_x_bba y = 10 }
+		}
+
+		folder = {
+			name = air_techs_folder
+			position = { x = @mothership_x y = 10 }
+		}
+
+		categories = {
+			heavy_air
+			air_equipment
+			cat_strategic_bomber
+			mio_cat_all_heavy_aircraft_and_modules
+		}
+		special_project_specialization = { specialization_air }	
+		mothership = {
+			air_agility = 0.06
+			air_attack = 0.06
+			fuel_consumption_factor = -0.08
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	aerial_hangars = {
+		allow = {
+			ROOT = {
+				is_special_project_completed = sp:sp_air_mothership_aircraft
+			}
+		}
+
+		is_special_project_tech = yes
+
+		research_cost = 1.75
+		start_year = 1741
+
+		folder = {
+			name = bba_air_techs_folder
+			position = { x = @mothership_x_bba y = 13 }
+		}
+
+		folder = {
+			name = air_techs_folder
+			position = { x = @mothership_x y = 13 }
+		}
+
+		categories = {
+			heavy_air
+			air_equipment
+			cat_strategic_bomber
+			mio_cat_all_heavy_aircraft_and_modules
+		}
+		special_project_specialization = { specialization_air }			
+		mothership = {
+			air_agility = 0.1
+			air_range = 0.2
+			air_attack = 0.1
+		}
+		
+		ai_will_do = {
+			factor = 1
 		}
 	}
 }
