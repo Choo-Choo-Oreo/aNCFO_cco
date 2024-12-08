@@ -1,0 +1,716 @@
+﻿add_namespace = HHE # Normal/Deed
+		country_event = { # Assassination of Deed
+			id = HHE.0
+			title = HHE.0.t
+			desc = HHE.0.d
+			picture = GFX_report_event_usa_election_generic
+			is_triggered_only = yes
+
+			option = {
+				name = HHE.0.a
+				news_event = news.0
+				add_stability = -0.05
+			}
+		}
+
+		country_event = { # Election Event
+			id = HHE.1
+			title = HHE.1.t
+			desc = HHE.1.d
+			picture = GFX_report_event_usa_election_generic
+			is_triggered_only = yes
+
+			option = { # Tradition
+				name = HHE.1.optA
+				trigger = {
+					has_global_flag = elected_tradition
+				}
+				news_event = news.1
+			}
+			option = { # Influencer
+				name = HHE.1.optB
+				trigger = {
+					has_global_flag = elected_influencer
+				}
+				news_event = news.2
+			}
+			option = { # Authority
+				name = HHE.1.optC
+				trigger = {
+					has_global_flag = elected_authority
+				}
+				news_event = news.3
+			}
+			option = { # Warmonger
+				name = HHE.1.optD
+				trigger = {
+					has_global_flag = elected_warmonger
+				}
+				news_event = news.4
+			}
+		}
+
+		country_event = { # Question Deeds Reforms
+			id = HHE.2
+			title = HHE.2.t
+			desc = HHE.2.d
+			picture = GFX_report_event_usa_election_generic
+			is_triggered_only = yes
+
+			option = { # Halt Reforms
+				name = HHE.4.optA
+				ai_chance = {
+					factor = 1
+					modifier = {
+						factor = 10
+						is_historical_focus_on = yes
+					}
+					modifier = {
+						add = 10
+						factor = 10
+						has_game_rule = {
+							rule = HHE_ai_behavior
+							option = WARMONGER
+						}
+					}
+				}
+				complete_national_focus = HHE_halt_reforms
+			}
+			option = { # Finish Reforms
+				name = HHE.4.optB
+				ai_chance = {
+					factor = 1
+					modifier = {
+						add = 10
+						factor = 10
+						has_game_rule = {
+							rule = HHE_ai_behavior
+							option = INFLUENCER
+						}
+					}
+				}
+				trigger = {
+					custom_trigger_tooltip = {
+						tooltip = historically_locked_tt
+						is_historical_focus_on = no
+					}
+				}
+				complete_national_focus = HHE_finish_reforms
+			}
+		}
+
+		country_event = { # Future Preventions of Assassinations
+			id = HHE.3
+			title = HHE.3.t
+			desc = HHE.3.d
+			picture = GFX_report_event_usa_election_generic
+			is_triggered_only = yes
+
+			option = { # Heavy Prevention
+				name = HHE.4.optA
+				ai_chance = {
+					factor = 1
+					modifier = {
+						factor = 50
+						is_historical_focus_on = yes
+					}
+					modifier = {
+						add = 10
+						factor = 10
+						has_game_rule = {
+							rule = HHE_ai_behavior
+							option = WARMONGER
+						}
+					}
+				}
+				complete_national_focus = HHE_heavy_assassination_prevention
+			}
+			option = { # Light Prevention
+				name = HHE.4.optB
+				ai_chance = {
+					factor = 1
+					modifier = {
+						add = 10
+						factor = 10
+						has_game_rule = {
+							rule = HHE_ai_behavior
+							option = INFLUENCER
+						}
+					}
+				}
+				trigger = {
+					custom_trigger_tooltip = {
+						tooltip = historically_locked_tt
+						is_historical_focus_on = no
+					}
+				}
+				complete_national_focus = HHE_light_assassination_prevention
+			}
+		}
+
+		country_event = { # Find the Culprit
+			id = HHE.4
+			title = HHE.4.t
+			desc = HHE.4.d
+			picture = GFX_report_event_usa_election_generic
+			is_triggered_only = yes
+
+			option = { # Blame the People
+				name = HHE.4.optA
+				ai_chance = {
+					factor = 1
+					modifier = {
+						factor = 50
+						is_historical_focus_on = yes
+					}
+					modifier = {
+						add = 10
+						factor = 10
+						has_game_rule = {
+							rule = HHE_ai_behavior
+							option = WARMONGER
+						}
+					}
+				}
+				complete_national_focus = HHE_blame_the_people
+			}
+			option = { # Blame the Merchants
+				name = HHE.4.optB
+				ai_chance = {
+					factor = 1
+					modifier = {
+						add = 10
+						factor = 10
+						has_game_rule = {
+							rule = HHE_ai_behavior
+							option = AUTHORITY
+						}
+					}
+				}
+				trigger = {
+					custom_trigger_tooltip = {
+						tooltip = historically_locked_tt
+						is_historical_focus_on = no
+					}
+				}
+				complete_national_focus = HHE_blame_merchants
+			}
+			option = { # Blame the Junta
+				name = HHE.4.optC
+				ai_chance = {
+					factor = 1
+					modifier = {
+						add = 10
+						factor = 10
+						has_game_rule = {
+							rule = HHE_ai_behavior
+							option = TRADITION
+						}
+					}
+					modifier = {
+						add = 10
+						factor = 10
+						has_game_rule = {
+							rule = HHE_ai_behavior
+							option = INFLUENCER
+						}
+					}
+				}
+				trigger = {
+					custom_trigger_tooltip = {
+						tooltip = historically_locked_tt
+						is_historical_focus_on = no
+					}
+				}
+				complete_national_focus = HHE_blame_junta
+			}
+		}
+add_namespace = HHE_tradition # Tradition
+add_namespace = HHE_influencer # Influencer
+add_namespace = HHE_authority # Authority
+add_namespace = HHE_warmonger # Warmonger
+		country_event = { # Northern Supply Preparation
+			id = HHE_warmonger.0
+			title = HHE_warmonger.0.t
+			desc = HHE_warmonger.0.d
+			picture = GFX_report_event_usa_election_generic
+			is_triggered_only = yes
+
+			option = {
+				name = HHE_warmonger.0.a
+				add_political_power = -100
+				build_railway = {
+					level = 1 fallback = yes build_only_on_allied = yes
+					path = { 7425 7488 7527 5358 7549 1898 7564 5602 }
+				}
+				build_railway = {
+					level = 1 fallback = yes build_only_on_allied = yes
+					path = { 7641 7682 7636 7617 2223 7595 5358 }
+				}
+				ai_chance = { factor = 10 }
+			}
+			option = {
+				name = HHE_warmonger.0.b
+			}
+		}
+
+		country_event = { # Corridor Supply Preparation
+			id = HHE_warmonger.1
+			title = HHE_warmonger.1.t
+			desc = HHE_warmonger.1.d
+			picture = GFX_report_event_usa_election_generic
+			is_triggered_only = yes
+
+			option = {
+				name = HHE_warmonger.0.a
+				add_political_power = -100
+				build_railway = {
+					level = 1 fallback = yes build_only_on_allied = yes
+					path = { 7970 7903 7823 7748 7738 1899 7602 7563 2944 }
+				}
+				build_railway = {
+					level = 1 fallback = yes build_only_on_allied = yes
+					path = { 7970 7919 6049 }
+				}
+				ai_chance = { factor = 10 }
+			}
+			option = {
+				name = HHE_warmonger.0.b
+			}
+		}
+
+		country_event = { # The takeover of the National-Military
+			id = HHE_warmonger.2
+			title = HHE_warmonger.2.t
+			desc = HHE_warmonger.2.d
+			picture = GFX_report_event_usa_election_generic
+			is_triggered_only = yes
+
+			option = {
+				name = HHE_warmonger.2.a
+				add_stability = -0.05
+				#add_political_power = -100
+			}
+		}
+
+		country_event = { # Unite with the Capital?
+			id = HHE_warmonger.3
+			title = HHE_warmonger.3.t
+			desc = HHE_warmonger.3.d
+			picture = GFX_report_event_hitler_handshake
+			is_triggered_only = yes
+
+			option = {
+				name = HHE_warmonger.3.a
+				ai_chance = { factor = 5 }
+				HHE = { set_autonomy = { target = HTP autonomy_state = autonomy_free } country_event = { id = HHE_warmonger.4 } }
+			}
+
+			option = {
+				name = HHE_warmonger.3.b
+				ai_chance = { factor = 95 }
+				HHE = { country_event = { id = HHE_warmonger.5 } }
+			}
+		}
+
+		country_event = { # Brother rejects the intergration
+			id = HHE_warmonger.4
+			title = HHE_warmonger.4.t
+			desc = HHE_warmonger.4.d
+			picture = GFX_report_event_hitler_handshake
+			is_triggered_only = yes
+			immediate = { set_country_flag = HHE_rejects_intergration }
+			option = {
+				name = HHE_warmonger.4.a
+				set_autonomy = { target = HTP autonomy_state = autonomy_free }
+				complete_national_focus = HHE_warmonger_family_divided
+				hidden_effect = {
+					declare_war_on = {
+						target = HTP
+						type = annex_everything
+					}
+				}
+			}
+		}
+
+		country_event = { # Brother accepts the intergration
+			id = HHE_warmonger.5
+			title = HHE_warmonger.5.t
+			desc = HHE_warmonger.5.d
+			picture = GFX_report_event_hitler_handshake
+			is_triggered_only = yes
+			immediate = { set_country_flag = HHE_accepts_intergration }
+			option = {
+				name = HHE_warmonger.5.a
+				complete_national_focus = HHE_warmonger_family_united
+				hidden_effect = {
+					transfer_navy = { target = HTP }
+					annex_country = { target = HTP transfer_troops = yes }
+					1   = { add_core_of = ROOT }
+					94  = { add_core_of = ROOT }
+					95  = { add_core_of = ROOT }
+					105 = { add_core_of = ROOT }
+					566 = { add_core_of = ROOT }
+				}
+			}
+		}
+
+		country_event = { # Demand Outerlands
+			id = HHE_warmonger.6
+			title = HHE_warmonger.6.t
+			desc = HHE_warmonger.6.d
+			picture = GFX_report_event_polish_tanks_01
+			is_triggered_only = yes
+			immediate = { log = "[GetDateText]: [Root.GetName]: Event HHE_warmonger.6" }
+			option = { # rejects
+				name = HHE_warmonger.6.optA
+				ai_chance = {
+					modifier = {
+						add = 100
+						has_war_with = HHE
+					}
+				}
+				HHE = { country_event = { id = HHE_warmonger.7 } }
+			}
+			option = { # accepts
+				name = HHE_warmonger.6.optB
+				ai_chance = {
+					modifier = {
+						add = 100
+						NOT = { has_war_with = HHE }
+					}
+				}
+				HHE = { country_event = { id = HHE_warmonger.8 } }
+				IF = {
+					LIMIT = { controls_state = 388 }
+					HHE = { transfer_state = 388 }
+				}
+				IF = {
+					LIMIT = { controls_state = 423 }
+					HHE = { transfer_state = 423 }
+				}
+				IF = {
+					LIMIT = { controls_state = 424 }
+					HHE = { transfer_state = 424 }
+				}
+				IF = {
+					LIMIT = { controls_state = 435 }
+					HHE = { transfer_state = 435 }
+				}
+				IF = {
+					LIMIT = { controls_state = 436 }
+					HHE = { transfer_state = 436 }
+				}
+				IF = {
+					LIMIT = { controls_state = 459 }
+					HHE = { transfer_state = 459 }
+				}
+				IF = {
+					LIMIT = { controls_state = 659 }
+					HHE = { transfer_state = 659 }
+				}
+			}
+		}
+
+		country_event = { # Outerlands rejects
+			id = HHE_warmonger.7
+			title = HHE_warmonger.7.t
+			desc = HHE_warmonger.7.d
+			picture = GFX_report_event_polish_tanks_01
+			is_triggered_only = yes
+			immediate = { log = "[GetDateText]: [Root.GetName]: Event HHE_warmonger.7" }
+			option = {
+				name = HHE_warmonger.7.optA
+			}
+		}
+
+		country_event = { # Outerlands accepts
+			id = HHE_warmonger.8
+			title = HHE_warmonger.8.t
+			desc = HHE_warmonger.8.d
+			picture = GFX_report_event_polish_tanks_01
+			is_triggered_only = yes
+			immediate = { log = "[GetDateText]: [Root.GetName]: Event HHE_warmonger.8" }
+			option = {
+				name = HHE_warmonger.8.optA
+			}
+		}
+
+		country_event = { # Homeland Region
+			id = HHE_warmonger.9
+			title = HHE_warmonger.9.t
+			desc = HHE_warmonger.9.d
+			picture = GFX_report_event_polish_tanks_01
+			is_triggered_only = yes
+			immediate = { log = "[GetDateText]: [Root.GetName]: Event HHE_warmonger.9" }
+			option = {
+				name = HHE_warmonger.9.optA
+			}
+		}
+
+		country_event = { # High Importance Region
+			id = HHE_warmonger.10
+			title = HHE_warmonger.10.t
+			desc = HHE_warmonger.10.d
+			picture = GFX_report_event_polish_tanks_01
+			is_triggered_only = yes
+			immediate = { log = "[GetDateText]: [Root.GetName]: Event HHE_warmonger.10" }
+			option = {
+				name = HHE_warmonger.10.optA
+			}
+		}
+
+		country_event = { # Importance Region
+			id = HHE_warmonger.11
+			title = HHE_warmonger.11.t
+			desc = HHE_warmonger.11.d
+			picture = GFX_report_event_polish_tanks_01
+			is_triggered_only = yes
+			immediate = { log = "[GetDateText]: [Root.GetName]: Event HHE_warmonger.11" }
+			option = {
+				name = HHE_warmonger.11.optA
+			}
+		}
+
+		country_event = { # Low Importance Region
+			id = HHE_warmonger.12
+			title = HHE_warmonger.12.t
+			desc = HHE_warmonger.12.d
+			picture = GFX_report_event_polish_tanks_01
+			is_triggered_only = yes
+			immediate = { log = "[GetDateText]: [Root.GetName]: Event HHE_warmonger.12" }
+			option = {
+				name = HHE_warmonger.12.optA
+			}
+		}
+	# Civil-War
+		country_event = { # DOC REP
+			id = HHE_warmonger.96
+			title = HHE_warmonger.96.t
+			desc = HHE_warmonger.96.d
+			picture = GFX_report_event_usa_election_generic
+			is_triggered_only = yes
+
+			option = {
+				name = HHE_warmonger.96.a
+				if = {
+					limit = { country_exists = HRF NOT = { original_tag = HRF } }
+					ROOT = { declare_war_on = { target = HRF type = civil_war } }
+				}
+			}
+		}
+
+		country_event = { # SFG SRA
+			id = HHE_warmonger.97
+			title = HHE_warmonger.97.t
+			desc = HHE_warmonger.97.d
+			picture = GFX_report_event_usa_election_generic
+			is_triggered_only = yes
+
+			option = {
+				name = HHE_warmonger.97.a
+				if = {
+					limit = { country_exists = HUP NOT = { original_tag = HUP } }
+					ROOT = { declare_war_on = { target = HUP type = civil_war } }
+				}
+			}
+		}
+
+		country_event = { # UFS
+			id = HHE_warmonger.98
+			title = HHE_warmonger.98.t
+			desc = HHE_warmonger.98.d
+			picture = GFX_report_event_usa_election_generic
+			is_triggered_only = yes
+
+			option = {
+				name = HHE_warmonger.98.a
+				if = {
+					limit = { country_exists = HWA NOT = { original_tag = HWA } }
+					ROOT = { declare_war_on = { target = HWA type = civil_war } }
+				}
+			}
+		}
+
+		country_event = { # Civil Starts
+			id = HHE_warmonger.99
+			title = HHE_warmonger.99.t
+			desc = HHE_warmonger.99.d
+			picture = GFX_report_event_usa_election_generic
+			is_triggered_only = yes
+			immediate = { set_global_flag = HHE_warmonger_civil_war_final } # This one is after "HHE_warmonger_civil_war_first"
+			option = {
+				name = HHE_warmonger.99.a
+				add_stability = 0.05
+				hidden_effect = {
+				}
+			}
+		}
+
+		country_event = { # Fire River
+			id = HHE_warmonger.100
+			title = HHE_warmonger.100.t
+			desc = HHE_warmonger.100.d
+			picture = GFX_report_event_usa_election_generic
+			is_triggered_only = yes
+
+			option = { # Stay as is, the first option is the default so this should prevent afk switch
+				name = HHE_warmonger.100.a
+				hidden_effect = {
+				}
+			}
+			option = {
+				name = HHE_warmonger.100.b
+				HFR = { change_tag_from = ROOT }
+				ai_chance = { factor = 0 }
+				hidden_effect = {
+				}
+			}
+		}
+
+		country_event = { # Freedom Front
+			id = HHE_warmonger.101
+			title = HHE_warmonger.101.t
+			desc = HHE_warmonger.101.d
+			picture = GFX_report_event_usa_election_generic
+			is_triggered_only = yes
+
+			option = { # Stay as is, the first option is the default so this should prevent afk switch
+				name = HHE_warmonger.101.a
+				hidden_effect = {
+				}
+			}
+			option = {
+				name = HHE_warmonger.101.b
+				HFF = { change_tag_from = ROOT }
+				ai_chance = { factor = 0 }
+				hidden_effect = {
+				}
+			}
+		}
+
+		country_event = { # Peoples Government
+			id = HHE_warmonger.102
+			title = HHE_warmonger.102.t
+			desc = HHE_warmonger.102.d
+			picture = GFX_report_event_usa_election_generic
+			is_triggered_only = yes
+
+			option = { # Stay as is, the first option is the default so this should prevent afk switch
+				name = HHE_warmonger.102.a
+				hidden_effect = {
+				}
+			}
+			option = {
+				name = HHE_warmonger.102.b
+				HPG = { change_tag_from = ROOT }
+				ai_chance = { factor = 0 }
+				hidden_effect = {
+				}
+			}
+		}
+add_namespace = HHI_SUBJECTS
+	# Normal
+		country_event = {
+			id = HHI_SUBJECTS.100
+			title = HHI_SUBJECTS.100.t
+			desc = HHI_SUBJECTS.100.d
+			picture = GFX_report_event_usa_election_generic
+			is_triggered_only = yes
+
+			option = {
+				name = HHI_SUBJECTS.100.a
+				custom_effect_tooltip = HHI_SUBJECTS_this_is_of_the_most_concern
+				ai_chance = {
+					factor = 50
+				}
+			}
+			option = {
+				name = HHI_SUBJECTS.100.b
+				custom_effect_tooltip = HHI_SUBJECTS_this_is_of_the_most_concern
+				add_political_power = -50
+				trigger = {
+					NOT = {
+						OR = {
+							has_government = unitism
+							has_country_flag = harmonainus_religion
+						}
+					}
+				}
+				ai_chance = {
+					factor = 50
+					modifier = {
+						factor = 100
+						OR = {
+							has_government = pluralism
+							has_government = semidemocracy
+						}
+					}
+				}
+				KGK = { country_event = { id = HHI_SUBJECTS.101 } }
+				MJU = { country_event = { id = HHI_SUBJECTS.101 } }
+				SFG = { country_event = { id = HHI_SUBJECTS.101 } }
+				SRA = { country_event = { id = HHI_SUBJECTS.101 } }
+				UFS = { country_event = { id = HHI_SUBJECTS.101 } }
+				MRC = { country_event = { id = HHI_SUBJECTS.102 } }
+			}
+		}
+
+		country_event = {
+			id = HHI_SUBJECTS.101
+			title = HHI_SUBJECTS.101.t
+			desc = HHI_SUBJECTS.101.d
+			picture = GFX_report_event_usa_election_generic
+			is_triggered_only = yes
+
+			option = {
+				name = HHI_SUBJECTS.101.a
+				custom_effect_tooltip = HHI_SUBJECTS_this_is_of_the_most_concern
+			}
+		}
+
+		country_event = {
+			id = HHI_SUBJECTS.102
+			title = HHI_SUBJECTS.102.t
+			desc = HHI_SUBJECTS.102.d
+			picture = GFX_report_event_usa_election_generic
+			is_triggered_only = yes
+
+			option = {
+				name = HHI_SUBJECTS.102.a
+				custom_effect_tooltip = HHI_SUBJECTS_this_is_of_the_most_concern
+				trigger = {
+					OR = {
+						has_government = unitism
+						has_country_flag = harmonainus_religion
+					}
+				}
+				ai_chance = {
+					factor = 50
+				}
+			}
+			option = {
+				name = HHI_SUBJECTS.102.b
+				custom_effect_tooltip = HHI_SUBJECTS_this_is_of_the_most_concern
+				add_political_power = -50
+				trigger = {
+					NOT = {
+						OR = {
+							has_government = unitism
+							has_country_flag = harmonainus_religion
+						}
+					}
+				}
+				ai_chance = {
+					factor = 50
+					modifier = {
+						factor = 100
+						has_government = pluralism
+					}
+				}
+				news_event = news.100
+				hidden_effect = {
+					set_global_flag = news_genocide_HHI_SUBJECTS
+				}
+			}
+		}

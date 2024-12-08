@@ -197,3 +197,110 @@ MRC_defend_against_HHE = {
 	ai_strategy = { type = prepare_for_war id = "HSP" value = 200 }
 	ai_strategy = { type = prepare_for_war id = "HER" value = 200 }
 }
+
+MRC_civil_war_support_for_original = {
+	enable = {
+		NOT = { original_tag = MRC }
+		MRC = { NOT = { surrender_progress > 0.50 } OR = {
+			has_government = pluralism
+			has_government = semidemocracy
+			has_government = authoritarianism
+		} }
+		OR = {
+			has_government = pluralism
+			has_government = semidemocracy
+			has_government = authoritarianism
+		}
+	}
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = befriend
+		id = "MRC"
+		value = 1000
+	}
+	ai_strategy = {
+		type = support
+		id = "MRC"
+		value = 1000
+	}
+	ai_strategy = {
+		type = send_volunteers_desire
+		id = "MRC"
+		value = 1000
+	}
+	ai_strategy = {
+		type = protect
+		id = "MRC"
+		value = 10
+	}
+}
+
+MRC_civil_war_support_for_theocratism = {
+	enable = {
+		NOT = { original_tag = MRC }
+		MRC = { NOT = { surrender_progress > 0.50 } OR = {
+			has_country_flag = harmonainus_religion
+			has_country_flag = harmonainus_reformed_religion
+		} }
+		AND = {
+			has_government = theocratism
+			OR = {
+				has_country_flag = harmonainus_religion
+				has_country_flag = harmonainus_reformed_religion
+			}
+		}
+	}
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = befriend
+		id = "MRC"
+		value = 1000
+	}
+	ai_strategy = {
+		type = support
+		id = "MRC"
+		value = 1000
+	}
+	ai_strategy = {
+		type = send_volunteers_desire
+		id = "MRC"
+		value = 1000
+	}
+	ai_strategy = {
+		type = protect
+		id = "MRC"
+		value = 10
+	}
+}
+
+MRC_civil_war_support_for_unitism = {
+	enable = {
+		NOT = { original_tag = MRC }
+		MRC = { NOT = { surrender_progress > 0.50 } has_government = unitis }
+		has_government = unitism
+	}
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = befriend
+		id = "MRC"
+		value = 1000
+	}
+	ai_strategy = {
+		type = support
+		id = "MRC"
+		value = 1000
+	}
+	ai_strategy = {
+		type = send_volunteers_desire
+		id = "MRC"
+		value = 1000
+	}
+	ai_strategy = {
+		type = protect
+		id = "MRC"
+		value = 10
+	}
+}

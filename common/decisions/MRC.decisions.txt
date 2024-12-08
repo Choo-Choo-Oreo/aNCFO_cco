@@ -1,0 +1,273 @@
+political_actions = {
+	#MRC_switch_to_MER = {
+	#	priority = 100
+	#	allowed = { AND = { is_debug = yes is_ai = no } }
+	#	visible = { is_debug = yes }
+	#	complete_effect = {
+	#		MER = { change_tag_from = ROOT }
+	#	}
+	#}
+}
+# BoP
+	bop_MRC_political_balance = {
+		DEBUG_deactivate_bop_MRC_political_balance = {
+			priority = 91
+			visible = {
+				is_debug = yes
+			}
+			complete_effect = {
+				remove_power_balance = { id = power_balance_MRC_political_balance }
+			}
+		}
+		DEBUG_left_test_bop_MRC_political_balance_20 = {
+			visible = {
+				is_debug = yes
+			}
+			complete_effect = {
+				add_power_balance_value = { id = power_balance_MRC_political_balance value = -0.20 }
+			}
+		}
+		DEBUG_left_test_bop_MRC_political_balance_10 = {
+			visible = {
+				is_debug = yes
+			}
+			complete_effect = {
+				add_power_balance_value = { id = power_balance_MRC_political_balance value = -0.10 }
+			}
+		}
+		DEBUG_right_test_bop_MRC_political_balance_10 = {
+			visible = {
+				is_debug = yes
+			}
+			complete_effect = {
+				add_power_balance_value = { id = power_balance_MRC_political_balance value = 0.10 }
+			}
+		}
+		DEBUG_right_test_bop_MRC_political_balance_20 = {
+			visible = {
+				is_debug = yes
+			}
+			complete_effect = {
+				add_power_balance_value = { id = power_balance_MRC_political_balance value = 0.20 }
+			}
+		}
+	}
+# Territory Acquisition
+	negotiate_grand_canal = {
+		MRC_negotiate_with_UFS_for_canal_small = {
+			icon = generic_form_nation
+			allowed = {
+				original_tag = MRC
+				#97 = { is_controlled_by = UFS }
+				#has_completed_focus = MRC_canal_trade_deal
+				#OR = {
+				#	has_country_flag = MRC_negotiate_grand_canal
+				#}
+			}
+			available = {
+				original_tag = MRC
+				97 = { is_controlled_by = UFS }
+				#has_completed_focus = MRC_canal_trade_deal
+				#OR = {
+					has_country_flag = MRC_negotiate_grand_canal
+				#}
+				NOT = {
+					has_global_flag = grand_canal_purchase_processing
+				}
+			}
+
+			fire_only_once = no
+			cost = 50
+
+			visible = {
+				original_tag = MRC
+				97 = { is_controlled_by = UFS }
+				#has_completed_focus = MRC_canal_trade_deal
+				#OR = {
+					has_country_flag = MRC_negotiate_grand_canal
+				#}
+			}
+			complete_effect = {
+				set_global_flag = grand_canal_purchase_processing
+				UFS = {
+					country_event = { id = grand_canal_purchase.1 days = 0}
+				}
+			}
+			ai_will_do = {
+				base = 5
+				modifier = {
+					factor = 5
+					is_historical_focus_on = yes
+				}
+			}
+		}
+		MRC_negotiate_with_UFS_for_canal_medium = {
+			icon = generic_form_nation
+			allowed = {
+				original_tag = MRC
+				#97 = { is_controlled_by = UFS }
+				#has_completed_focus = MRC_canal_trade_deal
+				#OR = {
+				#	has_country_flag = MRC_negotiate_grand_canal
+				#}
+			}
+			available = {
+				original_tag = MRC
+				97 = { is_controlled_by = UFS }
+				#has_completed_focus = MRC_canal_trade_deal
+				#OR = {
+					has_country_flag = MRC_negotiate_grand_canal
+				#}
+				NOT = {
+					has_global_flag = grand_canal_purchase_processing
+				}
+			}
+
+			fire_only_once = no
+			cost = 50
+
+			visible = {
+				original_tag = MRC
+				97 = { is_controlled_by = UFS }
+				#has_completed_focus = MRC_canal_trade_deal
+				#OR = {
+					has_country_flag = MRC_negotiate_grand_canal
+				#}
+			}
+			complete_effect = {
+				set_global_flag = grand_canal_purchase_processing
+				UFS = {
+					country_event = { id = grand_canal_purchase.4 days = 0}
+				}
+			}
+			ai_will_do = {
+				base = 20
+				modifier = {
+					factor = 20
+					is_historical_focus_on = yes
+				}
+			}
+		}
+		MRC_negotiate_with_UFS_for_canal_large = {
+			icon = generic_form_nation
+			allowed = {
+				original_tag = MRC
+				#97 = { is_controlled_by = UFS }
+				#has_completed_focus = MRC_canal_trade_deal
+				#OR = {
+				#	has_country_flag = MRC_negotiate_grand_canal
+				#}
+			}
+			available = {
+				original_tag = MRC
+				97 = { is_controlled_by = UFS }
+				#has_completed_focus = MRC_canal_trade_deal
+				#OR = {
+					has_country_flag = MRC_negotiate_grand_canal
+				#}
+				NOT = {
+					has_global_flag = grand_canal_purchase_processing
+				}
+			}
+
+			fire_only_once = no
+			cost = 50
+
+			visible = {
+				original_tag = MRC
+				97 = { is_controlled_by = UFS }
+				#has_completed_focus = MRC_canal_trade_deal
+				#OR = {
+					has_country_flag = MRC_negotiate_grand_canal
+				#}
+			}
+			complete_effect = {
+				set_global_flag = grand_canal_purchase_processing
+				UFS = {
+					country_event = { id = grand_canal_purchase.7 days = 0}
+				}
+			}
+			ai_will_do = {
+				base = 80
+				modifier = {
+					factor = 80
+					is_historical_focus_on = yes
+				}
+			}
+		}
+	}
+# Civilwar Victors Actions
+	archard_vlad_VAT_decisions = {
+		MRC_volunteer_KGK_army = {
+			icon = generic_prepare_civil_war
+
+			available = {
+				MRC = { NOT = { has_war_with = HHE } }
+				KGK = { has_war_with = HHE }
+			}
+
+			visible = { country_exists = KGK }
+
+			fire_only_once = yes
+
+			complete_effect = { KGK = { load_oob = "MRC_volunteer_KGK_army" add_manpower = 90600 } }
+			ai_will_do = {
+				base = 100
+				modifier = { has_war = no factor = 100 }
+			}
+		}
+		MRC_volunteer_REP_army = {
+			icon = generic_prepare_civil_war
+
+			available = {
+				MRC = { NOT = { has_war_with = HHE } }
+				REP = { has_war_with = HHE }
+			}
+
+			visible = { country_exists = REP }
+
+			fire_only_once = yes
+
+			complete_effect = { REP = { load_oob = "MRC_volunteer_REP_army" add_manpower = 90600 } }
+			ai_will_do = {
+				base = 100
+				modifier = { has_war = no factor = 100 }
+			}
+		}
+		MRC_volunteer_DOC_army = {
+			icon = generic_prepare_civil_war
+
+			available = {
+				MRC = { NOT = { has_war_with = HHE } }
+				DOC = { has_war_with = HHE }
+			}
+
+			visible = { country_exists = DOC }
+
+			fire_only_once = yes
+
+			complete_effect = { DOC = { load_oob = "MRC_volunteer_DOC_army" add_manpower = 90600 }}
+			ai_will_do = {
+				base = 100
+				modifier = { has_war = no factor = 100 }
+			}
+		}
+		MRC_volunteer_SMK_army = {
+			icon = generic_prepare_civil_war
+
+			available = {
+				MRC = { NOT = { has_war_with = HHE } }
+				SMK = { has_war_with = HHE }
+			}
+
+			visible = { country_exists = SMK }
+
+			fire_only_once = yes
+
+			complete_effect = { SMK = { load_oob = "MRC_volunteer_SMK_army" add_manpower = 90600 }}
+			ai_will_do = {
+				base = 100
+				modifier = { has_war = no factor = 100 }
+			}
+		}
+	}

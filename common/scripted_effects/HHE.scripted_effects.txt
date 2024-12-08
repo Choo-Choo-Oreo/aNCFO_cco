@@ -1,0 +1,991 @@
+# Shared
+	HHE_political_choas_down = { # Important to put LOWEST first
+		custom_effect_tooltip = HHE_political_choas_down_tt
+		if = {
+			limit = { has_idea = HHE_choas0 }
+			remove_ideas = HHE_choas0
+			add_political_power = 35
+		}
+		if = {
+			limit = { has_idea = HHE_choas1 }
+			swap_ideas = {
+				remove_idea = HHE_choas1
+				add_idea = HHE_choas0
+			}
+			add_political_power = 35
+		}
+		if = {
+			limit = { has_idea = HHE_choas2 }
+			swap_ideas = {
+				remove_idea = HHE_choas2
+				add_idea = HHE_choas1
+			}
+			add_political_power = 35
+		}
+		if = {
+			limit = { has_idea = HHE_choas3 }
+			swap_ideas = {
+				remove_idea = HHE_choas3
+				add_idea = HHE_choas2
+			}
+			add_political_power = 35
+		}
+		if = {
+			limit = { has_idea = HHE_choas4 }
+			swap_ideas = {
+				remove_idea = HHE_choas4
+				add_idea = HHE_choas3
+			}
+			add_political_power = 35
+		}
+	}
+
+	HHE_bureaucracy_improvement = { # Important to put LOWEST first
+		custom_effect_tooltip = HHE_bureaucracy_improvement_tt
+		if = {
+			limit = { has_idea = mediocre_bureaucracy }
+			remove_ideas = mediocre_bureaucracy
+		}
+		if = {
+			limit = { has_idea = traditional_bureaucracy }
+			swap_ideas = {
+				remove_idea = traditional_bureaucracy
+				add_idea = mediocre_bureaucracy
+			}
+		}
+	}
+
+	HHE_universities_up = { # Important to put HIGHEST first
+		custom_effect_tooltip = HHE_universities_up_tt
+		if = {
+			limit = {
+				not = {
+					has_idea = HHE_universities_3
+					has_idea = HHE_universities_2
+					has_idea = HHE_universities_1
+					has_idea = HHE_universities_0
+				}
+			}
+			add_ideas = HHE_universities_3
+		}
+		else_if = {
+			limit = { has_idea = HHE_universities_3 }
+			swap_ideas = {
+				remove_idea = HHE_universities_3
+				add_idea = HHE_universities_2
+			}
+		}
+		else_if = {
+			limit = { has_idea = HHE_universities_2 }
+			swap_ideas = {
+				remove_idea = HHE_universities_2
+				add_idea = HHE_universities_1
+			}
+		}
+		else_if = {
+			limit = { has_idea = HHE_universities_1 }
+			swap_ideas = {
+				remove_idea = HHE_universities_1
+				add_idea = HHE_universities_0
+			}
+		}
+	}
+# DEED
+	HHE_deed_reform_starter_up = { # Important to put HIGHEST first
+		if = {
+			limit = {
+				not = {
+					has_idea = HHE_first_deed_reform
+					has_idea = HHE_second_deed_reform
+					has_idea = HHE_third_deed_reform
+				}
+			}
+			add_ideas = HHE_first_deed_reform
+		}
+		else_if = {
+			limit = { has_idea = HHE_first_deed_reform }
+			swap_ideas = {
+				remove_idea = HHE_first_deed_reform
+				add_idea = HHE_second_deed_reform
+			}
+		}
+		else_if = {
+			limit = { has_idea = HHE_second_deed_reform }
+			swap_ideas = {
+				remove_idea = HHE_second_deed_reform
+				add_idea = HHE_third_deed_reform
+			}
+		}
+	}
+
+	HHE_deeds_assassination = {
+		hidden_effect = {
+			set_global_flag = death_of_deed
+			mark_focus_tree_layout_dirty = yes
+			#load_focus_tree = hhe_election_focus
+			add_stability = -0.1
+			add_ideas = HHE_choas4
+			ROOT = {
+				kill_country_leader = yes
+				HHE_harmonainus_senate = {
+					add_country_leader_role = {
+						promote_leader = yes
+						country_leader = {
+							ideology = sub_harmonainism
+							traits = { harmonainus_senate }
+						}
+					}
+				}
+				update_all_dogmata_on_focus_complete = yes
+			}
+			news_event = HHE.0
+		}
+	}
+
+	HHE_deeds_assassination_row2 = {
+		if = {
+			limit = {
+				or = {
+					custom_trigger_tooltip = { tooltip = historically_locked_tt is_historical_focus_on = no }
+					has_game_rule = { rule = rule_developer_restrictions option = RULE_DEV_RESTRICTIONS_OFF }
+					not = {
+						has_country_flag = {
+							flag = the_divinipuer_1
+						}
+					}
+					not = {
+						has_country_flag = {
+							flag = the_higher_priest_1
+						}
+					}
+					not = {
+						has_country_flag = {
+							flag = the_nobility_1
+						}
+					}
+					not = {
+						has_country_flag = {
+							flag = the_people_1
+						}
+					}
+				}
+			}
+			HHE_deeds_assassination = yes
+		}
+	}
+
+	HHE_deeds_assassination_row3 = {
+		if = {
+			limit = {
+				or = {
+					custom_trigger_tooltip = { tooltip = historically_locked_tt is_historical_focus_on = no }
+					has_game_rule = { rule = rule_developer_restrictions option = RULE_DEV_RESTRICTIONS_OFF }
+					not = {
+						has_country_flag = {
+							flag = the_divinipuer_2
+						}
+					}
+					not = {
+						has_country_flag = {
+							flag = the_higher_priest_2
+						}
+					}
+					not = {
+						has_country_flag = {
+							flag = the_nobility_2
+						}
+					}
+					not = {
+						has_country_flag = {
+							flag = the_people_2
+						}
+					}
+				}
+			}
+			HHE_deeds_assassination = yes
+		}
+	}
+# Election Effects
+	HHE_deed_reform_removal = { # Important to put HIGHEST first
+		if = {
+			limit = {
+				has_idea = HHE_first_deed_reform
+			}
+			remove_ideas = HHE_first_deed_reform
+		}
+		else_if = {
+			limit = {
+				has_idea = HHE_second_deed_reform
+			}
+			remove_ideas = HHE_second_deed_reform
+		}
+		else_if = {
+			limit = {
+				has_idea = HHE_third_deed_reform
+			}
+			remove_ideas = HHE_third_deed_reform
+		}
+	}
+
+	elected_tradition_effect = {
+		set_global_flag = elected_tradition
+		hidden_effect = {
+			load_focus_tree = hhe_tradition_focus
+			ROOT = {
+				HHE_gabriel_strongheart = {
+					add_country_leader_role = {
+						promote_leader = yes
+						country_leader = {
+							ideology = sub_harmonainism
+							traits = { trait_species_human silent_workhorse }
+						}
+					}
+				}
+				update_all_dogmata_on_focus_complete = yes
+			}
+			HLF = {
+				retire_character = HLF_gabriel_strongheart
+				update_all_dogmata_on_focus_complete = yes
+			}
+		}
+	}
+
+	elected_influencer_effect = {
+		set_global_flag = elected_influencer
+		hidden_effect = {
+			load_focus_tree = hhe_influencer_focus
+			ROOT = {
+				HHE_isabella_delfina = {
+					add_country_leader_role = {
+						promote_leader = yes
+						country_leader = {
+							ideology = sub_reformed_harmonainism
+							traits = { trait_species_human political_dancer pl_semidemocracy_advisor }
+						}
+					}
+				}
+				update_all_dogmata_on_focus_complete = yes
+			}
+			HST = {
+				retire_character = HST_isabella_delfina
+				update_all_dogmata_on_focus_complete = yes
+			}
+		}
+	}
+
+	elected_authority_effect = {
+		set_global_flag = elected_authority
+		hidden_effect = {
+			load_focus_tree = hhe_authority_focus
+			ROOT = {
+				HHE_gaius_divitiis = {
+					add_country_leader_role = {
+						promote_leader = yes
+						country_leader = {
+							ideology = sub_harmonainism
+							traits = { trait_species_human prince_of_terror railway_noble }
+						}
+					}
+				}
+				update_all_dogmata_on_focus_complete = yes
+			}
+			HNO = {
+				retire_character = HNO_gaius_divitiis
+				update_all_dogmata_on_focus_complete = yes
+			}
+		}
+	}
+
+	elected_warmonger_effect = {
+		set_global_flag = elected_warmonger
+		hidden_effect = {
+			add_ideas = initial_takeover
+			load_focus_tree = hhe_warmonger_focus
+			ROOT = {
+				HHE_archard_vlad = {
+					add_country_leader_role = {
+						promote_leader = yes
+						country_leader = {
+							ideology = sub_radical_harmonainism
+							traits = { trait_species_human warmonger national_integralist }
+						}
+					}
+					add_country_leader_role = {
+						promote_leader = yes
+						country_leader = {
+							ideology = sub_auth_harmonainism
+						}
+					}
+				}
+				add_field_marshal_role={
+					character = HHE_archard_vlad
+					traits={ war_hero media_personality brilliant_strategist organizer }
+					skill=3
+					attack_skill = 2
+					defense_skill = 1
+					planning_skill = 5
+					logistics_skill = 2
+				}
+				update_all_dogmata_on_focus_complete = yes
+			}
+			HTP = {
+				retire_character = HTP_archard_vlad
+				HTP_coccineum_vlad = {
+					add_country_leader_role = {
+						promote_leader = yes
+						country_leader = {
+							ideology = sub_radical_harmonainism
+							traits = { trait_species_human warmonger retired_officer }
+						}
+					}
+					add_country_leader_role = {
+						promote_leader = yes
+						country_leader = {
+							ideology = sub_auth_harmonainism
+						}
+					}
+				}
+				update_all_dogmata_on_focus_complete = yes
+			}
+		}
+	}
+# Tradition
+# Influencer
+# Authority
+# Warmonger
+	HHE_mobilize_nobility_industry = { # Important to put LOWEST first
+		custom_effect_tooltip = HHE_mobilize_nobility_industry_tt
+		if = {
+			limit = { has_idea = HHE_mobilize_nobility_industry_0 }
+			swap_ideas = {
+				remove_idea = HHE_mobilize_nobility_industry_0
+				add_idea = HHE_individual_industry
+			}
+		}
+		if = {
+			limit = { has_idea = HHE_mobilize_nobility_industry_1 }
+			swap_ideas = {
+				remove_idea = HHE_mobilize_nobility_industry_1
+				add_idea = HHE_mobilize_nobility_industry_0
+			}
+		}
+		if = {
+			limit = { has_idea = HHE_mobilize_nobility_industry_2 }
+			swap_ideas = {
+				remove_idea = HHE_mobilize_nobility_industry_2
+				add_idea = HHE_mobilize_nobility_industry_1
+			}
+		}
+		if = {
+			limit = { has_idea = nobility_held_industry }
+			swap_ideas = {
+				remove_idea = nobility_held_industry
+				add_idea = HHE_mobilize_nobility_industry_2
+			}
+		}
+	}
+
+	#HHE_interservice_rivalry_towards_army = {
+	#	if = {
+	#		limit = {  has_idea = JAP_interservice_rivalry_army_strengthened }
+	#		swap_ideas = {
+	#			remove_idea = JAP_interservice_rivalry_army_strengthened
+	#			add_idea = JAP_interservice_rivalry_army_dominant
+	#		}
+	#	}
+	#	if = {
+	#		limit = { has_idea = JAP_interservice_rivalry_balanced }
+	#		swap_ideas = {
+	#			remove_idea = JAP_interservice_rivalry_balanced
+	#			add_idea = JAP_interservice_rivalry_army_strengthened
+	#		}
+	#	}
+	#	if = {
+	#		limit = { has_idea = JAP_interservice_rivalry_navy_strengthened }
+	#		swap_ideas = {
+	#			remove_idea = JAP_interservice_rivalry_navy_strengthened
+	#			add_idea = JAP_interservice_rivalry_balanced
+	#		}
+	#	}
+	#	if = {
+	#		limit = { has_idea = JAP_interservice_rivalry_navy_dominant }
+	#		swap_ideas = {
+	#			remove_idea = JAP_interservice_rivalry_navy_dominant
+	#			add_idea = JAP_interservice_rivalry_navy_strengthened
+	#		}
+	#	}
+	#}
+	#HHE_interservice_rivalry_towards_navy = {
+	#	if = {
+	#		limit = { has_idea = JAP_interservice_rivalry_navy_strengthened }
+	#		swap_ideas = {
+	#			remove_idea = JAP_interservice_rivalry_navy_strengthened
+	#			add_idea = JAP_interservice_rivalry_navy_dominant
+	#		}
+	#	}	
+	#	if = {
+	#		limit = { has_idea = JAP_interservice_rivalry_balanced }
+	#		swap_ideas = {
+	#			remove_idea = JAP_interservice_rivalry_balanced
+	#			add_idea = JAP_interservice_rivalry_navy_strengthened
+	#		}
+	#	}
+	#	if = {
+	#		limit = { has_idea = JAP_interservice_rivalry_army_strengthened }
+	#		swap_ideas = {
+	#			remove_idea = JAP_interservice_rivalry_army_strengthened
+	#			add_idea = JAP_interservice_rivalry_balanced
+	#		}
+	#	}
+	#	if = {
+	#		limit = { has_idea = JAP_interservice_rivalry_army_dominant }
+	#		swap_ideas = {
+	#			remove_idea = JAP_interservice_rivalry_army_dominant
+	#			add_idea = JAP_interservice_rivalry_army_strengthened
+	#		}
+	#	}
+	#}
+
+	HHE_high_spirits_efforts_level_down = {
+		bop_HHE_archard_vlad_medium_decrease_effect = yes
+		if = {
+			limit = { has_idea = HHE_high_spirits_efforts_0 }
+			swap_ideas = {
+				remove_idea = HHE_high_spirits_efforts_0
+				add_idea = HHE_exhausted_efforts
+			}
+			activate_mission = HHE_falling_spirits_in_a_failed_war
+		}
+		else_if = {
+			limit = { has_idea = HHE_high_spirits_efforts_1 }
+			swap_ideas = {
+				remove_idea = HHE_high_spirits_efforts_1
+				add_idea = HHE_high_spirits_efforts_0
+			}
+			activate_mission = HHE_falling_spirits
+		}
+		else_if = {
+			limit = { has_idea = HHE_high_spirits_efforts_2 }
+			swap_ideas = {
+				remove_idea = HHE_high_spirits_efforts_2
+				add_idea = HHE_high_spirits_efforts_1
+			}
+			activate_mission = HHE_falling_spirits
+		}
+		else_if = {
+			limit = { has_idea = HHE_high_spirits_efforts_3 }
+			swap_ideas = {
+				remove_idea = HHE_high_spirits_efforts_3
+				add_idea = HHE_high_spirits_efforts_2
+			}
+			activate_mission = HHE_falling_spirits
+		}
+		else_if = {
+			limit = { has_idea = HHE_high_spirits_efforts_4 }
+			swap_ideas = {
+				remove_idea = HHE_high_spirits_efforts_4
+				add_idea = HHE_high_spirits_efforts_3
+			}
+			activate_mission = HHE_falling_spirits
+		}
+	}
+
+	HHE_high_spirits_efforts_level_up = {
+		bop_HHE_archard_vlad_great_victory_parades = yes
+		if = {
+			limit = { has_idea = HHE_high_spirits_efforts_3 }
+			swap_ideas = {
+				remove_idea = HHE_high_spirits_efforts_3
+				add_idea = HHE_high_spirits_efforts_4
+			}
+		}
+		else_if = {
+			limit = { has_idea = HHE_high_spirits_efforts_2 }
+			swap_ideas = {
+				remove_idea = HHE_high_spirits_efforts_2
+				add_idea = HHE_high_spirits_efforts_3
+			}
+		}
+		else_if = {
+			limit = { has_idea = HHE_high_spirits_efforts_1 }
+			swap_ideas = {
+				remove_idea = HHE_high_spirits_efforts_1
+				add_idea = HHE_high_spirits_efforts_2
+			}
+		}
+		else_if = {
+			limit = { has_idea = HHE_high_spirits_efforts_0 }
+			swap_ideas = {
+				remove_idea = HHE_high_spirits_efforts_0
+				add_idea = HHE_high_spirits_efforts_1
+			}
+		}
+		else_if = {
+			limit = { has_idea = HHE_exhausted_efforts }
+			swap_ideas = {
+				remove_idea = HHE_exhausted_efforts
+				add_idea = HHE_high_spirits_efforts_0
+			}
+		}
+	}
+
+	HHE_high_spirits_efforts_remove = {
+		if = {
+			limit = { has_idea = HHE_high_spirits_efforts_4 }
+			remove_ideas = HHE_high_spirits_efforts_4
+		}
+		if = {
+			limit = { has_idea = HHE_high_spirits_efforts_3 }
+			remove_ideas = HHE_high_spirits_efforts_3
+		}
+		if = {
+			limit = { has_idea = HHE_high_spirits_efforts_2 }
+			remove_ideas = HHE_high_spirits_efforts_2
+		}
+		if = {
+			limit = { has_idea = HHE_high_spirits_efforts_1 }
+			remove_ideas = HHE_high_spirits_efforts_1
+		}
+		if = {
+			limit = { has_idea = HHE_high_spirits_efforts_0 }
+			remove_ideas = HHE_high_spirits_efforts_0
+		}
+		else = {
+			remove_ideas = HHE_exhausted_efforts
+		}
+	}
+
+	HHE_piller_cult_of_personality = {
+		custom_effect_tooltip = HHE_piller_cult_of_personality_tt
+		bop_HHE_archard_vlad_low_increase_effect = yes
+	}
+
+	HHE_piller_economic = { # Important to put LOWEST first
+		custom_effect_tooltip = HHE_piller_economic_tt
+		if = {
+			limit = { has_idea = HHE_piller_economic1 }
+			swap_ideas = {
+				remove_idea = HHE_piller_economic1
+				add_idea = HHE_piller_economic0
+			}
+		}
+		if = {
+			limit = { has_idea = HHE_piller_economic2 }
+			swap_ideas = {
+				remove_idea = HHE_piller_economic2
+				add_idea = HHE_piller_economic1
+			}
+		}
+		if = {
+			limit = { has_idea = HHE_mobilize_nobility_industry_0 }
+			swap_ideas = {
+				remove_idea = HHE_mobilize_nobility_industry_0
+				add_idea = HHE_piller_economic2
+			}
+		}
+	}
+
+	HHE_piller_governance = { # Important to put LOWEST first
+		custom_effect_tooltip = HHE_piller_governance_tt
+		if = {
+			limit = { has_idea = HHE_piller_governance1 }
+			swap_ideas = {
+				remove_idea = HHE_piller_governance1
+				add_idea = HHE_piller_governance0
+			}
+		}
+		if = {
+			limit = { has_idea = HHE_piller_governance2 }
+			swap_ideas = {
+				remove_idea = HHE_piller_governance2
+				add_idea = HHE_piller_governance1
+			}
+		}
+		if = {
+			limit = { NOT = { OR = {
+				has_idea = HHE_piller_governance0
+				has_idea = HHE_piller_governance1
+				has_idea = HHE_piller_governance2
+			} } }
+			add_ideas = HHE_piller_governance2
+		}
+	}
+
+	HHE_piller_foreign_policy = { # Important to put LOWEST first
+		custom_effect_tooltip = HHE_piller_foreign_policy_tt
+		if = {
+			limit = { has_idea = HHE_piller_foreign_policy1 }
+			swap_ideas = {
+				remove_idea = HHE_piller_foreign_policy1
+				add_idea = HHE_piller_foreign_policy0
+			}
+		}
+		if = {
+			limit = { has_idea = HHE_piller_foreign_policy2 }
+			swap_ideas = {
+				remove_idea = HHE_piller_foreign_policy2
+				add_idea = HHE_piller_foreign_policy1
+			}
+		}
+		if = {
+			limit = { NOT = { OR = {
+				has_idea = HHE_piller_foreign_policy0
+				has_idea = HHE_piller_foreign_policy1
+				has_idea = HHE_piller_foreign_policy2
+			} } }
+			add_ideas = HHE_piller_foreign_policy2
+		}
+	}
+
+	HHE_piller_civil_liberties_lla = {
+		custom_effect_tooltip = HHE_piller_civil_liberties_tt
+		if = {
+			limit = { has_idea = HHE_piller_civil_liberties_lla_1 }
+			swap_ideas = {
+				remove_idea = HHE_piller_civil_liberties_lla_1
+				add_idea = HHE_piller_civil_liberties_lla_0
+			}
+		}
+		else_if = {
+			limit = { has_idea = HHE_piller_civil_liberties_lla_2 }
+			swap_ideas = {
+				remove_idea = HHE_piller_civil_liberties_lla_2
+				add_idea = HHE_piller_civil_liberties_lla_1
+			}
+		}
+		else_if = {
+			add_ideas = HHE_piller_civil_liberties_lla_2
+		}
+	}
+
+	HHE_piller_civil_liberties_vanilla = {
+		custom_effect_tooltip = HHE_piller_civil_liberties_tt
+		if = {
+			limit = { has_idea = HHE_piller_civil_liberties_vanilla_1 }
+			swap_ideas = {
+				remove_idea = HHE_piller_civil_liberties_vanilla_1
+				add_idea = HHE_piller_civil_liberties_vanilla_0
+			}
+		}
+		else_if = {
+			limit = { has_idea = HHE_piller_civil_liberties_vanilla_2 }
+			swap_ideas = {
+				remove_idea = HHE_piller_civil_liberties_vanilla_2
+				add_idea = HHE_piller_civil_liberties_vanilla_1
+			}
+		}
+		else_if = {
+			add_ideas = HHE_piller_civil_liberties_vanilla_2
+		}
+	}
+
+	HHE_piller_social = { # Important to put LOWEST first
+		custom_effect_tooltip = HHE_piller_social_tt
+		if = {
+			limit = { has_idea = HHE_piller_social1 }
+			swap_ideas = {
+				remove_idea = HHE_piller_social1
+				add_idea = HHE_piller_social0
+			}
+		}
+		if = {
+			limit = { has_idea = HHE_piller_social2 }
+			swap_ideas = {
+				remove_idea = HHE_piller_social2
+				add_idea = HHE_piller_social1
+			}
+		}
+		if = {
+			limit = { NOT = { OR = {
+				has_idea = HHE_piller_social0
+				has_idea = HHE_piller_social1
+				has_idea = HHE_piller_social2
+			} } }
+			add_ideas = HHE_piller_social2
+		}
+	}
+	# BOP
+		bop_HHE_archard_vlad_great_victory_parades = { # 0.10
+			custom_effect_tooltip = bop_HHE_archard_vlad_great_victory_parades_tt
+			bop_HHE_archard_vlad_low_increase_effect = yes
+		}
+
+		bop_HHE_archard_vlad_absurdly_high_increase_effect = { # 1.00
+			add_power_balance_value = {
+				id = power_balance_HHE_archard_vlad
+				value = 1
+			}
+		}
+
+		bop_HHE_archard_vlad_very_high_increase_effect = { # 0.25
+			add_power_balance_value = {
+				id = power_balance_HHE_archard_vlad
+				value = 0.25
+			}
+		}
+
+		bop_HHE_archard_vlad_high_increase_effect = { # 0.20
+			add_power_balance_value = {
+				id = power_balance_HHE_archard_vlad
+				value = 0.2
+			}
+		}
+
+		bop_HHE_archard_vlad_medium_increase_effect = { # 0.15
+			add_power_balance_value = {
+				id = power_balance_HHE_archard_vlad
+				value = 0.15
+			}
+		}
+
+		bop_HHE_archard_vlad_low_increase_effect = { # 0.10
+			add_power_balance_value = {
+				id = power_balance_HHE_archard_vlad
+				value = 0.1
+			}
+		}
+
+		bop_HHE_archard_vlad_very_low_increase_effect = { # 0.05
+			add_power_balance_value = {
+				id = power_balance_HHE_archard_vlad
+				value = 0.05
+			}
+		}
+
+		bop_HHE_archard_vlad_absurdly_high_decrease_effect = { # -1.00
+			add_power_balance_value = {
+				id = power_balance_HHE_archard_vlad
+				value = -1
+			}
+		}
+
+		bop_HHE_archard_vlad_very_high_decrease_effect = { # -0.25
+			add_power_balance_value = {
+				id = power_balance_HHE_archard_vlad
+				value = -0.25
+			}
+		}
+
+		bop_HHE_archard_vlad_high_decrease_effect = { # -0.20
+			add_power_balance_value = {
+				id = power_balance_HHE_archard_vlad
+				value = -0.2
+			}
+		}
+
+		bop_HHE_archard_vlad_medium_decrease_effect = { # -0.15
+			add_power_balance_value = {
+				id = power_balance_HHE_archard_vlad
+				value = -0.15
+			}
+		}
+
+		bop_HHE_archard_vlad_low_decrease_effect = { # -0.10
+			add_power_balance_value = {
+				id = power_balance_HHE_archard_vlad
+				value = -0.1
+			}
+		}
+
+		bop_HHE_archard_vlad_very_low_decrease_effect = { # -0.05
+			add_power_balance_value = {
+				id = power_balance_HHE_archard_vlad
+				value = -0.05
+			}
+		}
+# Pre Civil War Effects
+	civil_war_warmonger_effect = {
+		set_global_flag = HHE_collapse_of_the_nation # This one is Perma
+		hidden_effect = {
+			mark_focus_tree_layout_dirty = yes
+			news_event = news.6
+			HHE_civil_war_begins = yes
+			8 = { set_demilitarized_zone = yes }
+			79 = { set_demilitarized_zone = yes }
+			81 = { set_demilitarized_zone = yes }
+			93 = { set_demilitarized_zone = yes }
+			99 = { set_demilitarized_zone = yes }
+			114 = { set_demilitarized_zone = yes }
+			118 = { set_demilitarized_zone = yes }
+			122 = { set_demilitarized_zone = yes }
+			123 = { set_demilitarized_zone = yes }
+			124 = { set_demilitarized_zone = yes }
+			140 = { set_demilitarized_zone = yes }
+			141 = { set_demilitarized_zone = yes }
+			146 = { set_demilitarized_zone = yes }
+			148 = { set_demilitarized_zone = yes }
+			149 = { set_demilitarized_zone = yes }
+			150 = { set_demilitarized_zone = yes }
+			151 = { set_demilitarized_zone = yes }
+			154 = { set_demilitarized_zone = yes }
+			156 = { set_demilitarized_zone = yes }
+			157 = { set_demilitarized_zone = yes }
+			161 = { set_demilitarized_zone = yes }
+			162 = { set_demilitarized_zone = yes }
+			283 = { set_demilitarized_zone = yes }
+			284 = { set_demilitarized_zone = yes }
+			285 = { set_demilitarized_zone = yes }
+			286 = { set_demilitarized_zone = yes }
+			287 = { set_demilitarized_zone = yes }
+			401 = { set_demilitarized_zone = yes }
+			HHE = {
+				leave_faction  = yes
+				remove_ideas = prepare_military_takeover
+				add_timed_idea = { idea = failed_military_takeover days = 90 }
+			}
+			# Harmonainus Farmers Region
+			set_autonomy = { target = HBB autonomy_state = autonomy_free }
+			HBB = {
+				leave_faction  = yes
+				drop_cosmetic_tag = yes
+			}
+			# Harmonainus Central Region
+			set_autonomy = { target = HCR autonomy_state = autonomy_free }
+			HCR = {
+				leave_faction  = yes
+				drop_cosmetic_tag = yes
+			}
+			# Harmonainus East Region
+			set_autonomy = { target = HER autonomy_state = autonomy_free }
+			HER = {
+				leave_faction  = yes
+				drop_cosmetic_tag = yes
+			}
+			# Harmonainus Elven Tribes
+			set_autonomy = { target = HET autonomy_state = autonomy_free }
+			HET = {
+				leave_faction  = yes
+				drop_cosmetic_tag = yes
+			}
+			# Harmonainus Laity Federation
+			set_autonomy = { target = HLF autonomy_state = autonomy_free }
+			HLF = {
+				leave_faction  = yes
+				drop_cosmetic_tag = yes
+			}
+			# Harmonainus Nobles Estate Region
+			set_autonomy = { target = HNO autonomy_state = autonomy_free }
+			HNO = {
+				leave_faction  = yes
+				drop_cosmetic_tag = yes
+			}
+			# Harmonainus Pearl Sea Protectorate
+			set_autonomy = { target = HPP autonomy_state = autonomy_free }
+			HPP = {
+				leave_faction  = yes
+				drop_cosmetic_tag = yes
+			}
+			# Harmonainus North River Federation
+			set_autonomy = { target = HRF autonomy_state = autonomy_free }
+			HRF = {
+				leave_faction  = yes
+				drop_cosmetic_tag = yes
+			}
+			# Harmonainus Sea Protectorate
+			set_autonomy = { target = HSP autonomy_state = autonomy_free }
+			HSP = {
+				leave_faction  = yes
+				drop_cosmetic_tag = yes
+			}
+			# Harmonainus Sinus Theocracy
+			set_autonomy = { target = HST autonomy_state = autonomy_free }
+			HST = {
+				leave_faction  = yes
+				drop_cosmetic_tag = yes
+			}
+			# Harmonainus Temerarium Peninsula
+			#set_autonomy = { target = HTP autonomy_state = autonomy_free }
+			HTP = {
+				leave_faction  = yes
+				#drop_cosmetic_tag = yes
+			}
+			# Harmonainus Under Mountain Region
+			set_autonomy = { target = HUM autonomy_state = autonomy_free }
+			HUM = {
+				leave_faction  = yes
+				drop_cosmetic_tag = yes
+			}
+			# Harmonainus Upper Peninsula
+			set_autonomy = { target = HUP autonomy_state = autonomy_free }
+			HUP = {
+				leave_faction  = yes
+				drop_cosmetic_tag = yes
+			}
+			# Harmonainus Western Approach
+			set_autonomy = { target = HWA autonomy_state = autonomy_free }
+			HWA = {
+				leave_faction  = yes
+				drop_cosmetic_tag = yes
+			}
+		}
+	}
+
+	civil_war_warmonger_civil_war_bop = {
+		IF = { LIMIT = {
+			count_triggers = {
+				amount = 3
+				has_country_flag = HHE_collapse_of_the_nation_nobility_failed
+				has_country_flag = HHE_collapse_of_the_nation_nobility_fixed
+				has_country_flag = HHE_collapse_of_the_nation_fire_river_failed
+				has_country_flag = HHE_collapse_of_the_nation_fire_river_fixed
+				has_country_flag = HHE_collapse_of_the_nation_freedom_front_failed
+				has_country_flag = HHE_collapse_of_the_nation_freedom_front_fixed
+				has_country_flag = HHE_collapse_of_the_nation_peoples_government_failed
+				has_country_flag = HHE_collapse_of_the_nation_peoples_government_fixed
+			} }
+			complete_national_focus = HHE_warmonger_victory_parades
+		}
+	}
+# Post Civil War Effects
+	post_civil_war_tradition_effect = {
+		set_global_flag = elected_tradition
+		load_focus_tree = hhe_tradition_focus
+		ROOT = {
+			HHE_gabriel_strongheart = {
+				add_country_leader_role = {
+					promote_leader = yes
+					country_leader = {
+						ideology = sub_harmonainism
+						traits = { silent_workhorse }
+					}
+				}
+			}
+		}
+	}
+
+	post_civil_war_influencer_effect = {
+		set_global_flag = elected_influencer
+		load_focus_tree = hhe_influencer_focus
+		ROOT = {
+			HST_isabella_delfina = {
+				add_country_leader_role = {
+					promote_leader = yes
+					country_leader = {
+						ideology = sub_reformed_harmonainism
+						traits = { political_dancer pl_semidemocracy_advisor }
+					}
+				}
+			}
+		}
+	}
+
+	post_civil_war_authority_effect = {
+		set_global_flag = elected_authority
+		load_focus_tree = hhe_authority_focus
+		ROOT = {
+			HHE_gaius_divitiis = {
+				add_country_leader_role = {
+					promote_leader = yes
+					country_leader = {
+						ideology = sub_harmonainism
+						traits = { prince_of_terror railway_noble }
+					}
+				}
+			}
+		}
+	}
+
+	post_civil_war_peoples_government_effect = {
+		set_global_flag = elected_peoples_government
+		#load_focus_tree = hhe_peoples_government_focus
+	}
