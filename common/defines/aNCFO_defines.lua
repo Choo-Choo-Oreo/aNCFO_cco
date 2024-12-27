@@ -10,6 +10,9 @@
 			NDefines.NGame.COMBAT_LOG_MAX_MONTHS = 36
 			NDefines.NGame.GAME_SPEED_SECONDS = { 0.35, 0.15, 0.1, 0.035, 0.0 }
 
+	-- NGeography
+		NDefines.NGeography.MEDITERRANEAN_SEA_REGIONS = { 25, 26, 27, 28, 29, 30, 32, 34 }
+
 	-- NDiplomacy
 		NDefines.NDiplomacy.TENSION_STATE_VALUE = 2.0				-- Tension value gained by annexing one state
 		NDefines.NDiplomacy.TENSION_CIVIL_WAR_IMPACT = 0.2			-- civil war multiplier on tension.
