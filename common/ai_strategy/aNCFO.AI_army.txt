@@ -1,3 +1,117 @@
+no_lag_anti_division = {
+	enable = {
+		has_war = no
+		is_major = no
+		NOT = {
+			is_gaint_of_the_east_possible = yes
+			is_harmonainus_imperious_extras = yes
+		}
+	}
+
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = ai_wanted_divisions_factor
+		value = -1000
+	}
+}
+
+division_limiter = {
+	enable = {
+		NOT = { has_global_flag = KR_no_unit_limits }
+		has_reached_maximum_divisions = yes
+		NOT = { surrender_progress > 0.05 }
+	}
+
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = build_army
+		id = anti_tank
+		value = -10000
+	}
+
+	ai_strategy = {
+		type = build_army
+		id = armor
+		value = -10000
+	}
+
+	ai_strategy = {
+		type = build_army
+		id = bicycle
+		value = -10000
+	}
+
+	ai_strategy = {
+		type = build_army
+		id = cavalry
+		value = -10000
+	}
+
+	ai_strategy = {
+		type = build_army
+		id = heavy_armor
+		value = -10000
+	}
+
+	ai_strategy = {
+		type = build_army
+		id = infantry
+		value = -10000
+	}
+
+	ai_strategy = {
+		type = build_army
+		id = marine
+		value = -10000
+	}
+
+	ai_strategy = {
+		type = build_army
+		id = mobile
+		value = -10000
+	}
+
+	ai_strategy = {
+		type = build_army
+		id = mountaineer
+		value = -10000
+	}
+
+	ai_strategy = {
+		type = build_army
+		id = suppression
+		value = -10000
+	}
+}
+
+get_that_xp = {
+	enable = {
+		always = yes
+	}
+
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = send_volunteers_desire
+		value = 200
+	}
+}
+
+protect_the_homelands = {
+	enable = {
+		alliance_naval_strength_ratio < 1.5
+	}
+
+	abort_when_not_enabled = yes
+	
+	ai_strategy = {
+		type = garrison
+		value = 20
+	}
+}
+
 do_not_waste_pp_if_saving_for_manpower_laws = {
 	enable = {
 		manpower_per_military_factory < 500
@@ -378,6 +492,19 @@ aNCFO_AI_motorized_supplies = {
 		type = equipment_production_factor
 		id = motorized
 		value = 100
+	}
+}
+
+aNCFO_AI_motorized_surplus = {
+	enable = {
+		is_major = yes
+		has_equipment = { motorized_equipment > 2000 }
+	}
+	abort_when_not_enabled = yes
+	ai_strategy = {
+		type = equipment_production_factor
+		id = motorized
+		value = -100
 	}
 }
 

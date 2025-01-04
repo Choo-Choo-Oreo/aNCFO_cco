@@ -1,0 +1,1255 @@
+ideas = {
+	army_readiness_laws = {
+		law = yes
+		use_list_view = yes
+		army_readiness_reserve = {
+			cost = 180
+			removal_cost = -1
+			level = 5
+
+			modifier = {
+				mobilization_speed = -0.30
+				consumer_goods_expected_value = 0.01
+				unit_limit_factory_bonus = 0.00
+			}
+			
+			ai_will_do = {
+				factor = 0.5
+			}
+
+			cancel_if_invalid = no
+			default = yes
+		}
+
+		army_readiness_standing = {
+			cost = 180
+			removal_cost = -1
+			level = 4
+
+			available = {
+				OR = {
+					has_war = yes
+					threat > 0.30
+				}
+			}
+			
+			ai_will_do = {
+				factor = 1
+			}
+
+			modifier = {
+				mobilization_speed = -0.15
+				consumer_goods_expected_value = 0.02
+				unit_limit_factory_bonus = 0.25
+				experience_gain_army = 0.03
+			}
+
+			cancel_if_invalid = no
+		}
+
+		army_readiness_light_mobilize = {
+			cost = 180
+			removal_cost = -1
+			level = 3
+
+			available = {
+				OR = {
+					has_war = yes
+					threat > 0.55
+				}
+			}
+
+			ai_will_do = {
+				factor = 2
+			}
+
+			modifier = {
+				consumer_goods_expected_value = 0.03
+				unit_limit_factory_bonus = 0.50
+				experience_gain_army = 0.06
+			}
+
+			cancel_if_invalid = no
+		}
+
+		army_readiness_mobilize = {
+			cost = 180
+			removal_cost = -1
+			level = 2
+
+			available = {
+				OR = {
+					has_war = yes
+					threat > 0.85
+				}
+			}
+
+			ai_will_do = {
+				factor = 2.1
+			}
+
+			modifier = {
+				mobilization_speed = 0.15
+				consumer_goods_expected_value = 0.04
+				unit_limit_factory_bonus = 0.75
+				experience_gain_army = 0.10
+			}
+
+			cancel_if_invalid = no
+		}
+
+		army_readiness_heavy_mobilize = {
+			cost = 180
+			removal_cost = -1
+			level = 1
+
+			available = {
+				OR = {
+					has_war = yes
+					threat > 0.99
+				}
+			}
+
+			ai_will_do = {
+				factor = 2.2
+			}
+
+			modifier = {
+				mobilization_speed = 0.30
+				consumer_goods_expected_value = 0.05
+				unit_limit_factory_bonus = 1.00
+				experience_gain_army = 0.15
+			}
+
+			cancel_if_invalid = no
+		}
+	}
+
+	army_training_standards_laws = {
+		law = yes
+		use_list_view = yes
+		training_standards_elite = {
+						
+			cost = 100
+			removal_cost = -1
+			level = 1
+			
+			available = {
+				has_idea = taxes_very_high
+				NOT = { has_idea = age_14_70 }
+				NOT = { has_idea = age_12_80 }
+				NOT = { has_idea = scraping_the_barrel }
+				NOT = { has_idea = all_adults_serve }
+				NOT = { has_idea = service_by_requirement }
+			}
+
+			ai_will_do = {
+				factor = 2.2
+			}
+
+			modifier = {
+				training_time_army_factor = 0.2
+				consumer_goods_expected_value = 0.02
+				training_time_factor = -0.2
+				minimum_training_level = 0.1
+				# Leaders
+				naval_coordination = 0.10
+				military_leader_cost_factor = 0.40
+				command_power_gain = -0.02
+				max_command_power = 50
+				special_forces_cap = 0.10
+			}
+			
+			cancel_if_invalid = no
+		}
+
+		training_standards_distinguish = {
+
+			cost = 100
+			removal_cost = -1
+			level = 2
+			
+			available = {
+				OR = { has_idea = taxes_high has_idea = taxes_very_high }
+				NOT = { has_idea = age_14_70 }
+				NOT = { has_idea = age_12_80 }
+				NOT = { has_idea = scraping_the_barrel }
+				NOT = { has_idea = all_adults_serve }
+			}
+
+			ai_will_do = {
+				factor = 2.1
+			}
+
+			modifier = {
+				training_time_army_factor = 0.125
+				consumer_goods_expected_value = 0.01
+				training_time_factor = -0.125
+				minimum_training_level = 0.05
+				# Leaders
+				naval_coordination = 0.05
+				military_leader_cost_factor = 0.20
+				command_power_gain = -0.01
+				max_command_power = 37.5
+				special_forces_cap = 0.05
+			}
+			cancel_if_invalid = no
+		}
+
+		training_standards_competent = {
+
+			cost = 100
+			removal_cost = -1
+			level = 3
+			
+			ai_will_do = {
+				factor = 2
+			}
+
+			modifier = {
+				training_time_army_factor = 0.07
+				training_time_factor = -0.07
+				# Leaders
+				max_command_power = 25
+			}
+			
+			cancel_if_invalid = no
+			default = yes
+		}
+
+		training_standards_capable = {
+
+			cost = 100
+			removal_cost = -1
+			level = 4
+			
+			available = {
+				NOT = { has_idea = disarmed_nation }
+				NOT = { has_idea = volunteer_only }
+				NOT = { has_idea = limited_conscription }
+				AND = {
+					has_war = yes
+					enemies_strength_ratio > 1.5
+				}
+			}
+
+			ai_will_do = {
+				factor = 1
+			}
+
+			modifier = {
+				training_time_army_factor = -0.075
+				training_time_factor = 0.15
+				# Leaders
+				military_leader_cost_factor = -0.20
+				max_command_power = 12.5
+			}
+			
+			cancel_if_invalid = no
+		}
+
+		training_standards_subpar = {
+						
+			cost = 100
+			removal_cost = -1
+			level = 5
+			
+			available = {
+				OR = { has_idea = age_14_70 has_idea = age_12_80 }
+				NOT = { has_idea = disarmed_nation }
+				NOT = { has_idea = volunteer_only }
+				NOT = { has_idea = limited_conscription }
+				NOT = { has_idea = extensive_conscription }
+				NOT = { has_idea = service_by_requirement }
+				AND = {
+					has_war = yes
+					enemies_strength_ratio > 2.0
+				}
+			}
+			
+			ai_will_do = {
+				factor = 0.5
+			}
+
+			modifier = {
+				training_time_army_factor = -0.10
+				consumer_goods_expected_value = -0.01
+				training_time_factor = 0.20
+				minimum_training_level = -0.1
+				# Leaders
+				naval_coordination = -0.05
+				military_leader_cost_factor = -0.40
+				special_forces_cap = -0.05
+			}
+			
+			cancel_if_invalid = no
+		}
+	}
+
+	army_mobilization_laws = {
+		law = yes
+		use_list_view = yes
+		disarmed_nation = {
+			cost = 100
+			removal_cost = -1
+			level = 7
+
+			modifier = {
+				conscription_factor = -0.35
+				minimum_training_level = 0.1
+				production_speed_buildings_factor = 0.02
+				political_power_factor = 0.06
+			}
+
+			default = yes
+			cancel_if_invalid = no
+		}
+
+		volunteer_only = {
+			cost = 100
+			removal_cost = -1
+			level = 6
+			
+			available = {
+				NOT = { has_idea = taxes_very_low }
+			}
+
+			ai_will_do = {
+   				factor = 1
+				modifier = { factor = 10
+					is_major = yes has_manpower > 10000 }
+				modifier = { factor = 10
+					is_major = no has_manpower > 5000 }
+				modifier = { factor = 10
+					has_war = yes }
+				modifier = { factor = 10
+					has_war_with_major = yes }
+   				modifier = {
+					factor = 60 # being disarmed is bad in a wargame yo
+					has_idea = disarmed_nation 
+				}
+			}
+
+			modifier = {
+				conscription_factor = -0.1
+				industrial_capacity_factory = -0.02
+				industrial_capacity_dockyard = -0.02
+				experience_gain_army = 0.01
+			}
+			
+			cancel_if_invalid = no
+		}
+
+		limited_conscription = {
+			cost = 100
+			removal_cost = -1
+			level = 5
+
+			available = {
+				NOT = { has_idea = taxes_very_low }
+			}
+
+			available = {
+				has_war_support > 0.1
+			}
+
+			modifier = {
+				#conscription_factor = 0.0
+				industrial_capacity_factory = -0.05
+				industrial_capacity_dockyard = -0.05
+				production_speed_buildings_factor = -0.01
+				political_power_factor = -0.02
+				experience_gain_army = 0.01
+			}
+
+			ai_will_do = {
+   				factor = 1
+				modifier = { factor = 10
+					is_major = yes has_manpower > 10000 }
+				modifier = { factor = 10
+					is_major = no has_manpower > 5000 }
+				modifier = { factor = 10
+					has_war = yes }
+				modifier = { factor = 10
+					has_war_with_major = yes }
+				modifier = {
+					# Ignore if high on manpower
+					factor = 0.5
+					manpower_per_military_factory > 5000
+				}
+				modifier = {
+					#Prio if low on manpower
+					factor = 20
+					manpower_per_military_factory < 2000
+				}
+				modifier = {
+					factor = 0
+					NOT = { has_idea = volunteer_only }
+				}
+			}
+			
+			cancel_if_invalid = no
+		}
+
+		extensive_conscription = {
+			cost = 100
+			removal_cost = -1
+			level = 4
+
+			available = {
+				NOT = { has_idea = taxes_very_low }
+				NOT = { has_idea = taxes_low }
+				OR = {
+					AND = {
+						has_war = yes
+						enemies_strength_ratio > 0.5
+					}					
+				}
+				has_war_support > 0.2
+			}
+
+			ai_will_do = {
+   				factor = 1
+				modifier = { factor = 10
+					is_major = yes has_manpower > 10000 }
+				modifier = { factor = 10
+					is_major = no has_manpower > 5000 }
+				modifier = { factor = 10
+					has_war = yes }
+				modifier = { factor = 10
+					has_war_with_major = yes }
+				modifier = {
+					# Ignore if high on manpower
+					factor = 0.5
+					manpower_per_military_factory > 3000
+				}
+
+				modifier = {
+					#Prio if low on manpower
+					factor = 20
+					manpower_per_military_factory <  800
+				}
+
+				modifier = {
+					factor = 0
+					NOT = { has_idea = limited_conscription }
+				}
+			}
+
+			modifier = {
+				conscription_factor = 0.1
+				industrial_capacity_factory = -0.08
+				industrial_capacity_dockyard = -0.08
+				production_speed_buildings_factor = -0.03
+				political_power_factor = -0.05
+				experience_gain_army = 0.02
+			}
+			
+			cancel_if_invalid = no
+		}
+
+		service_by_requirement = {
+			cost = 100
+			removal_cost = -1
+			level = 3
+
+			available = {
+				NOT = { has_idea = taxes_very_low }
+				NOT = { has_idea = taxes_low }
+				OR = {
+					AND = {
+						has_war = yes
+						enemies_strength_ratio > 0.30
+					}
+				}
+				OR = {
+					has_war_support > 0.6
+					surrender_progress > 0
+				}
+			}
+
+			ai_will_do = {
+   				factor = 1
+				modifier = { factor = 10
+					is_major = yes has_war_with_major = yes }
+				modifier = { factor = 10
+					is_major = yes has_manpower > 10000 }
+				modifier = { factor = 10
+					is_major = no has_manpower > 5000 }
+				modifier = { factor = 10
+					has_war = yes }
+				modifier = { factor = 10
+					has_war_with_major = yes }
+				modifier = {
+					#Prio if low on manpower
+					factor = 20
+					manpower_per_military_factory <  700
+				}
+				modifier = {
+					#Lower chance if has decent amount
+					factor = 0.5
+					manpower_per_military_factory >  1000
+				}
+
+				modifier = {
+					factor = 0
+					NOT = { has_idea = extensive_conscription }
+				}
+			}
+
+			modifier = {
+				conscription_factor = 0.2
+				industrial_capacity_factory = -0.12
+				industrial_capacity_dockyard = -0.12
+				war_support_weekly = -0.001
+				minimum_training_level = -0.05
+				training_time_army_factor = 0.05
+				production_speed_buildings_factor = -0.05
+				political_power_factor = -0.08
+				experience_gain_army = 0.02
+			}
+			
+			cancel_if_invalid = no
+		}
+
+		all_adults_serve = {
+			cost = 100
+			removal_cost = -1
+			level = 2
+			
+			available = {
+				NOT = { has_idea = taxes_very_low }
+				NOT = { has_idea = taxes_low }
+				NOT = { has_idea = taxes_medium }
+				OR = {
+					has_war_support > 0.7
+					surrender_progress > 0
+				}
+				enemies_strength_ratio > 0.40
+				has_war = yes
+			}
+
+			ai_will_do = {
+   				factor = 1
+				modifier = { factor = 10
+					is_major = yes has_war_with_major = yes }
+				modifier = { factor = 10
+					is_major = yes has_manpower > 10000 }
+				modifier = { factor = 10
+					is_major = no has_manpower > 5000 }
+				modifier = { factor = 10
+					has_war = yes }
+				modifier = { factor = 10
+					has_war_with_major = yes }
+				modifier = {
+					#Prio if low on manpower
+					factor = 20
+					manpower_per_military_factory <  600
+				}
+				modifier = {
+					#Lower chance if has decent amount
+					factor = 0.5
+					manpower_per_military_factory >  1000
+				}
+				modifier = {
+					factor = 0
+					NOT = { has_idea = service_by_requirement }
+				}
+			}
+		
+			modifier = {
+				conscription_factor = 0.3
+				industrial_capacity_factory = -0.18
+				industrial_capacity_dockyard = -0.18
+				stability_weekly = -0.001
+				war_support_weekly = -0.001
+				minimum_training_level = -0.1
+				training_time_army_factor = 0.1
+				production_speed_buildings_factor = -0.07
+				political_power_factor = -0.11
+				experience_gain_army = 0.03
+			}
+			
+			cancel_if_invalid = no
+		}
+
+		scraping_the_barrel = {
+			cost = 100
+			removal_cost = -1
+			level = 1
+
+			available = {
+				NOT = { has_idea = taxes_very_low }
+				NOT = { has_idea = taxes_low }
+				NOT = { has_idea = taxes_medium }
+				NOT = { has_idea = taxes_high }
+				OR = {
+					has_war_support > 0.85
+					surrender_progress > 0.25
+				}
+				has_idea = egalitarian
+				enemies_strength_ratio > 0.80
+				has_war = yes
+			}
+
+			ai_will_do = {
+   				factor = 1
+				modifier = { factor = 10
+					is_major = yes has_war_with_major = yes }
+				modifier = { factor = 10
+					is_major = yes has_manpower > 10000 }
+				modifier = { factor = 10
+					is_major = no has_manpower > 5000 }
+				modifier = { factor = 10
+					has_war = yes }
+				modifier = { factor = 10
+					has_war_with_major = yes }
+				modifier = {
+					#Prio if low on manpower
+					factor = 20
+					manpower_per_military_factory <  500
+				}
+				modifier = {
+					#Lower chance if has decent amount
+					factor = 0.5
+					manpower_per_military_factory >  1000
+				}
+				modifier = {
+					#Block has plenty manpower
+					factor = 0
+					manpower_per_military_factory >  5000
+				}
+
+				modifier = {
+					factor = 0
+					NOT = { has_idea = all_adults_serve }
+				}
+			}
+
+			modifier = {
+				conscription_factor = 0.4
+				industrial_capacity_factory = -0.25
+				industrial_capacity_dockyard = -0.25
+				stability_weekly = -0.0015
+				war_support_weekly = -0.002
+				minimum_training_level = -0.15
+				training_time_army_factor = 0.15
+				production_speed_buildings_factor = -0.1
+				political_power_factor = -0.15
+				experience_gain_army = 0.03
+			}
+			
+			cancel_if_invalid = no
+		}
+	}
+
+	conscripts_age_laws = {
+		law = yes
+		use_list_view = yes
+		age_19_30 = {
+			cost = 100
+			removal_cost = -1
+			level = 6
+
+			available = {
+			}
+
+			ai_will_do = {
+				factor = 1
+				modifier = { factor = 10
+					is_major = yes has_manpower > 10000 }
+				modifier = { factor = 10
+					is_major = no has_manpower > 5000 }
+				modifier = { factor = 10
+					has_war = yes }
+				modifier = { factor = 10
+					has_war_with_major = yes }
+			}
+
+			modifier = {
+				conscription = 0.020
+				political_power_factor = 0.02
+				mobilization_speed	= 0.05
+				army_morale_factor = 0.03
+			}
+
+			cancel_if_invalid = no
+			default = yes
+		}
+
+		age_18_40 = {
+			cost = 100
+			removal_cost = -1
+			level = 5
+
+			available = {
+				NOT = { has_idea = disarmed_nation }
+			}
+
+			ai_will_do = {
+				factor = 1
+				modifier = { factor = 2.5
+					is_major = yes has_war_with_major = yes }
+				modifier = { factor = 10
+					is_major = yes has_manpower > 10000 }
+				modifier = { factor = 10
+					is_major = no has_manpower > 5000 }
+				modifier = { factor = 10
+					has_war = yes }
+				modifier = { factor = 10
+					has_war_with_major = yes }
+   				modifier = {
+					factor = 60 # being disarmed is bad in a wargame yo
+					has_idea = age_19_30 
+				}
+			}
+
+			modifier = {
+				conscription = 0.030
+			}
+
+			cancel_if_invalid = no
+		}
+
+		age_17_50 = {
+			cost = 100
+			removal_cost = -1
+			level = 4
+
+			available = {
+				or = {
+					has_idea = extensive_conscription
+					has_idea = service_by_requirement
+					has_idea = all_adults_serve
+					has_idea = scraping_the_barrel
+				}
+				AND = {
+					has_war = yes
+				}
+			}
+			
+			ai_will_do = {
+				factor = 1
+				modifier = { factor = 5
+					is_major = yes has_war_with_major = yes }
+				modifier = { factor = 10
+					is_major = yes has_manpower > 10000 }
+				modifier = { factor = 10
+					is_major = no has_manpower > 5000 }
+				modifier = { factor = 10
+					has_war = yes }
+				modifier = { factor = 10
+					has_war_with_major = yes }
+				modifier = {
+					#Prio if low on manpower
+					factor = 20
+					manpower_per_military_factory <  1000
+				}
+			}
+
+			modifier = {
+				conscription = 0.045
+				mobilization_speed	= -0.15
+				army_org_factor = -0.01
+				army_morale_factor = -0.10
+			}
+			
+			cancel_if_invalid = no
+		}
+
+		age_16_60 = {
+			cost = 100
+			removal_cost = -1
+			level = 3
+
+			available = {
+				or = {
+					has_idea = extensive_conscription
+					has_idea = service_by_requirement
+					has_idea = all_adults_serve
+					has_idea = scraping_the_barrel
+				}
+				AND = {
+					has_war = yes
+					enemies_strength_ratio > 0.5
+				}
+			}
+
+			ai_will_do = {
+				factor = 1
+				modifier = { factor = 7.5
+					is_major = yes has_war_with_major = yes }
+				modifier = { factor = 10
+					is_major = yes has_manpower > 10000 }
+				modifier = { factor = 10
+					is_major = no has_manpower > 5000 }
+				modifier = { factor = 10
+					has_war = yes }
+				modifier = { factor = 10
+					has_war_with_major = yes }
+				modifier = {
+					#Prio if low on manpower
+					factor = 20
+					manpower_per_military_factory <  800
+				}
+
+				modifier = {
+					factor = 3
+					has_manpower < 200000
+				}
+			}
+
+			modifier = {
+				conscription = 0.065
+				political_power_factor = -0.03
+				mobilization_speed	= -0.30
+				army_org_factor = -0.03
+				army_morale_factor = -0.10
+				stability_weekly = -0.0010
+			}
+			
+			cancel_if_invalid = no
+		}
+
+		age_14_70 = {
+			cost = 100
+			removal_cost = -1
+			level = 2
+
+			available = {
+				or = {
+					has_idea = service_by_requirement
+					has_idea = all_adults_serve
+					has_idea = scraping_the_barrel
+				}
+				AND = {
+					has_war = yes
+					enemies_strength_ratio > 1.0
+				}
+			}
+			
+			ai_will_do = {
+   				factor = 1
+				modifier = { factor = 10
+					is_major = yes has_war_with_major = yes }
+				modifier = { factor = 10
+					is_major = yes has_manpower > 10000 }
+				modifier = { factor = 10
+					is_major = no has_manpower > 5000 }
+				modifier = { factor = 10
+					has_war = yes }
+				modifier = { factor = 10
+					has_war_with_major = yes }
+				modifier = {
+					#Prio if low on manpower
+					factor = 20
+					manpower_per_military_factory <  700
+				}
+				modifier = {
+					#Lower chance if has decent amount
+					factor = 0.5
+					manpower_per_military_factory >  1000
+				}
+				modifier = {
+					#Block has plenty manpower
+					factor = 0
+					manpower_per_military_factory >  3000
+				}
+			}
+
+			modifier = {
+				conscription = 0.090
+				political_power_factor = -0.06
+				mobilization_speed	= -0.45
+				army_org_factor = -0.06
+				army_morale_factor = -0.20
+				stability_weekly = -0.0020
+				experience_gain_army_unit_factor = -0.15
+			}
+
+			cancel_if_invalid = no
+		}
+
+		age_12_80 = {
+			cost = 100
+			removal_cost = -1
+			level = 1
+
+			available = {
+				or = {
+					has_idea = all_adults_serve
+					has_idea = scraping_the_barrel
+				}
+				AND = {
+					has_war = yes
+					enemies_strength_ratio > 1.5
+				}
+			}
+			
+			ai_will_do = {
+   				factor = 1
+				modifier = { factor = 10
+					is_major = yes has_war_with_major = yes }
+				modifier = { factor = 10
+					is_major = yes has_manpower > 10000 }
+				modifier = { factor = 10
+					is_major = no has_manpower > 5000 }
+				modifier = { factor = 10
+					has_war = yes }
+				modifier = { factor = 10
+					has_war_with_major = yes }
+				modifier = {
+					#Prio if low on manpower
+					factor = 20
+					manpower_per_military_factory <  600
+				}
+				modifier = {
+					#Lower chance if has decent amount
+					factor = 0.5
+					manpower_per_military_factory >  1000
+				}
+				modifier = {
+					#Block has plenty manpower
+					factor = 0
+					manpower_per_military_factory >  5000
+				}
+			}
+
+			modifier = {
+				conscription = 0.120
+				political_power_factor = -0.10
+				mobilization_speed	= -0.60
+				army_org_factor = -0.10
+				army_morale_factor = -0.30
+				stability_weekly = -0.0030
+				experience_gain_army_unit_factor = -0.30
+			}
+
+			cancel_if_invalid = no
+		}
+	}
+
+	conscripts_foreign_laws = {
+		law = yes
+		use_list_view = yes
+		conscripts_foreign_none = {
+			cost = 100
+			removal_cost = -1
+			level = 1
+
+			available = {
+			}
+
+			modifier = {
+			}
+			cancel_if_invalid = no
+			default = yes
+		}
+
+		conscripts_foreign_volunteers = {
+			cost = 100
+			removal_cost = -1
+			level = 2
+
+			available = {
+			}
+
+			modifier = {
+				non_core_manpower = 0.05
+				autonomy_manpower_share = 0.05
+				training_time_army_factor = 0.01
+			}
+			cancel_if_invalid = no
+		}
+
+		conscripts_foreign_encouraged = {
+			cost = 100
+			removal_cost = -1
+			level = 3
+
+			available = {
+			}
+
+			modifier = {
+				non_core_manpower = 0.10
+				autonomy_manpower_share = 0.10
+				subjects_autonomy_gain = 0.2
+				training_time_army_factor = 0.03
+			}
+			cancel_if_invalid = no
+		}
+
+		conscripts_foreign_conscript = {
+			cost = 100
+			removal_cost = -1
+			level = 4
+
+			available = {
+			}
+
+			modifier = {
+				non_core_manpower = 0.15
+				autonomy_manpower_share = 0.15
+				subjects_autonomy_gain = 0.4
+				training_time_army_factor = 0.05
+			}
+			cancel_if_invalid = no
+		}
+	}
+
+	womens_rights_laws = {
+		# These are extra flags for nations to have more interactive focus trees and government.
+		# has_country_flag = prevent_women_workers
+		# has_country_flag = prevent_women_army
+		law = yes
+		use_list_view = yes
+		women_at_home = {
+			cost = 360
+			removal_cost = -1
+			level = 5
+			
+			available = {
+			}
+
+			modifier = {
+				political_power_factor = 0.05
+				monthly_population = 0.15
+				stability_weekly = 0.001
+				#stability_factor = 0.10
+			}
+			
+			ai_will_do = {
+				base = 1
+			}
+
+			cancel_if_invalid = no
+
+			default = yes
+		}
+
+		limited_women_in_the_workforce = { # Industrializing Nations
+			cost = 360
+			removal_cost = -1
+			level = 5
+
+			available = {
+				always = no
+			}
+
+			ai_will_do = {
+				base = 1
+			}
+
+			modifier = {
+				monthly_population = 0.075
+				industrial_capacity_factory = 0.06
+				industrial_capacity_dockyard = 0.06
+				stability_factor = 0.035
+			}
+
+			cancel_if_invalid = no
+		}
+
+		women_in_the_workforce = {
+			cost = 360
+			removal_cost = -1
+			level = 4
+
+			available = {
+				NOT = { has_country_flag = prevent_women_workers }
+				or = {
+					and = {
+						not = {
+							has_government = theocratism
+						}
+					}
+					and = {
+						has_government = theocratism
+						OR = {
+							has_war_support > 0.75
+							surrender_progress > 0.25
+						}
+						enemies_strength_ratio > 0.50
+					}
+				}
+			}
+
+			ai_will_do = {
+				base = 1
+				modifier = {
+					add = 100
+					OR = {
+						AND = {
+							has_stability > 0.90
+						}
+						AND = {
+							is_major = yes
+							has_stability > 0.75
+						}
+					}
+				}
+				modifier = { factor = 2
+					is_major = yes has_war_with_major = yes }
+			}
+
+			modifier = {
+				industrial_capacity_factory = 0.135
+				industrial_capacity_dockyard = 0.135
+				stability_factor = 0.025
+			}
+
+			cancel_if_invalid = no
+		}
+
+		women_in_the_army = {
+			cost = 360
+			removal_cost = -1
+			level = 3
+
+			available = {
+				NOT = {
+					has_government = theocratism
+					has_country_flag = prevent_women_workers
+					has_country_flag = prevent_women_army
+				}
+			}
+
+			ai_will_do = {
+				base = 1
+				modifier = {
+					add = 1000
+					OR = {
+						AND = {
+							surrender_progress > 0.90
+							has_manpower > 50000
+						}
+						AND = {
+							is_major = yes
+							has_manpower > 100000
+						}
+					}
+				}
+				modifier = {
+					#Prio if low on manpower
+					factor = 20
+					manpower_per_military_factory <  1000
+				}
+			}
+
+			on_add = {
+				set_rule = { can_generate_female_aces = yes can_generate_female_unit_leaders = yes }
+			}
+			on_remove = {
+				set_rule = { can_generate_female_aces = no can_generate_female_unit_leaders = no }
+			}
+			modifier = {
+				industrial_capacity_factory = 0.10
+				industrial_capacity_dockyard = 0.10
+				conscription_factor = 0.10
+				political_power_factor = -0.05
+				monthly_population = -0.020
+			}
+
+			cancel_if_invalid = no
+		}
+
+		women_in_the_frontlines = {
+			cost = 360
+			removal_cost = -1
+			level = 2
+
+			available = {
+				NOT = {
+					has_government = theocratism
+					has_country_flag = prevent_women_workers
+					has_country_flag = prevent_women_army
+				}
+			}
+
+			ai_will_do = {
+				base = 1
+				modifier = {
+					add = 1000
+					OR = {
+						AND = {
+							surrender_progress > 0.80
+							has_manpower > 10000
+						}
+						AND = {
+							is_major = yes
+							has_manpower > 50000
+						}
+					}
+				}
+				modifier = {
+					#Prio if low on manpower
+					factor = 20
+					manpower_per_military_factory <  800
+				}
+
+				modifier = {
+					factor = 3
+					has_manpower < 200000
+				}
+			}
+
+			on_add = {
+				set_rule = { can_generate_female_aces = yes can_generate_female_unit_leaders = yes }
+			}
+			on_remove = {
+				set_rule = { can_generate_female_aces = no can_generate_female_unit_leaders = no }
+			}
+			modifier = {
+				industrial_capacity_factory = 0.04
+				industrial_capacity_dockyard = 0.04
+				conscription_factor = 0.225
+				political_power_factor = -0.075
+				training_time_factor = 0.05
+				monthly_population = -0.050
+			}
+
+			cancel_if_invalid = no
+		}
+
+		egalitarian = {
+			cost = 360
+			removal_cost = -1
+			level = 1
+
+			available = {
+				or = {
+					has_idea = service_by_requirement
+					has_idea = all_adults_serve
+					has_idea = scraping_the_barrel
+				}
+				NOT = {
+					has_government = theocratism
+					has_country_flag = prevent_women_workers
+					has_country_flag = prevent_women_army
+				}
+			}
+
+			ai_will_do = {
+				base = 0
+			}
+
+			on_add = {
+				set_rule = { can_generate_female_aces = yes can_generate_female_unit_leaders = yes }
+			}
+			on_remove = {
+				set_rule = { can_generate_female_aces = no can_generate_female_unit_leaders = no }
+			}
+			modifier = {
+				conscription_factor = 0.40
+				political_power_factor = -0.2
+				training_time_factor = 0.15
+				army_attack_factor = -0.1
+				army_defence_factor = -0.1
+				monthly_population = -0.15
+				stability_weekly = -0.001
+			}
+
+			cancel_if_invalid = no
+		}
+	}
+}

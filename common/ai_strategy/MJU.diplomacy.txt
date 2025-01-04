@@ -1,132 +1,120 @@
-# befriend
-# conquer
-# antagonize
-# build_ship
-# build_army
-# unit_ratio
-# build_building
-# research_tech
-# garrison
-# protect
-# influence
-# Canal
-	MJU_allies_ask_for_diplo_access_to_UFS = {
+MJU_allies_ask_for_diplo_access_to_UFS = {
+	enable = {
+		97 = { is_controlled_by = UFS }
+		or = {
+			tag = MJU
+			tag = UFS
+		}
+		MJU = {
+			is_in_faction_with = MRC
+		}
+	}
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = diplo_action_desire
+		id = MJU
+		target = military_access
+		value = 5000
+	}
+	ai_strategy = {
+		type = diplo_action_desire
+		id = UFS
+		target = military_access
+		value = 5000
+	}
+}
+MJU_allies_ask_for_diplo_access_to_MRC = {
+	enable = {
+		97 = { is_controlled_by = MRC }
+		or = {
+			tag = MJU
+			tag = MRC
+		}
+		MJU = {
+			is_in_faction_with = UFS
+		}
+	}
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = diplo_action_desire
+		id = MJU
+		target = military_access
+		value = 5000
+	}
+	ai_strategy = {
+		type = diplo_action_desire
+		id = MRC
+		target = military_access
+		value = 5000
+	}
+}
+# Protect Canal Owner
+	MJU_defend_UFS_against_threats = {
+		allowed = { original_tag = MJU original_tag = UFS }
 		enable = {
+			HHE = { has_war_with = UFS }
 			97 = { is_controlled_by = UFS }
-			or = {
-				tag = MJU
-				tag = UFS
-			}
-			MJU = {
-				is_in_faction_with = MRC
+			country_exists = UFS
+		}
+		abort = {
+			OR = {
+				NOT = {
+					country_exists = UFS 
+					97 = { is_controlled_by = UFS }
+				}
+				has_war_with = UFS
 			}
 		}
-		abort_when_not_enabled = yes
-
+		
 		ai_strategy = {
-			type = diplo_action_desire
-			id = MJU
-			target = military_access
-			value = 5000
+			type = befriend
+			id = "UFS"
+			value = 200
 		}
 		ai_strategy = {
-			type = diplo_action_desire
-			id = UFS
-			target = military_access
-			value = 5000
+			type = alliance
+			id = "UFS"
+			value = 200
+		}
+		ai_strategy = {
+			type = protect
+			id = "UFS"
+			value = 200
 		}
 	}
-	MJU_allies_ask_for_diplo_access_to_MRC = {
+	MJU_defend_MRC_against_threats = {
+		allowed = { original_tag = MJU original_tag = MRC }
 		enable = {
+			HHE = { has_war_with = MRC }
 			97 = { is_controlled_by = MRC }
-			or = {
-				tag = MJU
-				tag = MRC
-			}
-			MJU = {
-				is_in_faction_with = UFS
+			country_exists = MRC
+		}
+		abort = {
+			OR = {
+				NOT = {
+					country_exists = MRC 
+					97 = { is_controlled_by = MRC }
+				}
+				has_war_with = MRC
 			}
 		}
-		abort_when_not_enabled = yes
-
+		
 		ai_strategy = {
-			type = diplo_action_desire
-			id = MJU
-			target = military_access
-			value = 5000
+			type = befriend
+			id = "MRC"
+			value = 200
 		}
 		ai_strategy = {
-			type = diplo_action_desire
-			id = MRC
-			target = military_access
-			value = 5000
+			type = alliance
+			id = "MRC"
+			value = 200
+		}
+		ai_strategy = {
+			type = protect
+			id = "MRC"
+			value = 200
 		}
 	}
-	# Protect Canal Owner
-		MJU_defend_UFS_against_threats = {
-			allowed = { original_tag = MJU original_tag = UFS }
-			enable = {
-				HHE = { has_war_with = UFS }
-				97 = { is_controlled_by = UFS }
-				country_exists = UFS
-			}
-			abort = {
-				OR = {
-					NOT = {
-						country_exists = UFS 
-						97 = { is_controlled_by = UFS }
-					}
-					has_war_with = UFS
-				}
-			}
-			
-			ai_strategy = {
-				type = befriend
-				id = "UFS"
-				value = 200
-			}
-			ai_strategy = {
-				type = alliance
-				id = "UFS"
-				value = 200
-			}
-			ai_strategy = {
-				type = protect
-				id = "UFS"
-				value = 200
-			}
-		}
-		MJU_defend_MRC_against_threats = {
-			allowed = { original_tag = MJU original_tag = MRC }
-			enable = {
-				HHE = { has_war_with = MRC }
-				97 = { is_controlled_by = MRC }
-				country_exists = MRC
-			}
-			abort = {
-				OR = {
-					NOT = {
-						country_exists = MRC 
-						97 = { is_controlled_by = MRC }
-					}
-					has_war_with = MRC
-				}
-			}
-			
-			ai_strategy = {
-				type = befriend
-				id = "MRC"
-				value = 200
-			}
-			ai_strategy = {
-				type = alliance
-				id = "MRC"
-				value = 200
-			}
-			ai_strategy = {
-				type = protect
-				id = "MRC"
-				value = 200
-			}
-		}
 # Main

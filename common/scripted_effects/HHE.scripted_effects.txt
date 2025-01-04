@@ -1,4 +1,41 @@
 # Shared
+	remove_ideas_group_nobility_held_industry = {
+		if = {
+			limit = { has_idea = nobility_held_industry }
+			remove_ideas = nobility_held_industry
+		}
+		if = {
+			limit = { has_idea = nobility_held_industry_civilwar }
+			remove_ideas = nobility_held_industry_civilwar
+		}
+	}
+
+	remove_ideas_group_traditional_bureaucracy = {
+		if = {
+			limit = { has_idea = traditional_bureaucracy }
+			remove_ideas = traditional_bureaucracy
+		}
+		if = {
+			limit = { has_idea = mediocre_bureaucracy }
+			remove_ideas = mediocre_bureaucracy
+		}
+	}
+
+	HHE_bureaucracy_improvement = { # Important to put LOWEST first
+		custom_effect_tooltip = HHE_bureaucracy_improvement_tt
+		if = {
+			limit = { has_idea = mediocre_bureaucracy }
+			remove_ideas = mediocre_bureaucracy
+		}
+		if = {
+			limit = { has_idea = traditional_bureaucracy }
+			swap_ideas = {
+				remove_idea = traditional_bureaucracy
+				add_idea = mediocre_bureaucracy
+			}
+		}
+	}
+
 	HHE_political_choas_down = { # Important to put LOWEST first
 		custom_effect_tooltip = HHE_political_choas_down_tt
 		if = {
@@ -37,21 +74,6 @@
 				add_idea = HHE_choas3
 			}
 			add_political_power = 35
-		}
-	}
-
-	HHE_bureaucracy_improvement = { # Important to put LOWEST first
-		custom_effect_tooltip = HHE_bureaucracy_improvement_tt
-		if = {
-			limit = { has_idea = mediocre_bureaucracy }
-			remove_ideas = mediocre_bureaucracy
-		}
-		if = {
-			limit = { has_idea = traditional_bureaucracy }
-			swap_ideas = {
-				remove_idea = traditional_bureaucracy
-				add_idea = mediocre_bureaucracy
-			}
 		}
 	}
 
@@ -380,6 +402,13 @@
 			limit = { has_idea = nobility_held_industry }
 			swap_ideas = {
 				remove_idea = nobility_held_industry
+				add_idea = HHE_mobilize_nobility_industry_2
+			}
+		}
+		if = {
+			limit = { has_idea = nobility_held_industry_civilwar }
+			swap_ideas = {
+				remove_idea = nobility_held_industry_civilwar
 				add_idea = HHE_mobilize_nobility_industry_2
 			}
 		}

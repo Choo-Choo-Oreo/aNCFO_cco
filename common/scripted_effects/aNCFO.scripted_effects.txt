@@ -1,0 +1,2196 @@
+# Ideological/Religious Scripts
+	update_religious_stance = { # +Map Update
+		log = "[GetDateText]: [Root.GetName]: update_religious_stance"
+		if = {
+			limit = { has_cosmetic_tag = VLADS_IMPERIOUS_UNIFIED }
+			add_ideas = vladaros_cult_religion_law
+		}
+		### Special Countries Countries First ###
+		else_if = {
+			limit = { has_government = unitism }
+			add_ideas = ideological_religion_law
+		}
+		else_if = {
+			limit = { has_country_flag = harmonainus_religion }
+			add_ideas = harmonainus_religion_law
+		}
+		else_if = {
+			limit = { has_country_flag = harmonainus_reformed_religion }
+			add_ideas = harmonainus_reformed_religion_law
+		}
+		else_if = {
+			limit = { has_country_flag = pullus_religion }
+			add_ideas = pullus_religion_law
+		}
+		else_if = {
+			limit = { has_country_flag = ideological_religion }
+			add_ideas = ideological_religion_law
+		}
+		else_if = {
+			limit = { has_country_flag = emperor_personality_religion }
+			add_ideas = emperor_personality_religion_law
+		}
+		else_if = {
+			limit = { has_country_flag = thalassaus_religion }
+			add_ideas = thalassaus_religion_law
+		}
+		else_if = {
+			limit = { has_country_flag = ager_montis_religion }
+			add_ideas = ager_montis_religion_law
+		}
+		else_if = {
+			limit = { has_country_flag = animaekin_religion }
+			add_ideas = animaekin_religion_law
+		}
+		else_if = { # Currently is planned with no name.
+			limit = { has_country_flag = yellow_reg_religion }
+			add_ideas = yellow_reg_religion_law
+		}
+		else_if = {
+			limit = { has_country_flag = secular_religion }
+			add_ideas = secular_religion_law
+		}
+		else_if = { # Just to have a default.
+			limit = {
+				OR = {
+					has_country_flag = nihilism_religion
+					NOT = { OR = {
+						has_country_flag = harmonainus_religion
+						has_country_flag = harmonainus_reformed_religion
+						has_country_flag = pullus_religion
+						has_country_flag = emperor_personality_religion
+						has_country_flag = thalassaus_religion
+						has_country_flag = ager_montis_religion
+						has_country_flag = animaekin_religion
+						has_country_flag = yellow_reg_religion
+						has_country_flag = secular_religion
+					} }
+				}
+			}
+			add_ideas = nihilism_religion_law
+		}
+		force_update_map_mode = { # We update with it here to reduce lag.
+			limit = { is_ai = no }
+			mapmode = country_religions_map
+		}
+	}
+
+	update_unitism_dogmata_stance = {
+		log = "[GetDateText]: [Root.GetName]: update_unitism_dogmata_stance"
+		if = {
+			limit = { AND = { has_government = unitism has_country_flag = harmonainus_religion } }
+			set_country_flag = harmonainus_religion_archived
+			clr_country_flag = harmonainus_religion
+			set_country_flag = ideological_religion
+		}
+		else_if = {
+			limit = { AND = { NOT = { has_government = unitism } has_country_flag = harmonainus_religion_archived } }
+			clr_country_flag = harmonainus_religion_archived
+			set_country_flag = harmonainus_religion
+			clr_country_flag = ideological_religion
+		}
+		else_if = {
+			limit = { AND = { has_government = unitism has_country_flag = harmonainus_reformed_religion } }
+			set_country_flag = harmonainus_reformed_religion_archived
+			clr_country_flag = harmonainus_reformed_religion
+			set_country_flag = ideological_religion
+		}
+		else_if = {
+			limit = { AND = { NOT = { has_government = unitism } has_country_flag = harmonainus_reformed_religion_archived } }
+			clr_country_flag = harmonainus_reformed_religion_archived
+			set_country_flag = harmonainus_reformed_religion
+			clr_country_flag = ideological_religion
+		}
+		else_if = {
+			limit = { AND = { has_government = unitism has_country_flag = pullus_religion } }
+			set_country_flag = pullus_religion_archived
+			clr_country_flag = pullus_religion
+			set_country_flag = ideological_religion
+		}
+		else_if = {
+			limit = { AND = { NOT = { has_government = unitism } has_country_flag = pullus_religion_archived } }
+			clr_country_flag = pullus_religion_archived
+			set_country_flag = pullus_religion
+			clr_country_flag = ideological_religion
+		}
+		else_if = {
+			limit = { AND = { has_government = unitism has_country_flag = emperor_personality_religion } }
+			set_country_flag = emperor_personality_religion_archived
+			clr_country_flag = emperor_personality_religion
+			set_country_flag = ideological_religion
+		}
+		else_if = {
+			limit = { AND = { NOT = { has_government = unitism } has_country_flag = emperor_personality_religion_archived } }
+			clr_country_flag = emperor_personality_religion_archivedgion
+			set_country_flag = emperor_personality_reli
+			clr_country_flag = ideological_religion
+		}
+		else_if = {
+			limit = { AND = { has_government = unitism has_country_flag = thalassaus_religion } }
+			set_country_flag = thalassaus_religion_archived
+			clr_country_flag = thalassaus_religion
+			set_country_flag = ideological_religion
+		}
+		else_if = {
+			limit = { AND = { NOT = { has_government = unitism } has_country_flag = thalassaus_religion_archived } }
+			clr_country_flag = thalassaus_religion_archived
+			set_country_flag = thalassaus_religion
+			clr_country_flag = ideological_religion
+		}
+		else_if = {
+			limit = { AND = { has_government = unitism has_country_flag = ager_montis_religion } }
+			set_country_flag = ager_montis_religion_archived
+			clr_country_flag = ager_montis_religion
+			set_country_flag = ideological_religion
+		}
+		else_if = {
+			limit = { AND = { NOT = { has_government = unitism } has_country_flag = ager_montis_religion_archived } }
+			clr_country_flag = ager_montis_religion_archived
+			set_country_flag = ager_montis_religion
+			clr_country_flag = ideological_religion
+		}
+		else_if = {
+			limit = { AND = { has_government = unitism has_country_flag = animaekin_religion } }
+			set_country_flag = animaekin_religion_archived
+			clr_country_flag = animaekin_religion
+			set_country_flag = ideological_religion
+		}
+		else_if = {
+			limit = { AND = { NOT = { has_government = unitism } has_country_flag = animaekin_religion_archived } }
+			clr_country_flag = animaekin_religion_archivedn
+			set_country_flag = animaekin_religio
+			clr_country_flag = ideological_religion
+		}
+		else_if = {
+			limit = { AND = { has_government = unitism has_country_flag = yellow_reg_religion } }
+			set_country_flag = yellow_reg_religion_archived
+			clr_country_flag = yellow_reg_religion
+			set_country_flag = ideological_religion
+		}
+		else_if = {
+			limit = { AND = { NOT = { has_government = unitism } has_country_flag = yellow_reg_religion_archived } }
+			clr_country_flag = yellow_reg_religion_archived
+			set_country_flag = yellow_reg_religion
+			clr_country_flag = ideological_religion
+		}
+		else_if = {
+			limit = { AND = { has_government = unitism has_country_flag = secular_religion } }
+			set_country_flag = secular_religion_archived
+			clr_country_flag = secular_religion
+			set_country_flag = ideological_religion
+		}
+		else_if = {
+			limit = { AND = { NOT = { has_government = unitism } has_country_flag = secular_religion_archived } }
+			clr_country_flag = secular_religion_archived
+			set_country_flag = secular_religion
+			clr_country_flag = ideological_religion
+		}
+		else_if = {
+			limit = { AND = { has_government = unitism has_country_flag = nihilism_religion } }
+			set_country_flag = nihilism_religion_archived
+			clr_country_flag = nihilism_religion
+			set_country_flag = ideological_religion
+		}
+		else_if = {
+			limit = { AND = { NOT = { has_government = unitism } has_country_flag = nihilism_religion_archived } }
+			clr_country_flag = nihilism_religion_archived
+			set_country_flag = nihilism_religion
+			clr_country_flag = ideological_religion
+		}
+		else_if = { # Just to have a default. Will replace with a event.
+			limit = { NOT = { OR = {
+				has_country_flag = harmonainus_religion
+				has_country_flag = harmonainus_reformed_religion
+				has_country_flag = pullus_religion
+				has_country_flag = emperor_personality_religion
+				has_country_flag = thalassaus_religion
+				has_country_flag = ager_montis_religion
+				has_country_flag = animaekin_religion
+				has_country_flag = yellow_reg_religion
+				has_country_flag = secular_religion
+			} } }
+			set_country_flag = nihilism_religion
+		}
+	}
+
+	update_ideological_dogmata_stance = { # +Map Update
+		log = "[GetDateText]: [Root.GetName]: update_ideological_dogmata_stance" # Log at location instead of here.
+		if = {
+			limit = { has_country_leader_ideology = sub_illuminism }
+			add_ideas = sub_unradical_law
+		}
+		else_if = {
+			limit = { has_country_leader_ideology = sub_pluralism }
+			add_ideas = sub_unradical_law
+		}
+		else_if = {
+			limit = { has_country_leader_ideology = sub_constitutionalism }
+			add_ideas = sub_unradical_law
+		}
+		else_if = {
+			limit = { has_country_leader_ideology = sub_conservatism }
+			add_ideas = sub_unradical_law
+		}
+		else_if = {
+			limit = { has_country_leader_ideology = sub_liberalism }
+			add_ideas = sub_unradical_law
+		}
+		else_if = {
+			limit = { has_country_leader_ideology = sub_progressivism }
+			add_ideas = sub_unradical_law
+		}
+		else_if = {
+			limit = { has_country_leader_ideology = sub_populism }
+			add_ideas = sub_unradical_law
+		}
+		else_if = {
+			limit = { has_country_leader_ideology = sub_obscurism }
+			add_ideas = sub_unradical_law
+		}
+		else_if = {
+			limit = { has_country_leader_ideology = sub_transitional_democracy }
+			add_ideas = sub_unradical_law
+		}
+		else_if = {
+			limit = { has_country_leader_ideology = sub_traditionalism }
+			add_ideas = sub_unradical_law
+		}
+		else_if = {
+			limit = { has_country_leader_ideology = sub_mercantile_republicism }
+			add_ideas = sub_unradical_law
+		}
+		else_if = {
+			limit = { has_country_leader_ideology = sub_socialism }
+			add_ideas = sub_unradical_law
+		}
+		else_if = {
+			limit = { has_country_leader_ideology = sub_illiberalism }
+			add_ideas = sub_unradical_law
+		}
+		else_if = { # Fanatic Theocratism
+			limit = { has_country_leader_ideology = sub_radical_harmonainism }
+			add_ideas = sub_radical_harmonainism_law
+		}
+		else_if = {
+			limit = { has_country_leader_ideology = sub_harmonainism }
+			add_ideas = sub_harmonainism_law
+		}
+		else_if = {
+			limit = { has_country_leader_ideology = sub_reformed_harmonainism }
+			add_ideas = sub_reformed_harmonainism_law
+		}
+		else_if = {
+			limit = { has_country_leader_ideology = sub_pullusism }
+			add_ideas = sub_pullusism_law
+		}
+		else_if = {
+			limit = { has_country_leader_ideology = sub_thalassaus }
+			add_ideas = sub_thalassaus_law
+		}
+		else_if = {
+			limit = { has_country_leader_ideology = sub_ager_montis }
+			add_ideas = sub_ager_montis_law
+		}
+		else_if = {
+			limit = { has_country_leader_ideology = sub_animaekin }
+			add_ideas = sub_animaekin_law
+		}
+		else_if = { # Fanatic Authoritarianism
+			limit = { has_country_leader_ideology = sub_monarchy }
+			add_ideas = sub_monarchy_law
+		}
+		else_if = {
+			limit = { has_country_leader_ideology = sub_authoritarian }
+			add_ideas = sub_authoritarian_law
+		}
+		else_if = {
+			limit = { has_country_leader_ideology = sub_auth_harmonainism }
+			add_ideas = sub_auth_harmonainism_law
+		}
+		else_if = {
+			limit = { has_country_leader_ideology = sub_oligarchy }
+			add_ideas = sub_oligarchy_law
+		}
+		else_if = { # Fanatic Unitism
+			limit = { has_country_leader_ideology = sub_ultra_nationalism }
+			add_ideas = sub_ultra_nationalism_law
+		}
+		else_if = {
+			limit = { has_country_leader_ideology = sub_national_unitism }
+			add_ideas = sub_national_unitism_law
+		}
+		else_if = {
+			limit = { has_country_leader_ideology = sub_unitism }
+			add_ideas = sub_unitism_law
+		}
+		else_if = {
+			limit = { has_country_leader_ideology = sub_syndicalism }
+			add_ideas = sub_syndicalism_law
+		}
+		else_if = {
+			limit = { has_country_leader_ideology = sub_fascism }
+			add_ideas = sub_fascism_law
+		}
+		force_update_map_mode = { # We update with it here to reduce lag.
+			limit = { is_ai = no }
+			mapmode = country_true_ideology_map
+		}
+	}
+
+	update_all_stances = {
+		update_religious_stance = yes
+		update_unitism_dogmata_stance = yes
+		update_ideological_dogmata_stance = yes
+	}
+
+	update_action_sub_ideology = {
+		IF = {
+			limit = { has_idea = sub_unradical_law NOT = { OR = {
+				has_country_leader_ideology = sub_illuminism
+				has_country_leader_ideology = sub_pluralism
+				has_country_leader_ideology = sub_constitutionalism
+				has_country_leader_ideology = sub_conservatism
+				has_country_leader_ideology = sub_liberalism
+				has_country_leader_ideology = sub_progressivism
+				has_country_leader_ideology = sub_populism
+				has_country_leader_ideology = sub_obscurism
+				has_country_leader_ideology = sub_transitional_democracy
+				has_country_leader_ideology = sub_traditionalism
+				has_country_leader_ideology = sub_mercantile_republicism
+				has_country_leader_ideology = sub_socialism
+				has_country_leader_ideology = sub_illiberalism
+			} } }
+			log = "[GetDateText]: [Root.GetName]: Switch away from sub_unradical"
+			update_ideological_dogmata_stance = yes
+		}
+		IF = {
+			limit = { has_idea = sub_radical_harmonainism_law NOT = { has_country_leader_ideology = sub_radical_harmonainism } }
+			log = "[GetDateText]: [Root.GetName]: Switch away from sub_radical_harmonainism"
+			update_ideological_dogmata_stance = yes
+		}
+		IF = {
+			limit = { has_idea = sub_harmonainism_law NOT = { has_country_leader_ideology = sub_harmonainism } }
+			log = "[GetDateText]: [Root.GetName]: Switch away from sub_harmonainism"
+			update_ideological_dogmata_stance = yes
+		}
+		IF = {
+			limit = { has_idea = sub_reformed_harmonainism_law NOT = { has_country_leader_ideology = sub_reformed_harmonainism } }
+			log = "[GetDateText]: [Root.GetName]: Switch away from sub_reformed_harmonainism"
+			update_ideological_dogmata_stance = yes
+		}
+		IF = {
+			limit = { has_idea = sub_pullusism_law NOT = { has_country_leader_ideology = sub_pullusism } }
+			log = "[GetDateText]: [Root.GetName]: Switch away from sub_pullusism"
+			update_ideological_dogmata_stance = yes
+		}
+		IF = {
+			limit = { has_idea = sub_thalassaus_law NOT = { has_country_leader_ideology = sub_thalassaus } }
+			log = "[GetDateText]: [Root.GetName]: Switch away from sub_thalassaus"
+			update_ideological_dogmata_stance = yes
+		}
+		IF = {
+			limit = { has_idea = sub_ager_montis_law NOT = { has_country_leader_ideology = sub_ager_montis } }
+			log = "[GetDateText]: [Root.GetName]: Switch away from sub_ager_montis"
+			update_ideological_dogmata_stance = yes
+		}
+		IF = {
+			limit = { has_idea = sub_animaekin_law NOT = { has_country_leader_ideology = sub_animaekin } }
+			log = "[GetDateText]: [Root.GetName]: Switch away from sub_animaekin"
+			update_ideological_dogmata_stance = yes
+		}
+		IF = {
+			limit = { has_idea = sub_monarchy_law NOT = { has_country_leader_ideology = sub_monarchy } }
+			log = "[GetDateText]: [Root.GetName]: Switch away from sub_monarchy"
+			update_ideological_dogmata_stance = yes
+		}
+		IF = {
+			limit = { has_idea = sub_authoritarian_law NOT = { has_country_leader_ideology = sub_authoritarian } }
+			log = "[GetDateText]: [Root.GetName]: Switch away from sub_authoritarian"
+			update_ideological_dogmata_stance = yes
+		}
+		IF = {
+			limit = { has_idea = sub_auth_harmonainism_law NOT = { has_country_leader_ideology = sub_auth_harmonainism } }
+			log = "[GetDateText]: [Root.GetName]: Switch away from sub_auth_harmonainism"
+			update_ideological_dogmata_stance = yes
+		}
+		IF = {
+			limit = { has_idea = sub_oligarchy_law NOT = { has_country_leader_ideology = sub_oligarchy } }
+			log = "[GetDateText]: [Root.GetName]: Switch away from sub_oligarchy"
+			update_ideological_dogmata_stance = yes
+		}
+		IF = {
+			limit = { has_idea = sub_ultra_nationalism_law NOT = { has_country_leader_ideology = sub_ultra_nationalism } }
+			log = "[GetDateText]: [Root.GetName]: Switch away from sub_ultra_nationalism"
+			update_ideological_dogmata_stance = yes
+		}
+		IF = {
+			limit = { has_idea = sub_national_unitism_law NOT = { has_country_leader_ideology = sub_national_unitism } }
+			log = "[GetDateText]: [Root.GetName]: Switch away from sub_national_unitism"
+			update_ideological_dogmata_stance = yes
+		}
+		IF = {
+			limit = { has_idea = sub_unitism_law NOT = { has_country_leader_ideology = sub_unitism } }
+			log = "[GetDateText]: [Root.GetName]: Switch away from sub_unitism"
+			update_ideological_dogmata_stance = yes
+		}
+		IF = {
+			limit = { has_idea = sub_syndicalism_law NOT = { has_country_leader_ideology = sub_syndicalism } }
+			log = "[GetDateText]: [Root.GetName]: Switch away from sub_syndicalism"
+			update_ideological_dogmata_stance = yes
+		}
+		IF = {
+			limit = { has_idea = sub_fascism_law NOT = { has_country_leader_ideology = sub_fascism } }
+			log = "[GetDateText]: [Root.GetName]: Switch away from sub_fascism"
+			update_ideological_dogmata_stance = yes
+		}
+	}
+
+	update_all_dogmata_on_focus_complete = {
+		log = "[GetDateText]: [Root.GetName]: on_focus_complete: update_all_dogmata_on_focus_complete"
+		update_action_sub_ideology = yes
+		IF = {
+			limit = { has_government = unitism NOT = { has_country_flag = ideological_religion } }
+			log = "[GetDateText]: [Root.GetName]: on_focus_complete: update_unitism_dogmata_stance Switch to"
+			update_unitism_dogmata_stance = yes
+			update_religious_stance = yes # Must update.
+		}
+		IF = {
+			limit = { has_country_flag = ideological_religion NOT = { has_government = unitism } }
+			log = "[GetDateText]: [Root.GetName]: on_focus_complete: update_unitism_dogmata_stance Switch away"
+			update_unitism_dogmata_stance = yes
+			update_religious_stance = yes # Must update.
+		}
+	}
+	# Switch Religion
+		switch_religion_harmonainus_religion = {
+			log = "[GetDateText]: [Root.GetName]: switch_religion_harmonainus_religion"
+			set_country_flag = harmonainus_religion
+			clr_country_flag = harmonainus_reformed_religion
+			clr_country_flag = pullus_religion
+			clr_country_flag = ideological_religion
+			clr_country_flag = emperor_personality_religion
+			clr_country_flag = thalassaus_religion
+			clr_country_flag = ager_montis_religion
+			clr_country_flag = animaekin_religion
+			clr_country_flag = yellow_reg_religion
+			clr_country_flag = secular_religion
+			clr_country_flag = nihilism_religion
+			update_religious_stance = yes # Must be last.
+		}
+
+		switch_religion_harmonainus_reformed_religion = {
+			log = "[GetDateText]: [Root.GetName]: switch_religion_harmonainus_reformed_religion"
+			clr_country_flag = harmonainus_religion
+			set_country_flag = harmonainus_reformed_religion
+			clr_country_flag = pullus_religion
+			clr_country_flag = ideological_religion
+			clr_country_flag = emperor_personality_religion
+			clr_country_flag = thalassaus_religion
+			clr_country_flag = ager_montis_religion
+			clr_country_flag = animaekin_religion
+			clr_country_flag = yellow_reg_religion
+			clr_country_flag = secular_religion
+			clr_country_flag = nihilism_religion
+			update_religious_stance = yes # Must be last.
+		}
+
+		switch_religion_pullus_religion = {
+			log = "[GetDateText]: [Root.GetName]: switch_religion_pullus_religion"
+			clr_country_flag = harmonainus_religion
+			clr_country_flag = harmonainus_reformed_religion
+			set_country_flag = pullus_religion
+			clr_country_flag = ideological_religion
+			clr_country_flag = emperor_personality_religion
+			clr_country_flag = thalassaus_religion
+			clr_country_flag = ager_montis_religion
+			clr_country_flag = animaekin_religion
+			clr_country_flag = yellow_reg_religion
+			clr_country_flag = secular_religion
+			clr_country_flag = nihilism_religion
+			update_religious_stance = yes # Must be last.
+		}
+
+		switch_religion_emperor_personality_religion = {
+			log = "[GetDateText]: [Root.GetName]: switch_religion_emperor_personality_religion"
+			clr_country_flag = harmonainus_religion
+			clr_country_flag = harmonainus_reformed_religion
+			clr_country_flag = pullus_religion
+			clr_country_flag = ideological_religion
+			set_country_flag = emperor_personality_religion
+			clr_country_flag = thalassaus_religion
+			clr_country_flag = ager_montis_religion
+			clr_country_flag = animaekin_religion
+			clr_country_flag = yellow_reg_religion
+			clr_country_flag = secular_religion
+			clr_country_flag = nihilism_religion
+			update_religious_stance = yes # Must be last.
+		}
+
+		switch_religion_thalassaus_religion = {
+			log = "[GetDateText]: [Root.GetName]: switch_religion_thalassaus_religion"
+			clr_country_flag = harmonainus_religion
+			clr_country_flag = harmonainus_reformed_religion
+			clr_country_flag = pullus_religion
+			clr_country_flag = ideological_religion
+			clr_country_flag = emperor_personality_religion
+			set_country_flag = thalassaus_religion
+			clr_country_flag = ager_montis_religion
+			clr_country_flag = animaekin_religion
+			clr_country_flag = yellow_reg_religion
+			clr_country_flag = secular_religion
+			clr_country_flag = nihilism_religion
+			update_religious_stance = yes # Must be last.
+		}
+
+		switch_religion_ager_montis_religion = {
+			log = "[GetDateText]: [Root.GetName]: switch_religion_ager_montis_religion"
+			clr_country_flag = harmonainus_religion
+			clr_country_flag = harmonainus_reformed_religion
+			clr_country_flag = pullus_religion
+			clr_country_flag = ideological_religion
+			clr_country_flag = emperor_personality_religion
+			clr_country_flag = thalassaus_religion
+			set_country_flag = ager_montis_religion
+			clr_country_flag = animaekin_religion
+			clr_country_flag = yellow_reg_religion
+			clr_country_flag = secular_religion
+			clr_country_flag = nihilism_religion
+			update_religious_stance = yes # Must be last.
+		}
+
+		switch_religion_animaekin_religion = {
+			log = "[GetDateText]: [Root.GetName]: switch_religion_animaekin_religion"
+			clr_country_flag = harmonainus_religion
+			clr_country_flag = harmonainus_reformed_religion
+			clr_country_flag = pullus_religion
+			clr_country_flag = ideological_religion
+			clr_country_flag = emperor_personality_religion
+			clr_country_flag = thalassaus_religion
+			clr_country_flag = ager_montis_religion
+			set_country_flag = animaekin_religion
+			clr_country_flag = yellow_reg_religion
+			clr_country_flag = secular_religion
+			clr_country_flag = nihilism_religion
+			update_religious_stance = yes # Must be last.
+		}
+
+		switch_religion_yellow_reg_religion = {
+			log = "[GetDateText]: [Root.GetName]: switch_religion_yellow_reg_religion"
+			clr_country_flag = harmonainus_religion
+			clr_country_flag = harmonainus_reformed_religion
+			clr_country_flag = pullus_religion
+			clr_country_flag = ideological_religion
+			clr_country_flag = emperor_personality_religion
+			clr_country_flag = thalassaus_religion
+			clr_country_flag = ager_montis_religion
+			clr_country_flag = animaekin_religion
+			set_country_flag = yellow_reg_religion
+			clr_country_flag = secular_religion
+			clr_country_flag = nihilism_religion
+			update_religious_stance = yes # Must be last.
+		}
+
+		switch_religion_secular_religion = {
+			log = "[GetDateText]: [Root.GetName]: switch_religion_secular_religion"
+			clr_country_flag = harmonainus_religion
+			clr_country_flag = harmonainus_reformed_religion
+			clr_country_flag = pullus_religion
+			clr_country_flag = ideological_religion
+			clr_country_flag = emperor_personality_religion
+			clr_country_flag = thalassaus_religion
+			clr_country_flag = ager_montis_religion
+			clr_country_flag = animaekin_religion
+			clr_country_flag = yellow_reg_religion
+			set_country_flag = secular_religion
+			clr_country_flag = nihilism_religion
+			update_religious_stance = yes # Must be last.
+		}
+
+		switch_religion_nihilism_religion = {
+			log = "[GetDateText]: [Root.GetName]: switch_religion_nihilism_religion"
+			clr_country_flag = harmonainus_religion
+			clr_country_flag = harmonainus_reformed_religion
+			clr_country_flag = pullus_religion
+			clr_country_flag = ideological_religion
+			clr_country_flag = emperor_personality_religion
+			clr_country_flag = thalassaus_religion
+			clr_country_flag = ager_montis_religion
+			clr_country_flag = animaekin_religion
+			clr_country_flag = yellow_reg_religion
+			clr_country_flag = secular_religion
+			set_country_flag = nihilism_religion
+			update_religious_stance = yes # Must be last.
+		}
+	# Should remove any and all foreign influence.
+		remove_pluralism_spirits_effect = {
+			if = {
+				limit = { has_idea = strong_pluralism_influence }
+				remove_ideas = strong_pluralism_influence
+			}
+			if = {
+				limit = { has_idea = moderate_pluralism_influence }
+				remove_ideas = moderate_pluralism_influence
+			}
+			if = {
+				limit = { has_idea = weak_pluralism_influence }
+				remove_ideas = weak_pluralism_influence
+			}
+		}
+
+		remove_semidemocracy_spirits_effect = {
+			if = {
+				limit = { has_idea = strong_semidemocracy_influence }
+				remove_ideas = strong_semidemocracy_influence
+			}
+			if = {
+				limit = { has_idea = moderate_semidemocracy_influence }
+				remove_ideas = moderate_semidemocracy_influence
+			}
+			if = {
+				limit = { has_idea = weak_semidemocracy_influence }
+				remove_ideas = weak_semidemocracy_influence
+			}
+		}
+
+		remove_theocratism_spirits_effect = {
+			if = {
+				limit = { has_idea = strong_theocratism_influence }
+				remove_ideas = strong_theocratism_influence
+			}
+			if = {
+				limit = { has_idea = moderate_theocratism_influence }
+				remove_ideas = moderate_theocratism_influence
+			}
+			if = {
+				limit = { has_idea = weak_theocratism_influence }
+				remove_ideas = weak_theocratism_influence
+			}
+		}
+
+		remove_authoritarianism_spirits_effect = {
+			if = {
+				limit = { has_idea = strong_authoritarianism_influence }
+				remove_ideas = strong_authoritarianism_influence
+			}
+			if = {
+				limit = { has_idea = moderate_authoritarianism_influence }
+				remove_ideas = moderate_authoritarianism_influence
+			}
+			if = {
+				limit = { has_idea = weak_authoritarianism_influence }
+				remove_ideas = weak_authoritarianism_influence
+			}
+		}
+
+		remove_unitism_spirits_effect = {
+			if = {
+				limit = { has_idea = strong_unitism_influence }
+				remove_ideas = strong_unitism_influence
+			}
+			if = {
+				limit = { has_idea = moderate_unitism_influence }
+				remove_ideas = moderate_unitism_influence
+			}
+			if = {
+				limit = { has_idea = weak_unitism_influence }
+				remove_ideas = weak_unitism_influence
+			}
+		}
+	# Add/Remove Popularity
+		add_25_current_party_popularity = {
+			if = {
+				limit = { has_government = pluralism }
+				add_popularity = {
+					ideology = pluralism
+					popularity = 0.25
+				}
+			}
+			if = {
+				limit = { has_government = semidemocracy }
+				add_popularity = {
+					ideology = semidemocracy
+					popularity = 0.25
+				}
+			}
+			if = {
+				limit = { has_government = theocratism }
+				add_popularity = {
+					ideology = theocratism
+					popularity = 0.25
+				}
+			}
+			if = {
+				limit = { has_government = authoritarianism }
+				add_popularity = {
+					ideology = authoritarianism
+					popularity = 0.25
+				}
+			}
+			if = {
+				limit = { has_government = unitism }
+				add_popularity = {
+					ideology = unitism
+					popularity = 0.25
+				}
+			}
+		}
+
+		add_20_current_party_popularity = {
+			if = {
+				limit = { has_government = pluralism }
+				add_popularity = {
+					ideology = pluralism
+					popularity = 0.20
+				}
+			}
+			if = {
+				limit = { has_government = semidemocracy }
+				add_popularity = {
+					ideology = semidemocracy
+					popularity = 0.20
+				}
+			}
+			if = {
+				limit = { has_government = theocratism }
+				add_popularity = {
+					ideology = theocratism
+					popularity = 0.20
+				}
+			}
+			if = {
+				limit = { has_government = authoritarianism }
+				add_popularity = {
+					ideology = authoritarianism
+					popularity = 0.20
+				}
+			}
+			if = {
+				limit = { has_government = unitism }
+				add_popularity = {
+					ideology = unitism
+					popularity = 0.20
+				}
+			}
+		}
+
+		add_15_current_party_popularity = {
+			if = {
+				limit = { has_government = pluralism }
+				add_popularity = {
+					ideology = pluralism
+					popularity = 0.15
+				}
+			}
+			if = {
+				limit = { has_government = semidemocracy }
+				add_popularity = {
+					ideology = semidemocracy
+					popularity = 0.15
+				}
+			}
+			if = {
+				limit = { has_government = theocratism }
+				add_popularity = {
+					ideology = theocratism
+					popularity = 0.15
+				}
+			}
+			if = {
+				limit = { has_government = authoritarianism }
+				add_popularity = {
+					ideology = authoritarianism
+					popularity = 0.15
+				}
+			}
+			if = {
+				limit = { has_government = unitism }
+				add_popularity = {
+					ideology = unitism
+					popularity = 0.15
+				}
+			}
+		}
+
+		add_10_current_party_popularity = {
+			if = {
+				limit = { has_government = pluralism }
+				add_popularity = {
+					ideology = pluralism
+					popularity = 0.10
+				}
+			}
+			if = {
+				limit = { has_government = semidemocracy }
+				add_popularity = {
+					ideology = semidemocracy
+					popularity = 0.10
+				}
+			}
+			if = {
+				limit = { has_government = theocratism }
+				add_popularity = {
+					ideology = theocratism
+					popularity = 0.10
+				}
+			}
+			if = {
+				limit = { has_government = authoritarianism }
+				add_popularity = {
+					ideology = authoritarianism
+					popularity = 0.10
+				}
+			}
+			if = {
+				limit = { has_government = unitism }
+				add_popularity = {
+					ideology = unitism
+					popularity = 0.10
+				}
+			}
+		}
+
+		add_05_current_party_popularity = {
+			if = {
+				limit = { has_government = pluralism }
+				add_popularity = {
+					ideology = pluralism
+					popularity = 0.05
+				}
+			}
+			if = {
+				limit = { has_government = semidemocracy }
+				add_popularity = {
+					ideology = semidemocracy
+					popularity = 0.05
+				}
+			}
+			if = {
+				limit = { has_government = theocratism }
+				add_popularity = {
+					ideology = theocratism
+					popularity = 0.05
+				}
+			}
+			if = {
+				limit = { has_government = authoritarianism }
+				add_popularity = {
+					ideology = authoritarianism
+					popularity = 0.05
+				}
+			}
+			if = {
+				limit = { has_government = unitism }
+				add_popularity = {
+					ideology = unitism
+					popularity = 0.05
+				}
+			}
+		}
+
+		remove_25_current_party_popularity = {
+			if = {
+				limit = { has_government = pluralism }
+				add_popularity = {
+					ideology = pluralism
+					popularity = -0.25
+				}
+			}
+			if = {
+				limit = { has_government = semidemocracy }
+				add_popularity = {
+					ideology = semidemocracy
+					popularity = -0.25
+				}
+			}
+			if = {
+				limit = { has_government = theocratism }
+				add_popularity = {
+					ideology = theocratism
+					popularity = -0.25
+				}
+			}
+			if = {
+				limit = { has_government = authoritarianism }
+				add_popularity = {
+					ideology = authoritarianism
+					popularity = -0.25
+				}
+			}
+			if = {
+				limit = { has_government = unitism }
+				add_popularity = {
+					ideology = unitism
+					popularity = -0.25
+				}
+			}
+		}
+
+		remove_20_current_party_popularity = {
+			if = {
+				limit = { has_government = pluralism }
+				add_popularity = {
+					ideology = pluralism
+					popularity = -0.20
+				}
+			}
+			if = {
+				limit = { has_government = semidemocracy }
+				add_popularity = {
+					ideology = semidemocracy
+					popularity = -0.20
+				}
+			}
+			if = {
+				limit = { has_government = theocratism }
+				add_popularity = {
+					ideology = theocratism
+					popularity = -0.20
+				}
+			}
+			if = {
+				limit = { has_government = authoritarianism }
+				add_popularity = {
+					ideology = authoritarianism
+					popularity = -0.20
+				}
+			}
+			if = {
+				limit = { has_government = unitism }
+				add_popularity = {
+					ideology = unitism
+					popularity = -0.20
+				}
+			}
+		}
+
+		remove_15_current_party_popularity = {
+			if = {
+				limit = { has_government = pluralism }
+				add_popularity = {
+					ideology = pluralism
+					popularity = -0.15
+				}
+			}
+			if = {
+				limit = { has_government = semidemocracy }
+				add_popularity = {
+					ideology = semidemocracy
+					popularity = -0.15
+				}
+			}
+			if = {
+				limit = { has_government = theocratism }
+				add_popularity = {
+					ideology = theocratism
+					popularity = -0.15
+				}
+			}
+			if = {
+				limit = { has_government = authoritarianism }
+				add_popularity = {
+					ideology = authoritarianism
+					popularity = -0.15
+				}
+			}
+			if = {
+				limit = { has_government = unitism }
+				add_popularity = {
+					ideology = unitism
+					popularity = -0.15
+				}
+			}
+		}
+
+		remove_10_current_party_popularity = {
+			if = {
+				limit = { has_government = pluralism }
+				add_popularity = {
+					ideology = pluralism
+					popularity = -0.10
+				}
+			}
+			if = {
+				limit = { has_government = semidemocracy }
+				add_popularity = {
+					ideology = semidemocracy
+					popularity = -0.10
+				}
+			}
+			if = {
+				limit = { has_government = theocratism }
+				add_popularity = {
+					ideology = theocratism
+					popularity = -0.10
+				}
+			}
+			if = {
+				limit = { has_government = authoritarianism }
+				add_popularity = {
+					ideology = authoritarianism
+					popularity = -0.10
+				}
+			}
+			if = {
+				limit = { has_government = unitism }
+				add_popularity = {
+					ideology = unitism
+					popularity = -0.10
+				}
+			}
+		}
+
+		remove_05_current_party_popularity = {
+			if = {
+				limit = { has_government = pluralism }
+				add_popularity = {
+					ideology = pluralism
+					popularity = -0.05
+				}
+			}
+			if = {
+				limit = { has_government = semidemocracy }
+				add_popularity = {
+					ideology = semidemocracy
+					popularity = -0.05
+				}
+			}
+			if = {
+				limit = { has_government = theocratism }
+				add_popularity = {
+					ideology = theocratism
+					popularity = -0.05
+				}
+			}
+			if = {
+				limit = { has_government = authoritarianism }
+				add_popularity = {
+					ideology = authoritarianism
+					popularity = -0.05
+				}
+			}
+			if = {
+				limit = { has_government = unitism }
+				add_popularity = {
+					ideology = unitism
+					popularity = -0.05
+				}
+			}
+		}
+# Generic Scripts
+	trade_raise = {
+		if = {
+			limit = { has_idea = closed_economy }
+			swap_ideas = {
+			    remove_idea = closed_economy
+			    add_idea = limited_exports
+			}
+		}
+		else_if = {
+			limit = { has_idea = limited_exports }
+			swap_ideas = {
+			    remove_idea = limited_exports
+			    add_idea = export_focus
+			}
+		}
+		else_if = {
+			limit = { has_idea = export_focus }
+			swap_ideas = {
+			    remove_idea = export_focus
+			    add_idea = free_trade
+			}
+		}
+		else_if = {
+			limit = { has_idea = free_trade }
+			add_political_power = 100
+		}
+	}
+
+	trade_lower = {
+		if = {
+			limit = { has_idea = free_trade }
+			swap_ideas = {
+			    remove_idea = free_trade
+			    add_idea = export_focus
+			}
+		}
+		else_if = {
+			limit = { has_idea = export_focus }
+			swap_ideas = {
+			    remove_idea = export_focus
+			    add_idea = limited_exports
+			}
+		}
+		else_if = {
+			limit = { has_idea = limited_exports }
+			swap_ideas = {
+			    remove_idea = limited_exports
+			    add_idea = closed_economy
+			}
+		}
+		else_if = {
+			limit = { has_idea = closed_economy }
+			add_political_power = 100
+		}
+	}
+
+	economy_raise = {
+		if = {
+			limit = { has_idea = undisturbed_isolation }
+			swap_ideas = {
+			    remove_idea = undisturbed_isolation
+			    add_idea = isolation
+			}
+		}
+		else_if = {
+			limit = { has_idea = isolation }
+			swap_ideas = {
+			    remove_idea = isolation
+			    add_idea = civilian_economy
+			}
+		}
+		else_if = {
+			limit = { has_idea = civilian_economy }
+			swap_ideas = {
+			    remove_idea = civilian_economy
+			    add_idea = low_economic_mobilisation
+			}
+		}
+		else_if = {
+			limit = { has_idea = low_economic_mobilisation }
+			swap_ideas = {
+			    remove_idea = low_economic_mobilisation
+			    add_idea = partial_economic_mobilisation
+			}
+		}
+		else_if = {
+			limit = { has_idea = partial_economic_mobilisation }
+			swap_ideas = {
+			    remove_idea = partial_economic_mobilisation
+			    add_idea = economic_mobilisation
+			}
+		}
+		else_if = {
+			limit = { has_idea = economic_mobilisation }
+			swap_ideas = {
+			    remove_idea = economic_mobilisation
+			    add_idea = war_economy
+			}
+		}
+		else_if = {
+			limit = { has_idea = war_economy }
+			swap_ideas = {
+			    remove_idea = war_economy
+			    add_idea = tot_economic_mobilisation
+			}
+		}
+		else_if = {
+			limit = { has_idea = tot_economic_mobilisation }
+			add_political_power = 100
+		}
+	}
+
+	economy_lower = {
+		if = {
+			limit = { has_idea = tot_economic_mobilisation }
+			swap_ideas = {
+			    remove_idea = tot_economic_mobilisation
+			    add_idea = war_economy
+			}
+		}
+		else_if = {
+			limit = { has_idea = war_economy }
+			swap_ideas = {
+			    remove_idea = war_economy
+			    add_idea = economic_mobilisation
+			}
+		}
+		else_if = {
+			limit = { has_idea = economic_mobilisation }
+			swap_ideas = {
+			    remove_idea = economic_mobilisation
+			    add_idea = partial_economic_mobilisation
+			}
+		}
+		else_if = {
+			limit = { has_idea = partial_economic_mobilisation }
+			swap_ideas = {
+			    remove_idea = partial_economic_mobilisation
+			    add_idea = low_economic_mobilisation
+			}
+		}
+		else_if = {
+			limit = { has_idea = low_economic_mobilisation }
+			swap_ideas = {
+			    remove_idea = low_economic_mobilisation
+			    add_idea = civilian_economy
+			}
+		}
+		else_if = {
+			limit = { has_idea = civilian_economy }
+			swap_ideas = {
+			    remove_idea = civilian_economy
+			    add_idea = isolation
+			}
+		}
+		else_if = {
+			limit = { has_idea = isolation }
+			swap_ideas = {
+			    remove_idea = isolation
+			    add_idea = undisturbed_isolation
+			}
+		}
+		else_if = {
+			limit = { has_idea = undisturbed_isolation }
+			add_political_power = 100
+		}
+	}
+
+	military_recruitment_raise = {
+		army_readiness_raise = yes
+		army_training_standards_raise = yes
+		army_mobilization_raise = yes
+		conscripts_age_raise = yes
+		conscripts_foreign_raise = yes
+		#womens_rights_raise = yes
+	}
+
+	military_recruitment_lower = {
+		army_readiness_lower = yes
+		army_training_standards_lower = yes
+		army_mobilization_lower = yes
+		conscripts_age_lower = yes
+		conscripts_foreign_lower = yes
+		#womens_rights_lower = yes
+	}
+
+	army_readiness_raise = {
+		if = {
+			limit = { has_idea = army_readiness_reserve }
+			swap_ideas = {
+			    remove_idea = army_readiness_reserve
+			    add_idea = army_readiness_standing
+			}
+		}
+		else_if = {
+			limit = { has_idea = army_readiness_standing }
+			swap_ideas = {
+			    remove_idea = army_readiness_standing
+			    add_idea = army_readiness_light_mobilize
+			}
+		}
+		else_if = {
+			limit = { has_idea = army_readiness_light_mobilize }
+			swap_ideas = {
+			    remove_idea = army_readiness_light_mobilize
+			    add_idea = army_readiness_mobilize
+			}
+		}
+		else_if = {
+			limit = { has_idea = army_readiness_mobilize }
+			swap_ideas = {
+			    remove_idea = army_readiness_mobilize
+			    add_idea = army_readiness_heavy_mobilize
+			}
+		}
+		else_if = {
+			limit = { has_idea = army_readiness_heavy_mobilize }
+			add_political_power = 100
+		}
+	}
+
+	army_readiness_lower = {
+		if = {
+			limit = { has_idea = army_readiness_heavy_mobilize }
+			swap_ideas = {
+			    remove_idea = army_readiness_heavy_mobilize
+			    add_idea = army_readiness_mobilize
+			}
+		}
+		else_if = {
+			limit = { has_idea = army_readiness_mobilize }
+			swap_ideas = {
+			    remove_idea = army_readiness_mobilize
+			    add_idea = army_readiness_light_mobilize
+			}
+		}
+		else_if = {
+			limit = { has_idea = army_readiness_light_mobilize }
+			swap_ideas = {
+			    remove_idea = army_readiness_light_mobilize
+			    add_idea = army_readiness_standing
+			}
+		}
+		else_if = {
+			limit = { has_idea = army_readiness_standing }
+			swap_ideas = {
+			    remove_idea = army_readiness_standing
+			    add_idea = army_readiness_reserve
+			}
+		}		
+		else_if = {
+			limit = { has_idea = army_readiness_reserve }
+			add_political_power = 100
+		}
+	}
+
+	army_training_standards_raise = {
+		if = {
+			limit = { has_idea = training_standards_subpar }
+			swap_ideas = {
+			    remove_idea = training_standards_subpar
+			    add_idea = training_standards_capable
+			}
+		}
+		else_if = {
+			limit = { has_idea = training_standards_capable }
+			swap_ideas = {
+			    remove_idea = training_standards_capable
+			    add_idea = training_standards_competent
+			}
+		}
+		else_if = {
+			limit = { has_idea = training_standards_competent }
+			swap_ideas = {
+			    remove_idea = training_standards_competent
+			    add_idea = training_standards_distinguish
+			}
+		}
+		else_if = {
+			limit = { has_idea = training_standards_distinguish }
+			swap_ideas = {
+			    remove_idea = training_standards_distinguish
+			    add_idea = training_standards_elite
+			}
+		}
+		else_if = {
+			limit = { has_idea = training_standards_elite }
+			add_political_power = 100
+		}
+	}
+
+	army_training_standards_lower = {
+		if = {
+			limit = { has_idea = training_standards_elite }
+			swap_ideas = {
+			    remove_idea = training_standards_elite
+			    add_idea = training_standards_distinguish
+			}
+		}
+		else_if = {
+			limit = { has_idea = training_standards_distinguish }
+			swap_ideas = {
+			    remove_idea = training_standards_distinguish
+			    add_idea = training_standards_competent
+			}
+		}
+		else_if = {
+			limit = { has_idea = training_standards_competent }
+			swap_ideas = {
+			    remove_idea = training_standards_competent
+			    add_idea = training_standards_capable
+			}
+		}
+		else_if = {
+			limit = { has_idea = training_standards_capable }
+			swap_ideas = {
+			    remove_idea = training_standards_capable
+			    add_idea = training_standards_subpar
+			}
+		}		
+		else_if = {
+			limit = { has_idea = training_standards_subpar }
+			add_political_power = 100
+		}
+	}
+
+	army_mobilization_raise = {
+		if = {
+			limit = { has_idea = disarmed_nation }
+			swap_ideas = {
+			    remove_idea = disarmed_nation
+			    add_idea = volunteer_only
+			}
+		}
+		else_if = {
+			limit = { has_idea = volunteer_only }
+			swap_ideas = {
+			    remove_idea = volunteer_only
+			    add_idea = limited_conscription
+			}
+		}
+		else_if = {
+			limit = { has_idea = limited_conscription }
+			swap_ideas = {
+			    remove_idea = limited_conscription
+			    add_idea = extensive_conscription
+			}
+		}
+		else_if = {
+			limit = { has_idea = extensive_conscription }
+			swap_ideas = {
+			    remove_idea = extensive_conscription
+			    add_idea = service_by_requirement
+			}
+		}
+		else_if = {
+			limit = { has_idea = service_by_requirement }
+			swap_ideas = {
+			    remove_idea = service_by_requirement
+			    add_idea = all_adults_serve
+			}
+		}
+		else_if = {
+			limit = { has_idea = all_adults_serve }
+			swap_ideas = {
+			    remove_idea = all_adults_serve
+			    add_idea = scraping_the_barrel
+			}
+		}
+		else_if = {
+			limit = { has_idea = scraping_the_barrel }
+			add_political_power = 100
+		}
+	}
+
+	army_mobilization_lower = {
+		if = {
+			limit = { has_idea = scraping_the_barrel }
+			swap_ideas = {
+			    remove_idea = scraping_the_barrel
+			    add_idea = all_adults_serve
+			}
+		}
+		else_if = {
+			limit = { has_idea = all_adults_serve }
+			swap_ideas = {
+			    remove_idea = all_adults_serve
+			    add_idea = service_by_requirement
+			}
+		}
+		else_if = {
+			limit = { has_idea = service_by_requirement }
+			swap_ideas = {
+			    remove_idea = service_by_requirement
+			    add_idea = extensive_conscription
+			}
+		}
+		else_if = {
+			limit = { has_idea = extensive_conscription }
+			swap_ideas = {
+			    remove_idea = extensive_conscription
+			    add_idea = limited_conscription
+			}
+		}
+		else_if = {
+			limit = { has_idea = limited_conscription }
+			swap_ideas = {
+			    remove_idea = limited_conscription
+			    add_idea = volunteer_only
+			}
+		}
+		else_if = {
+			limit = { has_idea = volunteer_only }
+			swap_ideas = {
+			    remove_idea = volunteer_only
+			    add_idea = disarmed_nation
+			}
+		}
+		else_if = {
+			limit = { has_idea = disarmed_nation }
+			add_political_power = 100
+		}
+	}
+
+	conscripts_age_raise = {
+		if = {
+			limit = { has_idea = age_19_30 }
+			swap_ideas = {
+			    remove_idea = age_19_30
+			    add_idea = age_18_40
+			}
+		}
+		else_if = {
+			limit = { has_idea = age_18_40 }
+			swap_ideas = {
+			    remove_idea = age_18_40
+			    add_idea = age_17_50
+			}
+		}
+		else_if = {
+			limit = { has_idea = age_17_50 }
+			swap_ideas = {
+			    remove_idea = age_17_50
+			    add_idea = age_16_60
+			}
+		}
+		else_if = {
+			limit = { has_idea = age_16_60 }
+			swap_ideas = {
+			    remove_idea = age_16_60
+			    add_idea = age_14_70
+			}
+		}
+		else_if = {
+			limit = { has_idea = age_14_70 }
+			swap_ideas = {
+			    remove_idea = age_14_70
+			    add_idea = age_12_80
+			}
+		}
+		else_if = {
+			limit = { has_idea = age_12_80 }
+			add_political_power = 100
+		}
+	}
+
+	conscripts_age_lower = {
+		if = {
+			limit = { has_idea = age_12_80 }
+			swap_ideas = {
+			    remove_idea = age_12_80
+			    add_idea = age_14_70
+			}
+		}
+		else_if = {
+			limit = { has_idea = age_14_70 }
+			swap_ideas = {
+			    remove_idea = age_14_70
+			    add_idea = age_16_60
+			}
+		}
+		else_if = {
+			limit = { has_idea = age_16_60 }
+			swap_ideas = {
+			    remove_idea = age_16_60
+			    add_idea = age_17_50
+			}
+		}
+		else_if = {
+			limit = { has_idea = age_17_50 }
+			swap_ideas = {
+			    remove_idea = age_17_50
+			    add_idea = age_18_40
+			}
+		}
+		else_if = {
+			limit = { has_idea = age_18_40 }
+			swap_ideas = {
+			    remove_idea = age_18_40
+			    add_idea = age_19_30
+			}
+		}
+		else_if = {
+			limit = { has_idea = age_19_30 }
+			add_political_power = 100
+		}
+	}
+
+	conscripts_foreign_raise = {
+		if = {
+			limit = { has_idea = conscripts_foreign_none }
+			swap_ideas = {
+			    remove_idea = conscripts_foreign_none
+			    add_idea = conscripts_foreign_volunteers
+			}
+		}
+		else_if = {
+			limit = { has_idea = conscripts_foreign_volunteers }
+			swap_ideas = {
+			    remove_idea = conscripts_foreign_volunteers
+			    add_idea = conscripts_foreign_encouraged
+			}
+		}
+		else_if = {
+			limit = { has_idea = conscripts_foreign_encouraged }
+			swap_ideas = {
+			    remove_idea = conscripts_foreign_encouraged
+			    add_idea = conscripts_foreign_conscript
+			}
+		}
+		else_if = {
+			limit = { has_idea = conscripts_foreign_conscript }
+			add_political_power = 100
+		}
+	}
+
+	conscripts_foreign_lower = {
+		if = {
+			limit = { has_idea = conscripts_foreign_conscript }
+			swap_ideas = {
+			    remove_idea = conscripts_foreign_conscript
+			    add_idea = conscripts_foreign_encouraged
+			}
+		}
+		else_if = {
+			limit = { has_idea = conscripts_foreign_encouraged }
+			swap_ideas = {
+			    remove_idea = conscripts_foreign_encouraged
+			    add_idea = conscripts_foreign_volunteers
+			}
+		}
+		else_if = {
+			limit = { has_idea = conscripts_foreign_volunteers }
+			swap_ideas = {
+			    remove_idea = conscripts_foreign_volunteers
+			    add_idea = conscripts_foreign_none
+			}
+		}
+		else_if = {
+			limit = { has_idea = conscripts_foreign_none }
+			add_political_power = 100
+		}
+	}
+
+	womens_rights_raise = {
+		if = {
+			limit = { has_idea = women_at_home }
+			swap_ideas = {
+			    remove_idea = women_at_home
+			    add_idea = women_in_the_workforce
+			}
+		}
+		else_if = {
+			limit = { has_idea = women_in_the_workforce }
+			swap_ideas = {
+			    remove_idea = women_in_the_workforce
+			    add_idea = women_in_the_army
+			}
+		}
+		else_if = {
+			limit = { has_idea = women_in_the_army }
+			swap_ideas = {
+			    remove_idea = women_in_the_army
+			    add_idea = women_in_the_frontlines
+			}
+		}
+		else_if = {
+			limit = { has_idea = women_in_the_frontlines }
+			swap_ideas = {
+			    remove_idea = women_in_the_frontlines
+			    add_idea = egalitarian
+			}
+		}
+		else_if = {
+			limit = { has_idea = egalitarian }
+			add_political_power = 100
+		}
+	}
+
+	womens_rights_lower = {
+		if = {
+			limit = { has_idea = egalitarian }
+			swap_ideas = {
+			    remove_idea = egalitarian
+			    add_idea = women_in_the_frontlines
+			}
+		}
+		else_if = {
+			limit = { has_idea = women_in_the_frontlines }
+			swap_ideas = {
+			    remove_idea = women_in_the_frontlines
+			    add_idea = women_in_the_army
+			}
+		}
+		else_if = {
+			limit = { has_idea = women_in_the_army }
+			swap_ideas = {
+			    remove_idea = women_in_the_army
+			    add_idea = women_in_the_workforce
+			}
+		}
+		else_if = {
+			limit = { has_idea = women_in_the_workforce }
+			swap_ideas = {
+			    remove_idea = women_in_the_workforce
+			    add_idea = limited_women_in_the_workforce
+			}
+		}		
+		else_if = {
+			limit = { has_idea = limited_women_in_the_workforce }
+			add_political_power = 100
+		}
+	}
+
+	unitism_revolutionary_warfare = { # Important to put HIGHEST first
+		if = {
+			limit = {
+				not = {
+					has_idea = revolutionary_warfare3
+					has_idea = revolutionary_warfare2
+					has_idea = revolutionary_warfare1
+					has_idea = revolutionary_warfare0
+				}
+			}
+			add_ideas = revolutionary_warfare3
+		}
+		else_if = {
+			limit = { has_idea = revolutionary_warfare3 }
+			swap_ideas = {
+				remove_idea = revolutionary_warfare3
+				add_idea = revolutionary_warfare2
+			}
+		}
+		else_if = {
+			limit = { has_idea = revolutionary_warfare2 }
+			swap_ideas = {
+				remove_idea = revolutionary_warfare2
+				add_idea = revolutionary_warfare1
+			}
+		}
+		else_if = {
+			limit = { has_idea = revolutionary_warfare1 }
+			swap_ideas = {
+				remove_idea = revolutionary_warfare1
+				add_idea = revolutionary_warfare0
+			}
+		}
+	}
+
+	unitism_gorilla_warfare = { # Important to put HIGHEST first
+		if = {
+			limit = {
+				not = {
+					has_idea = gorilla_warfare2
+					has_idea = gorilla_warfare1
+					has_idea = gorilla_warfare0
+				}
+			}
+			add_ideas = gorilla_warfare2
+		}
+		else_if = {
+			limit = { has_idea = gorilla_warfare2 }
+			swap_ideas = {
+				remove_idea = gorilla_warfare2
+				add_idea = gorilla_warfare1
+			}
+		}
+		else_if = {
+			limit = { has_idea = gorilla_warfare1 }
+			swap_ideas = {
+				remove_idea = gorilla_warfare1
+				add_idea = gorilla_warfare0
+			}
+		}
+	}
+
+	urbanize_state = {
+		if = {
+			limit = {
+				has_state_category = enclave
+			}
+			set_state_category = pastoral
+		}
+		else_if = {
+			limit = {
+				has_state_category = wasteland
+			}
+			set_state_category = pastoral
+		}
+		else_if = {
+			limit = {
+				has_state_category = tiny_island
+			}
+			set_state_category = small_island
+		}
+		else_if = {
+			limit = {
+				has_state_category = pastoral
+			}
+			set_state_category = rural
+		}
+		else_if = {
+			limit = {
+				has_state_category = small_island
+			}
+			set_state_category = rural
+		}
+		else_if = {
+			limit = {
+				has_state_category = rural
+			}
+			set_state_category = large_rural
+		}
+		else_if = {
+			limit = {
+				has_state_category = large_rural
+			}
+			set_state_category = town
+		}
+		else_if = {
+			limit = {
+				has_state_category = town
+			}
+			set_state_category = large_town
+		}
+		else_if = {
+			limit = {
+				has_state_category = large_town
+			}
+			set_state_category = city
+		}
+		else_if = {
+			limit = {
+				has_state_category = city
+			}
+			set_state_category = large_city
+		}
+		else_if = {
+			limit = {
+				has_state_category = large_city
+			}
+			set_state_category = metropolis
+		}
+		else_if = {
+			limit = {
+				has_state_category = metropolis
+			}
+			set_state_category = megalopolis
+		}
+		else_if = {
+			limit = {
+				has_state_category = megalopolis
+			}
+			add_extra_state_shared_building_slots = 1
+		}
+	}
+
+	aNCFO_GDP_idea_effects = {
+		if = { # Bureaucratic Efficiency
+			limit = {
+				has_idea = taxes_very_low
+			}
+			multiply_temp_variable = { temp_civ = 1.1 }
+			multiply_temp_variable = { temp_mil = 1.1 }
+			multiply_temp_variable = { temp_doc = 1.1 }
+		}
+		else_if = {
+			limit = {
+				has_idea = taxes_very_high
+			}
+			multiply_temp_variable = { temp_civ = 0.9 }
+			multiply_temp_variable = { temp_mil = 0.9 }
+			multiply_temp_variable = { temp_doc = 0.9 }
+		}
+		if = {
+			limit = {
+				has_idea = free_use_attunement_law
+			}
+			multiply_temp_variable = { temp_civ = 1.1 }
+			multiply_temp_variable = { temp_mil = 1.1 }
+			multiply_temp_variable = { temp_doc = 1.1 }
+		}
+		else_if = {
+			limit = {
+				has_idea = banned_attunement_law
+			}
+			multiply_temp_variable = { temp_civ = 0.9 }
+			multiply_temp_variable = { temp_mil = 0.9 }
+			multiply_temp_variable = { temp_doc = 0.9 }
+		}
+		if = {
+			limit = { OR = {
+					has_idea = women_in_the_workforce
+					has_idea = women_in_the_army
+					has_idea = women_in_the_frontlines
+				}
+			}
+			multiply_temp_variable = { temp_civ = 1.1 }
+			multiply_temp_variable = { temp_mil = 1.1 }
+			multiply_temp_variable = { temp_doc = 1.1 }
+		}
+		if = {
+			limit = {
+				has_idea = traditional_bureaucracy
+				is_harmonainus_imperious_extras = yes
+			}
+			multiply_temp_variable = { temp_civ = 0.9 }
+			multiply_temp_variable = { temp_mil = 0.9 }
+			multiply_temp_variable = { temp_doc = 0.9 }
+		}
+		else_if = {
+			limit = {
+				has_idea = mediocre_bureaucracy
+				is_harmonainus_imperious_extras = yes
+			}
+			multiply_temp_variable = { temp_civ = 0.95 }
+			multiply_temp_variable = { temp_mil = 0.95 }
+			multiply_temp_variable = { temp_doc = 0.95 }
+		}
+		if = {
+			limit = {
+				has_idea = nobility_held_industry
+				is_harmonainus_imperious_extras = yes
+			}
+			multiply_temp_variable = { temp_civ = 1.1 }
+			multiply_temp_variable = { temp_mil = 1.1 }
+			multiply_temp_variable = { temp_doc = 1.1 }
+		}
+		else_if = {
+			limit = {
+				has_idea = HHE_mobilize_nobility_industry_2
+				is_harmonainus_imperious_extras = yes
+			}
+			multiply_temp_variable = { temp_civ = 1.0 }
+			multiply_temp_variable = { temp_mil = 1.05 }
+			multiply_temp_variable = { temp_doc = 1.05 }
+		}
+		else_if = {
+			limit = {
+				has_idea = HHE_mobilize_nobility_industry_1
+				is_harmonainus_imperious_extras = yes
+			}
+			multiply_temp_variable = { temp_civ = 0.9 }
+			multiply_temp_variable = { temp_mil = 1.0 }
+			multiply_temp_variable = { temp_doc = 1.0 }
+		}
+		else_if = {
+			limit = {
+				has_idea = HHE_mobilize_nobility_industry_0
+				is_harmonainus_imperious_extras = yes
+			}
+			multiply_temp_variable = { temp_civ = 0.8 }
+			multiply_temp_variable = { temp_mil = 0.95 }
+			multiply_temp_variable = { temp_doc = 0.95 }
+		}
+		else_if = {
+			limit = {
+				has_idea = HHE_piller_economic2
+				is_harmonainus_imperious_extras = yes
+			}
+			multiply_temp_variable = { temp_civ = 0.7 }
+			multiply_temp_variable = { temp_mil = 0.9 }
+			multiply_temp_variable = { temp_doc = 0.9 }
+		}
+		else_if = {
+			limit = {
+				has_idea = HHE_piller_economic1
+				is_harmonainus_imperious_extras = yes
+			}
+			multiply_temp_variable = { temp_civ = 0.6 }
+			multiply_temp_variable = { temp_mil = 0.85 }
+			multiply_temp_variable = { temp_doc = 0.85 }
+		}
+		else_if = {
+			limit = {
+				has_idea = HHE_piller_economic0
+				is_harmonainus_imperious_extras = yes
+			}
+			multiply_temp_variable = { temp_civ = 0.5 }
+			multiply_temp_variable = { temp_mil = 0.8 }
+			multiply_temp_variable = { temp_doc = 0.8 }
+		}
+		if = {
+			limit = {
+				has_idea = HHE_autarky_idea
+				is_harmonainus_imperious_extras = yes
+			}
+			multiply_temp_variable = { temp_civ = 0.9 }
+			multiply_temp_variable = { temp_mil = 0.9 }
+			multiply_temp_variable = { temp_doc = 0.9 }
+		}
+		if = {
+			limit = {
+				has_idea = harmonainus_civil_war
+				is_harmonainus_imperious_extras = yes
+			}
+			multiply_temp_variable = { temp_civ = 0.9 }
+			multiply_temp_variable = { temp_mil = 0.9 }
+			multiply_temp_variable = { temp_doc = 0.9 }
+		}
+		if = { # Choas Efficiency
+			limit = {
+				has_idea = HHE_choas4
+				is_harmonainus_imperious_extras = yes
+			}
+			multiply_temp_variable = { temp_civ = 0.8 }
+			multiply_temp_variable = { temp_mil = 0.8 }
+			multiply_temp_variable = { temp_doc = 0.8 }
+		}
+		else_if = {
+			limit = {
+				has_idea = HHE_choas3
+				is_harmonainus_imperious_extras = yes
+			}
+			multiply_temp_variable = { temp_civ = 0.85 }
+			multiply_temp_variable = { temp_mil = 0.85 }
+			multiply_temp_variable = { temp_doc = 0.85 }
+		}
+		else_if = {
+			limit = {
+				has_idea = HHE_choas2
+				is_harmonainus_imperious_extras = yes
+			}
+			multiply_temp_variable = { temp_civ = 0.9 }
+			multiply_temp_variable = { temp_mil = 0.9 }
+			multiply_temp_variable = { temp_doc = 0.9 }
+		}
+		else_if = {
+			limit = {
+				has_idea = HHE_choas1
+				is_harmonainus_imperious_extras = yes
+			}
+			multiply_temp_variable = { temp_civ = 0.95 }
+			multiply_temp_variable = { temp_mil = 0.95 }
+			multiply_temp_variable = { temp_doc = 0.95 }
+		}
+		else_if = {
+			limit = {
+				has_idea = HHE_choas0
+				is_harmonainus_imperious_extras = yes
+			}
+			multiply_temp_variable = { temp_civ = 1.0 }
+			multiply_temp_variable = { temp_mil = 1.0 }
+			multiply_temp_variable = { temp_doc = 1.0 }
+		}
+	}
+# Peace Deals Scripts
+	HHE_great_war_won = {
+		log = "[GetDateText]: [Root.GetName]: HHE_great_war_won"
+		# Nothing till more state/countries are added.
+	}
+
+	HHE_great_war_lost = {
+		log = "[GetDateText]: [Root.GetName]: HHE_great_war_lost"
+		# Nothing till more state/countries are added.
+		every_state = {
+			limit = { OR = {
+				is_core_of = HHE
+				is_claimed_by = HHE
+			} }
+			remove_core_of = HHE
+			remove_claim_by = HHE
+		}
+	}
+
+	remove_this_later_and_re_add_to_above = {
+		log = "[GetDateText]: [Root.GetName]: remove_this_later_and_re_add_to_above"
+		#ROOT = { white_peace = { tag = HHE message = HHE_great_war_lost_tt } }
+		#MRC = { annex_country = { target = HHE } transfer_navy = { target = HHE } }
+		every_state = {
+			limit = {
+				OR = {
+					is_core_of = HHE
+					is_claimed_by = HHE
+				}
+			}
+			remove_core_of = HHE
+			remove_claim_by = HHE
+		}
+		DOC = { transfer_state = 101 transfer_state = 129 transfer_state = 200 transfer_state = 221 }
+
+		#FIK = { transfer_state = 235 }
+
+		REP = { transfer_state = 194 transfer_state = 195 transfer_state = 199 transfer_state = 220 transfer_state = 246 transfer_state = 247 transfer_state = 264 }
+
+		#ERP = { transfer_state = 233 # A United Elven Realm
+		#transfer_state = 201 transfer_state = 333 transfer_state = 425 }
+
+		HFF = { transfer_state = 85 transfer_state = 86 transfer_state = 88 transfer_state = 89 transfer_state = 90 transfer_state = 152
+		transfer_state = 5 transfer_state = 78 transfer_state = 80 transfer_state = 82 transfer_state = 83 transfer_state = 236 transfer_state = 237 transfer_state = 239 }
+
+		HFR = { transfer_state = 77 transfer_state = 84 transfer_state = 87 transfer_state = 238 } # transfer_state = 180
+
+		KGK = { transfer_state = 102 transfer_state = 248 transfer_state = 257 transfer_state = 263 transfer_state = 330 transfer_state = 437 transfer_state = 438 transfer_state = 439 transfer_state = 441 transfer_state = 440 transfer_state = 452 }
+
+		HJU = { transfer_state = 2 transfer_state = 93 transfer_state = 116 transfer_state = 118 transfer_state = 119 transfer_state = 120 transfer_state = 121 transfer_state = 122 transfer_state = 127 transfer_state = 128 }
+
+		MJU = {
+			puppet = {
+				target = HJU
+				end_wars = yes
+			}
+		}
+
+		HDW = { transfer_state = 99 transfer_state = 148 transfer_state = 151 transfer_state = 158 transfer_state = 191 transfer_state = 409 transfer_state = 410 }
+
+		MJU = { transfer_state = 117 }
+
+		UFS = { transfer_state = 3 transfer_state = 170 transfer_state = 171 transfer_state = 402 transfer_state = 403 transfer_state = 404 transfer_state = 405
+		transfer_state = 279 transfer_state = 397 }
+
+		HBB = { transfer_state = 18 transfer_state = 150 transfer_state = 153 transfer_state = 154 transfer_state = 156 transfer_state = 157 transfer_state = 160
+			add_popularity = {
+				ideology = pluralism
+				popularity = 0.5
+			}
+			set_politics = { ruling_party = pluralism }
+		}
+
+		HNO = { transfer_state = 20 transfer_state = 79 transfer_state = 81 transfer_state = 155 transfer_state = 159 transfer_state = 407
+			add_popularity = {
+				ideology = pluralism
+				popularity = 0.5
+			}
+			set_politics = { ruling_party = pluralism }
+		}
+
+		HTP = { transfer_state = 1 transfer_state = 94 transfer_state = 95 transfer_state = 105 transfer_state = 113 transfer_state = 115 transfer_state = 125 transfer_state = 126
+			add_popularity = {
+				ideology = pluralism
+				popularity = 0.5
+			}
+			set_politics = { ruling_party = pluralism }
+		}
+
+		MRC = { transfer_state = 11 transfer_state = 96 transfer_state = 106 transfer_state = 107 transfer_state = 108 transfer_state = 109 transfer_state = 110 transfer_state = 111 transfer_state = 112 transfer_state = 114 transfer_state = 180 transfer_state = 123 transfer_state = 124 transfer_state = 260 transfer_state = 261 transfer_state = 447 transfer_state = 448 transfer_state = 449 transfer_state = 450 transfer_state = 451
+			puppet = {
+				target = HTP
+				end_wars = yes
+			}
+			puppet = {
+				target = HFF
+				end_wars = yes
+			}
+			puppet = {
+				target = HFR
+				end_wars = yes
+			}
+		}
+
+		SDP = { transfer_state = 92 transfer_state = 169 transfer_state = 277 transfer_state = 278 transfer_state = 398 transfer_state = 399 transfer_state = 400 }
+
+		if = {
+			limit = { country_exists = RVV }
+			RVV = { transfer_state = 98 transfer_state = 134 transfer_state = 135 transfer_state = 138 transfer_state = 406 }
+		}
+		else_if = {
+			limit = { NOT = { country_exists = RVV } country_exists = CPV }
+			CPV = { transfer_state = 98 transfer_state = 134 transfer_state = 135 transfer_state = 138 transfer_state = 406 }
+		}
+		else_if = {
+			limit = { NOT = { country_exists = RVV country_exists = CPV } }
+			HST = { transfer_state = 98 transfer_state = 134 transfer_state = 135 transfer_state = 138 transfer_state = 406 }
+		}
+		if = {
+			limit = { 333 = { is_core_of = CPV } }
+			CPV = { transfer_state = 333 }
+		}
+		if = {
+			limit = { 333 = { is_core_of = RVV } }
+			RVV = { transfer_state = 333 }
+		}
+		if = {
+			limit = { 423 = { is_core_of = CPV } }
+			CPV = { transfer_state = 423 }
+		}
+		if = {
+			limit = { 423 = { is_core_of = RVV } }
+			RVV = { transfer_state = 423 }
+		}
+		if = {
+			limit = { 424 = { is_core_of = CPV } }
+			CPV = { transfer_state = 424 }
+		}
+		if = {
+			limit = { 424 = { is_core_of = RVV } }
+			RVV = { transfer_state = 424 }
+		}
+		if = {
+			limit = { 459 = { is_core_of = CPV } }
+			CPV = { transfer_state = 459 }
+		}
+		if = {
+			limit = { 459 = { is_core_of = RVV } }
+			RVV = { transfer_state = 459 }
+		}
+	}

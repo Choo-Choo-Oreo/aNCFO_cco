@@ -1,3 +1,121 @@
+industrialization_effort = {
+	enable = {
+		threat < 0.35
+		NOT = {
+			has_war = yes
+			any_country = {
+				LIMIT = { is_major = yes }
+				has_war_with_major = yes
+			}
+		}
+	}
+
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = added_military_to_civilian_factory_ratio
+		value = -100
+	}
+	ai_strategy = {
+		type = dockyard_to_military_factory_ratio
+		value = -100
+	}
+	ai_strategy = {
+		type = building_target
+		id = industrial_complex
+		value = 999
+	}
+	ai_strategy = {
+		type = building_target
+		id = synthetic_refinery
+		value = -999
+	}
+	ai_strategy = {
+		type = equipment_market_spend_factories
+		value = -999 # Factor for the EQUIPMENT_MARKET_MAX_CIVS_FOR_PURCHASES_RATIO define (value = 20 results in a factor of 1.2)
+	}
+}
+
+total_war_effort = {
+	enable = {
+		OR = {
+			threat > 0.35
+			has_war = yes
+			any_country = {
+				LIMIT = { is_major = yes }
+				has_war_with_major = yes
+			}
+		}
+	}
+
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = added_military_to_civilian_factory_ratio
+		value = 999
+	}
+	ai_strategy = {
+		type = dockyard_to_military_factory_ratio
+		value = -100
+	}
+	ai_strategy = {
+		type = building_target
+		id = arms_factory
+		value = 999
+	}
+}
+
+fuel_stockpile_effort = {
+	enable = {
+		OR = {
+			threat > 0.35
+			is_major = yes
+		}
+		NOT = { has_war = no }
+		has_fuel < 5000000
+	}
+
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = building_target
+		id = fuel_silo
+		value = 999
+	}
+}
+
+fuel_useage_effort = {
+	enable = {
+		any_country = {
+			LIMIT = { is_major = yes }
+			has_war_with_major = yes
+		}
+	}
+
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = building_target
+		id = fuel_silo
+		value = -999
+	}
+}
+
+wants_construction_complexs = {
+	enable = {
+		ROOT = {
+			every_owned_state = {
+				free_building_slots = {  building = arms_factory  size < 1 }
+			}
+		}
+	}
+	abort_when_not_enabled = yes
+	ai_strategy = {
+		type = building_target
+		id = construction_complex
+		value = 100
+	}
+}
 # Wants Steel Production
 	wants_steel_global_shortage = {
 		enable = {
@@ -335,20 +453,6 @@
 			type = pp_spend_amount
 			id = decision
 			value = 105
-		}
-	}
-
-	wants_early_civilian_factories = {
-		enable = {
-			date < 1726.01.01 # Two year of civ build up.
-			has_war = no
-			NOT = { has_global_flag = Artificers.GlobalIronShortage }
-		}
-		abort_when_not_enabled = yes
-		ai_strategy = {
-			type = building_target
-			id = industrial_complex
-			value = 50
 		}
 	}
 
