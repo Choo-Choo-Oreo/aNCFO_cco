@@ -1,10 +1,9 @@
 industrialization_effort = {
 	enable = {
 		threat < 0.35
-		NOT = {
-			has_war = yes
+		NOT = { 
 			any_country = {
-				LIMIT = { is_major = yes }
+				is_major = yes
 				has_war_with_major = yes
 			}
 		}
@@ -42,7 +41,7 @@ total_war_effort = {
 			threat > 0.35
 			has_war = yes
 			any_country = {
-				LIMIT = { is_major = yes }
+				is_major = yes
 				has_war_with_major = yes
 			}
 		}
@@ -65,55 +64,88 @@ total_war_effort = {
 	}
 }
 
-fuel_stockpile_effort = {
+#fuel_stockpile_effort = {
+#	enable = {
+#		OR = {
+#			threat > 0.35
+#			is_major = yes
+#		}
+#		NOT = { has_war = no }
+#		has_fuel < 5000000
+#	}
+
+#	abort_when_not_enabled = yes
+
+#	ai_strategy = {
+#		type = building_target
+#		id = fuel_silo
+#		value = 999
+#	}
+#}
+
+#fuel_useage_effort = {
+#	enable = {
+#		any_country = {
+#			LIMIT = { is_major = yes }
+#			has_war_with_major = yes
+#		}
+#	}
+
+#	abort_when_not_enabled = yes
+
+#	ai_strategy = {
+#		type = building_target
+#		id = fuel_silo
+#		value = -999
+#	}
+#}
+
+wants_construction_complexs = {
 	enable = {
-		OR = {
-			threat > 0.35
-			is_major = yes
+		NOT = {
+			any_owned_state = { free_building_slots = { building = arms_factory size > 0 } }
 		}
-		NOT = { has_war = no }
-		has_fuel < 5000000
 	}
 
 	abort_when_not_enabled = yes
 
 	ai_strategy = {
 		type = building_target
-		id = fuel_silo
+		id = construction_complex
 		value = 999
 	}
 }
 
-fuel_useage_effort = {
+wants_nuclear_reactors = {
 	enable = {
-		any_country = {
-			LIMIT = { is_major = yes }
-			has_war_with_major = yes
-		}
+		NOT = { has_tech = commercial_nuclear_reactor_tech }
 	}
 
 	abort_when_not_enabled = yes
 
 	ai_strategy = {
 		type = building_target
-		id = fuel_silo
-		value = -999
+		id = nuclear_reactor
+		value = 999
+	}
+	ai_strategy = {
+		type = building_target
+		id = nuclear_reactor_heavy_water
+		value = 999
 	}
 }
 
-wants_construction_complexs = {
+wants_commercial_nuclear_reactors = {
 	enable = {
-		ROOT = {
-			every_owned_state = {
-				free_building_slots = {  building = arms_factory  size < 1 }
-			}
-		}
+		has_tech = commercial_nuclear_reactor_tech
 	}
+
 	abort_when_not_enabled = yes
+
 	ai_strategy = {
 		type = building_target
-		id = construction_complex
-		value = 100
+		id = commercial_nuclear_reactor
+		value = 999
 	}
 }
 # Wants Steel Production
