@@ -2089,6 +2089,93 @@ focus_tree = { # Merchant-Republicism
 					}
 				}
 			}
+
+				focus = { # Spirit Killer
+					id = MRC_spirit_killer_focus
+					icon = GFX_focus_MRC_nuclear
+					prerequisite = { focus = MRC_wartime_government_forcus }
+					relative_position_id = MRC_wartime_government_forcus
+					x = 0
+					y = 1
+				
+					cost = 5
+					cancel_if_invalid = yes
+					continue_if_invalid = no
+					available_if_capitulated = no
+				
+					available = {
+					}
+					bypass = {
+					}
+				
+					ai_will_do = {
+						factor = 0
+						modifier = { factor = 0.67
+							has_tech = atomic_research }
+					}
+
+					completion_reward = {
+						log = "[GetDateText]: [Root.GetName]: Focus MRC_spirit_killer_focus"
+						IF = {
+							limit = {
+								NOT = { has_tech = atomic_research }
+							}
+							add_tech_bonus = {
+								name = MRC_perditio_project
+								bonus = 0.5
+								uses = 1
+								category = nuclear
+							}
+							add_breakthrough_progress = {
+								specialization = specialization_nuclear
+								value = 0.5
+							}
+							add_ideas = MRC_perditio_project_0
+						}
+						ELSE = {
+							add_breakthrough_progress = {
+								specialization = specialization_nuclear
+								value = 1
+							}
+							add_ideas = MRC_perditio_project_0
+						}
+					}
+				}
+
+				focus = { # Power Beyond their God
+					id = MRC_power_beyond_their_god_focus
+					icon = GFX_focus_MRC_nuclear
+					prerequisite = { focus = MRC_spirit_killer_focus }
+					relative_position_id = MRC_spirit_killer_focus
+					x = 0
+					y = 1
+				
+					cost = 10
+					cancel_if_invalid = yes
+					continue_if_invalid = no
+					available_if_capitulated = no
+				
+					available = {
+						has_tech = atomic_research
+					}
+					bypass = {
+					}
+				
+					ai_will_do = {
+						factor = 0
+						modifier = { factor = 0.67
+							has_tech = atomic_research }
+					}
+
+					completion_reward = {
+						log = "[GetDateText]: [Root.GetName]: Focus MRC_power_beyond_their_god_focus"
+						add_breakthrough_progress = {
+							specialization = specialization_nuclear
+							value = 1
+						}
+						swap_ideas = { remove_idea = MRC_perditio_project_0 add_idea = MRC_perditio_project_1 }
+					}
+				}
 	# Industrial Complex - Left+Middle
 		focus = { # Heavy Industry Construction
 			id = MRC_heavy_industry_construction

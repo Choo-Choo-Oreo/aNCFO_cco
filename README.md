@@ -36,7 +36,7 @@ Other Mod Devs/Modders the have ANY work added to this mod.
 		Better Mechanics : Combat									23 Nov 2024
 		Better Mechanics : Divisional AI							9 Aug 2024			6.8
 		Better Mechanics : Division Designer						18 Mar 2024
-		Better Mechanics : Frontline AI | Updated					9 Aug 2024			7.5
+		Better Mechanics : Frontline AI | Updated					3 Jan 2024			8.1
 		Better Mechanics : GFX Rework								Not Used
 		Better Mechanics : Intelligence Agency						Not Used
 		Better Mechanics : More Spies								Oct 10 2023
@@ -56,7 +56,7 @@ Other Mod Devs/Modders the have ANY work added to this mod.
 		Better Mechanics : Strategic View							3 Jun 2024
 		Better Mechanics : Commanders Limit							6 Jun 2024
 		Better Mechanics : Custom Rules								8 Jul 2024
-		Better Mechanics : MIOs										6 Aug 2024
+		Better Mechanics : MIOs										4 Jan 2025
 
 		Carpet Bombing												Not Used
 		Extensive Generic Aircraft Icons							Not Used
