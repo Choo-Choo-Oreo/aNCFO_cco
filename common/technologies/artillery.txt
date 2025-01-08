@@ -1595,19 +1595,14 @@ technologies = {
 
 	interwar_antitank = { # Equipment
 		ai_will_do = {
-			factor = 100
-			modifier = { add = 1 } # Artillery
+			factor = 10
+			modifier = { add = 700
+				threat > 0.01 num_of_military_factories > 20 }
+			modifier = { add = -700
+				threat < 0.01 num_of_military_factories < 20 }
 			modifier = { # Anti-Tank
 				factor = 10
 				any_enemy_country = { ROOT = { estimated_intel_max_armor = { tag = PREV value > 30 } } }
-			}
-			modifier = {
-				factor = 2
-				date > "1723.1.1"
-			}
-			modifier = {
-				factor = 5
-				date > "1724.1.1"
 			}
 		}
 
@@ -2422,8 +2417,11 @@ technologies = {
 
 	interwar_antiair = {
 		ai_will_do = {
-			factor = 100
-			modifier = { add = 1 } # Artillery
+			factor = 10
+			modifier = { add = 700
+				threat > 0.01 num_of_military_factories > 20 }
+			modifier = { add = -700
+				threat < 0.01 num_of_military_factories < 20 }
 			modifier = { # Anti-Air
 				factor = 10
 				any_enemy_country = { check_variable = { deployed_airforce_manpower_k > 5 } }

@@ -26,12 +26,78 @@ industrialization_effort = {
 	}
 	ai_strategy = {
 		type = building_target
+		id = fuel_silo
+		value = -999
+	}
+	ai_strategy = {
+		type = building_target
 		id = synthetic_refinery
 		value = -999
 	}
 	ai_strategy = {
 		type = equipment_market_spend_factories
-		value = -999 # Factor for the EQUIPMENT_MARKET_MAX_CIVS_FOR_PURCHASES_RATIO define (value = 20 results in a factor of 1.2)
+		value = -999
+	}
+}
+
+industrialization_effort_late_game = {
+	enable = {
+		num_of_controlled_states > 35
+		threat < 0.70
+		garrison_manpower_need < 100000
+		has_war = no
+		NOT = {
+			OR = {
+				AND = {
+					has_idea = age_17_50
+					OR = {
+						has_idea = all_adults_serve
+						has_idea = scraping_the_barrel
+					}
+				}
+				AND = {
+					has_idea = age_16_60
+					OR = {
+						has_idea = extensive_conscription
+						has_idea = service_by_requirement
+						has_idea = all_adults_serve
+						has_idea = scraping_the_barrel
+					}
+				}
+				has_idea = age_14_70
+				has_idea = age_12_80
+			}
+		}
+	}
+
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = added_military_to_civilian_factory_ratio
+		value = -100
+	}
+	ai_strategy = {
+		type = dockyard_to_military_factory_ratio
+		value = -100
+	}
+	ai_strategy = {
+		type = building_target	
+		id = industrial_complex
+		value = 999
+	}
+	ai_strategy = {
+		type = building_target
+		id = fuel_silo
+		value = -999
+	}
+	ai_strategy = {
+		type = building_target
+		id = synthetic_refinery
+		value = -999
+	}
+	ai_strategy = {
+		type = equipment_market_spend_factories
+		value = -999
 	}
 }
 
@@ -62,43 +128,12 @@ total_war_effort = {
 		id = arms_factory
 		value = 999
 	}
+	ai_strategy = {
+		type = building_target
+		id = fuel_silo
+		value = -999
+	}
 }
-
-#fuel_stockpile_effort = {
-#	enable = {
-#		OR = {
-#			threat > 0.35
-#			is_major = yes
-#		}
-#		NOT = { has_war = no }
-#		has_fuel < 5000000
-#	}
-
-#	abort_when_not_enabled = yes
-
-#	ai_strategy = {
-#		type = building_target
-#		id = fuel_silo
-#		value = 999
-#	}
-#}
-
-#fuel_useage_effort = {
-#	enable = {
-#		any_country = {
-#			LIMIT = { is_major = yes }
-#			has_war_with_major = yes
-#		}
-#	}
-
-#	abort_when_not_enabled = yes
-
-#	ai_strategy = {
-#		type = building_target
-#		id = fuel_silo
-#		value = -999
-#	}
-#}
 
 wants_construction_complexs = {
 	enable = {
@@ -273,45 +308,6 @@ wants_commercial_nuclear_reactors = {
 			value = 5
 		}
 	}
-# Aversion Steel Production
-	aversion_steel0 = {
-		enable = {
-			steel > 24
-			NOT = { has_global_flag = Artificers.GlobalIronShortage }
-		}
-		abort_when_not_enabled = yes
-		ai_strategy = {
-			type = building_target
-			id = steel_complex
-			value = -16
-		}
-	}
-
-	aversion_steel1 = {
-		enable = {
-			steel > 48
-			NOT = { has_global_flag = Artificers.GlobalIronShortage }
-		}
-		abort_when_not_enabled = yes
-		ai_strategy = {
-			type = building_target
-			id = steel_complex
-			value = -24
-		}
-	}
-
-	aversion_steel2 = {
-		enable = {
-			steel > 72
-			NOT = { has_global_flag = Artificers.GlobalIronShortage }
-		}
-		abort_when_not_enabled = yes
-		ai_strategy = {
-			type = building_target
-			id = steel_complex
-			value = -36
-		}
-	}
 # Wants Aluminium Production
 	wants_aluminium_level0 = {
 		enable = {
@@ -430,42 +426,6 @@ wants_commercial_nuclear_reactors = {
 			type = building_target
 			id = aluminium_complex
 			value = 5
-		}
-	}
-# Aversion Aluminium Production
-	aversion_aluminum0 = {
-		enable = {
-			aluminium > 24
-		}
-		abort_when_not_enabled = yes
-		ai_strategy = {
-			type = building_target
-			id = aluminium_complex
-			value = -16
-		}
-	}
-
-	aversion_aluminum1 = {
-		enable = {
-			aluminium > 48
-		}
-		abort_when_not_enabled = yes
-		ai_strategy = {
-			type = building_target
-			id = aluminium_complex
-			value = -24
-		}
-	}
-
-	aversion_aluminum2 = {
-		enable = {
-			aluminium > 72
-		}
-		abort_when_not_enabled = yes
-		ai_strategy = {
-			type = building_target
-			id = aluminium_complex
-			value = -36
 		}
 	}
 # Main Production
@@ -777,7 +737,11 @@ wants_commercial_nuclear_reactors = {
 	aNCFO_AI_more_small_planes_need_more_rubber = {
 		enable = {
 		    num_of_military_factories > 40
-			has_country_flag = ai_action_air_small
+		    OR = {
+				has_country_flag = ai_action_air_small
+				has_country_flag = ai_action_air_medium
+				has_country_flag = ai_action_air_large
+		    }
 		}
 		abort_when_not_enabled = yes
 		ai_strategy = {
@@ -790,7 +754,10 @@ wants_commercial_nuclear_reactors = {
 	aNCFO_AI_more_medium_planes_need_more_rubber = {
 		enable = {
 		    num_of_military_factories > 65
-			has_country_flag = ai_action_air_medium
+		    OR = {
+				has_country_flag = ai_action_air_medium
+				has_country_flag = ai_action_air_large
+		    }
 		}
 		abort_when_not_enabled = yes
 		ai_strategy = {
