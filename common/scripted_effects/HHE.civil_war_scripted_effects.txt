@@ -205,14 +205,11 @@ HHE_civil_war_ends = {
 	clr_global_flag = HHE_warmonger_civil_war_first # We no longer need this flag as the civil war is over.
 	clr_global_flag = HHE_warmonger_civil_war_final # We no longer need this flag as the civil war is over.
 	hidden_effect = {
-		if = {
-			limit = { any_country = { has_idea = harmonainus_civil_war } }
-			remove_ideas = harmonainus_civil_war
-		}
 		every_possible_country = {
 			clr_country_flag = collapse_of_the_nation_civil_war_local
 			clr_country_flag = collapse_of_the_nation_civil_war_regional
 			clr_country_flag = collapse_of_the_nation_civil_war_ignited
+			remove_ideas = harmonainus_civil_war
 		}
 	}
 }
@@ -242,6 +239,11 @@ HHI_subjects_civil_war_ends = {
 		MRC = { country_event = { id = MRC.4 } } # New threat over the horizon
 		set_global_flag = civilwar_victory_
 		post_civil_war_peoples_government_effect = yes
+	}
+	else_if = {
+		# Fallback if all major nations lost
+		set_global_flag = civilwar_victory_subject
+		post_civil_war_subject_effect = yes
 	}
 }
 
@@ -483,7 +485,8 @@ HHE_civil_war_ignited = {
 		add_to_faction = HFR
 	}
 	if = {
-		limit = { OR = { original_tag = HHE original_tag = HBB original_tag = HCR original_tag = HER original_tag = HET original_tag = HLF original_tag = HNO original_tag = HPP original_tag = HRF original_tag = HSP original_tag = HST original_tag = HTP original_tag = HUM #original_tag = HUP # Removed BC they can cause issues
+		limit = { OR = { original_tag = HHE original_tag = HBB original_tag = HCR original_tag = HER original_tag = HET original_tag = HLF original_tag = HNO original_tag = HPP #original_tag = HRF # Removed BC they can cause issues
+		original_tag = HSP original_tag = HST original_tag = HTP original_tag = HUM #original_tag = HUP # Removed BC they can cause issues
 		original_tag = HWA original_tag = HAN original_tag = HAP original_tag = HAW original_tag = HCO original_tag = HDW original_tag = HFF original_tag = HFR original_tag = HFS original_tag = HJU original_tag = HPG original_tag = HUF original_tag = ETF } }
 		if = {
 			limit = { country_exists = HBB NOT = { OR = { original_tag = HBB has_war_with = HBB HBB = { overlord = { is_harmonainus_imperious_extras = no } } } } }
@@ -517,10 +520,10 @@ HHE_civil_war_ignited = {
 			limit = { country_exists = HPP NOT = { OR = { original_tag = HPP has_war_with = HPP HPP = { overlord = { is_harmonainus_imperious_extras = no } } } } }
 			ROOT = { declare_war_on = { target = HPP type = civil_war } }
 		}
-		if = {
-			limit = { country_exists = HRF NOT = { OR = { original_tag = HRF has_war_with = HRF HRF = { overlord = { is_harmonainus_imperious_extras = no } } } } }
-			ROOT = { declare_war_on = { target = HRF type = civil_war } }
-		}
+		#if = {
+		#	limit = { country_exists = HRF NOT = { OR = { original_tag = HRF has_war_with = HRF HRF = { overlord = { is_harmonainus_imperious_extras = no } } } } }
+		#	ROOT = { declare_war_on = { target = HRF type = civil_war } }
+		#}
 		if = {
 			limit = { country_exists = HSP NOT = { OR = { original_tag = HSP has_war_with = HSP HSP = { overlord = { is_harmonainus_imperious_extras = no } } } } }
 			ROOT = { declare_war_on = { target = HSP type = civil_war } }

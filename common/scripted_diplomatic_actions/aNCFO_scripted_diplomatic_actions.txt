@@ -60,282 +60,215 @@ scripted_diplomatic_actions = {
 		
 		#### AI SECTION ###
 		
-		ai_desire = {		# AI modifiers to use this diplomatic action
-			modifier = {
-				factor = -50
-			}
-			modifier = { # strenght
-				ROOT = {
-					strength_ratio = {
-						tag = PREV
-						ratio > 0.5
-					}
-				}
-				add = 2
-			}
-				
-			modifier = {
-				ROOT = {
-					strength_ratio = {
-						tag = PREV
-						ratio > 1
-					}
-				}
-				add = 5
-			}
-				
-			modifier = {
-				ROOT = {
-					strength_ratio = {
-						tag = PREV
-						ratio > 2
-					}
-				}
-				add = 4
-			}
-				
-			modifier = {
-				ROOT = {
-					strength_ratio = {
-						tag = PREV
-						ratio < 0.4
-					}
-				}
-				add = -10
-			}
-
-			modifier = {
-				AND = {
-					tag = HHE
-					HHE = { has_government = theocratism }
-					ROOT = {
-						tag = MRC
-						NOT = { has_government = HHE }
-					}
-				}
-				add = -70
-			}
-
-			modifier = {
-				AND = {
-					tag = MRC
-					MRC = { OR = { has_government = semidemocracy has_government = authoritarianism } }
-					ROOT = { tag = MJU }
-				}
-				add = 50
-			}
-
-			modifier = {
-				AND = {
-					tag = MRC
-					MRC = { OR = { has_government = semidemocracy has_government = authoritarianism } }
-					ROOT = { tag = UFS }
-				}
-				add = 50
-			}
-
-			modifier = {
-				AND = {
-					tag = SDP
-					SDP = { OR = { has_government = pluralism has_government = semidemocracy } }
-					ROOT = { tag = UFS }
-				}
-				add = 50
-			}
-
-			modifier = { # distance
-				is_neighbor_of = ROOT
-				add = 2
-			}
-				
-			modifier = {
-				NOT = {
-					is_neighbor_of = ROOT
-				}
-				add = -3
-			}
-				
-			modifier = {
-				ROOT = {
-					is_major = yes
-				}
-				add = 5
-			}
-				
-			modifier = {
-				ROOT = {
-					land_doctrine_level > 2
-				}
-				add = 3
-			}
-			
-			modifier = {
-				ROOT = {
-					land_doctrine_level > 5
-				}
-				add = 4
-			}
-
-			modifier = {
-				ROOT = {
-					land_doctrine_level > 10
-				}
-				add = 4
-			}
-
-			modifier = { # slight friendliness bonus if same government
-				has_government = ROOT
-				add = 5
-			}
-
-			modifier = { # government style differences
-				NOT = {
-					has_government = ROOT
-				}
-				add = -5
-			}
-
-			modifier = {
-				has_non_aggression_pact_with = ROOT
-				add = 10
-			}
-
-			modifier = {
-				is_guaranteed_by = ROOT
-				add = 10
-			}
-
-			modifier = {
-				has_military_access_to = ROOT
-				add = 10
-			}
-
-			modifier = {
-				gives_military_access_to = ROOT
-				add = 10
-			}
-
-			modifier = { add = 50 OR = {
-				AND = {
-					tag = MRC
-					MRC = { OR = { has_completed_focus = MRC_foreign_intervention_focus has_completed_focus = MRC_intervention_policy } }
-					ROOT = { tag = KGK }
-				}
-				AND = {
-					tag = KGK
-					MRC = { OR = { has_completed_focus = MRC_foreign_intervention_focus has_completed_focus = MRC_intervention_policy } }
-					ROOT = { tag = MRC }
-				}
-			} }
-
-			modifier = { add = 50 OR = {
-				AND = {
-					tag = MRC
-					MRC = { OR = { has_completed_focus = MRC_foreign_intervention_focus has_completed_focus = MRC_intervention_policy } }
-					ROOT = { tag = REP }
-				}
-				AND = {
-					tag = REP
-					MRC = { OR = { has_completed_focus = MRC_foreign_intervention_focus has_completed_focus = MRC_intervention_policy } }
-					ROOT = { tag = MRC }
-				}
-			} }
-
-			modifier = { add = 50 OR = {
-				AND = {
-					tag = MRC
-					MRC = { OR = { has_completed_focus = MRC_foreign_intervention_focus has_completed_focus = MRC_intervention_policy } }
-					ROOT = { tag = RVV }
-				}
-				AND = {
-					tag = RVV
-					MRC = { OR = { has_completed_focus = MRC_foreign_intervention_focus has_completed_focus = MRC_intervention_policy } }
-					ROOT = { tag = MRC }
-				}
-			} }
-
-			modifier = { add = 50 OR = {
-				AND = {
-					tag = MRC
-					MRC = { OR = { has_completed_focus = MRC_foreign_intervention_focus has_completed_focus = MRC_intervention_policy } }
-					ROOT = { tag = UFS }
-				}
-				AND = {
-					tag = UFS
-					MRC = { OR = { has_completed_focus = MRC_foreign_intervention_focus has_completed_focus = MRC_intervention_policy } }
-					ROOT = { tag = MRC }
-				}
-			} }
-
-			modifier = {
-				has_opinion = {
-					target = ROOT
-					value > 10
-				}
-				add = 2
-			}
-				
-			modifier = {
-				has_opinion = {
-					target = ROOT
-					value > 15
-					}
-				add = 3
-			}
-				
-			modifier = {
-				has_opinion = {
-					target = ROOT
-					value > 20
-				}
-				add = 2
-			}
-				
-			modifier = {
-				has_opinion = {
-					target = ROOT
-					value > 30
-				}
-				add = 3
-			}
-				
-			modifier = {
-				has_opinion = {
-					target = ROOT
-					value > 50
-				}
-				add = 2
-			}
-				
-			modifier = {
-				has_opinion = {
-					target = ROOT
-					value > 70
-				}
-				add = 2
-			}
-			
-			modifier = {
-				has_opinion = {
-					target = ROOT
-					value > 95
-				}
-				add = 1
-			}
-		}
-		ai_acceptance = {		# AI modifiers to accept this diplomatic action, not valid if requires_acceptance is set to NO.
-			"Base Reluctance" = {
+		ai_desire = {	# AI modifiers to use this diplomatic action
+			modifier = { factor = -50 } # Base hesitation
+			# Historical
 				modifier = {
-					factor = -50
+					OR = {
+						AND = {
+							TAG = HRF
+							ROOT = { tag = HHE }
+						}
+						AND = {
+							TAG = HHE
+							ROOT = { tag = HRF }
+						}
+					}
+					HHE = { NOT = { has_completed_focus = HHE_warmonger_reconquer_northern_territories } }
+					add = 100
 				}
-			}
-			
-			"Friendliness" = {
-				base = 0
+
+				modifier = {
+					OR = {
+						AND = {
+							TAG = HUP
+							ROOT = { tag = HHE }
+						}
+						AND = {
+							TAG = HHE
+							ROOT = { tag = HUP }
+						}
+					}
+					HHE = { NOT = { has_completed_focus = HHE_warmonger_bifurcation_crusade } }
+					add = 100
+				}
+
+				modifier = {
+					AND = {
+						tag = HHE
+						HHE = { has_government = theocratism }
+						ROOT = {
+							tag = MRC
+							NOT = { has_government = HHE }
+						}
+					}
+					add = -70
+				}
+
+				modifier = {
+					AND = {
+						tag = MRC
+						MRC = { OR = { has_government = semidemocracy has_government = authoritarianism } }
+						ROOT = { tag = MJU }
+					}
+					add = 50
+				}
+
+				modifier = {
+					AND = {
+						tag = MRC
+						MRC = { OR = { has_government = semidemocracy has_government = authoritarianism } }
+						ROOT = { tag = UFS }
+					}
+					add = 50
+				}
+
+				modifier = {
+					AND = {
+						tag = SDP
+						SDP = { OR = { has_government = pluralism has_government = semidemocracy } }
+						ROOT = { tag = UFS }
+					}
+					add = 50
+				}
+
+				modifier = { add = 50 OR = {
+					AND = {
+						tag = MRC
+						MRC = { OR = { has_completed_focus = MRC_foreign_intervention_focus has_completed_focus = MRC_intervention_policy } }
+						ROOT = { tag = KGK }
+					}
+					AND = {
+						tag = KGK
+						MRC = { OR = { has_completed_focus = MRC_foreign_intervention_focus has_completed_focus = MRC_intervention_policy } }
+						ROOT = { tag = MRC }
+					}
+				} }
+
+				modifier = { add = 50 OR = {
+					AND = {
+						tag = MRC
+						MRC = { OR = { has_completed_focus = MRC_foreign_intervention_focus has_completed_focus = MRC_intervention_policy } }
+						ROOT = { tag = REP }
+					}
+					AND = {
+						tag = REP
+						MRC = { OR = { has_completed_focus = MRC_foreign_intervention_focus has_completed_focus = MRC_intervention_policy } }
+						ROOT = { tag = MRC }
+					}
+				} }
+
+				modifier = { add = 50 OR = {
+					AND = {
+						tag = MRC
+						MRC = { OR = { has_completed_focus = MRC_foreign_intervention_focus has_completed_focus = MRC_intervention_policy } }
+						ROOT = { tag = RVV }
+					}
+					AND = {
+						tag = RVV
+						MRC = { OR = { has_completed_focus = MRC_foreign_intervention_focus has_completed_focus = MRC_intervention_policy } }
+						ROOT = { tag = MRC }
+					}
+				} }
+
+				modifier = { add = 50 OR = {
+					AND = {
+						tag = MRC
+						MRC = { OR = { has_completed_focus = MRC_foreign_intervention_focus has_completed_focus = MRC_intervention_policy } }
+						ROOT = { tag = UFS }
+					}
+					AND = {
+						tag = UFS
+						MRC = { OR = { has_completed_focus = MRC_foreign_intervention_focus has_completed_focus = MRC_intervention_policy } }
+						ROOT = { tag = MRC }
+					}
+				} }
+			# Weights
+				modifier = { # Strength
+					ROOT = {
+						strength_ratio = {
+							tag = PREV
+							ratio > 0.5
+						}
+					}
+					add = 2
+				}
+					
+				modifier = {
+					ROOT = {
+						strength_ratio = {
+							tag = PREV
+							ratio > 1
+						}
+					}
+					add = 5
+				}
+					
+				modifier = {
+					ROOT = {
+						strength_ratio = {
+							tag = PREV
+							ratio > 2
+						}
+					}
+					add = 4
+				}
+					
+				modifier = {
+					ROOT = {
+						strength_ratio = {
+							tag = PREV
+							ratio < 0.4
+						}
+					}
+					add = -10
+				}
+
+				modifier = { # distance
+					is_neighbor_of = ROOT
+					add = 2
+				}
+					
+				modifier = {
+					NOT = {
+						is_neighbor_of = ROOT
+					}
+					add = -3
+				}
+					
+				modifier = {
+					ROOT = {
+						is_major = yes
+					}
+					add = 5
+				}
+					
+				modifier = {
+					ROOT = {
+						land_doctrine_level > 2
+					}
+					add = 3
+				}
+				
+				modifier = {
+					ROOT = {
+						land_doctrine_level > 5
+					}
+					add = 4
+				}
+
+				modifier = {
+					ROOT = {
+						land_doctrine_level > 10
+					}
+					add = 4
+				}
+
 				modifier = { # slight friendliness bonus if same government
 					has_government = ROOT
 					add = 5
 				}
+
 				modifier = { # government style differences
 					NOT = {
 						has_government = ROOT
@@ -347,22 +280,22 @@ scripted_diplomatic_actions = {
 					has_non_aggression_pact_with = ROOT
 					add = 10
 				}
-				
+
 				modifier = {
 					is_guaranteed_by = ROOT
 					add = 10
 				}
-				
+
 				modifier = {
 					has_military_access_to = ROOT
 					add = 10
 				}
-				
+
 				modifier = {
 					gives_military_access_to = ROOT
 					add = 10
 				}
-				
+
 				modifier = {
 					has_opinion = {
 						target = ROOT
@@ -370,15 +303,15 @@ scripted_diplomatic_actions = {
 					}
 					add = 2
 				}
-				
+					
 				modifier = {
 					has_opinion = {
 						target = ROOT
 						value > 15
-					}
+						}
 					add = 3
 				}
-				
+					
 				modifier = {
 					has_opinion = {
 						target = ROOT
@@ -386,7 +319,7 @@ scripted_diplomatic_actions = {
 					}
 					add = 2
 				}
-				
+					
 				modifier = {
 					has_opinion = {
 						target = ROOT
@@ -394,7 +327,7 @@ scripted_diplomatic_actions = {
 					}
 					add = 3
 				}
-				
+					
 				modifier = {
 					has_opinion = {
 						target = ROOT
@@ -402,7 +335,7 @@ scripted_diplomatic_actions = {
 					}
 					add = 2
 				}
-				
+					
 				modifier = {
 					has_opinion = {
 						target = ROOT
@@ -418,6 +351,224 @@ scripted_diplomatic_actions = {
 					}
 					add = 1
 				}
+			# End
+		}
+		ai_acceptance = {	# AI modifiers to accept this diplomatic action, not valid if requires_acceptance is set to NO.
+			"Base Reluctance" = {
+				modifier = { factor = -50 }
+			}
+			
+			"Friendliness" = {
+				base = 0
+				# Historical
+					modifier = {
+						OR = {
+							AND = {
+								TAG = HRF
+								ROOT = { tag = HHE }
+							}
+							AND = {
+								TAG = HHE
+								ROOT = { tag = HRF }
+							}
+						}
+						HHE = { NOT = { has_completed_focus = HHE_warmonger_reconquer_northern_territories } }
+						add = 100
+					}
+
+					modifier = {
+						OR = {
+							AND = {
+								TAG = HUP
+								ROOT = { tag = HHE }
+							}
+							AND = {
+								TAG = HHE
+								ROOT = { tag = HUP }
+							}
+						}
+						HHE = { NOT = { has_completed_focus = HHE_warmonger_bifurcation_crusade } }
+						add = 100
+					}
+
+					modifier = {
+						AND = {
+							tag = HHE
+							HHE = { has_government = theocratism }
+							ROOT = {
+								tag = MRC
+								NOT = { has_government = HHE }
+							}
+						}
+						add = -70
+					}
+
+					modifier = {
+						AND = {
+							tag = MRC
+							MRC = { OR = { has_government = semidemocracy has_government = authoritarianism } }
+							ROOT = { tag = MJU }
+						}
+						add = 50
+					}
+
+					modifier = {
+						AND = {
+							tag = MRC
+							MRC = { OR = { has_government = semidemocracy has_government = authoritarianism } }
+							ROOT = { tag = UFS }
+						}
+						add = 50
+					}
+
+					modifier = {
+						AND = {
+							tag = SDP
+							SDP = { OR = { has_government = pluralism has_government = semidemocracy } }
+							ROOT = { tag = UFS }
+						}
+						add = 50
+					}
+
+					modifier = { add = 50 OR = {
+						AND = {
+							tag = MRC
+							MRC = { OR = { has_completed_focus = MRC_foreign_intervention_focus has_completed_focus = MRC_intervention_policy } }
+							ROOT = { tag = KGK }
+						}
+						AND = {
+							tag = KGK
+							MRC = { OR = { has_completed_focus = MRC_foreign_intervention_focus has_completed_focus = MRC_intervention_policy } }
+							ROOT = { tag = MRC }
+						}
+					} }
+
+					modifier = { add = 50 OR = {
+						AND = {
+							tag = MRC
+							MRC = { OR = { has_completed_focus = MRC_foreign_intervention_focus has_completed_focus = MRC_intervention_policy } }
+							ROOT = { tag = REP }
+						}
+						AND = {
+							tag = REP
+							MRC = { OR = { has_completed_focus = MRC_foreign_intervention_focus has_completed_focus = MRC_intervention_policy } }
+							ROOT = { tag = MRC }
+						}
+					} }
+
+					modifier = { add = 50 OR = {
+						AND = {
+							tag = MRC
+							MRC = { OR = { has_completed_focus = MRC_foreign_intervention_focus has_completed_focus = MRC_intervention_policy } }
+							ROOT = { tag = RVV }
+						}
+						AND = {
+							tag = RVV
+							MRC = { OR = { has_completed_focus = MRC_foreign_intervention_focus has_completed_focus = MRC_intervention_policy } }
+							ROOT = { tag = MRC }
+						}
+					} }
+
+					modifier = { add = 50 OR = {
+						AND = {
+							tag = MRC
+							MRC = { OR = { has_completed_focus = MRC_foreign_intervention_focus has_completed_focus = MRC_intervention_policy } }
+							ROOT = { tag = UFS }
+						}
+						AND = {
+							tag = UFS
+							MRC = { OR = { has_completed_focus = MRC_foreign_intervention_focus has_completed_focus = MRC_intervention_policy } }
+							ROOT = { tag = MRC }
+						}
+					} }
+				# Weights
+					modifier = { # slight friendliness bonus if same government
+						has_government = ROOT
+						add = 5
+					}
+					modifier = { # government style differences
+						NOT = {
+							has_government = ROOT
+						}
+						add = -5
+					}
+
+					modifier = {
+						has_non_aggression_pact_with = ROOT
+						add = 10
+					}
+					
+					modifier = {
+						is_guaranteed_by = ROOT
+						add = 10
+					}
+					
+					modifier = {
+						has_military_access_to = ROOT
+						add = 10
+					}
+					
+					modifier = {
+						gives_military_access_to = ROOT
+						add = 10
+					}
+					
+					modifier = {
+						has_opinion = {
+							target = ROOT
+							value > 10
+						}
+						add = 2
+					}
+					
+					modifier = {
+						has_opinion = {
+							target = ROOT
+							value > 15
+						}
+						add = 3
+					}
+					
+					modifier = {
+						has_opinion = {
+							target = ROOT
+							value > 20
+						}
+						add = 2
+					}
+					
+					modifier = {
+						has_opinion = {
+							target = ROOT
+							value > 30
+						}
+						add = 3
+					}
+					
+					modifier = {
+						has_opinion = {
+							target = ROOT
+							value > 50
+						}
+						add = 2
+					}
+					
+					modifier = {
+						has_opinion = {
+							target = ROOT
+							value > 70
+						}
+						add = 2
+					}
+					
+					modifier = {
+						has_opinion = {
+							target = ROOT
+							value > 95
+						}
+						add = 1
+					}
+				# End
 			}
 			
 			"Beneficial" = {

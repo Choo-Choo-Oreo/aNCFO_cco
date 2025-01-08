@@ -3141,6 +3141,7 @@ focus_tree = { # Warmonger
 
 			completion_reward = {
 				log = "[GetDateText]: [Root.GetName]: Focus HHE_warmonger_family_reunion"
+				HTP = { country_event = { id = HHE_warmonger.3 } }
 				custom_effect_tooltip = if_they_accept
 				effect_tooltip = {
 					transfer_navy = { target = HTP }
@@ -3151,7 +3152,13 @@ focus_tree = { # Warmonger
 					105 = { add_core_of = ROOT }
 					566 = { add_core_of = ROOT }
 				}
-				HTP = { country_event = { id = HHE_warmonger.3 } }
+				custom_effect_tooltip = if_they_reject
+				effect_tooltip = {
+					declare_war_on = {
+						target = HTP
+						type = annex_everything
+					}
+				}
 			}
 		}
 
@@ -6281,6 +6288,7 @@ focus_tree = { # Warmonger
 			}
 			bypass = {
 				NOT = {
+					country_exists = HRF
 					country_exists = DOC
 					country_exists = REP
 				}
@@ -6302,19 +6310,37 @@ focus_tree = { # Warmonger
 
 			available_if_capitulated = yes
 
+			will_lead_to_war_with = HRF
 			will_lead_to_war_with = DOC
 			will_lead_to_war_with = REP
 			completion_reward = {
 				log = "[GetDateText]: [Root.GetName]: Focus HHE_warmonger_reconquer_northern_territories"
-				create_wargoal = {
-					type = annex_everything
-					target = DOC
-					expire = 0
+				IF = { LIMIT = { country_exists = HRF }
+					HRF = { country_event = { id = HHE_warmonger.13 } }
+					custom_effect_tooltip = if_they_accept
+					effect_tooltip = {
+						puppet = { target = HRF end_wars = no }
+					}
+					custom_effect_tooltip = if_they_reject
+					effect_tooltip = {
+						declare_war_on = { type = annex_everything target = HRF }
+						create_wargoal = { type = annex_everything target = HRF expire = 0 }
+					}
 				}
-				create_wargoal = {
-					type = annex_everything
-					target = REP
-					expire = 0
+				IF = { LIMIT = { OR = {
+						country_exists = DOC
+						country_exists = REP
+					} }
+					create_wargoal = {
+						type = annex_everything
+						target = DOC
+						expire = 0
+					}
+					create_wargoal = {
+						type = annex_everything
+						target = REP
+						expire = 0
+					}
 				}
 			}
 		}
@@ -6853,9 +6879,44 @@ focus_tree = { # Warmonger
 					log = "[GetDateText]: [Root.GetName]: Focus HHE_warmonger_bifurcation_crusade"
 					add_named_threat = { threat = 10 name = HHE_bifurcation_crusade }
 					# Event
-					puppet = {
-						target = HPV
-						end_wars = no
+					IF = { LIMIT = { country_exists = HUP }
+						HUP = { country_event = { id = HHE_warmonger.13 } }
+						custom_effect_tooltip = if_they_accept
+						effect_tooltip = {
+							puppet = { target = HUP end_wars = no }
+						}
+						custom_effect_tooltip = if_they_reject
+						effect_tooltip = {
+							declare_war_on = { type = annex_everything target = HUP }
+							create_wargoal = { type = annex_everything target = HUP expire = 0 }
+						}
+					}
+					IF = { LIMIT = { OR = {
+							country_exists = SFG
+							country_exists = SRA
+						} }
+						create_wargoal = {
+							type = annex_everything
+							target = SFG
+							expire = 0
+						}
+						create_wargoal = {
+							type = annex_everything
+							target = SRA
+							expire = 0
+						}
+					}
+					IF = { LIMIT = { country_exists = HPV }
+						HPV = { country_event = { id = HHE_warmonger.13 } }
+						custom_effect_tooltip = if_they_accept
+						effect_tooltip = {
+							puppet = { target = HPV end_wars = no }
+						}
+						custom_effect_tooltip = if_they_reject
+						effect_tooltip = {
+							declare_war_on = { type = annex_everything target = HPV }
+							create_wargoal = { type = annex_everything target = HPV expire = 0 }
+						}
 					}
 					create_wargoal = {
 						type = annex_everything
@@ -6895,16 +6956,6 @@ focus_tree = { # Warmonger
 					create_wargoal = {
 						type = annex_everything
 						target = NRP
-						expire = 0
-					}
-					create_wargoal = {
-						type = annex_everything
-						target = SFG
-						expire = 0
-					}
-					create_wargoal = {
-						type = annex_everything
-						target = SRA
 						expire = 0
 					}
 				}

@@ -304,6 +304,7 @@ add_namespace = HHE_warmonger # Warmonger
 				name = HHE_warmonger.3.a
 				ai_chance = { factor = 5 }
 				HHE = { set_autonomy = { target = HTP autonomy_state = autonomy_free } country_event = { id = HHE_warmonger.4 } }
+				HTP = { leave_faction  = yes drop_cosmetic_tag = yes }
 			}
 
 			option = {
@@ -323,6 +324,7 @@ add_namespace = HHE_warmonger # Warmonger
 			option = {
 				name = HHE_warmonger.4.a
 				set_autonomy = { target = HTP autonomy_state = autonomy_free }
+				HTP = { leave_faction  = yes drop_cosmetic_tag = yes }
 				complete_national_focus = HHE_warmonger_family_divided
 				hidden_effect = {
 					declare_war_on = {
@@ -483,6 +485,53 @@ add_namespace = HHE_warmonger # Warmonger
 				name = HHE_warmonger.12.optA
 			}
 		}
+
+		country_event = { # Reunite with the Capital?
+			id = HHE_warmonger.13
+			title = HHE_warmonger.13.t
+			desc = HHE_warmonger.13.d
+			picture = GFX_report_event_hitler_handshake
+			is_triggered_only = yes
+			immediate = { log = "[GetDateText]: [Root.GetName]: Event HHE_warmonger.13" }
+			option = {
+				name = HHE_warmonger.13.a
+				ai_chance = { factor = 5 }
+				FROM = { country_event = { id = HHE_warmonger.14 } }
+			}
+
+			option = {
+				name = HHE_warmonger.13.b
+				ai_chance = { factor = 95 }
+				FROM = { country_event = { id = HHE_warmonger.15 } }
+			}
+		}
+
+		country_event = { # Rejects the Reintergration
+			id = HHE_warmonger.14
+			title = HHE_warmonger.14.t
+			desc = HHE_warmonger.14.d
+			picture = GFX_report_event_hitler_handshake
+			is_triggered_only = yes
+			immediate = { log = "[GetDateText]: [Root.GetName]: Event HHE_warmonger.14" }
+			option = {
+				name = HHE_warmonger.14.a
+				declare_war_on = { type = annex_everything target = FROM }
+				create_wargoal = { type = annex_everything target = FROM expire = 0 }
+			}
+		}
+
+		country_event = { # Accepts the Reintergration
+			id = HHE_warmonger.15
+			title = HHE_warmonger.15.t
+			desc = HHE_warmonger.15.d
+			picture = GFX_report_event_hitler_handshake
+			is_triggered_only = yes
+			immediate = { log = "[GetDateText]: [Root.GetName]: Event HHE_warmonger.15" }
+			option = {
+				name = HHE_warmonger.15.a
+				puppet = { target = FROM end_wars = no }
+			}
+		}
 	# Civil-War
 		country_event = { # DOC REP
 			id = HHE_warmonger.96
@@ -491,6 +540,7 @@ add_namespace = HHE_warmonger # Warmonger
 			picture = GFX_report_event_usa_election_generic
 			is_triggered_only = yes
 
+			immediate = { log = "[GetDateText]: [Root.GetName]: Event HHE_warmonger.96" }
 			option = {
 				name = HHE_warmonger.96.a
 				if = {
@@ -507,6 +557,7 @@ add_namespace = HHE_warmonger # Warmonger
 			picture = GFX_report_event_usa_election_generic
 			is_triggered_only = yes
 
+			immediate = { log = "[GetDateText]: [Root.GetName]: Event HHE_warmonger.97" }
 			option = {
 				name = HHE_warmonger.97.a
 				if = {
@@ -523,6 +574,7 @@ add_namespace = HHE_warmonger # Warmonger
 			picture = GFX_report_event_usa_election_generic
 			is_triggered_only = yes
 
+			immediate = { log = "[GetDateText]: [Root.GetName]: Event HHE_warmonger.98" }
 			option = {
 				name = HHE_warmonger.98.a
 				if = {
@@ -538,7 +590,10 @@ add_namespace = HHE_warmonger # Warmonger
 			desc = HHE_warmonger.99.d
 			picture = GFX_report_event_usa_election_generic
 			is_triggered_only = yes
-			immediate = { set_global_flag = HHE_warmonger_civil_war_final } # This one is after "HHE_warmonger_civil_war_first"
+
+			immediate = { log = "[GetDateText]: [Root.GetName]: Event HHE_warmonger.98"
+				set_global_flag = HHE_warmonger_civil_war_final # This one is after "HHE_warmonger_civil_war_first"
+			}
 			option = {
 				name = HHE_warmonger.99.a
 				add_stability = 0.05
@@ -554,6 +609,7 @@ add_namespace = HHE_warmonger # Warmonger
 			picture = GFX_report_event_usa_election_generic
 			is_triggered_only = yes
 
+			immediate = { log = "[GetDateText]: [Root.GetName]: Event HHE_warmonger.100" }
 			option = { # Stay as is, the first option is the default so this should prevent afk switch
 				name = HHE_warmonger.100.a
 				hidden_effect = {
@@ -575,6 +631,7 @@ add_namespace = HHE_warmonger # Warmonger
 			picture = GFX_report_event_usa_election_generic
 			is_triggered_only = yes
 
+			immediate = { log = "[GetDateText]: [Root.GetName]: Event HHE_warmonger.101" }
 			option = { # Stay as is, the first option is the default so this should prevent afk switch
 				name = HHE_warmonger.101.a
 				hidden_effect = {
@@ -596,6 +653,7 @@ add_namespace = HHE_warmonger # Warmonger
 			picture = GFX_report_event_usa_election_generic
 			is_triggered_only = yes
 
+			immediate = { log = "[GetDateText]: [Root.GetName]: Event HHE_warmonger.102" }
 			option = { # Stay as is, the first option is the default so this should prevent afk switch
 				name = HHE_warmonger.102.a
 				hidden_effect = {
@@ -618,6 +676,7 @@ add_namespace = HHI_SUBJECTS
 			picture = GFX_report_event_usa_election_generic
 			is_triggered_only = yes
 
+			immediate = { log = "[GetDateText]: [Root.GetName]: Event HHI_SUBJECTS.100" }
 			option = {
 				name = HHI_SUBJECTS.100.a
 				custom_effect_tooltip = HHI_SUBJECTS_this_is_of_the_most_concern
@@ -663,6 +722,7 @@ add_namespace = HHI_SUBJECTS
 			picture = GFX_report_event_usa_election_generic
 			is_triggered_only = yes
 
+			immediate = { log = "[GetDateText]: [Root.GetName]: Event HHI_SUBJECTS.101" }
 			option = {
 				name = HHI_SUBJECTS.101.a
 				custom_effect_tooltip = HHI_SUBJECTS_this_is_of_the_most_concern
@@ -676,6 +736,7 @@ add_namespace = HHI_SUBJECTS
 			picture = GFX_report_event_usa_election_generic
 			is_triggered_only = yes
 
+			immediate = { log = "[GetDateText]: [Root.GetName]: Event HHI_SUBJECTS.102" }
 			option = {
 				name = HHI_SUBJECTS.102.a
 				custom_effect_tooltip = HHI_SUBJECTS_this_is_of_the_most_concern
