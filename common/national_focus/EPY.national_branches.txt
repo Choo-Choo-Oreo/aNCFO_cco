@@ -2,7 +2,7 @@ focus_tree = {
 	id = epy_reconquest_focus
 
 	country = {
-		factor = 0.1
+		factor = 0
 		modifier = {
 			add = 5
 			factor = 10
@@ -18,4 +18,42 @@ focus_tree = {
 	shared_focus = political_effort
 	shared_focus = EPY_liming_conquest
 	continuous_focus_position = { x = 50 y = 925 }
+}
+
+shared_focus = {
+	id = EPY_liming_conquest
+	icon = GFX_
+	#prerequisite = { focus =  }
+	#mutually_exclusive = { focus =  }
+	#relative_position_id = 
+	x = 17
+	y = 0
+
+	cost = 10
+
+	available = {
+		date > 1728.01.01 # Year Month Day
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		factor = 5
+	}
+
+	complete_tooltip = {
+	}
+	completion_reward = {
+		log = "[GetDateText]: [Root.GetName]: Focus EPY_liming_conquest"
+		every_country = {
+			limit = {
+				is_gaint_of_the_east_possible = yes
+				NOT = { is_subject_of = EPY }
+			}
+			PREV = {
+				declare_war_on = { type = annex_everything target = PREV }
+				create_wargoal = { type = annex_everything target = PREV expire = 0 }
+			}
+		}
+	}
 }

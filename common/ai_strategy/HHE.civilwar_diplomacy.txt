@@ -1,49 +1,103 @@
 # HBB, HCR, HER, HET, HHE, HLF, HNO, HPP, HRF, HSP, HST, HTP, HUM, HUP, HWA
 # HAN, HAP, HAW, HCO, HDW, HFF, HFR, HFS, HJU, HPG, 
-support_HHE_to_win = {
-	allowed = {
-		NOT = { has_government = unitism }
-		has_country_flag = harmonainus_religion
-		date > 1732.1.1
-	}
+support_HHE_to_win = { # Archard Vlad
 	enable = {
-		NOT = { has_government = unitism }
 		has_country_flag = harmonainus_religion
+		NOt = { OR = {
+			has_government = pluralism
+			has_government = semidemocracy
+		} }
 	}
-	abort = {
-		OR = {
-			date > 1732.1.1
-			AND = {
-				NOT = { has_global_flag = HHE_warmonger_civil_war_final }
-				OR = {
-					NOT = { country_exists = HHE }
-					NOT = { has_country_flag = harmonainus_religion }
-				}
-			}
-		}
-	}
+	abort = { NOT = { HHE_civil_war_blocked_after_victor = yes } }
+	allowed = { HHE_civil_war_blocked_after_victor = yes }
 
 	ai_strategy = {
 		type = send_volunteers_desire
 		id = "HHE"
-		value = 100 # They arn't pref but still better then the other.
+		value = 100
 	}
 	ai_strategy = {
 		type = support
 		id = "HHE"
-		value = 100 # They arn't pref but still better then the other.
+		value = 100
+	}
+}
+
+support_HLF_to_win = { # Gabriel Strongheart
+	enable = {
+		has_country_flag = harmonainus_religion
+		NOt = { OR = {
+			has_government = theocratism
+			has_government = unitism
+		} }
+	}
+	abort = { NOT = { HHE_civil_war_blocked_after_victor = yes } }
+	allowed = { HHE_civil_war_blocked_after_victor = yes }
+
+	ai_strategy = {
+		type = send_volunteers_desire
+		id = "HLF"
+		value = 100
+	}
+	ai_strategy = {
+		type = support
+		id = "HLF"
+		value = 100
+	}
+}
+
+support_HST_to_win = { # Isabella Delfina
+	enable = {
+		OR = {
+			has_country_flag = harmonainus_reformed_religion
+			has_country_flag = secular_religion
+		}
+		HST = { has_country_flag = form_harmonainus_imperious_west_flag }
+		OR = {
+			HLF = { has_country_flag = form_harmonainus_imperious_center_flag }
+			HNO = { has_country_flag = form_harmonainus_imperious_center_flag }
+			HHE = { has_country_flag = form_harmonainus_imperious_flag }
+		}
+	}
+	abort = { NOT = { HHE_civil_war_blocked_after_victor = yes } }
+	allowed = { HHE_civil_war_blocked_after_victor = yes }
+
+	ai_strategy = {
+		type = send_volunteers_desire
+		id = "HST"
+		value = 100
+	}
+	ai_strategy = {
+		type = support
+		id = "HST"
+		value = 100
+	}
+}
+
+support_HNO_to_win = { # Gaius Divitiis
+	enable = {
+		has_country_flag = harmonainus_religion
+		OR = {
+			has_government = semidemocracy
+			has_government = authoritarianism
+		}
+	}
+	abort = { NOT = { HHE_civil_war_blocked_after_victor = yes } }
+	allowed = { HHE_civil_war_blocked_after_victor = yes }
+
+	ai_strategy = {
+		type = send_volunteers_desire
+		id = "HNO"
+		value = 100
+	}
+	ai_strategy = {
+		type = support
+		id = "HNO"
+		value = 100
 	}
 }
 
 support_HFS_to_win = {
-	allowed = {
-		NOT = { has_country_flag = harmonainus_religion }
-		OR = {
-			has_government = pluralism
-			has_government = semidemocracy
-		}
-		date > 1732.1.1
-	}
 	enable = {
 		NOT = { has_country_flag = harmonainus_religion }
 		OR = {
@@ -55,40 +109,22 @@ support_HFS_to_win = {
 			country_exists = HTP
 		}
 	}
-	abort = {
-		OR = {
-			date > 1732.1.1
-			AND = {
-				NOT = { has_global_flag = HHE_warmonger_civil_war_final }
-				OR = {
-					NOT = { AND = { country_exists = HHE country_exists = HTP } }
-					NOT = { country_exists = HFS }
-				}
-			}
-		}
-	}
+	abort = { NOT = { HHE_civil_war_blocked_after_victor = yes } }
+	allowed = { HHE_civil_war_blocked_after_victor = yes }
 
 	ai_strategy = {
 		type = send_volunteers_desire
 		id = "HFS"
-		value = 100 # They arn't pref but still better then the other.
+		value = 100
 	}
 	ai_strategy = {
 		type = support
 		id = "HFS"
-		value = 100 # They arn't pref but still better then the other.
+		value = 100
 	}
 }
 
 support_HFS_to_win_MRC_boost = {
-	allowed = {
-		tag = MRC
-		OR = {
-			has_government = pluralism
-			has_government = semidemocracy
-		}
-		date > 1732.1.1
-	}
 	enable = {
 		tag = MRC
 		OR = {
@@ -100,99 +136,28 @@ support_HFS_to_win_MRC_boost = {
 			country_exists = HTP
 		}
 	}
-	abort = {
-		OR = {
-			date > 1732.1.1
-			AND = {
-				NOT = { has_global_flag = HHE_warmonger_civil_war_final }
-				OR = {
-					NOT = { AND = { country_exists = HHE country_exists = HTP } }
-					NOT = { country_exists = HFS }
-				}
-			}
-		}
-	}
+	abort = { NOT = { HHE_civil_war_blocked_after_victor = yes } }
+	allowed = { HHE_civil_war_blocked_after_victor = yes }
 
 	ai_strategy = {
 		type = send_volunteers_desire
 		id = "HFS"
-		value = 100 # They arn't pref but still better then the other.
+		value = 100
 	}
 	ai_strategy = {
 		type = support
 		id = "HFS"
-		value = 100 # They arn't pref but still better then the other.
-	}
-}
-
-support_HST_to_win = {
-	allowed = {
-		NOT = { has_government = unitism }
-		NOT = { has_country_flag = harmonainus_religion }
-		OR = {
-			has_country_flag = harmonainus_reformed_religion
-			has_country_flag = secular_religion
-		}
-		date > 1732.1.1
-	}
-	enable = {
-		NOT = { has_government = unitism }
-		NOT = { has_country_flag = harmonainus_religion }
-		OR = {
-			has_country_flag = harmonainus_reformed_religion
-			has_country_flag = secular_religion
-		}
-		OR = {
-			HST = { has_country_flag = form_harmonainus_imperious_west_flag }
-			HHE = { has_country_flag = form_harmonainus_imperious_flag }
-		}
-		HHE = { has_country_flag = form_harmonainus_imperious_flag }
-		country_exists = HHE
-	}
-	abort = {
-		OR = {
-			date > 1732.1.1
-			AND = {
-				NOT = { has_global_flag = HHE_warmonger_civil_war_final }
-				OR = {
-					NOT = { country_exists = HHE }
-					NOT = { country_exists = HST }
-				}
-			}
-		}
-	}
-
-	ai_strategy = {
-		type = send_volunteers_desire
-		id = "HST"
-		value = 100 # They arn't pref but still better then the other.
-	}
-	ai_strategy = {
-		type = support
-		id = "HST"
-		value = 100 # They arn't pref but still better then the other.
+		value = 100
 	}
 }
 
 support_HPG_to_win = {
-	allowed = {
-		has_government = unitism
-		is_harmonainus_imperious_extras = no
-		date > 1732.1.1
-	}
 	enable = {
 		has_government = unitism
-		is_harmonainus_imperious_extras = no
+		NOT = { is_harmonainus_imperious_extras = yes }
 	}
-	abort = {
-		OR = {
-			date > 1732.1.1
-			AND = {
-				NOT = { has_global_flag = HHE_warmonger_civil_war_final }
-				NOT = { country_exists = HPG }
-			}
-		}
-	}
+	abort = { NOT = { HHE_civil_war_blocked_after_victor = yes } }
+	allowed = { HHE_civil_war_blocked_after_victor = yes }
 
 	ai_strategy = {
 		type = send_volunteers_desire
@@ -207,22 +172,12 @@ support_HPG_to_win = {
 }
 
 support_HUF_to_win = {
-	allowed = {
-		has_government = unitism
-		date > 1732.1.1
-	}
 	enable = {
 		has_government = unitism
+		NOT = { is_harmonainus_imperious_extras = yes }
 	}
-	abort = {
-		OR = {
-			date > 1732.1.1
-			AND = {
-				NOT = { has_global_flag = HHE_warmonger_civil_war_final }
-				NOT = { country_exists = HUF }
-			}
-		}
-	}
+	abort = { NOT = { HHE_civil_war_blocked_after_victor = yes } }
+	allowed = { HHE_civil_war_blocked_after_victor = yes }
 
 	ai_strategy = {
 		type = send_volunteers_desire
