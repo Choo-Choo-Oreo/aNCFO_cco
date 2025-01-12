@@ -1,0 +1,352 @@
+# Army
+    ai_front_management_rush = {
+        enable = {
+            NOT = {
+                OR = {
+                    has_country_flag = ignore_micro_scripts 
+                    has_global_flag = ignore_micro_scripts_global
+                    surrender_progress > 0.2
+                    has_manpower < 1000
+                }
+            }
+            has_war = yes
+            is_major = no
+        }
+
+        abort_when_not_enabled = yes
+        
+        ai_strategy = {
+            type = front_control
+
+            country_trigger = { 
+                enemies_strength_ratio < 1.6
+            }
+
+            priority = 100
+            ordertype = front
+            execution_type = rush
+            execute_order = yes
+            manual_attack = no
+        }
+    }
+
+    ai_front_management_careful = {
+        enable = {
+            NOT = {
+                OR = {
+                    has_country_flag = ignore_micro_scripts 
+                    has_global_flag = ignore_micro_scripts_global
+                    surrender_progress > 0.2
+                    has_manpower < 1000
+                }
+            }
+            has_war = yes
+        }
+
+        abort_when_not_enabled = yes
+        
+        ai_strategy = {
+            type = front_control
+
+            country_trigger = { 
+                enemies_strength_ratio > 1.7
+                NOT = { enemies_strength_ratio > 3 }
+            }
+
+            ordertype = front
+            execution_type = careful
+            execute_order = yes
+            manual_attack = no
+        }
+    }
+
+    ai_front_management_rush_failing = {
+        enable = {
+            NOT = {
+                OR = {
+                    has_country_flag = ignore_micro_scripts 
+                    has_global_flag = ignore_micro_scripts_global
+                    has_manpower < 1000
+                }
+            }
+            has_war = yes
+            is_major = yes
+            surrender_progress > 0.2
+        }
+
+        abort_when_not_enabled = yes
+        
+        ai_strategy = {
+            type = front_control
+
+            country_trigger = { 
+                enemies_strength_ratio < 0.8
+            }
+
+            priority = 100
+            ordertype = front
+            execution_type = rush
+            execute_order = yes
+            manual_attack = no
+        }
+    }
+
+    ai_front_management_careful_failing = {
+        enable = {
+            NOT = {
+                OR = {
+                    has_country_flag = ignore_micro_scripts 
+                    has_global_flag = ignore_micro_scripts_global
+                    has_manpower < 1000
+                }
+            }
+            any_enemy_country = { is_major = yes }
+            is_major = yes
+            surrender_progress > 0.2
+        }
+
+        abort_when_not_enabled = yes
+        
+        ai_strategy = {
+            type = front_control
+
+            country_trigger = { 
+                enemies_strength_ratio > 0.9
+                NOT = { enemies_strength_ratio > 1.2 }
+            }
+
+            ordertype = front
+            execution_type = careful
+            execute_order = yes
+            manual_attack = no
+        }
+    }
+
+    ai_front_management_rush_major_vs_minor = {
+        enable = {
+            NOT = {
+                OR = {
+                    has_country_flag = ignore_micro_scripts 
+                    has_global_flag = ignore_micro_scripts_global
+                    surrender_progress > 0.2
+                    has_manpower < 1000
+                }
+            }
+            has_war = yes
+            is_major = yes
+        }
+
+        abort_when_not_enabled = yes
+        
+        ai_strategy = {
+            type = front_control
+
+            country_trigger = { 
+                enemies_strength_ratio < 3
+                is_major = no
+            }
+
+            ordertype = front
+            execution_type = careful
+            execute_order = yes
+            manual_attack = no
+        }
+    }
+
+    ai_front_management_careful_major_vs_minor = {
+        enable = {
+            NOT = {
+                OR = {
+                    has_country_flag = ignore_micro_scripts 
+                    has_global_flag = ignore_micro_scripts_global
+                    surrender_progress > 0.2
+                    has_manpower < 1000
+                }
+            }
+            has_war = yes
+            is_major = yes
+        }
+
+        abort_when_not_enabled = yes
+        
+        ai_strategy = {
+            type = front_control
+
+            country_trigger = { 
+                enemies_strength_ratio > 3.1
+                NOT = { enemies_strength_ratio > 4 }
+                is_major = no
+            }
+
+            ordertype = front
+            execution_type = careful
+            execute_order = yes
+            manual_attack = no
+        }
+    }
+
+    ai_front_management_stop = {
+        enable = {
+            NOT = {
+                OR = {
+                    has_country_flag = ignore_micro_scripts 
+                    has_global_flag = ignore_micro_scripts_global
+                }
+            }
+            has_war = yes
+            has_manpower < 1000
+        }
+
+        abort_when_not_enabled = yes
+        
+        ai_strategy = {
+            type = front_control
+
+            country_trigger = { 
+                enemies_strength_ratio > 0.4
+            }
+
+            ordertype = front
+            execution_type = careful
+            execute_order = no
+            manual_attack = no
+        }
+    }
+
+    ai_homeland_defense = {
+        enable = {
+            NOT = {
+                OR = {
+                    has_country_flag = ignore_micro_scripts 
+                    has_global_flag = ignore_micro_scripts_global
+                }
+            }
+            has_war = yes
+            surrender_progress > 0.2
+        }
+
+        abort_when_not_enabled = yes
+        
+        ai_strategy = {
+            type = front_unit_request
+            state_trigger = { 
+                any_state = {
+                    is_core_of = ROOT
+                    owner = {
+                        has_war_with = ROOT
+                    }
+                }
+            }
+            value = 100                         # Will be added as a factor over regular requests.
+        }
+    }
+# Navy
+    ai_navy_managment_no_problem = {
+        enable = {
+            NOT = {
+                OR = {
+                    has_country_flag = ignore_navy_micro_scripts 
+                    has_global_flag = ignore_navy_micro_scripts_global
+                    enemies_naval_strength_ratio > 0.8
+                }
+            }
+            has_war = yes
+            enemies_naval_strength_ratio < 0.8
+        }
+
+        abort_when_not_enabled = yes
+        
+        ai_strategy = {
+            type = naval_mission_threshold
+            id = MISSION_CONVOY_RAIDING
+            value = -1000
+        }
+        ai_strategy = {
+            type = naval_mission_threshold
+            id = MISSION_STRIKE_FORCE
+            value = -1000
+        }
+        ai_strategy = {
+            type = naval_mission_threshold
+            id = MISSION_PATROL
+            value = 1000
+        }
+        ai_strategy = {
+            type = naval_mission_threshold
+            id = MISSION_CONVOY_ESCORT
+            value = 1000
+        }
+    }
+
+    ai_navy_managment_beatable = {
+        enable = {
+            NOT = {
+                OR = {
+                    has_country_flag = ignore_navy_micro_scripts 
+                    has_global_flag = ignore_navy_micro_scripts_global
+                    enemies_naval_strength_ratio > 3.0
+                }
+            }
+            has_war = yes
+            enemies_naval_strength_ratio > 0.8
+        }
+
+        abort_when_not_enabled = yes
+        
+        ai_strategy = {
+            type = naval_mission_threshold
+            id = MISSION_CONVOY_RAIDING
+            value = -100
+        }
+        ai_strategy = {
+            type = naval_mission_threshold
+            id = MISSION_STRIKE_FORCE
+            value = -5000
+        }
+        ai_strategy = {
+            type = naval_mission_threshold
+            id = MISSION_PATROL
+            value = 1000
+        }
+        ai_strategy = {
+            type = naval_mission_threshold
+            id = MISSION_CONVOY_ESCORT
+            value = 1000
+        }
+    }
+
+    ai_navy_managment_unbeatable = {
+        enable = {
+            NOT = {
+                OR = {
+                    has_country_flag = ignore_navy_micro_scripts 
+                    has_global_flag = ignore_navy_micro_scripts_global
+                }
+            }
+            has_war = yes
+            enemies_naval_strength_ratio > 3.0
+        }
+
+        abort_when_not_enabled = yes
+        
+        ai_strategy = {
+            type = naval_mission_threshold
+            id = MISSION_CONVOY_RAIDING
+            value = 1000
+        }
+        ai_strategy = {
+            type = naval_mission_threshold
+            id = MISSION_STRIKE_FORCE
+            value = 1000
+        }
+        ai_strategy = {
+            type = naval_mission_threshold
+            id = MISSION_PATROL
+            value = 1000
+        }
+        ai_strategy = {
+            type = naval_mission_threshold
+            id = MISSION_CONVOY_ESCORT
+            value = 1000
+        }
+    }

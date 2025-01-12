@@ -89,39 +89,6 @@ on_actions = {
 					}
 				}
 			}
-		# Resistance and compliance
-			effect = {
-				12 = {
-					set_compliance = 10
-					set_resistance = 30
-					set_garrison_strength = 0.65
-				}
-				74 = {
-					set_compliance = 5
-					set_resistance = 35
-					set_garrison_strength = 0.55
-				}
-				76 = {
-					set_compliance = 20
-					set_resistance = 20
-					set_garrison_strength = 1.0
-				}
-				336 = {
-					set_compliance = 20
-					set_resistance = 20
-					set_garrison_strength = 1.0
-				}
-				337 = {
-					set_compliance = 15
-					set_resistance = 30
-					set_garrison_strength = 0.65
-				}
-				338 = {
-					set_compliance = 15
-					set_resistance = 25
-					set_garrison_strength = 0.8
-				}
-			}
 		# Gamerules Setup
 			effect = {
 				IF = { # Harmonainus Imperious: Dismantled
@@ -212,6 +179,39 @@ on_actions = {
 					}
 				}
 			}
+		# Resistance and compliance
+			effect = {
+				12 = {
+					set_compliance = 10
+					set_resistance = 30
+					set_garrison_strength = 0.65
+				}
+				74 = {
+					set_compliance = 5
+					set_resistance = 35
+					set_garrison_strength = 0.55
+				}
+				76 = {
+					set_compliance = 20
+					set_resistance = 20
+					set_garrison_strength = 1.0
+				}
+				336 = {
+					set_compliance = 20
+					set_resistance = 20
+					set_garrison_strength = 1.0
+				}
+				337 = {
+					set_compliance = 15
+					set_resistance = 30
+					set_garrison_strength = 0.65
+				}
+				338 = {
+					set_compliance = 15
+					set_resistance = 25
+					set_garrison_strength = 0.8
+				}
+			}
 		# Country Setup
 			effect = {
 				set_global_flag = aNCFO_enabled
@@ -276,7 +276,14 @@ on_actions = {
 					}
 				}
 			# Harmonainus Imperious
-				effect = {
+				effect = { # Respirce Rogjts
+					HHE = {
+						give_resource_rights = { receiver = HNO state = 79 }
+						give_resource_rights = { receiver = HNO state = 82 }
+					}
+					HBB = {
+						give_resource_rights = { receiver = HNO state = 157 }
+					}
 					HSP = {
 						give_resource_rights = { receiver = HNO state = 106 }
 						give_resource_rights = { receiver = HNO state = 451 }
@@ -292,8 +299,12 @@ on_actions = {
 						give_resource_rights = { receiver = HNO state = 279 }
 						give_resource_rights = { receiver = HNO state = 399 }
 					}
+					HUM = {
+						give_resource_rights = { receiver = HNO state = 148 }
+						give_resource_rights = { receiver = HNO state = 410 }
+					}
 				}
-				effect = {
+				effect = { # Lock all Divisions
 					every_country = {
 						if = {
 							limit = {
@@ -364,15 +375,9 @@ on_actions = {
 					every_state = {
 						limit = {
 							OR = {
-								is_core_of = DOO
 								is_core_of = FDN
-								is_core_of = HNT
-								is_core_of = KST
 								is_core_of = MTR
-								is_core_of = NWE
-								is_core_of = RDN # Should just be neighbor.
-								is_core_of = SHT
-								#is_core_of = TRH
+								is_owned_by = HNT
 							}
 						}
 						add_core_of = ROM
@@ -381,6 +386,7 @@ on_actions = {
 						limit = {
 							NOT = { is_core_of = ROM }
 							OR = {
+								is_core_of = DOO
 								state_is_in_the_kunstfertiger_sea = yes
 								state_is_in_the_mitti_sea = yes
 							}

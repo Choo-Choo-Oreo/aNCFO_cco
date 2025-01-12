@@ -14,15 +14,19 @@ This is a fantasy mod for HoI4 based off my own stories. I'm a solo dev with som
     - English
 
 [h1]Update[/h1]
-- Updated to 1.15.
-- Artificers Nations Content.
-- Added Special Projects.
+- Civilwar bug Fixing
+- Added many DAMs
+- Added many more states(100+ states)
+- Map Cleanup
+- AI Improvements
 
 [h1]Plans[/h1]
 - Several focus tree's for majors.
 - Clear dynamic focus trees outside of the story that is written.
+- Dynamic decisions for majors to project influence for resources and industries.
 - Many formables for all countries.
 - Roleplay focus design for multiplayer.
+- Always a world at war.
 - Overall balance experience.
 
 [h1]Information[/h1]

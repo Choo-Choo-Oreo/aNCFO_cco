@@ -1,3 +1,47 @@
+ai_do_not_build = {
+	enable = {
+		always = yes
+	}
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = equipment_production_min_factories
+		id = scout_plane
+		value = -100
+	}
+	ai_strategy = {
+		type = equipment_production_min_factories
+		id = anti_tank
+		value = -100
+	}
+	ai_strategy = {
+		type = equipment_production_min_factories
+		id = tactical_bomber
+		value = -100
+	}
+
+	ai_strategy = {
+		type = equipment_production_min_factories
+		id = strategic_bomber
+		value = -100
+	}
+	ai_strategy = { 
+		type = equipment_production_min_factories 
+		id = naval_bomber 
+		value = -100 
+	}
+	ai_strategy = { 
+		type = equipment_production_min_factories 
+		id = heavy_fighter 
+		value = -100 
+	}
+	ai_strategy = { 
+		type = equipment_production_min_factories 
+		id = maritime_patrol_plane
+		value = -100 
+	}
+}
+
 ai_dumb_production_fix = {
 	enable = {
 		num_of_military_factories > 20
@@ -29,6 +73,12 @@ ai_dumb_production_fix = {
 		id = train
 		value = 1
 	}
+	
+	ai_strategy = {
+		type = equipment_production_min_factories
+		id = convoy
+		value = 3
+	}
 }
 
 we_like_planes_alot = {
@@ -53,14 +103,48 @@ we_like_planes_alot = {
 	}
 }
 
+rubber_is_ok = {
+	enable = {
+		any_allied_country = {
+			rubber > 100
+		}
+	}
+	
+	abort_when_not_enabled = yes
+
+    ai_strategy = {
+		type = equipment_production_factor
+		id = fighter
+		value = 80
+	}
+	
+	ai_strategy = {
+		type = equipment_production_factor
+		id = cas
+		value = 80
+	}
+	
+	ai_strategy = {
+		type = equipment_production_factor
+		id = infantry
+		value = -15
+	}
+	
+	ai_strategy = {
+		type = equipment_production_factor
+		id = armor
+		value = -15
+	}
+}
+
 no_tanky_for_you = {
 	enable = { 
 		NOT = {
 			num_divisions < 120
 			num_of_military_factories < 50
 			OR = {
-				has_tech = basic_medium_tank
-				has_tech = basic_medium_tank_chassis
+			has_tech = basic_medium_tank
+			has_tech = basic_medium_tank_chassis
 			}
 		}
 	}
@@ -94,7 +178,13 @@ tanky_for_you = {
 			has_tech = basic_medium_tank
 			has_tech = basic_medium_tank_chassis
 		}
-		NOT = { surrender_progress > 0.2 }
+		NOT = { 
+			OR = {
+			surrender_progress > 0.2 
+			has_tech = main_battle_tank
+			has_tech = main_battle_tank_chassis
+			}
+		}
 	}
 	abort_when_not_enabled = yes
 
@@ -111,6 +201,33 @@ tanky_for_you = {
 	}
 }
 
+modern_tanky_for_you = {
+	enable = {
+		num_of_military_factories > 50
+		num_divisions > 120
+		OR = {
+			has_tech = main_battle_tank
+			has_tech = main_battle_tank_chassis
+		}
+		NOT = { 
+			surrender_progress > 0.2 
+		}
+	}
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = role_ratio
+		id = armor
+		value = 300
+	}
+
+	ai_strategy = {
+		type = equipment_production_min_factories_archetype
+		id = modern_tank_chassis
+		value = 30
+	}
+}
+
 no_more_inf_needed = {
 	enable = {
 		num_divisions > 300
@@ -118,14 +235,38 @@ no_more_inf_needed = {
 			has_tech = basic_medium_tank
 			has_tech = basic_medium_tank_chassis
 		}
-		NOT = { surrender_progress > 0.2 }
+		NOT = {
+			surrender_progress > 0.2 
+			has_army_size = {
+				size > 50
+				type = armor
+			}
+		}
+		
 	}
 	abort_when_not_enabled = yes
 
     ai_strategy = {
 		type = role_ratio
 		id = infantry
-		value = -300
+		value = -500
+	}
+}
+
+no_more_tank_needed = {
+	enable = {
+		has_army_size = {
+			size > 50
+			type = armor
+		}
+		
+	}
+	abort_when_not_enabled = yes
+
+    ai_strategy = {
+		type = role_ratio
+		id = armor
+		value = -200
 	}
 }
 
@@ -145,24 +286,29 @@ we_are_at_deaths_door = {
 	ai_strategy = {
 		type = equipment_production_factor
 		id = armor
-		value = -300
+		value = -1000
 	}
 	ai_strategy = {
 		type = equipment_production_min_factories_archetype
 		id = medium_tank_chassis
 		value = -300
 	}
-	
 	ai_strategy = {
-		type = equipment_production_factor
-		id = fighter
+		type = equipment_production_min_factories_archetype
+		id = modern_tank_chassis
 		value = -300
 	}
 	
 	ai_strategy = {
 		type = equipment_production_factor
+		id = fighter
+		value = -1000
+	}
+	
+	ai_strategy = {
+		type = equipment_production_factor
 		id = cas
-		value = -300
+		value = -1000
 	}
 	
 	ai_strategy = {
@@ -203,18 +349,23 @@ no_oil_big_l = {
 	ai_strategy = {
 		type = equipment_production_factor
 		id = armor
-		value = -300
+		value = -1000
 	}
 	ai_strategy = {
 		type = equipment_production_min_factories_archetype
 		id = medium_tank_chassis
 		value = -300
 	}
+	ai_strategy = {
+		type = equipment_production_min_factories_archetype
+		id = modern_tank_chassis
+		value = -300
+	}
 	
 	ai_strategy = {
 		type = equipment_production_factor
 		id = cas
-		value = -300
+		value = -1000
 	}
 	
 	ai_strategy = {

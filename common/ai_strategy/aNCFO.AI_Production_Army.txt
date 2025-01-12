@@ -1,105 +1,3 @@
-no_lag_anti_division = {
-	enable = {
-		has_war = no
-		is_major = no
-		NOT = { OR = {
-			is_gaint_of_the_east_possible = yes
-			is_harmonainus_imperious_extras = yes
-			has_major_nationalfocus_tree = yes
-			tag = ANA
-			tag = BHK
-			tag = CPV
-			tag = DOC
-			tag = IHS
-			tag = KGK
-			tag = MJU
-			tag = REP
-			tag = ROM
-			tag = RVV
-			tag = SDP
-			tag = SMK
-			tag = UFS
-		} }
-	}
-
-	abort_when_not_enabled = yes
-
-	ai_strategy = {
-		type = ai_wanted_divisions_factor
-		value = -1000
-	}
-}
-
-division_limiter = {
-	enable = {
-		NOT = { has_global_flag = KR_no_unit_limits }
-		has_reached_maximum_divisions = yes
-		NOT = { surrender_progress > 0.05 }
-	}
-
-	abort_when_not_enabled = yes
-
-	ai_strategy = {
-		type = build_army
-		id = anti_tank
-		value = -10000
-	}
-
-	ai_strategy = {
-		type = build_army
-		id = armor
-		value = -10000
-	}
-
-	ai_strategy = {
-		type = build_army
-		id = bicycle
-		value = -10000
-	}
-
-	ai_strategy = {
-		type = build_army
-		id = cavalry
-		value = -10000
-	}
-
-	ai_strategy = {
-		type = build_army
-		id = heavy_armor
-		value = -10000
-	}
-
-	ai_strategy = {
-		type = build_army
-		id = infantry
-		value = -10000
-	}
-
-	ai_strategy = {
-		type = build_army
-		id = marine
-		value = -10000
-	}
-
-	ai_strategy = {
-		type = build_army
-		id = mobile
-		value = -10000
-	}
-
-	ai_strategy = {
-		type = build_army
-		id = mountaineer
-		value = -10000
-	}
-
-	ai_strategy = {
-		type = build_army
-		id = suppression
-		value = -10000
-	}
-}
-
 get_that_xp = {
 	enable = {
 		always = yes
@@ -113,16 +11,32 @@ get_that_xp = {
 	}
 }
 
-protect_the_homelands = {
+defend_your_home_please = {
 	enable = {
-		alliance_naval_strength_ratio < 1.5
+		surrender_progress > 0.1
 	}
-
 	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = spare_unit_factor
+		value = -100
+	}
 	
 	ai_strategy = {
 		type = garrison
-		value = 20
+		value = -100
+	}
+}
+
+dont_waste_troops_please = {
+	enable = {
+		num_of_controlled_states > 70
+	}
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = garrison
+		value = -100
 	}
 }
 
