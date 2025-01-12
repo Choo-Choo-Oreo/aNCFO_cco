@@ -1,6 +1,6 @@
 # A New Chapter, Fantasy Overhual Flags
 
-Text
+This is a comprehensive list of all the flags used in the game. It is recommended to use the HTML file, as it includes detailed descriptions of each flag's purpose.
 
 ## Table of Content
 
@@ -25,6 +25,14 @@ Text
 * divine_right_coring_num2
 * divine_right_coring_num3
 * divine_right_coring_num4
+* ai_action_navy_small
+* ai_action_navy_medium
+* ai_action_navy_large
+* ai_action_air_small
+* ai_action_air_medium
+* ai_action_air_large
+* ai_action_industry_capacity
+* ai_action_industry_vacancy
 
 ## Global Flags
 
