@@ -1,0 +1,112 @@
+﻿add_namespace = influence_events
+
+country_event = {
+	id = influence_events.0
+	title = influence_events.0.t
+	desc = influence_events.0.d
+	picture = GFX_report_event_fascist_gathering
+	is_triggered_only = yes
+	immediate = { log = "[GetDateText]: [Root.GetName]: Event influence_events.0" }
+	option = { # Declined
+		name = influence_events.0.optA
+		FROM = { country_event = { id = influence_events.1 } }
+		ai_chance = { factor = 1
+			modifier = { factor = 10.0
+				ROOT = { NOT = { has_government = FROM } }
+			}
+			modifier = { factor = 5.0
+				is_enemy_religion = yes
+			}
+			modifier = { factor = -5.0
+				ROOT = { has_government = semidemocracy }
+				FROM = { OR = {
+					has_government = pluralism
+					has_government = authoritarianism
+				} }
+			}
+			modifier = { factor = -5.0
+				FROM = { has_government = semidemocracy }
+				ROOT = { OR = {
+					has_government = pluralism
+					has_government = authoritarianism
+				} }
+			}
+		}
+		IF = {
+			LIMIT = { tag = HHE }
+			FROM = { set_country_flag = denied.ally_with_HHE }
+		}
+		IF = {
+			LIMIT = { tag = OAK }
+			FROM = { set_country_flag = denied.ally_with_OAK }
+		}
+		IF = {
+			LIMIT = { tag = MRC }
+			FROM = { set_country_flag = denied.ally_with_MRC }
+		}
+	}
+	option = { # Accept
+		name = influence_events.0.optB
+		FROM = { country_event = { id = influence_events.2 } }
+		ai_chance = { factor = 2
+			modifier = { factor = 10.0
+				ROOT = { has_government = FROM }
+			}
+			modifier = { factor = 5.0
+				NOT = { is_enemy_religion = yes }
+			}
+			modifier = { factor = 5.0
+				ROOT = { has_government = semidemocracy }
+				FROM = { OR = {
+					has_government = pluralism
+					has_government = authoritarianism
+				} }
+			}
+			modifier = { factor = 5.0
+				FROM = { has_government = semidemocracy }
+				ROOT = { OR = {
+					has_government = pluralism
+					has_government = authoritarianism
+				} }
+			}
+		}
+		IF = {
+			LIMIT = { tag = HHE }
+			FROM = { set_country_flag = accept.ally_with_HHE }
+		}
+		IF = {
+			LIMIT = { tag = OAK }
+			FROM = { set_country_flag = accept.ally_with_OAK }
+		}
+		IF = {
+			LIMIT = { tag = MRC }
+			FROM = { set_country_flag = accept.ally_with_MRC }
+		}
+	}
+}
+
+country_event = { # Declined
+	id = influence_events.1
+	title = influence_events.1.t
+	desc = influence_events.1.d
+	picture = GFX_report_event_fascist_gathering
+	is_triggered_only = yes
+	immediate = { log = "[GetDateText]: [Root.GetName]: Event influence_events.1" }
+	option = {
+		name = influence_events.1.optA
+		ai_chance = { factor = 1 }
+	}
+}
+
+country_event = { # Accept
+	id = influence_events.2
+	title = influence_events.2.t
+	desc = influence_events.2.d
+	picture = GFX_report_event_fascist_gathering
+	is_triggered_only = yes
+	immediate = { log = "[GetDateText]: [Root.GetName]: Event influence_events.2" }
+	option = {
+		name = influence_events.2.optA
+		ai_chance = { factor = 1 }
+	}
+}

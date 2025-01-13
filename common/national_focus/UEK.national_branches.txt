@@ -1,0 +1,102 @@
+focus_tree = {
+	id = uek_focus
+
+	country = {
+		factor = 0
+		modifier = {
+			add = 5
+			factor = 10
+			tag = UEK
+		}
+	}
+	default = no
+	
+	shared_focus = ally_with_HHE # 17
+	shared_focus = ally_with_OAK # 65
+	shared_focus = ally_with_MRC # 123
+	shared_focus = ally_with_nobody # ROOT
+	# Escalation
+		focus = { # Wum Question
+			id = UEK_wum_question_focus
+			icon = GFX_focus_unknown_expansion
+			#prerequisite = { focus =  }
+			#mutually_exclusive = { focus =  }
+			#relative_position_id = 
+			x = 3
+			y = 3
+			cost = 10
+
+			allow_branch = {
+			}
+			available = {
+			}
+			bypass = {
+			}
+
+			ai_will_do = { factor = 2.5 }
+
+			available_if_capitulated = yes
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus UEK_wum_question_focus"
+				country_event = { id = UEK.0 }
+			}
+		}
+
+		focus = { # Single Strike
+			id = UEK_single_strike_focus
+			icon = GFX_focus_unknown_expansion
+			prerequisite = { focus = UEK_wum_question_focus }
+			mutually_exclusive = { focus = UEK_attrition_focus }
+			relative_position_id = UEK_wum_question_focus
+			x = -2
+			y = 1
+			cost = 0
+
+			allow_branch = {
+			}
+			available = {
+				always = no
+			}
+			bypass = {
+			}
+
+			ai_will_do = { factor = 0.0 }
+
+			available_if_capitulated = yes
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus UEK_single_strike_focus"
+				add_timed_idea = { idea = UEK_single_strike_idea days = 1095 }
+			}
+		}
+
+		focus = { # Attrition
+			id = UEK_attrition_focus
+			icon = GFX_focus_unknown_expansion
+			prerequisite = { focus = UEK_wum_question_focus }
+			mutually_exclusive = { focus = UEK_single_strike_focus }
+			relative_position_id = UEK_wum_question_focus
+			x = 2
+			y = 1
+			cost = 0
+
+			allow_branch = {
+			}
+			available = {
+				always = no
+			}
+			bypass = {
+			}
+
+			ai_will_do = { factor = 0.0 }
+
+			available_if_capitulated = yes
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus UEK_attrition_focus"
+				add_timed_idea = { idea = UEK_attrition_idea days = 2190 }
+			}
+		}
+	continuous_focus_position = { x = 50 y = 50 }
+}
