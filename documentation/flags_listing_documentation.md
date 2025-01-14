@@ -33,6 +33,12 @@ This is a comprehensive list of all the flags used in the game. It is recommende
 * ai_action_air_large
 * ai_action_industry_capacity
 * ai_action_industry_vacancy
+* denied.ally_with_HHE
+* denied.ally_with_OAK
+* denied.ally_with_MRC
+* accept.ally_with_HHE
+* accept.ally_with_OAK
+* accept.ally_with_MRC
 
 ## Global Flags
 

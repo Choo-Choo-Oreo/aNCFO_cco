@@ -1,0 +1,194 @@
+shared_focus = { # HHE
+	id = ally_with_HHE
+	icon = GFX_focus_unknown_political
+	#prerequisite = { focus =  }
+	mutually_exclusive = { focus = ally_with_OAK focus = ally_with_MRC }
+	#relative_position_id = 
+	x = 9
+	y = 0
+
+	cost = 10
+	cancel_if_invalid = yes
+	continue_if_invalid = no
+	available_if_capitulated = yes
+
+	allow_branch = {
+		NOT = { OR = {
+			has_completed_focus = ally_with_OAK
+			has_completed_focus = ally_with_MRC
+		} }
+	}
+	available = {
+		has_war = yes
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		factor = 2
+		modifier = { factor = 0.0
+			TAG = UEK
+		}
+	}
+
+	completion_reward = {
+		log = "[GetDateText]: [Root.GetName]: Focus ally_with_HHE"
+		HHE = { country_event = { id = influence_events.0 } }
+		effect_tooltip = {
+			custom_effect_tooltip = if_they_accept
+			complete_national_focus = ally_with_HHE
+		}
+		custom_effect_tooltip = generic_skip_one_line_tt # We do this for clearer reading.
+		effect_tooltip = {
+			custom_effect_tooltip = if_they_reject
+			uncomplete_national_focus = {
+				focus = ally_with_HHE
+				uncomplete_children = yes
+				refund_political_power = no
+			}
+		}
+	}
+}
+
+shared_focus = { # OAK
+	id = ally_with_OAK
+	icon = GFX_focus_unknown_political
+	#prerequisite = { focus =  }
+	mutually_exclusive = { focus = ally_with_HHE focus = ally_with_MRC }
+	#relative_position_id = 
+	x = 12
+	y = 0
+
+	cost = 10
+	cancel_if_invalid = yes
+	continue_if_invalid = no
+	available_if_capitulated = yes
+
+	allow_branch = {
+		NOT = { OR = {
+			has_completed_focus = ally_with_HHE
+			has_completed_focus = ally_with_MRC
+		} }
+	}
+	available = {
+		has_war = yes
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		factor = 2
+		modifier = { add = 1.0
+			TAG = UEK
+		}
+	}
+
+	completion_reward = {
+		log = "[GetDateText]: [Root.GetName]: Focus ally_with_OAK"
+		OAK = { country_event = { id = influence_events.0 } }
+		effect_tooltip = {
+			custom_effect_tooltip = if_they_accept
+			complete_national_focus = ally_with_OAK
+		}
+		custom_effect_tooltip = generic_skip_one_line_tt # We do this for clearer reading.
+		effect_tooltip = {
+			custom_effect_tooltip = if_they_reject
+			uncomplete_national_focus = {
+				focus = ally_with_OAK
+				uncomplete_children = yes
+				refund_political_power = no
+			}
+		}
+	}
+}
+
+shared_focus = { # MRC
+	id = ally_with_MRC
+	icon = GFX_focus_unknown_political
+	#prerequisite = { focus =  }
+	mutually_exclusive = { focus = ally_with_HHE focus = ally_with_OAK }
+	#relative_position_id = 
+	x = 15
+	y = 0
+
+	cost = 10
+	cancel_if_invalid = yes
+	continue_if_invalid = no
+	available_if_capitulated = yes
+
+	allow_branch = {
+		NOT = { OR = {
+			has_completed_focus = ally_with_HHE
+			has_completed_focus = ally_with_OAK
+		} }
+	}
+	available = {
+		has_war = yes
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		factor = 2
+		modifier = { add = 1.0
+			TAG = TRH
+		}
+	}
+
+	completion_reward = {
+		log = "[GetDateText]: [Root.GetName]: Focus ally_with_MRC"
+		MRC = { country_event = { id = influence_events.0 } }
+		effect_tooltip = {
+			custom_effect_tooltip = if_they_accept
+			complete_national_focus = ally_with_MRC
+		}
+		custom_effect_tooltip = generic_skip_one_line_tt # We do this for clearer reading.
+		effect_tooltip = {
+			custom_effect_tooltip = if_they_reject
+			uncomplete_national_focus = {
+				focus = ally_with_MRC
+				uncomplete_children = yes
+				refund_political_power = no
+			}
+		}
+	}
+}
+
+shared_focus = { # Alone
+	id = ally_with_nobody
+	icon = GFX_focus_unknown_political
+	#prerequisite = { focus =  }
+	#mutually_exclusive = { focus =  }
+	#relative_position_id = 
+	x = 12
+	y = 0
+
+	cost = 10
+	cancel_if_invalid = yes
+	continue_if_invalid = no
+	available_if_capitulated = yes
+
+	allow_branch = {
+		has_country_flag = denied.ally_with_HHE
+		has_country_flag = denied.ally_with_OAK
+		has_country_flag = denied.ally_with_MRC
+		NOT = {
+			has_country_flag = accept.ally_with_HHE
+			has_country_flag = accept.ally_with_OAK
+			has_country_flag = accept.ally_with_MRC
+		}
+	}
+	available = {
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		factor = 2
+	}
+
+	completion_reward = {
+		log = "[GetDateText]: [Root.GetName]: Focus ally_with_nobody"
+		add_offsite_building = { type = arms_factory level = 1 }
+	}
+}
