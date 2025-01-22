@@ -73,7 +73,7 @@ focus_tree = {
 
 			focus = { # Create Armor Division
 				id = TRH_create_armor_division_focus
-				icon = GFX_focus_unknown_political
+				icon = GFX_focus_unknown_military
 				prerequisite = { focus = TRH_short_war_focus }
 				#mutually_exclusive = { focus =  }
 				relative_position_id = TRH_short_war_focus
@@ -148,11 +148,11 @@ focus_tree = {
 					log = "[GetDateText]: [Root.GetName]: Focus TRH_front_railways_focus"
 					build_railway = {
 						level = 1 fallback = yes build_only_on_allied = yes
-						start_province = 4115 target_province = 8773
+						path = { 9205 9216 4503 9049 8991 }
 					}
 					build_railway = {
 						level = 1 fallback = yes build_only_on_allied = yes
-						start_province = 9205 target_province = 8991
+						path = { 8991 875 8773 8773 }
 					}
 					build_railway = {
 						level = 2 fallback = yes build_only_on_allied = yes
@@ -221,7 +221,7 @@ focus_tree = {
 
 			focus = { # Mobilized the Guard
 				id = TRH_mobilized_the_guard_focus
-				icon = GFX_focus_unknown_political
+				icon = GFX_focus_unknown_military
 				prerequisite = { focus = TRH_long_war_focus }
 				#mutually_exclusive = { focus =  }
 				relative_position_id = TRH_long_war_focus
@@ -385,34 +385,6 @@ focus_tree = {
 					log = "[GetDateText]: [Root.GetName]: Focus TRH_long_term_desert_warfare_focus"
 				}
 			}
-
-		focus = { # Declaration of War
-			id = TRH_declaration_of_war_focus
-			icon = GFX_focus_unknown_political
-			prerequisite = { focus = TRH_ready_supplies_focus focus = TRH_long_term_desert_warfare_focus }
-			#mutually_exclusive = { focus =  }
-			relative_position_id = TRH_wum_question_focus
-			x = 0
-			y = 5
-			cost = 5
-
-			allow_branch = {
-			}
-			available = {
-			}
-			bypass = {
-			}
-
-			ai_will_do = { factor = 1.0 }
-
-			available_if_capitulated = yes
-
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus TRH_declaration_of_war_focus"
-				declare_war_on = { type = annex_everything target = UEK }
-				create_wargoal = { type = annex_everything target = UEK expire = 0 }
-			}
-		}
 	# Escalation - Shared Middle
 		focus = { # Militarized Industry
 			id = TRH_militarized_industry_focus
@@ -488,6 +460,191 @@ focus_tree = {
 						instant_build = yes
 					}
 				}
+			}
+		}
+
+		focus = { # Deep Mining Improvements
+			id = TRH_deep_mining_improvements
+			icon = GFX_focus_unknown_industry
+			prerequisite = { focus = TRH_militarized_industry_focus focus = TRH_stable_foundation_focus }
+			#mutually_exclusive = { focus =  }
+			relative_position_id = TRH_wum_question_focus
+			x = 0
+			y = 3
+			cost = 8
+
+			allow_branch = {
+			}
+			available = {
+			}
+			bypass = {
+			}
+
+			ai_will_do = { factor = 2.5 }
+
+			available_if_capitulated = yes
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus TRH_deepmining_improvements"
+				25 = { add_extra_state_shared_building_slots = 2 }
+				add_resource = { type = steel state = 25 amount = 6 }
+				add_resource = { type = chromium state = 25 amount = 3 }
+				788 = { add_extra_state_shared_building_slots = 1 }
+				add_resource = { type = steel state = 788 amount = 3 }
+				
+			}
+		}
+
+			focus = { # Hollow Flows Training
+				id = TRH_hollow_flows_training_focus
+				icon = GFX_focus_unknown_military
+				prerequisite = { focus = TRH_militarized_industry_focus }
+				#mutually_exclusive = { focus =  }
+				relative_position_id = TRH_militarized_industry_focus
+				x = -1
+				y = 1
+				cost = 8
+
+				allow_branch = {
+				}
+				available = {
+				}
+				bypass = {
+				}
+
+				ai_will_do = { factor = 1.0 }
+
+				available_if_capitulated = yes
+
+				completion_reward = {
+					log = "[GetDateText]: [Root.GetName]: Focus TRH_hollow_flows_training_focus"
+					add_timed_idea = { idea = TRH_hollow_flows_training_idea days = 1825 }
+				}
+			}
+
+			focus = { # Field Infantry
+				id = TRH_field_infantry_focus
+				icon = GFX_focus_unknown_research
+				prerequisite = { focus = TRH_hollow_flows_training_focus }
+				prerequisite = { focus = TRH_deep_mining_improvements }
+				#mutually_exclusive = { focus =  }
+				relative_position_id = TRH_hollow_flows_training_focus
+				x = 1
+				y = 1
+				cost = 8
+
+				allow_branch = {
+				}
+				available = {
+				}
+				bypass = {
+				}
+
+				ai_will_do = { factor = 1.0 }
+
+				available_if_capitulated = yes
+
+				completion_reward = {
+					log = "[GetDateText]: [Root.GetName]: Focus TRH_field_infantry_focus"
+					add_tech_bonus = {
+						bonus = 0.50 uses = 2
+						category = artillery
+					}
+					add_tech_bonus = {
+						bonus = 0.50 uses = 2
+						category = infantry_weapons
+					}
+				}
+			}
+
+			focus = { # Hollow Flows Excavation
+				id = TRH_hollow_flows_excavation_focus
+				icon = GFX_focus_unknown_industry
+				prerequisite = { focus = TRH_stable_foundation_focus }
+				#mutually_exclusive = { focus =  }
+				relative_position_id = TRH_stable_foundation_focus
+				x = 1
+				y = 1
+				cost = 8
+
+				allow_branch = {
+				}
+				available = {
+				}
+				bypass = {
+				}
+
+				ai_will_do = { factor = 1.0 }
+
+				available_if_capitulated = yes
+
+				completion_reward = {
+					log = "[GetDateText]: [Root.GetName]: Focus TRH_hollow_flows_excavation_focus"
+					add_ideas = { TRH_hollow_flows_excavation_idea }
+				}
+			}
+
+			focus = { # Industrial Engineering
+				id = TRH_industrial_engineering_focus
+				icon = GFX_focus_unknown_research
+				prerequisite = { focus = TRH_hollow_flows_excavation_focus }
+				prerequisite = { focus = TRH_deep_mining_improvements }
+				#mutually_exclusive = { focus =  }
+				relative_position_id = TRH_hollow_flows_excavation_focus
+				x = -1
+				y = 1
+				cost = 8
+
+				allow_branch = {
+				}
+				available = {
+				}
+				bypass = {
+				}
+
+				ai_will_do = { factor = 1.0 }
+
+				available_if_capitulated = yes
+
+				completion_reward = {
+					log = "[GetDateText]: [Root.GetName]: Focus TRH_industrial_engineering_focus"
+					add_tech_bonus = {
+						bonus = 0.50 uses = 2
+						category = industry
+					}
+					add_tech_bonus = {
+						bonus = 0.50 uses = 2
+						category = electronics
+					}
+				}
+			}
+
+		focus = { # Declaration of War
+			id = TRH_declaration_of_war_focus
+			icon = GFX_focus_unknown_expansion
+			prerequisite = { focus = TRH_ready_supplies_focus focus = TRH_long_term_desert_warfare_focus }
+			prerequisite = { focus = TRH_field_infantry_focus focus = TRH_industrial_engineering_focus }
+			#mutually_exclusive = { focus =  }
+			relative_position_id = TRH_wum_question_focus
+			x = 0
+			y = 5
+			cost = 5
+
+			allow_branch = {
+			}
+			available = {
+			}
+			bypass = {
+			}
+
+			ai_will_do = { factor = 1.0 }
+
+			available_if_capitulated = yes
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus TRH_declaration_of_war_focus"
+				declare_war_on = { type = annex_everything target = UEK }
+				create_wargoal = { type = annex_everything target = UEK expire = 0 }
 			}
 		}
 	continuous_focus_position = { x = 38 y = 38 }

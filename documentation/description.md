@@ -30,6 +30,7 @@ This is a fantasy mod for HoI4 based off my own stories. I'm a solo dev with som
 - Overall balance experience.
 
 [h1]Information[/h1]
+[url=https://buymeacoffee.com/choo_choo_oreo] Buy a Coffee for Choo_Choo_Oreo[/url]
 [url=https://discord.gg/6qDDTEVyC3] Discord[/url]
 
 [h1]Check out my other mods![/h1]
