@@ -25,11 +25,11 @@ Other Mod Devs/Modders the have ANY work added to this mod.
 	- Edouard_Saladier Mod Graphics
 	https://steamcommunity.com/sharedfiles/filedetails/?id=1866759372	Pre-Götterdämmerung
 
-	- Amine Alkaline & Kaarlo (Better Mechanics Collection) Mod All
+	- Amine Alkaline, Sheep, Code, Vonkaja, & Kaarlo (Better Mechanics Collection) Mod All
 	https://steamcommunity.com/workshop/filedetails/?id=2994645469
 		Better Mechanics : Optimization									19 Jan 2024
-		Better Mechanics : AI Research | Vanilla Tech Tree				18 Mar 2024
-		Better Mechanics : Air/Land/Sea Designs (AI)					9 Jul 2024
+		Better Mechanics : AI Research | Vanilla Tech Tree				Not Used
+		Better Mechanics : Air/Land/Sea Designs (AI)					Not Used
 		Better Mechanics : Battalion Limiter							6 Jan 2024
 		Better Mechanics : Camera										Not Used
 		Better Mechanics : Civilian and Military Laws					Not Used
@@ -57,6 +57,12 @@ Other Mod Devs/Modders the have ANY work added to this mod.
 		Better Mechanics : Commanders Limit								6 Jun 2024
 		Better Mechanics : Custom Rules									8 Jul 2024
 		Better Mechanics : MIOs											4 Jan 2025
+		Better Mechanics : Extended Units								7 Dec 2024
+		Better Mechanics : Generic 3D Models							Not Used
+		Better Mechanics : Supply Production Health						Not Used
+		Better Mechanics : Devastation Overhaul							Not Used
+		Better Mechanics : Medals										14 Jan 2025
+		Better Mechanics : Extended Units Light							Not Used
 
 		Carpet Bombing													Not Used
 		Extensive Generic Aircraft Icons								Not Used
