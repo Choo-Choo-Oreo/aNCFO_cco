@@ -12,13 +12,13 @@ Other Mod Devs/Modders the have ANY work added to this mod.
 	- Ringwraith Mod Partially
 	https://steamcommunity.com/sharedfiles/filedetails/?id=1778255798	Pre-Götterdämmerung
 
-	- Equestria at War Team Mod Airtech+
+	- Equestria at War Team Mod Airtech+ Localisation+
 	https://steamcommunity.com/sharedfiles/filedetails/?id=1826643372	Pre-Götterdämmerung
 
-	-MrPunk Mod All
+	- MrPunk Mod All
 	https://steamcommunity.com/sharedfiles/filedetails/?id=2993766165	16 Nov 2024			1.15
 
-	-Elouda Mod Graphics
+	- Elouda Mod Graphics
 	https://steamcommunity.com/sharedfiles/filedetails/?id=714919100	Pre-Götterdämmerung
 	https://steamcommunity.com/sharedfiles/filedetails/?id=1687056790	Pre-Götterdämmerung
 
@@ -27,52 +27,52 @@ Other Mod Devs/Modders the have ANY work added to this mod.
 
 	- Amine Alkaline, Sheep, Code, Vonkaja, & Kaarlo (Better Mechanics Collection) Mod All
 	https://steamcommunity.com/workshop/filedetails/?id=2994645469
-		Better Mechanics : Optimization									19 Jan 2024
-		Better Mechanics : AI Research | Vanilla Tech Tree				Not Used
-		Better Mechanics : Air/Land/Sea Designs (AI)					Not Used
-		Better Mechanics : Battalion Limiter							6 Jan 2024
-		Better Mechanics : Camera										Not Used
-		Better Mechanics : Civilian and Military Laws					Not Used
-		Better Mechanics : Combat										23 Nov 2024
-		Better Mechanics : Divisional AI								9 Aug 2024			6.8
-		Better Mechanics : Division Designer							18 Mar 2024
-		Better Mechanics : Frontline AI | Updated						3 Jan 2024			8.1
-		Better Mechanics : GFX Rework									Not Used
-		Better Mechanics : Intelligence Agency							Not Used
-		Better Mechanics : More Spies									Oct 10 2023
-		Better Mechanics : National Economy								7 Apr 2024
-		Better Mechanics : Production									18 Mar 2024
-		Better Mechanics : Resource Wars								Not Used
-		Better Mechanics : Battle Indicators							Not Used
-		Better Mechanics : Tactical Warfare								17 Aug 2024
-		Better Mechanics : Times of Peace								Not Used
-		Better Mechanics : Training and Experience						18 Mar 2024
-		Better Mechanics : War Exhaustion								Not Used
-		Better Mechanics : Buttons										Not Used
-		Better Mechanics : Elite Forces									Not Used
-		Better Mechanics : State Categories								Pre-Release
-		Better Mechanics : Officer Corps								11 May 2024
-		Better Mechanics : Supply Replenishment							Not Used
-		Better Mechanics : Strategic View								3 Jun 2024
-		Better Mechanics : Commanders Limit								6 Jun 2024
-		Better Mechanics : Custom Rules									8 Jul 2024
-		Better Mechanics : MIOs											4 Jan 2025
-		Better Mechanics : Extended Units								7 Dec 2024
-		Better Mechanics : Generic 3D Models							Not Used
-		Better Mechanics : Supply Production Health						Not Used
-		Better Mechanics : Devastation Overhaul							Not Used
-		Better Mechanics : Medals										14 Jan 2025
-		Better Mechanics : Extended Units Light							Not Used
+		Better Mechanics : Optimization								19 Jan 2024
+		Better Mechanics : AI Research | Vanilla Tech Tree			Not Used
+		Better Mechanics : Air/Land/Sea Designs (AI)				Not Used
+		Better Mechanics : Battalion Limiter						6 Jan 2024
+		Better Mechanics : Camera									Not Used
+		Better Mechanics : Civilian and Military Laws				Not Used
+		Better Mechanics : Combat									23 Nov 2024
+		Better Mechanics : Divisional AI							9 Aug 2024			6.8
+		Better Mechanics : Division Designer						18 Mar 2024
+		Better Mechanics : Frontline AI | Updated					3 Jan 2024			8.1
+		Better Mechanics : GFX Rework								Not Used
+		Better Mechanics : Intelligence Agency						Not Used
+		Better Mechanics : More Spies								Oct 10 2023
+		Better Mechanics : National Economy							7 Apr 2024
+		Better Mechanics : Production								18 Mar 2024
+		Better Mechanics : Resource Wars							Not Used
+		Better Mechanics : Battle Indicators						Not Used
+		Better Mechanics : Tactical Warfare							17 Aug 2024
+		Better Mechanics : Times of Peace							Not Used
+		Better Mechanics : Training and Experience					18 Mar 2024
+		Better Mechanics : War Exhaustion							Not Used
+		Better Mechanics : Buttons									Not Used
+		Better Mechanics : Elite Forces								Not Used
+		Better Mechanics : State Categories							Pre-Release
+		Better Mechanics : Officer Corps							11 May 2024
+		Better Mechanics : Supply Replenishment						Not Used
+		Better Mechanics : Strategic View							3 Jun 2024
+		Better Mechanics : Commanders Limit							6 Jun 2024
+		Better Mechanics : Custom Rules								8 Jul 2024
+		Better Mechanics : MIOs										4 Jan 2025
+		Better Mechanics : Extended Units							7 Dec 2024
+		Better Mechanics : Generic 3D Models						Not Used
+		Better Mechanics : Supply Production Health					Not Used
+		Better Mechanics : Devastation Overhaul						Not Used
+		Better Mechanics : Medals									14 Jan 2025
+		Better Mechanics : Extended Units Light						Not Used
 
-		Carpet Bombing													Not Used
-		Extensive Generic Aircraft Icons								Not Used
-		Additional Plane Models											Not Used
+		Carpet Bombing												Not Used
+		Extensive Generic Aircraft Icons							Not Used
+		Additional Plane Models										Not Used
 
 	- Jeremiah12198 (HOI4 Improved Collection) Mod All
 	https://steamcommunity.com/workshop/filedetails/?id=3259297019
-		Always Declare War												Not Used
-		Better Air FX													Not Used
-		Coring with Compliance											Not Used
-		Defensive Pacts													Oct 21, 2023
-		Unlock Research Slots											Not Used
-		Realistic Damage and Civilian Evacuation						Not Used
+		Always Declare War											Not Used
+		Better Air FX												Not Used
+		Coring with Compliance										Not Used
+		Defensive Pacts												Oct 21, 2023
+		Unlock Research Slots										Not Used
+		Realistic Damage and Civilian Evacuation					Not Used
