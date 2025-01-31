@@ -98,13 +98,18 @@
 	-- NPolitics
 
 	-- NBuildings
-		NDefines.NBuildings.BASE_FACTORY_REPAIR_FACTOR = 1.0	-- Was 2.0
+		NDefines.NBuildings.ANTI_AIR_SUPERIORITY_MULT = 5.0
+		NDefines.NBuildings.SAM_MISSION_SUPERIORITY = 5.0
 
-		NDefines.NBuildings.MAX_SHARED_SLOTS = 60
-		NDefines.NBuildings.MAX_BUILDING_LEVELS = 60
+		NDefines.NBuildings.BASE_FACTORY_REPAIR = 1.0				-- Was 1.0
+		NDefines.NBuildings.BASE_FACTORY_REPAIR_FACTOR = 1.0		-- Was 2.0
 
-		NDefines.NBuildings.INFRASTRUCTURE_RESOURCE_BONUS = 0.20
-		NDefines.NBuildings.SUPPLY_ROUTE_RESOURCE_BONUS = 0.20
+		NDefines.NBuildings.MAX_BUILDING_LEVELS = 66
+		NDefines.NBuildings.MAX_SHARED_SLOTS = 66
+		NDefines.NBuildings.DESTRUCTION_COOLDOWN_IN_WAR = 90		-- Was 30
+
+		NDefines.NBuildings.INFRASTRUCTURE_RESOURCE_BONUS = 0.40	-- Was 0.20, we increase this to improve industrialization.
+		NDefines.NBuildings.SUPPLY_ROUTE_RESOURCE_BONUS = 1.00		-- Was 0.20, we increase this to improve industrialization.
 
 	-- NDeployment
 
