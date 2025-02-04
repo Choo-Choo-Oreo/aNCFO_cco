@@ -8,8 +8,6 @@
 Only the Steam account **[Choo_Choo_Oreo](https://steamcommunity.com/id/Choo_Choo_Oreo)** is authorized to publish this mod on Steam.
 
 **Note on Usage:**  
-- You are permitted to use any of the **CODE** in this mod for your own mod as you see fit.  
-- **Graphics from this mod are NOT permitted for use.**  
 - Contributions by other mod developers or modders (listed below) have been integrated where noted; this file serves solely to acknowledge their contributions and to track imported content.
 
 ---
