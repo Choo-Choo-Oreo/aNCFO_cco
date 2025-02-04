@@ -1,4 +1,4 @@
-# aNCFO HoI4 mod repository
+# {aNCFO} HoI4 mod repository
 
 ---
 
