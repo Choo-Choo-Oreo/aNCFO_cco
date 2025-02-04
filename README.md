@@ -1,78 +1,83 @@
-aNCFO mod repository
+# aNCFO HoI4 mod repository
 
-This item is not authorized for posting on Steam, except under the Steam account named "Choo_Choo_Oreo" (https://steamcommunity.com/id/Choo_Choo_Oreo).
+---
 
+# Imported Contributions & Publishing Notice
 
+**Publishing Authorization:**  
+Only the Steam account **[Choo_Choo_Oreo](https://steamcommunity.com/id/Choo_Choo_Oreo)** is authorized to publish this mod on Steam.
 
-If you want utilized any of the CODE here for your own mod, you have permision to use it as you see fit.
-If you want to use any graphics from the mod, you are not permitted to use any of them.
+**Note on Usage:**  
+- You are permitted to use any of the **CODE** in this mod for your own mod as you see fit.  
+- **Graphics from this mod are NOT permitted for use.**  
+- Contributions by other mod developers or modders (listed below) have been integrated where noted; this file serves solely to acknowledge their contributions and to track imported content.
 
-Other Mod Devs/Modders the have ANY work added to this mod.
+---
 
-	- Ringwraith Mod Partially
-	https://steamcommunity.com/sharedfiles/filedetails/?id=1778255798	Pre-Götterdämmerung
+## Imported Contributions
 
-	- Equestria at War Team Mod Airtech+ Localisation+
-	https://steamcommunity.com/sharedfiles/filedetails/?id=1826643372	Pre-Götterdämmerung
+Contributions are tracked in one of the following formats:
 
-	- MrPunk Mod All
-	https://steamcommunity.com/sharedfiles/filedetails/?id=2993766165	16 Nov 2024			1.15
+- **Format A (Single Mod):**  
+  **Modder Name** – *What’s Integrated*  
+  `[Mod Name+Link]` | *Date of Importation* *Version ID*
 
-	- Elouda Mod Graphics
-	https://steamcommunity.com/sharedfiles/filedetails/?id=714919100	Pre-Götterdämmerung
-	https://steamcommunity.com/sharedfiles/filedetails/?id=1687056790	Pre-Götterdämmerung
+- **Format B (Collection of Mods):**  
+  **Modder Name** – *What’s Integrated*  
+  `[Collection Name+Link]`  
+  **Mod Name** | *Date of Importation* *Version ID*
 
-	- Edouard_Saladier Mod Graphics
-	https://steamcommunity.com/sharedfiles/filedetails/?id=1866759372	Pre-Götterdämmerung
+---
 
-	- Amine Alkaline, Sheep, Code, Vonkaja, & Kaarlo (Better Mechanics Collection) Mod All
-	https://steamcommunity.com/workshop/filedetails/?id=2994645469
-		Better Mechanics : Optimization								19 Jan 2024
-		Better Mechanics : AI Research | Vanilla Tech Tree			Not Used
-		Better Mechanics : Air/Land/Sea Designs (AI)				Not Used
-		Better Mechanics : Battalion Limiter						6 Jan 2024
-		Better Mechanics : Camera									Not Used
-		Better Mechanics : Civilian and Military Laws				Not Used
-		Better Mechanics : Combat									23 Nov 2024
-		Better Mechanics : Divisional AI							9 Aug 2024			6.8
-		Better Mechanics : Division Designer						18 Mar 2024
-		Better Mechanics : Frontline AI | Updated					3 Jan 2024			8.1
-		Better Mechanics : GFX Rework								Not Used
-		Better Mechanics : Intelligence Agency						Not Used
-		Better Mechanics : More Spies								Oct 10 2023
-		Better Mechanics : National Economy							7 Apr 2024
-		Better Mechanics : Production								18 Mar 2024
-		Better Mechanics : Resource Wars							Not Used
-		Better Mechanics : Battle Indicators						Not Used
-		Better Mechanics : Tactical Warfare							17 Aug 2024
-		Better Mechanics : Times of Peace							Not Used
-		Better Mechanics : Training and Experience					18 Mar 2024
-		Better Mechanics : War Exhaustion							Not Used
-		Better Mechanics : Buttons									Not Used
-		Better Mechanics : Elite Forces								Not Used
-		Better Mechanics : State Categories							Pre-Release
-		Better Mechanics : Officer Corps							11 May 2024
-		Better Mechanics : Supply Replenishment						Not Used
-		Better Mechanics : Strategic View							3 Jun 2024
-		Better Mechanics : Commanders Limit							6 Jun 2024
-		Better Mechanics : Custom Rules								8 Jul 2024
-		Better Mechanics : MIOs										4 Jan 2025
-		Better Mechanics : Extended Units							7 Dec 2024
-		Better Mechanics : Generic 3D Models						Not Used
-		Better Mechanics : Supply Production Health					Not Used
-		Better Mechanics : Devastation Overhaul						Not Used
-		Better Mechanics : Medals									14 Jan 2025
-		Better Mechanics : Extended Units Light						Not Used
+### Contributions
 
-		Carpet Bombing												Not Used
-		Extensive Generic Aircraft Icons							Not Used
-		Additional Plane Models										Not Used
+- **Ringwraith Mod** – *Partially Integrated*  
+  [Extended Tech Tree 1960](https://steamcommunity.com/sharedfiles/filedetails/?id=1778255798) | *Pre‑Götterdämmerung*  
 
-	- Jeremiah12198 (HOI4 Improved Collection) Mod All
-	https://steamcommunity.com/workshop/filedetails/?id=3259297019
-		Always Declare War											Not Used
-		Better Air FX												Not Used
-		Coring with Compliance										Not Used
-		Defensive Pacts												Oct 21, 2023
-		Unlock Research Slots										Not Used
-		Realistic Damage and Civilian Evacuation					Not Used
+- **Equestria at War Team Mod** – *Airtech + Localisation+ Integrated*  
+  [Equestria at War](https://steamcommunity.com/sharedfiles/filedetails/?id=1826643372) | *Pre‑Götterdämmerung*  
+
+- **MrPunk Mod** – *All Code Integrated*  
+  [Vanilla Navy Rework](https://steamcommunity.com/sharedfiles/filedetails/?id=2993766165) | *16 Nov 2024* *Version 1.15*
+
+- **Elouda Mod** – *Graphics Integrated*  
+  [(OUTDATED) Extended Rework Mod (v0.50b) - ALPHA](https://steamcommunity.com/sharedfiles/filedetails/?id=714919100) | *Pre‑Götterdämmerung*  
+  [Naval Rework Mod II](https://steamcommunity.com/sharedfiles/filedetails/?id=1687056790) | *Pre‑Götterdämmerung*
+
+- **Edouard_Saladier Mod** – *Graphics Integrated*  
+  [Additionnal Tank Technologies](https://steamcommunity.com/sharedfiles/filedetails/?id=1866759372) | *Pre‑Götterdämmerung*
+
+- **Amine Alkaline, Sheep, Code, Vonkaja, & Kaarlo – Better Mechanics Collection** – *Various Components Integrated*  
+  [Better Mechanics Collection](https://steamcommunity.com/workshop/filedetails/?id=2994645469)  
+  Components include:  
+  - Better Mechanics : Optimization - *19 Jan 2024*
+  - Better Mechanics : Battalion Limiter - *6 Jan 2024*
+  - Better Mechanics : Combat - *23 Nov 2024*
+  - Better Mechanics : Divisional AI - *9 Aug 2024* *Version 6.8*
+  - Better Mechanics : Division Designer - *18 Mar 2024*
+  - Better Mechanics : Frontline AI | Updated - *3 Jan 2024* *Version 8.1*
+  - Better Mechanics : More Spies - *Oct 10 2023*
+  - Better Mechanics : National Economy - *7 Apr 2024*
+  - Better Mechanics : Production - *18 Mar 2024*
+  - Better Mechanics : Tactical Warfare - *17 Aug 2024*
+  - Better Mechanics : Training and Experience - *18 Mar 2024*
+  - Better Mechanics : State Categories - *Pre-Release*
+  - Better Mechanics : Officer Corps - *11 May 2024*
+  - Better Mechanics : Supply Replenishment - *Not Used*
+  - Better Mechanics : Strategic View - *3 Jun 2024*
+  - Better Mechanics : Commanders Limit - *6 Jun 2024*
+  - Better Mechanics : Custom Rules - *8 Jul 2024*
+  - Better Mechanics : MIOs - *4 Jan 2025*
+  - Better Mechanics : Extended Units - *7 Dec 2024*
+  - Better Mechanics : Medals - *14 Jan 2025*
+  - *(Other contributions in this collection are noted as “Not Used” where applicable.)*
+
+- **Jeremiah12198 – HOI4 Improved Collection** – *All Integrated*  
+  [HOI4 Improved Collection](https://steamcommunity.com/workshop/filedetails/?id=3259297019)  
+  Components include:  
+  - Defensive Pacts – *Oct 21, 2023*  
+  - *(Other contributions in this collection are noted as “Not Used” where applicable.)*
+
+---
+
+*This document is for internal tracking of imported code and assets. The legal license terms are maintained in the main LICENSE.md file.*

@@ -1,4 +1,5 @@
-Copyright (C) 2022 Orea Kunkle
+# Copyright (C) 2022 Orea Kunkle
+
 ---
 
 # Custom License for [aNCFO] Assets
@@ -15,7 +16,7 @@ A “Contributor” is any individual whose notable code contributions (i.e., mo
 - **Graphical Assets**
 
 1.2 **Graphical Assets**  
-“Graphical Assets” are assets provided in a graphical format. For the purposes of this license, these include files with the extensions “.GFX” or “.GUI”.
+“Graphical Assets” are assets provided in a graphical format. For the purposes of this license, these include files with the extensions “.PNG” “.DDS” “.DMP” “.GFX” “.GUI” or any other graphical format.
 
 1.3 **Non-Graphical Assets**  
 “Non-Graphical Assets” include all assets that are not considered Graphical Assets or Localization Works. This category typically encompasses code, documentation, and other textual assets.
