@@ -161,43 +161,52 @@
 		NDefines.NAI.WANTED_CARRIER_PLANES_PER_CARRIER_CAPACITY_FACTOR = 3.0 -- Scales how many carrier planes the AI want per carrier deck space.
 		NDefines.NAI.WANTED_CARRIER_PLANES_PER_CARRIER_CAPACITY_IN_PRODUCTION_FACTOR = 1.0 -- Scales how many carrier planes the AI want per deck space of carriers in production.
 
-		NDefines.NAI.RESEARCH_DAYS_BETWEEN_WEIGHT_UPDATE = 30 -- Base 7
+		NDefines.NAI.RESEARCH_DAYS_BETWEEN_WEIGHT_UPDATE = 30 			-- Base 7
 
 		NDefines.NAI.EQUIPMENT_MARKET_BASE_MARKET_RATIO = 0.35
-		NDefines.NAI.EQUIPMENT_MARKET_UPDATE_FREQUENCY_DAYS = 30 -- Base 11
+		NDefines.NAI.EQUIPMENT_MARKET_UPDATE_FREQUENCY_DAYS = 30 		-- Base 11
 
-		NDefines.NAI.DAYS_BETWEEN_AIR_PRIORITIES_UPDATE = 7 -- Base 4
+		NDefines.NAI.DAYS_BETWEEN_AIR_PRIORITIES_UPDATE = 7 			-- Base 4
 
-		NDefines.NAI.AI_UPDATE_ROLES_FREQUENCY_HOURS = 72 -- Base 48
+		NDefines.NAI.AI_UPDATE_ROLES_FREQUENCY_HOURS = 72 				-- Base 48
 
-		NDefines.NAI.UPDATE_SUPPLY_BOTTLENECKS_FREQUENCY_HOURS = 168 -- Base 168
+		NDefines.NAI.UPDATE_SUPPLY_BOTTLENECKS_FREQUENCY_HOURS = 168 	-- Base 168
 		NDefines.NAI.FIX_SUPPLY_BOTTLENECK_SATURATION_THRESHOLD = 0.75
 
-		NDefines.NAI.UPDATE_SUPPLY_MOTORIZATION_FREQUENCY_HOURS = 168 -- Base 52
+		NDefines.NAI.UPDATE_SUPPLY_MOTORIZATION_FREQUENCY_HOURS = 168 	-- Base 52
 
-		NDefines.NAI.MIN_FIELD_STRENGTH_TO_BUILD_UNITS = 0.95 -- Base 0.70
-		NDefines.NAI.MIN_MANPOWER_TO_BUILD_UNITS = 0.95 -- Base 0.70
+		NDefines.NAI.MIN_FIELD_STRENGTH_TO_BUILD_UNITS = 0.95 			-- Base 0.70
+		NDefines.NAI.MIN_MANPOWER_TO_BUILD_UNITS = 0.95 				-- Base 0.70
 
 		NDefines.NAI.CONSTRUCTION_PRIO_INFRASTRUCTURE = 0.20
 		NDefines.NAI.CONSTRUCTION_PRIO_CIV_FACTORY = 0.80
 		NDefines.NAI.CONSTRUCTION_PRIO_MIL_FACTORY = 0.70
-		NDefines.NAI.CONSTRUCTION_PRIO_SUPPLY_BUILDING = 1.65				-- Was 1.10
+		NDefines.NAI.CONSTRUCTION_PRIO_SUPPLY_BUILDING = 1.65			-- Was 1.10
 		NDefines.NAI.CONSTRUCTION_PRIO_RAILWAY = 4.00
 		NDefines.NAI.CONSTRUCTION_PRIO_RAILWAY_GUN_REPAIR = 15.00
 		NDefines.NAI.CONSTRUCTION_PRIO_UNSPECIFIED = 0.50
 		NDefines.NAI.CONSTRUCTION_PRIO_FACTOR_OCCUPIED_TERRITORY = 0.50
-		NDefines.NAI.CONSTRUCTION_PRIO_FACTOR_OWNED_NONCORE = 0.75			-- Was 1.50
-		NDefines.NAI.CONSTRUCTION_PRIO_FACTOR_OWNED_CORE = 4.00				-- Was 2.00
-		NDefines.NAI.CONSTRUCTION_PRIO_FACTOR_REPAIRING = 0.60				-- Was 0.30
+		NDefines.NAI.CONSTRUCTION_PRIO_FACTOR_OWNED_NONCORE = 0.75		-- Was 1.50
+		NDefines.NAI.CONSTRUCTION_PRIO_FACTOR_OWNED_CORE = 4.00			-- Was 2.00
+		NDefines.NAI.CONSTRUCTION_PRIO_FACTOR_REPAIRING = 0.60			-- Was 0.30
 
 		NDefines.NAI.AREA_DEFENSE_SETTING_VP = false
 		NDefines.NAI.AREA_DEFENSE_SETTING_PORTS = true
 		NDefines.NAI.AREA_DEFENSE_SETTING_AIRBASES = false
 		NDefines.NAI.AREA_DEFENSE_SETTING_BORDERS = false
-		NDefines.NAI.AREA_DEFENSE_SETTING_FORTS = true						-- Was false
+		NDefines.NAI.AREA_DEFENSE_SETTING_FORTS = true					-- Was false
 		NDefines.NAI.AREA_DEFENSE_SETTING_COASTLINES = true
 		NDefines.NAI.AREA_DEFENSE_SETTING_RAILWAYS = false
 		NDefines.NAI.AREA_DEFENSE_SETTING_FACILITY = false
+
+		NDefines.NAI.CARRIER_TASKFORCE_MAX_CARRIER_COUNT = 10 			-- optimum carrier count for carrier taskforces
+		NDefines.NAI.CAPITAL_TASKFORCE_MAX_CAPITAL_COUNT = 100 			-- optimum capital count for capital taskforces
+		NDefines.NAI.SCREEN_TASKFORCE_MAX_SHIP_COUNT = 400				-- optimum screen count for screen taskforces
+		NDefines.NAI.SUB_TASKFORCE_MAX_SHIP_COUNT = 20 					-- optimum sub count for sub taskforces
+
+		NDefines.NAI.MIN_CAPITALS_FOR_CARRIER_TASKFORCE = 6				-- carrier fleets will at least have this amount of capitals
+		NDefines.NAI.CAPITALS_TO_CARRIER_RATIO = 1.0					-- capital to carrier count in carrier taskfoces
+		NDefines.NAI.SCREENS_TO_CAPITAL_RATIO = 6.0						-- screens to capital/carrier count in carrier & capital taskforces
 		-- Optimization
 			NDefines.NAI.DIPLOMACY_ACCEPT_ATTACHE_BASE = 100
 			NDefines.NAI.DIPLOMACY_ACCEPT_ATTACHE_OPINION_TRASHHOLD = 0
@@ -1171,15 +1180,6 @@
 
 
 	---------------Navy Stuff---------------
-
-	NDefines.NAI.CARRIER_TASKFORCE_MAX_CARRIER_COUNT = 40 		-- optimum carrier count for carrier taskforces
-	NDefines.NAI.CAPITAL_TASKFORCE_MAX_CAPITAL_COUNT = 300 		-- optimum capital count for capital taskforces
-	NDefines.NAI.SCREEN_TASKFORCE_MAX_SHIP_COUNT = 300			-- optimum screen count for screen taskforces
-	NDefines.NAI.SUB_TASKFORCE_MAX_SHIP_COUNT = 16 				-- optimum sub count for sub taskforces
-
-	NDefines.NAI.MIN_CAPITALS_FOR_CARRIER_TASKFORCE = 6			-- carrier fleets will at least have this amount of capitals
-	NDefines.NAI.CAPITALS_TO_CARRIER_RATIO = 4.0				-- capital to carrier count in carrier taskfoces
-	NDefines.NAI.SCREENS_TO_CAPITAL_RATIO = 10.0					-- screens to capital/carrier count in carrier & capital taskforces
 
 	NDefines.NAI.MIN_MAIN_SHIP_RATIO = 0.3                      -- if main ship ratio is below this steal other ships.
 	NDefines.NAI.MIN_SUPPORT_SHIP_RATIO = 0.7                   -- if support ship ratio is below this steal other ships.
