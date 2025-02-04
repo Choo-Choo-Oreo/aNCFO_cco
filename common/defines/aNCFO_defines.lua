@@ -1,4 +1,15 @@
 -- aNCFO Defines
+	Nlua = {
+		NTopbar = {
+			GAME_SPEED_LIMIT = 0,	-- Unlocks Speed to match as much as the proccessor can handle
+			GAME_SPEED_STEPS = 5,	-- DONT CHANGE -- Deals with graphics and speed settings
+			GAME_SPEED_ONE = 1,		-- DONT CHANGE --
+			GAME_SPEED_TWO = 2,		-- DONT CHANGE --
+			GAME_SPEED_THREE = 3,	-- DONT CHANGE --
+			GAME_SPEED_FOUR = 4,	-- DONT CHANGE --
+			GAME_SPEED_FIVE = 5,	-- DONT CHANGE --
+		}
+	}
 	-- NGame
 		NDefines.NGame.START_DATE = "1724.1.1.12"
 		NDefines.NGame.END_DATE = "1936.1.1.1"
@@ -152,6 +163,7 @@
 
 		NDefines.NAI.RESEARCH_DAYS_BETWEEN_WEIGHT_UPDATE = 30 -- Base 7
 
+		NDefines.NAI.EQUIPMENT_MARKET_BASE_MARKET_RATIO = 0.35
 		NDefines.NAI.EQUIPMENT_MARKET_UPDATE_FREQUENCY_DAYS = 30 -- Base 11
 
 		NDefines.NAI.DAYS_BETWEEN_AIR_PRIORITIES_UPDATE = 7 -- Base 4
@@ -209,22 +221,6 @@
 	-- NAITheatre
 
 	-- NIndustrialOrganisation
-
--- Optimization Defines
-	NDefines.NAI.EQUIPMENT_MARKET_BASE_MARKET_RATIO = 0.35
-	NDefines.NCountry.EVENT_PROCESS_OFFSET = 25 -- Performance enhancer. --TW/WTT
-
-	Nlua = {
-		NTopbar = {
-			GAME_SPEED_LIMIT = 0,	-- Unlocks Speed to match as much as the proccessor can handle
-			GAME_SPEED_STEPS = 5,	-- DONT CHANGE -- Deals with graphics and speed settings
-			GAME_SPEED_ONE = 1,		-- DONT CHANGE --
-			GAME_SPEED_TWO = 2,		-- DONT CHANGE --
-			GAME_SPEED_THREE = 3,	-- DONT CHANGE --
-			GAME_SPEED_FOUR = 4,	-- DONT CHANGE --
-			GAME_SPEED_FIVE = 5,	-- DONT CHANGE --
-		}
-	}
 
 -- VNR Naval Defines
 	NDefines.NAI.ENEMY_NAVY_STRENGTH_DONT_BOTHER = 1.5;
