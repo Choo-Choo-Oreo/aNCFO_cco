@@ -12,6 +12,9 @@ This is a fantasy mod for HoI4 based off my own stories. I'm a solo dev with som
 + New technology trees.
 + Supported Languages:
     - English
+    - Russian (Usage of AI, wanting reliable translator)
+    - Chinese (Usage of AI, wanting reliable translator)
+    - Spanish (Usage of AI, wanting reliable translator)
 
 [h1]Update[/h1]
 - Civilwar bug Fixing

@@ -3225,7 +3225,33 @@ focus_tree = { # Warmonger
 
 			allow_branch = {
 				is_subject = no
-				has_completed_focus = HHE_warmonger_military_under_vlad
+				OR = {
+					has_completed_focus = HHE_warmonger_military_under_vlad
+					AND = { is_debug = yes is_ai = no }
+				}
+				OR = {
+					AND = {
+						has_government = theocratism
+						has_country_leader = {
+							character = HHE_archard_vlad
+							ruling_only = yes
+						}
+					}
+					AND = {
+						has_government = authoritarianism
+						has_country_leader = {
+							character = HHE_archard_vlad
+							ruling_only = yes
+						}
+					}
+					AND = {
+						has_government = unitism
+						has_country_leader = {
+							character = HHE_archard_vlad
+							ruling_only = yes
+						}
+					}
+				}
 			}
 
 			ai_will_do = {
@@ -4233,7 +4259,10 @@ focus_tree = { # Warmonger
 			available = { always = no }
 			allow_branch = {
 				is_subject = no
-				has_completed_focus = HHE_warmonger_military_under_vlad
+				OR = {
+					has_completed_focus = HHE_warmonger_military_under_vlad
+					AND = { is_debug = yes is_ai = no }
+				}
 				OR = {
 					AND = {
 						has_government = theocratism
@@ -4573,7 +4602,8 @@ focus_tree = { # Warmonger
 
 			completion_reward = {
 				log = "[GetDateText]: [Root.GetName]: Focus HHE_warmonger_pillar_personality"
-				HHE_piller_cult_of_personality = yes
+				unlock_decision_tooltip = pillar_personality
+				bop_HHE_archard_vlad_low_increase_effect = yes
 			}
 		}
 
@@ -4784,7 +4814,7 @@ focus_tree = { # Warmonger
 
 			completion_reward = {
 				log = "[GetDateText]: [Root.GetName]: Focus HHE_warmonger_vladaros_cult_of_personality"
-				HHE_piller_cult_of_personality = yes
+				bop_HHE_archard_vlad_low_increase_effect = yes
 				custom_effect_tooltip = attunement_status_focus_tt
 			}
 		}
@@ -4906,7 +4936,7 @@ focus_tree = { # Warmonger
 
 			completion_reward = {
 				log = "[GetDateText]: [Root.GetName]: Focus HHE_warmonger_preach_accomplish"
-				HHE_piller_cult_of_personality = yes
+				bop_HHE_archard_vlad_low_increase_effect = yes
 			}
 		}
 
@@ -5027,7 +5057,7 @@ focus_tree = { # Warmonger
 
 			completion_reward = {
 				log = "[GetDateText]: [Root.GetName]: Focus HHE_warmonger_booster_support"
-				HHE_piller_cult_of_personality = yes
+				bop_HHE_archard_vlad_low_increase_effect = yes
 			}
 		}
 	# Governance
@@ -5088,7 +5118,8 @@ focus_tree = { # Warmonger
 
 			completion_reward = {
 				log = "[GetDateText]: [Root.GetName]: Focus HHE_warmonger_pillar_governance"
-				HHE_piller_governance = yes
+				unlock_decision_tooltip = pillar_governance
+				add_ideas = HHE_piller_governance2
 			}
 		}
 
@@ -5272,7 +5303,10 @@ focus_tree = { # Warmonger
 
 			completion_reward = {
 				log = "[GetDateText]: [Root.GetName]: Focus HHE_warmonger_indoctrination_schools"
-				HHE_piller_governance = yes
+				swap_ideas = {
+					remove_idea = HHE_piller_governance2
+					add_idea = HHE_piller_governance1
+				}
 			}
 		}
 
@@ -5759,8 +5793,11 @@ focus_tree = { # Warmonger
 
 			completion_reward = {
 				log = "[GetDateText]: [Root.GetName]: Focus HHE_warmonger_our_nations_leader"
-				HHE_piller_cult_of_personality = yes
-				HHE_piller_governance = yes
+				bop_HHE_archard_vlad_low_increase_effect = yes
+				swap_ideas = {
+					remove_idea = HHE_piller_governance1
+					add_idea = HHE_piller_governance0
+				}
 				remove_country_leader_trait = national_integralist
 				add_country_leader_trait = archaiga_integralist
 			}
@@ -5838,7 +5875,12 @@ focus_tree = { # Warmonger
 			completion_reward = {
 				log = "[GetDateText]: [Root.GetName]: Focus HHE_warmonger_pillar_economic"
 				custom_effect_tooltip = unlocks_focus_tt
-				HHE_piller_economic = yes
+				#unlock_decision_tooltip = pillar_economic_HHE_militarization
+				custom_effect_tooltip = pillar_economic_HHE_militarization_tt
+				swap_ideas = {
+					remove_idea = HHE_mobilize_nobility_industry_0
+					add_idea = HHE_piller_economic2
+				}
 			}
 		}
 
@@ -5940,6 +5982,8 @@ focus_tree = { # Warmonger
 
 			completion_reward = {
 				log = "[GetDateText]: [Root.GetName]: Focus HHE_warmonger_construction_efforts"
+				#unlock_decision_tooltip = pillar_economic_HHE_industrialization
+				custom_effect_tooltip = pillar_economic_HHE_industrialization_tt
 				add_tech_bonus = {
 					name = GER_four_year_plan
 					bonus = 2.0
@@ -6110,7 +6154,10 @@ focus_tree = { # Warmonger
 
 			completion_reward = {
 				log = "[GetDateText]: [Root.GetName]: Focus HHE_warmonger_economic_transformation"
-				HHE_piller_economic = yes
+				swap_ideas = {
+					remove_idea = HHE_piller_economic2
+					add_idea = HHE_piller_economic1
+				}
 			}
 		}
 
@@ -6325,7 +6372,10 @@ focus_tree = { # Warmonger
 
 			completion_reward = {
 				log = "[GetDateText]: [Root.GetName]: Focus HHE_warmonger_national_economy"
-				HHE_piller_economic = yes
+				swap_ideas = {
+					remove_idea = HHE_piller_economic1
+					add_idea = HHE_piller_economic0
+				}
 			}
 		}
 	# Foreign Policy
@@ -6360,7 +6410,8 @@ focus_tree = { # Warmonger
 
 			completion_reward = {
 				log = "[GetDateText]: [Root.GetName]: Focus HHE_warmonger_pillar_foreign_policy"
-				HHE_piller_foreign_policy = yes
+				unlock_decision_tooltip = pillar_foreign_policy
+				add_ideas = HHE_piller_foreign_policy2
 			}
 		}
 
@@ -6516,16 +6567,16 @@ focus_tree = { # Warmonger
 						declare_war_on = { type = annex_everything target = HRF }
 						create_wargoal = { type = annex_everything target = HRF expire = 0 }
 					}
+					custom_effect_tooltip = generic_skip_one_line_tt # We do this for clearer reading.
 				}
-				IF = { LIMIT = { OR = {
-						country_exists = DOC
-						country_exists = REP
-					} }
+				IF = { LIMIT = { country_exists = DOC }
 					create_wargoal = {
 						type = annex_everything
 						target = DOC
 						expire = 0
 					}
+				}
+				IF = { LIMIT = { country_exists = REP }
 					create_wargoal = {
 						type = annex_everything
 						target = REP
@@ -6888,7 +6939,10 @@ focus_tree = { # Warmonger
 
 				completion_reward = {
 					log = "[GetDateText]: [Root.GetName]: Focus HHE_warmonger_trilateral_preparations"
-					HHE_piller_foreign_policy = yes
+					swap_ideas = {
+						remove_idea = HHE_piller_foreign_policy2
+						add_idea = HHE_piller_foreign_policy1
+					}
 				}
 			}
 
@@ -6945,9 +6999,9 @@ focus_tree = { # Warmonger
 				will_lead_to_war_with = MRC
 				completion_reward = {
 					log = "[GetDateText]: [Root.GetName]: Focus HHE_warmonger_trilateral_crusade"
-					add_ideas = HHE_high_spirits_efforts_4
+					add_named_threat = { threat = 20 name = HHE_trilateral_crusade }
 					unlock_decision_tooltip = HHE_falling_spirits
-					add_named_threat = { threat = 10 name = HHE_trilateral_crusade }
+					add_ideas = HHE_high_spirits_efforts_4
 					create_wargoal = {
 						type = annex_everything
 						target = UFS
@@ -7081,21 +7135,7 @@ focus_tree = { # Warmonger
 							declare_war_on = { type = annex_everything target = HUP }
 							create_wargoal = { type = annex_everything target = HUP expire = 0 }
 						}
-					}
-					IF = { LIMIT = { OR = {
-							country_exists = SFG
-							country_exists = SRA
-						} }
-						create_wargoal = {
-							type = annex_everything
-							target = SFG
-							expire = 0
-						}
-						create_wargoal = {
-							type = annex_everything
-							target = SRA
-							expire = 0
-						}
+						custom_effect_tooltip = generic_skip_one_line_tt # We do this for clearer reading.
 					}
 					IF = { LIMIT = { country_exists = HPV }
 						HPV = { country_event = { id = HHE_warmonger.13 } }
@@ -7109,46 +7149,77 @@ focus_tree = { # Warmonger
 							declare_war_on = { type = annex_everything target = HPV }
 							create_wargoal = { type = annex_everything target = HPV expire = 0 }
 						}
+						custom_effect_tooltip = generic_skip_one_line_tt # We do this for clearer reading.
 					}
-					create_wargoal = {
-						type = annex_everything
-						target = CPV
-						expire = 0
+					IF = { LIMIT = { country_exists = SFG }
+						create_wargoal = {
+							type = annex_everything
+							target = SFG
+							expire = 0
+						}
 					}
-					create_wargoal = {
-						type = annex_everything
-						target = ERP
-						expire = 0
+					IF = { LIMIT = { country_exists = SRA }
+						create_wargoal = {
+							type = annex_everything
+							target = SRA
+							expire = 0
+						}
 					}
-					create_wargoal = {
-						type = annex_everything
-						target = FIK
-						expire = 0
+					IF = { LIMIT = { country_exists = CPV }
+						create_wargoal = {
+							type = annex_everything
+							target = CPV
+							expire = 0
+						}
 					}
-					create_wargoal = {
-						type = annex_everything
-						target = GSD
-						expire = 0
+					IF = { LIMIT = { country_exists = ERP }
+						create_wargoal = {
+							type = annex_everything
+							target = ERP
+							expire = 0
+						}
 					}
-					create_wargoal = {
-						type = annex_everything
-						target = SEK
-						expire = 0
+					IF = { LIMIT = { country_exists = FIK }
+						create_wargoal = {
+							type = annex_everything
+							target = FIK
+							expire = 0
+						}
 					}
-					create_wargoal = {
-						type = annex_everything
-						target = SSD
-						expire = 0
+					#IF = { LIMIT = { country_exists = GSD }
+					#	create_wargoal = {
+					#		type = annex_everything
+					#		target = GSD
+					#		expire = 0
+					#	}
+					#}
+					IF = { LIMIT = { country_exists = SRA }
+						create_wargoal = {
+							type = annex_everything
+							target = SRA
+							expire = 0
+						}
 					}
-					create_wargoal = {
-						type = annex_everything
-						target = RVV
-						expire = 0
+					#IF = { LIMIT = { country_exists = SSD }
+					#	create_wargoal = {
+					#		type = annex_everything
+					#		target = SSD
+					#		expire = 0
+					#	}
+					#}
+					IF = { LIMIT = { country_exists = RVV }
+						create_wargoal = {
+							type = annex_everything
+							target = RVV
+							expire = 0
+						}
 					}
-					create_wargoal = {
-						type = annex_everything
-						target = NRP
-						expire = 0
+					IF = { LIMIT = { country_exists = NRP }
+						create_wargoal = {
+							type = annex_everything
+							target = NRP
+							expire = 0
+						}
 					}
 				}
 			}
@@ -7218,7 +7289,10 @@ focus_tree = { # Warmonger
 
 			completion_reward = {
 				log = "[GetDateText]: [Root.GetName]: Focus HHE_warmonger_resistance_nullification"
-				HHE_piller_foreign_policy = yes
+				swap_ideas = {
+					remove_idea = HHE_piller_foreign_policy1
+					add_idea = HHE_piller_foreign_policy0
+				}
 			}
 		}
 	# Civil Liberties
@@ -7256,6 +7330,8 @@ focus_tree = { # Warmonger
 
 			completion_reward = {
 				log = "[GetDateText]: [Root.GetName]: Focus HHE_warmonger_pillar_civil_liberties"
+				unlock_decision_tooltip = pillar_civil_liberties_policing
+				unlock_decision_tooltip = pillar_civil_liberties_resources
 				add_tech_bonus = {
 					name = intel_bonus
 					bonus = 1.0
@@ -7591,7 +7667,8 @@ focus_tree = { # Warmonger
 
 			completion_reward = {
 				log = "[GetDateText]: [Root.GetName]: Focus HHE_warmonger_pillar_social"
-				HHE_piller_social = yes
+				unlock_decision_tooltip = pillar_social
+				add_ideas = HHE_piller_social2
 			}
 		}
 
@@ -7737,7 +7814,10 @@ focus_tree = { # Warmonger
 
 			completion_reward = {
 				log = "[GetDateText]: [Root.GetName]: Focus HHE_warmonger_project_prospecting"
-				HHE_piller_social = yes
+				swap_ideas = {
+					remove_idea = HHE_piller_social2
+					add_idea = HHE_piller_social1
+				}
 			}
 		}
 
@@ -8007,7 +8087,10 @@ focus_tree = { # Warmonger
 
 			completion_reward = {
 				log = "[GetDateText]: [Root.GetName]: Focus HHE_warmonger_expand_paradise"
-				HHE_piller_social = yes
+				swap_ideas = {
+					remove_idea = HHE_piller_social1
+					add_idea = HHE_piller_social0
+				}
 			}
 		}
 
@@ -8090,14 +8173,16 @@ focus_tree = { # Warmonger
 						limit = {
 							has_dlc = "La Resistance"
 						}
-						HHE_piller_civil_liberties_lla = yes
-						else = {
-							HHE_piller_civil_liberties_vanilla = yes
+						swap_ideas = {
+							remove_idea = HHE_the_underground_lla
+							add_idea = HHE_piller_civil_liberties_lla_2
 						}
-					}
-					remove_ideas = {
-					    HHE_the_underground_lla
-					    HHE_the_underground_vanilla
+						else = {
+							swap_ideas = {
+								remove_idea = HHE_the_underground_vanilla
+								add_idea = HHE_piller_civil_liberties_vanilla_2
+							}
+						}
 					}
 				}
 			}
@@ -8140,9 +8225,15 @@ focus_tree = { # Warmonger
 						limit = {
 							has_dlc = "La Resistance"
 						}
-						HHE_piller_civil_liberties_lla = yes
+						swap_ideas = {
+							remove_idea = HHE_piller_civil_liberties_lla_2
+							add_idea = HHE_piller_civil_liberties_lla_1
+						}
 						else = {
-							HHE_piller_civil_liberties_vanilla = yes
+							swap_ideas = {
+								remove_idea = HHE_piller_civil_liberties_vanilla_2
+								add_idea = HHE_piller_civil_liberties_vanilla_1
+							}
 						}
 					}
 				}
@@ -8186,9 +8277,15 @@ focus_tree = { # Warmonger
 						limit = {
 							has_dlc = "La Resistance"
 						}
-						HHE_piller_civil_liberties_lla = yes
+						swap_ideas = {
+							remove_idea = HHE_piller_civil_liberties_lla_1
+							add_idea = HHE_piller_civil_liberties_lla_0
+						}
 						else = {
-							HHE_piller_civil_liberties_vanilla = yes
+							swap_ideas = {
+								remove_idea = HHE_piller_civil_liberties_vanilla_1
+								add_idea = HHE_piller_civil_liberties_vanilla_0
+							}
 						}
 					}
 				}
@@ -8280,7 +8377,10 @@ focus_tree = { # Warmonger
 
 			allow_branch = {
 				is_subject = no
-				has_completed_focus = HHE_warmonger_military_under_vlad
+				OR = {
+					has_completed_focus = HHE_warmonger_military_under_vlad
+					AND = { is_debug = yes is_ai = no }
+				}
 				OR = {
 					AND = {
 						has_government = theocratism
@@ -8945,6 +9045,33 @@ focus_tree = { # Warmonger
 
 			allow_branch = {
 				is_subject = no
+				OR = {
+					has_completed_focus = HHE_warmonger_military_under_vlad
+					AND = { is_debug = yes is_ai = no }
+				}
+				OR = {
+					AND = {
+						has_government = theocratism
+						has_country_leader = {
+							character = HHE_archard_vlad
+							ruling_only = yes
+						}
+					}
+					AND = {
+						has_government = authoritarianism
+						has_country_leader = {
+							character = HHE_archard_vlad
+							ruling_only = yes
+						}
+					}
+					AND = {
+						has_government = unitism
+						has_country_leader = {
+							character = HHE_archard_vlad
+							ruling_only = yes
+						}
+					}
+				}
 			}
 			available = {
 				has_war = no
@@ -8986,6 +9113,33 @@ focus_tree = { # Warmonger
 
 			allow_branch = {
 				is_subject = no
+				OR = {
+					has_completed_focus = HHE_warmonger_military_under_vlad
+					AND = { is_debug = yes is_ai = no }
+				}
+				OR = {
+					AND = {
+						has_government = theocratism
+						has_country_leader = {
+							character = HHE_archard_vlad
+							ruling_only = yes
+						}
+					}
+					AND = {
+						has_government = authoritarianism
+						has_country_leader = {
+							character = HHE_archard_vlad
+							ruling_only = yes
+						}
+					}
+					AND = {
+						has_government = unitism
+						has_country_leader = {
+							character = HHE_archard_vlad
+							ruling_only = yes
+						}
+					}
+				}
 			}
 			available = {
 				has_war = no
@@ -9030,6 +9184,33 @@ focus_tree = { # Warmonger
 
 			allow_branch = {
 				is_subject = no
+				OR = {
+					has_completed_focus = HHE_warmonger_military_under_vlad
+					AND = { is_debug = yes is_ai = no }
+				}
+				OR = {
+					AND = {
+						has_government = theocratism
+						has_country_leader = {
+							character = HHE_archard_vlad
+							ruling_only = yes
+						}
+					}
+					AND = {
+						has_government = authoritarianism
+						has_country_leader = {
+							character = HHE_archard_vlad
+							ruling_only = yes
+						}
+					}
+					AND = {
+						has_government = unitism
+						has_country_leader = {
+							character = HHE_archard_vlad
+							ruling_only = yes
+						}
+					}
+				}
 			}
 			available = {
 				has_war = no

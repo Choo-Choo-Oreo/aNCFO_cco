@@ -69,201 +69,6 @@ war_measures = {
 }
 
 economy_decisions = {
-	state_HHE_industrialization = {
-		icon = GFX_decision_generic_factory
-		state_target = yes
-		on_map_mode = map_only
-		target_array = core_states
-
-		days_remove = 60
-		fire_only_once = no
-		cost = industrialize_ppcost
-
-		modifier = {
-			civilian_factory_use = 5
-			industrial_capacity_factory = -0.05
-			production_speed_buildings_factor = -0.05
-		}
-
-		target_trigger = {
-			FROM = {
-				NOT = { has_state_flag = state_flag_HHE_industrialize_the_cities }
-				OR = {
-					has_state_category = large_town
-					has_state_category = city
-					has_state_category = large_city
-					has_state_category = metropolis
-					has_state_category = megalopolis
-				}
-				impassable = no
-				is_owned_by = ROOT
-			}
-		}
-		visible = {
-			original_tag = HHE
-			FROM = {
-				NOT = { has_state_flag = state_flag_HHE_industrialize_the_cities }
-			}
-			OR = {
-				#AND = { is_debug = yes is_ai = no }
-				has_completed_focus = HHE_warmonger_construction_efforts
-			}
-		}
-		available = {
-			FROM = {
-				if = {
-					limit = { has_state_category = large_town }
-					set_temp_variable = { industrialize_ppcost = 10 }
-					set_temp_variable = { industrialize_civiliancost = 3 }
-					ROOT = { num_of_civilian_factories_available_for_projects > 2 }
-				}
-				else_if = {
-					limit = { has_state_category = city }
-					set_temp_variable = { industrialize_ppcost = 20 }
-					set_temp_variable = { industrialize_civiliancost = 5 }
-					ROOT = { num_of_civilian_factories_available_for_projects > 4 }
-				}
-				else_if = {
-					limit = { has_state_category = large_city }
-					set_temp_variable = { industrialize_ppcost = 30 }
-					set_temp_variable = { industrialize_civiliancost = 7 }
-					ROOT = { num_of_civilian_factories_available_for_projects > 6 }
-				}
-				else_if = {
-					limit = { has_state_category = metropolis }
-					set_temp_variable = { industrialize_ppcost = 40 }
-					set_temp_variable = { industrialize_civiliancost = 10 }
-					ROOT = { num_of_civilian_factories_available_for_projects > 9 }
-				}
-				else_if = {
-					limit = { has_state_category = megalopolis }
-					set_temp_variable = { industrialize_ppcost = 50 }
-					set_temp_variable = { industrialize_civiliancost = 15 }
-					ROOT = { num_of_civilian_factories_available_for_projects > 14 }
-				}
-				hidden_trigger = {
-					OR = {
-						has_state_category = large_town
-						has_state_category = city
-						has_state_category = large_city
-						has_state_category = metropolis
-						has_state_category = megalopolis
-					}
-				}
-			}
-		}
-
-        complete_effect = {
-            log = "[GetDateText]: [Root.GetName]: Decision state_HHE_industrialization [FROM.state.GetName]"
-        }
-		remove_effect = {
-            log = "[GetDateText]: [Root.GetName]: Decision remove state_HHE_industrialization [FROM.state.GetName]"
-			FROM = {
-				set_state_flag = state_flag_HHE_industrialize_the_cities
-				if = {
-					limit = {
-						has_state_category = large_town
-					}
-					add_extra_state_shared_building_slots = 1
-					add_building_construction = {
-						type = industrial_complex
-						level = 1
-						instant_build = yes
-					}
-				}
-				else_if = {
-					limit = {
-						has_state_category = city
-					}
-					add_extra_state_shared_building_slots = 2
-					add_building_construction = {
-						type = industrial_complex
-						level = 2
-						instant_build = yes
-					}
-				}
-				else_if = {
-					limit = {
-						has_state_category = large_city
-					}
-					add_extra_state_shared_building_slots = 3
-					add_building_construction = {
-						type = industrial_complex
-						level = 3
-						instant_build = yes
-					}
-				}
-				else_if = {
-					limit = {
-						has_state_category = metropolis
-					}
-					add_extra_state_shared_building_slots = 4
-					add_building_construction = {
-						type = industrial_complex
-						level = 4
-						instant_build = yes
-					}
-				}
-				else_if = {
-					limit = {
-						has_state_category = megalopolis
-					}
-					add_extra_state_shared_building_slots = 5
-					add_building_construction = {
-						type = industrial_complex
-						level = 5
-						instant_build = yes
-					}
-				}
-				add_building_construction = {
-					type = construction_complex
-					level = 1
-					instant_build = yes
-				}
-			}
-		}
-
-        is_good = yes
-		ai_will_do = {
-			factor = 3.0
-			modifier = {
-				add = 1.5
-				FROM = { has_state_category = large_town }
-			}
-			modifier = {
-				add = 2.0
-				FROM = { has_state_category = city }
-			}
-			modifier = {
-				add = 2.5
-				FROM = { has_state_category = large_city }
-			}
-			modifier = {
-				add = 3.5
-				FROM = { has_state_category = metropolis }
-			}
-			modifier = {
-				add = 5.0
-				FROM = { has_state_category = megalopolis }
-			}
-			modifier = {
-				factor = 0
-				has_political_power < 50
-			}
-			modifier = {
-				factor = 3
-				has_political_power > 50
-			}
-			modifier = {
-				factor = 3
-				has_political_power > 100
-			}
-			modifier = {
-				factor = 3
-				has_political_power > 200
-			}
-		}
-	}
 }
 
 bop_HHE_gabriel_strongheart = {
@@ -278,27 +83,21 @@ bop_HHE_gaius_divitiis = {
 bop_HHE_archard_vlad = {
 	DEBUG_deactivate_bop_HHE_archard_vlad = {
 		priority = 91
-		visible = {
-			is_debug = yes
-		}
+		visible = { AND = { is_debug = yes is_ai = no } }
 		complete_effect = {
 			remove_power_balance = { id = power_balance_HHE_archard_vlad }
 		}
 	}
 
 	DEBUG_left_test_bop_HHE_archard_vlad = {
-		visible = {
-			is_debug = yes
-		}
+		visible = { AND = { is_debug = yes is_ai = no } }
 		complete_effect = {
 			bop_HHE_archard_vlad_very_low_decrease_effect = yes
 		}
 	}
 
 	DEBUG_right_test_bop_HHE_archard_vlad = {
-		visible = {
-			is_debug = yes
-		}
+		visible = { AND = { is_debug = yes is_ai = no } }
 		complete_effect = {
 			bop_HHE_archard_vlad_very_low_increase_effect = yes
 		}
@@ -521,7 +320,7 @@ bop_HHE_archard_vlad = {
 		}
 	}
 
-	pillar_economic = {
+	pillar_economic_HHE_militarization = {
 		icon = GFX_decision_ger_military_buildup
 		state_target = yes
 		on_map_mode = map_and_decisions_view
@@ -615,6 +414,202 @@ bop_HHE_archard_vlad = {
             }
 		}
 	}
+
+	pillar_economic_HHE_industrialization = {
+		icon = GFX_decision_generic_factory
+		state_target = yes
+		on_map_mode = map_only
+		target_array = core_states
+
+		days_remove = 60
+		fire_only_once = no
+		cost = industrialize_ppcost
+
+		modifier = {
+			civilian_factory_use = 5
+			industrial_capacity_factory = -0.05
+			production_speed_buildings_factor = -0.05
+		}
+
+		target_trigger = {
+			FROM = {
+				NOT = { has_state_flag = state_flag_HHE_industrialize_the_cities }
+				OR = {
+					has_state_category = large_town
+					has_state_category = city
+					has_state_category = large_city
+					has_state_category = metropolis
+					has_state_category = megalopolis
+				}
+				impassable = no
+				is_owned_by = ROOT
+			}
+		}
+		visible = {
+			original_tag = HHE
+			FROM = {
+				NOT = { has_state_flag = state_flag_HHE_industrialize_the_cities }
+			}
+			OR = {
+				#AND = { is_debug = yes is_ai = no }
+				has_completed_focus = HHE_warmonger_construction_efforts
+			}
+		}
+		available = {
+			FROM = {
+				if = {
+					limit = { has_state_category = large_town }
+					set_temp_variable = { industrialize_ppcost = 10 }
+					set_temp_variable = { industrialize_civiliancost = 3 }
+					ROOT = { num_of_civilian_factories_available_for_projects > 2 }
+				}
+				else_if = {
+					limit = { has_state_category = city }
+					set_temp_variable = { industrialize_ppcost = 20 }
+					set_temp_variable = { industrialize_civiliancost = 5 }
+					ROOT = { num_of_civilian_factories_available_for_projects > 4 }
+				}
+				else_if = {
+					limit = { has_state_category = large_city }
+					set_temp_variable = { industrialize_ppcost = 30 }
+					set_temp_variable = { industrialize_civiliancost = 7 }
+					ROOT = { num_of_civilian_factories_available_for_projects > 6 }
+				}
+				else_if = {
+					limit = { has_state_category = metropolis }
+					set_temp_variable = { industrialize_ppcost = 40 }
+					set_temp_variable = { industrialize_civiliancost = 10 }
+					ROOT = { num_of_civilian_factories_available_for_projects > 9 }
+				}
+				else_if = {
+					limit = { has_state_category = megalopolis }
+					set_temp_variable = { industrialize_ppcost = 50 }
+					set_temp_variable = { industrialize_civiliancost = 15 }
+					ROOT = { num_of_civilian_factories_available_for_projects > 14 }
+				}
+				hidden_trigger = {
+					OR = {
+						has_state_category = large_town
+						has_state_category = city
+						has_state_category = large_city
+						has_state_category = metropolis
+						has_state_category = megalopolis
+					}
+				}
+			}
+		}
+
+        complete_effect = {
+            log = "[GetDateText]: [Root.GetName]: Decision state_HHE_industrialization [FROM.state.GetName]"
+        }
+		remove_effect = {
+            log = "[GetDateText]: [Root.GetName]: Decision remove state_HHE_industrialization [FROM.state.GetName]"
+			FROM = {
+				set_state_flag = state_flag_HHE_industrialize_the_cities
+				if = {
+					limit = {
+						has_state_category = large_town
+					}
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = industrial_complex
+						level = 1
+						instant_build = yes
+					}
+				}
+				else_if = {
+					limit = {
+						has_state_category = city
+					}
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = industrial_complex
+						level = 2
+						instant_build = yes
+					}
+				}
+				else_if = {
+					limit = {
+						has_state_category = large_city
+					}
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = industrial_complex
+						level = 3
+						instant_build = yes
+					}
+				}
+				else_if = {
+					limit = {
+						has_state_category = metropolis
+					}
+					add_extra_state_shared_building_slots = 4
+					add_building_construction = {
+						type = industrial_complex
+						level = 4
+						instant_build = yes
+					}
+				}
+				else_if = {
+					limit = {
+						has_state_category = megalopolis
+					}
+					add_extra_state_shared_building_slots = 5
+					add_building_construction = {
+						type = industrial_complex
+						level = 5
+						instant_build = yes
+					}
+				}
+				add_building_construction = {
+					type = construction_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+
+        is_good = yes
+		ai_will_do = {
+			factor = 3.0
+			modifier = {
+				add = 1.5
+				FROM = { has_state_category = large_town }
+			}
+			modifier = {
+				add = 2.0
+				FROM = { has_state_category = city }
+			}
+			modifier = {
+				add = 2.5
+				FROM = { has_state_category = large_city }
+			}
+			modifier = {
+				add = 3.5
+				FROM = { has_state_category = metropolis }
+			}
+			modifier = {
+				add = 5.0
+				FROM = { has_state_category = megalopolis }
+			}
+			modifier = {
+				factor = 0
+				has_political_power < 50
+			}
+			modifier = {
+				factor = 3
+				has_political_power > 50
+			}
+			modifier = {
+				factor = 3
+				has_political_power > 100
+			}
+			modifier = {
+				factor = 3
+				has_political_power > 200
+			}
+		}
+	}
 }
 
 railway_HHE_trans_continental = {
@@ -664,6 +659,15 @@ railway_HHE_trans_continental = {
 			add_victory_points = { province = 492  value = 5 }
 			add_victory_points = { province = 8570 value = 5 }
 			add_victory_points = { province = 9003 value = 5 }
+			every_core_state = {
+				limit = { OR = { state = 18 state = 79 state = 81 state = 91 state = 140 state = 149 state = 157 state = 159 state = 160 state = 161 state = 162 state = 271 state = 407 } }
+				add_extra_state_shared_building_slots = 1
+				add_dynamic_modifier = {
+					modifier = HHE_trans_continental_railway_modifier
+					#days = 730
+					scope = HHE
+				}
+			}
 			#hidden_effect = {
 				build_railway = {
 					level = 1 fallback = yes build_only_on_allied = yes
@@ -693,6 +697,88 @@ railway_HHE_trans_continental = {
 				build_railway = {
 					level = 1 fallback = yes build_only_on_allied = yes
 					start_province = 15116 target_province = 8102
+				}
+			#}
+		}
+		ai_will_do = {
+			factor = 100
+			modifier = { factor = 100 has_war = yes }
+		}
+	}
+
+	railway_HHE_trans_continental_railway_expansion = {
+		icon = generic_wreckers
+		available = {
+			has_full_control_of_state = 5
+			has_full_control_of_state = 11
+			has_full_control_of_state = 77
+			has_full_control_of_state = 80
+			has_full_control_of_state = 84
+			has_full_control_of_state = 85
+			has_full_control_of_state = 83
+			has_full_control_of_state = 109
+			has_full_control_of_state = 180
+			has_full_control_of_state = 239
+			has_full_control_of_state = 437
+			has_full_control_of_state = 448
+			num_of_civilian_factories_available_for_projects > 9
+		}
+		visible = {
+			always = yes
+			#NOT = {
+			#	AND = {
+			#		has_railway_connection = { start_province = 5398 target_province = 340 }
+			#		has_railway_connection = { start_province = 5643 target_province = 492 }
+			#		has_railway_connection = { start_province = 5643 target_province = 3116 }
+			#		has_railway_connection = { start_province = 8959 target_province = 2057 }
+			#		has_railway_connection = { start_province = 8959 target_province = 9105 }
+			#	}
+			#}
+		}
+		highlight_states = { highlight_state_targets = { state = 77
+			state = 5 state = 11 state = 80 state = 84 state = 85 state = 83 state = 109 state = 180 state = 239 state = 437 state = 448
+		} }
+
+		days_remove = 30
+		fire_only_once = yes
+		cost = 25
+
+		modifier = { civilian_factory_use = 10 }
+
+		remove_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision remove railway_HHE_trans_continental_railway"
+			add_victory_points = { province = 7730  value = 5 }
+			add_victory_points = { province = 8006  value = 5 }
+			add_victory_points = { province = 8606  value = 5 }
+			add_victory_points = { province = 8861 value = 5 }
+			add_victory_points = { province = 15115 value = 5 }
+			add_victory_points = { province = 18899 value = 5 }
+			every_core_state = {
+				limit = { OR = { state = 5 state = 11 state = 77 state = 80 state = 84 state = 85 state = 83 state = 109 state = 180 state = 239 state = 437 state = 448 } }
+				add_extra_state_shared_building_slots = 1
+				add_dynamic_modifier = {
+					modifier = HHE_trans_continental_railway_modifier
+					#days = 730
+					scope = HHE
+				}
+			}
+			#hidden_effect = {
+				build_railway = {
+					level = 1 fallback = yes build_only_on_allied = yes
+					start_province = 15116 target_province = 8669
+				}
+				build_railway = {
+					level = 1 fallback = yes build_only_on_allied = yes
+					path = { 8606 433 8458 8405 8369 1826 6170 }
+				}
+				build_railway = {
+					level = 1 fallback = yes build_only_on_allied = yes
+					path = { 8175 8960 7730 }
+				}
+				# Upgrades whole network
+				build_railway = {
+					level = 1 fallback = yes build_only_on_allied = yes
+					start_province = 15116 target_province = 4271
 				}
 			#}
 		}
@@ -739,6 +825,15 @@ railway_HHE_trans_continental = {
 
 		remove_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision remove railway_HHE_nobilitas_regions"
+			every_core_state = {
+				limit = { OR = { state = 20 state = 79 state = 81 state = 155 state = 159 state = 407 } }
+				add_extra_state_shared_building_slots = 1
+				add_dynamic_modifier = {
+					modifier = HHE_labor_initiative_modifier
+					#days = 730
+					scope = HHE
+				}
+			}
 			#hidden_effect = {
 				build_railway = {
 					level = 1 fallback = yes build_only_on_allied = yes
@@ -805,6 +900,15 @@ railway_HHE_trans_continental = {
 
 		remove_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision remove railway_HHE_under_mountain_regions"
+			every_core_state = {
+				limit = { OR = { state = 148 state = 158 state = 191 state = 409 state = 410 } }
+				add_extra_state_shared_building_slots = 1
+				add_dynamic_modifier = {
+					modifier = HHE_labor_initiative_modifier
+					#days = 730
+					scope = HHE
+				}
+			}
 			#hidden_effect = {
 				build_railway = {
 					level = 1 fallback = yes build_only_on_allied = yes
@@ -869,6 +973,15 @@ railway_HHE_trans_continental = {
 
 		remove_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision remove railway_HHE_western_approach_regions"
+			every_core_state = {
+				limit = { OR = { state = 141 state = 142 state = 168 state = 170 state = 281 state = 282 state = 404 state = 405 state = 412 } }
+				add_extra_state_shared_building_slots = 1
+				add_dynamic_modifier = {
+					modifier = HHE_labor_initiative_modifier
+					#days = 730
+					scope = HHE
+				}
+			}
 			#hidden_effect = {
 				build_railway = {
 					level = 1 fallback = yes build_only_on_allied = yes
@@ -907,10 +1020,10 @@ railway_HHE_trans_continental = {
 			has_full_control_of_state = 166
 			has_full_control_of_state = 169
 			has_full_control_of_state = 273
-			has_full_control_of_state = 274
 			has_full_control_of_state = 277
 			has_full_control_of_state = 278
 			has_full_control_of_state = 279
+			has_full_control_of_state = 395
 			has_full_control_of_state = 396
 			has_full_control_of_state = 398
 			has_full_control_of_state = 399
@@ -930,7 +1043,7 @@ railway_HHE_trans_continental = {
 			}
 		}
 		highlight_states = { highlight_state_targets = { state = 92
-			state = 6 state = 166 state = 169 state = 273 state = 274 state = 277 state = 278 state = 279 state = 396 state = 398 state = 399 state = 400 state = 402
+			state = 6 state = 166 state = 169 state = 273 state = 277 state = 278 state = 279 state = 395 state = 396 state = 398 state = 399 state = 400 state = 402
 		} }
 
 		days_remove = 30
@@ -941,6 +1054,15 @@ railway_HHE_trans_continental = {
 
 		remove_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision remove railway_HHE_under_mountain_regions"
+			every_core_state = {
+				limit = { OR = { state = 6 state = 92 state = 166 state = 169 state = 273 state = 277 state = 278 state = 279 state = 395 state = 396 state = 398 state = 399 state = 400 state = 402 } }
+				add_extra_state_shared_building_slots = 1
+				add_dynamic_modifier = {
+					modifier = HHE_labor_initiative_modifier
+					#days = 730
+					scope = HHE
+				}
+			}
 			#hidden_effect = {
 				build_railway = { # Main Line
 					level = 1 fallback = yes build_only_on_allied = yes
@@ -984,7 +1106,6 @@ railway_HHE_trans_continental = {
 	railway_HHE_laity_regions = {
 		icon = generic_wreckers
 		available = {
-			has_full_control_of_state = 93
 			has_full_control_of_state = 119
 			has_full_control_of_state = 120
 			has_full_control_of_state = 121
@@ -1008,7 +1129,7 @@ railway_HHE_trans_continental = {
 			}
 		}
 		highlight_states = { highlight_state_targets = { state = 120
-			state = 93 state = 119 state = 121 state = 122 state = 127 state = 128
+			state = 119 state = 121 state = 122 state = 127 state = 128
 		} }
 
 		days_remove = 30
@@ -1019,6 +1140,15 @@ railway_HHE_trans_continental = {
 
 		remove_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision remove railway_HHE_under_mountain_regions"
+			every_core_state = {
+				limit = { OR = { state = 119 state = 120 state = 121 state = 122 state = 127 state = 128 } }
+				add_extra_state_shared_building_slots = 1
+				add_dynamic_modifier = {
+					modifier = HHE_labor_initiative_modifier
+					#days = 730
+					scope = HHE
+				}
+			}
 			#hidden_effect = {
 				build_railway = {
 					level = 1 fallback = yes build_only_on_allied = yes
