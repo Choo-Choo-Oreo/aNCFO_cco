@@ -27,6 +27,7 @@ power_balance_OAK_v_COA = {
 					NOT = { OAK = { has_war_with = COA } COA = { has_war_with = OAK } } } COA = {
 				    transfer_navy = { target = OAK }
 					annex_country = { target = OAK transfer_troops = yes }
+					remove_power_balance = { id = power_balance_OAK_v_COA }
 					country_event = { id = COA.0 }
 				} } }
 			}
@@ -251,7 +252,52 @@ power_balance_OAK_v_COA = {
 				} } }
 			}
 			on_deactivate = {
-
+				OAK = {
+					custom_effect_tooltip = modify_OAK_tug_of_war_modifier_tt
+					add_to_variable = { 
+						global.OAK_TOW_political_power_gain = -0.05
+						tooltip = political_power_gain_tt
+					}
+					add_to_variable = { 
+						global.OAK_TOW_drift_defence_factor = -0.05
+						tooltip = drift_defence_factor_tt
+					}
+					add_to_variable = { 
+						global.OAK_TOW_stability_factor = -0.05
+						tooltip = stability_factor_tt
+					}
+					add_to_variable = { 
+						global.OAK_TOW_party_popularity_stability_factor = -0.05
+						tooltip = party_popularity_stability_factor_tt
+					}
+					add_to_variable = { 
+						global.OAK_TOW_war_support_factor = -0.05
+						tooltip = war_support_factor_tt
+					}
+				}
+				COA = {
+					custom_effect_tooltip = modify_COA_tug_of_war_modifier_tt
+					add_to_variable = { 
+						global.OAK_TOW_political_power_gain = 0.05
+						tooltip = political_power_gain_tt
+					}
+					add_to_variable = { 
+						global.OAK_TOW_drift_defence_factor = 0.05
+						tooltip = drift_defence_factor_tt
+					}
+					add_to_variable = { 
+						global.OAK_TOW_stability_factor = 0.05
+						tooltip = stability_factor_tt
+					}
+					add_to_variable = { 
+						global.OAK_TOW_party_popularity_stability_factor = 0.05
+						tooltip = party_popularity_stability_factor_tt
+					}
+					add_to_variable = { 
+						global.OAK_TOW_war_support_factor = 0.05
+						tooltip = war_support_factor_tt
+					}
+				}
 			}
 		}
 
@@ -345,6 +391,7 @@ power_balance_OAK_v_COA = {
 					NOT = { OAK = { has_war_with = COA } COA = { has_war_with = OAK } } } OAK = {
 					transfer_navy = { target = COA }
 					annex_country = { target = COA transfer_troops = yes }
+					remove_power_balance = { id = power_balance_OAK_v_COA }
 					country_event = { id = OAK.0 }
 				} } }
 			}

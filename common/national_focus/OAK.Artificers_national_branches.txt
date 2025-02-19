@@ -64,55 +64,55 @@ focus_tree = {
 			}
 		}
 
-		focus = { # Preemptive Strike
-			id = OAK_political_preemptive_strike
-			icon = GFX_focus_unknown_political
-			prerequisite = { focus = OAK_political_a_new_year }
-			#mutually_exclusive = { focus =  }
-			relative_position_id = OAK_political_a_new_year
-			x = 5
-			y = 1
-			cost = 5
+		#focus = { # Preemptive Strike
+		#	id = OAK_political_preemptive_strike
+		#	icon = GFX_focus_unknown_political
+		#	prerequisite = { focus = OAK_political_a_new_year }
+		#	#mutually_exclusive = { focus =  }
+		#	relative_position_id = OAK_political_a_new_year
+		#	x = 5
+		#	y = 1
+		#	cost = 5
 
-			allow_branch = {
-			}
-			available = {
-				OR = {
-					is_power_balance_in_range = { id = power_balance_OAK_v_COA range < COA_established }
-					NOT = { country_exists = COA }
-				}
-			}
-			bypass = {
-			}
+		#	allow_branch = {
+		#	}
+		#	available = {
+		#		OR = {
+		#			is_power_balance_in_range = { id = power_balance_OAK_v_COA range < COA_established }
+		#			NOT = { country_exists = COA }
+		#		}
+		#	}
+		#	bypass = {
+		#	}
 
-			ai_will_do = { factor = 1
-				modifier = { factor = 2.5
-					is_power_balance_in_range = { id = power_balance_OAK_v_COA range > COA_prominent } }
-				modifier = { factor = 2.5
-					is_power_balance_in_range = { id = power_balance_OAK_v_COA range > COA_infuenctial } }
-				modifier = { factor = 2.5
-					is_power_balance_in_range = { id = power_balance_OAK_v_COA range > COA_dominant } }
-				modifier = { factor = 2 original_tag = OAK
-				    power_balance_value = { id = power_balance_OAK_v_COA value >  0.00 } }
-				modifier = { factor = 2 original_tag = OAK
-				    power_balance_value = { id = power_balance_OAK_v_COA value > -0.05 } }
-				modifier = { factor = 3.5 original_tag = OAK
-				    power_balance_value = { id = power_balance_OAK_v_COA value > -0.15 } }
-				modifier = { factor = 3.5 original_tag = OAK
-				    power_balance_value = { id = power_balance_OAK_v_COA value > -0.45 } }
-				modifier = { factor = 5 original_tag = OAK
-				    power_balance_value = { id = power_balance_OAK_v_COA value > -0.90 } }
-			}
+		#	ai_will_do = { factor = 1
+		#		modifier = { factor = 2.5
+		#			is_power_balance_in_range = { id = power_balance_OAK_v_COA range > COA_prominent } }
+		#		modifier = { factor = 2.5
+		#			is_power_balance_in_range = { id = power_balance_OAK_v_COA range > COA_infuenctial } }
+		#		modifier = { factor = 2.5
+		#			is_power_balance_in_range = { id = power_balance_OAK_v_COA range > COA_dominant } }
+		#		modifier = { factor = 2 original_tag = OAK
+		#		    power_balance_value = { id = power_balance_OAK_v_COA value >  0.00 } }
+		#		modifier = { factor = 2 original_tag = OAK
+		#		    power_balance_value = { id = power_balance_OAK_v_COA value > -0.05 } }
+		#		modifier = { factor = 3.5 original_tag = OAK
+		#		    power_balance_value = { id = power_balance_OAK_v_COA value > -0.15 } }
+		#		modifier = { factor = 3.5 original_tag = OAK
+		#		    power_balance_value = { id = power_balance_OAK_v_COA value > -0.45 } }
+		#		modifier = { factor = 5 original_tag = OAK
+		#		    power_balance_value = { id = power_balance_OAK_v_COA value > -0.90 } }
+		#	}
 
-			available_if_capitulated = yes
+		#	available_if_capitulated = yes
 
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus OAK_political_unification_war"
-				hidden_effect = { create_wargoal = { type = annex_everything target = COA expire = 0 } }
-				declare_war_on = { type = annex_everything target = COA }
-				effect_tooltip = { remove_power_balance = { id = power_balance_OAK_v_COA } }
-			}
-		}
+		#	completion_reward = {
+		#		log = "[GetDateText]: [Root.GetName]: Focus OAK_political_unification_war"
+		#		hidden_effect = { create_wargoal = { type = annex_everything target = COA expire = 0 } }
+		#		declare_war_on = { type = annex_everything target = COA }
+		#		remove_power_balance = { id = power_balance_OAK_v_COA }
+		#	}
+		#}
 
 		focus = { # Unification War
 			id = OAK_political_unification_war
@@ -169,12 +169,13 @@ focus_tree = {
 			#mutually_exclusive = { focus =  }
 			relative_position_id = OAK_political_unification_war
 			x = 0
-			y = 1
+			y = 2
 			cost = 5
 
 			allow_branch = {
 			}
 			available = {
+				NOT = { has_power_balance = { id = power_balance_OAK_v_COA } }
 				OR = {
 					NOT = { has_war_with = COA }
 					NOT = { country_exists = COA }
@@ -209,6 +210,50 @@ focus_tree = {
 				log = "[GetDateText]: [Root.GetName]: Focus OAK_political_reconstruction"
 			}
 		}
+
+		focus = { # Industrial Programs
+			id = OAK_political_industrial_programs
+			icon = GFX_focus_unknown_political
+			prerequisite = { focus = OAK_political_reconstruction }
+			#mutually_exclusive = { focus =  }
+			relative_position_id = OAK_political_reconstruction
+			x = -1
+			y = 1
+			cost = 5
+
+			allow_branch = {
+			}
+			available = {
+			}
+			bypass = {
+			}
+
+			ai_will_do = { factor = 1
+				modifier = { factor = 10
+					date > 1740.01.01 }
+			}
+
+			available_if_capitulated = yes
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus OAK_political_industrial_programs"
+				custom_effect_tooltip = modify_OAK_state_heart_of_iron_modifier_tt
+				add_to_variable = { 
+					global.OAK_local_resources = 0.40
+					tooltip = LOCAL_RESOURCES_tt
+				}
+				add_to_variable = { 
+					global.OAK_state_production_speed_buildings_factor = 0.40
+					tooltip = MODIFIER_STATE_PRODUCTION_SPEED_BUILDINGS_FACTOR_tt
+				}
+			}
+		}
+
+		# Academia
+		# Populus
+		# Industrialist
+		# Elites
+
 	continuous_focus_position = { x = 50 y = 950 }
 }
 
@@ -278,8 +323,55 @@ focus_tree = {
 			}
 		}
 
-		focus = { # Preemptive Strike
-			id = COA_political_preemptive_strike
+		#focus = { # Preemptive Strike
+		#	id = COA_political_preemptive_strike
+		#	icon = GFX_focus_unknown_political
+		#	prerequisite = { focus = COA_political_a_new_year }
+		#	#mutually_exclusive = { focus =  }
+		#	relative_position_id = COA_political_a_new_year
+		#	x = 5
+		#	y = 1
+		#	cost = 5
+
+		#	allow_branch = {
+		#	}
+		#	available = {
+		#		is_power_balance_in_range = { id = power_balance_OAK_v_COA range > OAK_established }
+		#	}
+		#	bypass = {
+		#	}
+
+		#	ai_will_do = { factor = 1
+		#		modifier = { factor = 2.5
+		#			is_power_balance_in_range = { id = power_balance_OAK_v_COA range > OAK_prominent } }
+		#		modifier = { factor = 2.5
+		#			is_power_balance_in_range = { id = power_balance_OAK_v_COA range > OAK_infuenctial } }
+		#		modifier = { factor = 2.5
+		#			is_power_balance_in_range = { id = power_balance_OAK_v_COA range > OAK_dominant } }
+		#		modifier = { factor = 2 original_tag = COA
+		#		    power_balance_value = { id = power_balance_OAK_v_COA value < 0.00 } }
+		#		modifier = { factor = 2 original_tag = COA
+		#		    power_balance_value = { id = power_balance_OAK_v_COA value < 0.05 } }
+		#		modifier = { factor = 3.5 original_tag = COA
+		#		    power_balance_value = { id = power_balance_OAK_v_COA value < 0.15 } }
+		#		modifier = { factor = 3.5 original_tag = COA
+		#		    power_balance_value = { id = power_balance_OAK_v_COA value < 0.45 } }
+		#		modifier = { factor = 5 original_tag = COA
+		#		    power_balance_value = { id = power_balance_OAK_v_COA value < 0.90 } }
+		#	}
+
+		#	available_if_capitulated = yes
+
+		#	completion_reward = {
+		#		log = "[GetDateText]: [Root.GetName]: Focus COA_political_preemptive_strike"
+		#		hidden_effect = { create_wargoal = { type = annex_everything target = OAK expire = 0 } }
+		#		declare_war_on = { type = annex_everything target = OAK }
+		#		remove_power_balance = { id = power_balance_OAK_v_COA }
+		#	}
+		#}
+
+		focus = { # Unification War
+			id = COA_political_unification_war
 			icon = GFX_focus_unknown_political
 			prerequisite = { focus = COA_political_a_new_year }
 			#mutually_exclusive = { focus =  }
@@ -291,39 +383,95 @@ focus_tree = {
 			allow_branch = {
 			}
 			available = {
-				is_power_balance_in_range = { id = power_balance_OAK_v_COA range > OAK_established }
+				OR = {
+					has_war_with = OAK
+					NOT = { country_exists = OAK }
+				}
 			}
 			bypass = {
+				NOT = { country_exists = OAK }
 			}
 
 			ai_will_do = { factor = 1
 				modifier = { factor = 2.5
-					is_power_balance_in_range = { id = power_balance_OAK_v_COA range > OAK_prominent } }
+					is_power_balance_in_range = { id = power_balance_OAK_v_COA range > COA_prominent } }
 				modifier = { factor = 2.5
-					is_power_balance_in_range = { id = power_balance_OAK_v_COA range > OAK_infuenctial } }
+					is_power_balance_in_range = { id = power_balance_OAK_v_COA range > COA_infuenctial } }
 				modifier = { factor = 2.5
-					is_power_balance_in_range = { id = power_balance_OAK_v_COA range > OAK_dominant } }
-				modifier = { factor = 2 original_tag = COA
-				    power_balance_value = { id = power_balance_OAK_v_COA value < 0.00 } }
-				modifier = { factor = 2 original_tag = COA
-				    power_balance_value = { id = power_balance_OAK_v_COA value < 0.05 } }
-				modifier = { factor = 3.5 original_tag = COA
-				    power_balance_value = { id = power_balance_OAK_v_COA value < 0.15 } }
-				modifier = { factor = 3.5 original_tag = COA
-				    power_balance_value = { id = power_balance_OAK_v_COA value < 0.45 } }
-				modifier = { factor = 5 original_tag = COA
-				    power_balance_value = { id = power_balance_OAK_v_COA value < 0.90 } }
+					is_power_balance_in_range = { id = power_balance_OAK_v_COA range > COA_dominant } }
+				modifier = { factor = 2 original_tag = OAK
+				    power_balance_value = { id = power_balance_OAK_v_COA value >  0.00 } }
+				modifier = { factor = 2 original_tag = OAK
+				    power_balance_value = { id = power_balance_OAK_v_COA value > -0.05 } }
+				modifier = { factor = 3.5 original_tag = OAK
+				    power_balance_value = { id = power_balance_OAK_v_COA value > -0.15 } }
+				modifier = { factor = 3.5 original_tag = OAK
+				    power_balance_value = { id = power_balance_OAK_v_COA value > -0.45 } }
+				modifier = { factor = 5 original_tag = OAK
+				    power_balance_value = { id = power_balance_OAK_v_COA value > -0.90 } }
 			}
 
 			available_if_capitulated = yes
 
 			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus COA_political_preemptive_strike"
-				hidden_effect = { create_wargoal = { type = annex_everything target = OAK expire = 0 } }
-				declare_war_on = { type = annex_everything target = OAK }
-				effect_tooltip = { remove_power_balance = { id = power_balance_OAK_v_COA } }
+				log = "[GetDateText]: [Root.GetName]: Focus COA_political_unification_war"
 			}
 		}
+
+		focus = { # Reconstruction
+			id = COA_political_reconstruction
+			icon = GFX_focus_unknown_political
+			prerequisite = { focus = COA_political_unification_war }
+			#mutually_exclusive = { focus =  }
+			relative_position_id = COA_political_unification_war
+			x = 0
+			y = 2
+			cost = 5
+
+			allow_branch = {
+			}
+			available = {
+				NOT = { has_power_balance = { id = power_balance_OAK_v_COA } }
+				OR = {
+					NOT = { has_war_with = OAK }
+					NOT = { country_exists = OAK }
+				}
+			}
+			bypass = {
+				NOT = { country_exists = OAK }
+			}
+
+			ai_will_do = { factor = 1
+				modifier = { factor = 2.5
+					is_power_balance_in_range = { id = power_balance_OAK_v_COA range > COA_prominent } }
+				modifier = { factor = 2.5
+					is_power_balance_in_range = { id = power_balance_OAK_v_COA range > COA_infuenctial } }
+				modifier = { factor = 2.5
+					is_power_balance_in_range = { id = power_balance_OAK_v_COA range > COA_dominant } }
+				modifier = { factor = 2 original_tag = OAK
+				    power_balance_value = { id = power_balance_OAK_v_COA value >  0.00 } }
+				modifier = { factor = 2 original_tag = OAK
+				    power_balance_value = { id = power_balance_OAK_v_COA value > -0.05 } }
+				modifier = { factor = 3.5 original_tag = OAK
+				    power_balance_value = { id = power_balance_OAK_v_COA value > -0.15 } }
+				modifier = { factor = 3.5 original_tag = OAK
+				    power_balance_value = { id = power_balance_OAK_v_COA value > -0.45 } }
+				modifier = { factor = 5 original_tag = OAK
+				    power_balance_value = { id = power_balance_OAK_v_COA value > -0.90 } }
+			}
+
+			available_if_capitulated = yes
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus COA_political_reconstruction"
+			}
+		}
+
+		# Academia
+		# Populus
+		# Industrialist
+		# Elites
+
 	continuous_focus_position = { x = 50 y = 950 }
 }
 
@@ -409,7 +557,10 @@ joint_focus = { # Academia
 	completion_reward_joint_originator = {
 		IF = { LIMIT = { tag = OAK }
 			custom_effect_tooltip = aritifcers_political_downsize_tt
-			add_political_power = 27
+			add_to_variable = { 
+				OAK_academia_political_power_gain = 0.10
+				tooltip = political_power_gain_tt
+			}
 			hidden_effect = {
 				modify_tech_sharing_bonus = {
 				    id = artificers_academia
@@ -424,13 +575,28 @@ joint_focus = { # Academia
 			}
 		}
 		IF = { LIMIT = { tag = COA }
-			add_political_power = 19
+			add_to_variable = { 
+				COA_academia_political_power_gain = 0.10
+				tooltip = political_power_gain_tt
+			}
 		}
 	}
 
 	completion_reward_joint_member = {
 		custom_effect_tooltip = aritifcers_political_group_locked_tt
 		set_country_flag = aritifcers_political_academia_locked
+		IF = { LIMIT = { tag = OAK }
+			add_to_variable = { 
+				OAK_academia_political_power_gain = -0.10
+				tooltip = political_power_gain_tt
+			}
+		}
+		IF = { LIMIT = { tag = COA }
+			add_to_variable = { 
+				COA_academia_political_power_gain = -0.10
+				tooltip = political_power_gain_tt
+			}
+		}
 	}
 }
 # OAK
@@ -552,13 +718,11 @@ joint_focus = { # Academia
 		completion_reward = {
 			log = "[GetDateText]: [Root.GetName]: Focus OAK_political_oversight_committee"
 			add_political_power = 27
-			add_research_slot = 1
 			OAK = {
-				remove_ideas = OAK_idea_unitist_academia
+				hidden_effect = { remove_ideas = OAK_hidden_idea_academia_popularity_of_unitist_factions }
 				remove_from_tech_sharing_group = artificers_academia
 			}
 			COA = {
-				remove_ideas = COA_idea_unitist_academia
 				remove_from_tech_sharing_group = artificers_academia
 			}
 		}
@@ -683,6 +847,8 @@ joint_focus = { # Academia
 			log = "[GetDateText]: [Root.GetName]: Focus COA_political_revolutionary_education"
 			add_political_power = 19
 			add_research_slot = 1
+			OAK = {  }
+			COA = {  }
 		}
 	}
 
@@ -726,24 +892,123 @@ joint_focus = { # Populus
 	completion_reward_joint_originator = {
 		IF = { LIMIT = { tag = OAK }
 			custom_effect_tooltip = aritifcers_political_downsize_tt
-			add_political_power = 27
+			add_to_variable = { 
+				OAK_academia_political_power_gain = 0.10
+				tooltip = political_power_gain_tt
+			}
 		}
 		IF = { LIMIT = { tag = COA }
-			add_political_power = 19
+			add_to_variable = { 
+				COA_academia_political_power_gain = 0.10
+				tooltip = political_power_gain_tt
+			}
 		}
 	}
 
 	completion_reward_joint_member = {
 		custom_effect_tooltip = aritifcers_political_group_locked_tt
 		set_country_flag = aritifcers_political_populus_locked
+		IF = { LIMIT = { tag = OAK }
+			add_to_variable = { 
+				OAK_academia_political_power_gain = -0.10
+				tooltip = political_power_gain_tt
+			}
+		}
+		IF = { LIMIT = { tag = COA }
+			add_to_variable = { 
+				COA_academia_political_power_gain = -0.10
+				tooltip = political_power_gain_tt
+			}
+		}
 	}
 }
 # OAK
+	shared_focus = { # Uplift Lower Strata
+		id = OAK_political_uplift_lower_strata
+		icon = GFX_focus_unknown_military
+		dynamic = yes
+		prerequisite = { focus = aritifcers_political_populus }
+		#mutually_exclusive = { focus =  }
+		relative_position_id = aritifcers_political_populus
+		x = -1
+		y = 1
+		cost = 5
+
+		text_icon = NORDIC_focus_style
+
+		allow_branch = {
+			tag = OAK
+		}
+		available = {
+			NOT = { has_country_flag = aritifcers_political_populus_locked }
+		}
+		bypass = {
+		}
+
+		ai_will_do = {
+			factor = 10
+			modifier = { factor = 5 OR = {
+				COA = { has_completed_focus = aritifcers_political_mittelland_underground_war }
+				OAK = { has_completed_focus = aritifcers_political_mittelland_underground_war }
+			} }
+			modifier = { factor = 5 OR = {
+				COA = { is_ai = no }
+				OAK = { is_ai = no }
+			} }
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus OAK_political_uplift_lower_strata"
+			add_political_power = 27
+		}
+	}
+
+	shared_focus = { # Prevent Exploitation
+		id = OAK_political_prevent_exploitation
+		icon = GFX_focus_unknown_military
+		dynamic = yes
+		prerequisite = { focus = aritifcers_political_populus }
+		#mutually_exclusive = { focus =  }
+		relative_position_id = aritifcers_political_populus
+		x = 1
+		y = 1
+		cost = 5
+
+		text_icon = NORDIC_focus_style
+
+		allow_branch = {
+			tag = OAK
+		}
+		available = {
+			NOT = { has_country_flag = aritifcers_political_populus_locked }
+		}
+		bypass = {
+		}
+
+		ai_will_do = {
+			factor = 10
+			modifier = { factor = 5 OR = {
+				COA = { has_completed_focus = aritifcers_political_mittelland_underground_war }
+				OAK = { has_completed_focus = aritifcers_political_mittelland_underground_war }
+			} }
+			modifier = { factor = 5 OR = {
+				COA = { is_ai = no }
+				OAK = { is_ai = no }
+			} }
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus OAK_political_prevent_exploitation"
+			add_political_power = 27
+		}
+	}
+
 	shared_focus = { # Victory with the Populus
 		id = OAK_political_victory_with_the_populus
 		icon = GFX_focus_unknown_military
 		dynamic = yes
-		prerequisite = { focus = aritifcers_political_populus }
+		prerequisite = { focus = OAK_political_uplift_lower_strata }
+		prerequisite = { focus = OAK_political_prevent_exploitation }
 		#prerequisite = { focus = aritifcers_political_populus }
 		#mutually_exclusive = { focus =  }
 		relative_position_id = aritifcers_political_populus
@@ -777,19 +1042,23 @@ joint_focus = { # Populus
 		completion_reward = {
 			log = "[GetDateText]: [Root.GetName]: Focus OAK_political_victory_with_the_populus"
 			add_political_power = 27
-			OAK = { remove_ideas = OAK_idea_ineffective_king }
-			COA = { remove_ideas = COA_idea_supported_populus }
+			OAK = {  }
+			COA = {  }
 		}
 	}
 # COA
+	# NAME
+
+	# NAME
+
 	shared_focus = { # Support from the Lower Strata
 		id = COA_political_support_from_the_lower_strata
 		icon = GFX_focus_unknown_military
 		dynamic = yes
-		prerequisite = { focus = OAK_political_victory_with_the_populus }
-		#prerequisite = { focus = OAK_political_victory_with_the_populus }
+		prerequisite = { focus = aritifcers_political_populus }
+		#prerequisite = { focus = aritifcers_political_populus }
 		#mutually_exclusive = { focus =  }
-		relative_position_id = OAK_political_victory_with_the_populus
+		relative_position_id = aritifcers_political_populus
 		x = 0
 		y = 2
 		cost = 10
@@ -820,6 +1089,8 @@ joint_focus = { # Populus
 		completion_reward = {
 			log = "[GetDateText]: [Root.GetName]: Focus COA_political_support_from_the_lower_strata"
 			add_political_power = 19
+			OAK = {  }
+			COA = {  }
 		}
 	}
 
@@ -863,16 +1134,34 @@ joint_focus = { # Industrialist
 	completion_reward_joint_originator = {
 		IF = { LIMIT = { tag = OAK }
 			custom_effect_tooltip = aritifcers_political_downsize_tt
-			add_political_power = 27
+			add_to_variable = { 
+				OAK_academia_political_power_gain = 0.10
+				tooltip = political_power_gain_tt
+			}
 		}
 		IF = { LIMIT = { tag = COA }
-			add_political_power = 19
+			add_to_variable = { 
+				COA_academia_political_power_gain = 0.10
+				tooltip = political_power_gain_tt
+			}
 		}
 	}
 
 	completion_reward_joint_member = {
 		custom_effect_tooltip = aritifcers_political_group_locked_tt
 		set_country_flag = aritifcers_political_industrialist_locked
+		IF = { LIMIT = { tag = OAK }
+			add_to_variable = { 
+				OAK_academia_political_power_gain = -0.10
+				tooltip = political_power_gain_tt
+			}
+		}
+		IF = { LIMIT = { tag = COA }
+			add_to_variable = { 
+				COA_academia_political_power_gain = -0.10
+				tooltip = political_power_gain_tt
+			}
+		}
 	}
 }
 # OAK
@@ -916,12 +1205,52 @@ joint_focus = { # Industrialist
 		}
 	}
 
+	shared_focus = { # Worker Identification
+		id = OAK_political_worker_identification
+		icon = GFX_focus_unknown_military
+		dynamic = yes
+		prerequisite = { focus = aritifcers_political_industrialist }
+		#mutually_exclusive = { focus =  }
+		relative_position_id = aritifcers_political_industrialist
+		x = 1
+		y = 1
+		cost = 5
+
+		text_icon = NORDIC_focus_style
+
+		allow_branch = {
+			tag = OAK
+		}
+		available = {
+			NOT = { has_country_flag = aritifcers_political_industrialist_locked }
+		}
+		bypass = {
+		}
+
+		ai_will_do = {
+			factor = 10
+			modifier = { factor = 5 OR = {
+				COA = { has_completed_focus = aritifcers_political_mittelland_underground_war }
+				OAK = { has_completed_focus = aritifcers_political_mittelland_underground_war }
+			} }
+			modifier = { factor = 5 OR = {
+				COA = { is_ai = no }
+				OAK = { is_ai = no }
+			} }
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus OAK_political_worker_identification"
+			add_political_power = 27
+		}
+	}
+
 	shared_focus = { # Victory in Industry
 		id = OAK_political_victory_in_industry
 		icon = GFX_focus_unknown_military
 		dynamic = yes
 		prerequisite = { focus = OAK_political_reclaiming_industries }
-		prerequisite = { focus = aritifcers_political_industrialist }
+		prerequisite = { focus = OAK_political_worker_identification }
 		#mutually_exclusive = { focus =  }
 		relative_position_id = aritifcers_political_industrialist
 		x = 0
@@ -954,8 +1283,8 @@ joint_focus = { # Industrialist
 		completion_reward = {
 			log = "[GetDateText]: [Root.GetName]: Focus OAK_political_victory_in_industry"
 			add_political_power = 27
-			OAK = { remove_ideas = OAK_idea_industrialist_in_the_unitist_pocket }
-			COA = { remove_ideas = COA_idea_industrialist_in_the_unitist_pocket }
+			OAK = {  }
+			COA = {  }
 		}
 	}
 # COA
@@ -999,6 +1328,52 @@ joint_focus = { # Industrialist
 		}
 	}
 
+	shared_focus = { # Paying-Off Industrial Experts
+	}
+
+	shared_focus = { # Revolutionary Industries
+		id = COA_revolutionary_industries
+		icon = GFX_focus_unknown_military
+		dynamic = yes
+		prerequisite = { focus = COA_political_siphoning_industries }
+		prerequisite = { focus = aritifcers_political_industrialist }
+		#mutually_exclusive = { focus =  }
+		relative_position_id = aritifcers_political_industrialist
+		x = 0
+		y = 2
+		cost = 10
+
+		text_icon = NORDIC_focus_style
+
+		allow_branch = {
+			tag = COA
+		}
+		available = {
+			NOT = { has_country_flag = aritifcers_political_industrialist_locked }
+		}
+		bypass = {
+		}
+
+		ai_will_do = {
+			factor = 10
+			modifier = { factor = 5 OR = {
+				COA = { has_completed_focus = aritifcers_political_mittelland_underground_war }
+				OAK = { has_completed_focus = aritifcers_political_mittelland_underground_war }
+			} }
+			modifier = { factor = 5 OR = {
+				COA = { is_ai = no }
+				OAK = { is_ai = no }
+			} }
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus COA_revolutionary_industries"
+			add_political_power = 27
+			OAK = {  }
+			COA = {  }
+		}
+	}
+
 joint_focus = { # Elites
 	id = aritifcers_political_elites
 	icon = GFX_focus_unknown_military
@@ -1039,24 +1414,123 @@ joint_focus = { # Elites
 	completion_reward_joint_originator = {
 		IF = { LIMIT = { tag = OAK }
 			custom_effect_tooltip = aritifcers_political_downsize_tt
-			add_political_power = 27
+			add_to_variable = { 
+				OAK_academia_political_power_gain = 0.10
+				tooltip = political_power_gain_tt
+			}
 		}
 		IF = { LIMIT = { tag = COA }
-			add_political_power = 19
+			add_to_variable = { 
+				COA_academia_political_power_gain = 0.10
+				tooltip = political_power_gain_tt
+			}
 		}
 	}
 
 	completion_reward_joint_member = {
 		custom_effect_tooltip = aritifcers_political_group_locked_tt
 		set_country_flag = aritifcers_political_elites_locked
+		IF = { LIMIT = { tag = OAK }
+			add_to_variable = { 
+				OAK_academia_political_power_gain = -0.10
+				tooltip = political_power_gain_tt
+			}
+		}
+		IF = { LIMIT = { tag = COA }
+			add_to_variable = { 
+				COA_academia_political_power_gain = -0.10
+				tooltip = political_power_gain_tt
+			}
+		}
 	}
 }
 # OAK
+	shared_focus = { # Local Electors
+		id = OAK_political_local_electors
+		icon = GFX_focus_unknown_military
+		dynamic = yes
+		prerequisite = { focus = aritifcers_political_elites }
+		#mutually_exclusive = { focus =  }
+		relative_position_id = aritifcers_political_elites
+		x = -1
+		y = 1
+		cost = 5
+
+		text_icon = NORDIC_focus_style
+
+		allow_branch = {
+			tag = OAK
+		}
+		available = {
+			NOT = { has_country_flag = aritifcers_political_elites_locked }
+		}
+		bypass = {
+		}
+
+		ai_will_do = {
+			factor = 10
+			modifier = { factor = 5 OR = {
+				COA = { has_completed_focus = aritifcers_political_mittelland_underground_war }
+				OAK = { has_completed_focus = aritifcers_political_mittelland_underground_war }
+			} }
+			modifier = { factor = 5 OR = {
+				COA = { is_ai = no }
+				OAK = { is_ai = no }
+			} }
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus OAK_political_local_electors"
+			add_political_power = 27
+		}
+	}
+
+	shared_focus = { # Empower the New Generation
+		id = OAK_political_empower_new_generation
+		icon = GFX_focus_unknown_military
+		dynamic = yes
+		prerequisite = { focus = aritifcers_political_elites }
+		#mutually_exclusive = { focus =  }
+		relative_position_id = aritifcers_political_elites
+		x = 1
+		y = 1
+		cost = 5
+
+		text_icon = NORDIC_focus_style
+
+		allow_branch = {
+			tag = OAK
+		}
+		available = {
+			NOT = { has_country_flag = aritifcers_political_elites_locked }
+		}
+		bypass = {
+		}
+
+		ai_will_do = {
+			factor = 10
+			modifier = { factor = 5 OR = {
+				COA = { has_completed_focus = aritifcers_political_mittelland_underground_war }
+				OAK = { has_completed_focus = aritifcers_political_mittelland_underground_war }
+			} }
+			modifier = { factor = 5 OR = {
+				COA = { is_ai = no }
+				OAK = { is_ai = no }
+			} }
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus OAK_political_empower_new_generation"
+			add_political_power = 27
+		}
+	}
+
 	shared_focus = { # Victory over the Elites
 		id = OAK_political_victory_with_the_elites
 		icon = GFX_focus_unknown_military
 		dynamic = yes
-		prerequisite = { focus = aritifcers_political_elites }
+		prerequisite = { focus = OAK_political_local_electors }
+		prerequisite = { focus = OAK_political_empower_new_generation }
 		#prerequisite = { focus = aritifcers_political_populus }
 		#mutually_exclusive = { focus =  }
 		relative_position_id = aritifcers_political_elites
@@ -1090,11 +1564,15 @@ joint_focus = { # Elites
 		completion_reward = {
 			log = "[GetDateText]: [Root.GetName]: Focus OAK_political_victory_with_the_elites"
 			add_political_power = 27
-			OAK = { remove_ideas = OAK_idea_unitist_elites }
-			COA = { remove_ideas = COA_idea_unitist_elites }
+			OAK = {  }
+			COA = {  }
 		}
 	}
 # COA
+	# Tighten the belt of Non-Compliances
+
+	# NAME
+
 	shared_focus = { # Empowered Revolutionaries
 		id = COA_political_empowered_revolutionary
 		icon = GFX_focus_unknown_military
@@ -1133,6 +1611,8 @@ joint_focus = { # Elites
 		completion_reward = {
 			log = "[GetDateText]: [Root.GetName]: Focus OAK_political_victory_with_the_elites"
 			add_political_power = 19
+			OAK = {  }
+			COA = {  }
 		}
 	}
 
@@ -1141,10 +1621,10 @@ joint_focus = { # Tear Down their Wall
 	icon = GFX_focus_unknown_military
 	dynamic = yes
 	prerequisite = {
-		focus = OAK_political_victory_in_academia focus = COA_political_revolutionary_education
-		focus = OAK_political_victory_with_the_populus
-		focus = OAK_political_victory_in_industry
-		focus = OAK_political_victory_with_the_elites focus = COA_political_empowered_revolutionary
+		focus = OAK_political_victory_in_academia		focus = COA_political_revolutionary_education
+		focus = OAK_political_victory_with_the_populus	focus = COA_political_support_from_the_lower_strata
+		focus = OAK_political_victory_in_industry 		focus = COA_revolutionary_industries
+		focus = OAK_political_victory_with_the_elites	focus = COA_political_empowered_revolutionary
 	}
 	#mutually_exclusive = { focus =  }
 	relative_position_id = aritifcers_political_mittelland_underground_war
