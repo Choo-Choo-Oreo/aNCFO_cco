@@ -16,7 +16,13 @@ This is a fantasy mod for HoI4 based off my own stories. I'm a solo dev with som
     - Chinese (Wanting reliable translator)
     - Spanish (Wanting reliable translator)
 
-[h1]Update[/h1]
+[h1]Major Update Changes[/h1]
+- Artificer Content
+- Industry Technologies
+- Simple Arcana Technologies
+- Special Modifers
+
+[h1]Minor Update Changes[/h1]
 - Civilwar bug Fixing
 - Added many DAMs
 - Added many more states(100+ states)

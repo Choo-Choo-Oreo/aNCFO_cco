@@ -57,6 +57,6 @@ tags={
 }
 name="A New Chapter - Fantasy Overhaul"
 picture="thumbnail.png"
-supported_version="1.15.*"
+supported_version="1.16.*"
 path="/mod/aNCFO_cco"
 remote_file_id="3301072102"
