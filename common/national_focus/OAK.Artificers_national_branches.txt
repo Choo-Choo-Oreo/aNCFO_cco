@@ -15,55 +15,63 @@ focus_tree = {
 	shared_focus = aviation_effort
 	shared_focus = naval_effort
 	shared_focus = aritifcers_political_mittelland_underground_war
-	# National Politics
-		focus = { # A New Year, a New State
-			id = OAK_political_a_new_year
-			icon = GFX_focus_unknown_political
-			#prerequisite = { focus =  }
-			#mutually_exclusive = { focus =  }
-			#relative_position_id = 
-			x = -8
-			y = 0
-			cost = 5
+	shortcut = {
+		name = OAK_political_a_new_year_shortcut
+		target = OAK_political_a_new_year 
+		scroll_wheel_factor = 1.0
+		trigger = {  }
+	}
 
-			allow_branch = {
-			}
-			available = {
-				OR = {
-					has_completed_focus = aritifcers_political_mittelland_underground_war
-					NOT = { country_exists = COA }
-				}
-			}
-			bypass = {
-			}
+	focus = { # A New Year, a New State
+		id = OAK_political_a_new_year
+		icon = GFX_focus_unknown_political
+		#prerequisite = { focus =  }
+		#mutually_exclusive = { focus =  }
+		#relative_position_id = 
+		x = -8
+		y = 0
+		cost = 5
 
-			ai_will_do = { factor = 1
-				modifier = { factor = 2.5
-					is_power_balance_in_range = { id = power_balance_OAK_v_COA range > COA_prominent } }
-				modifier = { factor = 2.5
-					is_power_balance_in_range = { id = power_balance_OAK_v_COA range > COA_infuenctial } }
-				modifier = { factor = 2.5
-					is_power_balance_in_range = { id = power_balance_OAK_v_COA range > COA_dominant } }
-				modifier = { factor = 2 original_tag = OAK
-				    power_balance_value = { id = power_balance_OAK_v_COA value >  0.00 } }
-				modifier = { factor = 2 original_tag = OAK
-				    power_balance_value = { id = power_balance_OAK_v_COA value > -0.05 } }
-				modifier = { factor = 3.5 original_tag = OAK
-				    power_balance_value = { id = power_balance_OAK_v_COA value > -0.15 } }
-				modifier = { factor = 3.5 original_tag = OAK
-				    power_balance_value = { id = power_balance_OAK_v_COA value > -0.45 } }
-				modifier = { factor = 5 original_tag = OAK
-				    power_balance_value = { id = power_balance_OAK_v_COA value > -0.90 } }
-			}
-
-			available_if_capitulated = yes
-
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus OAK_political_a_new_year"
-				add_stability = 0.025
+		allow_branch = {
+		}
+		available = {
+			OR = {
+				has_completed_focus = aritifcers_political_mittelland_underground_war
+				NOT = { country_exists = COA }
 			}
 		}
+		bypass = {
+		}
 
+		ai_will_do = { factor = 1
+			modifier = { factor = 2.5
+				is_power_balance_in_range = { id = power_balance_OAK_v_COA range > COA_prominent } }
+			modifier = { factor = 2.5
+				is_power_balance_in_range = { id = power_balance_OAK_v_COA range > COA_infuenctial } }
+			modifier = { factor = 2.5
+				is_power_balance_in_range = { id = power_balance_OAK_v_COA range > COA_dominant } }
+			modifier = { factor = 2 original_tag = OAK
+			    power_balance_value = { id = power_balance_OAK_v_COA value >  0.00 } }
+			modifier = { factor = 2 original_tag = OAK
+			    power_balance_value = { id = power_balance_OAK_v_COA value > -0.05 } }
+			modifier = { factor = 3.5 original_tag = OAK
+			    power_balance_value = { id = power_balance_OAK_v_COA value > -0.15 } }
+			modifier = { factor = 3.5 original_tag = OAK
+			    power_balance_value = { id = power_balance_OAK_v_COA value > -0.45 } }
+			modifier = { factor = 5 original_tag = OAK
+			    power_balance_value = { id = power_balance_OAK_v_COA value > -0.90 } }
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus OAK_political_a_new_year"
+			add_stability = 0.025
+		}
+	}
+	# A Heart of Iron
+
+	# National Politics
 		focus = { # Unification War
 			id = OAK_political_unification_war
 			icon = GFX_focus_unknown_political
@@ -125,14 +133,13 @@ focus_tree = {
 			allow_branch = {
 			}
 			available = {
-				NOT = { has_power_balance = { id = power_balance_OAK_v_COA } }
-				OR = {
-					NOT = { has_war_with = COA }
-					NOT = { country_exists = COA }
+				NOT = {
+					has_power_balance = { id = power_balance_OAK_v_COA }
+					has_war_with = COA
+					country_exists = COA
 				}
 			}
 			bypass = {
-				NOT = { country_exists = COA }
 			}
 
 			ai_will_do = { factor = 1
@@ -158,6 +165,11 @@ focus_tree = {
 
 			completion_reward = {
 				log = "[GetDateText]: [Root.GetName]: Focus OAK_political_reconstruction"
+				remove_dynamic_modifier = { modifier = OAK_idea_tug_of_war_modifier }
+				remove_dynamic_modifier = { modifier = OAK_idea_academia_modifier }
+				remove_dynamic_modifier = { modifier = OAK_idea_populus_modifier }
+				remove_dynamic_modifier = { modifier = OAK_idea_industrialist_modifier }
+				remove_dynamic_modifier = { modifier = OAK_idea_elites_modifier }
 			}
 		}
 
@@ -224,55 +236,63 @@ focus_tree = {
 	shared_focus = aviation_effort
 	shared_focus = naval_effort
 	shared_focus = aritifcers_political_mittelland_underground_war
-	# National Politics
-		focus = { # A New Year, a New State
-			id = COA_political_a_new_year
-			icon = GFX_focus_unknown_political
-			#prerequisite = { focus =  }
-			#mutually_exclusive = { focus =  }
-			#relative_position_id = 
-			x = -8
-			y = 0
-			cost = 5
+	shortcut = {
+		name = COA_political_a_new_year_shortcut
+		target = COA_political_a_new_year 
+		scroll_wheel_factor = 1.0
+		trigger = {  }
+	}
 
-			allow_branch = {
-			}
-			available = {
-				OR = {
-					has_completed_focus = aritifcers_political_mittelland_underground_war
-					NOT = { country_exists = OAK }
-				}
-			}
-			bypass = {
-			}
+	focus = { # A New Year, a New State
+		id = COA_political_a_new_year
+		icon = GFX_focus_unknown_political
+		#prerequisite = { focus =  }
+		#mutually_exclusive = { focus =  }
+		#relative_position_id = 
+		x = -8
+		y = 0
+		cost = 5
 
-			ai_will_do = { factor = 1
-				modifier = { factor = 2.5
-					is_power_balance_in_range = { id = power_balance_OAK_v_COA range > OAK_prominent } }
-				modifier = { factor = 2.5
-					is_power_balance_in_range = { id = power_balance_OAK_v_COA range > OAK_infuenctial } }
-				modifier = { factor = 2.5
-					is_power_balance_in_range = { id = power_balance_OAK_v_COA range > OAK_dominant } }
-				modifier = { factor = 2 original_tag = COA
-				    power_balance_value = { id = power_balance_OAK_v_COA value < 0.00 } }
-				modifier = { factor = 2 original_tag = COA
-				    power_balance_value = { id = power_balance_OAK_v_COA value < 0.05 } }
-				modifier = { factor = 3.5 original_tag = COA
-				    power_balance_value = { id = power_balance_OAK_v_COA value < 0.15 } }
-				modifier = { factor = 3.5 original_tag = COA
-				    power_balance_value = { id = power_balance_OAK_v_COA value < 0.45 } }
-				modifier = { factor = 5 original_tag = COA
-				    power_balance_value = { id = power_balance_OAK_v_COA value < 0.90 } }
-			}
-
-			available_if_capitulated = yes
-
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus COA_political_a_new_year"
-				add_stability = 0.025
+		allow_branch = {
+		}
+		available = {
+			OR = {
+				has_completed_focus = aritifcers_political_mittelland_underground_war
+				NOT = { country_exists = OAK }
 			}
 		}
+		bypass = {
+		}
 
+		ai_will_do = { factor = 1
+			modifier = { factor = 2.5
+				is_power_balance_in_range = { id = power_balance_OAK_v_COA range > OAK_prominent } }
+			modifier = { factor = 2.5
+				is_power_balance_in_range = { id = power_balance_OAK_v_COA range > OAK_infuenctial } }
+			modifier = { factor = 2.5
+				is_power_balance_in_range = { id = power_balance_OAK_v_COA range > OAK_dominant } }
+			modifier = { factor = 2 original_tag = COA
+			    power_balance_value = { id = power_balance_OAK_v_COA value < 0.00 } }
+			modifier = { factor = 2 original_tag = COA
+			    power_balance_value = { id = power_balance_OAK_v_COA value < 0.05 } }
+			modifier = { factor = 3.5 original_tag = COA
+			    power_balance_value = { id = power_balance_OAK_v_COA value < 0.15 } }
+			modifier = { factor = 3.5 original_tag = COA
+			    power_balance_value = { id = power_balance_OAK_v_COA value < 0.45 } }
+			modifier = { factor = 5 original_tag = COA
+			    power_balance_value = { id = power_balance_OAK_v_COA value < 0.90 } }
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus COA_political_a_new_year"
+			add_stability = 0.025
+		}
+	}
+	# A Heart of Iron
+
+	# National Politics
 		focus = { # Unification War
 			id = COA_political_unification_war
 			icon = GFX_focus_unknown_political
@@ -334,14 +354,13 @@ focus_tree = {
 			allow_branch = {
 			}
 			available = {
-				NOT = { has_power_balance = { id = power_balance_OAK_v_COA } }
-				OR = {
+				NOT = {
+					has_power_balance = { id = power_balance_OAK_v_COA }
 					NOT = { has_war_with = OAK }
 					NOT = { country_exists = OAK }
 				}
 			}
 			bypass = {
-				NOT = { country_exists = OAK }
 			}
 
 			ai_will_do = { factor = 1
@@ -367,6 +386,11 @@ focus_tree = {
 
 			completion_reward = {
 				log = "[GetDateText]: [Root.GetName]: Focus COA_political_reconstruction"
+				remove_dynamic_modifier = { modifier = COA_idea_tug_of_war_modifier }
+				remove_dynamic_modifier = { modifier = COA_idea_academia_modifier }
+				remove_dynamic_modifier = { modifier = COA_idea_populus_modifier }
+				remove_dynamic_modifier = { modifier = COA_idea_industrialist_modifier }
+				remove_dynamic_modifier = { modifier = COA_idea_elites_modifier }
 			}
 		}
 
@@ -709,6 +733,12 @@ joint_focus = { # Academia
 		completion_reward = {
 			log = "[GetDateText]: [Root.GetName]: Focus OAK_political_oversight_committee"
 			OAK = {
+				custom_effect_tooltip = modify_OAK_tug_of_war_modifier_tt
+				add_to_variable = { 
+					OAK_tugofwar_power_balance_daily_victory = 0.001 # +Oak -Coa
+					tooltip = power_balance_daily_tt
+				}
+				custom_effect_tooltip = generic_skip_one_line_tt # We do this for clearer reading.
 				hidden_effect = { remove_ideas = OAK_hidden_idea_academia_popularity_of_unitist_factions }
 				remove_from_tech_sharing_group = artificers_academia
 			}
@@ -847,6 +877,12 @@ joint_focus = { # Academia
 				}
 			}
 			COA = {
+				custom_effect_tooltip = modify_COA_tug_of_war_modifier_tt
+				add_to_variable = { 
+					COA_tugofwar_power_balance_daily_victory = -0.001 # +Oak -Coa
+					tooltip = power_balance_daily_tt
+				}
+				custom_effect_tooltip = generic_skip_one_line_tt # We do this for clearer reading.
 				custom_effect_tooltip = modify_OAK_academia_modifier_tt
 				add_to_variable = { 
 					COA_academia_research_speed_factor = 0.10
@@ -1048,6 +1084,12 @@ joint_focus = { # Populus
 		completion_reward = {
 			log = "[GetDateText]: [Root.GetName]: Focus OAK_political_victory_with_the_populus"
 			OAK = {
+				custom_effect_tooltip = modify_OAK_tug_of_war_modifier_tt
+				add_to_variable = { 
+					OAK_tugofwar_power_balance_daily_victory = 0.001 # +Oak -Coa
+					tooltip = power_balance_daily_tt
+				}
+				custom_effect_tooltip = generic_skip_one_line_tt # We do this for clearer reading.
 				custom_effect_tooltip = modify_OAK_populus_modifier_tt
 				add_to_variable = { 
 					OAK_populus_party_popularity_stability_factor = 0.15
@@ -1140,6 +1182,12 @@ joint_focus = { # Populus
 				#}
 			}
 			COA = {
+				custom_effect_tooltip = modify_COA_tug_of_war_modifier_tt
+				add_to_variable = { 
+					COA_tugofwar_power_balance_daily_victory = -0.001 # +Oak -Coa
+					tooltip = power_balance_daily_tt
+				}
+				custom_effect_tooltip = generic_skip_one_line_tt # We do this for clearer reading.
 				custom_effect_tooltip = modify_OAK_populus_modifier_tt
 				add_to_variable = { 
 					COA_populus_party_popularity_stability_factor = 0.10
@@ -1344,6 +1392,12 @@ joint_focus = { # Industrialist
 		completion_reward = {
 			log = "[GetDateText]: [Root.GetName]: Focus OAK_political_victory_in_industry"
 			OAK = {
+				custom_effect_tooltip = modify_OAK_tug_of_war_modifier_tt
+				add_to_variable = { 
+					OAK_tugofwar_power_balance_daily_victory = 0.001 # +Oak -Coa
+					tooltip = power_balance_daily_tt
+				}
+				custom_effect_tooltip = generic_skip_one_line_tt # We do this for clearer reading.
 				custom_effect_tooltip = modify_OAK_industrialist_modifier_tt
 				add_to_variable = { 
 					OAK_industrialist_consumer_goods_factor = -0.15
@@ -1534,6 +1588,12 @@ joint_focus = { # Industrialist
 				}
 			}
 			COA = {
+				custom_effect_tooltip = modify_COA_tug_of_war_modifier_tt
+				add_to_variable = { 
+					COA_tugofwar_power_balance_daily_victory = -0.001 # +Oak -Coa
+					tooltip = power_balance_daily_tt
+				}
+				custom_effect_tooltip = generic_skip_one_line_tt # We do this for clearer reading.
 				custom_effect_tooltip = modify_OAK_industrialist_modifier_tt
 				add_to_variable = { 
 					COA_industrialist_consumer_goods_factor = 00.10
@@ -1747,6 +1807,12 @@ joint_focus = { # Elites
 		completion_reward = {
 			log = "[GetDateText]: [Root.GetName]: Focus OAK_political_victory_with_the_elites"
 			OAK = {
+				custom_effect_tooltip = modify_OAK_tug_of_war_modifier_tt
+				add_to_variable = { 
+					OAK_tugofwar_power_balance_daily_victory = 0.001 # +Oak -Coa
+					tooltip = power_balance_daily_tt
+				}
+				custom_effect_tooltip = generic_skip_one_line_tt # We do this for clearer reading.
 				custom_effect_tooltip = modify_OAK_elites_modifier_tt
 				add_to_variable = { 
 					OAK_elites_power_balance_daily = 0.001
@@ -1863,6 +1929,12 @@ joint_focus = { # Elites
 				}
 			}
 			COA = {
+				custom_effect_tooltip = modify_COA_tug_of_war_modifier_tt
+				add_to_variable = { 
+					COA_tugofwar_power_balance_daily_victory = -0.001 # +Oak -Coa
+					tooltip = power_balance_daily_tt
+				}
+				custom_effect_tooltip = generic_skip_one_line_tt # We do this for clearer reading.
 				custom_effect_tooltip = modify_OAK_elites_modifier_tt
 				add_to_variable = { 
 					COA_elites_power_balance_daily = -0.001
