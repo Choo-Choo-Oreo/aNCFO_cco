@@ -96,26 +96,929 @@ Artificers_iron_crisis = {
 
 COA_v_OAK_power_shift = {
 	IF = {
-		limit = { original_tag = COA }
-		add_power_balance_value = { id = power_balance_OAK_v_COA value = -0.05 }
-		OAK = { add_power_balance_value = { id = power_balance_OAK_v_COA value = -0.05 } }
+		limit = { original_tag = OAK }
+		add_power_balance_value = { id = power_balance_OAK_v_COA value = 0.035 }
+		#COA = { add_power_balance_value = { id = power_balance_OAK_v_COA value = 0.035 } }
 		ELSE = {
-			limit = { original_tag = OAK }
-			add_power_balance_value = { id = power_balance_OAK_v_COA value = 0.05 }
-			COA = { add_power_balance_value = { id = power_balance_OAK_v_COA value = 0.05 } }
+			limit = { original_tag = COA }
+			add_power_balance_value = { id = power_balance_OAK_v_COA value = -0.035 }
+			#OAK = { add_power_balance_value = { id = power_balance_OAK_v_COA value = -0.035 } }
 		}
 	}
 }
 
 COA_v_OAK_power_shift_inverse = {
 	IF = {
-		limit = { original_tag = COA }
-		add_power_balance_value = { id = power_balance_OAK_v_COA value = 0.025 }
-		OAK = { add_power_balance_value = { id = power_balance_OAK_v_COA value = 0.025 } }
+		limit = { original_tag = OAK }
+		add_power_balance_value = { id = power_balance_OAK_v_COA value = -0.025 }
+		#COA = { add_power_balance_value = { id = power_balance_OAK_v_COA value = -0.025 } }
 		ELSE = {
-			limit = { original_tag = OAK }
-			add_power_balance_value = { id = power_balance_OAK_v_COA value = -0.025 }
-			COA = { add_power_balance_value = { id = power_balance_OAK_v_COA value = -0.025 } }
+			limit = { original_tag = COA }
+			add_power_balance_value = { id = power_balance_OAK_v_COA value = 0.025 }
+			#OAK = { add_power_balance_value = { id = power_balance_OAK_v_COA value = 0.025 } }
 		}
 	}
+}
+# Factions Setup
+	add_populus_faction_effect = {
+		set_temp_variable = { temp_factor = ROOT.populus_faction_bias } divide_temp_variable = { temp_factor = 100 } # Use faction bias to say how effect following modifiers are.
+		# The following are the faction modifiers.
+		set_variable = { populus_faction_bias_pp_gain = 0.2 } multiply_variable = { populus_faction_bias_pp_gain = temp_factor }
+		add_dynamic_modifier = { modifier = OAK_idea_populus_modifier }
+	}
+
+	add_academia_faction_effect = {
+		set_temp_variable = { temp_factor = ROOT.academia_faction_bias } divide_temp_variable = { temp_factor = 100 } # Use faction bias to say how effect following modifiers are.
+		# The following are the faction modifiers.
+		set_variable = { academia_faction_bias_pp_gain = 0.2 } multiply_variable = { academia_faction_bias_pp_gain = temp_factor }
+		add_dynamic_modifier = { modifier = OAK_idea_academia_modifier }
+	}
+
+	add_industrialist_faction_effect = {
+		set_temp_variable = { temp_factor = ROOT.industrialist_faction_bias } divide_temp_variable = { temp_factor = 100 } # Use faction bias to say how effect following modifiers are.
+		# The following are the faction modifiers.
+		set_variable = { industrialist_faction_bias_pp_gain = 0.2 } multiply_variable = { industrialist_faction_bias_pp_gain = temp_factor }
+		add_dynamic_modifier = { modifier = OAK_idea_industrialist_modifier }
+	}
+
+	add_military_faction_effect = {
+		set_temp_variable = { temp_factor = ROOT.military_faction_bias } divide_temp_variable = { temp_factor = 100 } # Use faction bias to say how effect following modifiers are.
+		# The following are the faction modifiers.
+		set_variable = { military_faction_bias_pp_gain = 0.2 } multiply_variable = { military_faction_bias_pp_gain = temp_factor }
+		add_dynamic_modifier = { modifier = OAK_idea_military_modifier }
+	}
+
+	add_bureaucrats_faction_effect = {
+		set_temp_variable = { temp_factor = ROOT.bureaucrats_faction_bias } divide_temp_variable = { temp_factor = 100 } # Use faction bias to say how effect following modifiers are.
+		# The following are the faction modifiers.
+		set_variable = { bureaucrats_faction_bias_pp_gain = 0.2 } multiply_variable = { bureaucrats_faction_bias_pp_gain = temp_factor }
+		add_dynamic_modifier = { modifier = OAK_idea_bureaucrats_modifier }
+	}
+# Factions
+	populus_change_loyalty_effect = {
+		custom_effect_tooltip = populus_change_tt
+
+		# This country
+		add_to_variable = { populus_faction_bias = global.OAK_faction_low }
+		clamp_variable = {
+			var = populus_faction_bias 
+			min = 0
+			max = 100
+		}
+		set_temp_variable = { temp_factor = populus_faction_bias }
+		divide_temp_variable = { temp_factor = 100 }
+		set_variable = { populus_faction_bias_pp_gain = 0.2 }
+		multiply_variable = { populus_faction_bias_pp_gain = temp_factor }
+
+		# Rival country
+		subtract_from_variable = { rival_country:populus_faction_bias = global.OAK_faction_low }
+		clamp_variable = {
+			var = rival_country:populus_faction_bias 
+			min = 0
+			max = 100
+		}
+		set_temp_variable = { temp_factor = rival_country:populus_faction_bias }
+		divide_temp_variable = { temp_factor = 100 }
+		set_variable = { rival_country:populus_faction_bias_pp_gain = 0.2 }
+		multiply_variable = { rival_country:populus_faction_bias_pp_gain = temp_factor }
+	}
+
+	populus_change_loyalty_effect_neg = {
+	    #temp_factor scales from 0% to 100%
+	    set_temp_variable = { temp_factor = populus_faction_bias }
+	    divide_temp_variable = { temp_factor = 100 }
+
+	    #temp_factor_negative scales from -100% to 100%
+	    set_temp_variable = { temp_factor_negative = populus_faction_bias }
+	    subtract_from_temp_variable = { temp_factor_negative = 50 }
+	    divide_temp_variable = { temp_factor_negative = 50 }
+    }
+
+	academia_change_loyalty_effect = {
+		custom_effect_tooltip = academia_change_tt
+
+		# This country
+		add_to_variable = { academia_faction_bias = global.OAK_faction_low }
+		clamp_variable = {
+			var = academia_faction_bias 
+			min = 0
+			max = 100
+		}
+		set_temp_variable = { temp_factor = academia_faction_bias }
+		divide_temp_variable = { temp_factor = 100 }
+		set_variable = { populus_faction_bias_pp_gain = 0.2 }
+		multiply_variable = { populus_faction_bias_pp_gain = temp_factor }
+
+		# Rival country
+		subtract_from_variable = { rival_country:academia_faction_bias = global.OAK_faction_low }
+		clamp_variable = {
+			var = rival_country:academia_faction_bias 
+			min = 0
+			max = 100
+		}
+		set_temp_variable = { temp_factor = rival_country:populus_faction_bias }
+		divide_temp_variable = { temp_factor = 100 }
+		set_variable = { rival_country:populus_faction_bias_pp_gain = 0.2 }
+		multiply_variable = { rival_country:populus_faction_bias_pp_gain = temp_factor }
+	}
+
+	industrialist_change_loyalty_effect = {
+		custom_effect_tooltip = industrialist_change_tt
+
+		# This country
+		add_to_variable = { industrialist_faction_bias = global.OAK_faction_low }
+		clamp_variable = {
+			var = industrialist_faction_bias 
+			min = 0
+			max = 100
+		}
+		set_temp_variable = { temp_factor = industrialist_faction_bias }
+		divide_temp_variable = { temp_factor = 100 }
+		set_variable = { populus_faction_bias_pp_gain = 0.2 }
+		multiply_variable = { populus_faction_bias_pp_gain = temp_factor }
+
+		# Rival country
+		subtract_from_variable = { rival_country:industrialist_faction_bias = global.OAK_faction_low }
+		clamp_variable = {
+			var = rival_country:industrialist_faction_bias 
+			min = 0
+			max = 100
+		}
+		set_temp_variable = { temp_factor = rival_country:populus_faction_bias }
+		divide_temp_variable = { temp_factor = 100 }
+		set_variable = { rival_country:populus_faction_bias_pp_gain = 0.2 }
+		multiply_variable = { rival_country:populus_faction_bias_pp_gain = temp_factor }
+	}
+
+	military_change_loyalty_effect = {
+		custom_effect_tooltip = military_change_tt
+
+		# This country
+		add_to_variable = { military_faction_bias = global.OAK_faction_low }
+		clamp_variable = {
+			var = military_faction_bias 
+			min = 0
+			max = 100
+		}
+		set_temp_variable = { temp_factor = military_faction_bias }
+		divide_temp_variable = { temp_factor = 100 }
+		set_variable = { populus_faction_bias_pp_gain = 0.2 }
+		multiply_variable = { populus_faction_bias_pp_gain = temp_factor }
+
+		# Rival country
+		subtract_from_variable = { rival_country:military_faction_bias = global.OAK_faction_low }
+		clamp_variable = {
+			var = rival_country:military_faction_bias 
+			min = 0
+			max = 100
+		}
+		set_temp_variable = { temp_factor = rival_country:populus_faction_bias }
+		divide_temp_variable = { temp_factor = 100 }
+		set_variable = { rival_country:populus_faction_bias_pp_gain = 0.2 }
+		multiply_variable = { rival_country:populus_faction_bias_pp_gain = temp_factor }
+	}
+
+	bureaucrats_change_loyalty_effect = {
+		custom_effect_tooltip = bureaucrats_change_tt
+
+		# This country
+		add_to_variable = { bureaucrats_faction_bias = global.OAK_faction_low }
+		clamp_variable = {
+			var = bureaucrats_faction_bias 
+			min = 0
+			max = 100
+		}
+		set_temp_variable = { temp_factor = bureaucrats_faction_bias }
+		divide_temp_variable = { temp_factor = 100 }
+		set_variable = { populus_faction_bias_pp_gain = 0.2 }
+		multiply_variable = { populus_faction_bias_pp_gain = temp_factor }
+
+		# Rival country
+		subtract_from_variable = { rival_country:bureaucrats_faction_bias = global.OAK_faction_low }
+		clamp_variable = {
+			var = rival_country:bureaucrats_faction_bias 
+			min = 0
+			max = 100
+		}
+		set_temp_variable = { temp_factor = rival_country:populus_faction_bias }
+		divide_temp_variable = { temp_factor = 100 }
+		set_variable = { rival_country:populus_faction_bias_pp_gain = 0.2 }
+		multiply_variable = { rival_country:populus_faction_bias_pp_gain = temp_factor }
+	}
+
+	# Populus
+		OAK_populus_low_loyalty_increase_effect = {
+			custom_effect_tooltip = OAK_populus_tt
+			custom_effect_tooltip = OAK_low_loyalty_increase_tt
+			add_to_variable = { ROOT.OAK_populus_faction_bias = global.OAK_faction_low_increase }
+			clamp_variable = {
+				var = ROOT.OAK_populus_faction_bias
+				min = 0
+				max = 100
+			}
+		}
+
+			OAK_populus_medium_loyalty_increase_effect = {
+				custom_effect_tooltip = OAK_populus_tt
+				custom_effect_tooltip = OAK_medium_loyalty_increase_tt
+				add_to_variable = { ROOT.OAK_populus_faction_bias = global.OAK_faction_medium_increase }
+				clamp_variable = {
+					var = ROOT.OAK_populus_faction_bias
+					min = 0
+					max = 100
+				}
+			}
+
+			OAK_populus_high_loyalty_increase_effect = {
+				custom_effect_tooltip = OAK_populus_tt
+				custom_effect_tooltip = OAK_high_loyalty_increase_tt
+				add_to_variable = { ROOT.OAK_populus_faction_bias = global.OAK_faction_high_increase }
+				clamp_variable = {
+					var = ROOT.OAK_populus_faction_bias
+					min = 0
+					max = 100
+				}
+			}
+
+		OAK_populus_low_loyalty_decrease_effect = {
+			custom_effect_tooltip = OAK_populus_tt
+			custom_effect_tooltip = OAK_low_loyalty_decrease_tt
+			add_to_variable = { ROOT.OAK_populus_faction_bias = global.OAK_faction_low_decrease }
+			clamp_variable = {
+				var = ROOT.OAK_populus_faction_bias
+				min = 0
+				max = 100
+			}
+		}
+
+			OAK_populus_medium_loyalty_decrease_effect = {
+				custom_effect_tooltip = OAK_populus_tt
+				custom_effect_tooltip = OAK_medium_loyalty_decrease_tt
+				add_to_variable = { ROOT.OAK_populus_faction_bias = global.OAK_faction_medium_decrease }
+				clamp_variable = {
+					var = ROOT.OAK_populus_faction_bias
+					min = 0
+					max = 100
+				}
+			}
+
+			OAK_populus_high_loyalty_decrease_effect = {
+				custom_effect_tooltip = OAK_populus_tt
+				custom_effect_tooltip = OAK_high_loyalty_decrease_tt
+				add_to_variable = { ROOT.OAK_populus_faction_bias = global.OAK_faction_high_decrease }
+				clamp_variable = {
+					var = ROOT.OAK_populus_faction_bias
+					min = 0
+					max = 100
+				}
+			}
+
+		OAK_populus_low_popularity_increase_effect = {
+			custom_effect_tooltip = OAK_populus_tt
+			custom_effect_tooltip = OAK_low_popularity_increase_tt
+			add_to_variable = { global.OAK_populus_faction_popularity = global.OAK_faction_low_increase }
+			clamp_variable = {
+				var = global.OAK_populus_faction_popularity
+				min = 0
+				max = 100
+			}
+		}
+
+			OAK_populus_medium_popularity_increase_effect = {
+				custom_effect_tooltip = OAK_populus_tt
+				custom_effect_tooltip = OAK_medium_popularity_increase_tt
+				add_to_variable = { global.OAK_populus_faction_popularity = global.OAK_faction_medium_increase }
+				clamp_variable = {
+					var = global.OAK_populus_faction_popularity
+					min = 0
+					max = 100
+				}
+			}
+
+			OAK_populus_high_popularity_increase_effect = {
+				custom_effect_tooltip = OAK_populus_tt
+				custom_effect_tooltip = OAK_high_popularity_increase_tt
+				add_to_variable = { global.OAK_populus_faction_popularity = global.OAK_faction_high_increase }
+				clamp_variable = {
+					var = global.OAK_populus_faction_popularity
+					min = 0
+					max = 100
+				}
+			}
+
+		OAK_populus_low_popularity_decrease_effect = {
+			custom_effect_tooltip = OAK_populus_tt
+			custom_effect_tooltip = OAK_low_popularity_decrease_tt
+			add_to_variable = { global.OAK_populus_faction_popularity = global.OAK_faction_low_decrease }
+			clamp_variable = {
+				var = global.OAK_populus_faction_popularity
+				min = 0
+				max = 100
+			}
+		}
+
+			OAK_populus_medium_popularity_decrease_effect = {
+				custom_effect_tooltip = OAK_populus_tt
+				custom_effect_tooltip = OAK_medium_popularity_decrease_tt
+				add_to_variable = { global.OAK_populus_faction_popularity = global.OAK_faction_medium_decrease }
+				clamp_variable = {
+					var = global.OAK_populus_faction_popularity
+					min = 0
+					max = 100
+				}
+			}
+
+			OAK_populus_high_popularity_decrease_effect = {
+				custom_effect_tooltip = OAK_populus_tt
+				custom_effect_tooltip = OAK_high_popularity_decrease_tt
+				add_to_variable = { global.OAK_populus_faction_popularity = global.OAK_faction_high_decrease }
+				clamp_variable = {
+					var = global.OAK_populus_faction_popularity
+					min = 0
+					max = 100
+				}
+			}
+
+	# Academia
+		OAK_academia_low_loyalty_increase_effect = {
+			custom_effect_tooltip = OAK_academia_tt
+			custom_effect_tooltip = OAK_low_loyalty_increase_tt
+			add_to_variable = { ROOT.OAK_academia_faction_bias = global.OAK_faction_low_increase }
+			clamp_variable = {
+				var = ROOT.OAK_academia_faction_bias
+				min = 0
+				max = 100
+			}
+		}
+
+			OAK_academia_medium_loyalty_increase_effect = {
+				custom_effect_tooltip = OAK_academia_tt
+				custom_effect_tooltip = OAK_medium_loyalty_increase_tt
+				add_to_variable = { ROOT.OAK_academia_faction_bias = global.OAK_faction_medium_increase }
+				clamp_variable = {
+					var = ROOT.OAK_academia_faction_bias
+					min = 0
+					max = 100
+				}
+			}
+
+			OAK_academia_high_loyalty_increase_effect = {
+				custom_effect_tooltip = OAK_academia_tt
+				custom_effect_tooltip = OAK_high_loyalty_increase_tt
+				add_to_variable = { ROOT.OAK_academia_faction_bias = global.OAK_faction_high_increase }
+				clamp_variable = {
+					var = ROOT.OAK_academia_faction_bias
+					min = 0
+					max = 100
+				}
+			}
+
+		OAK_academia_low_loyalty_decrease_effect = {
+			custom_effect_tooltip = OAK_academia_tt
+			custom_effect_tooltip = OAK_low_loyalty_decrease_tt
+			add_to_variable = { ROOT.OAK_academia_faction_bias = global.OAK_faction_low_decrease }
+			clamp_variable = {
+				var = ROOT.OAK_academia_faction_bias
+				min = 0
+				max = 100
+			}
+		}
+
+			OAK_academia_medium_loyalty_decrease_effect = {
+				custom_effect_tooltip = OAK_academia_tt
+				custom_effect_tooltip = OAK_medium_loyalty_decrease_tt
+				add_to_variable = { ROOT.OAK_academia_faction_bias = global.OAK_faction_medium_decrease }
+				clamp_variable = {
+					var = ROOT.OAK_academia_faction_bias
+					min = 0
+					max = 100
+				}
+			}
+
+			OAK_academia_high_loyalty_decrease_effect = {
+				custom_effect_tooltip = OAK_academia_tt
+				custom_effect_tooltip = OAK_high_loyalty_decrease_tt
+				add_to_variable = { ROOT.OAK_academia_faction_bias = global.OAK_faction_high_decrease }
+				clamp_variable = {
+					var = ROOT.OAK_academia_faction_bias
+					min = 0
+					max = 100
+				}
+			}
+
+		OAK_academia_low_popularity_increase_effect = {
+			custom_effect_tooltip = OAK_academia_tt
+			custom_effect_tooltip = OAK_low_popularity_increase_tt
+			add_to_variable = { global.OAK_academia_faction_popularity = global.OAK_faction_low_increase }
+			clamp_variable = {
+				var = global.OAK_academia_faction_popularity
+				min = 0
+				max = 100
+			}
+		}
+
+			OAK_academia_medium_popularity_increase_effect = {
+				custom_effect_tooltip = OAK_academia_tt
+				custom_effect_tooltip = OAK_medium_popularity_increase_tt
+				add_to_variable = { global.OAK_academia_faction_popularity = global.OAK_faction_medium_increase }
+				clamp_variable = {
+					var = global.OAK_academia_faction_popularity
+					min = 0
+					max = 100
+				}
+			}
+
+			OAK_academia_high_popularity_increase_effect = {
+				custom_effect_tooltip = OAK_academia_tt
+				custom_effect_tooltip = OAK_high_popularity_increase_tt
+				add_to_variable = { global.OAK_academia_faction_popularity = global.OAK_faction_high_increase }
+				clamp_variable = {
+					var = global.OAK_academia_faction_popularity
+					min = 0
+					max = 100
+				}
+			}
+
+		OAK_academia_low_popularity_decrease_effect = {
+			custom_effect_tooltip = OAK_academia_tt
+			custom_effect_tooltip = OAK_low_popularity_decrease_tt
+			add_to_variable = { global.OAK_academia_faction_popularity = global.OAK_faction_low_decrease }
+			clamp_variable = {
+				var = global.OAK_academia_faction_popularity
+				min = 0
+				max = 100
+			}
+		}
+
+			OAK_academia_medium_popularity_decrease_effect = {
+				custom_effect_tooltip = OAK_academia_tt
+				custom_effect_tooltip = OAK_medium_popularity_decrease_tt
+				add_to_variable = { global.OAK_academia_faction_popularity = global.OAK_faction_medium_decrease }
+				clamp_variable = {
+					var = global.OAK_academia_faction_popularity
+					min = 0
+					max = 100
+				}
+			}
+
+			OAK_academia_high_popularity_decrease_effect = {
+				custom_effect_tooltip = OAK_academia_tt
+				custom_effect_tooltip = OAK_high_popularity_decrease_tt
+				add_to_variable = { global.OAK_academia_faction_popularity = global.OAK_faction_high_decrease }
+				clamp_variable = {
+					var = global.OAK_academia_faction_popularity
+					min = 0
+					max = 100
+				}
+			}
+
+	# Industrialist
+		OAK_industrialist_low_loyalty_increase_effect = {
+			custom_effect_tooltip = OAK_industrialist_tt
+			custom_effect_tooltip = OAK_low_loyalty_increase_tt
+			add_to_variable = { ROOT.OAK_industrialist_faction_bias = global.OAK_faction_low_increase }
+			clamp_variable = {
+				var = ROOT.OAK_industrialist_faction_bias
+				min = 0
+				max = 100
+			}
+		}
+
+			OAK_industrialist_medium_loyalty_increase_effect = {
+				custom_effect_tooltip = OAK_industrialist_tt
+				custom_effect_tooltip = OAK_medium_loyalty_increase_tt
+				add_to_variable = { ROOT.OAK_industrialist_faction_bias = global.OAK_faction_medium_increase }
+				clamp_variable = {
+					var = ROOT.OAK_industrialist_faction_bias
+					min = 0
+					max = 100
+				}
+			}
+
+			OAK_industrialist_high_loyalty_increase_effect = {
+				custom_effect_tooltip = OAK_industrialist_tt
+				custom_effect_tooltip = OAK_high_loyalty_increase_tt
+				add_to_variable = { ROOT.OAK_industrialist_faction_bias = global.OAK_faction_high_increase }
+				clamp_variable = {
+					var = ROOT.OAK_industrialist_faction_bias
+					min = 0
+					max = 100
+				}
+			}
+
+		OAK_industrialist_low_loyalty_decrease_effect = {
+			custom_effect_tooltip = OAK_industrialist_tt
+			custom_effect_tooltip = OAK_low_loyalty_decrease_tt
+			add_to_variable = { ROOT.OAK_industrialist_faction_bias = global.OAK_faction_low_decrease }
+			clamp_variable = {
+				var = ROOT.OAK_industrialist_faction_bias
+				min = 0
+				max = 100
+			}
+		}
+
+			OAK_industrialist_medium_loyalty_decrease_effect = {
+				custom_effect_tooltip = OAK_industrialist_tt
+				custom_effect_tooltip = OAK_medium_loyalty_decrease_tt
+				add_to_variable = { ROOT.OAK_industrialist_faction_bias = global.OAK_faction_medium_decrease }
+				clamp_variable = {
+					var = ROOT.OAK_industrialist_faction_bias
+					min = 0
+					max = 100
+				}
+			}
+
+			OAK_industrialist_high_loyalty_decrease_effect = {
+				custom_effect_tooltip = OAK_industrialist_tt
+				custom_effect_tooltip = OAK_high_loyalty_decrease_tt
+				add_to_variable = { ROOT.OAK_industrialist_faction_bias = global.OAK_faction_high_decrease }
+				clamp_variable = {
+					var = ROOT.OAK_industrialist_faction_bias
+					min = 0
+					max = 100
+				}
+			}
+
+		OAK_industrialist_low_popularity_increase_effect = {
+			custom_effect_tooltip = OAK_industrialist_tt
+			custom_effect_tooltip = OAK_low_popularity_increase_tt
+			add_to_variable = { global.OAK_industrialist_faction_popularity = global.OAK_faction_low_increase }
+			clamp_variable = {
+				var = global.OAK_industrialist_faction_popularity
+				min = 0
+				max = 100
+			}
+		}
+
+			OAK_industrialist_medium_popularity_increase_effect = {
+				custom_effect_tooltip = OAK_industrialist_tt
+				custom_effect_tooltip = OAK_medium_popularity_increase_tt
+				add_to_variable = { global.OAK_industrialist_faction_popularity = global.OAK_faction_medium_increase }
+				clamp_variable = {
+					var = global.OAK_industrialist_faction_popularity
+					min = 0
+					max = 100
+				}
+			}
+
+			OAK_industrialist_high_popularity_increase_effect = {
+				custom_effect_tooltip = OAK_industrialist_tt
+				custom_effect_tooltip = OAK_high_popularity_increase_tt
+				add_to_variable = { global.OAK_industrialist_faction_popularity = global.OAK_faction_high_increase }
+				clamp_variable = {
+					var = global.OAK_industrialist_faction_popularity
+					min = 0
+					max = 100
+				}
+			}
+
+		OAK_industrialist_low_popularity_decrease_effect = {
+			custom_effect_tooltip = OAK_industrialist_tt
+			custom_effect_tooltip = OAK_low_popularity_decrease_tt
+			add_to_variable = { global.OAK_industrialist_faction_popularity = global.OAK_faction_low_decrease }
+			clamp_variable = {
+				var = global.OAK_industrialist_faction_popularity
+				min = 0
+				max = 100
+			}
+		}
+
+			OAK_industrialist_medium_popularity_decrease_effect = {
+				custom_effect_tooltip = OAK_industrialist_tt
+				custom_effect_tooltip = OAK_medium_popularity_decrease_tt
+				add_to_variable = { global.OAK_industrialist_faction_popularity = global.OAK_faction_medium_decrease }
+				clamp_variable = {
+					var = global.OAK_industrialist_faction_popularity
+					min = 0
+					max = 100
+				}
+			}
+
+			OAK_industrialist_high_popularity_decrease_effect = {
+				custom_effect_tooltip = OAK_industrialist_tt
+				custom_effect_tooltip = OAK_high_popularity_decrease_tt
+				add_to_variable = { global.OAK_industrialist_faction_popularity = global.OAK_faction_high_decrease }
+				clamp_variable = {
+					var = global.OAK_industrialist_faction_popularity
+					min = 0
+					max = 100
+				}
+			}
+
+	# Military
+		OAK_military_low_loyalty_increase_effect = {
+			custom_effect_tooltip = OAK_military_tt
+			custom_effect_tooltip = OAK_low_loyalty_increase_tt
+			add_to_variable = { ROOT.OAK_military_faction_bias = global.OAK_faction_low_increase }
+			clamp_variable = {
+				var = ROOT.OAK_military_faction_bias
+				min = 0
+				max = 100
+			}
+		}
+
+			OAK_military_medium_loyalty_increase_effect = {
+				custom_effect_tooltip = OAK_military_tt
+				custom_effect_tooltip = OAK_medium_loyalty_increase_tt
+				add_to_variable = { ROOT.OAK_military_faction_bias = global.OAK_faction_medium_increase }
+				clamp_variable = {
+					var = ROOT.OAK_military_faction_bias
+					min = 0
+					max = 100
+				}
+			}
+
+			OAK_military_high_loyalty_increase_effect = {
+				custom_effect_tooltip = OAK_military_tt
+				custom_effect_tooltip = OAK_high_loyalty_increase_tt
+				add_to_variable = { ROOT.OAK_military_faction_bias = global.OAK_faction_high_increase }
+				clamp_variable = {
+					var = ROOT.OAK_military_faction_bias
+					min = 0
+					max = 100
+				}
+			}
+
+		OAK_military_low_loyalty_decrease_effect = {
+			custom_effect_tooltip = OAK_military_tt
+			custom_effect_tooltip = OAK_low_loyalty_decrease_tt
+			add_to_variable = { ROOT.OAK_military_faction_bias = global.OAK_faction_low_decrease }
+			clamp_variable = {
+				var = ROOT.OAK_military_faction_bias
+				min = 0
+				max = 100
+			}
+		}
+
+			OAK_military_medium_loyalty_decrease_effect = {
+				custom_effect_tooltip = OAK_military_tt
+				custom_effect_tooltip = OAK_medium_loyalty_decrease_tt
+				add_to_variable = { ROOT.OAK_military_faction_bias = global.OAK_faction_medium_decrease }
+				clamp_variable = {
+					var = ROOT.OAK_military_faction_bias
+					min = 0
+					max = 100
+				}
+			}
+
+			OAK_military_high_loyalty_decrease_effect = {
+				custom_effect_tooltip = OAK_military_tt
+				custom_effect_tooltip = OAK_high_loyalty_decrease_tt
+				add_to_variable = { ROOT.OAK_military_faction_bias = global.OAK_faction_high_decrease }
+				clamp_variable = {
+					var = ROOT.OAK_military_faction_bias
+					min = 0
+					max = 100
+				}
+			}
+
+		OAK_military_low_popularity_increase_effect = {
+			custom_effect_tooltip = OAK_military_tt
+			custom_effect_tooltip = OAK_low_popularity_increase_tt
+			add_to_variable = { global.OAK_military_faction_popularity = global.OAK_faction_low_increase }
+			clamp_variable = {
+				var = global.OAK_military_faction_popularity
+				min = 0
+				max = 100
+			}
+		}
+
+			OAK_military_medium_popularity_increase_effect = {
+				custom_effect_tooltip = OAK_military_tt
+				custom_effect_tooltip = OAK_medium_popularity_increase_tt
+				add_to_variable = { global.OAK_military_faction_popularity = global.OAK_faction_medium_increase }
+				clamp_variable = {
+					var = global.OAK_military_faction_popularity
+					min = 0
+					max = 100
+				}
+			}
+
+			OAK_military_high_popularity_increase_effect = {
+				custom_effect_tooltip = OAK_military_tt
+				custom_effect_tooltip = OAK_high_popularity_increase_tt
+				add_to_variable = { global.OAK_military_faction_popularity = global.OAK_faction_high_increase }
+				clamp_variable = {
+					var = global.OAK_military_faction_popularity
+					min = 0
+					max = 100
+				}
+			}
+
+		OAK_military_low_popularity_decrease_effect = {
+			custom_effect_tooltip = OAK_military_tt
+			custom_effect_tooltip = OAK_low_popularity_decrease_tt
+			add_to_variable = { global.OAK_military_faction_popularity = global.OAK_faction_low_decrease }
+			clamp_variable = {
+				var = global.OAK_military_faction_popularity
+				min = 0
+				max = 100
+			}
+		}
+
+			OAK_military_medium_popularity_decrease_effect = {
+				custom_effect_tooltip = OAK_military_tt
+				custom_effect_tooltip = OAK_medium_popularity_decrease_tt
+				add_to_variable = { global.OAK_military_faction_popularity = global.OAK_faction_medium_decrease }
+				clamp_variable = {
+					var = global.OAK_military_faction_popularity
+					min = 0
+					max = 100
+				}
+			}
+
+			OAK_military_high_popularity_decrease_effect = {
+				custom_effect_tooltip = OAK_military_tt
+				custom_effect_tooltip = OAK_high_popularity_decrease_tt
+				add_to_variable = { global.OAK_military_faction_popularity = global.OAK_faction_high_decrease }
+				clamp_variable = {
+					var = global.OAK_military_faction_popularity
+					min = 0
+					max = 100
+				}
+			}
+
+	# Bureaucrats
+		OAK_bureaucrats_low_loyalty_increase_effect = {
+			custom_effect_tooltip = OAK_bureaucrats_tt
+			custom_effect_tooltip = OAK_low_loyalty_increase_tt
+			add_to_variable = { ROOT.OAK_bureaucrats_faction_bias = global.OAK_faction_low_increase }
+			clamp_variable = {
+				var = ROOT.OAK_bureaucrats_faction_bias
+				min = 0
+				max = 100
+			}
+		}
+
+			OAK_bureaucrats_medium_loyalty_increase_effect = {
+				custom_effect_tooltip = OAK_bureaucrats_tt
+				custom_effect_tooltip = OAK_medium_loyalty_increase_tt
+				add_to_variable = { ROOT.OAK_bureaucrats_faction_bias = global.OAK_faction_medium_increase }
+				clamp_variable = {
+					var = ROOT.OAK_bureaucrats_faction_bias
+					min = 0
+					max = 100
+				}
+			}
+
+			OAK_bureaucrats_high_loyalty_increase_effect = {
+				custom_effect_tooltip = OAK_bureaucrats_tt
+				custom_effect_tooltip = OAK_high_loyalty_increase_tt
+				add_to_variable = { ROOT.OAK_bureaucrats_faction_bias = global.OAK_faction_high_increase }
+				clamp_variable = {
+					var = ROOT.OAK_bureaucrats_faction_bias
+					min = 0
+					max = 100
+				}
+			}
+
+		OAK_bureaucrats_low_loyalty_decrease_effect = {
+			custom_effect_tooltip = OAK_bureaucrats_tt
+			custom_effect_tooltip = OAK_low_loyalty_decrease_tt
+			add_to_variable = { ROOT.OAK_bureaucrats_faction_bias = global.OAK_faction_low_decrease }
+			clamp_variable = {
+				var = ROOT.OAK_bureaucrats_faction_bias
+				min = 0
+				max = 100
+			}
+		}
+
+			OAK_bureaucrats_medium_loyalty_decrease_effect = {
+				custom_effect_tooltip = OAK_bureaucrats_tt
+				custom_effect_tooltip = OAK_medium_loyalty_decrease_tt
+				add_to_variable = { ROOT.OAK_bureaucrats_faction_bias = global.OAK_faction_medium_decrease }
+				clamp_variable = {
+					var = ROOT.OAK_bureaucrats_faction_bias
+					min = 0
+					max = 100
+				}
+			}
+
+			OAK_bureaucrats_high_loyalty_decrease_effect = {
+				custom_effect_tooltip = OAK_bureaucrats_tt
+				custom_effect_tooltip = OAK_high_loyalty_decrease_tt
+				add_to_variable = { ROOT.OAK_bureaucrats_faction_bias = global.OAK_faction_high_decrease }
+				clamp_variable = {
+					var = ROOT.OAK_bureaucrats_faction_bias
+					min = 0
+					max = 100
+				}
+			}
+
+		OAK_bureaucrats_low_popularity_increase_effect = {
+			custom_effect_tooltip = OAK_bureaucrats_tt
+			custom_effect_tooltip = OAK_low_popularity_increase_tt
+			add_to_variable = { global.OAK_bureaucrats_faction_popularity = global.OAK_faction_low_increase }
+			clamp_variable = {
+				var = global.OAK_bureaucrats_faction_popularity
+				min = 0
+				max = 100
+			}
+		}
+
+			OAK_bureaucrats_medium_popularity_increase_effect = {
+				custom_effect_tooltip = OAK_bureaucrats_tt
+				custom_effect_tooltip = OAK_medium_popularity_increase_tt
+				add_to_variable = { global.OAK_bureaucrats_faction_popularity = global.OAK_faction_medium_increase }
+				clamp_variable = {
+					var = global.OAK_bureaucrats_faction_popularity
+					min = 0
+					max = 100
+				}
+			}
+
+			OAK_bureaucrats_high_popularity_increase_effect = {
+				custom_effect_tooltip = OAK_bureaucrats_tt
+				custom_effect_tooltip = OAK_high_popularity_increase_tt
+				add_to_variable = { global.OAK_bureaucrats_faction_popularity = global.OAK_faction_high_increase }
+				clamp_variable = {
+					var = global.OAK_bureaucrats_faction_popularity
+					min = 0
+					max = 100
+				}
+			}
+
+		OAK_bureaucrats_low_popularity_decrease_effect = {
+			custom_effect_tooltip = OAK_bureaucrats_tt
+			custom_effect_tooltip = OAK_low_popularity_decrease_tt
+			add_to_variable = { global.OAK_bureaucrats_faction_popularity = global.OAK_faction_low_decrease }
+			clamp_variable = {
+				var = global.OAK_bureaucrats_faction_popularity
+				min = 0
+				max = 100
+			}
+		}
+
+			OAK_bureaucrats_medium_popularity_decrease_effect = {
+				custom_effect_tooltip = OAK_bureaucrats_tt
+				custom_effect_tooltip = OAK_medium_popularity_decrease_tt
+				add_to_variable = { global.OAK_bureaucrats_faction_popularity = global.OAK_faction_medium_decrease }
+				clamp_variable = {
+					var = global.OAK_bureaucrats_faction_popularity
+					min = 0
+					max = 100
+				}
+			}
+
+			OAK_bureaucrats_high_popularity_decrease_effect = {
+				custom_effect_tooltip = OAK_bureaucrats_tt
+				custom_effect_tooltip = OAK_high_popularity_decrease_tt
+				add_to_variable = { global.OAK_bureaucrats_faction_popularity = global.OAK_faction_high_decrease }
+				clamp_variable = {
+					var = global.OAK_bureaucrats_faction_popularity
+					min = 0
+					max = 100
+				}
+			}
+
+OAK_set_artificers_faction_values = {
+	set_country_flag = OAK_factions_unlocked_flag
+	set_variable = {    OAK.OAK_populus_faction_bias = 45 }
+	set_variable = {    COA.OAK_populus_faction_bias = 55 } # Commune of Artificers
+	set_variable = { global.OAK_populus_faction_popularity = 35 }
+	set_variable = {    OAK.OAK_populus_faction_boolean = 0 }
+	set_variable = {    COA.OAK_populus_faction_boolean = 0 } # Commune of Artificers
+
+	set_variable = {    OAK.OAK_academia_faction_bias = 35 }
+	set_variable = {    COA.OAK_academia_faction_bias = 65 } # Commune of Artificers
+	set_variable = { global.OAK_academia_faction_popularity = 35 }
+	set_variable = {    OAK.OAK_academia_faction_boolean = 0 }
+	set_variable = {    COA.OAK_academia_faction_boolean = 0 } # Commune of Artificers
+
+	set_variable = {    OAK.OAK_industrialist_faction_bias = 60 }
+	set_variable = {    COA.OAK_industrialist_faction_bias = 40 } # Commune of Artificers
+	set_variable = { global.OAK_industrialist_faction_popularity = 15 }
+	set_variable = {    OAK.OAK_industrialist_faction_boolean = 0 }
+	set_variable = {    COA.OAK_industrialist_faction_boolean = 0 } # Commune of Artificers
+
+	set_variable = {    OAK.OAK_military_faction_bias = 55 }
+	set_variable = {    COA.OAK_military_faction_bias = 45 } # Commune of Artificers
+	set_variable = { global.OAK_military_faction_popularity = 05 }
+	set_variable = {    OAK.OAK_military_faction_boolean = 0 }
+	set_variable = {    COA.OAK_military_faction_boolean = 0 } # Commune of Artificers
+
+	set_variable = {    OAK.OAK_bureaucrats_faction_bias = 35 }
+	set_variable = {    COA.OAK_bureaucrats_faction_bias = 65 } # Commune of Artificers
+	set_variable = { global.OAK_bureaucrats_faction_popularity = 10 }
+	set_variable = {    OAK.OAK_bureaucrats_faction_boolean = 0 }
+	set_variable = {    COA.OAK_bureaucrats_faction_boolean = 0 } # Commune of Artificers
+
+	set_variable = { global.OAK_faction_days_remove_very_low = 7 }       # Allow Speech, Discredit, Repress
+	set_variable = { global.OAK_faction_days_remove_low = 14 }           # Joint Act, Ban Media, Anti-faction Speech
+	set_variable = { global.OAK_faction_days_remove_medium = 21 }        # Bolster Zveno, Imprison leaders
+	set_variable = { global.OAK_faction_days_remove_high = 30 }          # Legalize, Fund, Appoint, Raid, Destroy
+	set_variable = { global.OAK_faction_days_remove_very_high = 60 }     # Integrate
+	set_variable = { global.OAK_faction_days_reenable_low = 7 }          # Allow Speech, Discredit
+	set_variable = { global.OAK_faction_days_reenable_medium = 14 }      # Joint Act, Anti-faction Speech
+	set_variable = { global.OAK_faction_days_reenable_high = 60 }        # Fund
+	set_variable = { global.OAK_faction_days_reenable_very_high = 120 }  # Raid
+	set_variable = { global.OAK_faction_low = 5 }
+	set_variable = { global.OAK_faction_medium = 10 }
+	set_variable = { global.OAK_faction_high = 15 }
+	set_variable = { global.OAK_ff_missions_base_days_to_add = 60 }      # Base amount of days to be added to Impending FF Coup mission
+	set_variable = { global.OAK_ff_missions_popularity_factor = 1 }      # More popularity means more days to add
+	set_variable = { global.OAK_ff_missions_loyalty_factor = 1 }         # More loyalty means less days to add
+	set_variable = { global.OAK_ff_preventive_actions_against_coup = 0 } # This will be used to reduce the chances of the FF staging the coup after they have planned it
+	set_variable = { global.OAK_ff_preventive_actions_base_value = 5 }   # The value added to the variable above every time a decision to prevent the coup is taken
+	set_variable = { global.OAK_ff_preventive_actions_cap_value = 50 }   # This is a cap to the player's ability to prevent the coup
 }

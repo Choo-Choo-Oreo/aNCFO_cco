@@ -97,8 +97,8 @@
 		NDefines.NProduction.BASE_FACTORY_SPEED = 5.00			-- Was 5.00
 		NDefines.NProduction.BASE_FACTORY_SPEED_MIL = 4.5		-- Was 9.00
 		NDefines.NProduction.BASE_FACTORY_SPEED_NAV = 2.5		-- Was 5.00
-		NDefines.NProduction.BASE_FACTORY_START_EFFICIENCY_FACTOR = 10	-- Was 10
-		NDefines.NProduction.BASE_FACTORY_MAX_EFFICIENCY_FACTOR = 30	-- Was 50
+		NDefines.NProduction.BASE_FACTORY_START_EFFICIENCY_FACTOR = 1	-- Was 10
+		NDefines.NProduction.BASE_FACTORY_MAX_EFFICIENCY_FACTOR = 10	-- Was 50
 
 	-- NMarket
 

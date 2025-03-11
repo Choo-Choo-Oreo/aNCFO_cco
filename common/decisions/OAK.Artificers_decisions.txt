@@ -515,344 +515,387 @@ Artificers_global_dwarven_iron_exports_category = {
     }
 }
 
-bop_COA_v_OAK = {
-    Artificers_guerrilla_warfare = {
+bop_COA_v_OAK_info = { # To create display info on how the factions influence tha BoP
+    OAK_populus_faction_display_fake = {
+        available = { always = no }
+        complete_effect = { custom_effect_tooltip = OAK_populus_loyalty_status_amount_fake }
+    }
+
+    OAK_academia_faction_display_fake = {
+        available = { always = no }
+        complete_effect = { custom_effect_tooltip = OAK_academia_loyalty_status_amount_fake }
+    }
+
+    OAK_industrialist_faction_display_fake = {
+        available = { always = no }
+        complete_effect = { custom_effect_tooltip = OAK_industrialist_loyalty_status_amount_fake }
+    }
+
+    OAK_military_faction_display_fake = {
+        available = { always = no }
+        complete_effect = { custom_effect_tooltip = OAK_military_loyalty_status_amount_fake }
+    }
+
+    OAK_bureaucrats_faction_display_fake = {
+        available = { always = no }
+        complete_effect = { custom_effect_tooltip = OAK_bureaucrats_loyalty_status_amount_fake }
+    }
+
+    OAK_artificers_faction_values_debug = {
+        available = { AND = { is_debug = yes is_ai = no } }
+        complete_effect = { OAK_set_artificers_faction_values = yes }
+    }
+
+    COA_left_75 = {
+        available = { AND = { is_debug = yes is_ai = no } }
+        complete_effect = { add_power_balance_value = { id = power_balance_OAK_v_COA value = -0.75 } }
+    }
+
+    COA_left_50 = {
+        available = { AND = { is_debug = yes is_ai = no } }
+        complete_effect = { add_power_balance_value = { id = power_balance_OAK_v_COA value = -0.50 } }
+    }
+
+    COA_left_25 = {
+        available = { AND = { is_debug = yes is_ai = no } }
+        complete_effect = { add_power_balance_value = { id = power_balance_OAK_v_COA value = -0.25 } }
+    }
+
+    OAK_right_25 = {
+        available = { AND = { is_debug = yes is_ai = no } }
+        complete_effect = { add_power_balance_value = { id = power_balance_OAK_v_COA value = 0.25 } }
+    }
+
+    OAK_right_50 = {
+        available = { AND = { is_debug = yes is_ai = no } }
+        complete_effect = { add_power_balance_value = { id = power_balance_OAK_v_COA value = 0.50 } }
+    }
+
+    OAK_right_75 = {
+        available = { AND = { is_debug = yes is_ai = no } }
+        complete_effect = { add_power_balance_value = { id = power_balance_OAK_v_COA value = 0.75 } }
+    }
+}
+
+bop_COA_v_OAK_influence = {
+# Faction: Populus       (Administrative Elites)
+    OAK_artificers_faction_populus = {
         icon = GFX_decision_spr_political_assassination
 
         available = {
-            has_equipment = { infantry_equipment > 999 }
-            has_equipment = { support_equipment > 199 }
+            check_variable = { ROOT.OAK_populus_faction_bias < 100 }
         }
-        visible = {  }
-        is_good = yes
-
-        fire_only_once = no
-        days_re_enable = 30
-        days_remove = 30
-
-        cost = 10
-
-        remove_effect = {
-            log = "[GetDateText]: [Root.GetName]: Decision Artificers_guerrilla_warfare"
-            # Effect
-            COA_v_OAK_power_shift = yes
-            send_equipment = { type = infantry_equipment amount = -1000 }
-            send_equipment = { type = support_equipment amount = -200 }
-        }
-
-        ai_will_do = {
-            factor = 1
-            modifier = { factor = 0.1
-                OR = {
-                    has_equipment = { infantry_equipment < 3000 }
-                    has_equipment = { support_equipment < 600 }
-                } }
-            modifier = { factor = 0.1
-                has_army_manpower = { size > 5000000 } }
-            modifier = { factor = 10
-                date > 1725.01.01 }
-            modifier = { factor = 30
-                date > 1726.01.01 }
-            modifier = { factor = 60
-                date > 1727.01.01 }
-            modifier = { factor = 100
-                date > 1728.01.01 }
-            modifier = { factor = 2 original_tag = COA
-                power_balance_value = { id = power_balance_OAK_v_COA value >  0.00 } }
-            modifier = { factor = 2 original_tag = COA
-                power_balance_value = { id = power_balance_OAK_v_COA value > -0.05 } }
-            modifier = { factor = 3.5 original_tag = COA
-                power_balance_value = { id = power_balance_OAK_v_COA value > -0.15 } }
-            modifier = { factor = 3.5 original_tag = COA
-                power_balance_value = { id = power_balance_OAK_v_COA value > -0.45 } }
-            modifier = { factor = 5 original_tag = COA
-                power_balance_value = { id = power_balance_OAK_v_COA value > -0.90 } }
-            modifier = { factor = 2 original_tag = OAK
-                power_balance_value = { id = power_balance_OAK_v_COA value < 0.00 } }
-            modifier = { factor = 2 original_tag = OAK
-                power_balance_value = { id = power_balance_OAK_v_COA value < 0.05 } }
-            modifier = { factor = 3.5 original_tag = OAK
-                power_balance_value = { id = power_balance_OAK_v_COA value < 0.15 } }
-            modifier = { factor = 3.5 original_tag = OAK
-                power_balance_value = { id = power_balance_OAK_v_COA value < 0.45 } }
-            modifier = { factor = 5 original_tag = OAK
-                power_balance_value = { id = power_balance_OAK_v_COA value < 0.90 } }
-        }
-    }
-
-    Artificers_fund_supporters = {
-        icon = GFX_decision_spr_political_assassination
-
-        available = {
-            has_equipment = { infantry_equipment > 999 }
-            has_equipment = { support_equipment > 199 }
-        }
-        visible = {  }
-        is_good = yes
-
-        fire_only_once = no
-        days_re_enable = 30
-        days_remove = 30
-
-        cost = 10
-
-        remove_effect = {
-            log = "[GetDateText]: [Root.GetName]: Decision Artificers_fund_supporters"
-            # Effect
-            COA_v_OAK_power_shift = yes
-            send_equipment = { type = infantry_equipment amount = -1000 }
-            send_equipment = { type = support_equipment amount = -200 }
-        }
-
-        ai_will_do = {
-            factor = 1
-            modifier = { factor = 0.1
-                OR = {
-                    has_equipment = { infantry_equipment < 3000 }
-                    has_equipment = { support_equipment < 600 }
-                } }
-            modifier = { factor = 0.1
-                has_army_manpower = { size > 5000000 } }
-            modifier = { factor = 10
-                date > 1725.01.01 }
-            modifier = { factor = 30
-                date > 1726.01.01 }
-            modifier = { factor = 60
-                date > 1727.01.01 }
-            modifier = { factor = 100
-                date > 1728.01.01 }
-            modifier = { factor = 2 original_tag = COA
-                power_balance_value = { id = power_balance_OAK_v_COA value >  0.00 } }
-            modifier = { factor = 2 original_tag = COA
-                power_balance_value = { id = power_balance_OAK_v_COA value > -0.05 } }
-            modifier = { factor = 3.5 original_tag = COA
-                power_balance_value = { id = power_balance_OAK_v_COA value > -0.15 } }
-            modifier = { factor = 3.5 original_tag = COA
-                power_balance_value = { id = power_balance_OAK_v_COA value > -0.45 } }
-            modifier = { factor = 5 original_tag = COA
-                power_balance_value = { id = power_balance_OAK_v_COA value > -0.90 } }
-            modifier = { factor = 2 original_tag = OAK
-                power_balance_value = { id = power_balance_OAK_v_COA value < 0.00 } }
-            modifier = { factor = 2 original_tag = OAK
-                power_balance_value = { id = power_balance_OAK_v_COA value < 0.05 } }
-            modifier = { factor = 3.5 original_tag = OAK
-                power_balance_value = { id = power_balance_OAK_v_COA value < 0.15 } }
-            modifier = { factor = 3.5 original_tag = OAK
-                power_balance_value = { id = power_balance_OAK_v_COA value < 0.45 } }
-            modifier = { factor = 5 original_tag = OAK
-                power_balance_value = { id = power_balance_OAK_v_COA value < 0.90 } }
-        }
-    }
-
-    Artificers_syphon_infantry = {
-        icon = GFX_decision_spr_political_assassination
-
-        available = {  }
-        visible = {  }
-
-        fire_only_once = no
-        days_re_enable = 30
-        days_remove = 30
-
-        cost = 10
-
-        remove_effect = {
-            log = "[GetDateText]: [Root.GetName]: Decision Artificer_syphon_infantry"
-            # Effect
-            COA_v_OAK_power_shift_inverse = yes
-            add_equipment_to_stockpile = { type = infantry_equipment amount = 3000 producer = ROOT }
-        }
-
-        ai_will_do = {
-            factor = 1
-            modifier = { factor = 0.1
-                OR = {
-                    has_equipment = { infantry_equipment > 6000 }
-                } }
-            modifier = { factor = 0.1
-                has_army_manpower = { size < 5000000 } }
-            modifier = { factor = 2 original_tag = COA
-                power_balance_value = { id = power_balance_OAK_v_COA value < 0.00 } }
-            modifier = { factor = 2 original_tag = COA
-                power_balance_value = { id = power_balance_OAK_v_COA value < 0.05 } }
-            modifier = { factor = 3.5 original_tag = COA
-                power_balance_value = { id = power_balance_OAK_v_COA value < 0.15 } }
-            modifier = { factor = 3.5 original_tag = COA
-                power_balance_value = { id = power_balance_OAK_v_COA value < 0.45 } }
-            modifier = { factor = 5 original_tag = COA
-                power_balance_value = { id = power_balance_OAK_v_COA value < 0.90 } }
-            modifier = { factor = 2 original_tag = OAK
-                power_balance_value = { id = power_balance_OAK_v_COA value >  0.00 } }
-            modifier = { factor = 2 original_tag = OAK
-                power_balance_value = { id = power_balance_OAK_v_COA value > -0.05 } }
-            modifier = { factor = 3.5 original_tag = OAK
-                power_balance_value = { id = power_balance_OAK_v_COA value > -0.15 } }
-            modifier = { factor = 3.5 original_tag = OAK
-                power_balance_value = { id = power_balance_OAK_v_COA value > -0.45 } }
-            modifier = { factor = 5 original_tag = OAK
-                power_balance_value = { id = power_balance_OAK_v_COA value > -0.90 } }
-        }
-    }
-
-    Artificers_syphon_support = {
-        icon = GFX_decision_spr_political_assassination
-
-        available = {  }
-        visible = {  }
-
-        fire_only_once = no
-        days_re_enable = 30
-        days_remove = 30
-
-        cost = 10
-
-        remove_effect = {
-            log = "[GetDateText]: [Root.GetName]: Decision Artificer_syphon_support"
-            # Effect
-            COA_v_OAK_power_shift_inverse = yes
-            add_equipment_to_stockpile = { type = support_equipment amount = 300 producer = ROOT }
-        }
-
-        ai_will_do = {
-            factor = 1
-            modifier = { factor = 0.1
-                OR = {
-                    has_equipment = { support_equipment > 600 }
-                } }
-            modifier = { factor = 0.1
-                has_army_manpower = { size < 5000000 } }
-            modifier = { factor = 2 original_tag = COA
-                power_balance_value = { id = power_balance_OAK_v_COA value < 0.00 } }
-            modifier = { factor = 2 original_tag = COA
-                power_balance_value = { id = power_balance_OAK_v_COA value < 0.05 } }
-            modifier = { factor = 3.5 original_tag = COA
-                power_balance_value = { id = power_balance_OAK_v_COA value < 0.15 } }
-            modifier = { factor = 3.5 original_tag = COA
-                power_balance_value = { id = power_balance_OAK_v_COA value < 0.45 } }
-            modifier = { factor = 5 original_tag = COA
-                power_balance_value = { id = power_balance_OAK_v_COA value < 0.90 } }
-            modifier = { factor = 2 original_tag = OAK
-                power_balance_value = { id = power_balance_OAK_v_COA value >  0.00 } }
-            modifier = { factor = 2 original_tag = OAK
-                power_balance_value = { id = power_balance_OAK_v_COA value > -0.05 } }
-            modifier = { factor = 3.5 original_tag = OAK
-                power_balance_value = { id = power_balance_OAK_v_COA value > -0.15 } }
-            modifier = { factor = 3.5 original_tag = OAK
-                power_balance_value = { id = power_balance_OAK_v_COA value > -0.45 } }
-            modifier = { factor = 5 original_tag = OAK
-                power_balance_value = { id = power_balance_OAK_v_COA value > -0.90 } }
-        }
-    }
-
-    Artificers_syphon_motorized = {
-        icon = GFX_decision_spr_political_assassination
-
-        available = {  }
-        visible = {  }
-
-        fire_only_once = no
-        days_re_enable = 30
-        days_remove = 30
-
-        cost = 10
-
-        remove_effect = {
-            log = "[GetDateText]: [Root.GetName]: Decision Artificer_syphon_motorized"
-            # Effect
-            COA_v_OAK_power_shift_inverse = yes
-            add_equipment_to_stockpile = { type = motorized_equipment amount = 60 producer = ROOT }
-        }
-
-        ai_will_do = {
-            factor = 1
-            modifier = { factor = 0.1
-                OR = {
-                    has_equipment = { motorized_equipment > 600 }
-                } }
-            modifier = { factor = 0.1
-                has_army_manpower = { size < 5000000 } }
-            modifier = { factor = 2 original_tag = COA
-                power_balance_value = { id = power_balance_OAK_v_COA value < 0.00 } }
-            modifier = { factor = 2 original_tag = COA
-                power_balance_value = { id = power_balance_OAK_v_COA value < 0.05 } }
-            modifier = { factor = 3.5 original_tag = COA
-                power_balance_value = { id = power_balance_OAK_v_COA value < 0.15 } }
-            modifier = { factor = 3.5 original_tag = COA
-                power_balance_value = { id = power_balance_OAK_v_COA value < 0.45 } }
-            modifier = { factor = 5 original_tag = COA
-                power_balance_value = { id = power_balance_OAK_v_COA value < 0.90 } }
-            modifier = { factor = 2 original_tag = OAK
-                power_balance_value = { id = power_balance_OAK_v_COA value >  0.00 } }
-            modifier = { factor = 2 original_tag = OAK
-                power_balance_value = { id = power_balance_OAK_v_COA value > -0.05 } }
-            modifier = { factor = 3.5 original_tag = OAK
-                power_balance_value = { id = power_balance_OAK_v_COA value > -0.15 } }
-            modifier = { factor = 3.5 original_tag = OAK
-                power_balance_value = { id = power_balance_OAK_v_COA value > -0.45 } }
-            modifier = { factor = 5 original_tag = OAK
-                power_balance_value = { id = power_balance_OAK_v_COA value > -0.90 } }
-        }
-    }
-
-    Artificers_syphon_artillery = {
-        icon = GFX_decision_spr_political_assassination
-
-        available = {  }
-        visible = {  }
-
-        fire_only_once = no
-        days_re_enable = 30
-        days_remove = 30
-
-        cost = 10
-
-        remove_effect = {
-            log = "[GetDateText]: [Root.GetName]: Decision Artificer_syphon_artillery"
-            # Effect
-            COA_v_OAK_power_shift_inverse = yes
-            random_list = {
-                1.1 = {
-                    add_equipment_to_stockpile = { type = artillery_equipment amount = 120 producer = ROOT }
-                }
-                1 = {
-                    add_equipment_to_stockpile = { type = anti_air_equipment amount = 60 producer = ROOT }
-                }
-                1 = {
-                    add_equipment_to_stockpile = { type = anti_tank_equipment amount = 60 producer = ROOT }
-                }
+        visible = {
+            OR = {
+                AND = { is_debug = yes is_ai = no }
+                tag = OAK
             }
         }
+        is_good = yes
+
+        fire_only_once = no
+        days_re_enable = 30
+        days_remove = 30
+
+        cost = 10
+
+        remove_effect = {
+            log = "[GetDateText]: [Root.GetName]: Decision OAK_artificers_faction_populus"
+            # Effect
+            COA_v_OAK_power_shift = yes
+            populus_change_loyalty_effect = yes
+        }
 
         ai_will_do = {
             factor = 1
-            modifier = { factor = 0.1
-                OR = {
-                    has_equipment = { artillery_equipment > 240 }
-                    has_equipment = { anti_air_equipment > 120 }
-                    has_equipment = { anti_tank_equipment > 120 }
-                } }
-            modifier = { factor = 0.1
-                has_army_manpower = { size < 5000000 } }
-            modifier = { factor = 2 original_tag = COA
-                power_balance_value = { id = power_balance_OAK_v_COA value < 0.00 } }
-            modifier = { factor = 2 original_tag = COA
-                power_balance_value = { id = power_balance_OAK_v_COA value < 0.05 } }
-            modifier = { factor = 3.5 original_tag = COA
-                power_balance_value = { id = power_balance_OAK_v_COA value < 0.15 } }
-            modifier = { factor = 3.5 original_tag = COA
-                power_balance_value = { id = power_balance_OAK_v_COA value < 0.45 } }
-            modifier = { factor = 5 original_tag = COA
-                power_balance_value = { id = power_balance_OAK_v_COA value < 0.90 } }
-            modifier = { factor = 2 original_tag = OAK
-                power_balance_value = { id = power_balance_OAK_v_COA value >  0.00 } }
-            modifier = { factor = 2 original_tag = OAK
-                power_balance_value = { id = power_balance_OAK_v_COA value > -0.05 } }
-            modifier = { factor = 3.5 original_tag = OAK
-                power_balance_value = { id = power_balance_OAK_v_COA value > -0.15 } }
-            modifier = { factor = 3.5 original_tag = OAK
-                power_balance_value = { id = power_balance_OAK_v_COA value > -0.45 } }
-            modifier = { factor = 5 original_tag = OAK
-                power_balance_value = { id = power_balance_OAK_v_COA value > -0.90 } }
+        }
+    }
+
+    COA_artificers_faction_populus = {
+        icon = GFX_decision_spr_political_assassination
+
+        available = {
+            check_variable = { ROOT.OAK_populus_faction_bias < 100 }
+        }
+        visible = {
+            OR = {
+                AND = { is_debug = yes is_ai = no }
+                tag = COA
+            }
+        }
+        is_good = yes
+
+        fire_only_once = no
+        days_re_enable = 30
+        days_remove = 30
+
+        cost = 10
+
+        remove_effect = {
+            log = "[GetDateText]: [Root.GetName]: Decision COA_artificers_faction_populus"
+            # Effect
+            COA_v_OAK_power_shift = yes
+            populus_change_loyalty_effect = yes
+        }
+
+        ai_will_do = {
+            factor = 1
+        }
+    }
+# Faction: Academia      (Cultural Elites)
+    OAK_artificers_faction_academia = {
+        icon = GFX_decision_spr_political_assassination
+
+        available = {
+            check_variable = { ROOT.OAK_populus_faction_bias < 100 }
+        }
+        visible = {
+            OR = {
+                AND = { is_debug = yes is_ai = no }
+                tag = OAK
+            }
+        }
+        is_good = yes
+
+        fire_only_once = no
+        days_re_enable = 30
+        days_remove = 30
+
+        cost = 10
+
+        remove_effect = {
+            log = "[GetDateText]: [Root.GetName]: Decision OAK_artificers_faction_academia"
+            # Effect
+            COA_v_OAK_power_shift = yes
+            academia_change_loyalty_effect = yes
+        }
+
+        ai_will_do = {
+            factor = 1
+        }
+    }
+
+    COA_artificers_faction_academia = {
+        icon = GFX_decision_spr_political_assassination
+
+        available = {
+            check_variable = { ROOT.OAK_populus_faction_bias < 100 }
+        }
+        visible = {
+            OR = {
+                AND = { is_debug = yes is_ai = no }
+                tag = COA
+            }
+        }
+        is_good = yes
+
+        fire_only_once = no
+        days_re_enable = 30
+        days_remove = 30
+
+        cost = 10
+
+        remove_effect = {
+            log = "[GetDateText]: [Root.GetName]: Decision COA_artificers_faction_academia"
+            # Effect
+            COA_v_OAK_power_shift = yes
+            academia_change_loyalty_effect = yes
+        }
+
+        ai_will_do = {
+            factor = 1
+        }
+    }
+# Faction: Industrialist (Economic Elites)
+    OAK_artificers_faction_industrialist = {
+        icon = GFX_decision_spr_political_assassination
+
+        available = {
+            check_variable = { ROOT.OAK_populus_faction_bias < 100 }
+        }
+        visible = {
+            OR = {
+                AND = { is_debug = yes is_ai = no }
+                tag = OAK
+            }
+        }
+        is_good = yes
+
+        fire_only_once = no
+        days_re_enable = 30
+        days_remove = 30
+
+        cost = 10
+
+        remove_effect = {
+            log = "[GetDateText]: [Root.GetName]: Decision OAK_artificers_faction_industrialist"
+            # Effect
+            COA_v_OAK_power_shift = yes
+            industrialist_change_loyalty_effect = yes
+        }
+
+        ai_will_do = {
+            factor = 1
+        }
+    }
+
+    COA_artificers_faction_industrialist = {
+        icon = GFX_decision_spr_political_assassination
+
+        available = {
+            check_variable = { ROOT.OAK_populus_faction_bias < 100 }
+        }
+        visible = {
+            OR = {
+                AND = { is_debug = yes is_ai = no }
+                tag = COA
+            }
+        }
+        is_good = yes
+
+        fire_only_once = no
+        days_re_enable = 30
+        days_remove = 30
+
+        cost = 10
+
+        remove_effect = {
+            log = "[GetDateText]: [Root.GetName]: Decision COA_artificers_faction_industrialist"
+            # Effect
+            COA_v_OAK_power_shift = yes
+            industrialist_change_loyalty_effect = yes
+        }
+
+        ai_will_do = {
+            factor = 1
+        }
+    }
+# Faction: Military      (Military Elites)
+    OAK_artificers_faction_military = {
+        icon = GFX_decision_spr_political_assassination
+
+        available = {
+            check_variable = { ROOT.OAK_populus_faction_bias < 100 }
+        }
+        visible = {
+            OR = {
+                AND = { is_debug = yes is_ai = no }
+                tag = OAK
+            }
+        }
+        is_good = yes
+
+        fire_only_once = no
+        days_re_enable = 30
+        days_remove = 30
+
+        cost = 10
+
+        remove_effect = {
+            log = "[GetDateText]: [Root.GetName]: Decision OAK_artificers_faction_veterans"
+            # Effect
+            COA_v_OAK_power_shift = yes
+            military_change_loyalty_effect = yes
+        }
+
+        ai_will_do = {
+            factor = 1
+        }
+    }
+
+    COA_artificers_faction_military = {
+        icon = GFX_decision_spr_political_assassination
+
+        available = {
+            check_variable = { ROOT.OAK_populus_faction_bias < 100 }
+        }
+        visible = {
+            OR = {
+                AND = { is_debug = yes is_ai = no }
+                tag = COA
+            }
+        }
+        is_good = yes
+
+        fire_only_once = no
+        days_re_enable = 30
+        days_remove = 30
+
+        cost = 10
+
+        remove_effect = {
+            log = "[GetDateText]: [Root.GetName]: Decision COA_artificers_faction_veterans"
+            # Effect
+            COA_v_OAK_power_shift = yes
+            military_change_loyalty_effect = yes
+        }
+
+        ai_will_do = {
+            factor = 1
+        }
+    }
+# Faction: Bureaucrats   (Political Elites)
+    OAK_artificers_faction_bureaucrats = {
+        icon = GFX_decision_spr_political_assassination
+
+        available = {
+            check_variable = { ROOT.OAK_populus_faction_bias < 100 }
+        }
+        visible = {
+            OR = {
+                AND = { is_debug = yes is_ai = no }
+                tag = OAK
+            }
+        }
+        is_good = yes
+
+        fire_only_once = no
+        days_re_enable = 30
+        days_remove = 30
+
+        cost = 10
+
+        remove_effect = {
+            log = "[GetDateText]: [Root.GetName]: Decision OAK_artificers_faction_bureaucrats"
+            # Effect
+            COA_v_OAK_power_shift = yes
+            bureaucrats_change_loyalty_effect = yes
+        }
+
+        ai_will_do = {
+            factor = 1
+        }
+    }
+
+    COA_artificers_faction_bureaucrats = {
+        icon = GFX_decision_spr_political_assassination
+
+        available = {
+            check_variable = { ROOT.OAK_populus_faction_bias < 100 }
+        }
+        visible = {
+            OR = {
+                AND = { is_debug = yes is_ai = no }
+                tag = COA
+            }
+        }
+        is_good = yes
+
+        fire_only_once = no
+        days_re_enable = 30
+        days_remove = 30
+
+        cost = 10
+
+        remove_effect = {
+            log = "[GetDateText]: [Root.GetName]: Decision COA_artificers_faction_bureaucrats"
+            # Effect
+            COA_v_OAK_power_shift = yes
+            bureaucrats_change_loyalty_effect = yes
+        }
+
+        ai_will_do = {
+            factor = 1
         }
     }
 }

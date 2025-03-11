@@ -20,7 +20,7 @@ This is a fantasy mod for HoI4 based off my own stories. I'm a solo dev with som
 - Artificer Content
 - Industry Technologies
 - Simple Arcana Technologies
-- Special Modifers
+- Special State Modifers
 
 [h1]Minor Update Changes[/h1]
 - Civilwar bug Fixing
@@ -39,11 +39,12 @@ This is a fantasy mod for HoI4 based off my own stories. I'm a solo dev with som
 - Overall balance experience.
 
 [h1]Information[/h1]
-[url=https://buymeacoffee.com/choo_choo_oreo] Buy a Coffee for Choo_Choo_Oreo[/url]
+[url=buymeacoffee.com/choo_choo_oreo] Buy a Coffee for Choo_Choo_Oreo[/url]
+[url=patreon.com/Choo_Choo_Oreo] Become a Patreon of Choo_Choo_Oreo[/url]
 [url=https://discord.gg/6qDDTEVyC3] Discord[/url]
 
 [h1]Check out my other mods![/h1]
-[url=https://steamcommunity.com/sharedfiles/filedetails/?id=1553726074] Continents are Countries.[/url]
-[url=https://steamcommunity.com/sharedfiles/filedetails/?id=1556140404] We Shall Never Surrender - Desperate Defence.[/url]
-[url=https://steamcommunity.com/sharedfiles/filedetails/?id=1894899147] Declare War on Everyone Button.[/url]
-[url=https://steamcommunity.com/sharedfiles/filedetails/?id=2877503144] Set your Country Rules![/url]
+[url=steamcommunity.com/sharedfiles/filedetails/?id=1553726074] Continents are Countries.[/url]
+[url=steamcommunity.com/sharedfiles/filedetails/?id=1556140404] We Shall Never Surrender - Desperate Defence.[/url]
+[url=steamcommunity.com/sharedfiles/filedetails/?id=1894899147] Declare War on Everyone Button.[/url]
+[url=steamcommunity.com/sharedfiles/filedetails/?id=2877503144] Set your Country Rules![/url]

@@ -26,8 +26,8 @@ set_fuel_ratio = 0.25
 
 set_power_balance = {
     id = power_balance_OAK_v_COA
-    left_side = political_balance_COA
-    right_side = political_balance_OAK
+    left_side = political_balance_COA_bias
+    right_side = political_balance_OAK_bias
 }
 add_power_balance_value = { id = power_balance_OAK_v_COA value = -0.05 }
 
@@ -49,6 +49,7 @@ set_popularities = {
 	recruit_character = OAK_rupert_kingston
 # Military #
 # Advisers #
+
 
 set_variable = { global.OAK_heartofiron_local_resources = 0.10 }							# For the Second Modifier
 set_variable = { global.OAK_heartofiron_state_production_speed_buildings_factor = 0.10 }	# For the Second Modifier
@@ -78,42 +79,67 @@ set_variable = { OAK_tugofwar_party_popularity_stability_factor = 0.00 }
 set_variable = { OAK_tugofwar_war_support_factor = 0.00 }
 add_dynamic_modifier = { modifier = OAK_idea_tug_of_war_modifier }
 
-set_variable = { OAK_academia_political_power_gain = 0.0 }
-set_variable = { OAK_academia_drift_defence_factor = -0.20 }
-set_variable = { OAK_academia_research_speed_factor = 0.0 }
-set_variable = { OAK_academia_scientist_breakthrough_bonus_factor = 0.0 }
-set_variable = { OAK_academia_unitism_drift = 0.03 }
-set_variable = { OAK_academia_unitism_acceptance = 10.0 }
-add_dynamic_modifier = { modifier = OAK_idea_academia_modifier }
+# Bias is what side they take.
+# Bias is a 0-100 % value well 50 being neutral. +Oak -Coa
 
-set_variable = { OAK_populus_political_power_gain = 0.0 }
-set_variable = { OAK_populus_party_popularity_stability_factor = -0.15 }
-set_variable = { OAK_populus_war_support_factor = -0.10 }
-set_variable = { OAK_populus_weekly_casualties_war_support = 0.0 }
-set_variable = { OAK_populus_weekly_convoys_war_support = 0.0 }
-set_variable = { OAK_populus_weekly_bombing_war_support = 0.0 }
+# Popularity is the % of support.
+# Popularity is the total value among all five factions.
+
+# Locked Boolean is if the faction is locked to a side.
+# Rival Country is for a effect to know what the other country is.
+
+set_variable = {    OAK.populus_faction_bias = 45 }
+set_variable = { global.populus_faction_popularity = 35 }
+set_variable = {    OAK.populus_faction_boolean = 0 }
+
+set_variable = {    OAK.academia_faction_bias = 35 }
+set_variable = { global.academia_faction_popularity = 35 }
+set_variable = {    OAK.academia_faction_boolean = 0 }
+
+set_variable = {    OAK.industrialist_faction_bias = 60 }
+set_variable = { global.industrialist_faction_popularity = 15 }
+set_variable = {    OAK.industrialist_faction_boolean = 0 }
+
+set_variable = {    OAK.military_faction_bias = 55 }
+set_variable = { global.military_faction_popularity = 05 }
+set_variable = {    OAK.military_faction_boolean = 0 }
+
+set_variable = {    OAK.bureaucrats_faction_bias = 35 }
+set_variable = { global.bureaucrats_faction_popularity = 10 }
+set_variable = {    OAK.bureaucrats_faction_boolean = 0 }
+
+set_variable = { rival_country = COA }
+
+set_variable = { global.OAK_faction_days_remove_very_low = 7 }       # Allow Speech, Discredit, Repress
+set_variable = { global.OAK_faction_days_remove_low = 14 }           # Joint Act, Ban Media, Anti-faction Speech
+set_variable = { global.OAK_faction_days_remove_medium = 21 }        # Bolster Zveno, Imprison leaders
+set_variable = { global.OAK_faction_days_remove_high = 30 }          # Legalize, Fund, Appoint, Raid, Destroy
+set_variable = { global.OAK_faction_days_remove_very_high = 60 }     # Integrate
+set_variable = { global.OAK_faction_days_reenable_low = 7 }          # Allow Speech, Discredit
+set_variable = { global.OAK_faction_days_reenable_medium = 14 }      # Joint Act, Anti-faction Speech
+set_variable = { global.OAK_faction_days_reenable_high = 60 }        # Fund
+set_variable = { global.OAK_faction_days_reenable_very_high = 120 }  # Raid
+set_variable = { global.OAK_faction_low = 5 }
+set_variable = { global.OAK_faction_medium = 10 }
+set_variable = { global.OAK_faction_high = 15 }
+set_variable = { global.OAK_ff_missions_base_days_to_add = 60 }      # Base amount of days to be added to Impending FF Coup mission
+set_variable = { global.OAK_ff_missions_popularity_factor = 1 }      # More popularity means more days to add
+set_variable = { global.OAK_ff_missions_loyalty_factor = 1 }         # More loyalty means less days to add
+set_variable = { global.OAK_ff_preventive_actions_against_coup = 0 } # This will be used to reduce the chances of the FF staging the coup after they have planned it
+set_variable = { global.OAK_ff_preventive_actions_base_value = 5 }   # The value added to the variable above every time a decision to prevent the coup is taken
+set_variable = { global.OAK_ff_preventive_actions_cap_value = 50 }   # This is a cap to the player's ability to prevent the coup
+
+set_temp_variable = { temp_factor = populus_faction_bias } divide_temp_variable = { temp_factor = 100 } # Use faction bias to say how effect following modifiers are.
+# The following are the faction modifiers.
+set_variable = { populus_faction_bias_pp_gain = 0.2 } multiply_variable = { populus_faction_bias_pp_gain = temp_factor }
 add_dynamic_modifier = { modifier = OAK_idea_populus_modifier }
 
-set_variable = { OAK_industrialist_political_power_gain = 0.0 }
-set_variable = { OAK_industrialist_consumer_goods_factor = 0.10 }
-set_variable = { OAK_industrialist_industrial_capacity_factory = -0.20 }
-set_variable = { OAK_industrialist_industrial_capacity_dockyard = -0.20 }
-set_variable = { OAK_industrialist_production_factory_efficiency_gain_factor = 0.0 }	# Production efficiency growth.	
-set_variable = { OAK_industrialist_production_factory_max_efficiency_factor = -0.20 }	# Production efficiency cap.
-set_variable = { OAK_industrialist_production_factory_start_efficiency_factor = 0.0 }	# Production efficiency base.
-set_variable = { OAK_industrialist_line_change_production_efficiency_factor = 0.0 }		# Production efficiency retention.
-set_variable = { OAK_industrialist_production_lack_of_resource_penalty_factor = 0.0 }	# Lack of resources penalty.
-set_variable = { OAK_industrialist_local_factories = 0.0 }
-set_variable = { OAK_industrialist_local_resources_factor = 0.0 }
-add_dynamic_modifier = { modifier = OAK_idea_industrialist_modifier }
+add_populus_faction_effect = yes
+add_academia_faction_effect = yes
+add_industrialist_faction_effect = yes
+add_military_faction_effect = yes
+add_bureaucrats_faction_effect = yes
 
-set_variable = { OAK_elites_political_power_gain = 0.0 }
-set_variable = { OAK_elites_power_balance_daily = -0.001 }
-set_variable = { OAK_elites_stability_factor = -0.20 }
-set_variable = { OAK_elites_war_support_factor = -0.20 }
-set_variable = { OAK_elites_army_attack_against_major_factor = 0.0 }
-set_variable = { OAK_elites_army_attack_against_minor_factor = 0.0 }
-add_dynamic_modifier = { modifier = OAK_idea_elites_modifier }
 
 add_ideas = {
 	species_idea_human

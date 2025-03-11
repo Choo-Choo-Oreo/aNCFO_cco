@@ -1,19 +1,17 @@
 power_balance_OAK_v_COA = {
-	initial_value = 0.25
-	left_side = political_balance_COA
-	right_side = political_balance_OAK
-	decision_category = bop_COA_v_OAK
+	initial_value = -0.05
+	left_side = political_balance_COA_bias
+	right_side = political_balance_OAK_bias
+	decision_category = bop_COA_v_OAK_info
 
 	side = {
-		id = political_balance_COA
+		id = political_balance_COA_bias
 		icon = GFX_bop_SWI_centralization_canton_side
 		range = {
-			id = COA_dominant
-			min = -1.0
+			id = political_balance_toward_COA_dominant
+			min = -1.00
 			max = -0.95
-			modifier = {
-				custom_modifier_tooltip = bop_COA_v_OAK_wartime_tt
-			}
+			#modifier = { custom_modifier_tooltip = bop_COA_v_OAK_cancel_when_war_tt } # Get cancelled here since a peaceful unification happens.
 			on_activate = {
 				COA = {
 					effect_tooltip = {
@@ -33,39 +31,27 @@ power_balance_OAK_v_COA = {
 					}
 				}
 			}
-			on_deactivate = {
-
-			}
+			on_deactivate = {  }
 		}
 
 		range = {
-			id = COA_infuenctial
+			id = political_balance_toward_COA_influential
 			min = -0.95
 			max = -0.575
-			modifier = {
-				custom_modifier_tooltip = bop_COA_v_OAK_wartime_tt
-			}
+			modifier = { custom_modifier_tooltip = bop_COA_v_OAK_cancel_when_war_tt }
 			on_activate = {
+				COA = {
+					effect_tooltip = {
+						custom_effect_tooltip = bop_COA_v_OAK_permalose_472
+						472 = { set_demilitarized_zone = yes transfer_state_to = COA }
+					}
+				}
 				effect_tooltip = {
-					475 = { set_demilitarized_zone = no }
 					485 = { set_demilitarized_zone = no }
 					486 = { set_demilitarized_zone = no }
 					487 = { set_demilitarized_zone = no }
 					600 = { set_demilitarized_zone = no }
 					602 = { set_demilitarized_zone = no }
-					#466 = { set_demilitarized_zone = no transfer_state_to = OAK }
-					#474 = { set_demilitarized_zone = no transfer_state_to = OAK }
-					#483 = { set_demilitarized_zone = no transfer_state_to = OAK }
-					#484 = { set_demilitarized_zone = no transfer_state_to = OAK }
-					#533 = { set_demilitarized_zone = no transfer_state_to = OAK }
-					#555 = { set_demilitarized_zone = no transfer_state_to = OAK }
-					#556 = { set_demilitarized_zone = no transfer_state_to = OAK }
-				}
-				COA = {
-					effect_tooltip = {
-						custom_effect_tooltip = bop_COA_v_OAK_permalose_475
-						475 = { transfer_state_to = COA }
-					}
 				}
 				hidden_effect = {
 					IF = { LIMIT = { TAG = COA NOT = { OAK = { has_war_with = COA } COA = { has_war_with = OAK } } }
@@ -76,14 +62,7 @@ power_balance_OAK_v_COA = {
 							487 = { set_demilitarized_zone = no }
 							600 = { set_demilitarized_zone = no }
 							602 = { set_demilitarized_zone = no }
-							#466 = { set_demilitarized_zone = no transfer_state_to = OAK }
-							#474 = { set_demilitarized_zone = no transfer_state_to = OAK }
-							#483 = { set_demilitarized_zone = no transfer_state_to = OAK }
-							#484 = { set_demilitarized_zone = no transfer_state_to = OAK }
-							#533 = { set_demilitarized_zone = no transfer_state_to = OAK }
-							#555 = { set_demilitarized_zone = no transfer_state_to = OAK }
-							#556 = { set_demilitarized_zone = no transfer_state_to = OAK }
-							475 = { transfer_state_to = COA }
+							472 = { set_demilitarized_zone = yes transfer_state_to = COA }
 						}
 					}
 				}
@@ -103,30 +82,28 @@ power_balance_OAK_v_COA = {
 		}
 
 		range = {
-			id = COA_prominent
+			id = political_balance_toward_COA_prominent
 			min = -0.575
 			max = -0.20
-			modifier = {
-				custom_modifier_tooltip = bop_COA_v_OAK_wartime_tt
-			}
+			modifier = { custom_modifier_tooltip = bop_COA_v_OAK_cancel_when_war_tt }
 			on_activate = {
 				effect_tooltip = {
-					475 = { set_demilitarized_zone = yes }
-					485 = { set_demilitarized_zone = yes }
-					486 = { set_demilitarized_zone = yes }
-					487 = { set_demilitarized_zone = yes }
-					600 = { set_demilitarized_zone = yes }
-					602 = { set_demilitarized_zone = yes }
+					475 = { set_demilitarized_zone = yes transfer_state_to = COA }
+					485 = { set_demilitarized_zone = yes transfer_state_to = COA }
+					486 = { set_demilitarized_zone = yes transfer_state_to = COA }
+					487 = { set_demilitarized_zone = yes transfer_state_to = COA }
+					600 = { set_demilitarized_zone = yes transfer_state_to = COA }
+					602 = { set_demilitarized_zone = yes transfer_state_to = COA }
 				}
 				hidden_effect = {
 					IF = { LIMIT = { TAG = COA NOT = { OAK = { has_war_with = COA } COA = { has_war_with = OAK } } }
 						COA = {
-							475 = { set_demilitarized_zone = yes }
-							485 = { set_demilitarized_zone = yes }
-							486 = { set_demilitarized_zone = yes }
-							487 = { set_demilitarized_zone = yes }
-							600 = { set_demilitarized_zone = yes }
-							602 = { set_demilitarized_zone = yes }
+							475 = { set_demilitarized_zone = yes transfer_state_to = COA }
+							485 = { set_demilitarized_zone = yes transfer_state_to = COA }
+							486 = { set_demilitarized_zone = yes transfer_state_to = COA }
+							487 = { set_demilitarized_zone = yes transfer_state_to = COA }
+							600 = { set_demilitarized_zone = yes transfer_state_to = COA }
+							602 = { set_demilitarized_zone = yes transfer_state_to = COA }
 						}
 					}
 				}
@@ -146,12 +123,10 @@ power_balance_OAK_v_COA = {
 		}
 
 		range = {
-			id = COA_emerging
+			id = political_balance_toward_COA_emerging
 			min = -0.20
 			max = -0.10
-			modifier = {
-				custom_modifier_tooltip = bop_COA_v_OAK_wartime_tt
-			}
+			modifier = { custom_modifier_tooltip = bop_COA_v_OAK_cancel_when_war_tt }
 			on_activate = {
 				effect_tooltip = {
 					475 = { transfer_state_to = COA }
@@ -193,21 +168,17 @@ power_balance_OAK_v_COA = {
 		id = political_balance_toward_neither_OAK_nor_COA
 		min = -0.10
 		max = 0.10
-		modifier = {
-			custom_modifier_tooltip = bop_COA_v_OAK_wartime_tt
-		}
+		modifier = { custom_modifier_tooltip = bop_COA_v_OAK_cancel_when_war_tt }
 	}
 
 	side = {
-		id = political_balance_OAK
+		id = political_balance_OAK_bias
 		icon = GFX_bop_SWI_centralization_council_side
 		range = {
-			id = OAK_emerging
+			id = political_balance_toward_OAK_emerging
 			min = 0.10
 			max = 0.20
-			modifier = {
-				custom_modifier_tooltip = bop_COA_v_OAK_wartime_tt
-			}
+			modifier = { custom_modifier_tooltip = bop_COA_v_OAK_cancel_when_war_tt }
 			on_activate = {
 				effect_tooltip = {
 					475 = { transfer_state_to = OAK }
@@ -245,30 +216,28 @@ power_balance_OAK_v_COA = {
 		}
 
 		range = {
-			id = OAK_prominent
+			id = political_balance_toward_OAK_prominent
 			min = 0.20
 			max = 0.575
-			modifier = {
-				custom_modifier_tooltip = bop_COA_v_OAK_wartime_tt
-			}
+			modifier = { custom_modifier_tooltip = bop_COA_v_OAK_cancel_when_war_tt }
 			on_activate = {
 				effect_tooltip = {
-					475 = { set_demilitarized_zone = yes }
-					485 = { set_demilitarized_zone = yes }
-					486 = { set_demilitarized_zone = yes }
-					487 = { set_demilitarized_zone = yes }
-					600 = { set_demilitarized_zone = yes }
-					602 = { set_demilitarized_zone = yes }
+					475 = { set_demilitarized_zone = yes transfer_state_to = OAK }
+					485 = { set_demilitarized_zone = yes transfer_state_to = OAK }
+					486 = { set_demilitarized_zone = yes transfer_state_to = OAK }
+					487 = { set_demilitarized_zone = yes transfer_state_to = OAK }
+					600 = { set_demilitarized_zone = yes transfer_state_to = OAK }
+					602 = { set_demilitarized_zone = yes transfer_state_to = OAK }
 				}
 				hidden_effect = {
 					IF = { LIMIT = { TAG = OAK NOT = { OAK = { has_war_with = COA } COA = { has_war_with = OAK } } }
 						OAK = {
-							475 = { set_demilitarized_zone = yes }
-							485 = { set_demilitarized_zone = yes }
-							486 = { set_demilitarized_zone = yes }
-							487 = { set_demilitarized_zone = yes }
-							600 = { set_demilitarized_zone = yes }
-							602 = { set_demilitarized_zone = yes }
+							475 = { set_demilitarized_zone = yes transfer_state_to = OAK }
+							485 = { set_demilitarized_zone = yes transfer_state_to = OAK }
+							486 = { set_demilitarized_zone = yes transfer_state_to = OAK }
+							487 = { set_demilitarized_zone = yes transfer_state_to = OAK }
+							600 = { set_demilitarized_zone = yes transfer_state_to = OAK }
+							602 = { set_demilitarized_zone = yes transfer_state_to = OAK }
 						}
 					}
 				}
@@ -288,13 +257,17 @@ power_balance_OAK_v_COA = {
 		}
 
 		range = {
-			id = OAK_infuenctial
+			id = political_balance_toward_OAK_influential
 			min = 0.575
 			max = 0.95
-			modifier = {
-				custom_modifier_tooltip = bop_COA_v_OAK_wartime_tt
-			}
+			modifier = { custom_modifier_tooltip = bop_COA_v_OAK_cancel_when_war_tt }
 			on_activate = {
+				OAK = {
+					effect_tooltip = {
+						custom_effect_tooltip = bop_COA_v_OAK_permalose_494
+						494 = { transfer_state_to = OAK }
+					}
+				}
 				effect_tooltip = {
 					475 = { set_demilitarized_zone = no }
 					485 = { set_demilitarized_zone = no }
@@ -302,16 +275,6 @@ power_balance_OAK_v_COA = {
 					487 = { set_demilitarized_zone = no }
 					600 = { set_demilitarized_zone = no }
 					602 = { set_demilitarized_zone = no }
-					#494 = { set_demilitarized_zone = no transfer_state_to = COA }
-					#496 = { set_demilitarized_zone = no transfer_state_to = COA }
-					#522 = { set_demilitarized_zone = no transfer_state_to = COA }
-					#601 = { set_demilitarized_zone = no transfer_state_to = COA }
-				}
-				OAK = {
-					effect_tooltip = {
-						custom_effect_tooltip = bop_COA_v_OAK_permalose_494
-						494 = { transfer_state_to = OAK }
-					}
 				}
 				hidden_effect = {
 					IF = { LIMIT = { TAG = OAK NOT = { OAK = { has_war_with = COA } COA = { has_war_with = OAK } } }
@@ -322,11 +285,7 @@ power_balance_OAK_v_COA = {
 							487 = { set_demilitarized_zone = no }
 							600 = { set_demilitarized_zone = no }
 							602 = { set_demilitarized_zone = no }
-							#494 = { set_demilitarized_zone = no transfer_state_to = COA }
-							#496 = { set_demilitarized_zone = no transfer_state_to = COA }
-							#522 = { set_demilitarized_zone = no transfer_state_to = COA }
-							#601 = { set_demilitarized_zone = no transfer_state_to = COA }
-							494 = { transfer_state_to = OAK }
+							494 = { set_demilitarized_zone = yes transfer_state_to = OAK }
 						}
 					}
 				}
@@ -346,12 +305,10 @@ power_balance_OAK_v_COA = {
 		}
 
 		range = {
-			id = OAK_dominant
+			id = political_balance_toward_OAK_dominant
 			min = 0.95
-			max = 1.0
-			modifier = {
-				custom_modifier_tooltip = bop_COA_v_OAK_wartime_tt
-			}
+			max = 1.00
+			#modifier = { custom_modifier_tooltip = bop_COA_v_OAK_cancel_when_war_tt } # Get cancelled here since a peaceful unification happens.
 			on_activate = {
 				OAK = {
 					effect_tooltip = {
@@ -371,9 +328,7 @@ power_balance_OAK_v_COA = {
 					}
 				}
 			}
-			on_deactivate = {
-
-			}
+			on_deactivate = {  }
 		}
 	}
 }
