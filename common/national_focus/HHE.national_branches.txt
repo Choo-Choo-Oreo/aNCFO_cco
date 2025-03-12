@@ -2896,6 +2896,8 @@ focus_tree = { # Warmonger
 				completion_reward = {
 					log = "[GetDateText]: [Root.GetName]: Focus HHE_warmonger_capital_influance"
 					add_popularity = { ideology = unitism popularity = 0.05 }
+					add_political_power = 35
+					add_stability = -0.025
 					2={
 						remove_building = { type = industrial_complex level = 1 }
 					}
@@ -2982,7 +2984,9 @@ focus_tree = { # Warmonger
 
 				completion_reward = {
 					log = "[GetDateText]: [Root.GetName]: Focus HHE_warmonger_strengthen_national_industry"
-					add_popularity = { ideology = unitism popularity = -0.025 }
+					add_popularity = { ideology = unitism popularity = -0.035 }
+					add_political_power = 25
+					add_stability = 0.025
 					77={
 						add_extra_state_shared_building_slots = 1
 						add_building_construction = { type = arms_factory level = 1 instant_build = yes }
@@ -3066,7 +3070,7 @@ focus_tree = { # Warmonger
 
 				completion_reward = {
 					log = "[GetDateText]: [Root.GetName]: Focus HHE_warmonger_HNO_arresting_officers"
-					add_popularity = { ideology = unitism popularity = -0.025 }
+					add_popularity = { ideology = unitism popularity = -0.035 }
 					add_political_power = 25
 					add_stability = 0.025
 					swap_ideas = { remove_idea = initial_takeover add_idea = prepare_military_takeover }
@@ -3106,22 +3110,24 @@ focus_tree = { # Warmonger
 				relative_position_id = HHE_warmonger_unexpected_but_welcomed
 				x = -3
 				y = 3
-				cost = 5
+				cost = 3
 
 				allow_branch = {
 				}
 
-				ai_will_do = { factor = 3 }
+				ai_will_do = { factor = 1 }
 
 				available_if_capitulated = yes
 
 				completion_reward = {
 					log = "[GetDateText]: [Root.GetName]: Focus HHE_warmonger_one_nation_one_navy"
-					add_political_power = 50
+					add_popularity = { ideology = unitism popularity = 0.05 }
+					add_political_power = 35
+					add_stability = -0.025
 					every_country = {
 						limit = { is_starting_subject_of_harmonainus_imperious = yes }
 						transfer_navy = { target = FROM }
-						add_stability = -0.025
+						add_stability = -0.035
 						add_war_support = -0.05
 					}
 				}
@@ -3135,7 +3141,7 @@ focus_tree = { # Warmonger
 				relative_position_id = HHE_warmonger_unexpected_but_welcomed
 				x = -1
 				y = 3
-				cost = 5
+				cost = 3
 
 				allow_branch = {
 				}
@@ -3146,9 +3152,9 @@ focus_tree = { # Warmonger
 
 				completion_reward = {
 					log = "[GetDateText]: [Root.GetName]: Focus HHE_warmonger_syphon_cultural_manpower"
-					load_oob = HHE_callapse_militia
 					add_political_power = 25
-					add_stability = 0.025
+					custom_effect_tooltip = HHE_callapse_militia_tt
+					hidden_effect = { load_oob = HHE_callapse_militia }
 				}
 			}
 
@@ -3160,7 +3166,7 @@ focus_tree = { # Warmonger
 				relative_position_id = HHE_warmonger_unexpected_but_welcomed
 				x = 1
 				y = 3
-				cost = 5
+				cost = 3
 
 				allow_branch = {
 				}
@@ -3172,7 +3178,6 @@ focus_tree = { # Warmonger
 				completion_reward = {
 					log = "[GetDateText]: [Root.GetName]: Focus HHE_warmonger_relocate_military_industrial_complexes"
 					add_political_power = 25
-					add_stability = -0.025
 					77={
 						add_extra_state_shared_building_slots = 1
 						add_building_construction = {
@@ -3224,17 +3229,20 @@ focus_tree = { # Warmonger
 				relative_position_id = HHE_warmonger_unexpected_but_welcomed
 				x = 3
 				y = 3
-				cost = 5
+				cost = 3
 
 				allow_branch = {
 				}
 
-				ai_will_do = { factor = 3 }
+				ai_will_do = { factor = 1 }
 
 				available_if_capitulated = yes
 
 				completion_reward = {
 					log = "[GetDateText]: [Root.GetName]: Focus HHE_warmonger_every_man_a_gun"
+					add_popularity = { ideology = unitism popularity = -0.035 }
+					add_political_power = 25
+					add_stability = 0.025
 					add_equipment_to_stockpile = {
 					    type = infantry_equipment
 					    amount = 21300
@@ -3245,22 +3253,89 @@ focus_tree = { # Warmonger
 					    amount = 1200
 					    producer = ROOT
 					}
-					add_political_power = 25
-					add_stability = 0.025
 				}
 			}
 		# P4
-			# (West)   , Trade of the West
-			# (Center) , Aristocrat Guilds of the Midlands
-			# (East)   , Triple Down on Tradition
+			focus = { # (West)         , Trade of the West
+				id = HHE_warmonger_west_trade
+				icon = GFX_focus_unknown_political
+				prerequisite = { focus = HHE_warmonger_one_nation_one_navy focus = HHE_warmonger_syphon_cultural_manpower }
+				prerequisite = { focus = HHE_warmonger_relocate_military_industrial_complexes focus = HHE_warmonger_every_man_a_gun }
+				#mutually_exclusive = { focus =  }
+				relative_position_id = HHE_warmonger_unexpected_but_welcomed
+				x = -2
+				y = 4
+				cost = 3
+
+				allow_branch = {
+				}
+
+				ai_will_do = { factor = 1 }
+
+				available_if_capitulated = yes
+
+				completion_reward = {
+					log = "[GetDateText]: [Root.GetName]: Focus HHE_warmonger_west_trade"
+					add_political_power = 25
+				}
+			}
+
+			focus = { # (East) +Unitist, Triple Down on Tradition
+				id = HHE_warmonger_traditional_triple_down
+				icon = GFX_focus_unknown_political
+				prerequisite = { focus = HHE_warmonger_one_nation_one_navy focus = HHE_warmonger_syphon_cultural_manpower }
+				prerequisite = { focus = HHE_warmonger_relocate_military_industrial_complexes focus = HHE_warmonger_every_man_a_gun }
+				#mutually_exclusive = { focus =  }
+				relative_position_id = HHE_warmonger_unexpected_but_welcomed
+				x = 0
+				y = 4
+				cost = 2
+
+				allow_branch = {
+				}
+
+				ai_will_do = { factor = 3 }
+
+				available_if_capitulated = yes
+
+				completion_reward = {
+					log = "[GetDateText]: [Root.GetName]: Focus HHE_warmonger_traditional_triple_down"
+					add_popularity = { ideology = unitism popularity = 0.05 }
+					add_political_power = 35
+					add_stability = -0.025
+				}
+			}
+
+			focus = { # (Center)         , Aristocrat Guilds of the Midlands
+				id = HHE_warmonger_midlands_aristocrat_guilds
+				icon = GFX_focus_unknown_political
+				prerequisite = { focus = HHE_warmonger_one_nation_one_navy focus = HHE_warmonger_syphon_cultural_manpower }
+				prerequisite = { focus = HHE_warmonger_relocate_military_industrial_complexes focus = HHE_warmonger_every_man_a_gun }
+				#mutually_exclusive = { focus =  }
+				relative_position_id = HHE_warmonger_unexpected_but_welcomed
+				x = 2
+				y = 4
+				cost = 3
+
+				allow_branch = {
+				}
+
+				ai_will_do = { factor = 1 }
+
+				available_if_capitulated = yes
+
+				completion_reward = {
+					log = "[GetDateText]: [Root.GetName]: Focus HHE_warmonger_midlands_aristocrat_guilds"
+					add_political_power = 25
+				}
+			}
 
 		focus = { # Military Under Vlad
 			id = HHE_warmonger_military_under_vlad
 			icon = GFX_focus_unknown_political
-			prerequisite = { focus = HHE_warmonger_one_nation_one_navy }
-			prerequisite = { focus = HHE_warmonger_syphon_cultural_manpower }
-			prerequisite = { focus = HHE_warmonger_relocate_military_industrial_complexes }
-			prerequisite = { focus = HHE_warmonger_every_man_a_gun }
+			prerequisite = { focus = HHE_warmonger_west_trade }
+			prerequisite = { focus = HHE_warmonger_traditional_triple_down }
+			prerequisite = { focus = HHE_warmonger_midlands_aristocrat_guilds }
 			#mutually_exclusive = { focus =  }
 			relative_position_id = HHE_warmonger_unexpected_but_welcomed
 			x = 0

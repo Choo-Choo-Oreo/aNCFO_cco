@@ -85,14 +85,17 @@
 			fire_only_once = yes
 
 			available = {
-				has_stability > 0.33
-				has_country_flag = HHE_collapse_of_the_nation_country_no_more_fixed
-				NOT = {
-					or = {
-						has_country_flag = HHE_collapse_of_the_nation_fire_river_failed
-						has_country_flag = HHE_collapse_of_the_nation_fire_river_fixed
+				AND = {
+					has_stability > 0.33
+					has_country_flag = HHE_collapse_of_the_nation_country_no_more_fixed
+					NOT = {
+						OR = {
+							has_country_flag = HHE_collapse_of_the_nation_fire_river_failed
+							has_country_flag = HHE_collapse_of_the_nation_fire_river_fixed
+						}
 					}
 				}
+				NOT = { has_completed_focus = HHE_warmonger_HHE_arresting_officers }
 			}
 
 			cost = 50
@@ -101,14 +104,17 @@
 			}
 
 			visible = {
-				has_global_flag = HHE_warmonger_civil_war_first
-				NOT = {
-					has_global_flag = HHE_warmonger_civil_war_final
-					or = {
-						has_country_flag = HHE_collapse_of_the_nation_fire_river_failed
-						has_country_flag = HHE_collapse_of_the_nation_fire_river_fixed
+				AND = {
+					has_global_flag = HHE_warmonger_civil_war_first
+					NOT = {
+						has_global_flag = HHE_warmonger_civil_war_final
+						OR = {
+							has_country_flag = HHE_collapse_of_the_nation_fire_river_failed
+							has_country_flag = HHE_collapse_of_the_nation_fire_river_fixed
+						}
 					}
 				}
+				NOT = { has_completed_focus = HHE_warmonger_HHE_arresting_officers }
 			}
 
 			complete_effect = {
@@ -124,32 +130,41 @@
 			fire_only_once = yes
 
 			available = {
-				hidden_trigger = {
-					has_global_flag = HHE_warmonger_civil_war_first
-					NOT = { has_global_flag = HHE_warmonger_civil_war_final }
+				AND = {
+					hidden_trigger = {
+						has_global_flag = HHE_warmonger_civil_war_first
+						NOT = { has_global_flag = HHE_warmonger_civil_war_final }
+					}
+					has_stability > 0.33
+					has_country_flag = HHE_collapse_of_the_nation_fire_river_fixed
 				}
-				has_stability > 0.33
-				has_country_flag = HHE_collapse_of_the_nation_fire_river_fixed
+				NOT = { has_completed_focus = HHE_warmonger_HHE_arresting_officers }
 			}
 
 			activation = {
-				has_global_flag = HHE_warmonger_civil_war_first
-				NOT = { has_global_flag = HHE_warmonger_civil_war_final }
-				NOT = {
-					or = {
-						has_country_flag = HHE_collapse_of_the_nation_fire_river_failed
-						has_country_flag = HHE_collapse_of_the_nation_fire_river_fixed
+				AND = {
+					has_global_flag = HHE_warmonger_civil_war_first
+					NOT = { has_global_flag = HHE_warmonger_civil_war_final }
+					NOT = {
+						OR = {
+							has_country_flag = HHE_collapse_of_the_nation_fire_river_failed
+							has_country_flag = HHE_collapse_of_the_nation_fire_river_fixed
+						}
 					}
 				}
+				NOT = { has_completed_focus = HHE_warmonger_HHE_arresting_officers }
 			}
 
 			visible = {
-				NOT = {
-					or = {
-						has_country_flag = HHE_collapse_of_the_nation_fire_river_failed
-						has_country_flag = HHE_collapse_of_the_nation_fire_river_fixed
+				AND = {
+					NOT = {
+						OR = {
+							has_country_flag = HHE_collapse_of_the_nation_fire_river_failed
+							has_country_flag = HHE_collapse_of_the_nation_fire_river_fixed
+						}
 					}
 				}
+				NOT = { has_completed_focus = HHE_warmonger_HHE_arresting_officers }
 			}
 
 			timeout_effect = {
@@ -271,6 +286,7 @@
 
 			complete_effect = {
 				set_country_flag = HHE_collapse_of_the_nation_peoples_government_fixed
+				add_popularity = { ideology = unitism popularity = -0.10 }
 				HHE_suppressed_rebellion_HPG = yes
 			}
 		}
@@ -312,6 +328,7 @@
 
 			timeout_effect = {
 				set_country_flag = HHE_collapse_of_the_nation_peoples_government_failed
+				add_popularity = { ideology = unitism popularity = -0.025 }
 				HHE_rebellion_HPG = yes
 			}
 		}
@@ -1130,6 +1147,44 @@
 			}
 		}
 
+		crisis_HHE_collapse_of_the_nation_civil_war_regional = {
+			icon = generic_civil_support
+
+			fire_only_once = yes
+
+			available = {
+				has_country_flag = collapse_of_the_nation_civil_war_local
+				NOT = { has_country_flag = collapse_of_the_nation_civil_war_regional }
+				has_war = no
+			}
+
+			cost = 50
+			ai_will_do = {
+				factor = 2
+				modifier = { add = 10.0 tag = HHE }
+				modifier = { factor = 7.5 is_major = yes }
+				modifier = { factor = 3.5 has_army_manpower = { size > 499999 } }
+				modifier = { factor = 7.5 has_army_manpower = { size > 749999 } }
+				modifier = { factor = 7.5 has_army_manpower = { size > 999999 } }
+			}
+
+			visible = {
+				
+			}
+
+			complete_effect = {
+				set_country_flag = collapse_of_the_nation_civil_war_regional
+				IF = { LIMIT = {
+						OR = {
+							is_subject_of = HHE
+							is_subject = no
+						}
+					}
+					HHE_civil_war_regional = yes
+				}
+			}
+		}
+
 		mission_HHE_collapse_of_the_nation_civil_war_regional = { ### LOCAL IGNITION -> REGIONAL IGNITION
 			icon = generic_civil_support
 
@@ -1161,6 +1216,51 @@
 						}
 					}
 					HHE_civil_war_regional = yes
+				}
+			}
+		}
+
+		crisis_HHE_collapse_of_the_nation_civil_war_full = {
+			icon = generic_civil_support
+
+			fire_only_once = yes
+
+			available = {
+				has_country_flag = collapse_of_the_nation_civil_war_regional
+				NOT = { has_country_flag = collapse_of_the_nation_civil_war_ignited }
+				has_war = no
+			}
+
+			cost = 50
+			ai_will_do = {
+				factor = 2
+				modifier = { add = 10.0 tag = HHE }
+				modifier = { factor = 7.5 is_major = yes }
+				modifier = { factor = 3.5 has_army_manpower = { size > 499999 } }
+				modifier = { factor = 7.5 has_army_manpower = { size > 749999 } }
+				modifier = { factor = 7.5 has_army_manpower = { size > 999999 } }
+			}
+
+			visible = {
+				has_global_flag = HHE_warmonger_civil_war_first
+				NOT = {
+					has_global_flag = HHE_warmonger_civil_war_final
+					or = {
+						has_country_flag = HUM_collapse_of_the_nation_dwarves_failed
+						has_country_flag = HUM_collapse_of_the_nation_dwarves_fixed
+					}
+				}
+			}
+
+			complete_effect = {
+				set_country_flag = collapse_of_the_nation_civil_war_ignited
+				IF = { LIMIT = {
+						OR = {
+							is_subject_of = HHE
+							is_subject = no
+						}
+					}
+					HHE_civil_war_ignited = yes
 				}
 			}
 		}
