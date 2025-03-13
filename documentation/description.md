@@ -4,7 +4,7 @@
 - There could be updates that break saves and end up being more destabilize.
 [img]https://i.imgur.com/Yd0iER6.gif[/img]
 [h1]Presentation[/h1]
-This is a fantasy mod for HoI4 based off my own stories. I'm a solo dev with some support from friends, one day I hope to have this mod public and can be a HoI4 Anbennar like the real Anbennar for EU4
+This is a fantasy mod for HoI4 based off my own stories and documents. I am a solo dev with some support from friends, one day I hope to have this mod to be HoI4 Anbennar like the real Anbennar for EU4. Though I will not this doesnt follow common fantasy and JRR Tolkien fantasy tropes. Due to me being a solo dev I dont have many events with written descriptions but I hope the titles are clear enought to figure out what is happening! Please join the discord and tell me about your game as its important to help me develop the mod quicker.
 
 [h1]Features[/h1]
 + New custom map.
@@ -12,15 +12,14 @@ This is a fantasy mod for HoI4 based off my own stories. I'm a solo dev with som
 + New technology trees.
 + Supported Languages:
     - English
-    - Russian (Wanting reliable translator)
-    - Chinese (Wanting reliable translator)
-    - Spanish (Wanting reliable translator)
+    - Wanting support for Russian (Wanting reliable translator)
+    - Wanting support for Chinese (Wanting reliable translator)
+    - Wanting support for Spanish (Wanting reliable translator)
 
 [h1]Major Update Changes[/h1]
-- Artificer Content
 - Industry Technologies
-- Simple Arcana Technologies
-- Special State Modifers
+- Special Modifers for States
+- Weather now occurs
 
 [h1]Minor Update Changes[/h1]
 - Civilwar bug Fixing
