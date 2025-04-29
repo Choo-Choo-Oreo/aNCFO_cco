@@ -38,9 +38,11 @@ This is a fantasy mod for HoI4 based off my own stories and documents. I am a so
 - Overall balance experience.
 
 [h1]Information[/h1]
+I'm centralizing everything for my mod collection on a new Discord server. I'll rarely respond to comments, bug reports, or suggestions here. Please use the Discord link for all future requests.
+
+[url=https://discord.gg/6qDDTEVyC3] Click me for the Discord Link![/url]
 [url=buymeacoffee.com/choo_choo_oreo] Buy a Coffee for Choo_Choo_Oreo[/url]
 [url=patreon.com/Choo_Choo_Oreo] Become a Patreon of Choo_Choo_Oreo[/url]
-[url=https://discord.gg/6qDDTEVyC3] Discord[/url]
 
 [h1]Check out my other mods![/h1]
 [url=steamcommunity.com/sharedfiles/filedetails/?id=1553726074] Continents are Countries.[/url]
