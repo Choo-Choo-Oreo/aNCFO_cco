@@ -1,0 +1,136 @@
+bm_attack_helicopter_project = {
+	specialization = specialization_air
+	icon = GFX_sp_attack_helicopter
+	project_tags = {
+		sp_tag_aircraft
+		sp_tag_helicopter
+	}
+
+	breakthrough_cost = {
+		specialization_air = 1
+	}
+
+	resource_cost = {
+		resources = {
+			steel = 8
+			aluminium = 5
+			chromium = 3 
+		}
+	}
+
+	prototype_time = sp_time.prototype.short
+	complexity = sp_complexity.small
+
+	allowed = {
+		has_dlc = "Gotterdammerung"
+	}
+	available = {
+		if = {
+			limit = {
+				FROM = {
+					is_ai = yes
+				}
+			}
+			FROM = {
+				always = no
+			}
+		}
+		else = {
+			FROM = {
+				is_special_project_completed = sp:sp_air_helicopter
+			}
+		}		
+	}
+
+	generic_prototype_rewards = {
+		bm_air_breakthrough_reward_low
+		bm_air_breakthrough_reward_medium
+		bm_air_breakthrough_reward_high
+		bm_air_scientist_xp_reward_low
+		bm_air_scientist_xp_reward_medium
+		bm_air_scientist_xp_reward_high
+		bm_progress_reward_low
+		bm_progress_reward_medium
+		bm_progress_reward_high
+		bm_progress_loss_low
+		bm_progress_loss_medium
+		bm_progress_loss_high
+	}
+
+	project_output = {
+		country_effects = {
+			custom_effect_tooltip = {
+				localization_key = bm_attack_helicopter_project_helicopter_tt
+				ICON = GFX_bm_attack_helicopter_eq_icon
+				NAME = bm_attack_helicopter_equipment
+				DESC = bm_attack_helicopter_equipment_desc
+			}
+			custom_effect_tooltip = bm_divider
+			custom_effect_tooltip = {
+				localization_key = bm_attack_helicopter_project_unit_tt
+				ICON = GFX_bm_attack_helicopter_unit_icon
+				NAME = bm_attack_helicopter_company
+				DESC = bm_attack_helicopter_company_desc
+			}
+		}
+
+		enable_equipments = {
+			bm_attack_helicopter_equipment_0
+		}
+
+		enable_subunits = {
+			bm_attack_helicopter_company
+		}
+	}
+
+	unique_prototype_rewards = {
+		bm_attack_helicopter_project_reward = {
+			fire_only_once = yes
+
+			threshold = {
+				min = 5
+				max = 80
+			}
+
+			weight = {
+				base = 30
+			}
+
+			option = {
+				token = bm_attack_helicopter_project_soft
+
+				iteration_output = {
+					country_effects = {
+						add_equipment_bonus = {
+							name = bm_attack_helicopter_eq_bonus_soft
+							bonus = {
+								bm_attack_helicopter_equipment = {
+									soft_attack = 0.30
+									instant = yes
+								}
+							}
+						}
+					}
+				}
+			}
+			option = {
+				token = bm_attack_helicopter_project_hard
+
+				iteration_output = {
+					country_effects = {
+						add_equipment_bonus = {
+							name = bm_attack_helicopter_eq_bonus_hard
+							bonus = {
+								bm_attack_helicopter_equipment = {
+									ap_attack = 0.20
+									hard_attack = 0.05
+									instant = yes
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

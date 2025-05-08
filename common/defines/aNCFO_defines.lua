@@ -119,8 +119,8 @@
 		NDefines.NBuildings.MAX_SHARED_SLOTS = 66
 		NDefines.NBuildings.DESTRUCTION_COOLDOWN_IN_WAR = 90		-- Was 30
 
-		NDefines.NBuildings.INFRASTRUCTURE_RESOURCE_BONUS = 0.40	-- Was 0.20, we increase this to improve industrialization.
-		NDefines.NBuildings.SUPPLY_ROUTE_RESOURCE_BONUS = 1.00		-- Was 0.20, we increase this to improve industrialization.
+		NDefines.NBuildings.INFRASTRUCTURE_RESOURCE_BONUS = 0.30	-- Was 0.20, we increase this to improve industrialization.
+		NDefines.NBuildings.SUPPLY_ROUTE_RESOURCE_BONUS = 0.30		-- Was 0.20, we increase this to improve industrialization.
 
 	-- NDeployment
 
@@ -230,6 +230,21 @@
 	-- NAITheatre
 
 	-- NIndustrialOrganisation
+
+	-- NProject
+		NDefines.NProject.RECRUIT_SCIENTIST_COST = {50, 65, 80, 100}	-- Defualt 25, 50, 75, 100
+
+		NDefines.NProject.BREAKTHROUGH_DAILY_TECHNOLOGY_GAIN = 14		-- Defualt 12
+		NDefines.NProject.BREAKTHROUGH_DAILY_SCIENTIST_SKILL_GAIN = 7	-- Defualt 5
+		NDefines.NProject.BREAKTHROUGH_DAILY_ROCKET_SITE_GAIN = 3		-- Defualt 3
+		NDefines.NProject.BREAKTHROUGH_DAILY_NUCLEAR_REACTOR_GAIN = 3	-- Defualt 1
+
+	-- NRaids
+		NDefines.NRaids.NUCLEAR_BOMB_PRODUCTION_SCALE = 2555.0			-- Defualt 2555.0
+		NDefines.NRaids.THERMONUCLEAR_BOMB_PRODUCTION_SCALE = 2255.0	-- Defualt 2555.0
+
+		NDefines.NRaids.NUCLEAR_BOMB_MIN_DAMAGE_PERCENT = 0.1			-- Defualt 0.1
+		NDefines.NRaids.NUCLEAR_BOMB_MAX_DAMAGE_PERCENT = 0.6			-- Defualt 0.9
 
 -- VNR Naval Defines
 	NDefines.NAI.ENEMY_NAVY_STRENGTH_DONT_BOTHER = 1.5;

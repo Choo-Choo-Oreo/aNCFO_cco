@@ -1,0 +1,203 @@
+bm_blood_plasma_project = {
+	specialization = specialization_land
+	icon = GFX_sp_blood_plasma_transfusion
+
+	breakthrough_cost = {
+		specialization_land = {
+			base = 1
+			modifier = {
+				add = -1
+				has_tech = tech_field_hospital2
+			}
+		}
+	}
+
+	ai_will_do = {
+		base = 1
+	}
+
+	prototype_time = sp_time.prototype.short
+	complexity = sp_complexity.small
+
+	available = {
+		FROM = {
+			has_tech = tech_field_hospital
+		}
+	}
+
+	generic_prototype_rewards = {
+		bm_progress_reward_low
+		bm_progress_reward_medium
+		bm_progress_loss_low
+		bm_progress_loss_medium
+		bm_land_breakthrough_reward_low
+		bm_land_breakthrough_reward_medium
+		bm_land_scientist_xp_reward_low
+		bm_land_scientist_xp_reward_medium
+	}
+
+	project_output = {
+		country_effects = {
+			if = {
+				limit = {
+					has_country_flag = bm_blood_plasma_project_trickleback_flag
+				}
+				custom_effect_tooltip = {
+					localization_key = bm_blood_plasma_project_trickleback_tt
+					ICON = GFX_bm_medical_tent_icon
+					NAME = bm_sp_blood_plasma_trickleback
+					DESC = bm_sp_blood_plasma_trickleback_desc
+				}
+				add_unit_bonus = {
+					field_hospital = {
+						casualty_trickleback = 0.15
+						supply_consumption = 0.05
+					}
+					helicopter_field_hospital = {
+						casualty_trickleback = 0.15
+						supply_consumption = 0.05
+					}
+				}
+			}
+			else = {
+				if = {
+					limit = {
+						has_country_flag = bm_blood_plasma_project_experience_flag
+					}
+					custom_effect_tooltip = {
+						localization_key = bm_blood_plasma_project_experience_tt
+						ICON = GFX_bm_blood_bag_icon
+						NAME = bm_sp_blood_plasma_experience
+						DESC = bm_sp_blood_plasma_experience_desc
+					}		
+					add_unit_bonus = {
+						field_hospital = {
+							experience_loss_factor = -0.10
+							supply_consumption = 0.05
+						}
+						helicopter_field_hospital = {
+							experience_loss_factor = -0.10
+							supply_consumption = 0.05
+						}
+					}
+				}
+				else = {
+					custom_effect_tooltip = {
+						localization_key = bm_blood_plasma_project_tt_choice
+						NAME_1 = bm_sp_blood_plasma_trickleback
+						NAME_2 = bm_sp_blood_plasma_experience
+					}
+					custom_effect_tooltip = bm_divider_2
+					custom_effect_tooltip = {
+						localization_key = bm_blood_plasma_project_trickleback_tt
+						ICON = GFX_bm_medical_tent_icon
+						NAME = bm_sp_blood_plasma_trickleback
+						DESC = bm_sp_blood_plasma_trickleback_desc
+					}
+					add_unit_bonus = {
+						field_hospital = {
+							casualty_trickleback = 0.15
+							supply_consumption = 0.05
+						}
+						helicopter_field_hospital = {
+							casualty_trickleback = 0.15
+							supply_consumption = 0.05
+						}
+					}
+					custom_effect_tooltip = bm_divider
+					custom_effect_tooltip = {
+						localization_key = bm_blood_plasma_project_experience_tt
+						ICON = GFX_bm_blood_bag_icon
+						NAME = bm_sp_blood_plasma_experience
+						DESC = bm_sp_blood_plasma_experience_desc
+					}
+					add_unit_bonus = {
+						field_hospital = {
+							experience_loss_factor = -0.10
+							supply_consumption = 0.05
+						}
+						helicopter_field_hospital = {
+							experience_loss_factor = -0.10
+							supply_consumption = 0.05
+						}
+					}
+					custom_effect_tooltip = bm_divider_2
+					custom_effect_tooltip = {
+						localization_key = bm_blood_plasma_project_tip_tt
+						TECH_1 = tech_field_hospital2
+					}
+				}
+			}
+		}
+	}
+
+	unique_prototype_rewards = {
+		bm_blood_plasma_project_reward = {
+			fire_only_once = yes
+
+			threshold = {
+				min = 20
+				max = 100
+			}
+
+			weight = {
+				base = 1000
+			}
+
+			option = {
+				token = bm_blood_plasma_project_trickleback_option
+
+				iteration_output = {
+					country_effects = {
+						set_country_flag = bm_blood_plasma_project_trickleback_flag
+						custom_effect_tooltip = {
+							localization_key = bm_blood_plasma_project_trickleback_tt
+							ICON = GFX_bm_medical_tent_icon
+							NAME = bm_sp_blood_plasma_trickleback
+							DESC = bm_sp_blood_plasma_trickleback_desc
+						}
+						effect_tooltip = {
+							add_unit_bonus = {
+								field_hospital = {
+									casualty_trickleback = 0.15
+									supply_consumption = 0.05
+								}
+								helicopter_field_hospital = {
+									casualty_trickleback = 0.15
+									supply_consumption = 0.05
+								}
+							}								
+						}
+					}
+				}
+			}
+			option = {
+				token = bm_blood_plasma_project_experience_option
+
+				iteration_output = {
+					country_effects = {
+						set_country_flag =bm_blood_plasma_project_experience_flag
+						custom_effect_tooltip = {
+							localization_key = bm_blood_plasma_project_experience_tt
+							ICON = GFX_bm_blood_bag_icon
+							NAME = bm_sp_blood_plasma_experience
+							DESC = bm_sp_blood_plasma_experience_desc
+						}
+						effect_tooltip = {
+							add_unit_bonus = {
+								field_hospital = {
+									experience_loss_factor = -0.10
+									supply_consumption = 0.05
+								}
+								helicopter_field_hospital = {
+									experience_loss_factor = -0.10
+									supply_consumption = 0.05
+								}
+							}							
+						}
+					}
+				}
+			}
+		}
+	}
+}

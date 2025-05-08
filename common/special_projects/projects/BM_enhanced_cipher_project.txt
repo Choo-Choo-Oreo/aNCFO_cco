@@ -1,0 +1,160 @@
+bm_enhanced_cipher_project = {
+	specialization = specialization_land
+	icon = GFX_sp_enhanced_cipher
+
+	breakthrough_cost = {
+		specialization_land = {
+			base = 1
+			modifier = {
+				add = -1
+				has_tech = improved_computing_machine
+			}
+		}
+	}
+
+	ai_will_do = {
+		base = 1
+	}
+
+	prototype_time = sp_time.prototype.medium
+	complexity = sp_complexity.small
+
+	allowed = {
+		has_dlc = "La Resistance"
+	}
+	available = {
+		FROM = {
+			has_tech = computing_machine
+		}
+	}
+
+	generic_prototype_rewards = {
+		bm_progress_reward_low
+		bm_progress_reward_medium
+		bm_progress_loss_low
+		bm_progress_loss_medium
+		bm_land_breakthrough_reward_low
+		bm_land_breakthrough_reward_medium
+		bm_land_scientist_xp_reward_low
+	}
+
+	project_output = {
+		country_effects = {
+			if = {
+				limit = {
+					has_country_flag = bm_enhanced_cipher_project_cryption_flag
+				}
+				custom_effect_tooltip = {
+					localization_key = bm_enhanced_cipher_project_cryption_tt
+					ICON = GFX_bm_cipher_icon
+					NAME = bm_sp_enhanced_cipher_technology_1
+					DESC = bm_sp_enhanced_cipher_technology_1_desc
+					STATS = tech_effect|bm_sp_enhanced_cipher_technology_1
+				}
+				hidden_effect = {
+					set_technology = {
+						bm_sp_enhanced_cipher_technology_1 = 1
+						popup = no
+					}
+				}
+			}
+			else = {
+				if = {
+					limit = {
+						has_country_flag = bm_enhanced_cipher_project_network_flag
+					}
+					custom_effect_tooltip = {
+						localization_key = bm_enhanced_cipher_project_network_tt
+						ICON = GFX_bm_network_icon
+						NAME = bm_sp_enhanced_cipher_technology_2
+						DESC = bm_sp_enhanced_cipher_technology_2_desc
+						STATS = tech_effect|bm_sp_enhanced_cipher_technology_2
+					}
+					hidden_effect = {
+						set_technology = {
+							bm_sp_enhanced_cipher_technology_2 = 1
+							popup = no
+						}
+					}
+				}
+				else = {
+					custom_effect_tooltip = {
+						localization_key = bm_enhanced_cipher_project_tt_choice
+						NAME_1 = bm_sp_enhanced_cipher_technology_1
+						NAME_2 = bm_sp_enhanced_cipher_technology_2
+					}
+					custom_effect_tooltip = bm_divider
+					custom_effect_tooltip = {
+						localization_key = bm_enhanced_cipher_project_cryption_tt
+						ICON = GFX_bm_cipher_icon
+						NAME = bm_sp_enhanced_cipher_technology_1
+						DESC = bm_sp_enhanced_cipher_technology_1_desc
+						STATS = tech_effect|bm_sp_enhanced_cipher_technology_1
+					}
+					custom_effect_tooltip = bm_divider
+					custom_effect_tooltip = {
+						localization_key = bm_enhanced_cipher_project_network_tt
+						ICON = GFX_bm_network_icon
+						NAME = bm_sp_enhanced_cipher_technology_2
+						DESC = bm_sp_enhanced_cipher_technology_2_desc
+						STATS = tech_effect|bm_sp_enhanced_cipher_technology_2
+					}
+					custom_effect_tooltip = bm_divider_2
+					custom_effect_tooltip = {
+						localization_key = bm_enhanced_cipher_project_tip_tt
+						TECH_1 = improved_computing_machine
+					}
+				}
+			}
+		}
+	}
+
+	unique_prototype_rewards = {
+		bm_enhanced_cipher_project_reward = {
+			fire_only_once = yes
+
+			threshold = {
+				min = 20
+				max = 100
+			}
+
+			force_reward_if_available = yes
+			weight = {
+				base = 1000.0
+			}
+
+			option = {
+				token = bm_enhanced_cipher_project_cryption_option
+
+				iteration_output = {
+					country_effects = {
+						set_country_flag = bm_enhanced_cipher_project_cryption_flag
+						custom_effect_tooltip = {
+							localization_key = bm_enhanced_cipher_project_cryption_tt
+							ICON = GFX_bm_cipher_icon
+							NAME = bm_sp_enhanced_cipher_technology_1
+							DESC = bm_sp_enhanced_cipher_technology_1_desc
+							STATS = tech_effect|bm_sp_enhanced_cipher_technology_1
+						}				
+					}
+				}				
+			}
+			option = {
+				token = bm_enhanced_cipher_project_network_option
+
+				iteration_output = {
+					country_effects = {
+						set_country_flag = bm_enhanced_cipher_project_network_flag
+						custom_effect_tooltip = {
+							localization_key = bm_enhanced_cipher_project_network_tt
+							ICON = GFX_bm_network_icon
+							NAME = bm_sp_enhanced_cipher_technology_2
+							DESC = bm_sp_enhanced_cipher_technology_2_desc
+							STATS = tech_effect|bm_sp_enhanced_cipher_technology_2
+						}		
+					}
+				}							
+			}
+		}
+	}
+}

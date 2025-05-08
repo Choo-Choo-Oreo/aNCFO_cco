@@ -6,6 +6,7 @@ mercantilism_civilian_factories = {
 		NOT = { has_global_flag = Artificers.GlobalIronShortage }
 	}
 	abort_when_not_enabled = yes
+
 	ai_strategy = {
 		type = building_target
 		id = industrial_complex
@@ -24,8 +25,13 @@ threat_military_factories_25 = {
 		num_of_military_factories < 25
 		threat > 0.25
 		NOT = { has_global_flag = Artificers.GlobalIronShortage }
+		AND = {
+			NOT = { has_war = yes }
+			has_manpower > 100000
+		}
 	}
 	abort_when_not_enabled = yes
+
 	ai_strategy = {
 		type = building_target
 		id = arms_factory
@@ -39,8 +45,13 @@ threat_military_factories_40 = {
 		num_of_military_factories < 40
 		threat > 0.40
 		NOT = { has_global_flag = Artificers.GlobalIronShortage }
+		AND = {
+			NOT = { has_war = yes }
+			has_manpower > 100000
+		}
 	}
 	abort_when_not_enabled = yes
+
 	ai_strategy = {
 		type = building_target
 		id = arms_factory
@@ -54,8 +65,13 @@ threat_military_factories_55 = {
 		num_of_military_factories < 55
 		threat > 0.55
 		NOT = { has_global_flag = Artificers.GlobalIronShortage }
+		AND = {
+			NOT = { has_war = yes }
+			has_manpower > 100000
+		}
 	}
 	abort_when_not_enabled = yes
+
 	ai_strategy = {
 		type = building_target
 		id = arms_factory
@@ -65,10 +81,9 @@ threat_military_factories_55 = {
 
 MRC_home_isles = {
 	allowed = { original_tag = MRC }
-	enable = {
-		always = yes
-	}
+	enable = { always = yes }
 	abort_when_not_enabled = yes
+
 	ai_strategy = {
 	    type = factory_build_score_factor
 	    target = 13
@@ -131,14 +146,106 @@ MRC_home_isles = {
 	}
 }
 
+MRC_recruitment = {
+	allowed = { original_tag = MRC }
+	enable = {
+		has_manpower < 200000
+		OR = {
+			has_contested_owner = 75
+			has_contested_owner = 335
+			75  = { NOT = { is_controlled_by = ROOT } }
+			335 = { NOT = { is_controlled_by = ROOT } }
+		}
+	}
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = build_building
+		id = barracks
+	    target = 13
+	    value = 999
+	}
+	ai_strategy = {
+		type = build_building
+		id = barracks
+	    target = 14
+	    value = 999
+	}
+	ai_strategy = {
+		type = build_building
+		id = barracks
+	    target = 15
+	    value = 999
+	}
+	ai_strategy = {
+		type = build_building
+		id = barracks
+	    target = 71
+	    value = 999
+	}
+	ai_strategy = {
+		type = build_building
+		id = barracks
+	    target = 72
+	    value = 999
+	}
+	ai_strategy = {
+		type = build_building
+		id = barracks
+	    target = 73
+	    value = 999
+	}
+	ai_strategy = {
+		type = build_building
+		id = barracks
+	    target = 240
+	    value = 999
+	}
+	ai_strategy = {
+		type = build_building
+		id = barracks
+	    target = 442
+	    value = 999
+	}
+	ai_strategy = {
+		type = build_building
+		id = barracks
+	    target = 443
+	    value = 999
+	}
+	ai_strategy = {
+		type = build_building
+		id = barracks
+	    target = 444
+	    value = 999
+	}
+	ai_strategy = {
+		type = build_building
+		id = barracks
+	    target = 445
+	    value = 999
+	}
+	ai_strategy = {
+		type = build_building
+		id = barracks
+	    target = 446
+	    value = 999
+	}
+}
+
 MRC_target_naval_production_0 = {
 	allowed = { original_tag = MRC }
 	enable = {
 		num_of_naval_factories < 20
 		date > 1726.01.01 # Don't do well building up.
 		NOT = { has_global_flag = Artificers.GlobalIronShortage }
+		AND = {
+			NOT = { has_war = yes }
+			has_manpower > 100000
+		}
 	}
 	abort_when_not_enabled = yes
+
 	ai_strategy = {
 		type = building_target
 		id = dockyard
@@ -152,8 +259,13 @@ MRC_target_naval_production_1 = {
 		num_of_naval_factories < 30
 		date > 1727.01.01 # Don't do well building up.
 		NOT = { has_global_flag = Artificers.GlobalIronShortage }
+		AND = {
+			NOT = { has_war = yes }
+			has_manpower > 100000
+		}
 	}
 	abort_when_not_enabled = yes
+
 	ai_strategy = {
 		type = building_target
 		id = dockyard
@@ -167,8 +279,13 @@ MRC_target_naval_production_2 = {
 		num_of_naval_factories < 40
 		date > 1728.01.01 # Don't do well building up.
 		NOT = { has_global_flag = Artificers.GlobalIronShortage }
+		AND = {
+			NOT = { has_war = yes }
+			has_manpower > 100000
+		}
 	}
 	abort_when_not_enabled = yes
+
 	ai_strategy = {
 		type = building_target
 		id = dockyard
@@ -184,6 +301,7 @@ MRC_stop_naval_production_0 = {
 		date > 1727.01.01 # Don't count this early.
 	}
 	abort_when_not_enabled = yes
+
 	ai_strategy = {
 		type = building_target
 		id = dockyard
@@ -196,8 +314,13 @@ MRC_match_enemy_naval_production_0 = {
 	enable = {
 		enemies_naval_strength_ratio > 0.1
 		num_of_military_factories > 25
+		AND = {
+			NOT = { has_war = yes }
+			has_manpower > 100000
+		}
 	}
 	abort_when_not_enabled = yes
+
 	ai_strategy = {
 		type = building_target
 		id = dockyard
@@ -210,8 +333,13 @@ MRC_match_enemy_naval_production_1 = {
 	enable = {
 		enemies_naval_strength_ratio > 0.2
 		num_of_military_factories > 25
+		AND = {
+			NOT = { has_war = yes }
+			has_manpower > 100000
+		}
 	}
 	abort_when_not_enabled = yes
+
 	ai_strategy = {
 		type = building_target
 		id = dockyard
@@ -224,8 +352,13 @@ MRC_match_enemy_naval_production_2 = {
 	enable = {
 		enemies_naval_strength_ratio > 0.3
 		num_of_military_factories > 25
+		AND = {
+			NOT = { has_war = yes }
+			has_manpower > 100000
+		}
 	}
 	abort_when_not_enabled = yes
+
 	ai_strategy = {
 		type = building_target
 		id = dockyard
@@ -238,8 +371,13 @@ MRC_match_enemy_naval_production_3 = {
 	enable = {
 		enemies_naval_strength_ratio > 0.4
 		num_of_military_factories > 25
+		AND = {
+			NOT = { has_war = yes }
+			has_manpower > 100000
+		}
 	}
 	abort_when_not_enabled = yes
+
 	ai_strategy = {
 		type = building_target
 		id = dockyard
@@ -252,8 +390,13 @@ MRC_match_enemy_naval_production_4 = {
 	enable = {
 		enemies_naval_strength_ratio > 0.5
 		num_of_military_factories > 25
+		AND = {
+			NOT = { has_war = yes }
+			has_manpower > 100000
+		}
 	}
 	abort_when_not_enabled = yes
+
 	ai_strategy = {
 		type = building_target
 		id = dockyard
@@ -266,8 +409,13 @@ MRC_match_enemy_naval_production_5 = {
 	enable = {
 		enemies_naval_strength_ratio > 0.6
 		num_of_military_factories > 40
+		AND = {
+			NOT = { has_war = yes }
+			has_manpower > 100000
+		}
 	}
 	abort_when_not_enabled = yes
+
 	ai_strategy = {
 		type = building_target
 		id = dockyard
@@ -280,8 +428,13 @@ MRC_match_enemy_naval_production_6 = {
 	enable = {
 		enemies_naval_strength_ratio > 0.7
 		num_of_military_factories > 40
+		AND = {
+			NOT = { has_war = yes }
+			has_manpower > 100000
+		}
 	}
 	abort_when_not_enabled = yes
+
 	ai_strategy = {
 		type = building_target
 		id = dockyard
@@ -294,8 +447,13 @@ MRC_match_enemy_naval_production_7 = {
 	enable = {
 		enemies_naval_strength_ratio > 0.8
 		num_of_military_factories > 40
+		AND = {
+			NOT = { has_war = yes }
+			has_manpower > 100000
+		}
 	}
 	abort_when_not_enabled = yes
+
 	ai_strategy = {
 		type = building_target
 		id = dockyard
@@ -308,8 +466,13 @@ MRC_match_enemy_naval_production_8 = {
 	enable = {
 		enemies_naval_strength_ratio > 0.9
 		num_of_military_factories > 40
+		AND = {
+			NOT = { has_war = yes }
+			has_manpower > 100000
+		}
 	}
 	abort_when_not_enabled = yes
+
 	ai_strategy = {
 		type = building_target
 		id = dockyard
@@ -322,8 +485,13 @@ MRC_match_enemy_naval_production_9 = {
 	enable = {
 		enemies_naval_strength_ratio > 1.0
 		num_of_military_factories > 40
+		AND = {
+			NOT = { has_war = yes }
+			has_manpower > 100000
+		}
 	}
 	abort_when_not_enabled = yes
+
 	ai_strategy = {
 		type = building_target
 		id = dockyard
@@ -334,6 +502,7 @@ MRC_match_enemy_naval_production_9 = {
 major_equipment_production = {
 	enable = { tag = MRC }
 	abort_when_not_enabled = yes
+	
 	ai_strategy = {
 		type = equipment_production_factor
 		id = fighter

@@ -1,0 +1,113 @@
+HHE_front_management_special_rush_minor = {
+    allowed = {
+        OR = {
+            TAG = HHE
+            TAG = HLF
+            TAG = HNO
+            TAG = HST
+        }
+    }
+    enable = {
+        OR = {
+            has_global_flag = HHE_warmonger_civil_war_final
+            AND = {
+                TAG = HHE
+                check_variable = { 183 > days_decision_timeout@mission_HHE_collapse_of_the_nation_civil_war_full }
+            }
+            TAG = HLF
+            TAG = HNO
+            TAG = HST
+        }
+        has_war = yes
+    }
+
+    abort_when_not_enabled = yes
+    
+    ai_strategy = {
+        type = front_control
+
+        country_trigger = { 
+            enemies_strength_ratio > 1.0
+            OR = {
+                # Minor Major
+                TAG = HER
+                TAG = HFF
+                TAG = HFR
+                TAG = HFS
+                TAG = HPG
+                TAG = HSP
+            }
+        }
+
+        priority = 150
+        ordertype = front
+        execution_type = rush
+        execute_order = yes
+        manual_attack = yes
+    }
+}
+
+HHE_front_management_special_rush_major = {
+    allowed = {
+        OR = {
+            TAG = HHE
+            TAG = HLF
+            TAG = HNO
+            TAG = HST
+        }
+    }
+    enable = {
+        OR = {
+            has_global_flag = HHE_warmonger_civil_war_final
+            OR = {
+                AND = {
+                    TAG = HHE
+                    HFF = {
+                        OR = {
+                            exists = no
+                            has_capitulated = yes
+                        }
+                    }
+                    HFR = {
+                        OR = {
+                            exists = no
+                            has_capitulated = yes
+                        }
+                    }
+                    HPG = {
+                        OR = {
+                            exists = no
+                            has_capitulated = yes
+                        }
+                    }
+                }
+                TAG = HLF
+                TAG = HNO
+                TAG = HST
+            }
+        }
+        has_war = yes
+    }
+
+    abort_when_not_enabled = yes
+    
+    ai_strategy = {
+        type = front_control
+
+        country_trigger = { 
+            enemies_strength_ratio > 1.0
+            OR = {
+                TAG = HHE
+                TAG = HLF
+                TAG = HNO
+                TAG = HST
+            }
+        }
+
+        priority = 135
+        ordertype = front
+        execution_type = rush_weak
+        execute_order = yes
+        manual_attack = yes
+    }
+}

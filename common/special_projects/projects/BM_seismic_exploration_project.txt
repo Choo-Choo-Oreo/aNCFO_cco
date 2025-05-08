@@ -1,0 +1,113 @@
+bm_seismic_exploration_project = {
+	specialization = specialization_land
+	icon = GFX_sp_seismic_exploration
+
+	breakthrough_cost = {
+		specialization_land = {
+			base = 1
+			modifier = {
+				add = -1
+				OR = {
+					has_tech = concentrated_industry5
+					has_tech = dispersed_industry5
+				}
+			}
+		}
+	}
+
+	resource_cost = {
+		resources = {
+			steel = 3
+			aluminium = 2
+			chromium = 2
+		}
+	}
+
+	ai_will_do = {
+		base = 1
+	}
+
+	prototype_time = 45
+	complexity = sp_complexity.small
+
+	available = {		
+		FROM = {
+			has_tech = excavation4
+		}
+	}
+
+	generic_prototype_rewards = {
+		bm_progress_reward_low
+		bm_progress_reward_medium
+		bm_progress_loss_low
+		bm_progress_loss_medium
+		bm_land_breakthrough_reward_low
+		bm_land_breakthrough_reward_medium
+		bm_land_scientist_xp_reward_low
+		bm_land_scientist_xp_reward_medium
+	}
+
+	project_output = {
+		country_effects = {
+			custom_effect_tooltip = {
+				localization_key = bm_seismic_exploration_project_tt
+				NAME = bm_seismic_exploration_dynamic_modifier
+				DESC = bm_seismic_exploration_dynamic_modifier_desc
+				ICON = GFX_bm_seismograph_icon
+			}
+			custom_effect_tooltip = bm_divider_2
+			add_dynamic_modifier = {
+				modifier = bm_seismic_exploration_dynamic_modifier
+			}
+			custom_effect_tooltip = bm_divider_2
+			custom_effect_tooltip = {
+				localization_key = bm_seismic_exploration_project_tip_tt
+				TECH_1 = concentrated_industry5
+				TECH_2 = dispersed_industry5
+			}
+		}
+	}
+
+	unique_prototype_rewards = {
+		bm_seismic_exploration_project_reward = {
+			fire_only_once = yes
+
+			threshold = {
+				min = 30
+				max = 90
+			}
+
+			weight = {
+				base = 1000
+			}
+
+			option = {
+				token = bm_seismic_exploration_project_reward_option
+
+				iteration_output = {
+					scientist_effects = {
+						if = {
+							limit = {
+								has_scientist_level = {
+									level < 3
+									specialization = specialization_land
+								}
+							}
+							random_list = {
+								50 = {
+									injure_scientist_for_days = 40
+								}
+								30 = {
+									injure_scientist_for_days = 20
+								}
+								30 = {
+									#No Effect
+								}
+							}
+						}						
+					}
+				}
+			}
+		}
+	}
+}

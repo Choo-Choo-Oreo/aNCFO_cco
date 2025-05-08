@@ -16,23 +16,53 @@ focus_tree = {
 	shared_focus = naval_effort
 	shared_focus = industrial_effort
 	shared_focus = political_effort
-	shared_focus = EPY_liming_conquest
+	shared_focus = EPY_annex_fenghuang
 	continuous_focus_position = { x = 50 y = 950 }
 }
 
 shared_focus = {
-	id = EPY_liming_conquest
+	id = EPY_annex_fenghuang
 	icon = GFX_
 	#prerequisite = { focus =  }
 	#mutually_exclusive = { focus =  }
 	#relative_position_id = 
-	x = 17
+	x = 16
 	y = 0
 
 	cost = 10
 
 	available = {
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		factor = 5
+	}
+
+	complete_tooltip = {
+	}
+	completion_reward = {
+		log = "[GetDateText]: [Root.GetName]: Focus EPY_liming_conquest"
+		declare_war_on = { type = annex_everything target = FGJ }
+		create_wargoal = { type = annex_everything target = FGJ expire = 0 }
+	}
+}
+
+shared_focus = {
+	id = EPY_liming_conquest
+	icon = GFX_
+	prerequisite = { focus = EPY_annex_fenghuang }
+	#mutually_exclusive = { focus =  }
+	#relative_position_id = 
+	x = 16
+	y = 1
+
+	cost = 10
+
+	available = {
 		date > 1728.01.01 # Year Month Day
+		has_war = no
 	}
 	bypass = {
 	}
