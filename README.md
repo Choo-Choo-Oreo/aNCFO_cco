@@ -76,6 +76,10 @@ Contributions are tracked in one of the following formats:
   - "Defensive Pacts" | *Oct 21, 2023*  
   - *(Other contributions in this collection are noted as “Not Used” where applicable.)*
 
+- **BiometricNuke - Baltona** - *Model Integrated*
+  [Warno - Baltona](https://steamcommunity.com/sharedfiles/filedetails/?id=3352254046)
+  [Heart of Iron - Baltona](https://steamcommunity.com/sharedfiles/filedetails/?id=3252134376)
+
 ---
 
 *This document is for internal tracking of imported code and assets. The legal license terms are maintained in the main LICENSE.md file.*
