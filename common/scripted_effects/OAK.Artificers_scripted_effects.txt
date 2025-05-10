@@ -67,6 +67,16 @@ Artificers_iron_crisis = {
 		} }
 		Artificers_iron_crisis_recovery = yes
 	}
+	else = {
+		custom_effect_tooltip = convert_building_steel_complex_to_resource_steel_tt
+		HIDDEN_EFFECT = { every_owned_state = {
+		        set_temp_variable = { steel_complex_count = building_level@steel_complex }
+		        remove_building = { type = steel_complex level = building_level@steel_complex }
+		        multiply_temp_variable = { steel_complex_count = 12 }
+		        add_resource = { type = steel amount = steel_complex_count }
+		        log = "[THIS.GetName] steel complex count: [?building_level@steel_complex]"
+		} }
+	}
 	if = {
 		limit = { has_idea = Artificers_idea_global_dwarven_iron_exports_0 }
 		swap_ideas = {
