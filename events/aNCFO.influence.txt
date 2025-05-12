@@ -6,7 +6,9 @@ country_event = {
 	desc = influence_events.0.d
 	picture = GFX_report_event_fascist_gathering
 	is_triggered_only = yes
+
 	immediate = { log = "[GetDateText]: [Root.GetName]: Event influence_events.0" }
+
 	option = { # Declined
 		name = influence_events.0.optA
 		FROM = { country_event = { id = influence_events.1 } }
@@ -33,7 +35,7 @@ country_event = {
 			}
 		}
 		IF = {
-			LIMIT = { tag = HHE }
+			LIMIT = { TAG = HHE }
 			FROM = {
 				set_country_flag = denied.ally_with_HHE
 				uncomplete_national_focus = {
@@ -44,7 +46,7 @@ country_event = {
 			}
 		}
 		IF = {
-			LIMIT = { tag = OAK }
+			LIMIT = { TAG = OAK }
 			FROM = {
 				set_country_flag = denied.ally_with_OAK
 				uncomplete_national_focus = {
@@ -55,7 +57,7 @@ country_event = {
 			}
 		}
 		IF = {
-			LIMIT = { tag = MRC }
+			LIMIT = { TAG = MRC }
 			FROM = {
 				set_country_flag = denied.ally_with_MRC
 				uncomplete_national_focus = {
@@ -92,16 +94,40 @@ country_event = {
 			}
 		}
 		IF = {
-			LIMIT = { tag = HHE }
+			LIMIT = { TAG = HHE }
 			FROM = { set_country_flag = accept.ally_with_HHE }
+			IF = {
+				LIMIT = { FROM = { TAG = TRH } }
+				goto_state = 25
+			}
+			IF = {
+				LIMIT = { FROM = { TAG = UEK } }
+				goto_state = 636
+			}
 		}
 		IF = {
-			LIMIT = { tag = OAK }
+			LIMIT = { TAG = OAK }
 			FROM = { set_country_flag = accept.ally_with_OAK }
+			IF = {
+				LIMIT = { FROM = { TAG = TRH } }
+				goto_state = 25
+			}
+			IF = {
+				LIMIT = { FROM = { TAG = UEK } }
+				goto_state = 636
+			}
 		}
 		IF = {
-			LIMIT = { tag = MRC }
+			LIMIT = { TAG = MRC }
 			FROM = { set_country_flag = accept.ally_with_MRC }
+			IF = {
+				LIMIT = { FROM = { TAG = TRH } }
+				goto_state = 25
+			}
+			IF = {
+				LIMIT = { FROM = { TAG = UEK } }
+				goto_state = 636
+			}
 		}
 	}
 }
@@ -112,20 +138,24 @@ country_event = { # Declined
 	desc = influence_events.1.d
 	picture = GFX_report_event_fascist_gathering
 	is_triggered_only = yes
+
 	immediate = { log = "[GetDateText]: [Root.GetName]: Event influence_events.1" }
+
 	option = {
 		name = influence_events.1.optA
 		ai_chance = { factor = 1 }
 	}
 }
 
-country_event = { # Accept
+country_event = { # Accepted
 	id = influence_events.2
 	title = influence_events.2.t
 	desc = influence_events.2.d
 	picture = GFX_report_event_fascist_gathering
 	is_triggered_only = yes
+
 	immediate = { log = "[GetDateText]: [Root.GetName]: Event influence_events.2" }
+
 	option = {
 		name = influence_events.2.optA
 		ai_chance = { factor = 1 }
