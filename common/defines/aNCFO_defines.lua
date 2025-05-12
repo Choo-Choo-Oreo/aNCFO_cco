@@ -131,9 +131,9 @@
 		NDefines.NPolitics.ARMY_LEADER_COST = 3					-- command power cost for recruiting new leaders, 'this value' * number_of_existing_leaders_of_type	
 		NDefines.NMilitary.RELIABILITY_WEATHER = 6.0			-- how much reliability is afffecting weather impact
 		NDefines.NMilitary.BASE_FORT_PENALTY = -0.10			-- fort penalty
-		NDefines.NMilitary.UNIT_UPKEEP_ATTRITION = 0.03 		--Constant attrition value applied to armies.
+		NDefines.NMilitary.UNIT_UPKEEP_ATTRITION = 0.03 		-- Constant attrition value applied to armies.
 
-		NDefines.NMilitary.ARMY_FUEL_COST_MULT = 0.250						-- fuel cost multiplier for all army related stuff
+		NDefines.NMilitary.ARMY_FUEL_COST_MULT = 0.250			-- fuel cost multiplier for all army related stuff
 
 	-- NAir
 		NDefines.NAir.AIR_WING_MAX_STATS_ATTACK = 1000 -- 10x higher than base.
@@ -144,13 +144,15 @@
 		NDefines.NAir.DETECT_CHANCE_FROM_RADARS = 0.60 -- 20% higher than base.
 		NDefines.NAir.DETECT_EFFICIENCY_FROM_RADAR = 0.84 -- 20% higher than base.
 
-		NDefines.NAir.FUEL_COST_MULT = 0.175								-- fuel multiplier for all air missions
+		NDefines.NAir.FUEL_COST_MULT = 0.175					-- fuel multiplier for all air missions
+
+		NDefines.NAir.MAX_QUICK_WING_SELECTION = 5				-- Max possible selection for airwing quick deploy
 
 	-- NNavy
 		NDefines.NNavy.MAX_CAPITALS_PER_AUTO_TASK_FORCE = 10
 		NDefines.NNavy.BEST_CAPITALS_TO_CARRIER_RATIO = 2
 
-		NDefines.NNavy.FUEL_COST_MULT = 0.100								-- fuel multiplier for all naval missions
+		NDefines.NNavy.FUEL_COST_MULT = 0.100					-- fuel multiplier for all naval missions
 
 	-- NRailwayGun
 
@@ -158,8 +160,8 @@
 		NDefines.NTrade.BASE_LAND_TRADE_RANGE = 200 -- 5x lower than base.
 
 	-- NAI
-		NDefines.NAI.WANTED_CARRIER_PLANES_PER_CARRIER_CAPACITY_FACTOR = 3.0 -- Scales how many carrier planes the AI want per carrier deck space.
-		NDefines.NAI.WANTED_CARRIER_PLANES_PER_CARRIER_CAPACITY_IN_PRODUCTION_FACTOR = 1.0 -- Scales how many carrier planes the AI want per deck space of carriers in production.
+		-- NDefines.NAI.WANTED_CARRIER_PLANES_PER_CARRIER_CAPACITY_FACTOR = 3.0 -- Scales how many carrier planes the AI want per carrier deck space.
+		-- NDefines.NAI.WANTED_CARRIER_PLANES_PER_CARRIER_CAPACITY_IN_PRODUCTION_FACTOR = 1.0 -- Scales how many carrier planes the AI want per deck space of carriers in production.
 
 		NDefines.NAI.RESEARCH_DAYS_BETWEEN_WEIGHT_UPDATE = 30 			-- Base 7
 
@@ -199,14 +201,14 @@
 		NDefines.NAI.AREA_DEFENSE_SETTING_RAILWAYS = false
 		NDefines.NAI.AREA_DEFENSE_SETTING_FACILITY = false
 
-		NDefines.NAI.CARRIER_TASKFORCE_MAX_CARRIER_COUNT = 10 			-- optimum carrier count for carrier taskforces
-		NDefines.NAI.CAPITAL_TASKFORCE_MAX_CAPITAL_COUNT = 100 			-- optimum capital count for capital taskforces
-		NDefines.NAI.SCREEN_TASKFORCE_MAX_SHIP_COUNT = 400				-- optimum screen count for screen taskforces
+		-- NDefines.NAI.CARRIER_TASKFORCE_MAX_CARRIER_COUNT = 10 			-- optimum carrier count for carrier taskforces
+		NDefines.NAI.CAPITAL_TASKFORCE_MAX_CAPITAL_COUNT = 60 			-- optimum capital count for capital taskforces
+		NDefines.NAI.SCREEN_TASKFORCE_MAX_SHIP_COUNT = 200				-- optimum screen count for screen taskforces
 		NDefines.NAI.SUB_TASKFORCE_MAX_SHIP_COUNT = 20 					-- optimum sub count for sub taskforces
 
 		NDefines.NAI.MIN_CAPITALS_FOR_CARRIER_TASKFORCE = 6				-- carrier fleets will at least have this amount of capitals
 		NDefines.NAI.CAPITALS_TO_CARRIER_RATIO = 1.0					-- capital to carrier count in carrier taskfoces
-		NDefines.NAI.SCREENS_TO_CAPITAL_RATIO = 6.0						-- screens to capital/carrier count in carrier & capital taskforces
+		-- NDefines.NAI.SCREENS_TO_CAPITAL_RATIO = 6.0						-- screens to capital/carrier count in carrier & capital taskforces
 		-- Optimization
 			NDefines.NAI.DIPLOMACY_ACCEPT_ATTACHE_BASE = 100
 			NDefines.NAI.DIPLOMACY_ACCEPT_ATTACHE_OPINION_TRASHHOLD = 0
@@ -570,7 +572,7 @@
 	NDefines.NAir.NAVAL_STRIKE_CARRIER_MULTIPLIER = 3.3
 	NDefines.NNavy.CARRIER_STACK_PENALTY = 10
 	NDefines.NNavy.CARRIER_STACK_PENALTY_EFFECT = 0.08
-	NDefines.NAI.CARRIER_TASKFORCE_MAX_CARRIER_COUNT = 10
+	-- NDefines.NAI.CARRIER_TASKFORCE_MAX_CARRIER_COUNT = 10
 
 
 	NDefines.NNavy.SUPREMACY_PER_SHIP_PER_MANPOWER = 0.05

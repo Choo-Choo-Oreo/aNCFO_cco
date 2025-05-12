@@ -107,6 +107,240 @@ HHE_fewer_factories_for_purchases_please = {
 	}
 }
 
+HHE_there_is_never_enough = {
+	allowed = { original_tag = HHE }
+	enable = {
+		check_variable = { num_divisions < 365 }
+		date < 1736.1.1
+		date > 1730.1.1
+	}
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = force_build_armies
+		value = 730
+	}
+
+	ai_strategy = {
+		type = build_army
+		id = infantry
+		value = 30
+	}
+
+	ai_strategy = {
+		type = build_army
+		id = garrison
+		value = 15
+	}
+}
+
+HHE_breakthough_attackers = {
+	allowed = { original_tag = HHE }
+	enable = {
+		check_variable = { num_divisions < 545 }
+		check_variable = { num_divisions > 365 }
+		date < 1736.1.1
+		date > 1732.1.1
+	}
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = force_build_armies
+		value = 365
+	}
+
+	ai_strategy = {
+		type = build_army
+		id = heavy_armor_role
+		value = 60
+	}
+
+	ai_strategy = {
+		type = build_army
+		id = armor
+		value = 60
+	}
+
+	ai_strategy = {
+		type = build_army
+		id = marine
+		value = 60
+	}
+}
+
+HRF_HUP_war_plan_MRC = {
+	allowed = {
+		OR = {
+			tag = HRF
+			tag = HUP
+		}
+	}
+	enable = {
+		is_in_faction_with = HHE
+		is_historical_focus_on = yes
+		MRC = { is_ai = no }
+		HHE = { is_ai = yes }
+	}
+
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = role_ratio
+		id = infantry
+		value = 100
+	}
+	ai_strategy = {
+		type = force_defend_ally_borders
+		value = 9999
+		id = "HHE"
+	}
+	ai_strategy = {
+		type = front_unit_request
+		tag = MRC
+		value = 100
+	}
+	ai_strategy = {
+		type = garrison
+		value = -9999
+	}
+	ai_strategy = {
+		type = front_unit_request
+		country_trigger = {
+			capital_scope = { is_on_continent = eruope }
+			NOT = { has_war_with = HHE }
+			NOT = { has_wargoal_against = HHE }
+			NOT = { is_justifying_wargoal_against = HHE } 
+			is_ai = yes
+		}
+		value = -100
+	}
+}
+
+HRF_HUP_war_plan_MJU = {
+	allowed = {
+		OR = {
+			tag = HRF
+			tag = HUP
+		}
+	}
+	enable = {
+		is_in_faction_with = HHE
+		is_historical_focus_on = yes
+		MJU = { is_ai = no }
+		HHE = { is_ai = yes }
+	}
+
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = role_ratio
+		id = infantry
+		value = 100
+	}
+
+	ai_strategy = {
+		type = force_defend_ally_borders
+		value = 9999
+		id = "HHE"
+	}
+
+	ai_strategy = {
+		type = front_unit_request
+		tag = MJU
+		value = 100
+	}
+
+	ai_strategy = {
+		type = garrison
+		value = -9999
+	}
+
+	ai_strategy = {
+		type = front_unit_request
+		country_trigger = {
+			capital_scope = { is_on_continent = eruope }
+			NOT = { has_war_with = HHE }
+			NOT = { has_wargoal_against = HHE }
+			NOT = { is_justifying_wargoal_against = HHE } 
+			is_ai = yes
+		}
+		value = -100
+	}
+}
+
+HHE_northern_thrust = {
+	allowed = { original_tag = HHE }
+	enable = {
+		has_completed_focus = HHE_warmonger_reconquer_northern_territories
+		OR = {
+			country_exists = HRF
+			country_exists = DOC
+			country_exists = REP
+		}
+	}
+	abort = {
+		NOT = {
+			country_exists = HRF
+			country_exists = DOC
+			country_exists = REP
+		}
+	}
+
+	ai_strategy = {
+		type = antagonize
+		id = "HRF"
+		value = 200
+	}
+	ai_strategy = {
+		type = antagonize
+		id = "DOC"
+		value = 150
+	}
+	ai_strategy = {
+		type = antagonize
+		id = "REP"
+		value = 100
+	}
+}
+
+HHE_claims_on_SMK = {
+	allowed = { original_tag = HHE }
+	enable = {
+		has_completed_focus = HHE_warmonger_secure_chromium_deposits
+		country_exists = SMK
+	}
+	abort = {
+		NOT = {
+			country_exists = SMK
+		}
+	}
+
+	ai_strategy = {
+		type = antagonize
+		id = "SMK"
+		value = 200
+	}
+}
+
+HHE_claims_on_KGK = {
+	allowed = { original_tag = HHE }
+	enable = {
+		has_completed_focus = HHE_warmonger_revenge_of_aktiburg
+		country_exists = KGK
+	}
+	abort = {
+		NOT = {
+			country_exists = KGK
+		}
+	}
+
+	ai_strategy = {
+		type = antagonize
+		id = "KGK"
+		value = 200
+	}
+}
+
 HHE_make_sure_MRC_is_ganked_before_we_move = {
 	allowed = { is_harmonainus_imperious = yes }
 	enable = {

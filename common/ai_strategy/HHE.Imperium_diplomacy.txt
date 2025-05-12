@@ -209,7 +209,7 @@ HHE_befriend_until_reintegration_HRF = {
 	enable = {
 		country_exists = HRF
 		NOT = { has_completed_focus = HHE_warmonger_reconquer_northern_territories }
-		has_global_flag = civilwar_victory_warmonger
+		has_completed_focus = HHE_warmonger_great_victory_parades
 	}
 	abort_when_not_enabled = yes
 
@@ -228,6 +228,13 @@ HHE_befriend_until_reintegration_HRF = {
 		id = "HRF"
 		value = 200
 	}
+
+	ai_strategy = {
+    	type = diplo_action_desire
+    	id = HRF
+    	value = 100
+    	target = send_volunteers
+	}
 }
 
 HHE_befriend_until_reintegration_HUP = {
@@ -235,7 +242,7 @@ HHE_befriend_until_reintegration_HUP = {
 	enable = {
 		country_exists = HUP
 		NOT = { has_completed_focus = HHE_warmonger_bifurcation_crusade }
-		has_global_flag = civilwar_victory_warmonger
+		has_completed_focus = HHE_warmonger_great_victory_parades
 	}
 	abort_when_not_enabled = yes
 
@@ -253,6 +260,64 @@ HHE_befriend_until_reintegration_HUP = {
 		type = protect
 		id = "HUP"
 		value = 200
+	}
+
+	ai_strategy = {
+    	type = diplo_action_desire
+    	id = HUP
+    	value = 100
+    	target = send_volunteers
+	}
+}
+
+HHE_befriend_until_reintegration_UFS = {
+	allowed = { original_tag = HHE }
+	enable = {
+		country_exists = UFS
+		NOT = { has_completed_focus = HHE_warmonger_trilateral_crusade }
+		has_global_flag = civilwar_victory_warmonger
+	}
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+	    type = ignore_claim
+	    id = UFS
+	    value = 1
+	}
+	ai_strategy = {
+		type = befriend
+		id = "UFS"
+		value = 200
+	}
+	ai_strategy = {
+		type = protect
+		id = "UFS"
+		value = 200
+	}
+
+	ai_strategy = {
+		type = alliance
+		id = "UFS"
+		value = -1000
+	}
+}
+
+HHE_UFS_neutrality_till_forced_not = {
+	allowed = { original_tag = UFS }
+	enable = {
+		country_exists = HHE
+		HHE = {
+			NOT = { has_completed_focus = HHE_warmonger_trilateral_crusade }
+			has_same_ideology = yes
+		}
+		has_global_flag = civilwar_victory_warmonger
+	}
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = alliance
+		id = "HHE"
+		value = -1000
 	}
 }
 

@@ -23,75 +23,7 @@ technologies = {
 	@column_9 = 18
 	@column_10 = 20
 
-gw_light_tank_chassis = { # Light Tanks
-	ai_will_do = {
-		factor = 2.5
-		modifier = {
-			factor = 2.00
-			is_major = yes
-		}
-	}
-
-	enable_equipments = {
-		light_tank_chassis_0
-		light_tank_destroyer_chassis_0
-		light_tank_artillery_chassis_0
-		light_tank_aa_chassis_0
-	}
-	enable_equipment_modules = {
-		tank_light_fixed_superstructure_turret
-	}
-	enable_subunits = {
-		light_armor
-	}
-	on_research_complete_limit = {
-		NOT = {	has_template_containing_unit = light_armor }
-		NOT = {	has_template_containing_unit = heavy_armor }
-		NOT = {	has_template_containing_unit = medium_armor }
-	}
-	on_research_complete = {
-		hidden_effect = {
-			if = {
-				limit = {
-					has_tech = motorised_infantry
-				}
-				load_oob = "unlock_tanks_mot"
-			}
-			if = {
-				limit = {
-					NOT = { has_tech = motorised_infantry }
-				}
-				load_oob = "unlock_tanks"
-			}
-		}
-		custom_effect_tooltip = UNLOCK_DIVISION_TEMPLATE
-	}
-
-	dependencies = {
-		tech_trucks = 1
-	}
-	path = {
-		leads_to_tech = basic_light_tank_chassis
-		research_cost_coeff = 1
-	}
-
-	research_cost = 2
-	start_year = 1724
-	folder = {
-		name = nsb_armour_folder
-		position = { x = @column_2 y = @1724 }
-	}
-
-	categories = {
-		armor
-		mio_cat_tech_all_armor_and_modules
-		cat_light_armor
-		mio_cat_tech_light_armor_and_modules
-	}
-	special_project_specialization = { specialization_land }
-}
-
-	basic_light_tank_chassis = { # Panzer I
+	gw_light_tank_chassis = { # Light Tanks
 		ai_will_do = {
 			factor = 2.5
 			modifier = {
@@ -101,12 +33,17 @@ gw_light_tank_chassis = { # Light Tanks
 		}
 
 		enable_equipments = {
-			light_tank_chassis_1
-			light_tank_destroyer_chassis_1
-			light_tank_artillery_chassis_1
-			light_tank_aa_chassis_1
+			light_tank_chassis_0
+			light_tank_destroyer_chassis_0
+			light_tank_artillery_chassis_0
+			light_tank_aa_chassis_0
 		}
-
+		enable_equipment_modules = {
+			tank_light_fixed_superstructure_turret
+		}
+		enable_subunits = {
+			light_armor
+		}
 		on_research_complete_limit = {
 			NOT = {	has_template_containing_unit = light_armor }
 			NOT = {	has_template_containing_unit = heavy_armor }
@@ -118,31 +55,31 @@ gw_light_tank_chassis = { # Light Tanks
 					limit = {
 						has_tech = motorised_infantry
 					}
-
 					load_oob = "unlock_tanks_mot"
 				}
 				if = {
 					limit = {
 						NOT = { has_tech = motorised_infantry }
 					}
-
 					load_oob = "unlock_tanks"
 				}
 			}
-
 			custom_effect_tooltip = UNLOCK_DIVISION_TEMPLATE
 		}
 
+		dependencies = {
+			tech_trucks = 1
+		}
 		path = {
-			leads_to_tech = improved_light_tank_chassis
+			leads_to_tech = basic_light_tank_chassis
 			research_cost_coeff = 1
 		}
 
 		research_cost = 2
-		start_year = 1730
+		start_year = 1724
 		folder = {
 			name = nsb_armour_folder
-			position = { x = @column_2 y = @1730 }
+			position = { x = @column_2 y = @1724 }
 		}
 
 		categories = {
@@ -154,212 +91,179 @@ gw_light_tank_chassis = { # Light Tanks
 		special_project_specialization = { specialization_land }
 	}
 
-	improved_light_tank_chassis = { # Panzer II
-		ai_will_do = {
-			factor = 0.5
-			modifier = {
-				factor = 2.00
-				is_major = yes
-			}
-		}
-
-		enable_equipments = {
-			light_tank_chassis_2
-			light_tank_destroyer_chassis_2
-			light_tank_artillery_chassis_2
-			light_tank_aa_chassis_2
-		}
-
-		path = {
-			leads_to_tech = advanced_light_tank_chassis
-			research_cost_coeff = 1
-		}
-
-		research_cost = 2
-		start_year = 1734
-
-		folder = {
-			name = nsb_armour_folder
-			position = { x = @column_2 y = @1734 }
-		}
-
-		categories = {
-			armor
-			mio_cat_tech_all_armor_and_modules
-			cat_light_armor
-			mio_cat_tech_light_armor_and_modules
-		}
-		special_project_specialization = { specialization_land }
-	}
-
-	advanced_light_tank_chassis = { # Leopard
-		ai_will_do = {
-			factor = 0.5
-			modifier = {
-				factor = 2.00
-				is_major = yes
-			}
-		}
-
-		enable_equipments = {
-			light_tank_chassis_3
-			light_tank_destroyer_chassis_3
-			light_tank_artillery_chassis_3
-			light_tank_aa_chassis_3
-		}
-
-		path = {
-			leads_to_tech = modern_light_tank_chassis
-			research_cost_coeff = 1
-		}
-
-		research_cost = 2
-		start_year = 1738
-
-		folder = {
-			name = nsb_armour_folder
-			position = { x = @column_2 y = @1738 }
-		}
-
-		categories = {
-			armor
-			mio_cat_tech_all_armor_and_modules
-			cat_light_armor
-			mio_cat_tech_light_armor_and_modules
-		}
-		special_project_specialization = { specialization_land }
-	}
-
-	modern_light_tank_chassis = { # Leopard
-		ai_will_do = {
-			factor = 0.5
-			modifier = {
-				factor = 2.00
-				is_major = yes
-			}
-		}
-
-		enable_equipments = {
-			light_tank_chassis_4
-			light_tank_destroyer_chassis_4
-			light_tank_artillery_chassis_4
-			light_tank_aa_chassis_4
-		}
-
-		research_cost = 2
-		start_year = 1748
-
-		folder = {
-			name = nsb_armour_folder
-			position = { x = @column_2 y = @1748 }
-		}
-
-		categories = {
-			armor
-			mio_cat_tech_all_armor_and_modules
-			cat_light_armor
-			mio_cat_tech_light_armor_and_modules
-		}
-		special_project_specialization = { specialization_land }
-	}
-
-gw_medium_tank_chassis = { # Medium Tanks
-	ai_will_do = {
-		factor = 2
-		modifier = {
-			add = 5
-			low_aircraft_focus_nation = yes
-		}
-		modifier = {
-			factor = 1.60
-			date > "1721.0.1"
-			low_aircraft_focus_nation = yes
-		}
-		modifier = {
-			add = 5
-			medium_aircraft_focus_nation = yes
-		}
-		modifier = {
-			factor = 2.0
-			date > "1716.6.1"
-			medium_aircraft_focus_nation = yes
-		}
-		modifier = {
-			add = 5
-			high_aircraft_focus_nation = yes
-		}
-		modifier = {
-			factor = 2.4
-			date > "1716.1.1"
-			high_aircraft_focus_nation = yes
-		}
-		modifier = {
-			factor = 4.00
-			is_major = yes
-		}
-	}
-
-	enable_equipments = {
-		medium_tank_chassis_0
-		medium_tank_destroyer_chassis_0
-		medium_tank_artillery_chassis_0
-		medium_tank_aa_chassis_0
-	}
-	enable_equipment_modules = {
-		tank_medium_fixed_superstructure_turret
-	}
-	enable_subunits = {
-		medium_armor
-	}
-	on_research_complete_limit = {
-		NOT = {	has_template_containing_unit = light_armor }
-		NOT = {	has_template_containing_unit = heavy_armor }
-		NOT = {	has_template_containing_unit = medium_armor }
-	}
-	on_research_complete = {
-		hidden_effect = {
-			if = {
-				limit = {
-					has_tech = motorised_infantry
+		basic_light_tank_chassis = { # Panzer I
+			ai_will_do = {
+				factor = 2.5
+				modifier = {
+					factor = 2.00
+					is_major = yes
 				}
-				load_oob = "unlock_tanks_mot"
 			}
-			if = {
-				limit = {
-					NOT = { has_tech = motorised_infantry }
+
+			enable_equipments = {
+				light_tank_chassis_1
+				light_tank_destroyer_chassis_1
+				light_tank_artillery_chassis_1
+				light_tank_aa_chassis_1
+			}
+
+			on_research_complete_limit = {
+				NOT = {	has_template_containing_unit = light_armor }
+				NOT = {	has_template_containing_unit = heavy_armor }
+				NOT = {	has_template_containing_unit = medium_armor }
+			}
+			on_research_complete = {
+				hidden_effect = {
+					if = {
+						limit = {
+							has_tech = motorised_infantry
+						}
+
+						load_oob = "unlock_tanks_mot"
+					}
+					if = {
+						limit = {
+							NOT = { has_tech = motorised_infantry }
+						}
+
+						load_oob = "unlock_tanks"
+					}
 				}
-				load_oob = "unlock_tanks"
+
+				custom_effect_tooltip = UNLOCK_DIVISION_TEMPLATE
 			}
+
+			path = {
+				leads_to_tech = improved_light_tank_chassis
+				research_cost_coeff = 1
+			}
+
+			research_cost = 2
+			start_year = 1730
+			folder = {
+				name = nsb_armour_folder
+				position = { x = @column_2 y = @1730 }
+			}
+
+			categories = {
+				armor
+				mio_cat_tech_all_armor_and_modules
+				cat_light_armor
+				mio_cat_tech_light_armor_and_modules
+			}
+			special_project_specialization = { specialization_land }
 		}
-		custom_effect_tooltip = UNLOCK_DIVISION_TEMPLATE
-	}
 
-	dependencies = {
-		tech_trucks = 1
-	}
-	path = {
-		leads_to_tech = basic_medium_tank_chassis
-		research_cost_coeff = 1
-	}
+		improved_light_tank_chassis = { # Panzer II
+			ai_will_do = {
+				factor = 0.5
+				modifier = {
+					factor = 2.00
+					is_major = yes
+				}
+			}
 
-	research_cost = 2
-	start_year = 1724
+			enable_equipments = {
+				light_tank_chassis_2
+				light_tank_destroyer_chassis_2
+				light_tank_artillery_chassis_2
+				light_tank_aa_chassis_2
+			}
 
-	folder = {
-		name = nsb_armour_folder
-		position = { x = @column_4 y = @1724 }
-	}
+			path = {
+				leads_to_tech = advanced_light_tank_chassis
+				research_cost_coeff = 1
+			}
 
-	categories = {
-		armor
-		mio_cat_tech_all_armor_and_modules
-		cat_medium_armor
-		mio_cat_tech_medium_armor_and_modules
-	}
-	special_project_specialization = { specialization_land }
-}
+			research_cost = 2
+			start_year = 1734
 
-	basic_medium_tank_chassis = { # Panzer III
+			folder = {
+				name = nsb_armour_folder
+				position = { x = @column_2 y = @1734 }
+			}
+
+			categories = {
+				armor
+				mio_cat_tech_all_armor_and_modules
+				cat_light_armor
+				mio_cat_tech_light_armor_and_modules
+			}
+			special_project_specialization = { specialization_land }
+		}
+
+		advanced_light_tank_chassis = { # Leopard
+			ai_will_do = {
+				factor = 0.5
+				modifier = {
+					factor = 2.00
+					is_major = yes
+				}
+			}
+
+			enable_equipments = {
+				light_tank_chassis_3
+				light_tank_destroyer_chassis_3
+				light_tank_artillery_chassis_3
+				light_tank_aa_chassis_3
+			}
+
+			path = {
+				leads_to_tech = modern_light_tank_chassis
+				research_cost_coeff = 1
+			}
+
+			research_cost = 2
+			start_year = 1738
+
+			folder = {
+				name = nsb_armour_folder
+				position = { x = @column_2 y = @1738 }
+			}
+
+			categories = {
+				armor
+				mio_cat_tech_all_armor_and_modules
+				cat_light_armor
+				mio_cat_tech_light_armor_and_modules
+			}
+			special_project_specialization = { specialization_land }
+		}
+
+		modern_light_tank_chassis = { # Leopard
+			ai_will_do = {
+				factor = 0.5
+				modifier = {
+					factor = 2.00
+					is_major = yes
+				}
+			}
+
+			enable_equipments = {
+				light_tank_chassis_4
+				light_tank_destroyer_chassis_4
+				light_tank_artillery_chassis_4
+				light_tank_aa_chassis_4
+			}
+
+			research_cost = 2
+			start_year = 1748
+
+			folder = {
+				name = nsb_armour_folder
+				position = { x = @column_2 y = @1748 }
+			}
+
+			categories = {
+				armor
+				mio_cat_tech_all_armor_and_modules
+				cat_light_armor
+				mio_cat_tech_light_armor_and_modules
+			}
+			special_project_specialization = { specialization_land }
+		}
+
+	gw_medium_tank_chassis = { # Medium Tanks
 		ai_will_do = {
 			factor = 2
 			modifier = {
@@ -368,7 +272,7 @@ gw_medium_tank_chassis = { # Medium Tanks
 			}
 			modifier = {
 				factor = 1.60
-				date > "1727.0.1"
+				date > "1721.0.1"
 				low_aircraft_focus_nation = yes
 			}
 			modifier = {
@@ -377,7 +281,7 @@ gw_medium_tank_chassis = { # Medium Tanks
 			}
 			modifier = {
 				factor = 2.0
-				date > "1720.6.1"
+				date > "1716.6.1"
 				medium_aircraft_focus_nation = yes
 			}
 			modifier = {
@@ -386,7 +290,7 @@ gw_medium_tank_chassis = { # Medium Tanks
 			}
 			modifier = {
 				factor = 2.4
-				date > "1720.1.1"
+				date > "1716.1.1"
 				high_aircraft_focus_nation = yes
 			}
 			modifier = {
@@ -396,13 +300,17 @@ gw_medium_tank_chassis = { # Medium Tanks
 		}
 
 		enable_equipments = {
-			medium_tank_chassis_1
-			medium_tank_destroyer_chassis_1
-			medium_tank_artillery_chassis_1
-			medium_tank_aa_chassis_1
+			medium_tank_chassis_0
+			medium_tank_destroyer_chassis_0
+			medium_tank_artillery_chassis_0
+			medium_tank_aa_chassis_0
 		}
-
-
+		enable_equipment_modules = {
+			tank_medium_fixed_superstructure_turret
+		}
+		enable_subunits = {
+			medium_armor
+		}
 		on_research_complete_limit = {
 			NOT = {	has_template_containing_unit = light_armor }
 			NOT = {	has_template_containing_unit = heavy_armor }
@@ -414,32 +322,32 @@ gw_medium_tank_chassis = { # Medium Tanks
 					limit = {
 						has_tech = motorised_infantry
 					}
-
 					load_oob = "unlock_tanks_mot"
 				}
 				if = {
 					limit = {
 						NOT = { has_tech = motorised_infantry }
 					}
-
 					load_oob = "unlock_tanks"
 				}
 			}
-
 			custom_effect_tooltip = UNLOCK_DIVISION_TEMPLATE
 		}
 
+		dependencies = {
+			tech_trucks = 1
+		}
 		path = {
-			leads_to_tech = improved_medium_tank_chassis
+			leads_to_tech = basic_medium_tank_chassis
 			research_cost_coeff = 1
 		}
 
 		research_cost = 2
-		start_year = 1730
+		start_year = 1724
 
 		folder = {
 			name = nsb_armour_folder
-			position = { x = @column_4 y = @1730 }
+			position = { x = @column_4 y = @1724 }
 		}
 
 		categories = {
@@ -451,9 +359,261 @@ gw_medium_tank_chassis = { # Medium Tanks
 		special_project_specialization = { specialization_land }
 	}
 
-	improved_medium_tank_chassis = { # Panzer IV
+		basic_medium_tank_chassis = { # Panzer III
+			ai_will_do = {
+				factor = 2
+				modifier = {
+					add = 5
+					low_aircraft_focus_nation = yes
+				}
+				modifier = {
+					factor = 1.60
+					date > "1727.0.1"
+					low_aircraft_focus_nation = yes
+				}
+				modifier = {
+					add = 5
+					medium_aircraft_focus_nation = yes
+				}
+				modifier = {
+					factor = 2.0
+					date > "1720.6.1"
+					medium_aircraft_focus_nation = yes
+				}
+				modifier = {
+					add = 5
+					high_aircraft_focus_nation = yes
+				}
+				modifier = {
+					factor = 2.4
+					date > "1720.1.1"
+					high_aircraft_focus_nation = yes
+				}
+				modifier = {
+					factor = 4.00
+					is_major = yes
+				}
+			}
+
+			enable_equipments = {
+				medium_tank_chassis_1
+				medium_tank_destroyer_chassis_1
+				medium_tank_artillery_chassis_1
+				medium_tank_aa_chassis_1
+			}
+
+
+			on_research_complete_limit = {
+				NOT = {	has_template_containing_unit = light_armor }
+				NOT = {	has_template_containing_unit = heavy_armor }
+				NOT = {	has_template_containing_unit = medium_armor }
+			}
+			on_research_complete = {
+				hidden_effect = {
+					if = {
+						limit = {
+							has_tech = motorised_infantry
+						}
+
+						load_oob = "unlock_tanks_mot"
+					}
+					if = {
+						limit = {
+							NOT = { has_tech = motorised_infantry }
+						}
+
+						load_oob = "unlock_tanks"
+					}
+				}
+
+				custom_effect_tooltip = UNLOCK_DIVISION_TEMPLATE
+			}
+
+			path = {
+				leads_to_tech = improved_medium_tank_chassis
+				research_cost_coeff = 1
+			}
+
+			research_cost = 2
+			start_year = 1730
+
+			folder = {
+				name = nsb_armour_folder
+				position = { x = @column_4 y = @1730 }
+			}
+
+			categories = {
+				armor
+				mio_cat_tech_all_armor_and_modules
+				cat_medium_armor
+				mio_cat_tech_medium_armor_and_modules
+			}
+			special_project_specialization = { specialization_land }
+		}
+
+		improved_medium_tank_chassis = { # Panzer IV
+			ai_will_do = {
+				factor = 2
+				modifier = {
+					add = 5
+					low_aircraft_focus_nation = yes
+				}
+				modifier = {
+					factor = 1.60
+					date > "1733.0.1"
+					low_aircraft_focus_nation = yes
+				}
+				modifier = {
+					add = 5
+					medium_aircraft_focus_nation = yes
+				}
+				modifier = {
+					factor = 2.0
+					date > "1730.6.1"
+					medium_aircraft_focus_nation = yes
+				}
+				modifier = {
+					add = 5
+					high_aircraft_focus_nation = yes
+				}
+				modifier = {
+					factor = 2.4
+					date > "1730.1.1"
+					high_aircraft_focus_nation = yes
+				}
+				modifier = {
+					factor = 4.00
+					is_major = yes
+				}
+			}
+
+			enable_equipments = {
+				medium_tank_chassis_2
+				medium_tank_destroyer_chassis_2
+				medium_tank_artillery_chassis_2
+				medium_tank_aa_chassis_2
+			}
+
+			path = {
+				leads_to_tech = advanced_medium_tank_chassis
+				research_cost_coeff = 1
+			}
+
+			research_cost = 2
+			start_year = 1734
+
+			folder = {
+				name = nsb_armour_folder
+				position = { x = @column_4 y = @1734 }
+			}
+
+			categories = {
+				armor
+				mio_cat_tech_all_armor_and_modules
+				cat_medium_armor
+				mio_cat_tech_medium_armor_and_modules
+			}
+			special_project_specialization = { specialization_land }
+		}
+
+		advanced_medium_tank_chassis = { # Panther
+			ai_will_do = {
+				factor = 2
+				modifier = {
+					add = 5
+					low_aircraft_focus_nation = yes
+				}
+				modifier = {
+					factor = 1.60
+					date > "1734.0.1"
+					low_aircraft_focus_nation = yes
+				}
+				modifier = {
+					add = 5
+					medium_aircraft_focus_nation = yes
+				}
+				modifier = {
+					factor = 2.0
+					date > "1730.6.1"
+					medium_aircraft_focus_nation = yes
+				}
+				modifier = {
+					add = 5
+					high_aircraft_focus_nation = yes
+				}
+				modifier = {
+					factor = 2.4
+					date > "1730.1.1"
+					high_aircraft_focus_nation = yes
+				}
+				modifier = {
+					factor = 4.00
+					is_major = yes
+				}
+			}
+
+			enable_equipments = {
+				medium_tank_chassis_3
+				medium_tank_destroyer_chassis_3
+				medium_tank_artillery_chassis_3
+				medium_tank_aa_chassis_3
+			}
+
+			path = {
+				leads_to_tech = main_battle_tank_chassis
+				research_cost_coeff = 1
+			}
+
+			research_cost = 2
+			start_year = 1738
+
+			folder = {
+				name = nsb_armour_folder
+				position = { x = @column_4 y = @1738 }
+			}
+
+			categories = {
+				armor
+				mio_cat_tech_all_armor_and_modules
+				cat_medium_armor
+				mio_cat_tech_medium_armor_and_modules
+			}
+			special_project_specialization = { specialization_land }
+		}
+
+	amphibious_tank_chassis = { # Amphibious Tanks
+
+		enable_equipments = {
+			amphibious_tank_chassis_1
+		}
+
+		enable_subunits = {
+			amphibious_armor
+		}
+
+		dependencies = {
+			amphibious_mechanized_infantry = 1
+		}
+
+		path = {
+			leads_to_tech = amphibious_drive
+			research_cost_coeff = 1
+		}
+
+		allow_branch = {
+			has_dlc = "Man the Guns"
+		}
+
+		research_cost = 2
+		start_year = 1736
+
+		folder = {
+			name = nsb_armour_folder
+			position = { x = @column_3 y = @1736 }
+		}
+
 		ai_will_do = {
-			factor = 2
+			factor = 1
 			modifier = {
 				add = 5
 				low_aircraft_focus_nation = yes
@@ -487,240 +647,6 @@ gw_medium_tank_chassis = { # Medium Tanks
 			}
 		}
 
-		enable_equipments = {
-			medium_tank_chassis_2
-			medium_tank_destroyer_chassis_2
-			medium_tank_artillery_chassis_2
-			medium_tank_aa_chassis_2
-		}
-
-		path = {
-			leads_to_tech = advanced_medium_tank_chassis
-			research_cost_coeff = 1
-		}
-
-		research_cost = 2
-		start_year = 1734
-
-		folder = {
-			name = nsb_armour_folder
-			position = { x = @column_4 y = @1734 }
-		}
-
-		categories = {
-			armor
-			mio_cat_tech_all_armor_and_modules
-			cat_medium_armor
-			mio_cat_tech_medium_armor_and_modules
-		}
-		special_project_specialization = { specialization_land }
-	}
-
-	advanced_medium_tank_chassis = { # Panther
-		ai_will_do = {
-			factor = 2
-			modifier = {
-				add = 5
-				low_aircraft_focus_nation = yes
-			}
-			modifier = {
-				factor = 1.60
-				date > "1734.0.1"
-				low_aircraft_focus_nation = yes
-			}
-			modifier = {
-				add = 5
-				medium_aircraft_focus_nation = yes
-			}
-			modifier = {
-				factor = 2.0
-				date > "1730.6.1"
-				medium_aircraft_focus_nation = yes
-			}
-			modifier = {
-				add = 5
-				high_aircraft_focus_nation = yes
-			}
-			modifier = {
-				factor = 2.4
-				date > "1730.1.1"
-				high_aircraft_focus_nation = yes
-			}
-			modifier = {
-				factor = 4.00
-				is_major = yes
-			}
-		}
-
-		enable_equipments = {
-			medium_tank_chassis_3
-			medium_tank_destroyer_chassis_3
-			medium_tank_artillery_chassis_3
-			medium_tank_aa_chassis_3
-		}
-
-		path = {
-			leads_to_tech = main_battle_tank_chassis
-			research_cost_coeff = 1
-		}
-
-		research_cost = 2
-		start_year = 1738
-
-		folder = {
-			name = nsb_armour_folder
-			position = { x = @column_4 y = @1738 }
-		}
-
-		categories = {
-			armor
-			mio_cat_tech_all_armor_and_modules
-			cat_medium_armor
-			mio_cat_tech_medium_armor_and_modules
-		}
-		special_project_specialization = { specialization_land }
-	}
-
-amphibious_tank_chassis = { # Amphibious Tanks
-
-	enable_equipments = {
-		amphibious_tank_chassis_1
-	}
-
-	enable_subunits = {
-		amphibious_armor
-	}
-
-	dependencies = {
-		amphibious_mechanized_infantry = 1
-	}
-
-	path = {
-		leads_to_tech = amphibious_drive
-		research_cost_coeff = 1
-	}
-
-	allow_branch = {
-		has_dlc = "Man the Guns"
-	}
-
-	research_cost = 2
-	start_year = 1736
-
-	folder = {
-		name = nsb_armour_folder
-		position = { x = @column_3 y = @1736 }
-	}
-
-	ai_will_do = {
-		factor = 1
-		modifier = {
-			add = 5
-			low_aircraft_focus_nation = yes
-		}
-		modifier = {
-			factor = 1.60
-			date > "1733.0.1"
-			low_aircraft_focus_nation = yes
-		}
-		modifier = {
-			add = 5
-			medium_aircraft_focus_nation = yes
-		}
-		modifier = {
-			factor = 2.0
-			date > "1730.6.1"
-			medium_aircraft_focus_nation = yes
-		}
-		modifier = {
-			add = 5
-			high_aircraft_focus_nation = yes
-		}
-		modifier = {
-			factor = 2.4
-			date > "1730.1.1"
-			high_aircraft_focus_nation = yes
-		}
-		modifier = {
-			factor = 4.00
-			is_major = yes
-		}
-	}
-
-	categories = {
-		armor
-		mio_cat_tech_all_armor_and_modules
-		cat_light_armor
-		mio_cat_tech_light_armor_and_modules
-	}
-	special_project_specialization = { specialization_land }
-}
-
-	amphibious_drive = { # SchwimmPanzer
-
-
-		enable_equipment_modules = {
-			amphibious_drive
-		}
-
-		enable_equipments = {
-			light_tank_amphibious_chassis_0
-			medium_tank_amphibious_chassis_0
-			heavy_tank_amphibious_chassis_0
-			light_tank_amphibious_chassis_1
-			medium_tank_amphibious_chassis_1
-			heavy_tank_amphibious_chassis_1
-			light_tank_amphibious_chassis_2
-			medium_tank_amphibious_chassis_2
-			heavy_tank_amphibious_chassis_2
-			light_tank_amphibious_chassis_3
-			medium_tank_amphibious_chassis_3
-			heavy_tank_amphibious_chassis_3
-		}
-
-		research_cost = 2
-		start_year = 1742
-
-		folder = {
-			name = nsb_armour_folder
-			position = { x = @column_3 y = @1742 }
-		}
-
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				add = 5
-				low_aircraft_focus_nation = yes
-			}
-			modifier = {
-				factor = 1.60
-				date > "1734.0.1"
-				low_aircraft_focus_nation = yes
-			}
-			modifier = {
-				add = 5
-				medium_aircraft_focus_nation = yes
-			}
-			modifier = {
-				factor = 2.0
-				date > "1730.6.1"
-				medium_aircraft_focus_nation = yes
-			}
-			modifier = {
-				add = 5
-				high_aircraft_focus_nation = yes
-			}
-			modifier = {
-				factor = 2.4
-				date > "1730.1.1"
-				high_aircraft_focus_nation = yes
-			}
-			modifier = {
-				factor = 4.00
-				is_major = yes
-			}
-		}
-
 		categories = {
 			armor
 			mio_cat_tech_all_armor_and_modules
@@ -730,76 +656,81 @@ amphibious_tank_chassis = { # Amphibious Tanks
 		special_project_specialization = { specialization_land }
 	}
 
-gw_heavy_tank_chassis = { # Heavy Tanks
-	ai_will_do = {
-		factor = 1
-		modifier = {
-			factor = 2.00
-			is_major = yes
-		}
-	}
+		amphibious_drive = { # SchwimmPanzer
 
-	enable_equipments = {
-		heavy_tank_chassis_0
-		heavy_tank_destroyer_chassis_0
-		heavy_tank_artillery_chassis_0
-		heavy_tank_aa_chassis_0
-	}
-	enable_equipment_modules = {
-		tank_heavy_fixed_superstructure_turret
-	}
-	enable_subunits = {
-		heavy_armor
-	}
-	on_research_complete_limit = {
-		NOT = {	has_template_containing_unit = light_armor }
-		NOT = {	has_template_containing_unit = heavy_armor }
-		NOT = {	has_template_containing_unit = medium_armor }
-	}
-	on_research_complete = {
-		hidden_effect = {
-			if = {
-				limit = {
-					has_tech = motorised_infantry
-				}
-				load_oob = "unlock_tanks_mot"
+
+			enable_equipment_modules = {
+				amphibious_drive
 			}
-			if = {
-				limit = {
-					NOT = { has_tech = motorised_infantry }
-				}
-				load_oob = "unlock_tanks"
+
+			enable_equipments = {
+				light_tank_amphibious_chassis_0
+				medium_tank_amphibious_chassis_0
+				heavy_tank_amphibious_chassis_0
+				light_tank_amphibious_chassis_1
+				medium_tank_amphibious_chassis_1
+				heavy_tank_amphibious_chassis_1
+				light_tank_amphibious_chassis_2
+				medium_tank_amphibious_chassis_2
+				heavy_tank_amphibious_chassis_2
+				light_tank_amphibious_chassis_3
+				medium_tank_amphibious_chassis_3
+				heavy_tank_amphibious_chassis_3
 			}
+
+			research_cost = 2
+			start_year = 1742
+
+			folder = {
+				name = nsb_armour_folder
+				position = { x = @column_3 y = @1742 }
+			}
+
+			ai_will_do = {
+				factor = 1
+				modifier = {
+					add = 5
+					low_aircraft_focus_nation = yes
+				}
+				modifier = {
+					factor = 1.60
+					date > "1734.0.1"
+					low_aircraft_focus_nation = yes
+				}
+				modifier = {
+					add = 5
+					medium_aircraft_focus_nation = yes
+				}
+				modifier = {
+					factor = 2.0
+					date > "1730.6.1"
+					medium_aircraft_focus_nation = yes
+				}
+				modifier = {
+					add = 5
+					high_aircraft_focus_nation = yes
+				}
+				modifier = {
+					factor = 2.4
+					date > "1730.1.1"
+					high_aircraft_focus_nation = yes
+				}
+				modifier = {
+					factor = 4.00
+					is_major = yes
+				}
+			}
+
+			categories = {
+				armor
+				mio_cat_tech_all_armor_and_modules
+				cat_light_armor
+				mio_cat_tech_light_armor_and_modules
+			}
+			special_project_specialization = { specialization_land }
 		}
-		custom_effect_tooltip = UNLOCK_DIVISION_TEMPLATE
-	}
 
-	dependencies = {
-		tech_trucks = 1
-	}
-	path = {
-		leads_to_tech = basic_heavy_tank_chassis
-		research_cost_coeff = 1
-	}
-
-	research_cost = 2
-	start_year = 1724
-
-	folder = {
-		name = nsb_armour_folder
-		position = { x = @column_6 y = @1724 }
-	}
-
-	categories = {
-		armor
-		mio_cat_tech_all_armor_and_modules
-		cat_heavy_armor
-		mio_cat_tech_heavy_armor_and_modules
-	}
-	special_project_specialization = { specialization_land }
-}
-
-	basic_heavy_tank_chassis = { # Grosstraktor
+	gw_heavy_tank_chassis = { # Heavy Tanks
 		ai_will_do = {
 			factor = 1
 			modifier = {
@@ -809,12 +740,17 @@ gw_heavy_tank_chassis = { # Heavy Tanks
 		}
 
 		enable_equipments = {
-			heavy_tank_chassis_1
-			heavy_tank_destroyer_chassis_1
-			heavy_tank_artillery_chassis_1
-			heavy_tank_aa_chassis_1
+			heavy_tank_chassis_0
+			heavy_tank_destroyer_chassis_0
+			heavy_tank_artillery_chassis_0
+			heavy_tank_aa_chassis_0
 		}
-
+		enable_equipment_modules = {
+			tank_heavy_fixed_superstructure_turret
+		}
+		enable_subunits = {
+			heavy_armor
+		}
 		on_research_complete_limit = {
 			NOT = {	has_template_containing_unit = light_armor }
 			NOT = {	has_template_containing_unit = heavy_armor }
@@ -826,32 +762,32 @@ gw_heavy_tank_chassis = { # Heavy Tanks
 					limit = {
 						has_tech = motorised_infantry
 					}
-
 					load_oob = "unlock_tanks_mot"
 				}
 				if = {
 					limit = {
 						NOT = { has_tech = motorised_infantry }
 					}
-
 					load_oob = "unlock_tanks"
 				}
 			}
-
 			custom_effect_tooltip = UNLOCK_DIVISION_TEMPLATE
 		}
 
+		dependencies = {
+			tech_trucks = 1
+		}
 		path = {
-			leads_to_tech = improved_heavy_tank_chassis
+			leads_to_tech = basic_heavy_tank_chassis
 			research_cost_coeff = 1
 		}
 
 		research_cost = 2
-		start_year = 1730
+		start_year = 1724
 
 		folder = {
 			name = nsb_armour_folder
-			position = { x = @column_6 y = @1730 }
+			position = { x = @column_6 y = @1724 }
 		}
 
 		categories = {
@@ -863,496 +799,194 @@ gw_heavy_tank_chassis = { # Heavy Tanks
 		special_project_specialization = { specialization_land }
 	}
 
-	improved_heavy_tank_chassis = { # Tiger
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				factor = 2.00
-				is_major = yes
+		basic_heavy_tank_chassis = { # Grosstraktor
+			ai_will_do = {
+				factor = 1
+				modifier = {
+					factor = 2.00
+					is_major = yes
+				}
 			}
+
+			enable_equipments = {
+				heavy_tank_chassis_1
+				heavy_tank_destroyer_chassis_1
+				heavy_tank_artillery_chassis_1
+				heavy_tank_aa_chassis_1
+			}
+
+			on_research_complete_limit = {
+				NOT = {	has_template_containing_unit = light_armor }
+				NOT = {	has_template_containing_unit = heavy_armor }
+				NOT = {	has_template_containing_unit = medium_armor }
+			}
+			on_research_complete = {
+				hidden_effect = {
+					if = {
+						limit = {
+							has_tech = motorised_infantry
+						}
+
+						load_oob = "unlock_tanks_mot"
+					}
+					if = {
+						limit = {
+							NOT = { has_tech = motorised_infantry }
+						}
+
+						load_oob = "unlock_tanks"
+					}
+				}
+
+				custom_effect_tooltip = UNLOCK_DIVISION_TEMPLATE
+			}
+
+			path = {
+				leads_to_tech = improved_heavy_tank_chassis
+				research_cost_coeff = 1
+			}
+
+			research_cost = 2
+			start_year = 1730
+
+			folder = {
+				name = nsb_armour_folder
+				position = { x = @column_6 y = @1730 }
+			}
+
+			categories = {
+				armor
+				mio_cat_tech_all_armor_and_modules
+				cat_heavy_armor
+				mio_cat_tech_heavy_armor_and_modules
+			}
+			special_project_specialization = { specialization_land }
 		}
+
+		improved_heavy_tank_chassis = { # Tiger
+			ai_will_do = {
+				factor = 1
+				modifier = {
+					factor = 2.00
+					is_major = yes
+				}
+			}
+
+			enable_equipments = {
+				heavy_tank_chassis_2
+				heavy_tank_destroyer_chassis_2
+				heavy_tank_artillery_chassis_2
+				heavy_tank_aa_chassis_2
+			}
+
+			path = {
+				leads_to_tech = advanced_heavy_tank_chassis
+				research_cost_coeff = 1
+			}
+
+			path = {
+				leads_to_tech = super_heavy_tank_chassis
+				research_cost_coeff = 1
+			}
+
+			research_cost = 2.5
+			start_year = 1734
+
+			folder = {
+				name = nsb_armour_folder
+				position = { x = @column_6 y = @1734 }
+			}
+
+			categories = {
+				armor
+				mio_cat_tech_all_armor_and_modules
+				cat_heavy_armor
+				mio_cat_tech_heavy_armor_and_modules
+			}
+			special_project_specialization = { specialization_land }
+		}
+
+		advanced_heavy_tank_chassis = { # King Tiger
+			ai_will_do = {
+				factor = 1
+				modifier = {
+					factor = 2.00
+					is_major = yes
+				}
+			}
+
+			enable_equipments = {
+				heavy_tank_chassis_3
+				heavy_tank_destroyer_chassis_3
+				heavy_tank_artillery_chassis_3
+				heavy_tank_aa_chassis_3
+			}
+
+			path = {
+				leads_to_tech = main_battle_tank_chassis
+				research_cost_coeff = 1
+			}
+
+			research_cost = 2.5
+			start_year = 1738
+
+			folder = {
+				name = nsb_armour_folder
+				position = { x = @column_6 y = @1738 }
+			}
+
+			categories = {
+				armor
+				mio_cat_tech_all_armor_and_modules
+				cat_heavy_armor
+				mio_cat_tech_heavy_armor_and_modules
+			}
+			special_project_specialization = { specialization_land }
+		}
+
+	super_heavy_tank_chassis = { # Maus
+		ai_will_do = { factor = 0 }
 
 		enable_equipments = {
-			heavy_tank_chassis_2
-			heavy_tank_destroyer_chassis_2
-			heavy_tank_artillery_chassis_2
-			heavy_tank_aa_chassis_2
+			super_heavy_tank_chassis_1
+			super_heavy_tank_destroyer_chassis_1
+			super_heavy_tank_artillery_chassis_1
+			super_heavy_tank_aa_chassis_1
 		}
 
-		path = {
-			leads_to_tech = advanced_heavy_tank_chassis
-			research_cost_coeff = 1
-		}
-
-		path = {
-			leads_to_tech = super_heavy_tank_chassis
-			research_cost_coeff = 1
-		}
-
-		research_cost = 2.5
-		start_year = 1734
-
-		folder = {
-			name = nsb_armour_folder
-			position = { x = @column_6 y = @1734 }
-		}
-
-		categories = {
-			armor
-			mio_cat_tech_all_armor_and_modules
-			cat_heavy_armor
-			mio_cat_tech_heavy_armor_and_modules
-		}
-		special_project_specialization = { specialization_land }
-	}
-
-	advanced_heavy_tank_chassis = { # King Tiger
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				factor = 2.00
-				is_major = yes
-			}
-		}
-
-		enable_equipments = {
-			heavy_tank_chassis_3
-			heavy_tank_destroyer_chassis_3
-			heavy_tank_artillery_chassis_3
-			heavy_tank_aa_chassis_3
-		}
-
-		path = {
-			leads_to_tech = main_battle_tank_chassis
-			research_cost_coeff = 1
-		}
-
-		research_cost = 2.5
-		start_year = 1738
-
-		folder = {
-			name = nsb_armour_folder
-			position = { x = @column_6 y = @1738 }
-		}
-
-		categories = {
-			armor
-			mio_cat_tech_all_armor_and_modules
-			cat_heavy_armor
-			mio_cat_tech_heavy_armor_and_modules
-		}
-		special_project_specialization = { specialization_land }
-	}
-
-super_heavy_tank_chassis = { # Maus
-	ai_will_do = { factor = 0 }
-
-	enable_equipments = {
-		super_heavy_tank_chassis_1
-		super_heavy_tank_destroyer_chassis_1
-		super_heavy_tank_artillery_chassis_1
-		super_heavy_tank_aa_chassis_1
-	}
-
-	enable_subunits = {
-		super_heavy_armor
-	}
-
-	enable_equipment_modules = {
-		tank_super_heavy_cannon
-	}
-
-	research_cost = 2.5
-	start_year = 1736
-	folder = {
-		name = nsb_armour_folder
-		position = { x = 17 y = @1736 }
-	}
-
-	path = {
-		leads_to_tech = sp_armored_lc_high_impact_obliterator_cannon_tech
-		research_cost_coeff = 1
-	}
-
-	path = {
-		leads_to_tech = sp_armored_lc_naval_engine_conversion_tech
-		research_cost_coeff = 1
-	}
-
-	path = {
-		leads_to_tech = sp_armored_lc_transmission_improvements_tech
-		research_cost_coeff = 1
-	}
-
-	path = {
-		leads_to_tech = sp_armored_lc_specialized_field_manuals_tech
-		research_cost_coeff = 1
-	}
-
-	categories = {
-		armor
-		mio_cat_tech_all_armor_and_modules
-		cat_heavy_armor
-		mio_cat_tech_heavy_armor_and_modules
-	}
-	special_project_specialization = { specialization_land }
-}
-
-	sp_armored_lc_naval_engine_conversion_tech = {
-		allow_branch = {
-			 has_dlc = "Gotterdammerung"
-		}
-
-		allow = {
-			ROOT = {
-				is_special_project_completed = sp:sp_land_land_cruiser
-			}
-		}
-
-		path = {
-			leads_to_tech = sp_armored_lc_weapon_fire_control_tech
-			research_cost_coeff = 1
-		}
-
-		is_special_project_tech = yes
-
-		land_cruiser = {
-			maximum_speed  = 0.05
-			supply_consumption  = -0.02
-		}
-
-		super_heavy_armor = {
-			maximum_speed  = 0.05
-			supply_consumption  = -0.02
-		}
-
-		research_cost = 1
-		start_year = 1738
-		
-		folder = {
-			name = nsb_armour_folder
-			position = { x = 15 y = @1738 }
-		}
-
-		folder = {
-			name = armour_folder
-			position = { x = 15 y = @1738 }
-		}
-
-		show_effect_as_desc = yes
-		ai_will_do = {
-			factor = 1
-
-			modifier = {
-				factor = 2
-				is_major = yes
-			}
-			modifier = {
-				has_war = yes
-				factor = 2
-			}
-
-			modifier = {
-				factor = 1.1
-				date > "1944.1.1"
-			}
-
-			modifier = {
-				factor = 1.1
-				date > "1945.1.1"
-			}
-		}
-
-		categories = {
-			armor
-			mio_cat_tech_all_armor_and_modules
-			cat_heavy_armor
-			mio_cat_tech_heavy_armor_and_modules
-		}
-		special_project_specialization = { specialization_land }
-	}
-
-	sp_armored_lc_transmission_improvements_tech = {
-		allow_branch = {
-			 has_dlc = "Gotterdammerung"
-		}
-
-		allow = {
-			ROOT = {
-				is_special_project_completed = sp:sp_land_land_cruiser
-			}
-		}
-
-		path = {
-			leads_to_tech = sp_armored_lc_weapon_fire_control_tech
-			research_cost_coeff = 1
-		}
-
-		is_special_project_tech = yes
-
-		land_cruiser = {
-			reliability = 0.05
-			supply_consumption = -0.02
-
-			forest = {
-				movement = 0.2
-			}
-			hills = {
-				movement = 0.2
-			}
-			mountain = 	{
-				movement = 0.2
-			}
-			jungle = {
-				movement = 0.2
-			}
-		}
-
-		super_heavy_armor = {
-			reliability = 0.05
-			supply_consumption = -0.02
-
-			forest = {
-				movement = 0.2
-			}
-			hills = {
-				movement = 0.2
-			}
-			mountain = 	{
-				movement = 0.2
-			}
-			jungle = {
-				movement = 0.2
-			}
-		}
-
-		research_cost = 1
-		start_year = 1738
-		
-		folder = {
-			name = nsb_armour_folder
-			position = { x = 17 y = @1738 }
-		}
-
-		folder = {
-			name = armour_folder
-			position = { x = 17 y = @1738 }
-		}
-
-		show_effect_as_desc = yes
-		ai_will_do = {
-			factor = 1
-
-			modifier = {
-				factor = 2
-				is_major = yes
-			}
-			modifier = {
-				has_war = yes
-				factor = 2
-			}
-
-			modifier = {
-				factor = 1.1
-				date > "1944.1.1"
-			}
-
-			modifier = {
-				factor = 1.1
-				date > "1945.1.1"
-			}
-		}
-
-		categories = {
-			armor
-			mio_cat_tech_all_armor_and_modules
-			cat_heavy_armor
-			mio_cat_tech_heavy_armor_and_modules
-		}
-		special_project_specialization = { specialization_land }
-	}
-
-	sp_armored_lc_specialized_field_manuals_tech = {
-		allow_branch = {
-			 has_dlc = "Gotterdammerung"
-		}
-
-		allow = {
-			ROOT = {
-				is_special_project_completed = sp:sp_land_land_cruiser
-			}
-		}
-
-		path = {
-			leads_to_tech = sp_armored_lc_weapon_fire_control_tech
-			research_cost_coeff = 1
-		}
-
-		is_special_project_tech = yes
-
-		land_cruiser = {
-			entrenchment = 0.05
-			max_strength = 0.05
-			max_organisation = 10
-		}
-
-		research_cost = 1
-		start_year = 1738
-		
-		folder = {
-			name = nsb_armour_folder
-			position = { x = 19 y = @1738 }
-		}
-
-		folder = {
-			name = armour_folder
-			position = { x = 19 y = @1738 }
-		}
-
-		show_effect_as_desc = yes
-		ai_will_do = {
-			factor = 1
-
-			modifier = {
-				factor = 2
-				is_major = yes
-			}
-			modifier = {
-				has_war = yes
-				factor = 2
-			}
-
-			modifier = {
-				factor = 1.1
-				date > "1944.1.1"
-			}
-
-			modifier = {
-				factor = 1.1
-				date > "1945.1.1"
-			}
-		}
-
-		categories = {
-			armor
-			mio_cat_tech_all_armor_and_modules
-			cat_heavy_armor
-			mio_cat_tech_heavy_armor_and_modules
-		}
-		special_project_specialization = { specialization_land }
-	}
-
-	sp_armored_lc_weapon_fire_control_tech = {
-		allow_branch = {
-			 has_dlc = "Gotterdammerung"
-		}
-
-		allow = {
-			ROOT = {
-				is_special_project_completed = sp:sp_land_land_cruiser
-			}
-		}
-
-		is_special_project_tech = yes
-
-		land_cruiser = {
-			breakthrough = 0.1
-			defense = 0.1
-		}
-
-		research_cost = 1
-		start_year = 1742
-		
-		folder = {
-			name = nsb_armour_folder
-			position = { x = 17 y = @1742 }
-		}
-
-		folder = {
-			name = armour_folder
-			position = { x = 17 y = @1742 }
-		}
-
-		show_effect_as_desc = yes
-		ai_will_do = {
-			factor = 1
-
-			modifier = {
-				factor = 2
-				is_major = yes
-			}
-			modifier = {
-				has_war = yes
-				factor = 2
-			}
-
-			modifier = {
-				factor = 1.1
-				date > "1944.1.1"
-			}
-
-			modifier = {
-				factor = 1.1
-				date > "1945.1.1"
-			}
-		}
-
-		categories = {
-			armor
-			mio_cat_tech_all_armor_and_modules
-			cat_heavy_armor
-			mio_cat_tech_heavy_armor_and_modules
-		}
-		special_project_specialization = { specialization_land }
-	}
-
-	sp_armored_lc_high_impact_obliterator_cannon_tech = {
-		allow_branch = {
-			 has_dlc = "Gotterdammerung"
-		}
-
-		allow = {
-			ROOT = {
-				is_special_project_completed = sp:sp_land_land_cruiser
-			}
-		}
-
-		is_special_project_tech = yes
-
-		research_cost = 1
-		start_year = 1738
-		
-		folder = {
-			name = nsb_armour_folder
-			position = { x = 21 y = @1738 }
+		enable_subunits = {
+			super_heavy_armor
 		}
 
 		enable_equipment_modules = {
-			lc_high_impact_obliterator_cannon			
+			tank_super_heavy_cannon
 		}
 
-		show_effect_as_desc = yes
-		ai_will_do = {
-			factor = 1
+		research_cost = 2.5
+		start_year = 1736
+		folder = {
+			name = nsb_armour_folder
+			position = { x = 17 y = @1736 }
+		}
 
-			modifier = {
-				factor = 2
-				is_major = yes
-			}
-			modifier = {
-				has_war = yes
-				factor = 2
-			}
+		path = {
+			leads_to_tech = sp_armored_lc_high_impact_obliterator_cannon_tech
+			research_cost_coeff = 1
+		}
 
-			modifier = {
-				factor = 1.1
-				date > "1944.1.1"
-			}
+		path = {
+			leads_to_tech = sp_armored_lc_naval_engine_conversion_tech
+			research_cost_coeff = 1
+		}
 
-			modifier = {
-				factor = 1.1
-				date > "1945.1.1"
-			}
+		path = {
+			leads_to_tech = sp_armored_lc_transmission_improvements_tech
+			research_cost_coeff = 1
+		}
+
+		path = {
+			leads_to_tech = sp_armored_lc_specialized_field_manuals_tech
+			research_cost_coeff = 1
 		}
 
 		categories = {
@@ -1364,79 +998,373 @@ super_heavy_tank_chassis = { # Maus
 		special_project_specialization = { specialization_land }
 	}
 
-main_battle_tank_chassis = { # Main Battle Tank
-	ai_will_do = {
-		factor = 2
-		modifier = {
-			add = 5
-			low_aircraft_focus_nation = yes
-		}
-		modifier = {
-			factor = 1.60
-			date > "1736.0.1"
-			low_aircraft_focus_nation = yes
-		}
-		modifier = {
-			add = 5
-			medium_aircraft_focus_nation = yes
-		}
-		modifier = {
-			factor = 2.0
-			date > "1737.6.1"
-			medium_aircraft_focus_nation = yes
-		}
-		modifier = {
-			add = 5
-			high_aircraft_focus_nation = yes
-		}
-		modifier = {
-			factor = 2.4
-			date > "1737.1.1"
-			high_aircraft_focus_nation = yes
-		}
-		modifier = {
-			factor = 2.00
-			is_major = yes
-		}
-	}
+		sp_armored_lc_naval_engine_conversion_tech = {
+			allow_branch = {
+				 has_dlc = "Gotterdammerung"
+			}
 
-	enable_equipments = {
-		modern_tank_chassis_1
-		modern_tank_destroyer_chassis_1
-		modern_tank_artillery_chassis_1
-		modern_tank_aa_chassis_1
-	}
-	enable_equipment_modules = {
-		tank_modern_tank_turret
-	}
-	enable_subunits = {
-		modern_armor
-	}
+			allow = {
+				ROOT = {
+					is_special_project_completed = sp:sp_land_land_cruiser
+				}
+			}
 
-	research_cost = 2.5
-	start_year = 1742
+			path = {
+				leads_to_tech = sp_armored_lc_weapon_fire_control_tech
+				research_cost_coeff = 1
+			}
 
-	folder = {
-		name = nsb_armour_folder
-		position = { x = @column_5 y = @1742 }
-	}
-	path = {
-		leads_to_tech = modern_main_battle_tank_chassis
-		research_cost_coeff = 1
-	}
+			is_special_project_tech = yes
 
-	categories = {
-		armor
-		mio_cat_tech_all_armor_and_modules
-		cat_medium_armor
-		mio_cat_tech_medium_armor_and_modules
-			cat_heavy_armor
-			mio_cat_tech_heavy_armor_and_modules
-	}
-	special_project_specialization = { specialization_land }
-}
+			land_cruiser = {
+				maximum_speed  = 0.05
+				supply_consumption  = -0.02
+			}
 
-	modern_main_battle_tank_chassis = {
+			super_heavy_armor = {
+				maximum_speed  = 0.05
+				supply_consumption  = -0.02
+			}
+
+			research_cost = 1
+			start_year = 1738
+			
+			folder = {
+				name = nsb_armour_folder
+				position = { x = 15 y = @1738 }
+			}
+
+			folder = {
+				name = armour_folder
+				position = { x = 15 y = @1738 }
+			}
+
+			show_effect_as_desc = yes
+			ai_will_do = {
+				factor = 1
+
+				modifier = {
+					factor = 2
+					is_major = yes
+				}
+				modifier = {
+					has_war = yes
+					factor = 2
+				}
+
+				modifier = {
+					factor = 1.1
+					date > "1944.1.1"
+				}
+
+				modifier = {
+					factor = 1.1
+					date > "1945.1.1"
+				}
+			}
+
+			categories = {
+				armor
+				mio_cat_tech_all_armor_and_modules
+				cat_heavy_armor
+				mio_cat_tech_heavy_armor_and_modules
+			}
+			special_project_specialization = { specialization_land }
+		}
+
+		sp_armored_lc_transmission_improvements_tech = {
+			allow_branch = {
+				 has_dlc = "Gotterdammerung"
+			}
+
+			allow = {
+				ROOT = {
+					is_special_project_completed = sp:sp_land_land_cruiser
+				}
+			}
+
+			path = {
+				leads_to_tech = sp_armored_lc_weapon_fire_control_tech
+				research_cost_coeff = 1
+			}
+
+			is_special_project_tech = yes
+
+			land_cruiser = {
+				reliability = 0.05
+				supply_consumption = -0.02
+
+				forest = {
+					movement = 0.2
+				}
+				hills = {
+					movement = 0.2
+				}
+				mountain = 	{
+					movement = 0.2
+				}
+				jungle = {
+					movement = 0.2
+				}
+			}
+
+			super_heavy_armor = {
+				reliability = 0.05
+				supply_consumption = -0.02
+
+				forest = {
+					movement = 0.2
+				}
+				hills = {
+					movement = 0.2
+				}
+				mountain = 	{
+					movement = 0.2
+				}
+				jungle = {
+					movement = 0.2
+				}
+			}
+
+			research_cost = 1
+			start_year = 1738
+			
+			folder = {
+				name = nsb_armour_folder
+				position = { x = 17 y = @1738 }
+			}
+
+			folder = {
+				name = armour_folder
+				position = { x = 17 y = @1738 }
+			}
+
+			show_effect_as_desc = yes
+			ai_will_do = {
+				factor = 1
+
+				modifier = {
+					factor = 2
+					is_major = yes
+				}
+				modifier = {
+					has_war = yes
+					factor = 2
+				}
+
+				modifier = {
+					factor = 1.1
+					date > "1944.1.1"
+				}
+
+				modifier = {
+					factor = 1.1
+					date > "1945.1.1"
+				}
+			}
+
+			categories = {
+				armor
+				mio_cat_tech_all_armor_and_modules
+				cat_heavy_armor
+				mio_cat_tech_heavy_armor_and_modules
+			}
+			special_project_specialization = { specialization_land }
+		}
+
+		sp_armored_lc_specialized_field_manuals_tech = {
+			allow_branch = {
+				 has_dlc = "Gotterdammerung"
+			}
+
+			allow = {
+				ROOT = {
+					is_special_project_completed = sp:sp_land_land_cruiser
+				}
+			}
+
+			path = {
+				leads_to_tech = sp_armored_lc_weapon_fire_control_tech
+				research_cost_coeff = 1
+			}
+
+			is_special_project_tech = yes
+
+			land_cruiser = {
+				entrenchment = 0.05
+				max_strength = 0.05
+				max_organisation = 10
+			}
+
+			research_cost = 1
+			start_year = 1738
+			
+			folder = {
+				name = nsb_armour_folder
+				position = { x = 19 y = @1738 }
+			}
+
+			folder = {
+				name = armour_folder
+				position = { x = 19 y = @1738 }
+			}
+
+			show_effect_as_desc = yes
+			ai_will_do = {
+				factor = 1
+
+				modifier = {
+					factor = 2
+					is_major = yes
+				}
+				modifier = {
+					has_war = yes
+					factor = 2
+				}
+
+				modifier = {
+					factor = 1.1
+					date > "1944.1.1"
+				}
+
+				modifier = {
+					factor = 1.1
+					date > "1945.1.1"
+				}
+			}
+
+			categories = {
+				armor
+				mio_cat_tech_all_armor_and_modules
+				cat_heavy_armor
+				mio_cat_tech_heavy_armor_and_modules
+			}
+			special_project_specialization = { specialization_land }
+		}
+
+		sp_armored_lc_weapon_fire_control_tech = {
+			allow_branch = {
+				 has_dlc = "Gotterdammerung"
+			}
+
+			allow = {
+				ROOT = {
+					is_special_project_completed = sp:sp_land_land_cruiser
+				}
+			}
+
+			is_special_project_tech = yes
+
+			land_cruiser = {
+				breakthrough = 0.1
+				defense = 0.1
+			}
+
+			research_cost = 1
+			start_year = 1742
+			
+			folder = {
+				name = nsb_armour_folder
+				position = { x = 17 y = @1742 }
+			}
+
+			folder = {
+				name = armour_folder
+				position = { x = 17 y = @1742 }
+			}
+
+			show_effect_as_desc = yes
+			ai_will_do = {
+				factor = 1
+
+				modifier = {
+					factor = 2
+					is_major = yes
+				}
+				modifier = {
+					has_war = yes
+					factor = 2
+				}
+
+				modifier = {
+					factor = 1.1
+					date > "1944.1.1"
+				}
+
+				modifier = {
+					factor = 1.1
+					date > "1945.1.1"
+				}
+			}
+
+			categories = {
+				armor
+				mio_cat_tech_all_armor_and_modules
+				cat_heavy_armor
+				mio_cat_tech_heavy_armor_and_modules
+			}
+			special_project_specialization = { specialization_land }
+		}
+
+		sp_armored_lc_high_impact_obliterator_cannon_tech = {
+			allow_branch = {
+				 has_dlc = "Gotterdammerung"
+			}
+
+			allow = {
+				ROOT = {
+					is_special_project_completed = sp:sp_land_land_cruiser
+				}
+			}
+
+			is_special_project_tech = yes
+
+			research_cost = 1
+			start_year = 1738
+			
+			folder = {
+				name = nsb_armour_folder
+				position = { x = 21 y = @1738 }
+			}
+
+			enable_equipment_modules = {
+				lc_high_impact_obliterator_cannon			
+			}
+
+			show_effect_as_desc = yes
+			ai_will_do = {
+				factor = 1
+
+				modifier = {
+					factor = 2
+					is_major = yes
+				}
+				modifier = {
+					has_war = yes
+					factor = 2
+				}
+
+				modifier = {
+					factor = 1.1
+					date > "1944.1.1"
+				}
+
+				modifier = {
+					factor = 1.1
+					date > "1945.1.1"
+				}
+			}
+
+			categories = {
+				armor
+				mio_cat_tech_all_armor_and_modules
+				cat_heavy_armor
+				mio_cat_tech_heavy_armor_and_modules
+			}
+			special_project_specialization = { specialization_land }
+		}
+
+	main_battle_tank_chassis = { # Main Battle Tank
 		ai_will_do = {
 			factor = 2
 			modifier = {
@@ -1445,7 +1373,7 @@ main_battle_tank_chassis = { # Main Battle Tank
 			}
 			modifier = {
 				factor = 1.60
-				date > "1738.0.1"
+				date > "1736.0.1"
 				low_aircraft_focus_nation = yes
 			}
 			modifier = {
@@ -1454,7 +1382,7 @@ main_battle_tank_chassis = { # Main Battle Tank
 			}
 			modifier = {
 				factor = 2.0
-				date > "1739.6.1"
+				date > "1737.6.1"
 				medium_aircraft_focus_nation = yes
 			}
 			modifier = {
@@ -1463,7 +1391,7 @@ main_battle_tank_chassis = { # Main Battle Tank
 			}
 			modifier = {
 				factor = 2.4
-				date > "1739.1.1"
+				date > "1737.1.1"
 				high_aircraft_focus_nation = yes
 			}
 			modifier = {
@@ -1473,18 +1401,28 @@ main_battle_tank_chassis = { # Main Battle Tank
 		}
 
 		enable_equipments = {
-			modern_tank_chassis_2
-			modern_tank_destroyer_chassis_2
-			modern_tank_artillery_chassis_2
-			modern_tank_aa_chassis_2
+			modern_tank_chassis_1
+			modern_tank_destroyer_chassis_1
+			modern_tank_artillery_chassis_1
+			modern_tank_aa_chassis_1
+		}
+		enable_equipment_modules = {
+			tank_modern_tank_turret
+		}
+		enable_subunits = {
+			modern_armor
 		}
 
 		research_cost = 2.5
-		start_year = 1748
+		start_year = 1742
 
 		folder = {
 			name = nsb_armour_folder
-			position = { x = @column_5 y = @1748 }
+			position = { x = @column_5 y = @1742 }
+		}
+		path = {
+			leads_to_tech = modern_main_battle_tank_chassis
+			research_cost_coeff = 1
 		}
 
 		categories = {
@@ -1492,385 +1430,75 @@ main_battle_tank_chassis = { # Main Battle Tank
 			mio_cat_tech_all_armor_and_modules
 			cat_medium_armor
 			mio_cat_tech_medium_armor_and_modules
-			cat_heavy_armor
-			mio_cat_tech_heavy_armor_and_modules
+				cat_heavy_armor
+				mio_cat_tech_heavy_armor_and_modules
 		}
 		special_project_specialization = { specialization_land }
 	}
-# Modules
-engine_tech_1 = {
-	ai_will_do = {
-		factor = 1
-		modifier = {
-			add = 15
-			wants_tank_chassis_research = yes
-		}
-		modifier = {
-			factor = 2.00
-			date > "1725.0.1"
-			wants_tank_chassis_research = yes
-		}
-		modifier = {
-			factor = 2.00
-			OR = { has_tech = gw_light_tank_chassis
-				has_tech = gw_medium_tank_chassis
-				has_tech = gw_heavy_tank_chassis
-			}
-		}
-		modifier = {
-			factor = -2.00
-			NOT = { OR = { has_tech = gw_light_tank_chassis
-				has_tech = gw_medium_tank_chassis
-				has_tech = gw_heavy_tank_chassis
-			} }
-		}
-		modifier = {
-			factor = 2.00
-			date > "1723.1.1"
-		}
-	}
 
-	path = {
-		leads_to_tech = engine_tech_2
-		research_cost_coeff = 1
-	}
-	on_research_complete = {
-		custom_effect_tooltip = engine_tech_1_tt
-	}
-	show_effect_as_desc = yes
-
-	xp_research_type = army
-	xp_boost_cost = 20
-	xp_research_bonus = 1.50
-	research_cost = 1
-	start_year = 1724
-	folder = {
-		name = nsb_armour_folder
-		position = { x = @column_0 y = @1724 }
-	}
-	dependencies = {
-		tech_trucks = 1
-	}
-
-	categories = {
-		armor
-		mio_cat_tech_all_armor_and_modules
-		mio_cat_tech_light_armor_and_modules
-		mio_cat_tech_medium_armor_and_modules
-		mio_cat_tech_heavy_armor_and_modules
-	}
-	special_project_specialization = { specialization_land }
-}
-
-	engine_tech_2 = {
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				add = 15
-				wants_tank_chassis_research = yes
-			}
-			modifier = {
-				factor = 2.00
-				date > "1724.0.1"
-				wants_tank_chassis_research = yes
-			}
-			modifier = {
-				factor = 2.00
-				OR = { has_tech = basic_light_tank_chassis
-					has_tech = basic_medium_tank_chassis
-					has_tech = basic_heavy_tank_chassis
+		modern_main_battle_tank_chassis = {
+			ai_will_do = {
+				factor = 2
+				modifier = {
+					add = 5
+					low_aircraft_focus_nation = yes
+				}
+				modifier = {
+					factor = 1.60
+					date > "1738.0.1"
+					low_aircraft_focus_nation = yes
+				}
+				modifier = {
+					add = 5
+					medium_aircraft_focus_nation = yes
+				}
+				modifier = {
+					factor = 2.0
+					date > "1739.6.1"
+					medium_aircraft_focus_nation = yes
+				}
+				modifier = {
+					add = 5
+					high_aircraft_focus_nation = yes
+				}
+				modifier = {
+					factor = 2.4
+					date > "1739.1.1"
+					high_aircraft_focus_nation = yes
+				}
+				modifier = {
+					factor = 2.00
+					is_major = yes
 				}
 			}
-			modifier = {
-				factor = -2.00
-				NOT = { OR = { has_tech = basic_light_tank_chassis
-					has_tech = basic_medium_tank_chassis
-					has_tech = basic_heavy_tank_chassis
-				} }
+
+			enable_equipments = {
+				modern_tank_chassis_2
+				modern_tank_destroyer_chassis_2
+				modern_tank_artillery_chassis_2
+				modern_tank_aa_chassis_2
 			}
-			modifier = {
-				factor = 2.00
-				date > "1729.1.1"
+
+			research_cost = 2.5
+			start_year = 1748
+
+			folder = {
+				name = nsb_armour_folder
+				position = { x = @column_5 y = @1748 }
 			}
-		}
 
-		path = {
-			leads_to_tech = engine_tech_3
-			research_cost_coeff = 1
-		}
-
-		on_research_complete = {
-			custom_effect_tooltip = engine_tech_2_tt
-		}
-		show_effect_as_desc = yes
-
-		xp_research_type = army
-		xp_boost_cost = 20
-		xp_research_bonus = 1.50
-		research_cost = 1
-		start_year = 1730
-		folder = {
-			name = nsb_armour_folder
-			position = { x = @column_0 y = @1730 }
-		}
-
-		categories = {
-			armor
-			mio_cat_tech_all_armor_and_modules
-			mio_cat_tech_light_armor_and_modules
-			mio_cat_tech_medium_armor_and_modules
-			mio_cat_tech_heavy_armor_and_modules
-		}
-		special_project_specialization = { specialization_land }
-	}
-
-	engine_tech_3 = {
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				add = 15
-				wants_tank_chassis_research = yes
+			categories = {
+				armor
+				mio_cat_tech_all_armor_and_modules
+				cat_medium_armor
+				mio_cat_tech_medium_armor_and_modules
+				cat_heavy_armor
+				mio_cat_tech_heavy_armor_and_modules
 			}
-			modifier = {
-				factor = 2.00
-				date > "1732.0.1"
-				wants_tank_chassis_research = yes
-			}
-			modifier = {
-				factor = 2.00
-				OR = { has_tech = improved_light_tank_chassis
-					has_tech = improved_medium_tank_chassis
-					has_tech = improved_heavy_tank_chassis
-				}
-			}
-			modifier = {
-				factor = -2.00
-				NOT = { OR = { has_tech = improved_light_tank_chassis
-					has_tech = improved_medium_tank_chassis
-					has_tech = improved_heavy_tank_chassis
-				} }
-			}
-			modifier = {
-				factor = 2.00
-				date > "1733.1.1"
-			}
+			special_project_specialization = { specialization_land }
 		}
-
-		path = {
-			leads_to_tech = engine_tech_4
-			research_cost_coeff = 1
-		}
-		on_research_complete = {
-			custom_effect_tooltip = engine_tech_3_tt
-		}
-		show_effect_as_desc = yes
-
-		xp_research_type = army
-		xp_boost_cost = 20
-		xp_research_bonus = 1.50
-		research_cost = 1
-		start_year = 1734
-		folder = {
-			name = nsb_armour_folder
-			position = { x = @column_0 y = @1734 }
-		}
-
-		categories = {
-			armor
-			mio_cat_tech_all_armor_and_modules
-			mio_cat_tech_light_armor_and_modules
-			mio_cat_tech_medium_armor_and_modules
-			mio_cat_tech_heavy_armor_and_modules
-		}
-		special_project_specialization = { specialization_land }
-	}
-
-	engine_tech_4 = {
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				add = 15
-				wants_tank_chassis_research = yes
-			}
-			modifier = {
-				factor = 2.00
-				date > "1737.0.1"
-				wants_tank_chassis_research = yes
-			}
-			modifier = {
-				factor = 2.00
-				OR = { has_tech = advanced_light_tank_chassis
-					has_tech = advanced_medium_tank_chassis
-					has_tech = advanced_heavy_tank_chassis
-				}
-			}
-			modifier = {
-				factor = -2.00
-				NOT = { OR = { has_tech = advanced_light_tank_chassis
-					has_tech = advanced_medium_tank_chassis
-					has_tech = advanced_heavy_tank_chassis
-				} }
-			}
-			modifier = {
-				factor = 2.00
-				date > "1737.1.1"
-			}
-		}
-
-		xp_research_type = army
-		xp_boost_cost = 20
-		xp_research_bonus = 1.50
-		research_cost = 1
-		start_year = 1738
-		folder = {
-			name = nsb_armour_folder
-			position = { x = @column_0 y = @1738 }
-		}
-		path = {
-			leads_to_tech = engine_tech_5
-			research_cost_coeff = 1
-		}
-		on_research_complete = {
-			custom_effect_tooltip = engine_tech_4_tt
-		}
-		show_effect_as_desc = yes
-
-		categories = {
-			armor
-			mio_cat_tech_all_armor_and_modules
-			mio_cat_tech_light_armor_and_modules
-			mio_cat_tech_medium_armor_and_modules
-			mio_cat_tech_heavy_armor_and_modules
-		}
-		special_project_specialization = { specialization_land }
-	}
-
-	engine_tech_5 = {
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				add = 15
-				wants_tank_chassis_research = yes
-			}
-			modifier = {
-				factor = 2.00
-				date > "1737.0.1"
-				wants_tank_chassis_research = yes
-			}
-			modifier = {
-				factor = 2.00
-				OR = { has_tech = modern_light_tank_chassis
-					has_tech = main_battle_tank_chassis
-					has_tech = modern_main_battle_tank_chassis
-				}
-			}
-			modifier = {
-				factor = -2.00
-				NOT = { OR = { has_tech = modern_light_tank_chassis
-					has_tech = main_battle_tank_chassis
-					has_tech = modern_main_battle_tank_chassis
-				} }
-			}
-			modifier = {
-				factor = 2.00
-				date > "1747.1.1"
-			}
-		}
-
-		xp_research_type = army
-		xp_boost_cost = 20
-		xp_research_bonus = 1.50
-		research_cost = 1
-		start_year = 1748
-		folder = {
-			name = nsb_armour_folder
-			position = { x = @column_0 y = @1748 }
-		}
-		on_research_complete = {
-			custom_effect_tooltip = engine_tech_5_tt
-		}
-		show_effect_as_desc = yes
-
-		categories = {
-			armor
-			mio_cat_tech_all_armor_and_modules
-			mio_cat_tech_light_armor_and_modules
-			mio_cat_tech_medium_armor_and_modules
-			mio_cat_tech_heavy_armor_and_modules
-		}
-		special_project_specialization = { specialization_land }
-	}
-
-armor_tech_1 = {
-	ai_will_do = {
-		factor = 1
-		modifier = {
-			add = 15
-			wants_tank_chassis_research = yes
-		}
-		modifier = {
-			factor = 2.00
-			date > "1725.0.1"
-			wants_tank_chassis_research = yes
-		}
-		modifier = {
-			factor = 2.00
-			OR = { has_tech = gw_light_tank_chassis
-				has_tech = gw_medium_tank_chassis
-				has_tech = gw_heavy_tank_chassis
-			}
-		}
-		modifier = {
-			factor = -2.00
-			NOT = { OR = { has_tech = gw_light_tank_chassis
-				has_tech = gw_medium_tank_chassis
-				has_tech = gw_heavy_tank_chassis
-			} }
-		}
-		modifier = {
-			factor = 2.00
-			date > "1723.1.1"
-		}
-	}
-
-	enable_equipment_modules = {
-		tank_cast_armor
-	}
-
-	path = {
-		leads_to_tech = armor_tech_2
-		research_cost_coeff = 1
-	}
-
-	on_research_complete = {
-		custom_effect_tooltip = armor_tech_1_tt
-	}
-	show_effect_as_desc = yes
-
-	xp_research_type = army
-	xp_boost_cost = 20
-	xp_research_bonus = 1.50
-	research_cost = 1
-	start_year = 1724
-	folder = {
-		name = nsb_armour_folder
-		position = { x = @column_1 y = @1724 }
-	}
-	dependencies = {
-		tech_trucks = 1
-	}
-
-	categories = {
-		armor
-		mio_cat_tech_all_armor_and_modules
-		mio_cat_tech_light_armor_and_modules
-		mio_cat_tech_medium_armor_and_modules
-		mio_cat_tech_heavy_armor_and_modules
-	}
-	special_project_specialization = { specialization_land }
-}
-
-	armor_tech_2 = {
+	# Modules
+	engine_tech_1 = {
 		ai_will_do = {
 			factor = 1
 			modifier = {
@@ -1884,31 +1512,30 @@ armor_tech_1 = {
 			}
 			modifier = {
 				factor = 2.00
-				OR = { has_tech = basic_light_tank_chassis
-					has_tech = basic_medium_tank_chassis
-					has_tech = basic_heavy_tank_chassis
+				OR = { has_tech = gw_light_tank_chassis
+					has_tech = gw_medium_tank_chassis
+					has_tech = gw_heavy_tank_chassis
 				}
 			}
 			modifier = {
 				factor = -2.00
-				NOT = { OR = { has_tech = basic_light_tank_chassis
-					has_tech = basic_medium_tank_chassis
-					has_tech = basic_heavy_tank_chassis
+				NOT = { OR = { has_tech = gw_light_tank_chassis
+					has_tech = gw_medium_tank_chassis
+					has_tech = gw_heavy_tank_chassis
 				} }
 			}
 			modifier = {
 				factor = 2.00
-				date > "1729.1.1"
+				date > "1723.1.1"
 			}
 		}
 
 		path = {
-			leads_to_tech = armor_tech_3
+			leads_to_tech = engine_tech_2
 			research_cost_coeff = 1
 		}
-
 		on_research_complete = {
-			custom_effect_tooltip = armor_tech_2_tt
+			custom_effect_tooltip = engine_tech_1_tt
 		}
 		show_effect_as_desc = yes
 
@@ -1916,10 +1543,13 @@ armor_tech_1 = {
 		xp_boost_cost = 20
 		xp_research_bonus = 1.50
 		research_cost = 1
-		start_year = 1730
+		start_year = 1724
 		folder = {
 			name = nsb_armour_folder
-			position = { x = @column_1 y = @1730 }
+			position = { x = @column_0 y = @1724 }
+		}
+		dependencies = {
+			tech_trucks = 1
 		}
 
 		categories = {
@@ -1932,453 +1562,246 @@ armor_tech_1 = {
 		special_project_specialization = { specialization_land }
 	}
 
-	armor_tech_3 = {
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				add = 15
-				wants_tank_chassis_research = yes
-			}
-			modifier = {
-				factor = 2.00
-				date > "1732.0.1"
-				wants_tank_chassis_research = yes
-			}
-			modifier = {
-				factor = 2.00
-				OR = { has_tech = improved_light_tank_chassis
-					has_tech = improved_medium_tank_chassis
-					has_tech = improved_heavy_tank_chassis
+		engine_tech_2 = {
+			ai_will_do = {
+				factor = 1
+				modifier = {
+					add = 15
+					wants_tank_chassis_research = yes
+				}
+				modifier = {
+					factor = 2.00
+					date > "1724.0.1"
+					wants_tank_chassis_research = yes
+				}
+				modifier = {
+					factor = 2.00
+					OR = { has_tech = basic_light_tank_chassis
+						has_tech = basic_medium_tank_chassis
+						has_tech = basic_heavy_tank_chassis
+					}
+				}
+				modifier = {
+					factor = -2.00
+					NOT = { OR = { has_tech = basic_light_tank_chassis
+						has_tech = basic_medium_tank_chassis
+						has_tech = basic_heavy_tank_chassis
+					} }
+				}
+				modifier = {
+					factor = 2.00
+					date > "1729.1.1"
 				}
 			}
-			modifier = {
-				factor = -2.00
-				NOT = { OR = { has_tech = improved_light_tank_chassis
-					has_tech = improved_medium_tank_chassis
-					has_tech = improved_heavy_tank_chassis
-				} }
+
+			path = {
+				leads_to_tech = engine_tech_3
+				research_cost_coeff = 1
 			}
-			modifier = {
-				factor = 2.00
-				date > "1733.1.1"
+
+			on_research_complete = {
+				custom_effect_tooltip = engine_tech_2_tt
 			}
-		}
+			show_effect_as_desc = yes
 
-		enable_equipment_modules = {
-			tank_welded_armor
-		}
-
-		path = {
-			leads_to_tech = armor_tech_4
-			research_cost_coeff = 1
-		}
-
-		on_research_complete = {
-			custom_effect_tooltip = armor_tech_3_tt
-		}
-		show_effect_as_desc = yes
-
-		xp_research_type = army
-		xp_boost_cost = 20
-		xp_research_bonus = 1.50
-		research_cost = 1
-		start_year = 1734
-		folder = {
-			name = nsb_armour_folder
-			position = { x = @column_1 y = @1734 }
-		}
-
-		categories = {
-			armor
-			mio_cat_tech_all_armor_and_modules
-			mio_cat_tech_light_armor_and_modules
-			mio_cat_tech_medium_armor_and_modules
-			mio_cat_tech_heavy_armor_and_modules
-		}
-		special_project_specialization = { specialization_land }
-	}
-
-	armor_tech_4 = {
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				add = 15
-				wants_tank_chassis_research = yes
+			xp_research_type = army
+			xp_boost_cost = 20
+			xp_research_bonus = 1.50
+			research_cost = 1
+			start_year = 1730
+			folder = {
+				name = nsb_armour_folder
+				position = { x = @column_0 y = @1730 }
 			}
-			modifier = {
-				factor = 2.00
-				date > "1737.0.1"
-				wants_tank_chassis_research = yes
+
+			categories = {
+				armor
+				mio_cat_tech_all_armor_and_modules
+				mio_cat_tech_light_armor_and_modules
+				mio_cat_tech_medium_armor_and_modules
+				mio_cat_tech_heavy_armor_and_modules
 			}
-			modifier = {
-				factor = 2.00
-				OR = { has_tech = advanced_light_tank_chassis
-					has_tech = advanced_medium_tank_chassis
-					has_tech = advanced_heavy_tank_chassis
+			special_project_specialization = { specialization_land }
+		}
+
+		engine_tech_3 = {
+			ai_will_do = {
+				factor = 1
+				modifier = {
+					add = 15
+					wants_tank_chassis_research = yes
+				}
+				modifier = {
+					factor = 2.00
+					date > "1732.0.1"
+					wants_tank_chassis_research = yes
+				}
+				modifier = {
+					factor = 2.00
+					OR = { has_tech = improved_light_tank_chassis
+						has_tech = improved_medium_tank_chassis
+						has_tech = improved_heavy_tank_chassis
+					}
+				}
+				modifier = {
+					factor = -2.00
+					NOT = { OR = { has_tech = improved_light_tank_chassis
+						has_tech = improved_medium_tank_chassis
+						has_tech = improved_heavy_tank_chassis
+					} }
+				}
+				modifier = {
+					factor = 2.00
+					date > "1733.1.1"
 				}
 			}
-			modifier = {
-				factor = -2.00
-				NOT = { OR = { has_tech = advanced_light_tank_chassis
-					has_tech = advanced_medium_tank_chassis
-					has_tech = advanced_heavy_tank_chassis
-				} }
+
+			path = {
+				leads_to_tech = engine_tech_4
+				research_cost_coeff = 1
 			}
-			modifier = {
-				factor = 2.00
-				date > "1737.1.1"
+			on_research_complete = {
+				custom_effect_tooltip = engine_tech_3_tt
 			}
-		}
+			show_effect_as_desc = yes
 
-		enable_equipment_modules = {
-			armor_skirts
-		}
-
-		xp_research_type = army
-		xp_boost_cost = 20
-		xp_research_bonus = 1.50
-		research_cost = 1
-		start_year = 1738
-		folder = {
-			name = nsb_armour_folder
-			position = { x = @column_1 y = @1738 }
-		}
-		path = {
-			leads_to_tech = armor_tech_5
-			research_cost_coeff = 1
-		}
-
-		on_research_complete = {
-			custom_effect_tooltip = armor_tech_4_tt
-		}
-		show_effect_as_desc = yes
-
-		categories = {
-			armor
-			mio_cat_tech_all_armor_and_modules
-			mio_cat_tech_light_armor_and_modules
-			mio_cat_tech_medium_armor_and_modules
-			mio_cat_tech_heavy_armor_and_modules
-		}
-		special_project_specialization = { specialization_land }
-	}
-
-	armor_tech_5 = {
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				add = 15
-				wants_tank_chassis_research = yes
+			xp_research_type = army
+			xp_boost_cost = 20
+			xp_research_bonus = 1.50
+			research_cost = 1
+			start_year = 1734
+			folder = {
+				name = nsb_armour_folder
+				position = { x = @column_0 y = @1734 }
 			}
-			modifier = {
-				factor = 2.00
-				date > "1737.0.1"
-				wants_tank_chassis_research = yes
+
+			categories = {
+				armor
+				mio_cat_tech_all_armor_and_modules
+				mio_cat_tech_light_armor_and_modules
+				mio_cat_tech_medium_armor_and_modules
+				mio_cat_tech_heavy_armor_and_modules
 			}
-			modifier = {
-				factor = 2.00
-				OR = { has_tech = modern_light_tank_chassis
-					has_tech = main_battle_tank_chassis
-					has_tech = modern_main_battle_tank_chassis
+			special_project_specialization = { specialization_land }
+		}
+
+		engine_tech_4 = {
+			ai_will_do = {
+				factor = 1
+				modifier = {
+					add = 15
+					wants_tank_chassis_research = yes
+				}
+				modifier = {
+					factor = 2.00
+					date > "1737.0.1"
+					wants_tank_chassis_research = yes
+				}
+				modifier = {
+					factor = 2.00
+					OR = { has_tech = advanced_light_tank_chassis
+						has_tech = advanced_medium_tank_chassis
+						has_tech = advanced_heavy_tank_chassis
+					}
+				}
+				modifier = {
+					factor = -2.00
+					NOT = { OR = { has_tech = advanced_light_tank_chassis
+						has_tech = advanced_medium_tank_chassis
+						has_tech = advanced_heavy_tank_chassis
+					} }
+				}
+				modifier = {
+					factor = 2.00
+					date > "1737.1.1"
 				}
 			}
-			modifier = {
-				factor = -2.00
-				NOT = { OR = { has_tech = modern_light_tank_chassis
-					has_tech = main_battle_tank_chassis
-					has_tech = modern_main_battle_tank_chassis
-				} }
+
+			xp_research_type = army
+			xp_boost_cost = 20
+			xp_research_bonus = 1.50
+			research_cost = 1
+			start_year = 1738
+			folder = {
+				name = nsb_armour_folder
+				position = { x = @column_0 y = @1738 }
 			}
-			modifier = {
-				factor = 2.00
-				date > "1747.1.1"
+			path = {
+				leads_to_tech = engine_tech_5
+				research_cost_coeff = 1
 			}
-		}
-
-		xp_research_type = army
-		xp_boost_cost = 20
-		xp_research_bonus = 1.50
-		research_cost = 1
-		start_year = 1748
-		folder = {
-			name = nsb_armour_folder
-			position = { x = @column_1 y = @1748 }
-		}
-
-		on_research_complete = {
-			custom_effect_tooltip = armor_tech_5_tt
-		}
-		show_effect_as_desc = yes
-
-		categories = {
-			armor
-			mio_cat_tech_all_armor_and_modules
-			mio_cat_tech_light_armor_and_modules
-			mio_cat_tech_medium_armor_and_modules
-			mio_cat_tech_heavy_armor_and_modules
-		}
-		special_project_specialization = { specialization_land }
-	}
-
-turret_tech_1 = {
-	ai_will_do = {
-		factor = 1
-		modifier = {
-			add = 15
-			wants_tank_chassis_research = yes
-		}
-		modifier = {
-			factor = 2.00
-			date > "1725.0.1"
-			wants_tank_chassis_research = yes
-		}
-		modifier = {
-			factor = 2.00
-			OR = { has_tech = gw_light_tank_chassis
-				has_tech = gw_medium_tank_chassis
-				has_tech = gw_heavy_tank_chassis
+			on_research_complete = {
+				custom_effect_tooltip = engine_tech_4_tt
 			}
-		}
-		modifier = {
-			factor = -2.00
-			NOT = { OR = { has_tech = gw_light_tank_chassis
-				has_tech = gw_medium_tank_chassis
-				has_tech = gw_heavy_tank_chassis
-			} }
-		}
-		modifier = {
-			factor = 2.00
-			date > "1723.1.1"
-		}
-	}
+			show_effect_as_desc = yes
 
-	enable_equipment_modules = {
-		tank_light_one_man_tank_turret
-		tank_medium_one_man_tank_turret
-	}
-
-	path = {
-		leads_to_tech = turret_tech_2
-		research_cost_coeff = 1
-	}
-
-	xp_research_type = army
-	xp_boost_cost = 20
-	xp_research_bonus = 1.50
-	research_cost = 1
-	start_year = 1724
-	folder = {
-		name = nsb_armour_folder
-		position = { x = @column_3 y = @1724 }
-	}
-	dependencies = {
-		tech_trucks = 1
-	}
-
-	categories = {
-		armor
-		mio_cat_tech_all_armor_and_modules
-		mio_cat_tech_light_armor_and_modules
-		mio_cat_tech_medium_armor_and_modules
-		mio_cat_tech_heavy_armor_and_modules
-	}
-	special_project_specialization = { specialization_land }
-}
-
-	turret_tech_2 = {
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				add = 15
-				wants_tank_chassis_research = yes
+			categories = {
+				armor
+				mio_cat_tech_all_armor_and_modules
+				mio_cat_tech_light_armor_and_modules
+				mio_cat_tech_medium_armor_and_modules
+				mio_cat_tech_heavy_armor_and_modules
 			}
-			modifier = {
-				factor = 2.00
-				date > "1724.0.1"
-				wants_tank_chassis_research = yes
-			}
-			modifier = {
-				factor = 2.00
-				OR = { has_tech = basic_light_tank_chassis
-					has_tech = basic_medium_tank_chassis
-					has_tech = basic_heavy_tank_chassis
+			special_project_specialization = { specialization_land }
+		}
+
+		engine_tech_5 = {
+			ai_will_do = {
+				factor = 1
+				modifier = {
+					add = 15
+					wants_tank_chassis_research = yes
+				}
+				modifier = {
+					factor = 2.00
+					date > "1737.0.1"
+					wants_tank_chassis_research = yes
+				}
+				modifier = {
+					factor = 2.00
+					OR = { has_tech = modern_light_tank_chassis
+						has_tech = main_battle_tank_chassis
+						has_tech = modern_main_battle_tank_chassis
+					}
+				}
+				modifier = {
+					factor = -2.00
+					NOT = { OR = { has_tech = modern_light_tank_chassis
+						has_tech = main_battle_tank_chassis
+						has_tech = modern_main_battle_tank_chassis
+					} }
+				}
+				modifier = {
+					factor = 2.00
+					date > "1747.1.1"
 				}
 			}
-			modifier = {
-				factor = -2.00
-				NOT = { OR = { has_tech = basic_light_tank_chassis
-					has_tech = basic_medium_tank_chassis
-					has_tech = basic_heavy_tank_chassis
-				} }
+
+			xp_research_type = army
+			xp_boost_cost = 20
+			xp_research_bonus = 1.50
+			research_cost = 1
+			start_year = 1748
+			folder = {
+				name = nsb_armour_folder
+				position = { x = @column_0 y = @1748 }
 			}
-			modifier = {
-				factor = 2.00
-				date > "1729.1.1"
+			on_research_complete = {
+				custom_effect_tooltip = engine_tech_5_tt
 			}
-		}
+			show_effect_as_desc = yes
 
-		enable_equipment_modules = {
-			tank_light_two_man_tank_turret
-			tank_medium_two_man_tank_turret
-			tank_heavy_two_man_tank_turret	
-			tank_super_heavy_three_man_tank_turret
-			strobe_sight
-		}
-
-		path = {
-			leads_to_tech = turret_tech_3
-			research_cost_coeff = 1
-		}
-
-		xp_research_type = army
-		xp_boost_cost = 20
-		xp_research_bonus = 1.50
-		research_cost = 1
-		start_year = 1730
-		folder = {
-			name = nsb_armour_folder
-			position = { x = @column_3 y = @1730 }
-		}
-
-		categories = {
-			armor
-			mio_cat_tech_all_armor_and_modules
-			mio_cat_tech_light_armor_and_modules
-			mio_cat_tech_medium_armor_and_modules
-			mio_cat_tech_heavy_armor_and_modules
-		}
-		special_project_specialization = { specialization_land }
-	}
-
-	turret_tech_3 = {
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				add = 15
-				wants_tank_chassis_research = yes
+			categories = {
+				armor
+				mio_cat_tech_all_armor_and_modules
+				mio_cat_tech_light_armor_and_modules
+				mio_cat_tech_medium_armor_and_modules
+				mio_cat_tech_heavy_armor_and_modules
 			}
-			modifier = {
-				factor = 2.00
-				date > "1732.0.1"
-				wants_tank_chassis_research = yes
-			}
-			modifier = {
-				factor = 2.00
-				OR = { has_tech = improved_light_tank_chassis
-					has_tech = improved_medium_tank_chassis
-					has_tech = improved_heavy_tank_chassis
-				}
-			}
-			modifier = {
-				factor = -2.00
-				NOT = { OR = { has_tech = improved_light_tank_chassis
-					has_tech = improved_medium_tank_chassis
-					has_tech = improved_heavy_tank_chassis
-				} }
-			}
-			modifier = {
-				factor = 2.00
-				date > "1733.1.1"
-			}
+			special_project_specialization = { specialization_land }
 		}
 
-		enable_equipment_modules = {
-			tank_light_three_man_tank_turret
-			tank_medium_three_man_tank_turret
-			tank_heavy_three_man_tank_turret
-			tank_super_heavy_four_man_tank_turret
-		}
-
-		xp_research_type = army
-		xp_boost_cost = 20
-		xp_research_bonus = 1.50
-		research_cost = 1
-		start_year = 1734
-		folder = {
-			name = nsb_armour_folder
-			position = { x = @column_3 y = @1734 }
-		}
-
-		categories = {
-			armor
-			mio_cat_tech_all_armor_and_modules
-			mio_cat_tech_light_armor_and_modules
-			mio_cat_tech_medium_armor_and_modules
-			mio_cat_tech_heavy_armor_and_modules
-		}
-		special_project_specialization = { specialization_land }
-	}
-
-modules_tech_1 = {
-	ai_will_do = {
-		factor = 1
-		modifier = {
-			add = 15
-			wants_tank_chassis_research = yes
-		}
-		modifier = {
-			factor = 2.00
-			date > "1725.0.1"
-			wants_tank_chassis_research = yes
-		}
-		modifier = {
-			factor = 2.00
-			OR = { has_tech = gw_light_tank_chassis
-				has_tech = gw_medium_tank_chassis
-				has_tech = gw_heavy_tank_chassis
-			}
-		}
-		modifier = {
-			factor = -2.00
-			NOT = { OR = { has_tech = gw_light_tank_chassis
-				has_tech = gw_medium_tank_chassis
-				has_tech = gw_heavy_tank_chassis
-			} }
-		}
-		modifier = {
-			factor = 2.00
-			date > "1723.1.1"
-		}
-	}
-
-	enable_equipment_modules = {
-		extra_ammo_storage
-		smoke_launchers
-	}
-
-	allow_branch = {
-		has_dlc = "No Step Back"	
-	}
-
-	xp_research_type = army
-	xp_boost_cost = 20
-	xp_research_bonus = 1.50
-	research_cost = 0.5
-	start_year = 1724
-	folder = {
-		name = nsb_armour_folder
-		position = { x = @column_5 y = @1724 }
-	}
-	dependencies = {
-		tech_trucks = 1
-	}
-
-	path = {
-		leads_to_tech = modules_tech_2
-		research_cost_coeff = 1
-	}	
-
-	categories = {
-		armor
-		mio_cat_tech_all_armor_and_modules
-		mio_cat_tech_light_armor_and_modules
-		mio_cat_tech_medium_armor_and_modules
-		mio_cat_tech_heavy_armor_and_modules
-	}
-	special_project_specialization = { specialization_land }
-}
-
-	modules_tech_2 = {
+	armor_tech_1 = {
 		ai_will_do = {
 			factor = 1
 			modifier = {
@@ -2392,40 +1815,556 @@ modules_tech_1 = {
 			}
 			modifier = {
 				factor = 2.00
-				OR = { has_tech = basic_light_tank_chassis
-					has_tech = basic_medium_tank_chassis
-					has_tech = basic_heavy_tank_chassis
+				OR = { has_tech = gw_light_tank_chassis
+					has_tech = gw_medium_tank_chassis
+					has_tech = gw_heavy_tank_chassis
 				}
 			}
 			modifier = {
 				factor = -2.00
-				NOT = { OR = { has_tech = basic_light_tank_chassis
-					has_tech = basic_medium_tank_chassis
-					has_tech = basic_heavy_tank_chassis
+				NOT = { OR = { has_tech = gw_light_tank_chassis
+					has_tech = gw_medium_tank_chassis
+					has_tech = gw_heavy_tank_chassis
 				} }
 			}
 			modifier = {
 				factor = 2.00
-				date > "1729.1.1"
+				date > "1723.1.1"
 			}
+		}
+
+		enable_equipment_modules = {
+			tank_cast_armor
+		}
+
+		path = {
+			leads_to_tech = armor_tech_2
+			research_cost_coeff = 1
+		}
+
+		on_research_complete = {
+			custom_effect_tooltip = armor_tech_1_tt
+		}
+		show_effect_as_desc = yes
+
+		xp_research_type = army
+		xp_boost_cost = 20
+		xp_research_bonus = 1.50
+		research_cost = 1
+		start_year = 1724
+		folder = {
+			name = nsb_armour_folder
+			position = { x = @column_1 y = @1724 }
+		}
+		dependencies = {
+			tech_trucks = 1
+		}
+
+		categories = {
+			armor
+			mio_cat_tech_all_armor_and_modules
+			mio_cat_tech_light_armor_and_modules
+			mio_cat_tech_medium_armor_and_modules
+			mio_cat_tech_heavy_armor_and_modules
+		}
+		special_project_specialization = { specialization_land }
+	}
+
+		armor_tech_2 = {
+			ai_will_do = {
+				factor = 1
+				modifier = {
+					add = 15
+					wants_tank_chassis_research = yes
+				}
+				modifier = {
+					factor = 2.00
+					date > "1725.0.1"
+					wants_tank_chassis_research = yes
+				}
+				modifier = {
+					factor = 2.00
+					OR = { has_tech = basic_light_tank_chassis
+						has_tech = basic_medium_tank_chassis
+						has_tech = basic_heavy_tank_chassis
+					}
+				}
+				modifier = {
+					factor = -2.00
+					NOT = { OR = { has_tech = basic_light_tank_chassis
+						has_tech = basic_medium_tank_chassis
+						has_tech = basic_heavy_tank_chassis
+					} }
+				}
+				modifier = {
+					factor = 2.00
+					date > "1729.1.1"
+				}
+			}
+
+			path = {
+				leads_to_tech = armor_tech_3
+				research_cost_coeff = 1
+			}
+
+			on_research_complete = {
+				custom_effect_tooltip = armor_tech_2_tt
+			}
+			show_effect_as_desc = yes
+
+			xp_research_type = army
+			xp_boost_cost = 20
+			xp_research_bonus = 1.50
+			research_cost = 1
+			start_year = 1730
+			folder = {
+				name = nsb_armour_folder
+				position = { x = @column_1 y = @1730 }
+			}
+
+			categories = {
+				armor
+				mio_cat_tech_all_armor_and_modules
+				mio_cat_tech_light_armor_and_modules
+				mio_cat_tech_medium_armor_and_modules
+				mio_cat_tech_heavy_armor_and_modules
+			}
+			special_project_specialization = { specialization_land }
+		}
+
+		armor_tech_3 = {
+			ai_will_do = {
+				factor = 1
+				modifier = {
+					add = 15
+					wants_tank_chassis_research = yes
+				}
+				modifier = {
+					factor = 2.00
+					date > "1732.0.1"
+					wants_tank_chassis_research = yes
+				}
+				modifier = {
+					factor = 2.00
+					OR = { has_tech = improved_light_tank_chassis
+						has_tech = improved_medium_tank_chassis
+						has_tech = improved_heavy_tank_chassis
+					}
+				}
+				modifier = {
+					factor = -2.00
+					NOT = { OR = { has_tech = improved_light_tank_chassis
+						has_tech = improved_medium_tank_chassis
+						has_tech = improved_heavy_tank_chassis
+					} }
+				}
+				modifier = {
+					factor = 2.00
+					date > "1733.1.1"
+				}
+			}
+
+			enable_equipment_modules = {
+				tank_welded_armor
+			}
+
+			path = {
+				leads_to_tech = armor_tech_4
+				research_cost_coeff = 1
+			}
+
+			on_research_complete = {
+				custom_effect_tooltip = armor_tech_3_tt
+			}
+			show_effect_as_desc = yes
+
+			xp_research_type = army
+			xp_boost_cost = 20
+			xp_research_bonus = 1.50
+			research_cost = 1
+			start_year = 1734
+			folder = {
+				name = nsb_armour_folder
+				position = { x = @column_1 y = @1734 }
+			}
+
+			categories = {
+				armor
+				mio_cat_tech_all_armor_and_modules
+				mio_cat_tech_light_armor_and_modules
+				mio_cat_tech_medium_armor_and_modules
+				mio_cat_tech_heavy_armor_and_modules
+			}
+			special_project_specialization = { specialization_land }
+		}
+
+		armor_tech_4 = {
+			ai_will_do = {
+				factor = 1
+				modifier = {
+					add = 15
+					wants_tank_chassis_research = yes
+				}
+				modifier = {
+					factor = 2.00
+					date > "1737.0.1"
+					wants_tank_chassis_research = yes
+				}
+				modifier = {
+					factor = 2.00
+					OR = { has_tech = advanced_light_tank_chassis
+						has_tech = advanced_medium_tank_chassis
+						has_tech = advanced_heavy_tank_chassis
+					}
+				}
+				modifier = {
+					factor = -2.00
+					NOT = { OR = { has_tech = advanced_light_tank_chassis
+						has_tech = advanced_medium_tank_chassis
+						has_tech = advanced_heavy_tank_chassis
+					} }
+				}
+				modifier = {
+					factor = 2.00
+					date > "1737.1.1"
+				}
+			}
+
+			enable_equipment_modules = {
+				armor_skirts
+			}
+
+			xp_research_type = army
+			xp_boost_cost = 20
+			xp_research_bonus = 1.50
+			research_cost = 1
+			start_year = 1738
+			folder = {
+				name = nsb_armour_folder
+				position = { x = @column_1 y = @1738 }
+			}
+			path = {
+				leads_to_tech = armor_tech_5
+				research_cost_coeff = 1
+			}
+
+			on_research_complete = {
+				custom_effect_tooltip = armor_tech_4_tt
+			}
+			show_effect_as_desc = yes
+
+			categories = {
+				armor
+				mio_cat_tech_all_armor_and_modules
+				mio_cat_tech_light_armor_and_modules
+				mio_cat_tech_medium_armor_and_modules
+				mio_cat_tech_heavy_armor_and_modules
+			}
+			special_project_specialization = { specialization_land }
+		}
+
+		armor_tech_5 = {
+			ai_will_do = {
+				factor = 1
+				modifier = {
+					add = 15
+					wants_tank_chassis_research = yes
+				}
+				modifier = {
+					factor = 2.00
+					date > "1737.0.1"
+					wants_tank_chassis_research = yes
+				}
+				modifier = {
+					factor = 2.00
+					OR = { has_tech = modern_light_tank_chassis
+						has_tech = main_battle_tank_chassis
+						has_tech = modern_main_battle_tank_chassis
+					}
+				}
+				modifier = {
+					factor = -2.00
+					NOT = { OR = { has_tech = modern_light_tank_chassis
+						has_tech = main_battle_tank_chassis
+						has_tech = modern_main_battle_tank_chassis
+					} }
+				}
+				modifier = {
+					factor = 2.00
+					date > "1747.1.1"
+				}
+			}
+
+			xp_research_type = army
+			xp_boost_cost = 20
+			xp_research_bonus = 1.50
+			research_cost = 1
+			start_year = 1748
+			folder = {
+				name = nsb_armour_folder
+				position = { x = @column_1 y = @1748 }
+			}
+
+			on_research_complete = {
+				custom_effect_tooltip = armor_tech_5_tt
+			}
+			show_effect_as_desc = yes
+
+			categories = {
+				armor
+				mio_cat_tech_all_armor_and_modules
+				mio_cat_tech_light_armor_and_modules
+				mio_cat_tech_medium_armor_and_modules
+				mio_cat_tech_heavy_armor_and_modules
+			}
+			special_project_specialization = { specialization_land }
+		}
+
+	turret_tech_1 = {
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				add = 15
+				wants_tank_chassis_research = yes
+			}
+			modifier = {
+				factor = 2.00
+				date > "1725.0.1"
+				wants_tank_chassis_research = yes
+			}
+			modifier = {
+				factor = 2.00
+				OR = { has_tech = gw_light_tank_chassis
+					has_tech = gw_medium_tank_chassis
+					has_tech = gw_heavy_tank_chassis
+				}
+			}
+			modifier = {
+				factor = -2.00
+				NOT = { OR = { has_tech = gw_light_tank_chassis
+					has_tech = gw_medium_tank_chassis
+					has_tech = gw_heavy_tank_chassis
+				} }
+			}
+			modifier = {
+				factor = 2.00
+				date > "1723.1.1"
+			}
+		}
+
+		enable_equipment_modules = {
+			tank_light_one_man_tank_turret
+			tank_medium_one_man_tank_turret
+		}
+
+		path = {
+			leads_to_tech = turret_tech_2
+			research_cost_coeff = 1
+		}
+
+		xp_research_type = army
+		xp_boost_cost = 20
+		xp_research_bonus = 1.50
+		research_cost = 1
+		start_year = 1724
+		folder = {
+			name = nsb_armour_folder
+			position = { x = @column_3 y = @1724 }
+		}
+		dependencies = {
+			tech_trucks = 1
+		}
+
+		categories = {
+			armor
+			mio_cat_tech_all_armor_and_modules
+			mio_cat_tech_light_armor_and_modules
+			mio_cat_tech_medium_armor_and_modules
+			mio_cat_tech_heavy_armor_and_modules
+		}
+		special_project_specialization = { specialization_land }
+	}
+
+		turret_tech_2 = {
+			ai_will_do = {
+				factor = 1
+				modifier = {
+					add = 15
+					wants_tank_chassis_research = yes
+				}
+				modifier = {
+					factor = 2.00
+					date > "1724.0.1"
+					wants_tank_chassis_research = yes
+				}
+				modifier = {
+					factor = 2.00
+					OR = { has_tech = basic_light_tank_chassis
+						has_tech = basic_medium_tank_chassis
+						has_tech = basic_heavy_tank_chassis
+					}
+				}
+				modifier = {
+					factor = -2.00
+					NOT = { OR = { has_tech = basic_light_tank_chassis
+						has_tech = basic_medium_tank_chassis
+						has_tech = basic_heavy_tank_chassis
+					} }
+				}
+				modifier = {
+					factor = 2.00
+					date > "1729.1.1"
+				}
+			}
+
+			enable_equipment_modules = {
+				tank_light_two_man_tank_turret
+				tank_medium_two_man_tank_turret
+				tank_heavy_two_man_tank_turret	
+				tank_super_heavy_three_man_tank_turret
+				strobe_sight
+			}
+
+			path = {
+				leads_to_tech = turret_tech_3
+				research_cost_coeff = 1
+			}
+
+			xp_research_type = army
+			xp_boost_cost = 20
+			xp_research_bonus = 1.50
+			research_cost = 1
+			start_year = 1730
+			folder = {
+				name = nsb_armour_folder
+				position = { x = @column_3 y = @1730 }
+			}
+
+			categories = {
+				armor
+				mio_cat_tech_all_armor_and_modules
+				mio_cat_tech_light_armor_and_modules
+				mio_cat_tech_medium_armor_and_modules
+				mio_cat_tech_heavy_armor_and_modules
+			}
+			special_project_specialization = { specialization_land }
+		}
+
+		turret_tech_3 = {
+			ai_will_do = {
+				factor = 1
+				modifier = {
+					add = 15
+					wants_tank_chassis_research = yes
+				}
+				modifier = {
+					factor = 2.00
+					date > "1732.0.1"
+					wants_tank_chassis_research = yes
+				}
+				modifier = {
+					factor = 2.00
+					OR = { has_tech = improved_light_tank_chassis
+						has_tech = improved_medium_tank_chassis
+						has_tech = improved_heavy_tank_chassis
+					}
+				}
+				modifier = {
+					factor = -2.00
+					NOT = { OR = { has_tech = improved_light_tank_chassis
+						has_tech = improved_medium_tank_chassis
+						has_tech = improved_heavy_tank_chassis
+					} }
+				}
+				modifier = {
+					factor = 2.00
+					date > "1733.1.1"
+				}
+			}
+
+			enable_equipment_modules = {
+				tank_light_three_man_tank_turret
+				tank_medium_three_man_tank_turret
+				tank_heavy_three_man_tank_turret
+				tank_super_heavy_four_man_tank_turret
+			}
+
+			xp_research_type = army
+			xp_boost_cost = 20
+			xp_research_bonus = 1.50
+			research_cost = 1
+			start_year = 1734
+			folder = {
+				name = nsb_armour_folder
+				position = { x = @column_3 y = @1734 }
+			}
+
+			categories = {
+				armor
+				mio_cat_tech_all_armor_and_modules
+				mio_cat_tech_light_armor_and_modules
+				mio_cat_tech_medium_armor_and_modules
+				mio_cat_tech_heavy_armor_and_modules
+			}
+			special_project_specialization = { specialization_land }
+		}
+
+	modules_tech_1 = {
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				add = 15
+				wants_tank_chassis_research = yes
+			}
+			modifier = {
+				factor = 2.00
+				date > "1725.0.1"
+				wants_tank_chassis_research = yes
+			}
+			modifier = {
+				factor = 2.00
+				OR = { has_tech = gw_light_tank_chassis
+					has_tech = gw_medium_tank_chassis
+					has_tech = gw_heavy_tank_chassis
+				}
+			}
+			modifier = {
+				factor = -2.00
+				NOT = { OR = { has_tech = gw_light_tank_chassis
+					has_tech = gw_medium_tank_chassis
+					has_tech = gw_heavy_tank_chassis
+				} }
+			}
+			modifier = {
+				factor = 2.00
+				date > "1723.1.1"
+			}
+		}
+
+		enable_equipment_modules = {
+			extra_ammo_storage
+			smoke_launchers
+		}
+
+		allow_branch = {
+			has_dlc = "No Step Back"	
 		}
 
 		xp_research_type = army
 		xp_boost_cost = 20
 		xp_research_bonus = 1.50
 		research_cost = 0.5
-		start_year = 1730
+		start_year = 1724
 		folder = {
 			name = nsb_armour_folder
-			position = { x = @column_5 y = @1730 }
+			position = { x = @column_5 y = @1724 }
 		}
-
-		enable_equipment_modules = {
-			sloped_armor
+		dependencies = {
+			tech_trucks = 1
 		}
 
 		path = {
-			leads_to_tech = modules_tech_3
+			leads_to_tech = modules_tech_2
 			research_cost_coeff = 1
 		}	
 
@@ -2439,179 +2378,240 @@ modules_tech_1 = {
 		special_project_specialization = { specialization_land }
 	}
 
-	modules_tech_3 = {
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				add = 15
-				wants_tank_chassis_research = yes
-			}
-			modifier = {
-				factor = 2.00
-				date > "1725.0.1"
-				wants_tank_chassis_research = yes
-			}
-			modifier = {
-				factor = 2.00
-				OR = { has_tech = improved_light_tank_chassis
-					has_tech = improved_medium_tank_chassis
-					has_tech = improved_heavy_tank_chassis
+		modules_tech_2 = {
+			ai_will_do = {
+				factor = 1
+				modifier = {
+					add = 15
+					wants_tank_chassis_research = yes
+				}
+				modifier = {
+					factor = 2.00
+					date > "1725.0.1"
+					wants_tank_chassis_research = yes
+				}
+				modifier = {
+					factor = 2.00
+					OR = { has_tech = basic_light_tank_chassis
+						has_tech = basic_medium_tank_chassis
+						has_tech = basic_heavy_tank_chassis
+					}
+				}
+				modifier = {
+					factor = -2.00
+					NOT = { OR = { has_tech = basic_light_tank_chassis
+						has_tech = basic_medium_tank_chassis
+						has_tech = basic_heavy_tank_chassis
+					} }
+				}
+				modifier = {
+					factor = 2.00
+					date > "1729.1.1"
 				}
 			}
-			modifier = {
-				factor = -2.00
-				NOT = { OR = { has_tech = improved_light_tank_chassis
-					has_tech = improved_medium_tank_chassis
-					has_tech = improved_heavy_tank_chassis
-				} }
+
+			xp_research_type = army
+			xp_boost_cost = 20
+			xp_research_bonus = 1.50
+			research_cost = 0.5
+			start_year = 1730
+			folder = {
+				name = nsb_armour_folder
+				position = { x = @column_5 y = @1730 }
 			}
-			modifier = {
-				factor = 2.00
-				date > "1733.1.1"
+
+			enable_equipment_modules = {
+				sloped_armor
 			}
+
+			path = {
+				leads_to_tech = modules_tech_3
+				research_cost_coeff = 1
+			}	
+
+			categories = {
+				armor
+				mio_cat_tech_all_armor_and_modules
+				mio_cat_tech_light_armor_and_modules
+				mio_cat_tech_medium_armor_and_modules
+				mio_cat_tech_heavy_armor_and_modules
+			}
+			special_project_specialization = { specialization_land }
 		}
 
-		enable_equipment_modules = {
-			wet_ammo_storage
+		modules_tech_3 = {
+			ai_will_do = {
+				factor = 1
+				modifier = {
+					add = 15
+					wants_tank_chassis_research = yes
+				}
+				modifier = {
+					factor = 2.00
+					date > "1725.0.1"
+					wants_tank_chassis_research = yes
+				}
+				modifier = {
+					factor = 2.00
+					OR = { has_tech = improved_light_tank_chassis
+						has_tech = improved_medium_tank_chassis
+						has_tech = improved_heavy_tank_chassis
+					}
+				}
+				modifier = {
+					factor = -2.00
+					NOT = { OR = { has_tech = improved_light_tank_chassis
+						has_tech = improved_medium_tank_chassis
+						has_tech = improved_heavy_tank_chassis
+					} }
+				}
+				modifier = {
+					factor = 2.00
+					date > "1733.1.1"
+				}
+			}
+
+			enable_equipment_modules = {
+				wet_ammo_storage
+			}
+
+			xp_research_type = army
+			xp_boost_cost = 20
+			xp_research_bonus = 1.50
+			research_cost = 0.5
+			start_year = 1734
+			folder = {
+				name = nsb_armour_folder
+				position = { x = @column_5 y = @1734 }
+			}
+
+			path = {
+				leads_to_tech = sp_armored_advanced_flamethrower_tech
+				research_cost_coeff = 1
+			}
+
+			categories = {
+				armor
+				mio_cat_tech_all_armor_and_modules
+				mio_cat_tech_light_armor_and_modules
+				mio_cat_tech_medium_armor_and_modules
+				mio_cat_tech_heavy_armor_and_modules
+			}
+			special_project_specialization = { specialization_land }
 		}
 
-		xp_research_type = army
-		xp_boost_cost = 20
-		xp_research_bonus = 1.50
-		research_cost = 0.5
-		start_year = 1734
-		folder = {
-			name = nsb_armour_folder
-			position = { x = @column_5 y = @1734 }
-		}
+		sp_armored_advanced_flamethrower_tech = {
 
-		path = {
-			leads_to_tech = sp_armored_advanced_flamethrower_tech
-			research_cost_coeff = 1
-		}
+			allow = {
+				ROOT = {
+					is_special_project_completed = sp:sp_land_flamethrower_tank
+				}
+			}
 
-		categories = {
-			armor
-			mio_cat_tech_all_armor_and_modules
-			mio_cat_tech_light_armor_and_modules
-			mio_cat_tech_medium_armor_and_modules
-			mio_cat_tech_heavy_armor_and_modules
-		}
-		special_project_specialization = { specialization_land }
-	}
+			is_special_project_tech = yes
 
-	sp_armored_advanced_flamethrower_tech = {
+			research_cost = 1
+			start_year = 1736
 
-		allow = {
-			ROOT = {
-				is_special_project_completed = sp:sp_land_flamethrower_tank
+			folder = {
+				name = nsb_armour_folder
+				position = { x = @column_5 y = @1736 }
 			}
-		}
 
-		is_special_project_tech = yes
+			enable_equipment_modules = {
+				advanced_flamethrower			
+			}
 
-		research_cost = 1
-		start_year = 1736
+			light_flame_tank = {
+				forest = {
+					attack = 0.05
+				}
+				hills = {
+					attack = 0.05
+				}
+				jungle = {
+					attack = 0.05
+				}
+				urban = {
+					attack = 0.05
+				}
+				fort = {
+					attack = 0.05
+				}
+			}
 
-		folder = {
-			name = nsb_armour_folder
-			position = { x = @column_5 y = @1736 }
-		}
+			medium_flame_tank = {
+				forest = {
+					attack = 0.05
+				}
+				hills = {
+					attack = 0.05
+				}
+				jungle = {
+					attack = 0.05
+				}
+				urban = {
+					attack = 0.05
+				}
+				fort = {
+					attack = 0.05
+				}
+			}
 
-		enable_equipment_modules = {
-			advanced_flamethrower			
-		}
+			heavy_flame_tank = {
+				forest = {
+					attack = 0.05
+				}
+				hills = {
+					attack = 0.05
+				}
+				jungle = {
+					attack = 0.05
+				}
+				urban = {
+					attack = 0.05
+				}
+				fort = {
+					attack = 0.05
+				}
+			}
 
-		light_flame_tank = {
-			forest = {
-				attack = 0.05
-			}
-			hills = {
-				attack = 0.05
-			}
-			jungle = {
-				attack = 0.05
-			}
-			urban = {
-				attack = 0.05
-			}
-			fort = {
-				attack = 0.05
-			}
-		}
-
-		medium_flame_tank = {
-			forest = {
-				attack = 0.05
-			}
-			hills = {
-				attack = 0.05
-			}
-			jungle = {
-				attack = 0.05
-			}
-			urban = {
-				attack = 0.05
-			}
-			fort = {
-				attack = 0.05
-			}
-		}
-
-		heavy_flame_tank = {
-			forest = {
-				attack = 0.05
-			}
-			hills = {
-				attack = 0.05
-			}
-			jungle = {
-				attack = 0.05
-			}
-			urban = {
-				attack = 0.05
-			}
-			fort = {
-				attack = 0.05
-			}
-		}
-
-		show_effect_as_desc = yes
-		ai_will_do = {
-			factor = 2
-
-			modifier = {
+			show_effect_as_desc = yes
+			ai_will_do = {
 				factor = 2
-				is_major = yes
-			}
-			modifier = {
-				has_war = yes
-				factor = 2
+
+				modifier = {
+					factor = 2
+					is_major = yes
+				}
+				modifier = {
+					has_war = yes
+					factor = 2
+				}
+
+				modifier = {
+					factor = 1.1
+					date > "1943.1.1"
+				}
+
+				modifier = {
+					factor = 1.1
+					date > "1944.1.1"
+				}
+
+				modifier = {
+					factor = 1.1
+					date > "1945.1.1"
+				}
 			}
 
-			modifier = {
-				factor = 1.1
-				date > "1943.1.1"
+			categories = {
+				armor
+				mio_cat_tech_all_armor_and_modules
+				mio_cat_tech_light_armor_and_modules
+				mio_cat_tech_medium_armor_and_modules
+				mio_cat_tech_heavy_armor_and_modules
 			}
-
-			modifier = {
-				factor = 1.1
-				date > "1944.1.1"
-			}
-
-			modifier = {
-				factor = 1.1
-				date > "1945.1.1"
-			}
+			special_project_specialization = { specialization_land }
 		}
-
-		categories = {
-			armor
-			mio_cat_tech_all_armor_and_modules
-			mio_cat_tech_light_armor_and_modules
-			mio_cat_tech_medium_armor_and_modules
-			mio_cat_tech_heavy_armor_and_modules
-		}
-		special_project_specialization = { specialization_land }
-	}
 }
