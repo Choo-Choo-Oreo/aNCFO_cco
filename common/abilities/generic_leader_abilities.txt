@@ -10,17 +10,43 @@ ability = {
 		allowed = {
 			is_leading_army_group = no
 			is_border_war = no
-			OWNER = {
-				if = {
-					limit = {
-						has_dlc = "Waking the Tiger"
-					}
-				}
-			}
+			OWNER = {  }
 		}
 		
 		ai_will_do = {
 			factor = -1
+			modifier = {
+				FROM = {
+					has_war_support > 0.1
+					command_power > 1.5
+				}
+				check_variable = { num_units_offensive_combats > 6 }
+				
+				set_temp_variable = { temp = avg_offensive_combat_status }
+				check_variable = { temp > 0.75 }
+				check_variable = { ai_random > temp }
+				
+				add = 2
+			}
+			modifier = {
+				FROM = {
+					has_war_support > 0.1
+					command_power > 1.5
+				}
+				check_variable = { num_units_offensive_combats > 15 }
+				check_variable = { num_units_offensive_combats_against@plains > 15 }
+				check_variable = { num_units_defensive_combats < 1 }
+				
+				set_temp_variable = { temp = avg_offensive_combat_status }
+				check_variable = { temp > 0.70 }
+				check_variable = { ai_random > temp }
+
+				set_temp_variable = { temp2 = num_units_offensive_combats_against@fort }
+				divide_temp_variable = { temp2 = temp }
+				check_variable = { temp2 < 0.1 }
+				
+				add = 20
+			}
 		}
 		
 		cost = 0.22
@@ -28,12 +54,12 @@ ability = {
 		
 		one_time_effect = {
 			add_temporary_buff_to_units = {
-				combat_offense = 0.15
-				combat_breakthrough = 0.20
-				org_damage_multiplier = -1.00
-				str_damage_multiplier = 0.60
-				war_support_reduction_on_damage = 0.20
-				cannot_retreat_while_attacking = 1.00
+				combat_offense = 0.2
+				combat_breakthrough = 0.25
+				org_damage_multiplier = -1.0
+				str_damage_multiplier = 0.6
+				war_support_reduction_on_damage = 0.2
+				cannot_retreat_while_attacking = 1.0
 				
 				days = 7
 				tooltip = ABILITY_FORCE_ATTACK_TOOLTIP
@@ -52,8 +78,7 @@ ability = {
 		allowed = {
 			is_leading_army_group = no
 			is_border_war = no
-			OWNER = {
-			}
+			OWNER = {  }
 		}
 		
 		cost = 0.22
@@ -61,12 +86,12 @@ ability = {
 		
 		one_time_effect = {
 			add_temporary_buff_to_units = {
-				combat_defense = 0.15
-				combat_entrenchment = 0.20
-				org_damage_multiplier = -1.00
-				str_damage_multiplier = 0.60
-				war_support_reduction_on_damage = 0.20
-				cannot_retreat_while_defending = 1.00
+				combat_defense = 0.2
+				combat_entrenchment = 0.25
+				org_damage_multiplier = -1.0
+				str_damage_multiplier = 0.6
+				war_support_reduction_on_damage = 0.2
+				cannot_retreat_while_defending = 1.0
 				
 				days = 7
 				tooltip = ABILITY_LAST_STAND_TOOLTIP
@@ -75,6 +100,39 @@ ability = {
 		
 		ai_will_do = {
 			factor = -1
+			modifier = {
+				FROM = {
+					has_war_support > 0.4
+					surrender_progress > 0.2
+				}
+				
+				check_variable = { num_units_defensive_combats > 6 }
+				
+				set_temp_variable = { temp = avg_defensive_combat_status }
+				check_variable = { temp < 0.25 }
+				check_variable = { ai_random > temp }
+				
+				add = 2
+			}
+			modifier = {
+				FROM = {
+					has_war_support > 0.1
+					command_power > 90
+				}
+				check_variable = { num_units_defensive_combats > 6 }
+				OR = {
+					check_variable = { num_units_defensive_combats_against@marsh > 6 }
+					check_variable = { num_units_defensive_combats_against@mountain > 6 }
+					check_variable = { num_units_on_climate@hot_climate > 6 }
+					check_variable = { num_units_on_climate@cold_climate > 6 }
+				}
+				
+				set_temp_variable = { temp = avg_defensive_combat_status }
+				check_variable = { temp < 0.45 }
+				check_variable = { ai_random > temp }
+				
+				add = 20
+			}
 		}
 	}
 
@@ -94,12 +152,22 @@ ability = {
 		duration = 168
 		
 		unit_modifiers = {
-			planning_speed = 4.00
+			planning_speed = 4.0
 		}
 		
 		
 		ai_will_do = {
 			factor = -1
+			modifier = {
+				FROM = {
+					command_power > 2.0
+				}
+				check_variable = { num_units > 6 }
+				check_variable = { unit_ratio_ready_for_plan > 0.55 }
+				check_variable = { avg_unit_planning_ratio < 0.4 }
+				
+				add = 2
+			}
 		}
 	}
 
@@ -118,10 +186,10 @@ ability = {
 			fort = {
 				attack = 0.20
 			}
-			fortification_damage = 2.0
-			fortification_collateral_chance = 2.0
+			fortification_damage = 2.5
+			fortification_collateral_chance = 2.5
 		}
-		cost = 0.1
+		cost = 0.07
 		duration = 168
 		
 		
@@ -138,19 +206,7 @@ ability = {
 				divide_temp_variable = { temp2 = temp }
 				check_variable = { temp2 > 0.5 }
 				
-				add = 2
-			}
-			modifier = { # Added
-				FROM = {
-					has_war_support > 0.2
-					command_power > 3.0
-				}
-				check_variable = { num_units_offensive_combats > 6 }
-				
-				set_temp_variable = { temp = avg_offensive_combat_status }
-				check_variable = { temp > 0.45 }
-				check_variable = { ai_random > temp }
-				add = 0.5
+				add = 25
 			}
 		}
 	}
@@ -168,8 +224,8 @@ ability = {
 		
 		unit_modifiers = {
 			paratrooper_weight_factor = -0.10
-			paradrop_organization_factor = 2.00
-			paratrooper_aa_defense = 0.50
+			paradrop_organization_factor = 2.0
+			paratrooper_aa_defense = 0.5
 		}
 		
 		cost = 0.1
@@ -188,7 +244,7 @@ ability = {
 		}
 		
 		unit_modifiers = {
-			naval_invasion_prep_speed = 0.50
+			naval_invasion_prep_speed = 0.5
 		}
 		
 		cost = 0.1
@@ -207,8 +263,8 @@ ability = {
 		}
 		
 		unit_modifiers = {
-			dont_lose_dig_in_on_attack = 1.00
-			offence = -0.20
+			dont_lose_dig_in_on_attack = 1.0
+			offence = -0.2
 		}
 		
 		cancelable = yes
@@ -229,9 +285,9 @@ ability = {
 		
 		
 		unit_modifiers = {
-			river_crossing_factor = -0.40
+			river_crossing_factor = -0.4
 			river = {
-				attack = 0.20
+				attack = 0.2
 			}
 		}
 		
@@ -246,19 +302,7 @@ ability = {
 				}
 				check_variable = { num_units_crossing_river > 5 }
 				
-				add = 2
-			}
-			modifier = { # Added
-				FROM = {
-					has_war_support > 0.2
-					command_power > 3.0
-				}
-				check_variable = { num_units_offensive_combats > 6 }
-				
-				set_temp_variable = { temp = avg_offensive_combat_status }
-				check_variable = { temp > 0.45 }
-				check_variable = { ai_random > temp }
-				add = 0.5
+				add = 25
 			}
 		}
 	}
@@ -272,6 +316,9 @@ ability = {
 		allowed = {
 			has_ability = extra_suplies
 			is_border_war = no
+			OWNER = {
+				NOT = { has_country_flag = has_quinine }
+			}
 		}
 		
 		unit_modifiers = {
@@ -299,7 +346,7 @@ ability = {
 		}
 		
 		unit_modifiers = {
-			acclimatization_cold_climate_gain_factor = 0.50
+			acclimatization_cold_climate_gain_factor = 0.5
 		}
 		
 		cost = 0.1
@@ -308,17 +355,17 @@ ability = {
 		
 		ai_will_do = {
 			factor = -1
-			#modifier = {
-			#	FROM = {
-			#		command_power > 2.0
-			#	}
-			#	check_variable = { num_units_on_climate@cold_climate > 8 }
-			#	set_temp_variable = { temp = avg_units_acclimation@cold_climate }
-			#	divide_temp_variable = { temp =  num_units }
-			#	check_variable = { temp < 0.5 }
+			modifier = {
+				FROM = {
+					command_power > 2.0
+				}
+				check_variable = { num_units_on_climate@cold_climate > 8 }
+				set_temp_variable = { temp = avg_units_acclimation@cold_climate }
+				divide_temp_variable = { temp =  num_units }
+				check_variable = { temp < 0.5 }
 				
-			#	add = 2
-			#}
+				add = 2
+			}
 		}
 	}
 }
