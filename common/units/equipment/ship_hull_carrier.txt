@@ -1,4 +1,5 @@
 equipments = {
+
 	ship_hull_carrier = {
 		year = 1722
 
@@ -39,7 +40,7 @@ equipments = {
 			}
 			fixed_ship_radar_slot = {
 				required = no
-				allowed_module_categories = { ship_radar }
+				allowed_module_categories = { carrier_mast ship_radar }
 			}
 			fixed_ship_engine_slot = {
 				required = yes
@@ -51,7 +52,7 @@ equipments = {
 			}
 			fixed_ship_armor_slot = {
 				required = no
-				allowed_module_categories = { ship_cruiser_armor ship_cruiser_heavy_armor }
+				allowed_module_categories = { ship_carrier_armor }
 			}
 			fixed_ship_carrier_miscellaneous_slot_1 = { 
 				required = no
@@ -136,6 +137,7 @@ equipments = {
 		#MIO stat modifers will factory by the unmodified stat value so here a 0.5 mio stat modifier would make this ships naval_weather_penalty_factor stat 1.5.
 		# change this from 1 at your own risk
 	}
+
 	### vnr hulls
 	vnr_ship_hull_carrier_conversion_ca = {
 		derived_variant_name = carrier_equipment_ca
@@ -205,11 +207,15 @@ equipments = {
 			}
 			fixed_ship_armor_slot = {
 				required = no
-				allowed_module_categories = { ship_heavy_armor ship_cruiser_armor ship_cruiser_heavy_armor }
+				allowed_module_categories = { ship_carrier_armor ship_carrier_armor_heavy ship_carrier_armor_shbb }
 			}
 			fixed_ship_carrier_miscellaneous_slot_1 = inherit
 			fixed_ship_carrier_miscellaneous_slot_2 = inherit
 			fixed_ship_flight_deck_slot = inherit
+			fixed_ship_role_slot = {
+				required = yes
+				allowed_module_categories = { bb_carrier_role }
+			}
 			mid_1_custom_slot = {
 				required = no
 				allowed_module_categories = {
@@ -227,10 +233,17 @@ equipments = {
 					ship_deck_space_small
 				}
 			}
+			rear_1_custom_slot = {
+				required = no
+				allowed_module_categories = {
+					ship_deck_space_converted
+				}
+			}
 		}
 
 		default_modules = {
 			fixed_ship_engine_slot = heavy_ship_engine_1
+			fixed_ship_role_slot = carrier_bb_conversion
 			mid_1_custom_slot = empty
 		}
 		naval_range = 4000
@@ -274,7 +287,7 @@ equipments = {
 			}
 			fixed_ship_radar_slot = {
 				required = no
-				allowed_module_categories = { ship_radar }
+				allowed_module_categories = { carrier_mast ship_radar }
 			}
 			fixed_ship_engine_slot = {
 				required = yes
@@ -286,7 +299,7 @@ equipments = {
 			}
 			fixed_ship_armor_slot = {
 				required = no
-				allowed_module_categories = { ship_cruiser_armor ship_cruiser_heavy_armor }
+				allowed_module_categories = { ship_carrier_armor ship_carrier_armor_heavy }
 			}
 			fixed_ship_carrier_miscellaneous_slot_1 = inherit
 			fixed_ship_carrier_miscellaneous_slot_2 = inherit
@@ -428,6 +441,7 @@ equipments = {
 					ship_anti_air
 					ship_deck_space
 					ship_deck_space_small
+					carrier_helipad
 				}
 			}
 			front_2_custom_slot = {
@@ -448,6 +462,7 @@ equipments = {
 					steam_catapult
 					carrier_side_lift
 					carrier_angled_deck
+					carrier_helipad
 				}
 			}
 			mid_2_custom_slot = {
@@ -460,6 +475,7 @@ equipments = {
 					steam_catapult
 					carrier_side_lift
 					carrier_angled_deck
+					carrier_helipad
 				}
 			}
 			rear_1_custom_slot = {
@@ -603,7 +619,7 @@ equipments = {
 		archetype = ship_hull_carrier
 		model = ship_hull_super_carrier
 		priority = 1000
-		can_convert_from = { vnr_ship_hull_super_carrier }
+		can_convert_from = { vnr_ship_hull_super_carrier vnr_ship_hull_carrier_3 }
 		parent = vnr_ship_hull_carrier_3
 		module_slots = {
 			fixed_ship_deck_slot_1 = {
@@ -629,7 +645,7 @@ equipments = {
 			}
 			fixed_ship_armor_slot = {
 				required = yes
-				allowed_module_categories = { ship_carrier_armor_heavy }
+				allowed_module_categories = { ship_carrier_armor ship_carrier_armor_heavy }
 			}
 			fixed_ship_carrier_miscellaneous_slot_1 = { 
 				required = no
@@ -647,6 +663,7 @@ equipments = {
 					steam_catapult
 					carrier_side_lift
 					carrier_angled_deck
+					carrier_helipad
 				}
 			}
 			front_2_custom_slot = front_1_custom_slot
@@ -660,6 +677,7 @@ equipments = {
 					steam_catapult
 					carrier_side_lift
 					carrier_angled_deck
+					carrier_helipad
 				}
 			}
 			mid_2_custom_slot = mid_1_custom_slot
@@ -671,12 +689,14 @@ equipments = {
 					ship_anti_air
 					ship_missile_aa
 					carrier_side_lift
+					carrier_helipad
 				}
 			}
+			rear_2_custom_slot = rear_1_custom_slot
 		}
 		default_modules = {
 			fixed_ship_engine_slot = carrier_ship_engine_4
-			fixed_ship_armor_slot = ship_carrier_armor_heavy
+			fixed_ship_armor_slot = ship_armor_carrier_heavy_5
 		}
 
 		naval_range = 6000
@@ -729,7 +749,7 @@ equipments = {
 			}
 			fixed_ship_armor_slot = {
 				required = yes
-				allowed_module_categories = { ship_carrier_armor_heavy }
+				allowed_module_categories = { ship_carrier_armor ship_carrier_armor_heavy }
 			}
 			fixed_ship_carrier_miscellaneous_slot_1 = { 
 				required = no
@@ -748,6 +768,7 @@ equipments = {
 					steam_catapult
 					carrier_side_lift
 					carrier_angled_deck
+					carrier_helipad
 				}
 			}
 			mid_1_custom_slot = {
@@ -760,6 +781,7 @@ equipments = {
 					steam_catapult
 					carrier_side_lift
 					carrier_angled_deck
+					carrier_helipad
 				}
 			}
 			rear_1_custom_slot = {
@@ -769,12 +791,15 @@ equipments = {
 					ship_missile_aa
 					ship_secondaries
 					ship_dp_secondaries_bb
+					carrier_side_lift
+					carrier_helipad
 				}
 			}
+			rear_2_custom_slot = rear_1_custom_slot
 		}
 		default_modules = {
 			fixed_ship_engine_slot = carrier_ship_engine_4
-			fixed_ship_armor_slot = ship_carrier_armor_heavy
+			fixed_ship_armor_slot = ship_armor_carrier_heavy_5
 		}
 
 		naval_range = 6000
@@ -796,3 +821,4 @@ equipments = {
 		manpower = 6500
 	}
 }
+

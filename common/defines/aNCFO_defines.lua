@@ -489,7 +489,7 @@
 				NDefines.NAI.CANCEL_COMBAT_DISADVANTAGE_RATIO = 10             -- If the enemy's advantage ratio over us during (normal) combat is more than <value>, allow canceling the attack
 				NDefines.NAI.CANCEL_COMBAT_MIN_DURATION_HOURS = 480              -- Only allow cancelling (normal) combat if at least <value> hours have passed
 
-				NDefines.NAI.NAVY_PREFERED_MAX_SIZE = 300										-- AI will generally attempt to merge fleets into this size but as a soft limit.
+				-- VNR -- NDefines.NAI.NAVY_PREFERED_MAX_SIZE = 300										-- AI will generally attempt to merge fleets into this size but as a soft limit.
 
 				NDefines.NAI.EQUIPMENT_MARKET_MAX_CIVS_FOR_PURCHASES_RATIO = 0.2            -- Ratio of available civilian factories to max use for equipment purchases (0.2 = 20 %, so 50 available civs would mean max ca 10 civs to spend on purchases at any one time). Gets modified by equipment_market_spend_factories AI strategy.
 				NDefines.NAI.EQUIPMENT_MARKET_NR_DELIVERIES_SOFT_MAX = 7                   -- AI tries to adjust assigned factories and amount of equipment to keep nr deliveries at max this
@@ -786,16 +786,18 @@
 -- VNR Naval Defines
 	NDefines.NAI.ENEMY_NAVY_STRENGTH_DONT_BOTHER = 1.5;
 	NDefines.NAI.SHIPS_PRODUCTION_BASE_COST = 25000;
-	-- NDefines.NAI.NAVY_PREFERED_MAX_SIZE = 50;
+	NDefines.NAI.NAVY_PREFERED_MAX_SIZE = 50;
 	NDefines.NAI.DOCKYARDS_PER_NAVAL_DESIRE_EFFECT = 10;
 	NDefines.NAI.PRODUCTION_MAX_PROGRESS_TO_SWITCH_NAVAL = 0;
 	NDefines.NAI.PRODUCTION_WAIT_TO_FINISH_IF_EXPENSIVE = 0.02;
 	NDefines.NAI.CARRIER_TASKFORCE_MAX_CARRIER_COUNT = 6;
-	NDefines.NAI.SCREENS_TO_CAPITAL_RATIO = 4;
-	NDefines.NAI.REPAIR_TASKFORCE_SIZE = 25;
+	NDefines.NAI.SCREENS_TO_CAPITAL_RATIO = 3;
+	NDefines.NAI.REPAIR_TASKFORCE_SIZE = 8;
 	NDefines.NAI.WANTED_CARRIER_PLANES_PER_CARRIER_CAPACITY_FACTOR = 2;
 	NDefines.NAI.WANTED_CARRIER_PLANES_PER_CARRIER_CAPACITY_IN_PRODUCTION_FACTOR = 1.5;
 	NDefines.NAI.AI_WANTED_CARRIER_BASED_PLANES_FACTOR = 1.5;
+	NDefines.NAI.MAX_ALLOWED_NAVAL_DANGER = 100;
+	NDefines.NAI.CONVOY_ESCORT_SCORE_FROM_CONVOYS = 25;
 
 	NDefines.NNavy.SCREEN_RATIO_FOR_FULL_SCREENING_FOR_CAPITALS = 2.0;
 	NDefines.NNavy.ESCAPE_SPEED_PER_COMBAT_DAY = 0.03;
@@ -806,12 +808,11 @@
 	NDefines.NNavy.SPOTTING_SPEED_EFFECT_FOR_INITIAL_UNIT_TRANSFER_SPOTTING = 0.5;
 	NDefines.NNavy.SPOTTING_SPEED_EFFECT_FOR_INITIAL_NAVAL_INVASION_SPOTTING = 0.5;
 	NDefines.NNavy.CONVOY_EFFICIENCY_MIN_VALUE = 0;
-	NDefines.NNavy.CONVOY_HIT_PROFILE = 110;
+	NDefines.NNavy.CONVOY_HIT_PROFILE = 95;
 	NDefines.NNavy.NAVY_PIERCING_THRESHOLDS = { 2.0, 1.0, 0.85, 0.75, 0.6, 0.5, 0.3, 0.1, 0.0 }
 	NDefines.NNavy.NAVY_PIERCING_THRESHOLD_CRITICAL_VALUES = { 3.0, 1.0, 0.65, 0.55, 0.4, 0.3, 0.15, 0.1, 0.0 }
 	NDefines.NNavy.NAVY_PIERCING_THRESHOLD_DAMAGE_VALUES = { 1.0, 1.0, 0.7, 0.6, 0.45, 0.35, 0.2, 0.1, 0.01 }
-	NDefines.NNavy.MISSION_MAX_REGIONS = 6;
-	NDefines.NNavy.CONVOY_DEFENSE_MAX_REGION_TO_TASKFORCE_RATIO = 4;
+	NDefines.NNavy.CONVOY_DEFENSE_MAX_REGION_TO_TASKFORCE_RATIO	 = 2;
 	NDefines.NNavy.COMBAT_TORPEDO_CRITICAL_CHANCE = 0.4
 	NDefines.NNavy.CARRIER_STACK_PENALTY = 6;
 	NDefines.NNavy.CARRIER_STACK_PENALTY_EFFECT = 0.1;
@@ -819,9 +820,12 @@
 	NDefines.NNavy.CAPITAL_ONLY_COMBAT_ACTIVATE_TIME = 22;
 	NDefines.NNavy.ALL_SHIPS_ACTIVATE_TIME = 30;
 	NDefines.NNavy.COMBAT_CHASE_RESIGNATION_HOURS = 4;
-	NDefines.NNavy.ANTI_AIR_TARGETING = 1.0;
-	NDefines.NNavy.SUBMARINE_REVEAL_BASE_CHANCE = 14;
-	NDefines.NNavy.SUBMARINE_BASE_TORPEDO_REVEAL_CHANCE = 0.05;
+	NDefines.NNavy.ANTI_AIR_TARGETING = 0.93;
+	NDefines.NNavy.MAX_ANTI_AIR_REDUCTION_EFFECT_ON_INCOMING_AIR_DAMAGE = 0.6;
+	NDefines.NNavy.TRAINING_MAX_DAILY_COUNTRY_EXP = 2;
+	NDefines.NNavy.SUBMARINE_REVEAL_BASE_CHANCE = 16;
+	NDefines.NNavy.SUBMARINE_REVEAL_POW	= 4.0;
+	NDefines.NNavy.SUBMARINE_BASE_TORPEDO_REVEAL_CHANCE = 0.35;
 	NDefines.NNavy.WAR_SCORE_GAIN_FOR_SUNK_SHIP_MANPOWER_FACTOR = 0.01;
 	NDefines.NNavy.WAR_SCORE_GAIN_FOR_SUNK_SHIP_PRODUCTION_COST_FACTOR = 0.04;
 	NDefines.NNavy.SHORE_BOMBARDMENT_CAP = 0.5;
@@ -839,6 +843,7 @@
 	NDefines.NNavy.MANPOWER_LOSS_RATIO_ON_SUNK = 0.25;
 	NDefines.NNavy.BASE_GUN_COOLDOWNS = { 1.0, 8.0, 1.0 };
 	NDefines.NNavy.COMBAT_TORPEDO_CRITICAL_DAMAGE_MULT = 3.0;
+	NDefines.NNavy.COMBAT_CRITICAL_DAMAGE_MULT = 8;
 	NDefines.NNavy.PRIDE_OF_THE_FLEET_UNASSIGN_COST = 25;
 	NDefines.NNavy.SUBMARINE_ESCAPE_RATIOS = { 90, 15, 3.0, 1.0, 0.1 }
 	NDefines.NNavy.EXPERIENCE_FACTOR_CONVOY_ATTACK = 0.1
@@ -860,7 +865,7 @@
 	};
 
 	NDefines.NNavy.GUN_HIT_PROFILES = { -- hit profiles for guns, if target ih profile is lower the gun will have lower accuracy
-			80.0,	-- big guns
+			75.0,	-- big guns
 			105.0,	-- torpedoes
 			45.0,	-- small guns
 	};
@@ -895,9 +900,9 @@
 			0, -- HOLD (consumes fuel HOLD_MISSION_MOVEMENT_COST fuel while moving)
 			10000, -- PATROL
 			8000, -- STRIKE FORCE
-			500, -- CONVOY RAIDING
-			1000, -- CONVOY ESCORT
-			-1, -- MINES PLANTING
+			2000, -- CONVOY RAIDING
+			6000, -- CONVOY ESCORT
+			100, -- MINES PLANTING
 			300, -- MINES SWEEPING
 			0, -- TRAIN
 			0, -- RESERVE_FLEET
@@ -907,14 +912,14 @@
 	NDefines.NAI.MAX_MISSION_PER_TASKFORCE = {
 			0, -- HOLD (consumes fuel HOLD_MISSION_MOVEMENT_COST fuel while moving)
 			2, -- PATROL
-			8, -- STRIKE FORCE
-			1.5, -- CONVOY RAIDING
+			4, -- STRIKE FORCE
+			3, -- CONVOY RAIDING
 			4, -- CONVOY ESCORT
 			2, -- MINES PLANTING
 			2, -- MINES SWEEPING
 			0, -- TRAIN
 			0, -- RESERVE_FLEET
-			10, -- NAVAL INVASION SUPPORT
+			4, -- NAVAL INVASION SUPPORT
 	}
 
 	NDefines.NAir.COMBAT_DAMAGE_SCALE_CARRIER = 20;
@@ -938,8 +943,6 @@
 	NDefines.NIntel.NAVY_SHIP_TYPE_COUNT_INTEL_MAX = 0.3;
 	NDefines.NIntel.NAVY_MIN_INTEL_TO_SHOW_SHIP_CLASSES = 0.15;
 	NDefines.NIntel.NAVY_MIN_INTEL_TO_SHOW_SHIP_DESIGN_DETAILS = 0.5;
-
-	NDefines.NGame.DECISION_ALERT_TIMEOUT_DAYS = 60;
 
 -- Production Defines
 	--------------------------------------------------------------------------------------------------------------

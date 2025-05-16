@@ -66,6 +66,20 @@ autonomous_occupation = {
 			resistance < autonomous_occupation
 			add = 500
 		}
+		modifier = {
+			FROM = {
+				has_capitulated = yes
+				has_government = pluralism
+			}
+			add = 1000
+		}
+		modifier = {
+			FROM = {
+				has_war = no
+				has_government = pluralism
+			}
+			add = 5000
+		}
 	}
 }
 
@@ -112,7 +126,7 @@ local_police_force_garrison = {
 
 
 	ai_will_do = {
-		base = 100
+		base = 300
 		modifier = {
 			check_variable  = { resistance_target_without_law > 0.09}
 			add = 200
@@ -168,7 +182,7 @@ liberate_workers_occupation = {
 	}
 
 	ai_will_do = {
-		base = 200
+		base = 7000
 	}
 }
 
@@ -190,9 +204,9 @@ military_governor_occupation = {
 		base = 0
 		modifier = {
 			check_variable  = { resistance_target_without_law > 0.24}
-			add = 400
+			add = 200
 		}
-		
+
 		modifier = {
 			check_variable  = { resistance_target_without_law > 0.34}
 
@@ -203,7 +217,7 @@ military_governor_occupation = {
 			}
 			check_variable = { garrison_min_support_ratio < requirement_limit }
 
-			add = 400
+			add = 200
 		}
 	}
 }
@@ -224,19 +238,32 @@ martial_law_occupation = {
 	ai_will_do = {
 		base = 0
 		modifier = {
-			check_variable = { resistance_target_without_law > 0.44}
+			check_variable = { resistance_target_without_law > 0.59 }
 
-			set_temp_variable = { resistance_limit = 40 }
+			set_temp_variable = { resistance_limit = 35 }
 			set_temp_variable = { requirement_limit = 0.65 }
 			if = {
 				limit = { occupation_law = martial_law_occupation }
-				set_temp_variable = { resistance_limit = 35 }
+				set_temp_variable = { resistance_limit = 30 }
 				set_temp_variable = { requirement_limit = 0.5 }
 			}
 			check_variable = { garrison_min_support_ratio > requirement_limit }
 			resistance > resistance_limit
 
-			add = 500
+			add = 4000
+		}
+
+		modifier = {
+			check_variable = { resistance_target_without_law > 0.59 }
+
+			set_temp_variable = { resistance_limit = 35 }
+			if = {
+				limit = { occupation_law = martial_law_occupation }
+				set_temp_variable = { resistance_limit = 30 }
+			}
+			resistance > resistance_limit
+
+			add = 4000
 		}
 	}
 }
@@ -355,6 +382,68 @@ harsh_quotas_occupation = {
 			add_to_temp_variable = { num_damaged = 150 }
 
 			add = num_damaged
+		}
+
+		modifier = {
+			FROM = {
+				original_tag = SPR
+			}
+			date < 1943.1.1
+
+			add = -9999
+		}
+
+		modifier = {
+			OR = {
+				is_on_continent = europe
+				is_core_of = USA
+			}
+
+			OR ={
+				AND = {
+					check_variable = { building_level@arms_factory = 1 compare = greater_than }
+					check_variable = { building_level@industrial_complex = 1 compare = greater_than }
+				}
+				check_variable = { building_level@arms_factory = 2 compare = greater_than }
+				check_variable = { building_level@industrial_complex = 2 compare = greater_than }
+			}
+			
+			
+			FROM  = {
+				NOT = { has_government = unitism } #we get better occupation law
+			}
+
+			add = 2000
+		}
+
+		modifier = {
+			compliance > 60
+			OR ={
+				AND = {
+					check_variable = { building_level@arms_factory = 2 compare = greater_than }
+					check_variable = { building_level@industrial_complex = 2 compare = greater_than }
+				}
+				check_variable = { building_level@arms_factory = 4 compare = greater_than }
+				check_variable = { building_level@industrial_complex = 4 compare = greater_than }
+			}
+			
+			
+			FROM  = {
+				NOT = { has_government = unitism }
+			}
+
+			add = 2000
+		}
+
+		modifier = {
+			set_temp_variable = { resistance_limit = 49 }
+			if = {
+				limit = { occupation_law = martial_law_occupation }
+				set_temp_variable = { resistance_limit = 30 }
+			}
+			resistance > resistance_limit
+
+			add = -1000
 		}
 	}
 }

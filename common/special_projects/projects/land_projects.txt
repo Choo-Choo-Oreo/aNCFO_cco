@@ -1,13 +1,3 @@
-                                                                                                                                          
- ######  #         ##    #    #  ######  #####  #    #  #####    ####   #    #  ######  #####       #####    ##    #    #  #    #   ####  
- #       #        #  #   ##  ##  #         #    #    #  #    #  #    #  #    #  #       #    #        #     #  #   ##   #  #   #   #      
- #####   #       #    #  # ## #  #####     #    ######  #    #  #    #  #    #  #####   #    #        #    #    #  # #  #  ####     ####  
- #       #       ######  #    #  #         #    #    #  #####   #    #  # ## #  #       #####         #    ######  #  # #  #  #         # 
- #       #       #    #  #    #  #         #    #    #  #   #   #    #  ##  ##  #       #   #         #    #    #  #   ##  #   #   #    # 
- #       ######  #    #  #    #  ######    #    #    #  #    #   ####   #    #  ######  #    #        #    #    #  #    #  #    #   ####  
-                                                                                                                                          
-
-
 sp_land_flamethrower_tank = {
 	specialization = specialization_land
 	#icon = GFX_sp_land_flamethrower_tank ### Automatically hooked-in since the GFX ID matches the project ID.
@@ -15,13 +5,13 @@ sp_land_flamethrower_tank = {
 	project_tags = sp_tag_tank
 
 	ai_will_do = {
-		base = 1
+		base = 5
 	}
 
 	allowed = {
 		has_dlc = "No Step Back"
 	}
-
+	
 	available = {
 		FROM = {
 			has_tech = tech_engineers
@@ -38,7 +28,6 @@ sp_land_flamethrower_tank = {
 	
 	project_output = {
 		country_effects = {
-
 			add_design_template_bonus = {
 				name = sp_land_flamethrower_tank
 				uses = 1
@@ -98,16 +87,6 @@ sp_land_flamethrower_tank = {
 	}
 }
 
-
-  #####                                                                       #                                                         #     #                                                    
- #     #  #####   ######   ####   #    ##    #       #   ####   #####        # #    #####   #    #   ####   #####   ######  #####       #     #  ######  #    #  #   ####   #       ######   ####  
- #        #    #  #       #    #  #   #  #   #       #  #         #         #   #   #    #  ##  ##  #    #  #    #  #       #    #      #     #  #       #    #  #  #    #  #       #       #      
-  #####   #    #  #####   #       #  #    #  #       #   ####     #        #     #  #    #  # ## #  #    #  #    #  #####   #    #      #     #  #####   ######  #  #       #       #####    ####  
-       #  #####   #       #       #  ######  #       #       #    #        #######  #####   #    #  #    #  #####   #       #    #       #   #   #       #    #  #  #       #       #            # 
- #     #  #       #       #    #  #  #    #  #       #  #    #    #        #     #  #   #   #    #  #    #  #   #   #       #    #        # #    #       #    #  #  #    #  #       #       #    # 
-  #####   #       ######   ####   #  #    #  ######  #   ####     #        #     #  #    #  #    #   ####   #    #  ######  #####          #     ######  #    #  #   ####   ######  ######   ####  
-                                                                                                                                                                                                
-
 sp_land_military_engineering_vehicles = {
 	specialization = specialization_land
 
@@ -116,6 +95,14 @@ sp_land_military_engineering_vehicles = {
 	available = {
 		FROM = {
 			has_tech = tech_engineers
+		}
+	}
+
+	ai_will_do = {
+		base = 20
+		modifier = {
+			factor = 200
+			FROM = { is_major = yes }
 		}
 	}
 	
@@ -186,18 +173,6 @@ sp_land_military_engineering_vehicles = {
 	}
 }
 
-
-
-
-                                                                                             ##                                                                                                   
-  ####   #    #  #####   ######  #####          #    #  ######    ##    #    #  #   #       #  #        #    #   ####   #####   ######  #####   #    #      #####    ##    #    #  #    #   ####  
- #       #    #  #    #  #       #    #         #    #  #        #  #   #    #   # #         ##         ##  ##  #    #  #    #  #       #    #  ##   #        #     #  #   ##   #  #   #   #      
-  ####   #    #  #    #  #####   #    #  #####  ######  #####   #    #  #    #    #         ###         # ## #  #    #  #    #  #####   #    #  # #  #        #    #    #  # #  #  ####     ####  
-      #  #    #  #####   #       #####          #    #  #       ######  #    #    #        #   # #      #    #  #    #  #    #  #       #####   #  # #        #    ######  #  # #  #  #         # 
- #    #  #    #  #       #       #   #          #    #  #       #    #   #  #     #        #    #       #    #  #    #  #    #  #       #   #   #   ##        #    #    #  #   ##  #   #   #    # 
-  ####    ####   #       ######  #    #         #    #  ######  #    #    ##      #         ###  #      #    #   ####   #####   ######  #    #  #    #        #    #    #  #    #  #    #   ####  
-                                                                                                                                                                                                  
-
 sp_land_land_cruiser = {
 	specialization = specialization_land
 
@@ -235,6 +210,17 @@ sp_land_land_cruiser = {
 		resources = { 
 			steel = 16
 			chromium = 8
+		}
+	}
+
+	ai_will_do = {
+		base = 1
+		modifier = {
+			factor = 0 
+			OR = {
+				FROM = { is_major = no } # Pointless unless we are big enough to do this
+				FROM = { has_government = pluralism }# Don't spend the tax payers' money on this, then they won't vote for you again
+			}
 		}
 	}
 	
@@ -896,20 +882,7 @@ sp_land_land_cruiser = {
 			}
 		}
 	}
-
-
 }
-
-
-
-                                                                                                                                                                                                        
-   ##    #####   #    #    ##    #    #   ####   ######  #####         ##    #####   #####  #  #       #       ######  #####   #   #      #####   #####    ####        #  ######   ####   #####   ####  
-  #  #   #    #  #    #   #  #   ##   #  #    #  #       #    #       #  #   #    #    #    #  #       #       #       #    #   # #       #    #  #    #  #    #       #  #       #    #    #    #      
- #    #  #    #  #    #  #    #  # #  #  #       #####   #    #      #    #  #    #    #    #  #       #       #####   #    #    #        #    #  #    #  #    #       #  #####   #         #     ####  
- ######  #    #  #    #  ######  #  # #  #       #       #    #      ######  #####     #    #  #       #       #       #####     #        #####   #####   #    #       #  #       #         #         # 
- #    #  #    #   #  #   #    #  #   ##  #    #  #       #    #      #    #  #   #     #    #  #       #       #       #   #     #        #       #   #   #    #  #    #  #       #    #    #    #    # 
- #    #  #####     ##    #    #  #    #   ####   ######  #####       #    #  #    #    #    #  ######  ######  ######  #    #    #        #       #    #   ####    ####   ######   ####     #     ####  
-                                                                                                                                                                                               
 
 sp_land_super_heavy_howitzer = {
 	specialization = specialization_land
@@ -1223,19 +1196,8 @@ sp_land_super_heavy_railway_gun = {
 		}
 
 		country_effects = {
-			if = {
-				limit = {
-					original_tag = GER
-				}
-				create_railway_gun = {
-					equipment = super_heavy_railway_gun_equipment_1
-					name = "Dora"
-				}
-			}
-			else = {
-				create_railway_gun = {
-					equipment = super_heavy_railway_gun_equipment_1
-				}
+			create_railway_gun = {
+				equipment = super_heavy_railway_gun_equipment_1
 			}
 		}
 	}
@@ -1497,16 +1459,6 @@ sp_land_multi_charge_large_caliber_gun = {
 		}
 	}
 }
-
-
-##     ## ########  ######      ###       ########  #######  ########  ######## 
-###   ### ##       ##    ##    ## ##      ##       ##     ## ##     ##    ##    
-#### #### ##       ##         ##   ##     ##       ##     ## ##     ##    ##    
-## ### ## ######   ##   #### ##     ##    ######   ##     ## ########     ##    
-##     ## ##       ##    ##  #########    ##       ##     ## ##   ##      ##    
-##     ## ##       ##    ##  ##     ##    ##       ##     ## ##    ##     ##    
-##     ## ########  ######   ##     ##    ##        #######  ##     ##    ##
-
 
 sp_land_stronghold_network = {
 	specialization = specialization_land
