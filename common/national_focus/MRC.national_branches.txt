@@ -11,8 +11,6 @@ focus_tree = { # Merchant-Republicism
 	}
 	default = no
 
-	shared_focus = MRC_intervention_military # Policy
-	shared_focus = MRC_neutrality_rearmement # Policy
 	shared_focus = MRC_military_learn_cyrstallo_peninsula_failures # Modifers
 	shared_focus = MRC_military_third_dimensional # Modifers
 	shared_focus = MRC_ambitious_great_fleet # Modifers
@@ -2673,6 +2671,10 @@ focus_tree = { # Merchant-Republicism
 			available_if_capitulated = no
 		
 			available = {
+				has_country_leader = {
+					character = MRC_gracia_fidaelis
+					ruling_only = yes
+				}
 			}
 			bypass = {
 			}
@@ -2804,7 +2806,7 @@ focus_tree = { # Merchant-Republicism
 	# Left Chapter 3:   Foreign Intervention Branch
 	# Right Chapter 3:  Progressive Neutrality Branch
 	# Middle Chapter 3: Merchant-Republicism Equilibrium Branch
-	continuous_focus_position = { x = 500 y = 100 }
+	continuous_focus_position = { x = 150 y = 50 }
 }
 
 focus_tree = { # Theocratic
@@ -2823,12 +2825,10 @@ focus_tree = { # Theocratic
 	}
 	default = no
 
-	shared_focus = MRC_intervention_military # Policy
-	shared_focus = MRC_neutrality_rearmement # Policy
 	shared_focus = MRC_military_learn_cyrstallo_peninsula_failures # Modifers
 	shared_focus = MRC_military_third_dimensional # Modifers
 	shared_focus = MRC_ambitious_great_fleet # Modifers
-	continuous_focus_position = { x = 500 y = 100 }
+	continuous_focus_position = { x = 150 y = 50 }
 }
 
 focus_tree = { # Unity
@@ -2847,331 +2847,12 @@ focus_tree = { # Unity
 	}
 	default = no
 
-	shared_focus = MRC_intervention_military # Policy
-	shared_focus = MRC_neutrality_rearmement # Policy
 	shared_focus = MRC_military_learn_cyrstallo_peninsula_failures # Modifers
 	shared_focus = MRC_military_third_dimensional # Modifers
 	shared_focus = MRC_ambitious_great_fleet # Modifers
-	continuous_focus_position = { x = 500 y = 100 }
+	continuous_focus_position = { x = 150 y = 50 }
 }
 
-# Intervention Military Branch
-	shared_focus = { # Intervention Military
-		id = MRC_intervention_military
-		icon = GFX_focus_unknown_military
-		#prerequisite = { focus = MRC_foreign_intervention_focus }
-		#mutually_exclusive = { focus =  }
-		#relative_position_id = MRC_foreign_intervention_focus
-		x = -17
-		y = 7
-	
-		cost = 10
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = no
-	
-		available = {
-			custom_trigger_tooltip = {
-				tooltip = historically_locked_tt
-				is_historical_focus_on = no
-			}
-			NOT = { has_completed_focus = MRC_neutrality_rearmement }
-			OR = {
-				has_completed_focus = MRC_foreign_intervention_focus
-				has_completed_focus = MRC_intervention_policy
-			}
-		}
-		bypass = {
-		}
-	
-		ai_will_do = {
-			base = 2
-		}
-
-		completion_reward = {
-			log = "[GetDateText]: [Root.GetName]: Focus MRC_intervention_military"
-		}
-	}
-
-	shared_focus = { # Centralized the Mesi Sea
-		id = MRC_centralized_the_mesi_sea
-		icon = GFX_focus_unknown_military
-		prerequisite = { focus = MRC_intervention_military }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = MRC_intervention_military
-		x = -2
-		y = 1
-	
-		cost = 1
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = no
-
-		available = {
-			#
-		}
-		bypass = {
-			# Auto Bypass later for conquest
-		}
-	
-		ai_will_do = {
-			base = 2
-		}
-
-		completion_reward = {
-			log = "[GetDateText]: [Root.GetName]: Focus MRC_centralized_the_mesi_sea"
-		}
-	}
-
-	shared_focus = { # Industrial Militarism
-		id = MRC_industrial_militarism
-		icon = GFX_focus_unknown_military
-		prerequisite = { focus = MRC_intervention_military }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = MRC_intervention_military
-		x = 2
-		y = 1
-	
-		cost = 5
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = no
-
-		available = {
-		}
-		bypass = {
-		}
-	
-		ai_will_do = {
-			base = 2
-		}
-
-		completion_reward = {
-			log = "[GetDateText]: [Root.GetName]: Focus MRC_industrial_militarism"
-		}
-	}
-# Neutrality Rearmement Branch
-	shared_focus = { # Neutrality Rearmement
-		id = MRC_neutrality_rearmement
-		icon = GFX_focus_unknown_military
-		#prerequisite = { focus = MRC_foreign_neutrality_focus }
-		#mutually_exclusive = { focus =  }
-		#relative_position_id = MRC_foreign_neutrality_focus
-		x = 17
-		y = 7
-	
-		cost = 10
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = no
-
-		available = {
-			NOT = { has_completed_focus = MRC_intervention_military }
-			OR = {
-				has_completed_focus = MRC_neutrality_policy
-				has_completed_focus = MRC_foreign_neutrality_focus
-			}
-		}
-		bypass = {
-		}
-	
-		ai_will_do = {
-			base = 2
-		}
-
-		completion_reward = {
-			log = "[GetDateText]: [Root.GetName]: Focus MRC_neutrality_rearmement"
-			hidden_effect = {
-				if = {
-					limit = { MRC = { has_completed_focus = MRC_neutrality_rearmement } }
-					MRC = { complete_national_focus = MRC_archard_vlad_the_warmonger }
-				}
-			}
-		}
-	}
-
-	shared_focus = { # Home Island Coastal Defensives
-		id = MRC_home_island_coastal_defensives
-		icon = GFX_focus_unknown_military
-		prerequisite = { focus = MRC_neutrality_rearmement }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = MRC_neutrality_rearmement
-		x = -2
-		y = 1
-	
-		cost = 5
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = no
-
-		available = {
-		}
-		bypass = {
-		}
-	
-		ai_will_do = {
-			base = 2
-		}
-
-		completion_reward = {
-			log = "[GetDateText]: [Root.GetName]: Focus MRC_home_island_coastal_defensives"
-		}
-	}
-	# Deed
-
-
-	# Traditional
-		shared_focus = { # Gabriel Strongheart the Tradition
-			id = MRC_gabriel_strongheart_the_tradition
-			icon = GFX_focus_unknown_military
-			prerequisite = { focus = MRC_neutrality_rearmement }
-			#mutually_exclusive = { focus =  }
-			relative_position_id = MRC_neutrality_rearmement
-			x = 2
-			y = 1
-		
-			cost = 1
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = no
-		
-			allow_branch = {
-				NOT = { OR = { has_completed_focus = MRC_isabella_delfina_the_influencer has_completed_focus = MRC_gaius_divitiis_the_authority has_completed_focus = MRC_archard_vlad_the_warmonger } }
-			}
-			available = {
-				NOT = { always = yes }
-			}
-			bypass = {
-			}
-		
-			ai_will_do = {
-				base = 2
-			}
-
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_gabriel_strongheart_the_tradition"
-			}
-		}
-	# Influencer
-		shared_focus = { # Isabella Delfina the Influencer
-			id = MRC_isabella_delfina_the_influencer
-			icon = GFX_focus_unknown_military
-			prerequisite = { focus = MRC_neutrality_rearmement }
-			#mutually_exclusive = { focus =  }
-			relative_position_id = MRC_neutrality_rearmement
-			x = 5
-			y = 1
-		
-			cost = 1
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = no
-		
-			allow_branch = {
-				NOT = { OR = { has_completed_focus = MRC_gabriel_strongheart_the_tradition has_completed_focus = MRC_gaius_divitiis_the_authority has_completed_focus = MRC_archard_vlad_the_warmonger } }
-			}
-			available = {
-				NOT = { always = yes }
-			}
-			bypass = {
-			}
-		
-			ai_will_do = {
-				base = 2
-			}
-
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_isabella_delfina_the_influencer"
-			}
-		}
-	# Authority
-		shared_focus = { # Gaius Divitiis the Authoritarian
-			id = MRC_gaius_divitiis_the_authority
-			icon = GFX_focus_unknown_military
-			prerequisite = { focus = MRC_neutrality_rearmement }
-			#mutually_exclusive = { focus =  }
-			relative_position_id = MRC_neutrality_rearmement
-			x = 8
-			y = 1
-		
-			cost = 1
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = no
-		
-			allow_branch = {
-				NOT = { OR = { has_completed_focus = MRC_gabriel_strongheart_the_tradition has_completed_focus = MRC_isabella_delfina_the_influencer has_completed_focus = MRC_archard_vlad_the_warmonger } }
-			}
-			available = {
-				NOT = { always = yes }
-			}
-			bypass = {
-			}
-		
-			ai_will_do = {
-				base = 2
-			}
-
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_gaius_divitiis_the_authority"
-			}
-		}
-	# Warmonger
-		shared_focus = { # Archard Vlad the Warmonger
-			id = MRC_archard_vlad_the_warmonger
-			icon = GFX_focus_unknown_military
-			prerequisite = { focus = MRC_neutrality_rearmement }
-			#mutually_exclusive = { focus =  }
-			relative_position_id = MRC_neutrality_rearmement
-			x = 11
-			y = 1
-		
-			cost = 1
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = no
-		
-			allow_branch = {
-				NOT = { OR = { has_completed_focus = MRC_gabriel_strongheart_the_tradition has_completed_focus = MRC_isabella_delfina_the_influencer has_completed_focus = MRC_gaius_divitiis_the_authority } }
-			}
-			available = {
-				NOT = { always = yes }
-			}
-			bypass = {
-			}
-		
-			ai_will_do = {
-				base = 2
-			}
-
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_archard_vlad_the_warmonger"
-			}
-		}
-
-		shared_focus = { # Voluteers against Tyranny
-			id = MRC_voluteers_against_tyranny
-			icon = GFX_focus_unknown_military
-			prerequisite = { focus = MRC_archard_vlad_the_warmonger }
-			#mutually_exclusive = { focus =  }
-			relative_position_id = MRC_archard_vlad_the_warmonger
-			x = 0
-			y = 1
-		
-			cost = 5
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = no
-
-			ai_will_do = {
-				base = 2
-			}
-
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_voluteers_against_tyranny"
-				custom_effect_tooltip = MRC_WARMONGER_UNLOCK_VOLUNTEER_TROOPS_TT
-			}
-		}
 # Army Branches
 	shared_focus = { # Learn from the Cyrstallo Peninsula Failures
 		id = MRC_military_learn_cyrstallo_peninsula_failures
@@ -3366,6 +3047,184 @@ focus_tree = { # Unity
 			navy_experience = 25
 		}
 	}
+	# International Navy
+		shared_focus = { # The International Fleet 
+			id = MRC_international_fleet
+			icon = GFX_focus_unknown_military
+			prerequisite = { focus = MRC_ambitious_great_fleet }
+			mutually_exclusive = { focus = MRC_national_fleet }
+			relative_position_id = MRC_ambitious_great_fleet
+			x = -2
+			y = 1
+
+			cost = 10
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = yes
+
+			available = {
+				OR = {
+					has_completed_focus = MRC_foreign_intervention_focus
+					has_completed_focus = MRC_intervention_policy
+				}
+			}
+			bypass = {
+			}
+
+			ai_will_do = {
+				base = 2
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_international_fleet"
+			}
+		}
+
+		shared_focus = { # Continental Range
+			id = MRC_continental_range
+			icon = GFX_focus_unknown_military
+			prerequisite = { focus = MRC_international_fleet }
+			#mutually_exclusive = { focus =  }
+			relative_position_id = MRC_international_fleet
+			x = 0
+			y = 1
+
+			cost = 10
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = yes
+
+			available = {
+			}
+			bypass = {
+			}
+
+			ai_will_do = {
+				base = 2
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_continental_range"
+				add_ideas = MRC_idea_continetal_naval_range
+			}
+		}
+
+		shared_focus = { # Fortify Trade Ports
+			id = MRC_fortify_trade_ports
+			icon = GFX_focus_unknown_military
+			prerequisite = { focus = MRC_international_fleet }
+			#mutually_exclusive = { focus =  }
+			relative_position_id = MRC_international_fleet
+			x = -2
+			y = 1
+
+			cost = 10
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = yes
+
+			available = {
+			}
+			bypass = {
+			}
+
+			ai_will_do = {
+				base = 2
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_fortify_trade_ports"
+			}
+		}
+	# Local Navy
+		shared_focus = { # The National Fleet
+			id = MRC_national_fleet
+			icon = GFX_focus_unknown_military
+			prerequisite = { focus = MRC_ambitious_great_fleet }
+			mutually_exclusive = { focus = MRC_international_fleet }
+			relative_position_id = MRC_ambitious_great_fleet
+			x = 2
+			y = 1
+
+			cost = 10
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = yes
+
+			available = {
+				OR = {
+					has_completed_focus = MRC_neutrality_policy
+					has_completed_focus = MRC_foreign_neutrality_focus
+				}
+			}
+			bypass = {
+			}
+
+			ai_will_do = {
+				base = 2
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_national_fleet"
+			}
+		}
+
+		shared_focus = { # Naval Security
+			id = MRC_naval_security
+			icon = GFX_focus_unknown_military
+			prerequisite = { focus = MRC_national_fleet }
+			#mutually_exclusive = { focus =  }
+			relative_position_id = MRC_national_fleet
+			x = 0
+			y = 1
+
+			cost = 10
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = yes
+
+			available = {
+			}
+			bypass = {
+			}
+
+			ai_will_do = {
+				base = 2
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_naval_security"
+				add_ideas = MRC_idea_local_security_naval_range
+			}
+		}
+
+		shared_focus = { # Fortify Home Ports
+			id = MRC_fortify_home_ports
+			icon = GFX_focus_unknown_military
+			prerequisite = { focus = MRC_national_fleet }
+			#mutually_exclusive = { focus =  }
+			relative_position_id = MRC_national_fleet
+			x = 2
+			y = 1
+
+			cost = 10
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = yes
+
+			available = {
+			}
+			bypass = {
+			}
+
+			ai_will_do = {
+				base = 2
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_fortify_home_ports"
+			}
+		}
 
 	shared_focus = { # Expand Naval Dockyards
 		id = MRC_expand_naval_dockyards
@@ -4038,181 +3897,3 @@ focus_tree = { # Unity
 					}
 				}
 			}
-	# International Navy
-		shared_focus = { # The International Fleet 
-			id = MRC_international_fleet
-			icon = GFX_focus_unknown_military
-			prerequisite = { focus = MRC_ambitious_great_fleet }
-			mutually_exclusive = { focus = MRC_national_fleet }
-			relative_position_id = MRC_ambitious_great_fleet
-			x = -2
-			y = 1
-
-			cost = 10
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = yes
-
-			available = {
-				OR = {
-					has_completed_focus = MRC_foreign_intervention_focus
-					has_completed_focus = MRC_intervention_policy
-				}
-			}
-			bypass = {
-			}
-
-			ai_will_do = {
-				base = 2
-			}
-
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_international_fleet"
-			}
-		}
-
-		shared_focus = { # Continental Range
-			id = MRC_continental_range
-			icon = GFX_focus_unknown_military
-			prerequisite = { focus = MRC_international_fleet }
-			#mutually_exclusive = { focus =  }
-			relative_position_id = MRC_international_fleet
-			x = 0
-			y = 1
-
-			cost = 10
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = yes
-
-			available = {
-			}
-			bypass = {
-			}
-
-			ai_will_do = {
-				base = 2
-			}
-
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_continental_range"
-				add_ideas = MRC_idea_continetal_naval_range
-			}
-		}
-
-		shared_focus = { # Fortify Trade Ports
-			id = MRC_fortify_trade_ports
-			icon = GFX_focus_unknown_military
-			prerequisite = { focus = MRC_international_fleet }
-			#mutually_exclusive = { focus =  }
-			relative_position_id = MRC_international_fleet
-			x = -2
-			y = 1
-
-			cost = 10
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = yes
-
-			available = {
-			}
-			bypass = {
-			}
-
-			ai_will_do = {
-				base = 2
-			}
-
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_fortify_trade_ports"
-			}
-		}
-	# Local Navy
-		shared_focus = { # The National Fleet
-			id = MRC_national_fleet
-			icon = GFX_focus_unknown_military
-			prerequisite = { focus = MRC_ambitious_great_fleet }
-			mutually_exclusive = { focus = MRC_international_fleet }
-			relative_position_id = MRC_ambitious_great_fleet
-			x = 2
-			y = 1
-
-			cost = 10
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = yes
-
-			available = {
-				OR = {
-					has_completed_focus = MRC_neutrality_policy
-					has_completed_focus = MRC_foreign_neutrality_focus
-				}
-			}
-			bypass = {
-			}
-
-			ai_will_do = {
-				base = 2
-			}
-
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_national_fleet"
-			}
-		}
-
-		shared_focus = { # Naval Security
-			id = MRC_naval_security
-			icon = GFX_focus_unknown_military
-			prerequisite = { focus = MRC_national_fleet }
-			#mutually_exclusive = { focus =  }
-			relative_position_id = MRC_national_fleet
-			x = 0
-			y = 1
-
-			cost = 10
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = yes
-
-			available = {
-			}
-			bypass = {
-			}
-
-			ai_will_do = {
-				base = 2
-			}
-
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_naval_security"
-				add_ideas = MRC_idea_local_security_naval_range
-			}
-		}
-
-		shared_focus = { # Fortify Home Ports
-			id = MRC_fortify_home_ports
-			icon = GFX_focus_unknown_military
-			prerequisite = { focus = MRC_national_fleet }
-			#mutually_exclusive = { focus =  }
-			relative_position_id = MRC_national_fleet
-			x = 2
-			y = 1
-
-			cost = 10
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = yes
-
-			available = {
-			}
-			bypass = {
-			}
-
-			ai_will_do = {
-				base = 2
-			}
-
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_fortify_home_ports"
-			}
-		}
