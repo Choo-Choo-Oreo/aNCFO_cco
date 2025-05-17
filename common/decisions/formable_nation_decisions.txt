@@ -2833,6 +2833,172 @@ form_united_vally_category = {
 	}
 }
 
+form_pearlin_duan_marian_federation_category = {
+	form_pearlin_duan_marian_federation = {
+		icon = generic_form_nation
+		allowed = {
+			OR = {
+				original_tag = SDP
+				original_tag = SMP
+				original_tag = SPP
+			}
+		}
+		available = {
+			is_subject = no
+			count_triggers = {
+				amount = 10
+				21  = { is_controlled_by = ROOT }
+				22  = { is_controlled_by = ROOT }
+				47  = { is_controlled_by = ROOT }
+				164 = { is_controlled_by = ROOT }
+				419 = { is_controlled_by = ROOT }
+				420 = { is_controlled_by = ROOT }
+				589 = { is_controlled_by = ROOT }
+				590 = { is_controlled_by = ROOT }
+				591 = { is_controlled_by = ROOT }
+				592 = { is_controlled_by = ROOT }
+				594 = { is_controlled_by = ROOT }
+				595 = { is_controlled_by = ROOT }
+				596 = { is_controlled_by = ROOT }
+				597 = { is_controlled_by = ROOT }
+				598 = { is_controlled_by = ROOT }
+			}
+		}
+		visible = {
+			OR = {
+				original_tag = SDP
+				original_tag = SMP
+				original_tag = SPP
+			}
+			NOT = { has_country_flag = form_pearlin_duan_marian_federation_flag }
+		}
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision form_pearlin_duan_marian_federation"
+			set_cosmetic_tag = UNIFIED_UotPDMPF
+			set_capital = { state = 21 }
+			hidden_effect = {
+				21  = { add_core_of = ROOT }
+				22  = { add_core_of = ROOT }
+				47  = { add_core_of = ROOT }
+				164 = { add_core_of = ROOT }
+				419 = { add_core_of = ROOT }
+				420 = { add_core_of = ROOT }
+				589 = { add_core_of = ROOT }
+				590 = { add_core_of = ROOT }
+				591 = { add_core_of = ROOT }
+				592 = { add_core_of = ROOT }
+				594 = { add_core_of = ROOT }
+				595 = { add_core_of = ROOT }
+				596 = { add_core_of = ROOT }
+				597 = { add_core_of = ROOT }
+				598 = { add_core_of = ROOT }
+				every_state = {
+					LIMIT = { is_core_of = NPP }
+					add_core_of = ROOT
+				}
+			}
+			hidden_effect = { set_country_flag = form_pearlin_duan_marian_federation_flag }
+		}
+		ai_will_do = {
+			factor = 5
+		}
+	}
+}
+
+political_actions = {
+	UotPDMPF_federate_with_UFS = {
+		icon = generic_form_nation
+		allowed = { always = yes }
+		available = {
+			is_subject = no
+			OR = {
+				AND = {
+					is_in_faction_with = SDP
+					SDP = { has_cosmetic_tag = UNIFIED_UotPDMPF }
+				}
+				AND = {
+					is_in_faction_with = SMP
+					SMP = { has_cosmetic_tag = UNIFIED_UotPDMPF }
+				}
+				AND = {
+					is_in_faction_with = SPP
+					SPP = { has_cosmetic_tag = UNIFIED_UotPDMPF }
+				}
+			}
+			has_capitulated = yes
+		}
+		visible = {
+			TAG = UFS
+			OR = {
+				SDP = { has_country_flag = form_pearlin_duan_marian_federation_flag }
+				SMP = { has_country_flag = form_pearlin_duan_marian_federation_flag }
+				SPP = { has_country_flag = form_pearlin_duan_marian_federation_flag }
+			}
+			NOT = { has_global_flag = form_UotPDMPF_federate_with_UFS_flag }
+		}
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision UotPDMPF_federate_with_UFS"
+			IF = {
+				LIMIT = { SDP = { has_cosmetic_tag = UNIFIED_UotPDMPF } }
+				transfer_navy = { target = SDP }
+				SDP = {
+					annex_country = { target = UFS transfer_troops = yes }
+					every_state = {
+						LIMIT = { is_core_of = UFS }
+						add_core_of = SDP
+					}
+					hidden_effect = {
+						8   = { add_core_of = SDP }
+						403 = { add_core_of = SDP }
+						404 = { add_core_of = SDP }
+					}
+				}
+			}
+			IF = {
+				LIMIT = { SMP = { has_cosmetic_tag = UNIFIED_UotPDMPF } }
+				transfer_navy = { target = SMP }
+				SMP = {
+					annex_country = { target = UFS transfer_troops = yes }
+					every_state = {
+						LIMIT = { is_core_of = UFS }
+						add_core_of = SMP
+					}
+					hidden_effect = {
+						8   = { add_core_of = SDP }
+						403 = { add_core_of = SDP }
+						404 = { add_core_of = SDP }
+					}
+				}
+			}
+			IF = {
+				LIMIT = { SPP = { has_cosmetic_tag = UNIFIED_UotPDMPF } }
+				transfer_navy = { target = SPP }
+				SPP = {
+					annex_country = { target = UFS transfer_troops = yes }
+					every_state = {
+						LIMIT = { is_core_of = UFS }
+						add_core_of = SPP
+					}
+					hidden_effect = {
+						8   = { add_core_of = SDP }
+						403 = { add_core_of = SDP }
+						404 = { add_core_of = SDP }
+					}
+				}
+			}
+			hidden_effect = { set_global_flag = form_UotPDMPF_federate_with_UFS_flag }
+		}
+		cost = 50
+		ai_will_do = {
+			factor = 10
+			modifier = {
+				factor = 5
+				is_historical_focus_on = yes
+			}
+		}
+	}
+}
+
 form_artemum_oberflehkhuh_category = {
 	form_artemum_oberflehkhuh = {
 		icon = generic_form_nation
