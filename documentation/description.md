@@ -22,11 +22,12 @@ This is a fantasy mod for HoI4 based off my own stories and documents. I am a so
 - Weather now occurs
 
 [h1]Minor Update Changes[/h1]
-- Civilwar bug Fixing
-- Added many DAMs
-- Added many more states(100+ states)
+- Balance Changes
+- Bita Development
 - Map Cleanup
 - AI Improvements
+- Merchant-Republica Focuses
+- Ursprung and Twerah Focuses
 
 [h1]Plans[/h1]
 - Several focus tree's for majors.

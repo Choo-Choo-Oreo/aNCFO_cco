@@ -80,26 +80,315 @@ bop_HHE_isabella_delfina = {
 bop_HHE_gaius_divitiis = {
 }
 
-bop_HHE_archard_vlad = {
-	DEBUG_deactivate_bop_HHE_archard_vlad = {
+bop_HHE_archard_vladaros = {
+	HHE_mission_archard_vladaros_desire_for_war = {
+
+		allowed = {
+			original_tag = HHE
+		}
+
+		icon = ger_mefo_bills
+		priority = 100
+
+		available = {
+			has_war = yes
+		}
+
+		activation = {
+			has_war = no
+			has_completed_focus = HHE_warmonger_great_victory_parades
+			hidden_trigger = {
+				NOT = {
+					OR = {
+						has_completed_focus = HHE_warmonger_her_disciple_archard_vladaros
+						has_completed_focus = HHE_warmonger_one_faith
+						has_completed_focus = HHE_warmonger_one_nation
+					}
+				}
+			}
+		}
+
+		days_mission_timeout = 30
+		is_good = no
+		fire_only_once = no
+
+		cancel_trigger = {
+			hidden_trigger = {
+				OR = {
+					has_completed_focus = HHE_warmonger_her_disciple_archard_vladaros
+					has_completed_focus = HHE_warmonger_one_faith
+					has_completed_focus = HHE_warmonger_one_nation
+				}
+			}
+		}
+
+		timeout_effect = {
+			activate_mission = HHE_mission_archard_vladaros_desire_for_war
+			IF = {
+				LIMIT = { NOT = { has_completed_focus = HHE_warmonger_vladaros_cult_of_personality } }
+				custom_effect_tooltip = cult_personality_vladaros_one_tt
+				custom_effect_tooltip = generic_skip_one_line_tt # We do this for clearer reading.
+				add_power_balance_value = { id = power_balance_HHE_archard_vladaros value = -0.01 }
+			}
+			ELSE_IF = {
+				LIMIT = { NOT = { has_completed_focus = HHE_warmonger_our_nations_leader } }
+				custom_effect_tooltip = cult_personality_vladaros_two_tt
+				custom_effect_tooltip = generic_skip_one_line_tt # We do this for clearer reading.
+				add_power_balance_value = { id = power_balance_HHE_archard_vladaros value = -0.02 }
+			}
+			ELSE_IF = {
+				custom_effect_tooltip = generic_skip_one_line_tt # We do this for clearer reading.
+				add_power_balance_value = { id = power_balance_HHE_archard_vladaros value = -0.03 }
+			}
+		}
+	}
+
+	HHE_mission_archard_vladaros_single_economy = {
+
+		allowed = {
+			original_tag = HHE
+		}
+
+		icon = ger_mefo_bills
+		priority = 100
+
+		available = {
+			has_idea = HHE_autarky_idea
+			all_core_state = { is_fully_controlled_by = ROOT }
+			OR = { # This needs to correspond to the Bypass values in the previous focuses
+				has_resources_in_country = {
+					resource = steel
+					amount > 1199
+					extracted = yes
+				}
+				any_subject_country = {
+					has_resources_in_country = {
+						resource = steel
+						amount > 1199
+						extracted = yes
+					}
+				}
+			}
+			OR = { # This needs to correspond to the Bypass values in the previous focuses
+				has_resources_in_country = {
+					resource = aluminium
+					amount > 399
+					extracted = yes
+				}
+				any_subject_country = {
+					has_resources_in_country = {
+						resource = aluminium
+						amount > 399
+						extracted = yes
+					}
+				}
+			}
+			OR = { # This needs to correspond to the Bypass values in the previous focuses
+				has_resources_in_country = {
+					resource = oil
+					amount > 224
+					extracted = yes
+				}
+				any_subject_country = {
+					has_resources_in_country = {
+						resource = oil
+						amount > 224
+						extracted = yes
+					}
+				}
+			}
+			OR = { # This needs to correspond to the Bypass values in the previous focuses
+				has_resources_in_country = {
+					resource = tungsten
+					amount > 149
+					extracted = yes
+				}
+				any_subject_country = {
+					has_resources_in_country = {
+						resource = tungsten
+						amount > 149
+						extracted = yes
+					}
+				}
+			}
+			OR = { # This needs to correspond to the Bypass values in the previous focuses
+				has_resources_in_country = {
+					resource = chromium
+					amount > 149
+					extracted = yes
+				}
+				any_subject_country = {
+					has_resources_in_country = {
+						resource = chromium
+						amount > 149
+						extracted = yes
+					}
+				}
+			}
+			OR = { # This needs to correspond to the Bypass values in the previous focuses
+				has_resources_in_country = {
+					resource = rubber
+					amount > 74
+					extracted = yes
+				}
+				any_subject_country = {
+					has_resources_in_country = {
+						resource = rubber
+						amount > 74
+						extracted = yes
+					}
+				}
+			}
+		}
+
+		activation = {
+			has_completed_focus = HHE_warmonger_state_economy
+			hidden_trigger = { NOT = { has_idea = autarkic_economy_improved } }
+		}
+
+		days_mission_timeout = 30
+		is_good = no
+		fire_only_once = no
+
+		cancel_trigger = {
+		}
+
+		complete_effect = {
+			swap_ideas = {
+				remove_idea = autarkic_economy
+				add_idea = autarkic_economy_improved
+			}
+		}
+
+		timeout_effect = {
+			activate_mission = HHE_mission_archard_vladaros_single_economy
+			IF = {
+				LIMIT = {
+					NOT = {
+						OR = {
+							has_completed_focus = HHE_warmonger_autarky
+							has_completed_focus = HHE_warmonger_revisit_rttf
+						}
+					}
+				}
+				add_power_balance_value = { id = power_balance_HHE_archard_vladaros value = -0.01 }
+				ELSE = {
+					LIMIT = {
+						OR = {
+							has_completed_focus = HHE_warmonger_autarky
+							has_completed_focus = HHE_warmonger_revisit_rttf
+						}
+						NOT = {
+							has_completed_focus = HHE_warmonger_autarky
+							has_completed_focus = HHE_warmonger_revisit_rttf
+						}
+					}
+					add_power_balance_value = { id = power_balance_HHE_archard_vladaros value = -0.02 }
+					ELSE = {
+						add_power_balance_value = { id = power_balance_HHE_archard_vladaros value = -0.03 }
+					}
+				}
+			}
+		}
+	}
+
+	HHE_mission_archard_vladaros_wartime_economy = {
+
+		allowed = {
+			original_tag = HHE
+		}
+
+		icon = ger_mefo_bills
+		priority = 100
+
+		available = {
+			FROM = {
+				custom_trigger_tooltip = { tooltip = HHE_mission_archard_vladaros_wartime_economy_tt }
+				#set_temp_variable = { temp_militarized = ROOT.num_of_military_factories }
+				#add_to_variable = { ROOT.temp_militarized = ROOT.num_of_naval_factories }
+				check_variable = { ROOT.num_of_civilian_factories < ROOT.num_of_military_factories }
+			}
+		}
+
+		activation = {
+			has_completed_focus = HHE_warmonger_marco_economy
+			hidden_trigger = {
+				FROM = {
+					check_variable = { ROOT.num_of_civilian_factories > ROOT.num_of_military_factories }
+				}
+			}
+		}
+
+		days_mission_timeout = 30
+		is_good = no
+		fire_only_once = no
+
+		cancel_trigger = {
+			hidden_trigger = {
+				FROM = {
+					check_variable = { ROOT.num_of_civilian_factories < ROOT.num_of_military_factories }
+				}
+			}
+		}
+
+		timeout_effect = {
+			activate_mission = HHE_mission_archard_vladaros_wartime_economy
+			IF = {
+				LIMIT = {
+					NOT = {
+						OR = {
+							has_completed_focus = HHE_warmonger_national_economy
+							has_completed_focus = HHE_warmonger_trilateral_preparations
+						}
+					}
+				}
+				add_power_balance_value = { id = power_balance_HHE_archard_vladaros value = -0.01 }
+				ELSE = {
+					LIMIT = {
+						OR = {
+							has_completed_focus = HHE_warmonger_national_economy
+							has_completed_focus = HHE_warmonger_trilateral_preparations
+						}
+						NOT = {
+							has_completed_focus = HHE_warmonger_national_economy
+							has_completed_focus = HHE_warmonger_trilateral_preparations
+						}
+					}
+					add_power_balance_value = { id = power_balance_HHE_archard_vladaros value = -0.02 }
+					ELSE = {
+						add_power_balance_value = { id = power_balance_HHE_archard_vladaros value = -0.03 }
+					}
+				}
+			}
+		}
+	}
+
+	DEBUG_deactivate_bop_HHE_archard_vladaros = {
 		priority = 91
 		visible = { AND = { is_debug = yes is_ai = no } }
 		complete_effect = {
-			remove_power_balance = { id = power_balance_HHE_archard_vlad }
+			remove_power_balance = { id = power_balance_HHE_archard_vladaros }
 		}
 	}
 
-	DEBUG_left_test_bop_HHE_archard_vlad = {
+	DEBUG_left_test_bop_HHE_archard_vladaros_failure = {
 		visible = { AND = { is_debug = yes is_ai = no } }
 		complete_effect = {
-			bop_HHE_archard_vlad_very_low_decrease_effect = yes
+			add_power_balance_value = { id = power_balance_HHE_archard_vladaros value = -2.0 }
 		}
 	}
 
-	DEBUG_right_test_bop_HHE_archard_vlad = {
+	DEBUG_left_test_bop_HHE_archard_vladaros = {
 		visible = { AND = { is_debug = yes is_ai = no } }
 		complete_effect = {
-			bop_HHE_archard_vlad_very_low_increase_effect = yes
+			add_power_balance_value = { id = power_balance_HHE_archard_vladaros value = -0.05 }
+		}
+	}
+
+	DEBUG_right_test_bop_HHE_archard_vladaros = {
+		visible = { AND = { is_debug = yes is_ai = no } }
+		complete_effect = {
+			add_power_balance_value = { id = power_balance_HHE_archard_vladaros value = 0.05 }
 		}
 	}
 
@@ -111,28 +400,30 @@ bop_HHE_archard_vlad = {
 		days_re_enable = 30
 		cost = 50
 
-		complete_effect = { bop_HHE_archard_vlad_very_low_increase_effect = yes }
+		complete_effect = {
+			add_power_balance_value = { id = power_balance_HHE_archard_vladaros value = 0.05 }
+		}
 
 		ai_will_do = {
 			factor = 10
 			modifier = {
 				factor = 4
-				power_balance_value = { id = power_balance_HHE_archard_vlad value < 0.50 }
+				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
 			}
             modifier = {
                 factor = 10
                 has_war_support < 0.50
-				power_balance_value = { id = power_balance_HHE_archard_vlad value < 0.50 }
+				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
             }
             modifier = {
                 factor = 10
                 has_war_support < 0.25
-				power_balance_value = { id = power_balance_HHE_archard_vlad value < 0.50 }
+				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
             }
             modifier = {
                 factor = 10
                 has_war_support < 0.01
-				power_balance_value = { id = power_balance_HHE_archard_vlad value < 0.50 }
+				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
             }
 		}
 	}
@@ -148,7 +439,7 @@ bop_HHE_archard_vlad = {
 
 		complete_effect = { hidden_effect = { add_stability = -0.05 }
 			add_popularity = { ideology = theocratism popularity = 0.05 }
-			bop_HHE_archard_vlad_very_low_increase_effect = yes
+			add_power_balance_value = { id = power_balance_HHE_archard_vladaros value = 0.05 }
 		}
 
 		ai_will_do = {
@@ -159,22 +450,22 @@ bop_HHE_archard_vlad = {
 			}
 			modifier = {
 				factor = 4
-				power_balance_value = { id = power_balance_HHE_archard_vlad value < 0.50 }
+				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
 			}
             modifier = {
                 factor = 5
                 has_war_support < 0.50
-				power_balance_value = { id = power_balance_HHE_archard_vlad value < 0.50 }
+				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
             }
             modifier = {
                 factor = 5
                 has_war_support < 0.25
-				power_balance_value = { id = power_balance_HHE_archard_vlad value < 0.50 }
+				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
             }
             modifier = {
                 factor = 5
                 has_war_support < 0.01
-				power_balance_value = { id = power_balance_HHE_archard_vlad value < 0.50 }
+				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
             }
 		}
 	}
@@ -188,7 +479,9 @@ bop_HHE_archard_vlad = {
 		custom_cost_text = decision_cost_manpower_30
 		custom_cost_trigger = { has_manpower > 29999 }
 
-		complete_effect = { hidden_effect = { add_manpower = -30000 } bop_HHE_archard_vlad_very_low_increase_effect = yes }
+		complete_effect = { hidden_effect = { add_manpower = -30000 }
+			add_power_balance_value = { id = power_balance_HHE_archard_vladaros value = 0.05 }
+		}
 
 		ai_will_do = {
 			factor = 0
@@ -198,22 +491,22 @@ bop_HHE_archard_vlad = {
 			}
 			modifier = {
 				factor = 4
-				power_balance_value = { id = power_balance_HHE_archard_vlad value < 0.50 }
+				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
 			}
             modifier = {
                 factor = 5
                 has_war_support < 0.50
-				power_balance_value = { id = power_balance_HHE_archard_vlad value < 0.50 }
+				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
             }
             modifier = {
                 factor = 5
                 has_war_support < 0.25
-				power_balance_value = { id = power_balance_HHE_archard_vlad value < 0.50 }
+				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
             }
             modifier = {
                 factor = 5
                 has_war_support < 0.01
-				power_balance_value = { id = power_balance_HHE_archard_vlad value < 0.50 }
+				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
             }
 		}
 	}
@@ -226,28 +519,30 @@ bop_HHE_archard_vlad = {
 		days_re_enable = 30
 		cost = 50
 
-		complete_effect = { bop_HHE_archard_vlad_very_low_increase_effect = yes }
+		complete_effect = {
+			add_power_balance_value = { id = power_balance_HHE_archard_vladaros value = 0.05 }
+		}
 
 		ai_will_do = {
 			factor = 10
 			modifier = {
 				factor = 4
-				power_balance_value = { id = power_balance_HHE_archard_vlad value < 0.50 }
+				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
 			}
             modifier = {
                 factor = 10
                 has_war_support < 0.50
-				power_balance_value = { id = power_balance_HHE_archard_vlad value < 0.50 }
+				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
             }
             modifier = {
                 factor = 10
                 has_war_support < 0.25
-				power_balance_value = { id = power_balance_HHE_archard_vlad value < 0.50 }
+				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
             }
             modifier = {
                 factor = 10
                 has_war_support < 0.01
-				power_balance_value = { id = power_balance_HHE_archard_vlad value < 0.50 }
+				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
             }
 		}
 	}
@@ -260,28 +555,31 @@ bop_HHE_archard_vlad = {
 		days_re_enable = 30
 		cost = 50
 
-		complete_effect = { add_war_support = 0.05 bop_HHE_archard_vlad_very_low_increase_effect = yes }
+		complete_effect = {
+			add_war_support = 0.05
+			add_power_balance_value = { id = power_balance_HHE_archard_vladaros value = 0.05 }
+		}
 
 		ai_will_do = {
 			factor = 10
 			modifier = {
 				factor = 4
-				power_balance_value = { id = power_balance_HHE_archard_vlad value < 0.50 }
+				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
 			}
             modifier = {
                 factor = 10
                 has_war_support < 0.50
-				power_balance_value = { id = power_balance_HHE_archard_vlad value < 0.50 }
+				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
             }
             modifier = {
                 factor = 10
                 has_war_support < 0.25
-				power_balance_value = { id = power_balance_HHE_archard_vlad value < 0.50 }
+				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
             }
             modifier = {
                 factor = 10
                 has_war_support < 0.01
-				power_balance_value = { id = power_balance_HHE_archard_vlad value < 0.50 }
+				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
             }
 		}
 	}
@@ -294,28 +592,30 @@ bop_HHE_archard_vlad = {
 		days_re_enable = 30
 		cost = 50
 
-		complete_effect = { bop_HHE_archard_vlad_very_low_increase_effect = yes }
+		complete_effect = {
+			add_power_balance_value = { id = power_balance_HHE_archard_vladaros value = 0.05 }
+		}
 
 		ai_will_do = {
 			factor = 10
 			modifier = {
 				factor = 4
-				power_balance_value = { id = power_balance_HHE_archard_vlad value < 0.50 }
+				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
 			}
             modifier = {
                 factor = 10
                 has_war_support < 0.50
-				power_balance_value = { id = power_balance_HHE_archard_vlad value < 0.50 }
+				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
             }
             modifier = {
                 factor = 10
                 has_war_support < 0.25
-				power_balance_value = { id = power_balance_HHE_archard_vlad value < 0.50 }
+				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
             }
             modifier = {
                 factor = 10
                 has_war_support < 0.01
-				power_balance_value = { id = power_balance_HHE_archard_vlad value < 0.50 }
+				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
             }
 		}
 	}
@@ -379,7 +679,7 @@ bop_HHE_archard_vlad = {
 				add_building_construction = { type = arms_factory level = 1 instant_build = yes }
 				add_building_construction = { type = barracks level = 1 instant_build = yes }
 			}
-			bop_HHE_archard_vlad_very_low_increase_effect = yes
+			add_power_balance_value = { id = power_balance_HHE_archard_vladaros value = 0.05 }
 		}
 
         is_good = yes
@@ -395,22 +695,22 @@ bop_HHE_archard_vlad = {
 			}
 			modifier = {
 				factor = 4
-				power_balance_value = { id = power_balance_HHE_archard_vlad value < 0.50 }
+				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
 			}
             modifier = {
                 factor = 10
                 has_war_support < 0.50
-				power_balance_value = { id = power_balance_HHE_archard_vlad value < 0.50 }
+				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
             }
             modifier = {
                 factor = 10
                 has_war_support < 0.25
-				power_balance_value = { id = power_balance_HHE_archard_vlad value < 0.50 }
+				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
             }
             modifier = {
                 factor = 10
                 has_war_support < 0.01
-				power_balance_value = { id = power_balance_HHE_archard_vlad value < 0.50 }
+				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
             }
 		}
 	}
@@ -1748,7 +2048,7 @@ parade_HHE_victory_parades = { # Civil-War of Reconquest
 	}
 }
 
-parade_HHE_great_victory_parades = {
+parade_HHE_great_victory_parades = { # Grand Parades
 	grand_canal_HHE_great_victory_parades = {
 		icon = generic_prepare_civil_war
 
@@ -2111,7 +2411,7 @@ morale_HHE_falling_spirits = {
 		}
 
 		timeout_effect = {
-			bop_HHE_archard_vlad_low_decrease_effect = yes
+			add_power_balance_value = { id = power_balance_HHE_archard_vladaros value = -0.1 }
 			activate_mission = HHE_falling_spirits_in_a_failed_war
 		}
 	}

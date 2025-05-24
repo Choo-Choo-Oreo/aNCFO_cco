@@ -612,5 +612,317 @@ on_actions = {
 				}
 			}
 		}
+
+		effect = {
+			if = {
+				limit = {
+					has_game_rule = {
+						rule = bm_ai_production_fix
+						option = BM_PRODUCTION_FIX_ENABLE
+					}
+				}
+				every_country = { 
+					add_dynamic_modifier = { modifier = BM_AI_production_efficiency_fix }
+					set_variable = { BM_AI_production_efficiency_fix_var = global.difficulty }
+					divide_variable = { BM_AI_production_efficiency_fix_var = 5 }
+				}
+			}
+		}
+
+		effect = {
+			#NUM_OF_MAXIMUM_OPERATIVE_STATUS
+			if = {
+				limit = {
+					has_game_rule = {
+						rule = num_of_maximum_operative_status
+						option = NUM_OF_MAXIMUM_OPERATIVE_5
+					}
+				}
+				set_variable = { global.global_setup_maximum_operative = 5 }
+			}
+			if = {
+				limit = {
+					has_game_rule = {
+						rule = num_of_maximum_operative_status
+						option = NUM_OF_MAXIMUM_OPERATIVE_10
+					}
+				}
+				set_variable = { global.global_setup_maximum_operative = 10 }
+			}
+			if = {
+				limit = {
+					has_game_rule = {
+						rule = num_of_maximum_operative_status
+						option = NUM_OF_MAXIMUM_OPERATIVE_15
+					}
+				}
+				set_variable = { global.global_setup_maximum_operative = 15 }
+			}
+			if = {
+				limit = {
+					has_game_rule = {
+						rule = num_of_maximum_operative_status
+						option = NUM_OF_MAXIMUM_OPERATIVE_20
+					}
+				}
+				set_variable = { global.global_setup_maximum_operative = 20 }
+			}
+			if = {
+				limit = {
+					has_game_rule = {
+						rule = num_of_maximum_operative_status
+						option = NUM_OF_MAXIMUM_OPERATIVE_25
+					}
+				}
+				set_variable = { global.global_setup_maximum_operative = 25 }
+			}
+			if = {
+				limit = {
+					has_game_rule = {
+						rule = num_of_maximum_operative_status
+						option = NUM_OF_MAXIMUM_OPERATIVE_30
+					}
+				}
+				set_variable = { global.global_setup_maximum_operative = 30 }
+			}
+			if = {
+				limit = {
+					has_game_rule = {
+						rule = num_of_maximum_operative_status
+						option = NUM_OF_MAXIMUM_OPERATIVE_50
+					}
+				}
+				set_variable = { global.global_setup_maximum_operative = 50 }
+			}
+			if = {
+				limit = {
+					has_game_rule = {
+						rule = num_of_maximum_operative_status
+						option = NUM_OF_MAXIMUM_OPERATIVE_75
+					}
+				}
+				set_variable = { global.global_setup_maximum_operative = 75 }
+			}
+			if = {
+				limit = {
+					has_game_rule = {
+						rule = num_of_maximum_operative_status
+						option = NUM_OF_MAXIMUM_OPERATIVE_100
+					}
+				}
+				set_variable = { global.global_setup_maximum_operative = 100 }
+			}
+			if = {
+				limit = {
+					has_game_rule = {
+						rule = num_of_maximum_operative_status
+						option = NUM_OF_MAXIMUM_OPERATIVE_150
+					}
+				}
+				set_variable = { global.global_setup_maximum_operative = 150 }
+			}
+			if = {
+				limit = {
+					has_game_rule = {
+						rule = num_of_maximum_operative_status
+						option = NUM_OF_MAXIMUM_OPERATIVE_200
+					}
+				}
+				set_variable = { global.global_setup_maximum_operative = 200 }
+			}
+			
+			#NUM_OF_OPERATIVE_SLOT_STATUS
+			if = {
+				limit = {
+					has_game_rule = {
+						rule = num_of_operative_slot_status
+						option = PER_5
+					}
+				}
+				set_variable = { global.global_setup_operative = 5 }
+			}
+			if = {
+				limit = {
+					has_game_rule = {
+						rule = num_of_operative_slot_status
+						option = PER_10
+					}
+				}
+				set_variable = { global.global_setup_operative = 10 }
+			}
+			if = {
+				limit = {
+					has_game_rule = {
+						rule = num_of_operative_slot_status
+						option = PER_15
+					}
+				}
+				set_variable = { global.global_setup_operative = 15 }
+			}
+			if = {
+				limit = {
+					has_game_rule = {
+						rule = num_of_operative_slot_status
+						option = PER_20
+					}
+				}
+				set_variable = { global.global_setup_operative = 20 }
+			}
+			if = {
+				limit = {
+					has_game_rule = {
+						rule = num_of_operative_slot_status
+						option = PER_30
+					}
+				}
+				set_variable = { global.global_setup_operative = 30 }
+			}
+			if = {
+				limit = {
+					has_game_rule = {
+						rule = num_of_operative_slot_status
+						option = PER_50
+					}
+				}
+				set_variable = { global.global_setup_operative = 50 }
+			}
+			every_country = {
+				limit = { has_intelligence_agency = yes }
+				if = {
+					limit = { NOT = { has_dynamic_modifier = { modifier = operative_slot_idea_dyn } } }
+					add_dynamic_modifier = { modifier = operative_slot_idea_dyn }
+				}
+				set_temp_variable = { operative_slot_temp = num_of_factories }
+				divide_temp_variable = { operative_slot_temp = global.global_setup_operative }
+				set_variable = { operative_slot_var = operative_slot_temp }
+				round_variable = operative_slot_var
+				if = {
+					limit = {
+						NOT = { has_game_rule = { rule = num_of_maximum_operative_status option = DEFAULT } }
+						check_variable = { operative_slot_var > global.global_setup_maximum_operative }
+					}
+					set_variable = { operative_slot_var = global.global_setup_maximum_operative }
+				}
+			}
+		}
+
+		effect = {
+			# Division Limits
+			if = {
+				limit = {
+					has_game_rule = {
+						rule = unit_limit_options
+						option = AI_ONLY
+					}
+				}
+				set_global_flag = KR_unit_limits_ai_only
+			}
+			else_if = {
+				limit = {
+					has_game_rule = {
+						rule = unit_limit_options
+						option = NONE
+					}
+				}
+				set_global_flag = KR_no_unit_limits
+			}
+			# Demobilization
+			if = {
+				limit = {
+					has_game_rule = {
+						rule = demobilization_options
+						option = AI_ONLY
+					}
+				}
+				set_global_flag = KR_demob_ai_only
+			}
+			else_if = {
+				limit = {
+					has_game_rule = {
+						rule = demobilization_options
+						option = NONE
+					}
+				}
+				set_global_flag = KR_no_demob
+			}
+		}
+	}
+	on_weekly = {
+		effect = {
+			if = {
+				limit = { has_intelligence_agency = yes }
+				if = {
+					limit = { NOT = { has_dynamic_modifier = { modifier = operative_slot_idea_dyn } } }
+					add_dynamic_modifier = { modifier = operative_slot_idea_dyn }
+				}
+				set_temp_variable = { operative_slot_temp = num_of_factories }
+				divide_temp_variable = { operative_slot_temp = global.global_setup_operative }
+				set_variable = { operative_slot_var = operative_slot_temp }
+				round_variable = operative_slot_var
+				if = {
+					limit = {
+						NOT = { has_game_rule = { rule = num_of_maximum_operative_status option = DEFAULT } }
+						check_variable = { operative_slot_var > global.global_setup_maximum_operative }
+					}
+					set_variable = { operative_slot_var = global.global_setup_maximum_operative }
+				}
+			}
+		}
+
+		effect = {
+			# unit limit calculations
+			country_event = kr.political.119
+		}
+	}
+
+	on_monthly = {
+		effect = {
+
+			# maintain list of guarantors
+			if = {
+				limit = {
+					has_global_flag = KR_Economy_Logging
+					is_debug = yes
+				}
+
+				#unit limits logging
+				log = "KR_Unit_Limit_Metrics;[GetDateText];[Root.GetTag];[?num_actual_divisions];[?max_divisions]"
+			}
+		}
+	}
+
+	on_startup = {
+		effect = {
+
+			every_country = {
+				#Unit Limits Setup
+				country_event = kr.political.119
+			}
+		}
+	}
+
+	on_peace = {
+		effect = {
+			log = "[GetDateText]: [Root.GetName]: on_peace"
+			#Demobilization check for the AI
+			if = {
+				limit = {
+					is_ai = yes
+					NOT = { has_country_flag = has_demobilization_check }
+				}
+				set_country_flag = { flag = has_demobilization_check days = 6 value = 1 }
+				country_event = { id = kr.political.120 days = 6 }
+			}
+
+			#Reduce units check for the AI
+			if = {
+				limit = {
+					is_ai = yes
+					NOT = { has_country_flag = has_reduce_units_check }
+				}
+				set_country_flag = has_reduce_units_check
+				country_event = { id = kr.political.121 days = 7 random = 72 }
+			}
+		}
 	}
 }

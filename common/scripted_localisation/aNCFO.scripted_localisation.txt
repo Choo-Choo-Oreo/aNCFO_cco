@@ -1,0 +1,112 @@
+defined_text = {
+	name = GetSpawnOrdinalSuffix
+	text = {
+		trigger = {
+			set_temp_variable = { remainder = counter }
+			modulo_temp_variable = { remainder = 10 }
+			check_variable = { remainder = 1 }
+			NOT = { check_variable = { counter = 11 } }
+		}
+		localization_key = "st"
+	}
+	text = {
+		trigger = {
+			set_temp_variable = { remainder = counter }
+			modulo_temp_variable = { remainder = 10 }
+			check_variable = { remainder = 2 }
+			NOT = { check_variable = { counter = 12 } }
+		}
+		localization_key = "nd"
+	}
+	text = {
+		trigger = {
+			set_temp_variable = { remainder = counter }
+			modulo_temp_variable = { remainder = 10 }
+			check_variable = { remainder = 3 }
+			NOT = { check_variable = { counter = 13 } }
+		}
+		localization_key = "rd"
+	}
+	text = {
+		localization_key = "th"
+	}
+}
+
+defined_text = {
+	name = GetSpawnMilitiaName
+	text = {
+		trigger = { always = yes }
+		localization_key = "Local Militia"
+	}
+}
+
+defined_text = {
+	name = GetSpawnGarrisonName
+	text = {
+		trigger = { always = yes }
+		localization_key = "Local Garrison"
+	}
+}
+
+defined_text = {
+	name = GetSpawnCavalryMilitiaName
+	text = {
+		trigger = { always = yes }
+		localization_key = "Local Cavalry"
+	}
+}
+
+defined_text = {
+	name = GetSpawnMilitiaTemplate
+	text = {
+		trigger = { always = yes }
+		localization_key = "Local Militia"
+	}
+}
+
+defined_text = {
+	name = GetSpawnGarrisonTemplate
+	text = {
+		trigger = { always = yes }
+		localization_key = "Local Garrison"
+	}
+}
+
+defined_text = {
+	name = GetSpawnCavalryMilitiaTemplate
+	text = {
+		trigger = { always = yes }
+		localization_key = "Local Cavalry"
+	}
+}
+
+defined_text = {
+	name = GetSpawnDivisionCount
+	text = {
+		trigger = {
+			set_temp_variable = { unit_count = state_population_k }
+			divide_temp_variable = { unit_count = 1000 }
+			clamp_temp_variable = { var = unit_count min = 1 max = 50 }
+			if = {
+				limit = { has_resistance = no }
+				multiply_temp_variable = { unit_count = 2 }
+			}
+			else_if = {
+				limit = {
+					ROOT = {
+						OR = {
+							TAG = HLF
+							TAG = HNO
+							TAG = HST
+						}
+					}
+					is_core_of = HHE
+					is_owned_by = HHE
+				}
+				multiply_temp_variable = { unit_count = 2 }
+			}
+			round_temp_variable = unit_count
+		}
+		localization_key = "[?unit_count|G0]"
+	}
+}
