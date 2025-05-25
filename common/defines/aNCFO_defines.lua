@@ -13,7 +13,7 @@
 	-- NGame
 		NDefines.NGame.START_DATE = "1724.1.1.12"
 		NDefines.NGame.END_DATE = "1936.1.1.1"
-		NDefines.NGame.MAP_SCALE_PIXEL_TO_KM = 7.8254
+		NDefines.NGame.MAP_SCALE_PIXEL_TO_KM = 8.5368
 		NDefines.NGame.HANDS_OFF_START_TAG = "LLA"
 		-- Optimization
 			NDefines.NGame.LAG_DAYS_FOR_LOWER_SPEED = 100
