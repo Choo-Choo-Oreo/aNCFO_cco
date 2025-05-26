@@ -1,10 +1,10 @@
 [h1]Warning before Downloading[/h1]
-- This mod is private and it lacks content, but it is "playable".
-- The story of the mod is relatively complete but implementation is slow.
-- There could be updates that break saves and end up being more destabilize.
+- Despite being public this mod lacks content, but it is playable.
+- The story of the mod is relatively complete but implementation is slow to preserve quality.
+- There could be updates that break saves games or ends up destabilize them.
 [img]https://i.imgur.com/Yd0iER6.gif[/img]
 [h1]Presentation[/h1]
-This is a fantasy mod for HoI4 based off my own stories and documents. I am a solo dev with some support from friends, one day I hope to have this mod to be HoI4 Anbennar like the real Anbennar for EU4. Though I will not this doesnt follow common fantasy and JRR Tolkien fantasy tropes. Due to me being a solo dev I dont have many events with written descriptions but I hope the titles are clear enought to figure out what is happening! Please join the discord and tell me about your game as its important to help me develop the mod quicker.
+This is a fantasy mod for HoI4 based off my own stories and documents. I am a solo dev with some support from friends, one day I hope to have this mod to be HoI4 Anbennar like the real Anbennar from EU4. Though I will not this doesnt follow common fantasy and JRR Tolkien fantasy tropes. Due to me being a solo dev I dont have many events with written descriptions but I hope the titles are clear enought to figure out what is happening! Please join the discord and tell me about your game as its important to help me develop the mod quicker.
 
 [h1]Features[/h1]
 + New custom map.
@@ -19,24 +19,26 @@ This is a fantasy mod for HoI4 based off my own stories and documents. I am a so
 [h1]Major Update Changes[/h1]
 - Industry Technologies
 - Special Modifers for States
-- Weather now occurs
-
-[h1]Minor Update Changes[/h1]
-- Balance Changes
-- Bita Development
-- Map Cleanup
-- AI Improvements
 - Merchant-Republica Focuses
 - Ursprung and Twerah Focuses
 
+[h1]Minor Update Changes[/h1]
+- Balance Changes
+- Map, and Weather Improvements
+- Smater AI Strategies and Behaviors
+- Continent Bita Development
+- Continent Novusaiga Development
+
 [h1]Plans[/h1]
-- Several focus tree's for majors.
-- Clear dynamic focus trees outside of the story that is written.
-- Dynamic decisions for majors to project influence for resources and industries.
-- Many formables for all countries.
+- Branching Focus tree's for all major and major-minor nations.
+- Clear dynamic focus trees outside of historical timeline.
+- Dynamic decisions for majors to project influence onto minor and major-minor nations.
 - Roleplay focus design for multiplayer.
-- Always a world at war.
-- Overall balance experience.
+- Overlaping formables for each region.
+- Unique super-formables.
+- Acceptable formables comptable with allies for multiplayer usage.
+- Guarantee of a Great War, or rarely World War.
+- Overall balance experience especially for multiplayer.
 
 [h1]Information[/h1]
 I'm centralizing everything for my mod collection on a new Discord server. I'll rarely respond to comments, bug reports, or suggestions here. Please use the Discord link for all future requests.
