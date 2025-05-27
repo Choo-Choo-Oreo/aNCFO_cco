@@ -2904,6 +2904,7 @@ political_actions = {
 		icon = generic_construction
 		state_target = yes
 		on_map_mode = map_only
+		target_array = controlled_states # DO NOT REMOVE.
 
 		days_remove = 70
 		fire_only_once = no
@@ -2912,10 +2913,16 @@ political_actions = {
 		modifier = { political_power_cost = 0.50 }
 
 		target_trigger = {
-			FROM = {
-				impassable = no
-				is_owned_by = ROOT
-				NOT = { is_core_of = ROOT }
+			IF = { # Check before checking every state.
+				LIMIT = {
+					has_completed_focus = authoritarianism_divine_right
+					NOT = { has_country_flag = divine_right_coring_num4 }
+				}
+				FROM = {
+					impassable = no
+					is_owned_by = ROOT
+					NOT = { is_core_of = ROOT }
+				}
 			}
 		}
 		visible = {
@@ -2923,58 +2930,59 @@ political_actions = {
 			NOT = { has_country_flag = divine_right_coring_num4 }
 		}
 		available = {
-			FROM = { # PP Cost
-				if = {
-					limit = { has_state_category = enclave }
-					set_temp_variable = { divine_right_ppcost = 10 }
+			IF = { # Check before checking every state.
+				LIMIT = {
+					has_completed_focus = authoritarianism_divine_right
+					NOT = { has_country_flag = divine_right_coring_num4 }
 				}
-				else_if = {
-					limit = { has_state_category = wasteland }
-					set_temp_variable = { divine_right_ppcost = 10 }
-				}
-				else_if = {
-					limit = { has_state_category = tiny_island }
-					set_temp_variable = { divine_right_ppcost = 10 }
-				}
-				else_if = {
-					limit = { has_state_category = pastoral }
-					set_temp_variable = { divine_right_ppcost = 10 }
-				}
-				else_if = {
-					limit = { has_state_category = small_island }
-					set_temp_variable = { divine_right_ppcost = 20 }
-				}
-				else_if = {
-					limit = { has_state_category = rural }
-					set_temp_variable = { divine_right_ppcost = 30 }
-				}
-				else_if = {
-					limit = { has_state_category = large_rural }
-					set_temp_variable = { divine_right_ppcost = 40 }
-				}
-				if = {
-					limit = { has_state_category = town }
-					set_temp_variable = { divine_right_ppcost = 50 }
-				}
-				else_if = {
-					limit = { has_state_category = large_town }
-					set_temp_variable = { divine_right_ppcost = 60 }
-				}
-				if = {
-					limit = { has_state_category = city }
-					set_temp_variable = { divine_right_ppcost = 70 }
-				}
-				else_if = {
-					limit = { has_state_category = large_city }
-					set_temp_variable = { divine_right_ppcost = 80 }
-				}
-				else_if = {
-					limit = { has_state_category = metropolis }
-					set_temp_variable = { divine_right_ppcost = 90 }
-				}
-				else_if = {
-					limit = { has_state_category = megalopolis }
-					set_temp_variable = { divine_right_ppcost = 100 }
+				FROM = {
+					if = {
+						limit = {
+							OR = {
+								has_state_category = enclave
+								has_state_category = wasteland
+								has_state_category = tiny_island
+								has_state_category = pastoral
+							}
+						}
+						set_temp_variable = { divine_right_ppcost = 10 }
+					}
+					else_if = {
+						limit = { has_state_category = small_island }
+						set_temp_variable = { divine_right_ppcost = 20 }
+					}
+					else_if = {
+						limit = { has_state_category = rural }
+						set_temp_variable = { divine_right_ppcost = 30 }
+					}
+					else_if = {
+						limit = { has_state_category = large_rural }
+						set_temp_variable = { divine_right_ppcost = 40 }
+					}
+					if = {
+						limit = { has_state_category = town }
+						set_temp_variable = { divine_right_ppcost = 50 }
+					}
+					else_if = {
+						limit = { has_state_category = large_town }
+						set_temp_variable = { divine_right_ppcost = 60 }
+					}
+					if = {
+						limit = { has_state_category = city }
+						set_temp_variable = { divine_right_ppcost = 70 }
+					}
+					else_if = {
+						limit = { has_state_category = large_city }
+						set_temp_variable = { divine_right_ppcost = 80 }
+					}
+					else_if = {
+						limit = { has_state_category = metropolis }
+						set_temp_variable = { divine_right_ppcost = 90 }
+					}
+					else_if = {
+						limit = { has_state_category = megalopolis }
+						set_temp_variable = { divine_right_ppcost = 100 }
+					}
 				}
 			}
 			has_war = no

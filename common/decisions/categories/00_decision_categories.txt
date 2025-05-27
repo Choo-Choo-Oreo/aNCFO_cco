@@ -72,17 +72,38 @@ category_exile_forces = {
 	priority = 6
 }
 
-urbanization_category = {
+industries_dynamic_category = {
 	priority = 2
 	icon = generic_economy
-	allowed = {
-		always = yes
-	}
+	allowed = { always = yes }
 	visible = {
 		OR = {
-			#AND = { is_debug = yes is_ai = no }
-			AND = { MRC = { has_completed_focus = MRC_industral_buildup_actions } is_subject_of = MRC }
-			has_completed_focus = MRC_industral_buildup_actions
+			#AND = { # Do not yet have one.
+			#	HHE = {  }
+			#	OR = {
+			#		has_country_flag = accept.ally_with_HHE
+			#		is_subject_of = HHE
+			#	}
+			#}
+			AND = {
+				OR = {
+					OAK = { has_completed_focus = aritifcers_focus_reconstruction_industry }
+					COA = { has_completed_focus = aritifcers_focus_reconstruction_industry }
+				}
+				OR = {
+					has_completed_focus = aritifcers_focus_reconstruction_industry
+					has_country_flag = accept.ally_with_OAK
+					is_subject_of = OAK
+				}
+			}
+			AND = {
+				MRC = { has_completed_focus = MRC_industral_buildup_actions }
+				OR = {
+					has_completed_focus = MRC_industral_buildup_actions
+					has_country_flag = accept.ally_with_MRC
+					is_subject_of = MRC
+				}
+			}
 		}
 	}
 }

@@ -87,24 +87,6 @@ HHE_local_port_modifier = { # local_port
 	state_production_speed_buildings_factor = 0.10
 }
 
-MRC_state_most_serene_republic_of_insulae = { # Country Modifier in the general dynamics
-	enable = { always = yes }
-	remove_trigger = {
-		NOT = {
-			is_core_of = ROOT
-			OR = {
-				OWNER = { original_tag = MRC }
-				OWNER = { has_country_flag = MRC_MSR_collaboration }
-			}
-		}
-	}
-	icon = GFX_faction_tur_unaligned
-
-	local_factories = MRC.MRC_local_factories_modifer
-	#local_resources = MRC.MRC_local_resources_modifer # Unbalance, makes convoy raiding useless.
-	state_production_speed_buildings_factor = MRC.MRC_state_production_speed_buildings_factor_modifer
-}
-
 OAK_state_heart_of_iron_modifier = { # Country Modifier in the general dynamics
 	enable = { always = yes }
 	remove_trigger = {
@@ -120,7 +102,28 @@ OAK_state_heart_of_iron_modifier = { # Country Modifier in the general dynamics
 	icon = GFX_tank_niche_8
 
 	custom_modifier_tooltip = OAK_state_heart_of_iron_tt
-	#local_factories = global.OAK_modifier # Considered
+	local_factory_sabotage = global.OAK_heartofiron_local_factory_sabotage
 	local_resources = global.OAK_heartofiron_local_resources
+	local_supplies = global.OAK_heartofiron_local_supplies
 	state_production_speed_buildings_factor = global.OAK_heartofiron_state_production_speed_buildings_factor
+	max_fuel_building = global.OAK_heartofiron_max_fuel_building
+}
+
+MRC_state_most_serene_republic_of_insulae_modifier = { # Country Modifier in the general dynamics
+	enable = { always = yes }
+	remove_trigger = {
+		NOT = {
+			is_core_of = ROOT
+			OR = {
+				OWNER = { original_tag = MRC }
+				OWNER = { has_country_flag = MRC_MSR_collaboration }
+			}
+		}
+	}
+	icon = GFX_faction_tur_unaligned
+
+	custom_modifier_tooltip = MRC_state_most_serene_republic_tt
+	local_factories = MRC.MRC_local_factories_modifer
+	local_building_slots_factor = MRC.MRC_local_building_slots_factor_modifer
+	state_production_speed_buildings_factor = MRC.MRC_state_production_speed_buildings_factor_modifer
 }
