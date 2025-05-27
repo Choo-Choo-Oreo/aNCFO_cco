@@ -488,18 +488,14 @@ joint_focus = { # Attacker
 		IF = { LIMIT = { tag = COA }
 			declare_war_on = { target = OAK type = annex_everything }
 		}
+		trade_lower = yes
 	}
 
 	completion_reward_joint_member = {
 		custom_effect_tooltip = aritifcers_focus_group_locked_tt
 		hidden_effect = { remove_power_balance = { id = power_balance_OAK_v_COA } }
 		set_country_flag = aritifcers_focus_attack_locked
-		#IF = { LIMIT = { tag = OAK }
-		#	add_political_power = 27
-		#}
-		#IF = { LIMIT = { tag = COA }
-		#	add_political_power = 19
-		#}
+		trade_lower = yes
 	}
 }
 
@@ -507,7 +503,7 @@ joint_focus = { # Attacker
 
 	# High Firepower
 
-joint_focus = { # Reconstruction Era
+shared_focus = { # Reconstruction Era
 	id = aritifcers_focus_reconstruction
 	icon = GFX_focus_unknown_military
 	dynamic = yes
@@ -540,25 +536,31 @@ joint_focus = { # Reconstruction Era
 		}
 	}
 
-	joint_trigger = {
-	}
-
-	completion_reward = { log = "[GetDateText]: [Root.GetName]: Focus aritifcers_focus_reconstruction" }
-
-	completion_reward_joint_originator = {
-		custom_effect_tooltip = aritifcers_focus_downsize_tt
+	completion_reward = {
+		log = "[GetDateText]: [Root.GetName]: Focus aritifcers_focus_reconstruction"
 		IF = { LIMIT = { tag = OAK }
+			every_state = {
+				limit = {
+					OR = {
+						is_core_of = COA
+						is_claimed_by = COA
+					}
+				}
+				remove_core_of = COA
+				remove_claim_by = COA
+			}
 		}
 		IF = { LIMIT = { tag = COA }
-		}
-	}
-
-	completion_reward_joint_member = {
-		custom_effect_tooltip = aritifcers_focus_group_locked_tt
-		set_country_flag = aritifcers_focus_elites_locked
-		IF = { LIMIT = { tag = OAK }
-		}
-		IF = { LIMIT = { tag = COA }
+			every_state = {
+				limit = {
+					OR = {
+						is_core_of = OAK
+						is_claimed_by = OAK
+					}
+				}
+				remove_core_of = OAK
+				remove_claim_by = OAK
+			}
 		}
 	}
 }
@@ -596,10 +598,6 @@ joint_focus = { # Reconstruction Era
 			log = "[GetDateText]: [Root.GetName]: Focus aritifcers_dwarf_reconstruction"
 			add_research_slot = 1
 		}
-
-		#completion_reward_joint_originator = { add_political_power = 2 }
-
-		#completion_reward_joint_member = { add_political_power = 1 }
 	}
 
 	shared_focus = { # Heartland Reconstruction
@@ -635,10 +633,6 @@ joint_focus = { # Reconstruction Era
 			log = "[GetDateText]: [Root.GetName]: Focus aritifcers_heartland_reconstruction"
 			add_research_slot = 1
 		}
-
-		#completion_reward_joint_originator = { add_political_power = 2 }
-
-		#completion_reward_joint_member = { add_political_power = 1 }
 	}
 
 	shared_focus = { # Gnome Reconstruction
@@ -674,10 +668,6 @@ joint_focus = { # Reconstruction Era
 			log = "[GetDateText]: [Root.GetName]: Focus aritifcers_gnome_reconstruction"
 			add_research_slot = 1
 		}
-
-		#completion_reward_joint_originator = { add_political_power = 2 }
-
-		#completion_reward_joint_member = { add_political_power = 1 }
 	}
 
 shared_focus = { # Gawissana Reconstruction

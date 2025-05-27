@@ -83,23 +83,26 @@ HHE_local_port_modifier = { # local_port
 	state_production_speed_dockyard_factor = 0.10
 	state_production_speed_naval_base_factor = 0.10
 
-	state_resources_factor = 0.19
-	state_production_speed_buildings_factor = 0.19
+	state_resources_factor = 0.10
+	state_production_speed_buildings_factor = 0.10
 }
 
-MRC_state_beating_heart_of_the_modifier = { # Country Modifier in the general dynamics
+MRC_state_most_serene_republic_of_insulae = { # Country Modifier in the general dynamics
 	enable = { always = yes }
 	remove_trigger = {
 		NOT = {
 			is_core_of = ROOT
-			OWNER = { original_tag = MRC }
+			OR = {
+				OWNER = { original_tag = MRC }
+				OWNER = { has_country_flag = MRC_MSR_collaboration }
+			}
 		}
 	}
-	icon = GFX_civ_factory_output
+	icon = GFX_faction_tur_unaligned
 
-	local_factories = 0.10
-	#local_resources = 0.10 # Considered
-	state_production_speed_buildings_factor = 0.10
+	local_factories = MRC.MRC_local_factories_modifer
+	#local_resources = MRC.MRC_local_resources_modifer # Unbalance, makes convoy raiding useless.
+	state_production_speed_buildings_factor = MRC.MRC_state_production_speed_buildings_factor_modifer
 }
 
 OAK_state_heart_of_iron_modifier = { # Country Modifier in the general dynamics
@@ -110,6 +113,7 @@ OAK_state_heart_of_iron_modifier = { # Country Modifier in the general dynamics
 			OR = {
 				OWNER = { original_tag = OAK }
 				OWNER = { original_tag = COA }
+				OWNER = { has_country_flag = OAK_HoI_collaboration }
 			}
 		}
 	}

@@ -1,10 +1,13 @@
 on_actions = {
 	on_capitulation_immediate = {
 		effect = { # Remove Wargoals from capitulated nations
-			FROM = {
-				remove_wargoal = {
-					type = all
-					target = ROOT
+			IF = {
+				LIMIT = { FROM = { has_wargoal_against = ROOT } }
+				FROM = {
+					remove_wargoal = {
+						type = all
+						target = ROOT
+					}
 				}
 			}
 		}

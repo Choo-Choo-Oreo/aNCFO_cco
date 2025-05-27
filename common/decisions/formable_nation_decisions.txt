@@ -3773,6 +3773,145 @@ form_new_mandate_over_empyrean_category = {
 	}
 }
 
+form_elven_wum_high_kingdom = {
+	form_wum_high_kingdom = {
+		icon = generic_form_nation
+		allowed = {
+			OR = {
+				original_tag = UEK
+			}
+		}
+		available = {
+			is_subject = no
+			25  = { is_controlled_by = ROOT }
+			552 = { is_controlled_by = ROOT }
+			569 = { is_controlled_by = ROOT }
+			570 = { is_controlled_by = ROOT }
+			571 = { is_controlled_by = ROOT }
+			572 = { is_controlled_by = ROOT }
+			573 = { is_controlled_by = ROOT }
+			574 = { is_controlled_by = ROOT }
+			575 = { is_controlled_by = ROOT }
+			636 = { is_controlled_by = ROOT }
+			757 = { is_controlled_by = ROOT }
+			788 = { is_controlled_by = ROOT }
+			789 = { is_controlled_by = ROOT }
+			790 = { is_controlled_by = ROOT }
+			797 = { is_controlled_by = ROOT }
+			798 = { is_controlled_by = ROOT }
+			799 = { is_controlled_by = ROOT }
+			800 = { is_controlled_by = ROOT }
+			801 = { is_controlled_by = ROOT }
+			802 = { is_controlled_by = ROOT }
+			803 = { is_controlled_by = ROOT }
+			804 = { is_controlled_by = ROOT }
+			805 = { is_controlled_by = ROOT }
+		}
+		visible = {
+			OR = {
+				original_tag = UEK
+			}
+			NOT = { has_global_flag = form_wum_high_kingdom_flag }
+		}
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision form_elven_wum_high_kingdom"
+			set_cosmetic_tag = UNIFIED_WUM_HIGH_KINGDOM
+			set_capital = { state = 636 }
+			hidden_effect = {
+			# Main Core
+				#25  = { add_core_of = ROOT }
+				552 = { add_core_of = ROOT }
+				569 = { add_core_of = ROOT }
+				570 = { add_core_of = ROOT }
+				571 = { add_core_of = ROOT }
+				572 = { add_core_of = ROOT }
+				573 = { add_core_of = ROOT }
+				574 = { add_core_of = ROOT }
+				575 = { add_core_of = ROOT }
+				636 = { add_core_of = ROOT }
+				757 = { add_core_of = ROOT }
+				#788 = { add_core_of = ROOT }
+				#789 = { add_core_of = ROOT }
+				790 = { add_core_of = ROOT }
+				797 = { add_core_of = ROOT }
+				798 = { add_core_of = ROOT }
+				799 = { add_core_of = ROOT }
+				800 = { add_core_of = ROOT }
+				801 = { add_core_of = ROOT }
+				802 = { add_core_of = ROOT }
+				803 = { add_core_of = ROOT }
+				804 = { add_core_of = ROOT }
+				805 = { add_core_of = ROOT }
+			# Foreign Core
+				535 = { add_core_of = ROOT }
+				568 = { add_core_of = ROOT }
+				625 = { add_core_of = ROOT }
+				639 = { add_core_of = ROOT }
+				640 = { add_core_of = ROOT }
+				661 = { add_core_of = ROOT }
+				707 = { add_core_of = ROOT }
+				708 = { add_core_of = ROOT }
+				735 = { add_core_of = ROOT }
+				753 = { add_core_of = ROOT }
+				754 = { add_core_of = ROOT }
+				758 = { add_core_of = ROOT }
+				759 = { add_core_of = ROOT }
+				831 = { add_core_of = ROOT }
+				832 = { add_core_of = ROOT }
+				833 = { add_core_of = ROOT }
+				839 = { add_core_of = ROOT }
+			}
+			hidden_effect = { set_global_flag = form_wum_high_kingdom_flag }
+		}
+		ai_will_do = {
+			factor = 5
+			modifier = {
+				factor = 10
+				is_historical_focus_on = yes
+			}
+		}
+	}
+
+	form_wum_dwarf_collab = {
+		icon = generic_form_nation
+		allowed = {
+			OR = {
+				original_tag = UEK
+			}
+		}
+		available = {
+			is_subject = no
+			25  = { is_controlled_by = ROOT }
+			788 = { is_controlled_by = ROOT }
+			789 = { is_controlled_by = ROOT }
+		}
+		visible = {
+			OR = {
+				original_tag = UEK
+			}
+			has_global_flag = form_wum_high_kingdom_flag
+			NOT = { has_global_flag = form_wum_high_kingdom_collab_flag }
+		}
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision form_wum_dwarf_collab"
+			#set_temp_variable = { country_to_initiate = FROM }
+			#TRH = { instantiate_collaboration_government = yes }
+			25  = { transfer_state_to = TRH }
+			788 = { transfer_state_to = TRH }
+			789 = { transfer_state_to = TRH }
+			set_autonomy = { target = TRH autonomous_state = autonomy_integrated_puppet }
+			hidden_effect = { set_global_flag = form_wum_high_kingdom_collab_flag }
+		}
+		ai_will_do = {
+			factor = 5
+			modifier = {
+				factor = 10
+				is_historical_focus_on = yes
+			}
+		}
+	}
+}
+
 form_electrum_federation_category = {
 	form_electrum_federation = {
 		icon = generic_form_nation
@@ -4009,20 +4148,23 @@ form_dwarven_wum_smithahaufast_category = {
 		}
 		available = {
 			is_subject = no
-			25  = { is_controlled_by = ROOT }
-			573 = { is_controlled_by = ROOT }
-			575 = { is_controlled_by = ROOT }
-			634 = { is_controlled_by = ROOT }
-			635 = { is_controlled_by = ROOT }
-			788 = { is_controlled_by = ROOT }
-			789 = { is_controlled_by = ROOT }
-			790 = { is_controlled_by = ROOT }
-			797 = { is_controlled_by = ROOT }
-			798 = { is_controlled_by = ROOT }
-			799 = { is_controlled_by = ROOT }
-			800 = { is_controlled_by = ROOT }
-			803 = { is_controlled_by = ROOT }
-			805 = { is_controlled_by = ROOT }
+			count_triggers = {
+				amount = 12
+				25  = { is_controlled_by = ROOT }
+				573 = { is_controlled_by = ROOT }
+				575 = { is_controlled_by = ROOT }
+				634 = { is_controlled_by = ROOT }
+				635 = { is_controlled_by = ROOT }
+				788 = { is_controlled_by = ROOT }
+				789 = { is_controlled_by = ROOT }
+				790 = { is_controlled_by = ROOT }
+				797 = { is_controlled_by = ROOT }
+				798 = { is_controlled_by = ROOT }
+				799 = { is_controlled_by = ROOT }
+				800 = { is_controlled_by = ROOT }
+				803 = { is_controlled_by = ROOT }
+				805 = { is_controlled_by = ROOT }
+			}
 		}
 		visible = {
 			OR = {

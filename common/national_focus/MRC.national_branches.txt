@@ -428,6 +428,7 @@ focus_tree = { # Merchant-Republicism
 					} }
 				}
 				available = {
+					has_dynamic_modifier = { modifier = MRC_most_serene_republic_of_insulae }
 				}
 				bypass = {
 				}
@@ -555,6 +556,7 @@ focus_tree = { # Merchant-Republicism
 					} }
 				}
 				available = {
+					has_dynamic_modifier = { modifier = MRC_most_serene_republic_of_insulae }
 				}
 				bypass = {
 				}
@@ -574,14 +576,14 @@ focus_tree = { # Merchant-Republicism
 				}
 			} # Branch VVV
 	# Early Industry Development Branch
-		focus = { # Industral Buildup Policies
-			id = MRC_industral_buildup_actions
+		focus = { # Home Isle Buildup
+			id = MRC_home_islands_buildup
 			icon = GFX_focus_unknown_industry
 			prerequisite = { focus = MRC_foreign_intervention_focus focus = MRC_internal_balanced_focus focus = MRC_foreign_neutrality_focus }
 			x = 0
 			y = 4
 		
-			cost = 5
+			cost = 10
 			cancel_if_invalid = yes
 			continue_if_invalid = no
 			available_if_capitulated = no
@@ -596,11 +598,50 @@ focus_tree = { # Merchant-Republicism
 			}
 
 			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_industral_buildup_actions"
-				unlock_decision_tooltip = urbanize_state_MRC
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_home_islands_buildup"
 				add_timed_idea = {
 					idea = MRC_idea_homeland_buildup
 					days = 360
+				}
+				13={
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = steel_complex
+						level = 1
+						instant_build = yes
+					}
+				}
+				14={
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = steel_complex
+						level = 1
+						instant_build = yes
+					}
+				}
+				15={
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = steel_complex
+						level = 1
+						instant_build = yes
+					}
+				}
+				71={
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = steel_complex
+						level = 1
+						instant_build = yes
+					}
+				}
+				72={
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = steel_complex
+						level = 1
+						instant_build = yes
+					}
 				}
 			}
 		}
@@ -608,9 +649,9 @@ focus_tree = { # Merchant-Republicism
 		focus = { # Trade Outpost Buildup
 			id = MRC_merchents_outpost
 			icon = GFX_focus_unknown_industry
-			prerequisite = { focus = MRC_industral_buildup_actions }
+			prerequisite = { focus = MRC_home_islands_buildup }
 			prerequisite = { focus = MRC_foreign_intervention_focus focus = MRC_internal_balanced_focus }
-			relative_position_id = MRC_industral_buildup_actions
+			relative_position_id = MRC_home_islands_buildup
 			x = -2
 			y = 1
 		
@@ -655,81 +696,14 @@ focus_tree = { # Merchant-Republicism
 			}
 		}
 
-		focus = { # Home Isle Buildup
-			id = MRC_home_islands_buildup
-			icon = GFX_focus_unknown_industry
-			prerequisite = { focus = MRC_industral_buildup_actions }
-			prerequisite = { focus = MRC_internal_balanced_focus focus = MRC_foreign_neutrality_focus }
-			relative_position_id = MRC_industral_buildup_actions
-			x = 2
-			y = 1
-		
-			cost = 10
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = no
-		
-			available = {
-			}
-			bypass = {
-			}
-		
-			ai_will_do = {
-				factor = 2
-			}
-
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_home_islands_buildup"
-				13={
-					add_extra_state_shared_building_slots = 3
-					add_building_construction = {
-						type = steel_complex
-						level = 1
-						instant_build = yes
-					}
-				}
-				14={
-					add_extra_state_shared_building_slots = 3
-					add_building_construction = {
-						type = steel_complex
-						level = 1
-						instant_build = yes
-					}
-				}
-				15={
-					add_extra_state_shared_building_slots = 3
-					add_building_construction = {
-						type = steel_complex
-						level = 1
-						instant_build = yes
-					}
-				}
-				71={
-					add_extra_state_shared_building_slots = 3
-					add_building_construction = {
-						type = steel_complex
-						level = 1
-						instant_build = yes
-					}
-				}
-				72={
-					add_extra_state_shared_building_slots = 3
-					add_building_construction = {
-						type = steel_complex
-						level = 1
-						instant_build = yes
-					}
-				}
-			}
-		}
-
 		focus = { # Secondary Isle Buildup
 			id = MRC_secondary_islands_buildup
 			icon = GFX_focus_unknown_industry
-			prerequisite = { focus = MRC_merchents_outpost focus = MRC_home_islands_buildup }
-			relative_position_id = MRC_industral_buildup_actions
-			x = 0
-			y = 2
+			prerequisite = { focus = MRC_home_islands_buildup }
+			prerequisite = { focus = MRC_internal_balanced_focus focus = MRC_foreign_neutrality_focus }
+			relative_position_id = MRC_home_islands_buildup
+			x = 2
+			y = 1
 		
 			cost = 10
 			cancel_if_invalid = yes
@@ -789,6 +763,35 @@ focus_tree = { # Merchant-Republicism
 						instant_build = yes
 					}
 				}
+			}
+		}
+
+		focus = { # Industral Buildup Policies
+			id = MRC_industral_buildup_actions
+			icon = GFX_focus_unknown_industry
+			prerequisite = { focus = MRC_merchents_outpost focus = MRC_secondary_islands_buildup }
+			relative_position_id = MRC_home_islands_buildup
+			x = 0
+			y = 2
+		
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+		
+			available = {
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				factor = 2
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_industral_buildup_actions"
+				unlock_decision_tooltip = urbanize_state_MRC
+				add_dynamic_modifier = { modifier = MRC_most_serene_republic_of_insulae }
 			}
 		}
 	# Middle Chapter 1: Merchant-Republicism Equilibrium Branch
@@ -857,6 +860,7 @@ focus_tree = { # Merchant-Republicism
 			available_if_capitulated = no
 		
 			available = {
+				has_dynamic_modifier = { modifier = MRC_most_serene_republic_of_insulae }
 			}
 			bypass = {
 			}
@@ -875,7 +879,7 @@ focus_tree = { # Merchant-Republicism
 		focus = { # Foreign Trade Policies
 			id = MRC_foreign_trade
 			icon = GFX_focus_unknown_political
-			prerequisite = { focus = MRC_home_islands_buildup }
+			prerequisite = { focus = MRC_secondary_islands_buildup }
 			prerequisite = { focus = MRC_foreign_neutrality_focus focus = MRC_internal_balanced_focus }
 			relative_position_id = MRC_foreign_neutrality_focus
 			x = 0
@@ -887,6 +891,7 @@ focus_tree = { # Merchant-Republicism
 			available_if_capitulated = no
 		
 			available = {
+				has_dynamic_modifier = { modifier = MRC_most_serene_republic_of_insulae }
 			}
 			bypass = {
 			}
@@ -907,7 +912,7 @@ focus_tree = { # Merchant-Republicism
 			mutually_exclusive = { focus = MRC_neutrality_policy }
 			prerequisite = { focus = MRC_foreign_trade }
 			prerequisite = { focus = MRC_canal_trade_deal }
-			relative_position_id = MRC_secondary_islands_buildup
+			relative_position_id = MRC_industral_buildup_actions
 			x = -1
 			y = 1
 		
@@ -962,7 +967,7 @@ focus_tree = { # Merchant-Republicism
 			mutually_exclusive = { focus = MRC_intervention_policy }
 			prerequisite = { focus = MRC_foreign_trade }
 			prerequisite = { focus = MRC_canal_trade_deal }
-			relative_position_id = MRC_secondary_islands_buildup
+			relative_position_id = MRC_industral_buildup_actions
 			x = 1
 			y = 1
 		
@@ -998,7 +1003,7 @@ focus_tree = { # Merchant-Republicism
 				mutually_exclusive = { focus = MRC_economic_reform }
 				prerequisite = { focus = MRC_foreign_trade }
 				prerequisite = { focus = MRC_canal_trade_deal }
-				relative_position_id = MRC_secondary_islands_buildup
+				relative_position_id = MRC_industral_buildup_actions
 				x = -5
 				y = 1
 			
@@ -1100,7 +1105,7 @@ focus_tree = { # Merchant-Republicism
 				mutually_exclusive = { focus = MRC_economic_status_quo }
 				prerequisite = { focus = MRC_foreign_trade }
 				prerequisite = { focus = MRC_canal_trade_deal }
-				relative_position_id = MRC_secondary_islands_buildup
+				relative_position_id = MRC_industral_buildup_actions
 				x = -3
 				y = 1
 			
@@ -1228,7 +1233,7 @@ focus_tree = { # Merchant-Republicism
 				mutually_exclusive = { focus = MRC_change_couse }
 				prerequisite = { focus = MRC_foreign_trade }
 				prerequisite = { focus = MRC_canal_trade_deal }
-				relative_position_id = MRC_secondary_islands_buildup
+				relative_position_id = MRC_industral_buildup_actions
 				x = 3
 				y = 1
 			
@@ -1396,7 +1401,7 @@ focus_tree = { # Merchant-Republicism
 				mutually_exclusive = { focus = MRC_steady_couse }
 				prerequisite = { focus = MRC_foreign_trade }
 				prerequisite = { focus = MRC_canal_trade_deal }
-				relative_position_id = MRC_secondary_islands_buildup
+				relative_position_id = MRC_industral_buildup_actions
 				x = 5
 				y = 1
 			
