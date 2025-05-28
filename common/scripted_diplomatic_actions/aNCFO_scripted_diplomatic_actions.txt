@@ -678,8 +678,8 @@ scripted_diplomatic_actions = {
 			}
 		}
 	}
-	
-getridof_defensive_pact = {
+
+	getridof_defensive_pact = {
 		icon = 6		#	The icon to use for the dipomatic request, visible when the diplomatic action is sent, not visible if the diplomatic request does not require acceptance, must be included in the \gfx\interface\alerts\global_diplorequest_icons.dds file, number represents icon location from left to right.
 		
 		#### CONDITIONS TO USE/SEE ACTION ###
@@ -770,6 +770,58 @@ getridof_defensive_pact = {
 			}
 		}
 		ai_acceptance = {		# AI modifiers to accept this diplomatic action, not valid if requires_acceptance is set to NO.
+		}
+	}
+
+	recall_volunteers = {
+	
+		allowed = {
+			ROOT = { is_ai = no }
+		}
+		visible = {
+			always = yes
+		}
+		selectable = {
+			# doing this for nicer tooltips
+			if = {
+				limit = {
+					NOT = { has_volunteers_amount_from = { tag = ROOT count > 0 } }
+				}
+				custom_trigger_tooltip = {
+					tooltip = RECALL_VOLUNTEERS_TOOLTIP
+					always = no
+				}
+			}
+			else = {
+				custom_trigger_tooltip = {
+					tooltip = RECALL_VOLUNTEERS_TOOLTIP_G
+					always = yes
+				}
+			}
+		}
+
+		cost = 0
+		command_power = 0
+
+		show_acceptance_on_action_button = no
+
+		icon = 1
+
+		complete_effect = {
+			ROOT = { recall_volunteers_from = PREV }
+		}
+
+		ai_desire = {
+			modifier = { factor = 0 }
+			modifier = { add = 100
+				PREV = { surrender_progress > 0.95 }
+			}
+		}
+
+		ai_acceptance = {
+			condition = {
+				base = 100
+			}
 		}
 	}
 }

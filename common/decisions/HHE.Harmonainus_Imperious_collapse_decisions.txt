@@ -1,1115 +1,1114 @@
-# Collapse Decisions
-	crisis_HHE_collapse = {
-		crisis_HHE_collapse_of_the_nation_nobility = {
-			icon = generic_civil_support
+crisis_HHE_collapse = {
+	crisis_HHE_collapse_of_the_nation_nobility = {
+		icon = generic_civil_support
 
-			fire_only_once = yes
+		fire_only_once = yes
 
-			available = {
-				has_stability > 0.45
+		available = {
+			has_stability > 0.45
+			has_country_flag = HHE_collapse_of_the_nation_country_no_more_fixed
+			NOT = {
+				OR = {
+					has_country_flag = HHE_collapse_of_the_nation_nobility_failed
+					has_country_flag = HHE_collapse_of_the_nation_nobility_fixed
+				}
+			}
+		}
+
+		cost = 50
+		ai_will_do = {
+			factor = 1000
+		}
+
+		visible = {
+			has_global_flag = HHE_warmonger_civil_war_first
+			NOT = {
+				has_global_flag = HHE_warmonger_civil_war_final
+				or = {
+					has_country_flag = HHE_collapse_of_the_nation_nobility_failed
+					has_country_flag = HHE_collapse_of_the_nation_nobility_fixed
+				}
+			}
+		}
+
+		complete_effect = {
+			set_country_flag = HHE_collapse_of_the_nation_nobility_fixed
+			HHE_suppressed_rebellion_HNO = yes
+		}
+	}
+
+	mission_HHE_collapse_of_the_nation_nobility = {
+		icon = generic_civil_support
+
+		days_mission_timeout = 15
+		fire_only_once = yes
+
+		available = {
+			hidden_trigger = {
+				has_global_flag = HHE_warmonger_civil_war_first
+				NOT = { has_global_flag = HHE_warmonger_civil_war_final }
+			}
+			has_stability > 0.45
+			has_country_flag = HHE_collapse_of_the_nation_nobility_fixed
+		}
+
+		activation = {
+			has_global_flag = HHE_warmonger_civil_war_first
+			NOT = { has_global_flag = HHE_warmonger_civil_war_final }
+			NOT = {
+				or = {
+					has_country_flag = HHE_collapse_of_the_nation_nobility_failed
+					has_country_flag = HHE_collapse_of_the_nation_nobility_fixed
+				}
+			}
+		}
+
+		visible = {
+			NOT = {
+				or = {
+					has_country_flag = HHE_collapse_of_the_nation_nobility_failed
+					has_country_flag = HHE_collapse_of_the_nation_nobility_fixed
+				}
+			}
+		}
+
+		timeout_effect = {
+			set_country_flag = HHE_collapse_of_the_nation_nobility_failed
+			HHE_rebellion_HNO = yes
+		}
+	}
+
+	crisis_HHE_collapse_of_the_nation_fire_river = {
+		icon = generic_civil_support
+
+		fire_only_once = yes
+
+		available = {
+			AND = {
+				has_stability > 0.33
 				has_country_flag = HHE_collapse_of_the_nation_country_no_more_fixed
 				NOT = {
 					OR = {
-						has_country_flag = HHE_collapse_of_the_nation_nobility_failed
-						has_country_flag = HHE_collapse_of_the_nation_nobility_fixed
+						has_country_flag = HHE_collapse_of_the_nation_fire_river_failed
+						has_country_flag = HHE_collapse_of_the_nation_fire_river_fixed
 					}
 				}
 			}
+			NOT = { has_completed_focus = HHE_warmonger_HHE_arresting_officers }
+		}
 
-			cost = 50
-			ai_will_do = {
-				factor = 1000
-			}
+		cost = 50
+		ai_will_do = {
+			factor = 1000
+		}
 
-			visible = {
+		visible = {
+			AND = {
 				has_global_flag = HHE_warmonger_civil_war_first
 				NOT = {
 					has_global_flag = HHE_warmonger_civil_war_final
-					or = {
-						has_country_flag = HHE_collapse_of_the_nation_nobility_failed
-						has_country_flag = HHE_collapse_of_the_nation_nobility_fixed
+					OR = {
+						has_country_flag = HHE_collapse_of_the_nation_fire_river_failed
+						has_country_flag = HHE_collapse_of_the_nation_fire_river_fixed
 					}
 				}
 			}
-
-			complete_effect = {
-				set_country_flag = HHE_collapse_of_the_nation_nobility_fixed
-				HHE_suppressed_rebellion_HNO = yes
-			}
+			NOT = { has_completed_focus = HHE_warmonger_HHE_arresting_officers }
 		}
 
-		mission_HHE_collapse_of_the_nation_nobility = {
-			icon = generic_civil_support
+		complete_effect = {
+			set_country_flag = HHE_collapse_of_the_nation_fire_river_fixed
+			HHE_suppressed_rebellion_HFR = yes
+		}
+	}
 
-			days_mission_timeout = 15
-			fire_only_once = yes
+	mission_HHE_collapse_of_the_nation_fire_river = {
+		icon = generic_civil_support
 
-			available = {
+		days_mission_timeout = 30
+		fire_only_once = yes
+
+		available = {
+			AND = {
 				hidden_trigger = {
 					has_global_flag = HHE_warmonger_civil_war_first
 					NOT = { has_global_flag = HHE_warmonger_civil_war_final }
 				}
-				has_stability > 0.45
-				has_country_flag = HHE_collapse_of_the_nation_nobility_fixed
+				has_stability > 0.33
+				has_country_flag = HHE_collapse_of_the_nation_fire_river_fixed
 			}
+			NOT = { has_completed_focus = HHE_warmonger_HHE_arresting_officers }
+		}
 
-			activation = {
+		activation = {
+			AND = {
 				has_global_flag = HHE_warmonger_civil_war_first
 				NOT = { has_global_flag = HHE_warmonger_civil_war_final }
 				NOT = {
-					or = {
-						has_country_flag = HHE_collapse_of_the_nation_nobility_failed
-						has_country_flag = HHE_collapse_of_the_nation_nobility_fixed
+					OR = {
+						has_country_flag = HHE_collapse_of_the_nation_fire_river_failed
+						has_country_flag = HHE_collapse_of_the_nation_fire_river_fixed
 					}
 				}
 			}
+			NOT = { has_completed_focus = HHE_warmonger_HHE_arresting_officers }
+		}
 
-			visible = {
+		visible = {
+			AND = {
 				NOT = {
-					or = {
-						has_country_flag = HHE_collapse_of_the_nation_nobility_failed
-						has_country_flag = HHE_collapse_of_the_nation_nobility_fixed
+					OR = {
+						has_country_flag = HHE_collapse_of_the_nation_fire_river_failed
+						has_country_flag = HHE_collapse_of_the_nation_fire_river_fixed
 					}
 				}
 			}
+			NOT = { has_completed_focus = HHE_warmonger_HHE_arresting_officers }
+		}
 
-			timeout_effect = {
-				set_country_flag = HHE_collapse_of_the_nation_nobility_failed
-				HHE_rebellion_HNO = yes
+		timeout_effect = {
+			set_country_flag = HHE_collapse_of_the_nation_fire_river_failed
+			HHE_rebellion_HFR = yes
+		}
+	}
+
+	crisis_HHE_collapse_of_the_nation_freedom_front = {
+		icon = generic_civil_support
+
+		fire_only_once = yes
+
+		available = {
+			has_stability > 0.25
+			has_country_flag = HHE_collapse_of_the_nation_country_no_more_fixed
+			NOT = {
+				or = {
+					has_country_flag = HHE_collapse_of_the_nation_freedom_front_failed
+					has_country_flag = HHE_collapse_of_the_nation_freedom_front_fixed
+				}
 			}
 		}
 
-		crisis_HHE_collapse_of_the_nation_fire_river = {
-			icon = generic_civil_support
+		cost = 50
+		ai_will_do = {
+			factor = 1000
+		}
 
-			fire_only_once = yes
+		visible = {
+			has_global_flag = HHE_warmonger_civil_war_first
+			NOT = {
+				has_global_flag = HHE_warmonger_civil_war_final
+				or = {
+					has_country_flag = HHE_collapse_of_the_nation_freedom_front_failed
+					has_country_flag = HHE_collapse_of_the_nation_freedom_front_fixed
+				}
+			}
+		}
 
-			available = {
-				AND = {
-					has_stability > 0.33
+		complete_effect = {
+			set_country_flag = HHE_collapse_of_the_nation_freedom_front_fixed
+			HHE_suppressed_rebellion_HFF = yes
+		}
+	}
+
+	mission_HHE_collapse_of_the_nation_freedom_front = {
+		icon = generic_civil_support
+
+		days_mission_timeout = 55
+		fire_only_once = yes
+
+		available = {
+			hidden_trigger = {
+				has_global_flag = HHE_warmonger_civil_war_first
+				NOT = { has_global_flag = HHE_warmonger_civil_war_final }
+			}
+			has_stability > 0.25
+			has_country_flag = HHE_collapse_of_the_nation_freedom_front_fixed
+		}
+
+		activation = {
+			has_global_flag = HHE_warmonger_civil_war_first
+			NOT = { has_global_flag = HHE_warmonger_civil_war_final }
+			NOT = {
+				or = {
+					has_country_flag = HHE_collapse_of_the_nation_freedom_front_failed
+					has_country_flag = HHE_collapse_of_the_nation_freedom_front_fixed
+				}
+			}
+		}
+
+		visible = {
+			NOT = {
+				or = {
+					has_country_flag = HHE_collapse_of_the_nation_freedom_front_failed
+					has_country_flag = HHE_collapse_of_the_nation_freedom_front_fixed
+				}
+			}
+		}
+
+		timeout_effect = {
+			set_country_flag = HHE_collapse_of_the_nation_freedom_front_failed
+			HHE_rebellion_HFF = yes
+		}
+	}
+
+	crisis_HHE_collapse_of_the_nation_peoples_government = {
+		icon = generic_civil_support
+
+		fire_only_once = yes
+
+		available = {
+			has_stability > 0.20
+			has_country_flag = HHE_collapse_of_the_nation_country_no_more_fixed
+			NOT = {
+				or = {
+					has_country_flag = HHE_collapse_of_the_nation_peoples_government_failed
+					has_country_flag = HHE_collapse_of_the_nation_peoples_government_fixed
+				}
+			}
+		}
+
+		cost = 50
+		ai_will_do = {
+			factor = 1000
+		}
+
+		visible = {
+			has_global_flag = HHE_warmonger_civil_war_first
+			NOT = {
+				has_global_flag = HHE_warmonger_civil_war_final
+				or = {
+					has_country_flag = HHE_collapse_of_the_nation_peoples_government_failed
+					has_country_flag = HHE_collapse_of_the_nation_peoples_government_fixed
+				}
+			}
+		}
+
+		complete_effect = {
+			set_country_flag = HHE_collapse_of_the_nation_peoples_government_fixed
+			add_popularity = { ideology = unitism popularity = -0.10 }
+			HHE_suppressed_rebellion_HPG = yes
+		}
+	}
+
+	mission_HHE_collapse_of_the_nation_peoples_government = {
+		icon = generic_civil_support
+
+		days_mission_timeout = 65
+		fire_only_once = yes
+
+		available = {
+			hidden_trigger = {
+				has_global_flag = HHE_warmonger_civil_war_first
+				NOT = { has_global_flag = HHE_warmonger_civil_war_final }
+			}
+			has_stability > 0.20
+			has_country_flag = HHE_collapse_of_the_nation_peoples_government_fixed
+		}
+
+		activation = {
+			has_global_flag = HHE_warmonger_civil_war_first
+			NOT = { has_global_flag = HHE_warmonger_civil_war_final }
+			NOT = {
+				or = {
+					has_country_flag = HHE_collapse_of_the_nation_peoples_government_failed
+					has_country_flag = HHE_collapse_of_the_nation_peoples_government_fixed
+				}
+			}
+		}
+
+		visible = {
+			NOT = {
+				or = {
+					has_country_flag = HHE_collapse_of_the_nation_peoples_government_failed
+					has_country_flag = HHE_collapse_of_the_nation_peoples_government_fixed
+				}
+			}
+		}
+
+		timeout_effect = {
+			set_country_flag = HHE_collapse_of_the_nation_peoples_government_failed
+			add_popularity = { ideology = unitism popularity = -0.025 }
+			HHE_rebellion_HPG = yes
+		}
+	}
+
+	crisis_HHE_collapse_of_the_nation_country_no_more = {
+		icon = generic_civil_support
+
+		fire_only_once = yes
+
+		available = {
+			has_stability > 0.17
+			NOT = {
+				or = {
+					has_country_flag = HHE_collapse_of_the_nation_country_no_more_failed
 					has_country_flag = HHE_collapse_of_the_nation_country_no_more_fixed
-					NOT = {
-						OR = {
-							has_country_flag = HHE_collapse_of_the_nation_fire_river_failed
-							has_country_flag = HHE_collapse_of_the_nation_fire_river_fixed
-						}
-					}
 				}
-				NOT = { has_completed_focus = HHE_warmonger_HHE_arresting_officers }
-			}
-
-			cost = 50
-			ai_will_do = {
-				factor = 1000
-			}
-
-			visible = {
-				AND = {
-					has_global_flag = HHE_warmonger_civil_war_first
-					NOT = {
-						has_global_flag = HHE_warmonger_civil_war_final
-						OR = {
-							has_country_flag = HHE_collapse_of_the_nation_fire_river_failed
-							has_country_flag = HHE_collapse_of_the_nation_fire_river_fixed
-						}
-					}
-				}
-				NOT = { has_completed_focus = HHE_warmonger_HHE_arresting_officers }
-			}
-
-			complete_effect = {
-				set_country_flag = HHE_collapse_of_the_nation_fire_river_fixed
-				HHE_suppressed_rebellion_HFR = yes
 			}
 		}
 
-		mission_HHE_collapse_of_the_nation_fire_river = {
-			icon = generic_civil_support
+		cost = 50
+		ai_will_do = {
+			factor = 10000
+		}
 
-			days_mission_timeout = 30
-			fire_only_once = yes
-
-			available = {
-				AND = {
-					hidden_trigger = {
-						has_global_flag = HHE_warmonger_civil_war_first
-						NOT = { has_global_flag = HHE_warmonger_civil_war_final }
-					}
-					has_stability > 0.33
-					has_country_flag = HHE_collapse_of_the_nation_fire_river_fixed
+		visible = {
+			has_global_flag = HHE_warmonger_civil_war_first
+			NOT = {
+				has_global_flag = HHE_warmonger_civil_war_final
+				or = {
+					has_country_flag = HHE_collapse_of_the_nation_country_no_more_failed
+					has_country_flag = HHE_collapse_of_the_nation_country_no_more_fixed
 				}
-				NOT = { has_completed_focus = HHE_warmonger_HHE_arresting_officers }
-			}
-
-			activation = {
-				AND = {
-					has_global_flag = HHE_warmonger_civil_war_first
-					NOT = { has_global_flag = HHE_warmonger_civil_war_final }
-					NOT = {
-						OR = {
-							has_country_flag = HHE_collapse_of_the_nation_fire_river_failed
-							has_country_flag = HHE_collapse_of_the_nation_fire_river_fixed
-						}
-					}
-				}
-				NOT = { has_completed_focus = HHE_warmonger_HHE_arresting_officers }
-			}
-
-			visible = {
-				AND = {
-					NOT = {
-						OR = {
-							has_country_flag = HHE_collapse_of_the_nation_fire_river_failed
-							has_country_flag = HHE_collapse_of_the_nation_fire_river_fixed
-						}
-					}
-				}
-				NOT = { has_completed_focus = HHE_warmonger_HHE_arresting_officers }
-			}
-
-			timeout_effect = {
-				set_country_flag = HHE_collapse_of_the_nation_fire_river_failed
-				HHE_rebellion_HFR = yes
 			}
 		}
 
-		crisis_HHE_collapse_of_the_nation_freedom_front = {
-			icon = generic_civil_support
-
-			fire_only_once = yes
-
-			available = {
-				has_stability > 0.25
-				has_country_flag = HHE_collapse_of_the_nation_country_no_more_fixed
-				NOT = {
-					or = {
-						has_country_flag = HHE_collapse_of_the_nation_freedom_front_failed
-						has_country_flag = HHE_collapse_of_the_nation_freedom_front_fixed
-					}
-				}
-			}
-
-			cost = 50
-			ai_will_do = {
-				factor = 1000
-			}
-
-			visible = {
-				has_global_flag = HHE_warmonger_civil_war_first
-				NOT = {
-					has_global_flag = HHE_warmonger_civil_war_final
-					or = {
-						has_country_flag = HHE_collapse_of_the_nation_freedom_front_failed
-						has_country_flag = HHE_collapse_of_the_nation_freedom_front_fixed
-					}
-				}
-			}
-
-			complete_effect = {
-				set_country_flag = HHE_collapse_of_the_nation_freedom_front_fixed
-				HHE_suppressed_rebellion_HFF = yes
-			}
+		complete_effect = {
+			set_country_flag = HHE_collapse_of_the_nation_country_no_more_fixed
 		}
+	}
 
-		mission_HHE_collapse_of_the_nation_freedom_front = {
-			icon = generic_civil_support
+	mission_HHE_collapse_of_the_nation_country_no_more = {
+		icon = generic_civil_support
 
-			days_mission_timeout = 55
-			fire_only_once = yes
+		days_mission_timeout = 80
+		fire_only_once = yes
 
-			available = {
-				hidden_trigger = {
-					has_global_flag = HHE_warmonger_civil_war_first
-					NOT = { has_global_flag = HHE_warmonger_civil_war_final }
-				}
-				has_stability > 0.25
-				has_country_flag = HHE_collapse_of_the_nation_freedom_front_fixed
-			}
-
-			activation = {
+		available = {
+			hidden_trigger = {
 				has_global_flag = HHE_warmonger_civil_war_first
 				NOT = { has_global_flag = HHE_warmonger_civil_war_final }
-				NOT = {
-					or = {
-						has_country_flag = HHE_collapse_of_the_nation_freedom_front_failed
-						has_country_flag = HHE_collapse_of_the_nation_freedom_front_fixed
-					}
-				}
 			}
+			has_stability > 0.17
+			has_country_flag = HHE_collapse_of_the_nation_country_no_more_fixed
+		}
 
-			visible = {
-				NOT = {
-					or = {
-						has_country_flag = HHE_collapse_of_the_nation_freedom_front_failed
-						has_country_flag = HHE_collapse_of_the_nation_freedom_front_fixed
-					}
+		activation = {
+			has_global_flag = HHE_warmonger_civil_war_first
+			NOT = { has_global_flag = HHE_warmonger_civil_war_final }
+			NOT = {
+				or = {
+					has_country_flag = HHE_collapse_of_the_nation_country_no_more_failed
+					has_country_flag = HHE_collapse_of_the_nation_country_no_more_fixed
 				}
-			}
-
-			timeout_effect = {
-				set_country_flag = HHE_collapse_of_the_nation_freedom_front_failed
-				HHE_rebellion_HFF = yes
 			}
 		}
 
-		crisis_HHE_collapse_of_the_nation_peoples_government = {
-			icon = generic_civil_support
-
-			fire_only_once = yes
-
-			available = {
-				has_stability > 0.20
-				has_country_flag = HHE_collapse_of_the_nation_country_no_more_fixed
-				NOT = {
-					or = {
-						has_country_flag = HHE_collapse_of_the_nation_peoples_government_failed
-						has_country_flag = HHE_collapse_of_the_nation_peoples_government_fixed
-					}
+		visible = {
+			NOT = {
+				or = {
+					has_country_flag = HHE_collapse_of_the_nation_country_no_more_failed
+					has_country_flag = HHE_collapse_of_the_nation_country_no_more_fixed
 				}
-			}
-
-			cost = 50
-			ai_will_do = {
-				factor = 1000
-			}
-
-			visible = {
-				has_global_flag = HHE_warmonger_civil_war_first
-				NOT = {
-					has_global_flag = HHE_warmonger_civil_war_final
-					or = {
-						has_country_flag = HHE_collapse_of_the_nation_peoples_government_failed
-						has_country_flag = HHE_collapse_of_the_nation_peoples_government_fixed
-					}
-				}
-			}
-
-			complete_effect = {
-				set_country_flag = HHE_collapse_of_the_nation_peoples_government_fixed
-				add_popularity = { ideology = unitism popularity = -0.10 }
-				HHE_suppressed_rebellion_HPG = yes
 			}
 		}
 
-		mission_HHE_collapse_of_the_nation_peoples_government = {
-			icon = generic_civil_support
+		timeout_effect = {
+			1 = { add_core_of = HHE }
+			HHE = { transfer_state = 1 }
+			set_country_flag = HHE_collapse_of_the_nation_country_no_more_failed
+			5 = { add_core_of = HPG }
+			239 = { add_core_of = HPG }
+			HPG = { transfer_state = 5 transfer_state = 239 }
+			237 = { add_core_of = HNO }
+			HNO = { transfer_state = 237 }
+		}
+	}
+}
 
-			days_mission_timeout = 65
-			fire_only_once = yes
+crisis_HBB_collapse = {
+	crisis_HBB_collapse_of_the_nation_unity_front = {
+		icon = generic_civil_support
 
-			available = {
-				hidden_trigger = {
-					has_global_flag = HHE_warmonger_civil_war_first
-					NOT = { has_global_flag = HHE_warmonger_civil_war_final }
+		fire_only_once = yes
+
+		available = {
+			has_stability > 0.75
+			NOT = {
+				or = {
+					has_country_flag = HBB_collapse_of_the_nation_unity_front_failed
+					has_country_flag = HBB_collapse_of_the_nation_unity_front_fixed
 				}
-				has_stability > 0.20
-				has_country_flag = HHE_collapse_of_the_nation_peoples_government_fixed
 			}
+		}
 
-			activation = {
+		cost = 50
+		ai_will_do = {
+			factor = 1000
+		}
+
+		visible = {
+			has_global_flag = HHE_warmonger_civil_war_first
+			NOT = {
+				has_global_flag = HHE_warmonger_civil_war_final
+				or = {
+					has_country_flag = HBB_collapse_of_the_nation_unity_front_failed
+					has_country_flag = HBB_collapse_of_the_nation_unity_front_fixed
+				}
+			}
+		}
+
+		complete_effect = {
+			set_country_flag = HBB_collapse_of_the_nation_unity_front_fixed
+			HBB_suppressed_rebellion_HUF = yes
+		}
+	}
+
+	mission_HBB_collapse_of_the_nation_unity_front = {
+		icon = generic_civil_support
+
+		days_mission_timeout = 30
+		fire_only_once = yes
+
+		available = {
+			hidden_trigger = {
 				has_global_flag = HHE_warmonger_civil_war_first
 				NOT = { has_global_flag = HHE_warmonger_civil_war_final }
-				NOT = {
-					or = {
-						has_country_flag = HHE_collapse_of_the_nation_peoples_government_failed
-						has_country_flag = HHE_collapse_of_the_nation_peoples_government_fixed
-					}
-				}
 			}
+			has_stability > 0.45
+			has_country_flag = HBB_collapse_of_the_nation_unity_front_fixed
+		}
 
-			visible = {
-				NOT = {
-					or = {
-						has_country_flag = HHE_collapse_of_the_nation_peoples_government_failed
-						has_country_flag = HHE_collapse_of_the_nation_peoples_government_fixed
-					}
+		activation = {
+			has_global_flag = HHE_warmonger_civil_war_first
+			NOT = { has_global_flag = HHE_warmonger_civil_war_final }
+			NOT = {
+				or = {
+					has_country_flag = HBB_collapse_of_the_nation_unity_front_failed
+					has_country_flag = HBB_collapse_of_the_nation_unity_front_fixed
 				}
-			}
-
-			timeout_effect = {
-				set_country_flag = HHE_collapse_of_the_nation_peoples_government_failed
-				add_popularity = { ideology = unitism popularity = -0.025 }
-				HHE_rebellion_HPG = yes
 			}
 		}
 
-		crisis_HHE_collapse_of_the_nation_country_no_more = {
-			icon = generic_civil_support
-
-			fire_only_once = yes
-
-			available = {
-				has_stability > 0.17
-				NOT = {
-					or = {
-						has_country_flag = HHE_collapse_of_the_nation_country_no_more_failed
-						has_country_flag = HHE_collapse_of_the_nation_country_no_more_fixed
-					}
+		visible = {
+			NOT = {
+				or = {
+					has_country_flag = HBB_collapse_of_the_nation_unity_front_failed
+					has_country_flag = HBB_collapse_of_the_nation_unity_front_fixed
 				}
-			}
-
-			cost = 50
-			ai_will_do = {
-				factor = 10000
-			}
-
-			visible = {
-				has_global_flag = HHE_warmonger_civil_war_first
-				NOT = {
-					has_global_flag = HHE_warmonger_civil_war_final
-					or = {
-						has_country_flag = HHE_collapse_of_the_nation_country_no_more_failed
-						has_country_flag = HHE_collapse_of_the_nation_country_no_more_fixed
-					}
-				}
-			}
-
-			complete_effect = {
-				set_country_flag = HHE_collapse_of_the_nation_country_no_more_fixed
 			}
 		}
 
-		mission_HHE_collapse_of_the_nation_country_no_more = {
-			icon = generic_civil_support
+		timeout_effect = {
+			set_country_flag = HBB_collapse_of_the_nation_unity_front_failed
+			HBB_rebellion_HUF = yes
+		}
+	}
+}
 
-			days_mission_timeout = 80
-			fire_only_once = yes
+crisis_HCR_collapse = {
+	crisis_HCR_collapse_of_the_nation_western_anarchist = {
+		icon = generic_civil_support
 
-			available = {
-				hidden_trigger = {
-					has_global_flag = HHE_warmonger_civil_war_first
-					NOT = { has_global_flag = HHE_warmonger_civil_war_final }
-				}
-				has_stability > 0.17
-				has_country_flag = HHE_collapse_of_the_nation_country_no_more_fixed
-			}
+		fire_only_once = yes
 
-			activation = {
-				has_global_flag = HHE_warmonger_civil_war_first
-				NOT = { has_global_flag = HHE_warmonger_civil_war_final }
-				NOT = {
-					or = {
-						has_country_flag = HHE_collapse_of_the_nation_country_no_more_failed
-						has_country_flag = HHE_collapse_of_the_nation_country_no_more_fixed
-					}
+		available = {
+			has_stability > 0.75
+			NOT = {
+				or = {
+					has_country_flag = HCR_collapse_of_the_nation_western_anarchist_failed
+					has_country_flag = HCR_collapse_of_the_nation_western_anarchist_fixed
 				}
 			}
+		}
 
-			visible = {
-				NOT = {
-					or = {
-						has_country_flag = HHE_collapse_of_the_nation_country_no_more_failed
-						has_country_flag = HHE_collapse_of_the_nation_country_no_more_fixed
-					}
+		cost = 50
+		ai_will_do = {
+			factor = 1000
+		}
+
+		visible = {
+			has_global_flag = HHE_warmonger_civil_war_first
+			NOT = {
+				has_global_flag = HHE_warmonger_civil_war_final
+				or = {
+					has_country_flag = HCR_collapse_of_the_nation_western_anarchist_failed
+					has_country_flag = HCR_collapse_of_the_nation_western_anarchist_fixed
 				}
 			}
+		}
 
-			timeout_effect = {
-				1 = { add_core_of = HHE }
-				HHE = { transfer_state = 1 }
-				set_country_flag = HHE_collapse_of_the_nation_country_no_more_failed
-				5 = { add_core_of = HPG }
-				239 = { add_core_of = HPG }
-				HPG = { transfer_state = 5 transfer_state = 239 }
-				237 = { add_core_of = HNO }
-				HNO = { transfer_state = 237 }
-			}
+		complete_effect = {
+			set_country_flag = HCR_collapse_of_the_nation_western_anarchist_fixed
+			HCR_suppressed_rebellion_HAW = yes
 		}
 	}
 
-	crisis_HBB_collapse = {
-		crisis_HBB_collapse_of_the_nation_unity_front = {
-			icon = generic_civil_support
+	mission_HCR_collapse_of_the_nation_western_anarchist = {
+		icon = generic_civil_support
 
-			fire_only_once = yes
+		days_mission_timeout = 15
+		fire_only_once = yes
 
-			available = {
-				has_stability > 0.75
-				NOT = {
-					or = {
-						has_country_flag = HBB_collapse_of_the_nation_unity_front_failed
-						has_country_flag = HBB_collapse_of_the_nation_unity_front_fixed
-					}
-				}
-			}
-
-			cost = 50
-			ai_will_do = {
-				factor = 1000
-			}
-
-			visible = {
-				has_global_flag = HHE_warmonger_civil_war_first
-				NOT = {
-					has_global_flag = HHE_warmonger_civil_war_final
-					or = {
-						has_country_flag = HBB_collapse_of_the_nation_unity_front_failed
-						has_country_flag = HBB_collapse_of_the_nation_unity_front_fixed
-					}
-				}
-			}
-
-			complete_effect = {
-				set_country_flag = HBB_collapse_of_the_nation_unity_front_fixed
-				HBB_suppressed_rebellion_HUF = yes
-			}
-		}
-
-		mission_HBB_collapse_of_the_nation_unity_front = {
-			icon = generic_civil_support
-
-			days_mission_timeout = 30
-			fire_only_once = yes
-
-			available = {
-				hidden_trigger = {
-					has_global_flag = HHE_warmonger_civil_war_first
-					NOT = { has_global_flag = HHE_warmonger_civil_war_final }
-				}
-				has_stability > 0.45
-				has_country_flag = HBB_collapse_of_the_nation_unity_front_fixed
-			}
-
-			activation = {
+		available = {
+			hidden_trigger = {
 				has_global_flag = HHE_warmonger_civil_war_first
 				NOT = { has_global_flag = HHE_warmonger_civil_war_final }
-				NOT = {
-					or = {
-						has_country_flag = HBB_collapse_of_the_nation_unity_front_failed
-						has_country_flag = HBB_collapse_of_the_nation_unity_front_fixed
-					}
+			}
+			has_stability > 0.75
+			has_country_flag = HCR_collapse_of_the_nation_western_anarchist_fixed
+		}
+
+		activation = {
+			has_global_flag = HHE_warmonger_civil_war_first
+			NOT = { has_global_flag = HHE_warmonger_civil_war_final }
+			NOT = {
+				or = {
+					has_country_flag = HCR_collapse_of_the_nation_western_anarchist_failed
+					has_country_flag = HCR_collapse_of_the_nation_western_anarchist_fixed
 				}
 			}
+		}
 
-			visible = {
-				NOT = {
-					or = {
-						has_country_flag = HBB_collapse_of_the_nation_unity_front_failed
-						has_country_flag = HBB_collapse_of_the_nation_unity_front_fixed
-					}
+		visible = {
+			NOT = {
+				or = {
+					has_country_flag = HCR_collapse_of_the_nation_western_anarchist_failed
+					has_country_flag = HCR_collapse_of_the_nation_western_anarchist_fixed
 				}
 			}
+		}
 
-			timeout_effect = {
-				set_country_flag = HBB_collapse_of_the_nation_unity_front_failed
-				HBB_rebellion_HUF = yes
+		timeout_effect = {
+			set_country_flag = HCR_collapse_of_the_nation_western_anarchist_failed
+			HCR_rebellion_HAW = yes
+		}
+	}
+}
+
+crisis_HER_collapse = {
+}
+
+crisis_HET_collapse = {
+	crisis_ETF_collapse_of_the_nation_elven_tribes = {
+		icon = generic_civil_support
+
+		fire_only_once = yes
+
+		available = {
+			has_stability > 0.90
+			NOT = {
+				or = {
+					has_country_flag = ETF_collapse_of_the_nation_elven_tribes_failed
+					has_country_flag = ETF_collapse_of_the_nation_elven_tribes_fixed
+				}
 			}
+		}
+
+		cost = 50
+		ai_will_do = {
+			factor = 1000
+		}
+
+		visible = {
+			has_global_flag = HHE_warmonger_civil_war_first
+			NOT = {
+				has_global_flag = HHE_warmonger_civil_war_final
+				or = {
+					has_country_flag = ETF_collapse_of_the_nation_elven_tribes_failed
+					has_country_flag = ETF_collapse_of_the_nation_elven_tribes_fixed
+				}
+			}
+		}
+
+		complete_effect = {
+			set_country_flag = ETF_collapse_of_the_nation_elven_tribes_fixed
+			HET_suppressed_rebellion_ETF = yes
 		}
 	}
 
-	crisis_HCR_collapse = {
-		crisis_HCR_collapse_of_the_nation_western_anarchist = {
-			icon = generic_civil_support
+	mission_ETF_collapse_of_the_nation_elven_tribes = {
+		icon = generic_civil_support
 
-			fire_only_once = yes
+		days_mission_timeout = 30
+		fire_only_once = yes
 
-			available = {
-				has_stability > 0.75
-				NOT = {
-					or = {
-						has_country_flag = HCR_collapse_of_the_nation_western_anarchist_failed
-						has_country_flag = HCR_collapse_of_the_nation_western_anarchist_fixed
-					}
-				}
-			}
-
-			cost = 50
-			ai_will_do = {
-				factor = 1000
-			}
-
-			visible = {
-				has_global_flag = HHE_warmonger_civil_war_first
-				NOT = {
-					has_global_flag = HHE_warmonger_civil_war_final
-					or = {
-						has_country_flag = HCR_collapse_of_the_nation_western_anarchist_failed
-						has_country_flag = HCR_collapse_of_the_nation_western_anarchist_fixed
-					}
-				}
-			}
-
-			complete_effect = {
-				set_country_flag = HCR_collapse_of_the_nation_western_anarchist_fixed
-				HCR_suppressed_rebellion_HAW = yes
-			}
-		}
-
-		mission_HCR_collapse_of_the_nation_western_anarchist = {
-			icon = generic_civil_support
-
-			days_mission_timeout = 15
-			fire_only_once = yes
-
-			available = {
-				hidden_trigger = {
-					has_global_flag = HHE_warmonger_civil_war_first
-					NOT = { has_global_flag = HHE_warmonger_civil_war_final }
-				}
-				has_stability > 0.75
-				has_country_flag = HCR_collapse_of_the_nation_western_anarchist_fixed
-			}
-
-			activation = {
-				has_global_flag = HHE_warmonger_civil_war_first
-				NOT = { has_global_flag = HHE_warmonger_civil_war_final }
-				NOT = {
-					or = {
-						has_country_flag = HCR_collapse_of_the_nation_western_anarchist_failed
-						has_country_flag = HCR_collapse_of_the_nation_western_anarchist_fixed
-					}
-				}
-			}
-
-			visible = {
-				NOT = {
-					or = {
-						has_country_flag = HCR_collapse_of_the_nation_western_anarchist_failed
-						has_country_flag = HCR_collapse_of_the_nation_western_anarchist_fixed
-					}
-				}
-			}
-
-			timeout_effect = {
-				set_country_flag = HCR_collapse_of_the_nation_western_anarchist_failed
-				HCR_rebellion_HAW = yes
-			}
-		}
-	}
-
-	crisis_HER_collapse = {
-	}
-
-	crisis_HET_collapse = {
-		crisis_ETF_collapse_of_the_nation_elven_tribes = {
-			icon = generic_civil_support
-
-			fire_only_once = yes
-
-			available = {
-				has_stability > 0.90
-				NOT = {
-					or = {
-						has_country_flag = ETF_collapse_of_the_nation_elven_tribes_failed
-						has_country_flag = ETF_collapse_of_the_nation_elven_tribes_fixed
-					}
-				}
-			}
-
-			cost = 50
-			ai_will_do = {
-				factor = 1000
-			}
-
-			visible = {
-				has_global_flag = HHE_warmonger_civil_war_first
-				NOT = {
-					has_global_flag = HHE_warmonger_civil_war_final
-					or = {
-						has_country_flag = ETF_collapse_of_the_nation_elven_tribes_failed
-						has_country_flag = ETF_collapse_of_the_nation_elven_tribes_fixed
-					}
-				}
-			}
-
-			complete_effect = {
-				set_country_flag = ETF_collapse_of_the_nation_elven_tribes_fixed
-				HET_suppressed_rebellion_ETF = yes
-			}
-		}
-
-		mission_ETF_collapse_of_the_nation_elven_tribes = {
-			icon = generic_civil_support
-
-			days_mission_timeout = 30
-			fire_only_once = yes
-
-			available = {
-				hidden_trigger = {
-					has_global_flag = HHE_warmonger_civil_war_first
-					NOT = { has_global_flag = HHE_warmonger_civil_war_final }
-				}
-				has_stability > 0.75
-				has_country_flag = ETF_collapse_of_the_nation_elven_tribes_fixed
-			}
-
-			activation = {
+		available = {
+			hidden_trigger = {
 				has_global_flag = HHE_warmonger_civil_war_first
 				NOT = { has_global_flag = HHE_warmonger_civil_war_final }
-				NOT = {
-					or = {
-						has_country_flag = ETF_collapse_of_the_nation_elven_tribes_failed
-						has_country_flag = ETF_collapse_of_the_nation_elven_tribes_fixed
-					}
+			}
+			has_stability > 0.75
+			has_country_flag = ETF_collapse_of_the_nation_elven_tribes_fixed
+		}
+
+		activation = {
+			has_global_flag = HHE_warmonger_civil_war_first
+			NOT = { has_global_flag = HHE_warmonger_civil_war_final }
+			NOT = {
+				or = {
+					has_country_flag = ETF_collapse_of_the_nation_elven_tribes_failed
+					has_country_flag = ETF_collapse_of_the_nation_elven_tribes_fixed
 				}
 			}
+		}
 
-			visible = {
-				NOT = {
-					or = {
-						has_country_flag = ETF_collapse_of_the_nation_elven_tribes_failed
-						has_country_flag = ETF_collapse_of_the_nation_elven_tribes_fixed
-					}
+		visible = {
+			NOT = {
+				or = {
+					has_country_flag = ETF_collapse_of_the_nation_elven_tribes_failed
+					has_country_flag = ETF_collapse_of_the_nation_elven_tribes_fixed
 				}
 			}
+		}
 
-			timeout_effect = {
-				set_country_flag = ETF_collapse_of_the_nation_elven_tribes_failed
-				HET_rebellion_ETF = yes
+		timeout_effect = {
+			set_country_flag = ETF_collapse_of_the_nation_elven_tribes_failed
+			HET_rebellion_ETF = yes
+		}
+	}
+}
+
+crisis_ETF_collapse = {
+	occupation_ETF_takeover_of_HUM = {
+		icon = generic_civil_support
+
+		fire_only_once = yes
+
+		available = {
+			always = yes
+		}
+
+		cost = 50
+		ai_will_do = {
+			factor = 10000
+		}
+
+		visible = {
+			always = yes
+		}
+
+		complete_effect = {
+			ETF = { transfer_state = 19 transfer_state = 163 transfer_state = 270 transfer_state = 408 }
+			HNO = {  }
+		}
+	}
+}
+
+crisis_HLF_collapse = {
+	crisis_HLF_collapse_of_the_nation_confederacy = {
+		icon = generic_civil_support
+
+		fire_only_once = yes
+
+		available = {
+			has_stability > 0.55
+			NOT = {
+				or = {
+					has_country_flag = HLF_collapse_of_the_nation_confederacy_failed
+					has_country_flag = HLF_collapse_of_the_nation_confederacy_fixed
+				}
 			}
+		}
+
+		cost = 50
+		ai_will_do = {
+			factor = 1000
+		}
+
+		visible = {
+			has_global_flag = HHE_warmonger_civil_war_first
+			NOT = {
+				has_global_flag = HHE_warmonger_civil_war_final
+				or = {
+					has_country_flag = HLF_collapse_of_the_nation_confederacy_failed
+					has_country_flag = HLF_collapse_of_the_nation_confederacy_fixed
+				}
+			}
+		}
+
+		complete_effect = {
+			set_country_flag = HLF_collapse_of_the_nation_confederacy_fixed
+			HLF_suppressed_rebellion_HCO = yes
 		}
 	}
 
-	crisis_ETF_collapse = {
-		occupation_ETF_takeover_of_HUM = {
-			icon = generic_civil_support
+	mission_HLF_collapse_of_the_nation_confederacy = {
+		icon = generic_civil_support
 
-			fire_only_once = yes
+		days_mission_timeout = 20
+		fire_only_once = yes
 
-			available = {
-				always = yes
-			}
-
-			cost = 50
-			ai_will_do = {
-				factor = 10000
-			}
-
-			visible = {
-				always = yes
-			}
-
-			complete_effect = {
-				ETF = { transfer_state = 19 transfer_state = 163 transfer_state = 270 transfer_state = 408 }
-				HNO = {  }
-			}
-		}
-	}
-
-	crisis_HLF_collapse = {
-		crisis_HLF_collapse_of_the_nation_confederacy = {
-			icon = generic_civil_support
-
-			fire_only_once = yes
-
-			available = {
-				has_stability > 0.55
-				NOT = {
-					or = {
-						has_country_flag = HLF_collapse_of_the_nation_confederacy_failed
-						has_country_flag = HLF_collapse_of_the_nation_confederacy_fixed
-					}
-				}
-			}
-
-			cost = 50
-			ai_will_do = {
-				factor = 1000
-			}
-
-			visible = {
-				has_global_flag = HHE_warmonger_civil_war_first
-				NOT = {
-					has_global_flag = HHE_warmonger_civil_war_final
-					or = {
-						has_country_flag = HLF_collapse_of_the_nation_confederacy_failed
-						has_country_flag = HLF_collapse_of_the_nation_confederacy_fixed
-					}
-				}
-			}
-
-			complete_effect = {
-				set_country_flag = HLF_collapse_of_the_nation_confederacy_fixed
-				HLF_suppressed_rebellion_HCO = yes
-			}
-		}
-
-		mission_HLF_collapse_of_the_nation_confederacy = {
-			icon = generic_civil_support
-
-			days_mission_timeout = 20
-			fire_only_once = yes
-
-			available = {
-				hidden_trigger = {
-					has_global_flag = HHE_warmonger_civil_war_first
-					NOT = { has_global_flag = HHE_warmonger_civil_war_final }
-				}
-				has_stability > 0.75
-				has_country_flag = HLF_collapse_of_the_nation_confederacy_fixed
-			}
-
-			activation = {
-				has_global_flag = HHE_warmonger_civil_war_first
-				NOT = { has_global_flag = HHE_warmonger_civil_war_final }
-				NOT = {
-					or = {
-						has_country_flag = HLF_collapse_of_the_nation_confederacy_failed
-						has_country_flag = HLF_collapse_of_the_nation_confederacy_fixed
-					}
-				}
-			}
-
-			visible = {
-				NOT = {
-					or = {
-						has_country_flag = HLF_collapse_of_the_nation_confederacy_failed
-						has_country_flag = HLF_collapse_of_the_nation_confederacy_fixed
-					}
-				}
-			}
-
-			timeout_effect = {
-				set_country_flag = HLF_collapse_of_the_nation_confederacy_failed
-				HLF_rebellion_HCO = yes
-			}
-		}
-
-		crisis_HLF_collapse_of_the_nation_junta = {
-			icon = generic_civil_support
-
-			fire_only_once = yes
-
-			available = {
-				has_stability > 0.60
-				NOT = {
-					or = {
-						has_country_flag = HLF_collapse_of_the_nation_junta_failed
-						has_country_flag = HLF_collapse_of_the_nation_junta_fixed
-					}
-				}
-			}
-
-			cost = 50
-			ai_will_do = {
-				factor = 1000
-			}
-
-			visible = {
-				has_global_flag = HHE_warmonger_civil_war_first
-				NOT = {
-					has_global_flag = HHE_warmonger_civil_war_final
-					or = {
-						has_country_flag = HLF_collapse_of_the_nation_junta_failed
-						has_country_flag = HLF_collapse_of_the_nation_junta_fixed
-					}
-				}
-			}
-
-			complete_effect = {
-				set_country_flag = HLF_collapse_of_the_nation_junta_fixed
-				HLF_suppressed_rebellion_MJU = yes
-			}
-		}
-
-		mission_HLF_collapse_of_the_nation_junta = {
-			icon = generic_civil_support
-
-			days_mission_timeout = 40
-			fire_only_once = yes
-
-			available = {
-				hidden_trigger = {
-					has_global_flag = HHE_warmonger_civil_war_first
-					NOT = { has_global_flag = HHE_warmonger_civil_war_final }
-				}
-				has_stability > 0.55
-				has_country_flag = HLF_collapse_of_the_nation_junta_fixed
-			}
-
-			activation = {
+		available = {
+			hidden_trigger = {
 				has_global_flag = HHE_warmonger_civil_war_first
 				NOT = { has_global_flag = HHE_warmonger_civil_war_final }
-				NOT = {
-					or = {
-						has_country_flag = HLF_collapse_of_the_nation_junta_failed
-						has_country_flag = HLF_collapse_of_the_nation_junta_fixed
-					}
-				}
 			}
-
-			visible = {
-				NOT = {
-					or = {
-						has_country_flag = HLF_collapse_of_the_nation_junta_failed
-						has_country_flag = HLF_collapse_of_the_nation_junta_fixed
-					}
-				}
-			}
-
-			timeout_effect = {
-				set_country_flag = HLF_collapse_of_the_nation_junta_failed
-				HLF_rebellion_MJU = yes
-			}
+			has_stability > 0.75
+			has_country_flag = HLF_collapse_of_the_nation_confederacy_fixed
 		}
-	}
 
-	crisis_HNO_collapse = {
-	}
-
-	crisis_DOC_collapse = {
-	}
-
-	crisis_REP_collapse = {
-	}
-
-	crisis_HPP_collapse = {
-	}
-
-	crisis_HRF_collapse = {
-	}
-
-	crisis_HSP_collapse = {
-	}
-
-	crisis_HST_collapse = {
-		crisis_HST_collapse_of_the_nation_archaigan_people = {
-			icon = generic_civil_support
-
-			fire_only_once = yes
-
-			available = {
-				has_stability > 0.70
-				NOT = {
-					or = {
-						has_country_flag = HST_collapse_of_the_nation_archaigan_people_failed
-						has_country_flag = HST_collapse_of_the_nation_archaigan_people_fixed
-					}
+		activation = {
+			has_global_flag = HHE_warmonger_civil_war_first
+			NOT = { has_global_flag = HHE_warmonger_civil_war_final }
+			NOT = {
+				or = {
+					has_country_flag = HLF_collapse_of_the_nation_confederacy_failed
+					has_country_flag = HLF_collapse_of_the_nation_confederacy_fixed
 				}
-			}
-
-			cost = 50
-			ai_will_do = {
-				factor = 1000
-			}
-
-			visible = {
-				has_global_flag = HHE_warmonger_civil_war_first
-				NOT = {
-					has_global_flag = HHE_warmonger_civil_war_final
-					or = {
-						has_country_flag = HST_collapse_of_the_nation_archaigan_people_failed
-						has_country_flag = HST_collapse_of_the_nation_archaigan_people_fixed
-					}
-				}
-			}
-
-			complete_effect = {
-				set_country_flag = HST_collapse_of_the_nation_archaigan_people_fixed
-				HST_suppressed_rebellion_HAW = yes
 			}
 		}
 
-		mission_HST_collapse_of_the_nation_archaigan_people = {
-			icon = generic_civil_support
-
-			days_mission_timeout = 33
-			fire_only_once = yes
-
-			available = {
-				hidden_trigger = {
-					has_global_flag = HHE_warmonger_civil_war_first
-					NOT = { has_global_flag = HHE_warmonger_civil_war_final }
+		visible = {
+			NOT = {
+				or = {
+					has_country_flag = HLF_collapse_of_the_nation_confederacy_failed
+					has_country_flag = HLF_collapse_of_the_nation_confederacy_fixed
 				}
-				has_stability > 0.70
-				has_country_flag = HST_collapse_of_the_nation_archaigan_people_fixed
 			}
+		}
 
-			activation = {
+		timeout_effect = {
+			set_country_flag = HLF_collapse_of_the_nation_confederacy_failed
+			HLF_rebellion_HCO = yes
+		}
+	}
+
+	crisis_HLF_collapse_of_the_nation_junta = {
+		icon = generic_civil_support
+
+		fire_only_once = yes
+
+		available = {
+			has_stability > 0.60
+			NOT = {
+				or = {
+					has_country_flag = HLF_collapse_of_the_nation_junta_failed
+					has_country_flag = HLF_collapse_of_the_nation_junta_fixed
+				}
+			}
+		}
+
+		cost = 50
+		ai_will_do = {
+			factor = 1000
+		}
+
+		visible = {
+			has_global_flag = HHE_warmonger_civil_war_first
+			NOT = {
+				has_global_flag = HHE_warmonger_civil_war_final
+				or = {
+					has_country_flag = HLF_collapse_of_the_nation_junta_failed
+					has_country_flag = HLF_collapse_of_the_nation_junta_fixed
+				}
+			}
+		}
+
+		complete_effect = {
+			set_country_flag = HLF_collapse_of_the_nation_junta_fixed
+			HLF_suppressed_rebellion_MJU = yes
+		}
+	}
+
+	mission_HLF_collapse_of_the_nation_junta = {
+		icon = generic_civil_support
+
+		days_mission_timeout = 40
+		fire_only_once = yes
+
+		available = {
+			hidden_trigger = {
 				has_global_flag = HHE_warmonger_civil_war_first
 				NOT = { has_global_flag = HHE_warmonger_civil_war_final }
-				NOT = {
-					or = {
-						has_country_flag = HST_collapse_of_the_nation_archaigan_people_failed
-						has_country_flag = HST_collapse_of_the_nation_archaigan_people_fixed
-					}
+			}
+			has_stability > 0.55
+			has_country_flag = HLF_collapse_of_the_nation_junta_fixed
+		}
+
+		activation = {
+			has_global_flag = HHE_warmonger_civil_war_first
+			NOT = { has_global_flag = HHE_warmonger_civil_war_final }
+			NOT = {
+				or = {
+					has_country_flag = HLF_collapse_of_the_nation_junta_failed
+					has_country_flag = HLF_collapse_of_the_nation_junta_fixed
 				}
 			}
+		}
 
-			visible = {
-				NOT = {
-					or = {
-						has_country_flag = HST_collapse_of_the_nation_archaigan_people_failed
-						has_country_flag = HST_collapse_of_the_nation_archaigan_people_fixed
-					}
+		visible = {
+			NOT = {
+				or = {
+					has_country_flag = HLF_collapse_of_the_nation_junta_failed
+					has_country_flag = HLF_collapse_of_the_nation_junta_fixed
 				}
 			}
+		}
 
-			timeout_effect = {
-				set_country_flag = HST_collapse_of_the_nation_archaigan_people_failed
-				HST_rebellion_HAP = yes
+		timeout_effect = {
+			set_country_flag = HLF_collapse_of_the_nation_junta_failed
+			HLF_rebellion_MJU = yes
+		}
+	}
+}
+
+crisis_HNO_collapse = {
+}
+
+crisis_DOC_collapse = {
+}
+
+crisis_REP_collapse = {
+}
+
+crisis_HPP_collapse = {
+}
+
+crisis_HRF_collapse = {
+}
+
+crisis_HSP_collapse = {
+}
+
+crisis_HST_collapse = {
+	crisis_HST_collapse_of_the_nation_archaigan_people = {
+		icon = generic_civil_support
+
+		fire_only_once = yes
+
+		available = {
+			has_stability > 0.70
+			NOT = {
+				or = {
+					has_country_flag = HST_collapse_of_the_nation_archaigan_people_failed
+					has_country_flag = HST_collapse_of_the_nation_archaigan_people_fixed
+				}
 			}
+		}
+
+		cost = 50
+		ai_will_do = {
+			factor = 1000
+		}
+
+		visible = {
+			has_global_flag = HHE_warmonger_civil_war_first
+			NOT = {
+				has_global_flag = HHE_warmonger_civil_war_final
+				or = {
+					has_country_flag = HST_collapse_of_the_nation_archaigan_people_failed
+					has_country_flag = HST_collapse_of_the_nation_archaigan_people_fixed
+				}
+			}
+		}
+
+		complete_effect = {
+			set_country_flag = HST_collapse_of_the_nation_archaigan_people_fixed
+			HST_suppressed_rebellion_HAW = yes
 		}
 	}
 
-	crisis_HTP_collapse = {
-		crisis_HTP_collapse_of_the_nation_free_sailors = {
-			icon = generic_civil_support
+	mission_HST_collapse_of_the_nation_archaigan_people = {
+		icon = generic_civil_support
 
-			fire_only_once = yes
+		days_mission_timeout = 33
+		fire_only_once = yes
 
-			available = {
-				has_stability > 0.67
-				NOT = {
-					or = {
-						has_country_flag = HTP_collapse_of_the_nation_free_sailors_failed
-						has_country_flag = HTP_collapse_of_the_nation_free_sailors_fixed
-					}
-				}
-			}
-
-			cost = 50
-			ai_will_do = {
-				factor = 1000
-			}
-
-			visible = {
-				has_global_flag = HHE_warmonger_civil_war_first
-				NOT = {
-					has_global_flag = HHE_warmonger_civil_war_final
-					or = {
-						has_country_flag = HTP_collapse_of_the_nation_free_sailors_failed
-						has_country_flag = HTP_collapse_of_the_nation_free_sailors_fixed
-					}
-				}
-			}
-
-			complete_effect = {
-				set_country_flag = HTP_collapse_of_the_nation_free_sailors_fixed
-				HTP_suppressed_rebellion_HFS = yes
-			}
-		}
-
-		mission_HTP_collapse_of_the_nation_free_sailors = {
-			icon = generic_civil_support
-
-			days_mission_timeout = 10
-			fire_only_once = yes
-
-			available = {
-				hidden_trigger = {
-					has_global_flag = HHE_warmonger_civil_war_first
-					NOT = { has_global_flag = HHE_warmonger_civil_war_final }
-				}
-				has_stability > 0.67
-				has_country_flag = HTP_collapse_of_the_nation_free_sailors_fixed
-			}
-
-			activation = {
-				has_global_flag = HHE_warmonger_civil_war_first
-				NOT = { has_global_flag = HHE_warmonger_civil_war_final }
-				NOT = {
-					or = {
-						has_country_flag = HTP_collapse_of_the_nation_free_sailors_failed
-						has_country_flag = HTP_collapse_of_the_nation_free_sailors_fixed
-					}
-				}
-			}
-
-			visible = {
-				NOT = {
-					or = {
-						has_country_flag = HTP_collapse_of_the_nation_free_sailors_failed
-						has_country_flag = HTP_collapse_of_the_nation_free_sailors_fixed
-					}
-				}
-			}
-
-			timeout_effect = {
-				set_country_flag = HTP_collapse_of_the_nation_free_sailors_failed
-				HTP_rebellion_HFS = yes
-			}
-		}
-	}
-
-	crisis_HUM_collapse = {
-		crisis_HUM_collapse_of_the_nation_dwarves = {
-			icon = generic_civil_support
-
-			fire_only_once = yes
-
-			available = {
-				has_stability > 0.75
-				NOT = {
-					or = {
-						has_country_flag = HUM_collapse_of_the_nation_dwarves_failed
-						has_country_flag = HUM_collapse_of_the_nation_dwarves_fixed
-					}
-				}
-			}
-
-			cost = 50
-			ai_will_do = {
-				factor = 1000
-			}
-
-			visible = {
-				has_global_flag = HHE_warmonger_civil_war_first
-				NOT = {
-					has_global_flag = HHE_warmonger_civil_war_final
-					or = {
-						has_country_flag = HUM_collapse_of_the_nation_dwarves_failed
-						has_country_flag = HUM_collapse_of_the_nation_dwarves_fixed
-					}
-				}
-			}
-
-			complete_effect = {
-				set_country_flag = HUM_collapse_of_the_nation_dwarves_fixed
-				HUM_suppressed_rebellion_HDW = yes
-			}
-		}
-
-		mission_HUM_collapse_of_the_nation_dwarves = {
-			icon = generic_civil_support
-
-			days_mission_timeout = 15
-			fire_only_once = yes
-
-			available = {
-				hidden_trigger = {
-					has_global_flag = HHE_warmonger_civil_war_first
-					NOT = { has_global_flag = HHE_warmonger_civil_war_final }
-				}
-				has_stability > 0.75
-				has_country_flag = HUM_collapse_of_the_nation_dwarves_fixed
-			}
-
-			activation = {
+		available = {
+			hidden_trigger = {
 				has_global_flag = HHE_warmonger_civil_war_first
 				NOT = { has_global_flag = HHE_warmonger_civil_war_final }
-				NOT = {
-					or = {
-						has_country_flag = HUM_collapse_of_the_nation_dwarves_failed
-						has_country_flag = HUM_collapse_of_the_nation_dwarves_fixed
-					}
+			}
+			has_stability > 0.70
+			has_country_flag = HST_collapse_of_the_nation_archaigan_people_fixed
+		}
+
+		activation = {
+			has_global_flag = HHE_warmonger_civil_war_first
+			NOT = { has_global_flag = HHE_warmonger_civil_war_final }
+			NOT = {
+				or = {
+					has_country_flag = HST_collapse_of_the_nation_archaigan_people_failed
+					has_country_flag = HST_collapse_of_the_nation_archaigan_people_fixed
 				}
 			}
+		}
 
-			visible = {
-				NOT = {
-					or = {
-						has_country_flag = HUM_collapse_of_the_nation_dwarves_failed
-						has_country_flag = HUM_collapse_of_the_nation_dwarves_fixed
-					}
+		visible = {
+			NOT = {
+				or = {
+					has_country_flag = HST_collapse_of_the_nation_archaigan_people_failed
+					has_country_flag = HST_collapse_of_the_nation_archaigan_people_fixed
 				}
 			}
+		}
 
-			timeout_effect = {
-				set_country_flag = HUM_collapse_of_the_nation_dwarves_failed
-				HUM_rebellion_HDW = yes
+		timeout_effect = {
+			set_country_flag = HST_collapse_of_the_nation_archaigan_people_failed
+			HST_rebellion_HAP = yes
+		}
+	}
+}
+
+crisis_HTP_collapse = {
+	crisis_HTP_collapse_of_the_nation_free_sailors = {
+		icon = generic_civil_support
+
+		fire_only_once = yes
+
+		available = {
+			has_stability > 0.67
+			NOT = {
+				or = {
+					has_country_flag = HTP_collapse_of_the_nation_free_sailors_failed
+					has_country_flag = HTP_collapse_of_the_nation_free_sailors_fixed
+				}
 			}
+		}
+
+		cost = 50
+		ai_will_do = {
+			factor = 1000
+		}
+
+		visible = {
+			has_global_flag = HHE_warmonger_civil_war_first
+			NOT = {
+				has_global_flag = HHE_warmonger_civil_war_final
+				or = {
+					has_country_flag = HTP_collapse_of_the_nation_free_sailors_failed
+					has_country_flag = HTP_collapse_of_the_nation_free_sailors_fixed
+				}
+			}
+		}
+
+		complete_effect = {
+			set_country_flag = HTP_collapse_of_the_nation_free_sailors_fixed
+			HTP_suppressed_rebellion_HFS = yes
 		}
 	}
 
-	crisis_HUP_collapse = {
+	mission_HTP_collapse_of_the_nation_free_sailors = {
+		icon = generic_civil_support
+
+		days_mission_timeout = 10
+		fire_only_once = yes
+
+		available = {
+			hidden_trigger = {
+				has_global_flag = HHE_warmonger_civil_war_first
+				NOT = { has_global_flag = HHE_warmonger_civil_war_final }
+			}
+			has_stability > 0.67
+			has_country_flag = HTP_collapse_of_the_nation_free_sailors_fixed
+		}
+
+		activation = {
+			has_global_flag = HHE_warmonger_civil_war_first
+			NOT = { has_global_flag = HHE_warmonger_civil_war_final }
+			NOT = {
+				or = {
+					has_country_flag = HTP_collapse_of_the_nation_free_sailors_failed
+					has_country_flag = HTP_collapse_of_the_nation_free_sailors_fixed
+				}
+			}
+		}
+
+		visible = {
+			NOT = {
+				or = {
+					has_country_flag = HTP_collapse_of_the_nation_free_sailors_failed
+					has_country_flag = HTP_collapse_of_the_nation_free_sailors_fixed
+				}
+			}
+		}
+
+		timeout_effect = {
+			set_country_flag = HTP_collapse_of_the_nation_free_sailors_failed
+			HTP_rebellion_HFS = yes
+		}
+	}
+}
+
+crisis_HUM_collapse = {
+	crisis_HUM_collapse_of_the_nation_dwarves = {
+		icon = generic_civil_support
+
+		fire_only_once = yes
+
+		available = {
+			has_stability > 0.75
+			NOT = {
+				or = {
+					has_country_flag = HUM_collapse_of_the_nation_dwarves_failed
+					has_country_flag = HUM_collapse_of_the_nation_dwarves_fixed
+				}
+			}
+		}
+
+		cost = 50
+		ai_will_do = {
+			factor = 1000
+		}
+
+		visible = {
+			has_global_flag = HHE_warmonger_civil_war_first
+			NOT = {
+				has_global_flag = HHE_warmonger_civil_war_final
+				or = {
+					has_country_flag = HUM_collapse_of_the_nation_dwarves_failed
+					has_country_flag = HUM_collapse_of_the_nation_dwarves_fixed
+				}
+			}
+		}
+
+		complete_effect = {
+			set_country_flag = HUM_collapse_of_the_nation_dwarves_fixed
+			HUM_suppressed_rebellion_HDW = yes
+		}
 	}
 
-	crisis_HWA_collapse = {
-	}
+	mission_HUM_collapse_of_the_nation_dwarves = {
+		icon = generic_civil_support
 
-	crisis_UFS_collapse = {
+		days_mission_timeout = 15
+		fire_only_once = yes
+
+		available = {
+			hidden_trigger = {
+				has_global_flag = HHE_warmonger_civil_war_first
+				NOT = { has_global_flag = HHE_warmonger_civil_war_final }
+			}
+			has_stability > 0.75
+			has_country_flag = HUM_collapse_of_the_nation_dwarves_fixed
+		}
+
+		activation = {
+			has_global_flag = HHE_warmonger_civil_war_first
+			NOT = { has_global_flag = HHE_warmonger_civil_war_final }
+			NOT = {
+				or = {
+					has_country_flag = HUM_collapse_of_the_nation_dwarves_failed
+					has_country_flag = HUM_collapse_of_the_nation_dwarves_fixed
+				}
+			}
+		}
+
+		visible = {
+			NOT = {
+				or = {
+					has_country_flag = HUM_collapse_of_the_nation_dwarves_failed
+					has_country_flag = HUM_collapse_of_the_nation_dwarves_fixed
+				}
+			}
+		}
+
+		timeout_effect = {
+			set_country_flag = HUM_collapse_of_the_nation_dwarves_failed
+			HUM_rebellion_HDW = yes
+		}
 	}
+}
+
+crisis_HUP_collapse = {
+}
+
+crisis_HWA_collapse = {
+}
+
+crisis_UFS_collapse = {
+}
 # Civil-War Decisions
 	crisis_collapse_of_the_nation = {
 		mission_HHE_collapse_of_the_nation_civil_war = { ### Unignited -> LOCAL IGNITION
@@ -1295,15 +1294,29 @@
 	}
 
 	crisis_troop_deployer_collapse = {
-		crisis_HHE_troop_deployed_id = {
+		crisis_HHE_troop_deployer_within_state = {
 	        icon = generic_military
+			state_target = yes
+			on_map_mode = map_only
+			target_array = controlled_states
 
 			#highlight_states = { highlight_state_targets = { state = id } }
 
+			target_trigger = {
+				FROM = { NOT = { has_state_flag = HHE_civilwar_recruited_militias } }
+			}
 	        available = {
-	        	#id = { is_controlled_by = ROOT }
+	        	OR = {
+					has_country_flag = form_harmonainus_imperious_flag
+					has_country_flag = form_harmonainus_imperious_center_flag
+					has_country_flag = form_harmonainus_imperious_west_flag
+	        	}
+	        	FROM = { NOT = { has_state_flag = HHE_civilwar_recruited_militias } }
+				hidden_trigger = {
+					has_global_flag = HHE_warmonger_civil_war_first
+				}
 	        }
-	        visible = { always = yes AND = { is_debug = yes is_ai = no } }
+	        visible = { NOT = { has_state_flag = HHE_civilwar_recruited_militias } }
 
 	        fire_only_once = yes
 	        custom_cost_trigger = {
@@ -1312,27 +1325,26 @@
 			custom_cost_text = decision_cost_CP_15
 
 	        days_remove = 35
-	        remove_trigger = { NOT = {
-	        	#id = { is_controlled_by = ROOT }
-	        } }
+	        remove_trigger = {
+				hidden_trigger = {
+					has_global_flag = HHE_warmonger_civil_war_first
+				}
+	        }
 
 	        complete_effect = {
 	            log = "[GetDateText]: [Root.GetName]: Decision crisis_HHE_troop_deployed_id"
+	            hidden_effect = { add_command_power = -15 }
 	        }
 	        remove_effect = {
 	            log = "[GetDateText]: [Root.GetName]: Decision remove crisis_HHE_troop_deployed_id"
-				# deployed
+				# Deployer
+				custom_effect_tooltip = HHE_civilwar_spawn_militia_divisions_tt
+				hidden_effect = { FROM = { HHE_civilwar_spawn_militia_divisions = yes } }
 	        }
-	        ai_will_do = {
-	            factor = 0
-	            #modifier = {
-	            #	add = 1
-	            #	factor = 1
-				#	id = {
-				#		is_controlled_by = ROOT
-				#		any_neighbor_state = { is_controlled_by_ROOT_or_ally = no }
-				#	}
-	            #}
+	        ai_will_do = { factor = 10
+				modifier = { factor = 10
+					command_power > 30
+				}
 	        }
 		}
 	}
@@ -2099,37 +2111,83 @@
 	}
 
 	crisis_pillage_state_collapse = {
-		crisis_HHE_pillage_state_id = {
+		crisis_HHE_pillage_and_loot_state = {
 	        icon = SWI_consolidate_council_power
+			state_target = yes
+			on_map_mode = map_only
+			target_array = controlled_states
 
-			#highlight_states = { highlight_state_targets = { state = id } }
+			#highlight_states = { highlight_state_targets = { state = FROM } }
 
+			target_trigger = {
+				FROM = { NOT = { has_state_flag = HHE_civilwar_pillage_and_loot } }
+	        	hidden_trigger = {
+					FROM = {
+						NOT = {
+							OR = {
+								has_state_category = city
+								has_state_category = large_city
+								has_state_category = metropolis
+								has_state_category = megalopolis
+							}
+						}
+					}
+				}
+			}
 	        available = {
-	        	#id = { is_controlled_by = ROOT }
+	        	NOT = {
+		        	OR = {
+						has_country_flag = form_harmonainus_imperious_flag
+						has_country_flag = form_harmonainus_imperious_center_flag
+						has_country_flag = form_harmonainus_imperious_west_flag
+		        	}
+	        	}
+	        	FROM = { NOT = { has_state_flag = HHE_civilwar_pillage_and_loot } }
+	        	hidden_trigger = {
+					FROM = {
+						NOT = {
+							OR = {
+								has_state_category = city
+								has_state_category = large_city
+								has_state_category = metropolis
+								has_state_category = megalopolis
+							}
+						}
+					}
+					has_global_flag = HHE_warmonger_civil_war_first
+	        	}
 	        }
-	        visible = { always = yes AND = { is_debug = yes is_ai = no } }
+	        visible = { NOT = { has_state_flag = HHE_civilwar_pillage_and_loot } }
 
 	        fire_only_once = yes
-	        cost = 10
+	        cost = 30
 
 	        days_remove = 35
-	        remove_trigger = { NOT = {
-	        	#id = { is_controlled_by = ROOT }
-	        } }
+	        remove_trigger = {
+				hidden_trigger = {
+					has_global_flag = HHE_warmonger_civil_war_first
+				}
+	        }
 
 	        complete_effect = {
 	            log = "[GetDateText]: [Root.GetName]: Decision crisis_HHE_pillage_state_id"
 	        }
 	        remove_effect = {
 	            log = "[GetDateText]: [Root.GetName]: Decision remove crisis_HHE_pillage_state_id"
-				# deployed
+	            # Pillage
+				add_equipment_to_stockpile = {
+				    type = infantry_equipment
+				    amount = 1000
+				}
+				add_stability = -0.02
+				add_war_support = -0.02
+				hidden_effect = {
+					set_state_flag = HHE_civilwar_pillage_and_loot
+				}
 	        }
-	        ai_will_do = {
-	            factor = 0
-	            #modifier = {
-	            #	add = 1
-	            #	factor = 1
-				#	id = {
+	        ai_will_do = { factor = 1
+	            #modifier = { factor = 1
+				#	FROM = {
 				#		is_controlled_by = ROOT
 				#		any_neighbor_state = { is_controlled_by_ROOT_or_ally = no }
 				#	}

@@ -985,6 +985,7 @@ create_militia_template = {
 			division_template = {
 				name = "Local Militia"
 				#division_names_group = HHE_name
+				is_locked = yes
 				regiments = {
 					militia = { x = 0 y = 0 }
 					militia = { x = 0 y = 1 }
@@ -1007,6 +1008,7 @@ create_garrison_template = {
 			division_template = {
 				name = "Local Garrison"
 				#division_names_group = HHE_name
+				is_locked = yes
 				regiments = {
 					infantry = { x = 0 y = 0 }
 					infantry = { x = 0 y = 1 }
@@ -1031,6 +1033,7 @@ create_cavalry_militia_template = {
 			division_template = {
 				name = "Local Cavalry"
 				#division_names_group = HHE_name
+				is_locked = yes
 				regiments = {
 					cavalry = { x = 0 y = 0 }
 					cavalry = { x = 0 y = 1 }
@@ -1040,6 +1043,169 @@ create_cavalry_militia_template = {
 					cavalry = { x = 1 y = 2 }
 				}
 			}
+		}
+	}
+}
+
+spawn_militia_divisions = {
+	set_state_flag = recruited_militias
+
+	# calculate number of units to spawn
+	set_temp_variable = { units_to_spawn = state_population_k }
+	divide_temp_variable = { units_to_spawn = 1000 }
+
+	# failsafe so at least one unit is always spawned
+	clamp_temp_variable = { var = units_to_spawn min = 1 max = 50 }
+
+	# if core, get twice the units
+	if = {
+		limit = { is_core_of = ROOT }
+		multiply_temp_variable = { units_to_spawn = 2 }
+	}
+	# Electors gets more units and cores in USA-owned cores
+	else_if = {
+		limit = {
+			ROOT = {
+				OR = {
+					TAG = HLF
+					TAG = HNO
+					TAG = HST
+				}
+			}
+			is_core_of = HHE
+			is_owned_by = HHE
+		}
+		multiply_temp_variable = { units_to_spawn = 2 }
+	}
+	round_temp_variable = units_to_spawn
+
+	# tooltip
+	set_temp_variable = { total_units_to_spawn = units_to_spawn }
+	round_temp_variable = total_units_to_spawn
+	custom_effect_tooltip = Spawn_recruit_units
+
+	# if 5 or more units or a metropolis/megalopolis, covert 25% to garrison-template units
+	if = {
+		limit = {
+			OR = {
+				has_state_category = metropolis
+				has_state_category = megalopolis
+				check_variable = { var = units_to_spawn value = 5 compare = greater_than_or_equals }
+			}
+		}
+		set_temp_variable = { garrisons_to_spawn = units_to_spawn }
+		divide_temp_variable = { garrisons_to_spawn = 4 }
+		clamp_temp_variable = { var = garrisons_to_spawn min = 1 max = 10 }
+		round_temp_variable = garrisons_to_spawn
+		subtract_from_temp_variable = { units_to_spawn = garrisons_to_spawn }
+	}
+
+	# specific states get cavalry militia units
+	if = {
+		limit = {
+			OR = {
+				state = 18
+				state = 20
+				state = 120
+				state = 122
+				state = 128
+				state = 150
+				state = 153
+				state = 154
+				state = 155
+				state = 156
+				state = 160
+			}
+		}
+		set_temp_variable = { cavalry_to_spawn = 1 }
+		if = {
+			limit = {
+				OR = {
+					state = 120
+					state = 122
+					state = 128
+				}
+			}
+			add_to_temp_variable = { cavalry_to_spawn = 1 }
+		}
+		subtract_from_temp_variable = { units_to_spawn = cavalry_to_spawn }
+	}
+
+	# spawn normal militias
+	set_temp_variable = { counter = 1 }
+	if = {
+		limit = {
+			check_variable = { var = units_to_spawn value = 1 compare = greater_than_or_equals }
+		}
+		ROOT = { create_militia_template = yes }
+		for_loop_effect = {
+			start = 1
+			end = units_to_spawn
+			compare = less_than_or_equals
+
+			meta_effect = {
+				text = {
+					create_unit = {
+						division = "name = [DIVISION] division_template = [TEMPLATE] start_experience_factor = 0.1375 start_equipment_factor = 0.8"
+						allow_spawning_on_enemy_provs = yes
+						owner = ROOT
+						id = 1776
+					}
+				}
+				DIVISION = "\\\"[?counter][GetSpawnOrdinalSuffix] [THIS.GetName] [GetSpawnMilitiaName]\\\""
+				TEMPLATE = "\\\"[GetSpawnMilitiaTemplate]\\\""
+			}
+			add_to_temp_variable = { counter = 1 }
+		}
+	}
+
+	# spawn garrisons
+	if = {
+		limit = { has_variable = garrisons_to_spawn }
+		ROOT = { create_garrison_template = yes }
+		for_loop_effect = {
+			start = 1
+			end = garrisons_to_spawn
+			compare = less_than_or_equals
+
+			meta_effect = {
+				text = {
+					create_unit = {
+						division = "name = [DIVISION] division_template = [TEMPLATE] start_experience_factor = 0.1375 start_equipment_factor = 0.8"
+						allow_spawning_on_enemy_provs = yes
+						owner = ROOT
+						id = 1776
+					}
+				}
+				DIVISION = "\\\"[?counter][GetSpawnOrdinalSuffix] [THIS.GetName] [GetSpawnGarrisonName]\\\""
+				TEMPLATE = "\\\"[GetSpawnGarrisonTemplate]\\\""
+			}
+			add_to_temp_variable = { counter = 1 }
+		}
+	}
+
+	# spawn cavalry militias
+	if = {
+		limit = { has_variable = cavalry_to_spawn }
+		ROOT = { create_cavalry_militia_template = yes }
+		for_loop_effect = {
+			start = 1
+			end = cavalry_to_spawn
+			compare = less_than_or_equals
+
+			meta_effect = {
+				text = {
+					create_unit = {
+						division = "name = [DIVISION] division_template = [TEMPLATE] start_experience_factor = 0.1375 start_equipment_factor = 0.8"
+						allow_spawning_on_enemy_provs = yes
+						owner = ROOT
+						id = 1776
+					}
+				}
+				DIVISION = "\\\"[?counter][GetSpawnOrdinalSuffix] [THIS.GetName] [GetSpawnCavalryMilitiaName]\\\""
+				TEMPLATE = "\\\"[GetSpawnCavalryMilitiaTemplate]\\\""
+			}
+			add_to_temp_variable = { counter = 1 }
 		}
 	}
 }
