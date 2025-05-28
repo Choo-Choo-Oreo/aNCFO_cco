@@ -1,10 +1,10 @@
 shared_focus = { # HHE
-	id = ally_with_HHE
+	id = IWum_focus_ally_with_HHE
 	icon = GFX_focus_unknown_political
 	#prerequisite = { focus =  }
-	mutually_exclusive = { focus = ally_with_OAK focus = ally_with_MRC }
+	mutually_exclusive = { focus = IWum_focus_ally_with_OAK focus = IWum_focus_ally_with_MRC }
 	#relative_position_id = 
-	x = 9
+	x = 8
 	y = 0
 
 	cost = 10
@@ -13,21 +13,36 @@ shared_focus = { # HHE
 	available_if_capitulated = yes
 
 	allow_branch = {
-		NOT = { OR = {
-			has_completed_focus = ally_with_OAK
-			has_completed_focus = ally_with_MRC
-		} }
+		NOT = {
+			OR = {
+				has_completed_focus = IWum_focus_ally_with_OAK
+				has_completed_focus = IWum_focus_ally_with_MRC
+			}
+		}
 	}
 	available = {
-		has_war = yes
+		IF = {
+			LIMIT = { TAG = TRH }
+			OR = {
+				has_war = yes
+				has_completed_focus = TRH_declaration_of_war_focus
+			}
+		}
+		IF = {
+			LIMIT = { TAG = UEK }
+			OR = {
+				has_war = yes
+				has_completed_focus = UEK_declaration_of_war_focus
+				has_completed_focus = UEK_steadfast_focus
+			}
+		}
 		country_exists = HHE
 		NOT = { has_country_flag = denied.ally_with_HHE }
 	}
 	bypass = {
 	}
 
-	ai_will_do = {
-		factor = 2
+	ai_will_do = { factor = 2
 		modifier = { factor = 0.0
 			TAG = UEK
 		}
@@ -38,17 +53,17 @@ shared_focus = { # HHE
 	}
 
 	completion_reward = {
-		log = "[GetDateText]: [Root.GetName]: Focus ally_with_HHE"
+		log = "[GetDateText]: [Root.GetName]: Focus IWum_focus_ally_with_HHE"
 		HHE = { country_event = { id = influence_events.0 } }
 		effect_tooltip = {
 			custom_effect_tooltip = if_they_accept
-			complete_national_focus = ally_with_HHE
+			complete_national_focus = IWum_focus_ally_with_HHE
 		}
 		custom_effect_tooltip = generic_skip_one_line_tt # We do this for clearer reading.
 		effect_tooltip = {
 			custom_effect_tooltip = if_they_reject
 			uncomplete_national_focus = {
-				focus = ally_with_HHE
+				focus = IWum_focus_ally_with_HHE
 				uncomplete_children = yes
 				refund_political_power = no
 			}
@@ -56,11 +71,147 @@ shared_focus = { # HHE
 	}
 }
 
+	shared_focus = { # Harmonainus Volunteers
+		id = IWum_focus_HHE_harmonainus_volunteers
+		icon = GFX_focus_unknown_political
+		prerequisite = { focus = IWum_focus_ally_with_HHE }
+		#mutually_exclusive = { focus =  }
+		relative_position_id = IWum_focus_ally_with_HHE
+		x = -1
+		y = 1
+
+		cost = 10
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = yes
+
+		allow_branch = {
+		}
+		available = {
+		}
+		bypass = {
+		}
+
+		ai_will_do = { factor = 1 }
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus IWum_focus_HHE_government_collaboration"
+			add_manpower = 50000
+			capital_scope = { spawn_militia_divisions = yes }
+		}
+	}
+
+	shared_focus = { # Harmonainus Lend Lease
+		id = IWum_focus_HHE_harmonainus_lend_lease
+		icon = GFX_focus_unknown_political
+		prerequisite = { focus = IWum_focus_ally_with_HHE }
+		#mutually_exclusive = { focus =  }
+		relative_position_id = IWum_focus_ally_with_HHE
+		x = 1
+		y = 1
+
+		cost = 10
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = yes
+
+		allow_branch = {
+		}
+		available = {
+		}
+		bypass = {
+		}
+
+		ai_will_do = { factor = 1 }
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus IWum_focus_HHE_harmonainus_lend_lease"
+			effect_tooltip = {
+				HHE = {
+					send_equipment = {
+						equipment = infantry_equipment
+						amount = 6000
+						target = ROOT
+					}
+				}
+			}
+			hidden_effect = {
+				add_equipment_to_stockpile = {
+					type = infantry_equipment
+					amount = 6000
+					producer = HHE
+				}
+			}
+		}
+	}
+
+shared_focus = { # Government Collaboration
+	id = IWum_focus_HHE_government_collaboration
+	icon = GFX_focus_unknown_political
+	prerequisite = { focus = IWum_focus_HHE_harmonainus_volunteers }
+	prerequisite = { focus = IWum_focus_HHE_harmonainus_lend_lease }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = IWum_focus_ally_with_HHE
+	x = 0
+	y = 2
+
+	cost = 10
+	cancel_if_invalid = yes
+	continue_if_invalid = no
+	available_if_capitulated = yes
+
+	allow_branch = {
+	}
+	available = {
+		has_war = no
+	}
+	bypass = {
+	}
+
+	ai_will_do = { factor = 1 }
+
+	completion_reward = {
+		log = "[GetDateText]: [Root.GetName]: Focus IWum_focus_HHE_government_collaboration"
+		switch_religion_harmonainus_religion = yes
+		add_research_slot = 1
+	}
+}
+
+shared_focus = { # Following Footsteps
+	id = IWum_focus_HHE_following_footsteps
+	icon = GFX_focus_unknown_political
+	prerequisite = { focus = IWum_focus_HHE_government_collaboration }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = IWum_focus_HHE_government_collaboration
+	x = 0
+	y = 2
+
+	cost = 10
+	cancel_if_invalid = yes
+	continue_if_invalid = no
+	available_if_capitulated = yes
+
+	allow_branch = {
+	}
+	available = {
+		HHE = { has_war_with_major = yes }
+	}
+	bypass = {
+	}
+
+	ai_will_do = { factor = 1 }
+
+	completion_reward = {
+		log = "[GetDateText]: [Root.GetName]: Focus IWum_focus_HHE_following_footsteps"
+		HHE = { puppet = ROOT }
+	}
+}
+
 shared_focus = { # OAK
-	id = ally_with_OAK
+	id = IWum_focus_ally_with_OAK
 	icon = GFX_focus_unknown_political
 	#prerequisite = { focus =  }
-	mutually_exclusive = { focus = ally_with_HHE focus = ally_with_MRC }
+	mutually_exclusive = { focus = IWum_focus_ally_with_HHE focus = IWum_focus_ally_with_MRC }
 	#relative_position_id = 
 	x = 12
 	y = 0
@@ -71,21 +222,36 @@ shared_focus = { # OAK
 	available_if_capitulated = yes
 
 	allow_branch = {
-		NOT = { OR = {
-			has_completed_focus = ally_with_HHE
-			has_completed_focus = ally_with_MRC
-		} }
+		NOT = {
+			OR = {
+				has_completed_focus = IWum_focus_ally_with_HHE
+				has_completed_focus = IWum_focus_ally_with_MRC
+			}
+		}
 	}
 	available = {
-		has_war = yes
+		IF = {
+			LIMIT = { TAG = TRH }
+			OR = {
+				has_war = yes
+				has_completed_focus = TRH_declaration_of_war_focus
+			}
+		}
+		IF = {
+			LIMIT = { TAG = UEK }
+			OR = {
+				has_war = yes
+				has_completed_focus = UEK_declaration_of_war_focus
+				has_completed_focus = UEK_steadfast_focus
+			}
+		}
 		country_exists = OAK
 		NOT = { has_country_flag = denied.ally_with_OAK }
 	}
 	bypass = {
 	}
 
-	ai_will_do = {
-		factor = 2
+	ai_will_do = { factor = 2
 		modifier = { factor = 0.0
 			TAG = TRH
 		}
@@ -96,17 +262,17 @@ shared_focus = { # OAK
 	}
 
 	completion_reward = {
-		log = "[GetDateText]: [Root.GetName]: Focus ally_with_OAK"
+		log = "[GetDateText]: [Root.GetName]: Focus IWum_focus_ally_with_OAK"
 		OAK = { country_event = { id = influence_events.0 } }
 		effect_tooltip = {
 			custom_effect_tooltip = if_they_accept
-			complete_national_focus = ally_with_OAK
+			complete_national_focus = IWum_focus_ally_with_OAK
 		}
 		custom_effect_tooltip = generic_skip_one_line_tt # We do this for clearer reading.
 		effect_tooltip = {
 			custom_effect_tooltip = if_they_reject
 			uncomplete_national_focus = {
-				focus = ally_with_OAK
+				focus = IWum_focus_ally_with_OAK
 				uncomplete_children = yes
 				refund_political_power = no
 			}
@@ -114,13 +280,140 @@ shared_focus = { # OAK
 	}
 }
 
+	shared_focus = { # Invite Economic Investors
+		id = IWum_focus_OAK_invite_civs_investors
+		icon = GFX_focus_unknown_political
+		prerequisite = { focus = IWum_focus_ally_with_OAK }
+		#mutually_exclusive = { focus = }
+		relative_position_id = IWum_focus_ally_with_OAK
+		x = -1
+		y = 1
+
+		cost = 10
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = yes
+
+		allow_branch = {
+		}
+		available = {
+		}
+		bypass = {
+		}
+
+		ai_will_do = { factor = 1 }
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus IWum_focus_OAK_invite_civs_investors"
+			capital_scope = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = { type = industrial_complex level = 2 instant_build = yes }
+			}
+		}
+	}
+
+	shared_focus = { # Invite Military Investors
+		id = IWum_focus_OAK_invite_arms_investors
+		icon = GFX_focus_unknown_political
+		prerequisite = { focus = IWum_focus_ally_with_OAK }
+		#mutually_exclusive = { focus = }
+		relative_position_id = IWum_focus_ally_with_OAK
+		x = 1
+		y = 1
+
+		cost = 10
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = yes
+
+		allow_branch = {
+		}
+		available = {
+		}
+		bypass = {
+		}
+
+		ai_will_do = { factor = 1 }
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus IWum_focus_OAK_economic_collaboration"
+			capital_scope = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = { type = arms_factory level = 2 instant_build = yes }
+			}
+		}
+	}
+
+shared_focus = { # Economic Collaboration
+	id = IWum_focus_OAK_economic_collaboration
+	icon = GFX_focus_unknown_political
+	prerequisite = { focus = IWum_focus_OAK_invite_civs_investors }
+	prerequisite = { focus = IWum_focus_OAK_invite_arms_investors }
+	#mutually_exclusive = { focus = }
+	relative_position_id = IWum_focus_ally_with_OAK
+	x = 0
+	y = 2
+
+	cost = 10
+	cancel_if_invalid = yes
+	continue_if_invalid = no
+	available_if_capitulated = yes
+
+	allow_branch = {
+	}
+	available = {
+		has_war = no
+	}
+	bypass = {
+	}
+
+	ai_will_do = { factor = 1 }
+
+	completion_reward = {
+		log = "[GetDateText]: [Root.GetName]: Focus IWum_focus_OAK_economic_collaboration"
+		custom_effect_tooltip = OAK_HoI_collaboration_join
+		set_country_flag = OAK_HoI_collaboration
+		add_research_slot = 1
+	}
+}
+
+shared_focus = { # United Front
+	id = IWum_focus_OAK_united_front
+	icon = GFX_focus_unknown_political
+	prerequisite = { focus = IWum_focus_OAK_economic_collaboration }
+	#mutually_exclusive = { focus = }
+	relative_position_id = IWum_focus_OAK_economic_collaboration
+	x = 0
+	y = 2
+
+	cost = 10
+	cancel_if_invalid = yes
+	continue_if_invalid = no
+	available_if_capitulated = yes
+
+	allow_branch = {
+	}
+	available = {
+		OAK = { is_in_faction = yes }
+	}
+	bypass = {
+	}
+
+	ai_will_do = { factor = 1 }
+
+	completion_reward = {
+		log = "[GetDateText]: [Root.GetName]: Focus IWum_focus_OAK_united_front"
+		OAK = { add_to_faction = ROOT }
+	}
+}
+
 shared_focus = { # MRC
-	id = ally_with_MRC
+	id = IWum_focus_ally_with_MRC
 	icon = GFX_focus_unknown_political
 	#prerequisite = { focus =  }
-	mutually_exclusive = { focus = ally_with_HHE focus = ally_with_OAK }
+	mutually_exclusive = { focus = IWum_focus_ally_with_HHE focus = IWum_focus_ally_with_OAK }
 	#relative_position_id = 
-	x = 15
+	x = 16
 	y = 0
 
 	cost = 10
@@ -129,35 +422,49 @@ shared_focus = { # MRC
 	available_if_capitulated = yes
 
 	allow_branch = {
-		NOT = { OR = {
-			has_completed_focus = ally_with_HHE
-			has_completed_focus = ally_with_OAK
-		} }
+		NOT = {
+			OR = {
+				has_completed_focus = IWum_focus_ally_with_HHE
+				has_completed_focus = IWum_focus_ally_with_OAK
+			}
+		}
 	}
 	available = {
-		has_war = yes
+		IF = {
+			LIMIT = { TAG = TRH }
+			OR = {
+				has_war = yes
+				has_completed_focus = TRH_declaration_of_war_focus
+			}
+		}
+		IF = {
+			LIMIT = { TAG = UEK }
+			OR = {
+				has_war = yes
+				has_completed_focus = UEK_declaration_of_war_focus
+				has_completed_focus = UEK_steadfast_focus
+			}
+		}
 		country_exists = MRC
 		NOT = { has_country_flag = denied.ally_with_MRC }
 	}
 	bypass = {
 	}
 
-	ai_will_do = {
-		factor = 2
-	}
+	ai_will_do = { factor = 2 }
 
 	completion_reward = {
-		log = "[GetDateText]: [Root.GetName]: Focus ally_with_MRC"
+		log = "[GetDateText]: [Root.GetName]: Focus IWum_focus_ally_with_MRC"
 		MRC = { country_event = { id = influence_events.0 } }
 		effect_tooltip = {
 			custom_effect_tooltip = if_they_accept
-			complete_national_focus = ally_with_MRC
+			complete_national_focus = IWum_focus_ally_with_MRC
 		}
 		custom_effect_tooltip = generic_skip_one_line_tt # We do this for clearer reading.
 		effect_tooltip = {
 			custom_effect_tooltip = if_they_reject
 			uncomplete_national_focus = {
-				focus = ally_with_MRC
+				focus = IWum_focus_ally_with_MRC
 				uncomplete_children = yes
 				refund_political_power = no
 			}
@@ -165,8 +472,148 @@ shared_focus = { # MRC
 	}
 }
 
+	shared_focus = { # Industry Investors
+		id = IWum_focus_MRC_industry_investors
+		icon = GFX_focus_unknown_political
+		prerequisite = { focus = IWum_focus_ally_with_MRC }
+		#mutually_exclusive = { focus =  }
+		relative_position_id = IWum_focus_ally_with_MRC
+		x = -1
+		y = 1
+
+		cost = 10
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = yes
+
+		allow_branch = {
+		}
+		available = {
+		}
+		bypass = {
+		}
+
+		ai_will_do = { factor = 1 }
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus IWum_focus_MRC_industry_investors"
+			capital_scope = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = { type = industrial_complex level = 1 instant_build = yes }
+				add_building_construction = { type = arms_factory level = 1 instant_build = yes }
+			}
+		}
+	}
+
+	shared_focus = { # Merchant Lend Lease
+		id = IWum_focus_MRC_lend_lease
+		icon = GFX_focus_unknown_political
+		prerequisite = { focus = IWum_focus_ally_with_MRC }
+		#mutually_exclusive = { focus =  }
+		relative_position_id = IWum_focus_ally_with_MRC
+		x = 1
+		y = 1
+
+		cost = 10
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = yes
+
+		allow_branch = {
+		}
+		available = {
+		}
+		bypass = {
+		}
+
+		ai_will_do = { factor = 1 }
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus IWum_focus_MRC_lend_lease"
+			effect_tooltip = {
+				MRC = {
+					send_equipment = {
+						equipment = infantry_equipment
+						amount = 6000
+						target = ROOT
+					}
+				}
+			}
+			hidden_effect = {
+				add_equipment_to_stockpile = {
+					type = infantry_equipment
+					amount = 6000
+					producer = MRC
+				}
+			}
+		}
+	}
+
+shared_focus = { # Economic Collaboration
+	id = IWum_focus_MRC_economic_collaboration
+	icon = GFX_focus_unknown_political
+	prerequisite = { focus = IWum_focus_MRC_industry_investors }
+	prerequisite = { focus = IWum_focus_MRC_lend_lease }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = IWum_focus_ally_with_MRC
+	x = 0
+	y = 2
+
+	cost = 10
+	cancel_if_invalid = yes
+	continue_if_invalid = no
+	available_if_capitulated = yes
+
+	allow_branch = {
+	}
+	available = {
+		has_war = no
+	}
+	bypass = {
+	}
+
+	ai_will_do = { factor = 1 }
+
+	completion_reward = {
+		log = "[GetDateText]: [Root.GetName]: Focus IWum_focus_MRC_economic_collaboration"
+		custom_effect_tooltip = MRC_MSR_collaboration_join
+		set_country_flag = MRC_MSR_collaboration
+		add_research_slot = 1
+	}
+}
+
+shared_focus = { # United Front
+	id = IWum_focus_MRC_united_front
+	icon = GFX_focus_unknown_political
+	prerequisite = { focus = IWum_focus_MRC_economic_collaboration }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = IWum_focus_MRC_economic_collaboration
+	x = 0
+	y = 2
+
+	cost = 10
+	cancel_if_invalid = yes
+	continue_if_invalid = no
+	available_if_capitulated = yes
+
+	allow_branch = {
+	}
+	available = {
+		MRC = { is_in_faction = yes }
+	}
+	bypass = {
+	}
+
+	ai_will_do = { factor = 1 }
+
+	completion_reward = {
+		log = "[GetDateText]: [Root.GetName]: Focus IWum_focus_MRC_united_front"
+		MRC = { add_to_faction = ROOT }
+	}
+}
+
 shared_focus = { # Alone
-	id = ally_with_nobody
+	id = IWum_focus_ally_with_nobody
 	icon = GFX_focus_unknown_political
 	#prerequisite = { focus =  }
 	#mutually_exclusive = { focus =  }
@@ -194,12 +641,10 @@ shared_focus = { # Alone
 	bypass = {
 	}
 
-	ai_will_do = {
-		factor = 2
-	}
+	ai_will_do = { factor = 1 }
 
 	completion_reward = {
-		log = "[GetDateText]: [Root.GetName]: Focus ally_with_nobody"
+		log = "[GetDateText]: [Root.GetName]: Focus IWum_focus_ally_with_nobody"
 		add_offsite_building = { type = arms_factory level = 1 }
 	}
 }
