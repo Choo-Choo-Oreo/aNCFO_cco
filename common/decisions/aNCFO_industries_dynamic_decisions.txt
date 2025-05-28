@@ -23,7 +23,7 @@ industries_dynamic_category = {
 		fire_only_once = no
 		cost = urbanize_ppcost
 
-		modifier = { civilian_factory_use = 5 }
+		modifier = { civilian_factory_use = 10 }
 
 		target_trigger = {
 			IF = { # Check before checking every state.
@@ -211,6 +211,282 @@ industries_dynamic_category = {
 		remove_effect = {
             log = "[GetDateText]: [Root.GetName]: Decision remove industry_dynamic_OAK"
 			FROM = { add_dynamic_modifier = { modifier = OAK_state_heart_of_iron_modifier } }
+		}
+
+		ai_will_do = {
+			factor = 5
+			modifier = {
+				factor = 10
+				has_political_power > 200
+			}
+		}
+	}
+
+	industry_dynamic_OAK_quarry = {
+		icon = generic_construction
+		state_target = yes
+		on_map_mode = map_only
+		#target_array = core_states
+
+		days_remove = 180
+		fire_only_once = no
+		cost = urbanize_ppcost
+
+		modifier = { civilian_factory_use = 20 }
+
+		target_trigger = {
+			IF = { # Check before checking every state.
+				LIMIT = {
+					NOT = { has_country_flag = urbanization_hidden }
+					has_completed_focus = aritifcers_focus_reconstruction_industry
+				}
+				FROM = {
+					has_dynamic_modifier = { modifier = OAK_state_heart_of_iron_modifier }
+					OR = {
+						has_dynamic_modifier = { modifier = resource_state_axiomatic_metal_modifier }
+						has_dynamic_modifier = { modifier = resource_state_sacred_metal_modifier }
+						has_dynamic_modifier = { modifier = resource_state_energetic_metal_modifier }
+						has_dynamic_modifier = { modifier = resource_state_kinetic_metal_modifier }
+					}
+					OR = {
+						controls_or_subject_of = yes
+						AND = {
+							controller = { has_country_flag = accept.ally_with_OAK }
+						}
+					}
+				}
+			}
+		}
+		visible = {
+			NOT = { has_country_flag = urbanization_hidden }
+			has_completed_focus = aritifcers_focus_reconstruction_industry
+		}
+		available = {
+			IF = { # Check before checking every state.
+				LIMIT = {
+					NOT = { has_country_flag = urbanization_hidden }
+					has_completed_focus = aritifcers_focus_reconstruction_industry
+				}
+				FROM = {
+					has_dynamic_modifier = { modifier = OAK_state_heart_of_iron_modifier }
+
+					if = { # Rural
+						limit = { has_state_category = enclave
+							NOT = { has_dynamic_modifier = { modifier = OAK_state_heart_of_iron_modifier } }
+						}
+						set_temp_variable = { urbanize_ppcost = 10 }
+						set_temp_variable = { urbanize_statepop = 10 }
+						set_temp_variable = { urbanize_roadlvl = 1 }
+					}
+
+						else_if = {
+							limit = { has_state_category = wasteland
+								NOT = { has_dynamic_modifier = { modifier = OAK_state_heart_of_iron_modifier } }
+							}
+							set_temp_variable = { urbanize_ppcost = 10 }
+							set_temp_variable = { urbanize_statepop = 10 }
+							set_temp_variable = { urbanize_roadlvl = 1 }
+						}
+
+						else_if = {
+							limit = { has_state_category = tiny_island
+								NOT = { has_dynamic_modifier = { modifier = OAK_state_heart_of_iron_modifier } }
+							}
+							set_temp_variable = { urbanize_ppcost = 10 }
+							set_temp_variable = { urbanize_statepop = 10 }
+							set_temp_variable = { urbanize_roadlvl = 1 }
+						}
+
+						else_if = {
+							limit = { has_state_category = pastoral
+								NOT = { has_dynamic_modifier = { modifier = OAK_state_heart_of_iron_modifier } }
+							}
+							set_temp_variable = { urbanize_ppcost = 10 }
+							set_temp_variable = { urbanize_statepop = 20 }
+							set_temp_variable = { urbanize_roadlvl = 1 }
+						}
+
+						else_if = {
+							limit = { has_state_category = small_island
+								NOT = { has_dynamic_modifier = { modifier = OAK_state_heart_of_iron_modifier } }
+							}
+							set_temp_variable = { urbanize_ppcost = 20 }
+							set_temp_variable = { urbanize_statepop = 45 }
+							set_temp_variable = { urbanize_roadlvl = 1 }
+						}
+
+						else_if = {
+							limit = { has_state_category = rural
+								NOT = { has_dynamic_modifier = { modifier = OAK_state_heart_of_iron_modifier } }
+							}
+							set_temp_variable = { urbanize_ppcost = 30 }
+							set_temp_variable = { urbanize_statepop = 70 }
+							set_temp_variable = { urbanize_roadlvl = 1 }
+						}
+
+						else_if = {
+							limit = { has_state_category = large_rural
+								NOT = { has_dynamic_modifier = { modifier = OAK_state_heart_of_iron_modifier } }
+							}
+							set_temp_variable = { urbanize_ppcost = 40 }
+							set_temp_variable = { urbanize_statepop = 145 }
+							set_temp_variable = { urbanize_roadlvl = 2 }
+						}
+
+					if = { # Suburban
+						limit = { has_state_category = town
+							NOT = { has_dynamic_modifier = { modifier = OAK_state_heart_of_iron_modifier } }
+						}
+						set_temp_variable = { urbanize_ppcost = 50 }
+						set_temp_variable = { urbanize_statepop = 250 }
+						set_temp_variable = { urbanize_roadlvl = 2 }
+					}
+
+						else_if = {
+							limit = { has_state_category = large_town
+								NOT = { has_dynamic_modifier = { modifier = OAK_state_heart_of_iron_modifier } }
+							}
+							set_temp_variable = { urbanize_ppcost = 60 }
+							set_temp_variable = { urbanize_statepop = 390 }
+							set_temp_variable = { urbanize_roadlvl = 3 }
+						}
+
+					if = { # Urban
+						limit = { has_state_category = city
+							NOT = { has_dynamic_modifier = { modifier = OAK_state_heart_of_iron_modifier } }
+						}
+						set_temp_variable = { urbanize_ppcost = 70 }
+						set_temp_variable = { urbanize_statepop = 430 }
+						set_temp_variable = { urbanize_roadlvl = 3 }
+					}
+
+						else_if = {
+							limit = { has_state_category = large_city
+								NOT = { has_dynamic_modifier = { modifier = OAK_state_heart_of_iron_modifier } }
+							}
+							set_temp_variable = { urbanize_ppcost = 80 }
+							set_temp_variable = { urbanize_statepop = 900 }
+							set_temp_variable = { urbanize_roadlvl = 4 }
+						}
+
+						else_if = {
+							limit = { has_state_category = metropolis
+								NOT = { has_dynamic_modifier = { modifier = OAK_state_heart_of_iron_modifier } }
+							}
+							set_temp_variable = { urbanize_ppcost = 90 }
+							set_temp_variable = { urbanize_statepop = 1300 }
+							set_temp_variable = { urbanize_roadlvl = 4 }
+						}
+
+						else_if = {
+							limit = { has_state_category = megalopolis
+								NOT = { has_dynamic_modifier = { modifier = OAK_state_heart_of_iron_modifier } }
+							}
+							set_temp_variable = { urbanize_ppcost = 100 }
+							set_temp_variable = { urbanize_statepop = 1800 }
+							set_temp_variable = { urbanize_roadlvl = 5 }
+						} # Max var: 2147483
+
+					hidden_trigger = {
+						OR = {
+							has_state_category = enclave
+							has_state_category = wasteland
+							has_state_category = tiny_island
+							has_state_category = pastoral
+							has_state_category = small_island
+							has_state_category = rural
+							has_state_category = large_rural
+							has_state_category = town
+							has_state_category = large_town
+							has_state_category = city
+							has_state_category = large_city
+							has_state_category = metropolis
+							has_state_category = megalopolis
+						}
+					}
+					#state_population_k > urbanize_statepop
+					#infrastructure > urbanize_roadlvl
+				}
+			}
+			num_of_civilian_factories_available_for_projects > 19
+			has_war = no
+		}
+		remove_trigger = { has_war = yes }
+        complete_effect = {
+            log = "[GetDateText]: [Root.GetName]: Decision industry_dynamic_OAK"
+        }
+		remove_effect = {
+            log = "[GetDateText]: [Root.GetName]: Decision remove industry_dynamic_OAK"
+			FROM = {
+				IF = {
+					LIMIT = { has_dynamic_modifier = { modifier = resource_state_axiomatic_metal_modifier } }
+					IF = {
+						LIMIT = { check_variable = { global.OAK_heartofiron_local_factories < 0.10 } }
+						custom_effect_tooltip = modify_OAK_state_heart_of_iron_modifier_tt
+						add_to_variable = {
+							global.OAK_heartofiron_local_factories = 0.02
+							tooltip = local_factories_tt
+						}
+						add_to_variable = {
+							global.OAK_heartofiron_local_factory_sabotage = 0.02
+							tooltip = local_factory_sabotage_tt
+						}
+					}
+					custom_effect_tooltip = generic_skip_one_line_tt
+					remove_dynamic_modifier = { modifier = resource_state_axiomatic_metal_modifier }
+					add_dynamic_modifier = { modifier = resource_state_axiomatic_metal_modifier_heart_of_iron }
+				}
+				ELSE_IF = {
+					LIMIT = { has_dynamic_modifier = { modifier = resource_state_sacred_metal_modifier } }
+					IF = {
+						LIMIT = { check_variable = { global.OAK_heartofiron_research_speed_factor < 0.10 } }
+						custom_effect_tooltip = modify_OAK_country_heart_of_iron_modifier_tt
+						add_to_variable = {
+							global.OAK_heartofiron_research_speed_factor = 0.02
+							tooltip = research_speed_factor_tt
+						}
+						add_to_variable = {
+							global.OAK_heartofiron_scientist_xp_gain_factor = 0.02
+							tooltip = scientist_xp_gain_factor_factor_tt
+						}
+					}
+					custom_effect_tooltip = generic_skip_one_line_tt
+					remove_dynamic_modifier = { modifier = resource_state_sacred_metal_modifier }
+					add_dynamic_modifier = { modifier = resource_state_sacred_metal_modifier_heart_of_iron }
+				}
+				ELSE_IF = {
+					LIMIT = { has_dynamic_modifier = { modifier = resource_state_energetic_metal_modifier } }
+					IF = {
+						LIMIT = { check_variable = { global.OAK_heartofiron_max_fuel_factor < 0.20 } }
+						custom_effect_tooltip = modify_OAK_state_heart_of_iron_modifier_tt
+						add_to_variable = {
+							global.OAK_heartofiron_max_fuel_factor = 0.04
+							tooltip = max_fuel_factor_tt
+						}
+						custom_effect_tooltip = generic_skip_one_line_tt
+					}
+					remove_dynamic_modifier = { modifier = resource_state_energetic_metal_modifier }
+					add_dynamic_modifier = { modifier = resource_state_energetic_metal_modifier_heart_of_iron }
+				}
+				ELSE_IF = {
+					LIMIT = { has_dynamic_modifier = { modifier = resource_state_kinetic_metal_modifier } }
+					IF = {
+						LIMIT = { check_variable = { global.OAK_heartofiron_local_supply_impact_factor < 0.10 } }
+						custom_effect_tooltip = modify_OAK_state_heart_of_iron_modifier_tt
+						add_to_variable = {
+							global.OAK_heartofiron_local_supply_impact_factor = -0.02
+							tooltip = local_supply_impact_factor_tt
+						}
+						add_to_variable = {
+							global.OAK_heartofiron_local_non_core_supply_impact_factor = -0.02
+							tooltip = local_non_core_supply_impact_factor_tt
+						}
+						custom_effect_tooltip = generic_skip_one_line_tt
+					}
+					remove_dynamic_modifier = { modifier = resource_state_kinetic_metal_modifier }
+					add_dynamic_modifier = { modifier = resource_state_kinetic_metal_modifier_heart_of_iron }
+				}
+			}
 		}
 
 		ai_will_do = {
