@@ -1,4 +1,4 @@
-shared_focus = { # HHE
+shared_focus = { # Aligned with [HHE.GetName]
 	id = IWum_focus_ally_with_HHE
 	icon = GFX_focus_unknown_political
 	#prerequisite = { focus =  }
@@ -155,7 +155,7 @@ shared_focus = { # Government Collaboration
 	x = 0
 	y = 2
 
-	cost = 10
+	cost = 50
 	cancel_if_invalid = yes
 	continue_if_invalid = no
 	available_if_capitulated = yes
@@ -163,12 +163,12 @@ shared_focus = { # Government Collaboration
 	allow_branch = {
 	}
 	available = {
-		has_war = no
+		#has_war = no # Special due to length.
 	}
 	bypass = {
 	}
 
-	ai_will_do = { factor = 1 }
+	ai_will_do = { factor = 5 }
 
 	completion_reward = {
 		log = "[GetDateText]: [Root.GetName]: Focus IWum_focus_HHE_government_collaboration"
@@ -178,13 +178,168 @@ shared_focus = { # Government Collaboration
 	}
 }
 
-shared_focus = { # Following Footsteps
-	id = IWum_focus_HHE_following_footsteps
+	shared_focus = { # Veterans of the Civil-War
+		id = IWum_focus_HHE_veterans_of_the_civilwar
+		icon = GFX_focus_unknown_political
+		prerequisite = { focus = IWum_focus_HHE_government_collaboration }
+		#mutually_exclusive = { focus =  }
+		relative_position_id = IWum_focus_HHE_government_collaboration
+		x = -1
+		y = 1
+
+		cost = 10
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = yes
+
+		allow_branch = {
+			country_exists = HHE
+			HHE = {
+				has_country_leader = {
+					character = HHE_archard_vladaros
+					ruling_only = yes
+				}
+				has_completed_focus = HHE_warmonger_great_victory_parades
+			}
+		}
+		available = {
+			date > 1726.01.01
+		}
+		bypass = {
+		}
+
+		ai_will_do = { factor = 1 }
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus IWum_focus_HHE_veterans_of_the_civilwar"
+		}
+	}
+
+	shared_focus = { # Allow Reentering of Elites
+		id = IWum_focus_HHE_allow_reentering_of_elites
+		icon = GFX_focus_unknown_political
+		prerequisite = { focus = IWum_focus_HHE_government_collaboration }
+		#mutually_exclusive = { focus =  }
+		relative_position_id = IWum_focus_HHE_government_collaboration
+		x = -1
+		y = 1
+
+		cost = 10
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = yes
+
+		allow_branch = {
+			OR = {
+				country_exists = HHE
+				HLF = {
+					exists = yes
+					has_government = theocratism
+				}
+				HNO = {
+					exists = yes
+					has_government = theocratism
+				}
+				HST = {
+					exists = yes
+					has_government = theocratism
+				}
+			}
+			HHE = {
+				NOT = {
+					has_country_leader = {
+						character = HHE_archard_vladaros
+						ruling_only = yes
+					}
+				}
+			}
+		}
+		available = {
+			date > 1726.01.01
+		}
+		bypass = {
+		}
+
+		ai_will_do = { factor = 1 }
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus IWum_focus_HHE_allow_reentering_of_elites"
+			add_ideas = idea_invited_harmonainus_aristocrats
+		}
+	}
+
+	shared_focus = { # Continuing Alone
+		id = IWum_focus_HHE_our_harmonainus_dwarves
+		icon = GFX_focus_unknown_political
+		prerequisite = { focus = IWum_focus_HHE_government_collaboration }
+		#mutually_exclusive = { focus =  }
+		relative_position_id = IWum_focus_HHE_government_collaboration
+		x = -1
+		y = 1
+
+		cost = 10
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = yes
+
+		allow_branch = {
+			HHE = { exists = no }
+			HLF = { exists = no }
+			HNO = { exists = no }
+			HST = { exists = no }
+		}
+		available = {
+			date > 1726.01.01
+		}
+		bypass = {
+		}
+
+		ai_will_do = { factor = 1 }
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus IWum_focus_HHE_continuing_alone"
+			add_stability = -0.05
+			add_war_support = 0.15
+		}
+	}
+
+	shared_focus = { # Allow Harmonainus Clergy in Government
+		id = IWum_focus_HHE_permitting_harmonainus_clergy
+		icon = GFX_focus_unknown_political
+		prerequisite = { focus = IWum_focus_HHE_government_collaboration }
+		#mutually_exclusive = { focus =  }
+		relative_position_id = IWum_focus_HHE_government_collaboration
+		x = 1
+		y = 1
+
+		cost = 10
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = yes
+
+		allow_branch = {
+		}
+		available = {
+		}
+		bypass = {
+		}
+
+		ai_will_do = { factor = 1 }
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus IWum_focus_HHE_allow_reentering_of_elites"
+			add_ideas = idea_invited_harmonainus_clergy
+		}
+	}
+
+shared_focus = { # Continuing Alone
+	id = IWum_focus_HHE_continuing_alone
 	icon = GFX_focus_unknown_political
-	prerequisite = { focus = IWum_focus_HHE_government_collaboration }
-	#mutually_exclusive = { focus =  }
+	prerequisite = { focus = IWum_focus_HHE_veterans_of_the_civilwar focus = IWum_focus_HHE_allow_reentering_of_elites focus = IWum_focus_HHE_our_harmonainus_dwarves }
+	prerequisite = { focus = IWum_focus_HHE_permitting_harmonainus_clergy }
+	mutually_exclusive = { focus = IWum_focus_HHE_following_footsteps }
 	relative_position_id = IWum_focus_HHE_government_collaboration
-	x = 0
+	x = -1
 	y = 2
 
 	cost = 10
@@ -195,7 +350,47 @@ shared_focus = { # Following Footsteps
 	allow_branch = {
 	}
 	available = {
-		HHE = { has_war_with_major = yes }
+		HHE = { exists = no }
+		HLF = { exists = no }
+		HNO = { exists = no }
+		HST = { exists = no }
+	}
+	bypass = {
+	}
+
+	ai_will_do = { factor = 1 }
+
+	completion_reward = {
+		log = "[GetDateText]: [Root.GetName]: Focus IWum_focus_HHE_continuing_alone"
+		add_stability = -0.05
+		add_war_support = 0.15
+	}
+}
+
+shared_focus = { # Following Footsteps
+	id = IWum_focus_HHE_following_footsteps
+	icon = GFX_focus_unknown_political
+	prerequisite = { focus = IWum_focus_HHE_veterans_of_the_civilwar focus = IWum_focus_HHE_allow_reentering_of_elites focus = IWum_focus_HHE_our_harmonainus_dwarves }
+	prerequisite = { focus = IWum_focus_HHE_permitting_harmonainus_clergy }
+	mutually_exclusive = { focus = IWum_focus_HHE_continuing_alone }
+	relative_position_id = IWum_focus_HHE_government_collaboration
+	x = 1
+	y = 2
+
+	cost = 10
+	cancel_if_invalid = yes
+	continue_if_invalid = no
+	available_if_capitulated = yes
+
+	allow_branch = {
+	}
+	available = {
+		OR = {
+			HHE = { has_war_with_major = yes }
+			HLF = { has_war_with_major = yes }
+			HNO = { has_war_with_major = yes }
+			HST = { has_war_with_major = yes }
+		}
 	}
 	bypass = {
 	}
@@ -208,7 +403,7 @@ shared_focus = { # Following Footsteps
 	}
 }
 
-shared_focus = { # OAK
+shared_focus = { # Aligned with [OAK.GetName]
 	id = IWum_focus_ally_with_OAK
 	icon = GFX_focus_unknown_political
 	#prerequisite = { focus =  }
@@ -379,13 +574,46 @@ shared_focus = { # Economic Collaboration
 	}
 }
 
+shared_focus = { # Aligned but Independent
+	id = IWum_focus_OAK_aligned_independent
+	icon = GFX_focus_unknown_political
+	prerequisite = { focus = IWum_focus_OAK_economic_collaboration }
+	mutually_exclusive = { focus = IWum_focus_OAK_united_front }
+	relative_position_id = IWum_focus_OAK_economic_collaboration
+	x = -1
+	y = 2
+
+	cost = 10
+	cancel_if_invalid = yes
+	continue_if_invalid = no
+	available_if_capitulated = yes
+
+	allow_branch = {
+	}
+	available = {
+	}
+	bypass = {
+	}
+
+	ai_will_do = { factor = 0
+		modifier = { add = 10
+			OAK = { exists = no }
+		}
+	}
+
+	completion_reward = {
+		log = "[GetDateText]: [Root.GetName]: Focus IWum_focus_OAK_aligned_independent"
+		add_political_power = 100
+	}
+}
+
 shared_focus = { # United Front
 	id = IWum_focus_OAK_united_front
 	icon = GFX_focus_unknown_political
 	prerequisite = { focus = IWum_focus_OAK_economic_collaboration }
-	#mutually_exclusive = { focus = }
+	mutually_exclusive = { focus = IWum_focus_OAK_aligned_independent }
 	relative_position_id = IWum_focus_OAK_economic_collaboration
-	x = 0
+	x = 1
 	y = 2
 
 	cost = 10
@@ -401,7 +629,7 @@ shared_focus = { # United Front
 	bypass = {
 	}
 
-	ai_will_do = { factor = 1 }
+	ai_will_do = { factor = 10 }
 
 	completion_reward = {
 		log = "[GetDateText]: [Root.GetName]: Focus IWum_focus_OAK_united_front"
@@ -409,7 +637,7 @@ shared_focus = { # United Front
 	}
 }
 
-shared_focus = { # MRC
+shared_focus = { # Aligned with [MRC.GetName]
 	id = IWum_focus_ally_with_MRC
 	icon = GFX_focus_unknown_political
 	#prerequisite = { focus =  }
@@ -585,13 +813,46 @@ shared_focus = { # Economic Collaboration
 	}
 }
 
+shared_focus = { # Aligned but Independent
+	id = IWum_focus_MRC_aligned_independent
+	icon = GFX_focus_unknown_political
+	prerequisite = { focus = IWum_focus_MRC_economic_collaboration }
+	mutually_exclusive = { focus = IWum_focus_MRC_united_front }
+	relative_position_id = IWum_focus_MRC_economic_collaboration
+	x = -1
+	y = 2
+
+	cost = 10
+	cancel_if_invalid = yes
+	continue_if_invalid = no
+	available_if_capitulated = yes
+
+	allow_branch = {
+	}
+	available = {
+	}
+	bypass = {
+	}
+
+	ai_will_do = { factor = 0
+		modifier = { add = 10
+			MRC = { exists = no }
+		}
+	}
+
+	completion_reward = {
+		log = "[GetDateText]: [Root.GetName]: Focus IWum_focus_MRC_aligned_independent"
+		add_political_power = 100
+	}
+}
+
 shared_focus = { # United Front
 	id = IWum_focus_MRC_united_front
 	icon = GFX_focus_unknown_political
 	prerequisite = { focus = IWum_focus_MRC_economic_collaboration }
-	#mutually_exclusive = { focus =  }
+	mutually_exclusive = { focus = IWum_focus_MRC_aligned_independent }
 	relative_position_id = IWum_focus_MRC_economic_collaboration
-	x = 0
+	x = 1
 	y = 2
 
 	cost = 10
@@ -607,7 +868,7 @@ shared_focus = { # United Front
 	bypass = {
 	}
 
-	ai_will_do = { factor = 1 }
+	ai_will_do = { factor = 10 }
 
 	completion_reward = {
 		log = "[GetDateText]: [Root.GetName]: Focus IWum_focus_MRC_united_front"
@@ -615,7 +876,7 @@ shared_focus = { # United Front
 	}
 }
 
-shared_focus = { # Alone
+shared_focus = { # Alone with Nobody
 	id = IWum_focus_ally_with_nobody
 	icon = GFX_focus_unknown_political
 	#prerequisite = { focus =  }
@@ -649,5 +910,41 @@ shared_focus = { # Alone
 	completion_reward = {
 		log = "[GetDateText]: [Root.GetName]: Focus IWum_focus_ally_with_nobody"
 		add_offsite_building = { type = arms_factory level = 1 }
+	}
+}
+
+shared_focus = { # Moving Forward
+	id = IWum_focus_moving_forward
+	icon = GFX_focus_unknown_political
+	prerequisite = {
+		focus = IWum_focus_HHE_continuing_alone
+		focus = IWum_focus_HHE_following_footsteps
+		focus = IWum_focus_OAK_aligned_independent
+		focus = IWum_focus_OAK_united_front
+		focus = IWum_focus_MRC_aligned_independent
+		focus = IWum_focus_MRC_united_front
+	}
+	#mutually_exclusive = { focus =  }
+	#relative_position_id = 
+	x = 12
+	y = 8
+
+	cost = 10
+	cancel_if_invalid = yes
+	continue_if_invalid = no
+	available_if_capitulated = yes
+
+	allow_branch = {
+	}
+	available = {
+	}
+	bypass = {
+	}
+
+	ai_will_do = { factor = 1 }
+
+	completion_reward = {
+		log = "[GetDateText]: [Root.GetName]: Focus IWum_focus_ally_with_nobody"
+		load_focus_tree = generic_focus
 	}
 }

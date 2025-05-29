@@ -32,7 +32,7 @@ Contributions are tracked in one of the following formats:
 - **Ringwraith Mod** – *Partially Integrated*  
   ["Extended Tech Tree 1960"](https://steamcommunity.com/sharedfiles/filedetails/?id=1778255798) | *Pre‑Götterdämmerung*  
 
-- **Equestria at War Team Mod** – *Airtech + Localisation+ Integrated*  
+- **Equestria at War Team Mod** – *Airtech + Localisation + Integrated*  
   ["Equestria at War"](https://steamcommunity.com/sharedfiles/filedetails/?id=1826643372) | *Pre‑Götterdämmerung*  
 
 - **MrPunk Mod** – *All Code Integrated*  
@@ -41,6 +41,9 @@ Contributions are tracked in one of the following formats:
 - **Elouda Mod** – *Graphics Integrated*  
   [(OUTDATED) Extended Rework Mod (v0.50b) - ALPHA](https://steamcommunity.com/sharedfiles/filedetails/?id=714919100) | *Pre‑Götterdämmerung*  
   ["Naval Rework Mod II"](https://steamcommunity.com/sharedfiles/filedetails/?id=1687056790) | *Pre‑Götterdämmerung*
+
+- **truck gaming** – *Graphics Integrated*  
+  [Modifier Icons](https://steamcommunity.com/sharedfiles/filedetails/?id=2668048070) | *Götterdämmerung*  
 
 - **Edouard_Saladier Mod** – *Graphics Integrated*  
   ["Additionnal Tank Technologies"](https://steamcommunity.com/sharedfiles/filedetails/?id=1866759372) | *Pre‑Götterdämmerung*
