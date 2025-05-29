@@ -193,17 +193,19 @@ shared_focus = { # Government Collaboration
 		available_if_capitulated = yes
 
 		allow_branch = {
-			country_exists = HHE
 			HHE = {
+				exists = yes
 				has_country_leader = {
 					character = HHE_archard_vladaros
 					ruling_only = yes
 				}
-				has_completed_focus = HHE_warmonger_great_victory_parades
 			}
 		}
 		available = {
 			date > 1726.01.01
+			HHE = {
+				has_completed_focus = HHE_warmonger_great_victory_parades
+			}
 		}
 		bypass = {
 		}
@@ -231,7 +233,26 @@ shared_focus = { # Government Collaboration
 
 		allow_branch = {
 			OR = {
-				country_exists = HHE
+				HHE = {
+					OR = {
+						AND = {
+							exists = yes
+							NOT = {
+								has_country_leader = {
+									character = HHE_archard_vladaros
+									ruling_only = yes
+								}
+							}
+						}
+						AND = {
+							exists = no
+							has_country_leader = {
+								character = HHE_archard_vladaros
+								ruling_only = yes
+							}
+						}
+					}
+				}
 				HLF = {
 					exists = yes
 					has_government = theocratism
@@ -243,14 +264,6 @@ shared_focus = { # Government Collaboration
 				HST = {
 					exists = yes
 					has_government = theocratism
-				}
-			}
-			HHE = {
-				NOT = {
-					has_country_leader = {
-						character = HHE_archard_vladaros
-						ruling_only = yes
-					}
 				}
 			}
 		}
@@ -391,6 +404,7 @@ shared_focus = { # Following Footsteps
 			HNO = { has_war_with_major = yes }
 			HST = { has_war_with_major = yes }
 		}
+		is_subject = no
 	}
 	bypass = {
 	}
@@ -625,6 +639,7 @@ shared_focus = { # United Front
 	}
 	available = {
 		OAK = { is_in_faction = yes }
+		is_subject = no
 	}
 	bypass = {
 	}
@@ -864,6 +879,7 @@ shared_focus = { # United Front
 	}
 	available = {
 		MRC = { is_in_faction = yes }
+		is_subject = no
 	}
 	bypass = {
 	}
