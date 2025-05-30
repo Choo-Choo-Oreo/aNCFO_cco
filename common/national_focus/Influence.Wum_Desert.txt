@@ -200,6 +200,12 @@ shared_focus = { # Government Collaboration
 					ruling_only = yes
 				}
 			}
+			NOT = {
+				OR = {
+					has_completed_focus = IWum_focus_ally_with_OAK
+					has_completed_focus = IWum_focus_ally_with_MRC
+				}
+			}
 		}
 		available = {
 			date > 1726.01.01
@@ -214,6 +220,23 @@ shared_focus = { # Government Collaboration
 
 		completion_reward = {
 			log = "[GetDateText]: [Root.GetName]: Focus IWum_focus_HHE_veterans_of_the_civilwar"
+			add_manpower = 30000
+			effect_tooltip = {
+				HHE = {
+					send_equipment = {
+						equipment = infantry_equipment
+						amount = 10000
+						target = ROOT
+					}
+				}
+			}
+			hidden_effect = {
+				add_equipment_to_stockpile = {
+					type = infantry_equipment
+					amount = 10000
+					producer = HHE
+				}
+			}
 		}
 	}
 
@@ -232,27 +255,21 @@ shared_focus = { # Government Collaboration
 		available_if_capitulated = yes
 
 		allow_branch = {
-			OR = {
-				HHE = {
-					OR = {
-						AND = {
-							exists = yes
-							NOT = {
-								has_country_leader = {
-									character = HHE_archard_vladaros
-									ruling_only = yes
-								}
-							}
-						}
-						AND = {
-							exists = no
+			HHE = {
+				OR = {
+					AND = {
+						exists = yes
+						NOT = {
 							has_country_leader = {
 								character = HHE_archard_vladaros
 								ruling_only = yes
 							}
 						}
 					}
+					exists = no
 				}
+			}
+			OR = {
 				HLF = {
 					exists = yes
 					has_government = theocratism
@@ -264,6 +281,12 @@ shared_focus = { # Government Collaboration
 				HST = {
 					exists = yes
 					has_government = theocratism
+				}
+			}
+			NOT = {
+				OR = {
+					has_completed_focus = IWum_focus_ally_with_OAK
+					has_completed_focus = IWum_focus_ally_with_MRC
 				}
 			}
 		}
@@ -300,6 +323,12 @@ shared_focus = { # Government Collaboration
 			HLF = { exists = no }
 			HNO = { exists = no }
 			HST = { exists = no }
+			NOT = {
+				OR = {
+					has_completed_focus = IWum_focus_ally_with_OAK
+					has_completed_focus = IWum_focus_ally_with_MRC
+				}
+			}
 		}
 		available = {
 			date > 1726.01.01
