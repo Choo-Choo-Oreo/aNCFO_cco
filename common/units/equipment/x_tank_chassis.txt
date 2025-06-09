@@ -1,6 +1,18 @@
 # This file must be evaluated after the file(s) defining the archetypes being duplicated.
 # The equipment attributes alias, type, variant_name, and derived_variant_name are not duplicated.
 duplicate_archetypes = {
+	mech_aa_chassis = {
+		archetype = mech_chassis
+		type = { armor anti_air }
+
+		for_each = {
+			# For each duplicated equipment type (excluding the archetype), set variant_name by taking what would be
+			# used as the localization key (the name of the type) and run a find-and-replace on it.
+			# Example: light_tank_aa_chassis_1 gets variant_name light_tank_aa_equipment_1.
+			variant_name = { find_and_replace = { "chassis" "equipment" } } # 
+			#hardness = { set = 0.5 }
+		}
+	}
 	# light_tank
 	light_tank_aa_chassis = {
 		archetype = light_tank_chassis
@@ -44,6 +56,14 @@ duplicate_archetypes = {
 	light_tank_flame_chassis = {
 		archetype = light_tank_chassis
 		type = { armor flame }
+		for_each = {
+			variant_name = { find_and_replace = { "chassis" "equipment" } }
+		}
+	}
+
+	light_tank_airlift_chassis = {
+		archetype = light_tank_chassis
+		type = { armor } # airlift
 		for_each = {
 			variant_name = { find_and_replace = { "chassis" "equipment" } }
 		}

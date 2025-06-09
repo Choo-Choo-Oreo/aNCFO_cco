@@ -27,6 +27,8 @@ technologies = {
 		
 		enable_equipment_modules = {
 			tank_small_cannon
+			mech_dft_shell
+			mech_cheap_shell
 		}
 
 		path = {
@@ -95,6 +97,8 @@ technologies = {
 			
 			enable_equipment_modules = {
 				tank_small_cannon_2
+				mech_infantry_support_gun
+				mech_he_shell_1
 			}
 
 			path = {
@@ -104,7 +108,7 @@ technologies = {
 			
 			path = {
 				leads_to_tech = interwar_light_artillery 
-				research_cost_coeff = 1
+				research_cost_coeff = 0.9
 			}
 			
 			path = {
@@ -165,6 +169,8 @@ technologies = {
 
 			enable_equipment_modules = {
 				tank_medium_cannon
+				car_medium_howitzer
+				car_medium_cannon
 			}
 
 			#on_research_complete = {
@@ -178,7 +184,7 @@ technologies = {
 			
 			path = {
 				leads_to_tech = improved_light_artillery 
-				research_cost_coeff = 1
+				research_cost_coeff = 0.9
 			}
 			
 			path = {
@@ -269,7 +275,7 @@ technologies = {
 			special_project_specialization = { specialization_land }
 		}
 
-	gw_light_artillery = {
+	gw_light_artillery = { # Needs to be fixed.
 		ai_will_do = {
 			factor = 1
 			modifier = {
@@ -304,28 +310,29 @@ technologies = {
 		
 		enable_equipment_modules = {
 			secondary_turret_small_cannon
+			car_small_cannon
 		}
 
 		path = {
 			leads_to_tech = interwar_light_artillery 
 			research_cost_coeff = 1
 		}
-		
+
 		path = {
 			leads_to_tech = artillery_1
 			research_cost_coeff = 1
 		}
-		
+
 		path = {
 			leads_to_tech = artillery_ammo_1
 			research_cost_coeff = 1
 		}
-		
+
 		path = {
 			leads_to_tech = artillery_fc_1
 			research_cost_coeff = 1
 		}
-		
+
 		research_cost = 1
 		
 		folder = {
@@ -372,6 +379,7 @@ technologies = {
 			enable_equipment_modules = {
 				tank_close_support_gun
 				secondary_turret_close_support_gun
+				car_infantry_support_gun
 			}
 
 			path = {
@@ -403,23 +411,35 @@ technologies = {
 
 		improved_light_artillery = {
 			ai_will_do = {
-				factor = 0
-				#modifier = {
-				#	#factor = 0
-				#	#OR = { can_research = advanced_light_artillery has_tech = advanced_light_artillery }
-				#}
-				#modifier = {
-				#	factor = 2
-				#	date > "1731.1.1"
-				#}
-				#modifier = {
-				#	factor = 5
-				#	date > "1732.1.1"
-				#}
+				factor = 1
+				modifier = {
+					#factor = 0
+					#OR = { can_research = advanced_heavy_artillery has_tech = advanced_heavy_artillery }
+				}
+				modifier = { # Uses Tanks
+					factor = 2.00
+					OR = { has_tech = gw_light_tank_chassis
+						has_tech = gw_medium_tank_chassis
+						has_tech = gw_heavy_tank_chassis
+					}
+				}
+				modifier = {
+					factor = 2
+					date > "1731.1.1"
+				}
+				modifier = {
+					factor = 5
+					date > "1732.1.1"
+				}
 			}
 		
 			enable_equipments = {
 				light_artillery_equipment_3
+			}
+
+			enable_equipment_modules = {
+				car_medium_cannon_2
+				car_stabilizer
 			}
 
 			path = {
@@ -475,6 +495,7 @@ technologies = {
 			
 			enable_equipment_modules = {
 				auto_loader
+				car_auto_loader
 			}
 
 			path = {
@@ -590,6 +611,9 @@ technologies = {
 			
 			enable_equipment_modules = {
 				tank_medium_howitzer
+				mech_mortar_1
+				mech_small_cannon
+				mech_grenade_launcher
 			}
 
 			#on_research_complete = {
@@ -658,6 +682,7 @@ technologies = {
 
 			enable_equipment_modules = {
 				tank_medium_howitzer_2
+				mech_mortar_2
 			}
 
 			path = {
@@ -723,6 +748,7 @@ technologies = {
 			
 			enable_equipment_modules = {
 				tank_heavy_howitzer
+				mech_he_shell_3
 			}
 
 			#on_research_complete = {
@@ -1435,10 +1461,10 @@ technologies = {
 		}
 
 	rocket_artillery = {
-
 		enable_equipments = {
 			rocket_artillery_equipment_1
 		}
+
 		enable_subunits = {
 			rocket_artillery
 			rocket_artillery_brigade
@@ -1457,6 +1483,8 @@ technologies = {
 		enable_equipment_modules = {
 			tank_rocket_launcher
 			rocket_rails
+			lc_rocket_launcher # Module for Land Cruiser
+			car_rocket_launcher
 		}
 
 		research_cost = 1.5
@@ -1487,18 +1515,17 @@ technologies = {
 	}
 
 		rocket_artillery4 = {
-
 			enable_equipments = {
 				rocket_artillery_equipment_2
+			}
+
+			enable_equipment_modules = {
+				tank_rocket_launcher_2
 			}
 			
 			mot_rocket_artillery_brigade = {
 				soft_attack = 0.30
 				breakthrough = 0.15
-			}
-
-			enable_equipment_modules = {
-				tank_rocket_launcher_2
 			}
 
 			research_cost = 1.5
@@ -1676,6 +1703,11 @@ technologies = {
 			
 			enable_equipment_modules = {
 				tank_high_velocity_cannon
+				lc_high_velocity_cannon_turret # Module for Land Cruiser
+				car_medium_cannon
+				car_high_velocity_cannon
+				mech_small_cannon
+				mech_ap_shell_1
 			}
 
 			path = {
@@ -1738,6 +1770,10 @@ technologies = {
 			
 			enable_equipment_modules = {
 				tank_medium_cannon
+				car_medium_howitzer
+				car_medium_cannon
+				car_small_cannon_2
+				mech_small_cannon_2
 			}
 
 			research_cost = 0.5
@@ -1783,6 +1819,9 @@ technologies = {
 				tank_high_velocity_cannon_2
 				tank_heavy_cannon_2
 				tank_buster_2
+				car_auto_cannon_2
+				car_stabilizer
+				mech_ap_shell_2
 			}
 
 			path = {
@@ -1849,6 +1888,9 @@ technologies = {
 
 			enable_equipment_modules = {
 				tank_medium_cannon_2
+				car_high_velocity_cannon_2
+				car_medium_cannon_2
+				car_stabilizer
 			}
 
 			research_cost = 0.5
@@ -1894,6 +1936,9 @@ technologies = {
 				tank_high_velocity_cannon_3
 				tank_heavy_cannon_3
 				auto_loader
+				car_auto_loader
+				lc_heavy_high_velocity_cannons # Module for Land Cruiser
+				mech_ap_shell_3
 			}
 
 			research_cost = 1.5
@@ -2450,6 +2495,8 @@ technologies = {
 			tank_auto_cannon
 			tank_anti_air_cannon
 			tank_heavy_cannon
+			car_auto_cannon
+			mech_auto_cannon
 		}
 
 		path = {
@@ -2512,6 +2559,8 @@ technologies = {
 				ship_anti_air_2
 				tank_auto_cannon_2
 				tank_anti_air_cannon_2
+				car_small_cannon_2
+				lc_light_anti_air_battery # Module for Land Cruiser
 			}
 
 			path = {
@@ -2566,6 +2615,7 @@ technologies = {
 			enable_equipment_modules = {
 				ship_anti_air_3
 				tank_auto_cannon_2
+				mech_auto_cannon_2
 			}
 
 			path = {
@@ -2617,6 +2667,7 @@ technologies = {
 				tank_heavy_cannon_3
 				tank_anti_air_cannon_3
 				auto_loader
+				car_auto_loader
 			}
 
 			research_cost = 1.5
@@ -2648,6 +2699,7 @@ technologies = {
 		enable_equipment_modules = {
 			ship_anti_air_3
 			tank_auto_cannon_2
+			lc_heavy_anti_air_battery # Module for Land Cruiser
 		}
 
 		path = {
@@ -2686,6 +2738,7 @@ technologies = {
 				tank_heavy_cannon_3
 				tank_anti_air_cannon_3
 				auto_loader
+				car_auto_loader
 			}
 
 			research_cost = 1.5

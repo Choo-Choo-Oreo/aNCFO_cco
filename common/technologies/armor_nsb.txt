@@ -1,15 +1,13 @@
 technologies = {
-	@1716 = 0
-	@1720 = 2
-	@1724 = 3
-	@1728 = 4
-	@1730 = 5
-	@1732 = 6
-	@1734 = 7
-	@1736 = 9
-	@1738 = 11
-	@1742 = 13
-	@1748 = 15
+	@1724 = 1
+	@1728 = 2
+	@1730 = 3
+	@1732 = 4
+	@1734 = 5
+	@1736 = 7
+	@1738 = 9
+	@1742 = 11
+	@1748 = 13
 
 	@column_0 = 0
 	@column_1 = 2
@@ -23,7 +21,7 @@ technologies = {
 	@column_9 = 18
 	@column_10 = 20
 
-	gw_light_tank_chassis = { # Light Tanks
+	gw_light_tank_chassis = { # 1724 Light Tanks
 		ai_will_do = {
 			factor = 2.5
 			modifier = {
@@ -40,6 +38,7 @@ technologies = {
 		}
 		enable_equipment_modules = {
 			tank_light_fixed_superstructure_turret
+			flat_armor
 		}
 		enable_subunits = {
 			light_armor
@@ -91,7 +90,7 @@ technologies = {
 		special_project_specialization = { specialization_land }
 	}
 
-		basic_light_tank_chassis = { # Panzer I
+		basic_light_tank_chassis = { # 1730 Light Tanks
 			ai_will_do = {
 				factor = 2.5
 				modifier = {
@@ -105,6 +104,10 @@ technologies = {
 				light_tank_destroyer_chassis_1
 				light_tank_artillery_chassis_1
 				light_tank_aa_chassis_1
+			}
+			enable_equipment_modules = {
+				tank_steel_tracks_1
+				tank_rubber_tracks_1
 			}
 
 			on_research_complete_limit = {
@@ -154,7 +157,7 @@ technologies = {
 			special_project_specialization = { specialization_land }
 		}
 
-		improved_light_tank_chassis = { # Panzer II
+		improved_light_tank_chassis = { # 1734 Light Tanks
 			ai_will_do = {
 				factor = 0.5
 				modifier = {
@@ -192,7 +195,7 @@ technologies = {
 			special_project_specialization = { specialization_land }
 		}
 
-		advanced_light_tank_chassis = { # Leopard
+		advanced_light_tank_chassis = { # 1738 Light Tanks
 			ai_will_do = {
 				factor = 0.5
 				modifier = {
@@ -206,6 +209,11 @@ technologies = {
 				light_tank_destroyer_chassis_3
 				light_tank_artillery_chassis_3
 				light_tank_aa_chassis_3
+			}
+			enable_equipment_modules = {
+				tank_steel_tracks_2
+				tank_rubber_tracks_2
+				tank_padded_tracks_1
 			}
 
 			path = {
@@ -230,7 +238,7 @@ technologies = {
 			special_project_specialization = { specialization_land }
 		}
 
-		modern_light_tank_chassis = { # Leopard
+		modern_light_tank_chassis = { # 1748 Light Tanks
 			ai_will_do = {
 				factor = 0.5
 				modifier = {
@@ -263,7 +271,7 @@ technologies = {
 			special_project_specialization = { specialization_land }
 		}
 
-	gw_medium_tank_chassis = { # Medium Tanks
+	gw_medium_tank_chassis = { # 1724 Medium Tanks
 		ai_will_do = {
 			factor = 2
 			modifier = {
@@ -307,6 +315,7 @@ technologies = {
 		}
 		enable_equipment_modules = {
 			tank_medium_fixed_superstructure_turret
+			flat_armor
 		}
 		enable_subunits = {
 			medium_armor
@@ -359,7 +368,7 @@ technologies = {
 		special_project_specialization = { specialization_land }
 	}
 
-		basic_medium_tank_chassis = { # Panzer III
+		basic_medium_tank_chassis = { # 1730 Medium Tanks
 			ai_will_do = {
 				factor = 2
 				modifier = {
@@ -401,7 +410,10 @@ technologies = {
 				medium_tank_artillery_chassis_1
 				medium_tank_aa_chassis_1
 			}
-
+			enable_equipment_modules = {
+				tank_steel_tracks_1
+				tank_rubber_tracks_1
+			}
 
 			on_research_complete_limit = {
 				NOT = {	has_template_containing_unit = light_armor }
@@ -451,7 +463,7 @@ technologies = {
 			special_project_specialization = { specialization_land }
 		}
 
-		improved_medium_tank_chassis = { # Panzer IV
+		improved_medium_tank_chassis = { # 1734 Medium Tanks
 			ai_will_do = {
 				factor = 2
 				modifier = {
@@ -493,6 +505,11 @@ technologies = {
 				medium_tank_artillery_chassis_2
 				medium_tank_aa_chassis_2
 			}
+			enable_equipment_modules = {
+				tank_steel_tracks_2
+				tank_rubber_tracks_2
+				tank_padded_tracks_1
+			}
 
 			path = {
 				leads_to_tech = advanced_medium_tank_chassis
@@ -516,7 +533,7 @@ technologies = {
 			special_project_specialization = { specialization_land }
 		}
 
-		advanced_medium_tank_chassis = { # Panther
+		advanced_medium_tank_chassis = { # 1738 Medium Tanks
 			ai_will_do = {
 				factor = 2
 				modifier = {
@@ -558,6 +575,16 @@ technologies = {
 				medium_tank_artillery_chassis_3
 				medium_tank_aa_chassis_3
 			}
+			enable_equipment_modules = {
+				tank_steel_tracks_3
+				tank_rubber_tracks_3
+				tank_padded_tracks_2
+			}
+
+			path = {
+				leads_to_tech = advanced_heavy_tank_chassis
+				research_cost_coeff = 0.9
+			}
 
 			path = {
 				leads_to_tech = main_battle_tank_chassis
@@ -582,36 +609,6 @@ technologies = {
 		}
 
 	amphibious_tank_chassis = { # Amphibious Tanks
-
-		enable_equipments = {
-			amphibious_tank_chassis_1
-		}
-
-		enable_subunits = {
-			amphibious_armor
-		}
-
-		dependencies = {
-			amphibious_mechanized_infantry = 1
-		}
-
-		path = {
-			leads_to_tech = amphibious_drive
-			research_cost_coeff = 1
-		}
-
-		allow_branch = {
-			has_dlc = "Man the Guns"
-		}
-
-		research_cost = 2
-		start_year = 1736
-
-		folder = {
-			name = nsb_armour_folder
-			position = { x = @column_3 y = @1736 }
-		}
-
 		ai_will_do = {
 			factor = 1
 			modifier = {
@@ -647,6 +644,37 @@ technologies = {
 			}
 		}
 
+		enable_equipments = {
+			amphibious_tank_chassis_1
+			tank_steel_tracks_2
+			tank_rubber_tracks_2
+		}
+
+		enable_subunits = {
+			amphibious_armor
+		}
+
+		dependencies = {
+			amphibious_mechanized_infantry = 1
+		}
+
+		path = {
+			leads_to_tech = amphibious_drive
+			research_cost_coeff = 1
+		}
+
+		allow_branch = {
+			has_dlc = "Man the Guns"
+		}
+
+		research_cost = 2
+		start_year = 1736
+
+		folder = {
+			name = nsb_armour_folder
+			position = { x = @column_3 y = @1736 }
+		}
+
 		categories = {
 			armor
 			mio_cat_tech_all_armor_and_modules
@@ -657,35 +685,6 @@ technologies = {
 	}
 
 		amphibious_drive = { # SchwimmPanzer
-
-
-			enable_equipment_modules = {
-				amphibious_drive
-			}
-
-			enable_equipments = {
-				light_tank_amphibious_chassis_0
-				medium_tank_amphibious_chassis_0
-				heavy_tank_amphibious_chassis_0
-				light_tank_amphibious_chassis_1
-				medium_tank_amphibious_chassis_1
-				heavy_tank_amphibious_chassis_1
-				light_tank_amphibious_chassis_2
-				medium_tank_amphibious_chassis_2
-				heavy_tank_amphibious_chassis_2
-				light_tank_amphibious_chassis_3
-				medium_tank_amphibious_chassis_3
-				heavy_tank_amphibious_chassis_3
-			}
-
-			research_cost = 2
-			start_year = 1742
-
-			folder = {
-				name = nsb_armour_folder
-				position = { x = @column_3 y = @1742 }
-			}
-
 			ai_will_do = {
 				factor = 1
 				modifier = {
@@ -721,6 +720,34 @@ technologies = {
 				}
 			}
 
+
+			enable_equipment_modules = {
+				amphibious_drive
+			}
+
+			enable_equipments = {
+				light_tank_amphibious_chassis_0
+				medium_tank_amphibious_chassis_0
+				heavy_tank_amphibious_chassis_0
+				light_tank_amphibious_chassis_1
+				medium_tank_amphibious_chassis_1
+				heavy_tank_amphibious_chassis_1
+				light_tank_amphibious_chassis_2
+				medium_tank_amphibious_chassis_2
+				heavy_tank_amphibious_chassis_2
+				light_tank_amphibious_chassis_3
+				medium_tank_amphibious_chassis_3
+				heavy_tank_amphibious_chassis_3
+			}
+
+			research_cost = 2
+			start_year = 1742
+
+			folder = {
+				name = nsb_armour_folder
+				position = { x = @column_3 y = @1742 }
+			}
+
 			categories = {
 				armor
 				mio_cat_tech_all_armor_and_modules
@@ -730,7 +757,7 @@ technologies = {
 			special_project_specialization = { specialization_land }
 		}
 
-	gw_heavy_tank_chassis = { # Heavy Tanks
+	gw_heavy_tank_chassis = { # 1724 Heavy Tanks
 		ai_will_do = {
 			factor = 1
 			modifier = {
@@ -747,6 +774,7 @@ technologies = {
 		}
 		enable_equipment_modules = {
 			tank_heavy_fixed_superstructure_turret
+			flat_armor
 		}
 		enable_subunits = {
 			heavy_armor
@@ -799,7 +827,7 @@ technologies = {
 		special_project_specialization = { specialization_land }
 	}
 
-		basic_heavy_tank_chassis = { # Grosstraktor
+		basic_heavy_tank_chassis = { # 1730 Heavy Tanks
 			ai_will_do = {
 				factor = 1
 				modifier = {
@@ -813,6 +841,10 @@ technologies = {
 				heavy_tank_destroyer_chassis_1
 				heavy_tank_artillery_chassis_1
 				heavy_tank_aa_chassis_1
+			}
+			enable_equipment_modules = {
+				tank_steel_tracks_1
+				tank_rubber_tracks_1
 			}
 
 			on_research_complete_limit = {
@@ -863,7 +895,7 @@ technologies = {
 			special_project_specialization = { specialization_land }
 		}
 
-		improved_heavy_tank_chassis = { # Tiger
+		improved_heavy_tank_chassis = { # 1734 Heavy Tanks
 			ai_will_do = {
 				factor = 1
 				modifier = {
@@ -877,6 +909,11 @@ technologies = {
 				heavy_tank_destroyer_chassis_2
 				heavy_tank_artillery_chassis_2
 				heavy_tank_aa_chassis_2
+			}
+			enable_equipment_modules = {
+				tank_steel_tracks_2
+				tank_rubber_tracks_2
+				tank_padded_tracks_1
 			}
 
 			path = {
@@ -906,7 +943,7 @@ technologies = {
 			special_project_specialization = { specialization_land }
 		}
 
-		advanced_heavy_tank_chassis = { # King Tiger
+		advanced_heavy_tank_chassis = { # 1738 Heavy Tanks
 			ai_will_do = {
 				factor = 1
 				modifier = {
@@ -920,6 +957,16 @@ technologies = {
 				heavy_tank_destroyer_chassis_3
 				heavy_tank_artillery_chassis_3
 				heavy_tank_aa_chassis_3
+			}
+			enable_equipment_modules = {
+				tank_steel_tracks_3
+				tank_rubber_tracks_3
+				tank_padded_tracks_2
+			}
+
+			path = {
+				leads_to_tech = advanced_medium_tank_chassis
+				research_cost_coeff = 0.9
 			}
 
 			path = {
@@ -952,6 +999,11 @@ technologies = {
 			super_heavy_tank_destroyer_chassis_1
 			super_heavy_tank_artillery_chassis_1
 			super_heavy_tank_aa_chassis_1
+		}
+		enable_equipment_modules = {
+			tank_steel_tracks_3
+			tank_rubber_tracks_3
+			tank_padded_tracks_2
 		}
 
 		enable_subunits = {
@@ -1368,34 +1420,7 @@ technologies = {
 		ai_will_do = {
 			factor = 2
 			modifier = {
-				add = 5
-				low_aircraft_focus_nation = yes
-			}
-			modifier = {
-				factor = 1.60
-				date > "1736.0.1"
-				low_aircraft_focus_nation = yes
-			}
-			modifier = {
-				add = 5
-				medium_aircraft_focus_nation = yes
-			}
-			modifier = {
-				factor = 2.0
-				date > "1737.6.1"
-				medium_aircraft_focus_nation = yes
-			}
-			modifier = {
-				add = 5
-				high_aircraft_focus_nation = yes
-			}
-			modifier = {
-				factor = 2.4
-				date > "1737.1.1"
-				high_aircraft_focus_nation = yes
-			}
-			modifier = {
-				factor = 2.00
+				factor = 20.00
 				is_major = yes
 			}
 		}
@@ -1408,9 +1433,15 @@ technologies = {
 		}
 		enable_equipment_modules = {
 			tank_modern_tank_turret
+			tank_padded_tracks_3
 		}
 		enable_subunits = {
 			modern_armor
+		}
+
+		path = {
+			leads_to_tech = modern_main_battle_tank_chassis
+			research_cost_coeff = 1
 		}
 
 		research_cost = 2.5
@@ -1420,18 +1451,14 @@ technologies = {
 			name = nsb_armour_folder
 			position = { x = @column_5 y = @1742 }
 		}
-		path = {
-			leads_to_tech = modern_main_battle_tank_chassis
-			research_cost_coeff = 1
-		}
 
 		categories = {
 			armor
 			mio_cat_tech_all_armor_and_modules
 			cat_medium_armor
 			mio_cat_tech_medium_armor_and_modules
-				cat_heavy_armor
-				mio_cat_tech_heavy_armor_and_modules
+			cat_heavy_armor
+			mio_cat_tech_heavy_armor_and_modules
 		}
 		special_project_specialization = { specialization_land }
 	}
@@ -1440,34 +1467,7 @@ technologies = {
 			ai_will_do = {
 				factor = 2
 				modifier = {
-					add = 5
-					low_aircraft_focus_nation = yes
-				}
-				modifier = {
-					factor = 1.60
-					date > "1738.0.1"
-					low_aircraft_focus_nation = yes
-				}
-				modifier = {
-					add = 5
-					medium_aircraft_focus_nation = yes
-				}
-				modifier = {
-					factor = 2.0
-					date > "1739.6.1"
-					medium_aircraft_focus_nation = yes
-				}
-				modifier = {
-					add = 5
-					high_aircraft_focus_nation = yes
-				}
-				modifier = {
-					factor = 2.4
-					date > "1739.1.1"
-					high_aircraft_focus_nation = yes
-				}
-				modifier = {
-					factor = 2.00
+					factor = 20.00
 					is_major = yes
 				}
 			}
@@ -1528,6 +1528,10 @@ technologies = {
 				factor = 2.00
 				date > "1723.1.1"
 			}
+		}
+
+		enable_equipment_modules = {
+			tank_diesel_engine
 		}
 
 		path = {
@@ -1592,6 +1596,11 @@ technologies = {
 					factor = 2.00
 					date > "1729.1.1"
 				}
+			}
+
+			enable_equipment_modules = {
+				tank_petrol_electric_engine
+				ostketten
 			}
 
 			path = {
@@ -1717,6 +1726,10 @@ technologies = {
 				}
 			}
 
+			enable_equipment_modules = {
+				tank_hydropneumatic_suspension
+			}
+
 			xp_research_type = army
 			xp_boost_cost = 20
 			xp_research_bonus = 1.50
@@ -1777,6 +1790,10 @@ technologies = {
 				}
 			}
 
+			enable_equipment_modules = {
+				tank_hydrostatic_engine
+			}
+
 			xp_research_type = army
 			xp_boost_cost = 20
 			xp_research_bonus = 1.50
@@ -1834,7 +1851,8 @@ technologies = {
 		}
 
 		enable_equipment_modules = {
-			tank_cast_armor
+			semi-flat_armor
+			mech_rolled_homo_armor
 		}
 
 		path = {
@@ -1902,6 +1920,12 @@ technologies = {
 				}
 			}
 
+			enable_equipment_modules = {
+				tank_cast_armor
+				tank_welded_armor
+				car_welded_armor
+			}
+
 			path = {
 				leads_to_tech = armor_tech_3
 				research_cost_coeff = 1
@@ -1965,7 +1989,10 @@ technologies = {
 			}
 
 			enable_equipment_modules = {
-				tank_welded_armor
+				armor_skirts
+				car_sloped_armor
+				lc_armored_skirts
+				add_on_armor_turret
 			}
 
 			path = {
@@ -2031,7 +2058,9 @@ technologies = {
 			}
 
 			enable_equipment_modules = {
-				armor_skirts
+				sloped_armor_zwei
+				mech_high_hardness_rolled_armor
+				tank_hh_welded_armor
 			}
 
 			xp_research_type = army
@@ -2155,6 +2184,10 @@ technologies = {
 		enable_equipment_modules = {
 			tank_light_one_man_tank_turret
 			tank_medium_one_man_tank_turret
+
+			open_top_turret
+			car_open_top_turret
+			schmalturm_turret
 		}
 
 		path = {
@@ -2223,6 +2256,11 @@ technologies = {
 				tank_heavy_two_man_tank_turret	
 				tank_super_heavy_three_man_tank_turret
 				strobe_sight
+
+				tank_db_two_man_light_tank_turret
+				tank_db_three_man_light_tank_turret
+				oscillating_turret
+				car_oscillating_turret
 			}
 
 			path = {
@@ -2287,6 +2325,12 @@ technologies = {
 				tank_medium_three_man_tank_turret
 				tank_heavy_three_man_tank_turret
 				tank_super_heavy_four_man_tank_turret
+
+				exp_rangefinder_turret
+				tank_db_three_man_medium_tank_turret
+				tank_db_three_man_heavy_tank_turret
+				tank_db_four_man_heavy_tank_turret
+				tank_db_four_man_super_heavy_tank_turret
 			}
 
 			xp_research_type = army
@@ -2342,7 +2386,7 @@ technologies = {
 		}
 
 		enable_equipment_modules = {
-			extra_ammo_storage
+			flat_armor
 			smoke_launchers
 		}
 
@@ -2421,6 +2465,7 @@ technologies = {
 			}
 
 			enable_equipment_modules = {
+				extra_ammo_storage
 				sloped_armor
 			}
 

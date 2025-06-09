@@ -91,6 +91,7 @@
 	-- NResistance
 
 	-- NProduction
+		NDefines.NProduction.MAX_EQUIPMENT_RESOURCES_NEED = 6   -- Was 3
 		NDefines.NProduction.MAX_CIV_FACTORIES_PER_LINE = 10.0	-- Was 15.0
 		NDefines.NProduction.EFFICIENCY_LOSS_PER_UNUSED_DAY = 2 -- Was 1
 		NDefines.NProduction.BASE_FACTORY_SPEED = 5.00			-- Was 5.00

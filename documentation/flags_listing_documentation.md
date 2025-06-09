@@ -24,6 +24,8 @@ When launching the game please use `-debug -crash_data_log` to use the full deve
 
 - Plains: Fightable 80~ Pixels
 
+- Farmlands: Fightable 70~ Pixels
+
 - Urban: Majors 30~ Pixels well Minors 60 Pixels on Average
 
 - Jungle: Fightable 100~ Pixels
