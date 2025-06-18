@@ -14,8 +14,6 @@ When launching the game please use `-debug -crash_data_log` to use the full deve
 ## Mapping
 
 # **Land Province Map Size Guidelines**
-- Ocean: Fightable 1000~ Pixels
-
 - Forest: Fightable 90~ Pixels
 
 - Hills: Fightable 90~ Pixels
@@ -26,7 +24,9 @@ When launching the game please use `-debug -crash_data_log` to use the full deve
 
 - Farmlands: Fightable 70~ Pixels
 
-- Urban: Majors 30~ Pixels well Minors 60 Pixels on Average
+- Urban: Minors 60-45~ Pixels
+
+- Urban: Majors 30-20~ Pixels
 
 - Jungle: Fightable 100~ Pixels
 
