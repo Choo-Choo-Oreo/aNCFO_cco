@@ -1,4 +1,4 @@
-HHE_front_management_special_rush_HER = {
+HHE_front_management_rush_HER = {
     allowed = { TAG = HHE }
     enable = { has_war_with = HER }
 
@@ -20,7 +20,7 @@ HHE_front_management_special_rush_HER = {
     }
 }
 
-HHE_front_management_special_rush_HFS = {
+HHE_front_management_rush_HFS = {
     allowed = { TAG = HHE }
     enable = {
         has_war_with = HFS
@@ -54,7 +54,7 @@ HHE_front_management_special_rush_HFS = {
     }
 }
 
-HHE_front_management_special_double_rush_HFS = {
+HHE_front_management_rush_HFS_double = {
     allowed = { TAG = HHE }
     enable = {
         date > 1728.1.1
@@ -77,7 +77,7 @@ HHE_front_management_special_double_rush_HFS = {
     }
 }
 
-HHE_front_management_special_rush_minor = {
+HHE_front_management_rush_weak_minor = {
     allowed = {
         OR = {
             TAG = HHE
@@ -127,7 +127,7 @@ HHE_front_management_special_rush_minor = {
     }
 }
 
-HHE_front_management_special_rush_minor_double = {
+HHE_front_management_rush_weak_minor_double = {
     allowed = {
         OR = {
             TAG = HHE
@@ -166,7 +166,7 @@ HHE_front_management_special_rush_minor_double = {
     }
 }
 
-HHE_front_management_special_rush_major = {
+HHE_front_management_rush_weak_major = {
     allowed = {
         OR = {
             TAG = HHE
@@ -231,7 +231,7 @@ HHE_front_management_special_rush_major = {
     }
 }
 
-HHE_front_management_special_rush_major_double = {
+HHE_front_management_rush_weak_major_double = {
     allowed = {
         OR = {
             TAG = HHE
@@ -266,7 +266,7 @@ HHE_front_management_special_rush_major_double = {
     }
 }
 
-HHE_front_management_special_rush_central = {
+HHE_front_management_rush_central = {
     allowed = {
         OR = {
             TAG = HHE
@@ -320,7 +320,7 @@ HHE_front_management_special_rush_central = {
     }
 }
 
-HHE_front_management_special_rush_south_west = {
+HHE_front_management_rush_south_west = {
     allowed = {
         OR = {
             TAG = HHE
@@ -369,5 +369,106 @@ HHE_front_management_special_rush_south_west = {
         execution_type = rush
         execute_order = yes
         manual_attack = yes
+    }
+}
+
+HST_front_management_rush_weak_HAP = {
+    allowed = { TAG = HST }
+    enable = { has_war_with = HAP }
+
+    abort_when_not_enabled = yes
+    
+    ai_strategy = {
+        type = front_control
+
+        country_trigger = { TAG = HAP }
+
+        priority = 200
+        ordertype = front
+        execution_type = rush_weak
+        execute_order = yes
+        manual_attack = yes
+    }
+}
+
+HPP_front_management_rush_HAW = {
+    allowed = { TAG = HPP }
+    enable = { has_war_with = HAW }
+
+    abort_when_not_enabled = yes
+    
+    ai_strategy = {
+        type = front_control
+
+        country_trigger = { TAG = HAW }
+
+        priority = 150
+        ordertype = front
+        execution_type = rush
+        execute_order = yes
+        manual_attack = yes
+    }
+}
+
+HPP_front_management_rush_weak_HCR = {
+    allowed = { TAG = HPP }
+    enable = {
+        has_war_with = HCR
+        NOT = { has_war_with = HAW }
+    }
+
+    abort_when_not_enabled = yes
+    
+    ai_strategy = {
+        type = front_control
+
+        country_trigger = { TAG = HCR }
+
+        priority = 135
+        ordertype = front
+        execution_type = rush_weak
+        execute_order = yes
+        manual_attack = yes
+    }
+}
+
+HHE_front_management_ignore_foreign = {
+    allowed = {
+        OR = {
+            TAG = HHE
+            TAG = HLF
+            TAG = HNO
+            TAG = HST
+        }
+    }
+    enable = {
+        has_global_flag = HHE_warmonger_civil_war_final
+    }
+
+    abort_when_not_enabled = yes
+    
+    ai_strategy = {
+        type = front_control
+
+        country_trigger = {
+            OR = {
+                TAG = REP
+                TAG = DOC
+                TAG = IHS
+                TAG = WIE
+                TAG = LRO
+                TAG = LEE
+                TAG = NMR
+                TAG = PCS
+                TAG = SMK
+                TAG = KGK
+                TAG = MRC
+                TAG = CYR
+            }
+        }
+
+        ratio = -10.0
+        priority = -1000
+        ordertype = front
     }
 }

@@ -640,10 +640,11 @@ bop_HHE_archard_vladaros = {
 			FROM = {
 				NOT = { has_state_flag = state_flag_HHE_pillar_economic }
 				OR = {
-					has_state_category = city
-					has_state_category = large_city
 					has_state_category = metropolis
 					has_state_category = megalopolis
+					has_state_category = archethnopolis
+					has_state_category = hieropalingenopolis
+					has_state_category = theogennopolis
 				}
 				impassable = no
 				is_owned_by = ROOT
@@ -659,10 +660,11 @@ bop_HHE_archard_vladaros = {
 			FROM = {
 				hidden_trigger = {
 					OR = {
-						has_state_category = city
-						has_state_category = large_city
 						has_state_category = metropolis
 						has_state_category = megalopolis
+						has_state_category = archethnopolis
+						has_state_category = hieropalingenopolis
+						has_state_category = theogennopolis
 					}
 				}
 			}
@@ -735,11 +737,13 @@ bop_HHE_archard_vladaros = {
 			FROM = {
 				NOT = { has_state_flag = state_flag_HHE_industrialize_the_cities }
 				OR = {
-					has_state_category = large_town
 					has_state_category = city
 					has_state_category = large_city
 					has_state_category = metropolis
 					has_state_category = megalopolis
+					has_state_category = archethnopolis
+					has_state_category = hieropalingenopolis
+					has_state_category = theogennopolis
 				}
 				impassable = no
 				is_owned_by = ROOT
@@ -758,34 +762,40 @@ bop_HHE_archard_vladaros = {
 		available = {
 			FROM = {
 				if = {
-					limit = { has_state_category = large_town }
-					set_temp_variable = { industrialize_ppcost = 10 }
-					set_temp_variable = { industrialize_civiliancost = 3 }
-					ROOT = { num_of_civilian_factories_available_for_projects > 2 }
-				}
-				else_if = {
 					limit = { has_state_category = city }
-					set_temp_variable = { industrialize_ppcost = 20 }
+					set_temp_variable = { industrialize_ppcost = 10 }
 					set_temp_variable = { industrialize_civiliancost = 5 }
 					ROOT = { num_of_civilian_factories_available_for_projects > 4 }
 				}
 				else_if = {
 					limit = { has_state_category = large_city }
-					set_temp_variable = { industrialize_ppcost = 30 }
+					set_temp_variable = { industrialize_ppcost = 20 }
 					set_temp_variable = { industrialize_civiliancost = 7 }
 					ROOT = { num_of_civilian_factories_available_for_projects > 6 }
 				}
 				else_if = {
 					limit = { has_state_category = metropolis }
-					set_temp_variable = { industrialize_ppcost = 40 }
+					set_temp_variable = { industrialize_ppcost = 30 }
 					set_temp_variable = { industrialize_civiliancost = 10 }
 					ROOT = { num_of_civilian_factories_available_for_projects > 9 }
 				}
 				else_if = {
 					limit = { has_state_category = megalopolis }
-					set_temp_variable = { industrialize_ppcost = 50 }
+					set_temp_variable = { industrialize_ppcost = 40 }
 					set_temp_variable = { industrialize_civiliancost = 15 }
 					ROOT = { num_of_civilian_factories_available_for_projects > 14 }
+				}
+				else_if = {
+					limit = {
+						OR = {
+							has_state_category = archethnopolis
+							has_state_category = hieropalingenopolis
+							has_state_category = theogennopolis
+						}
+					}
+					set_temp_variable = { industrialize_ppcost = 50 }
+					set_temp_variable = { industrialize_civiliancost = 20 }
+					ROOT = { num_of_civilian_factories_available_for_projects > 19 }
 				}
 				hidden_trigger = {
 					OR = {
@@ -808,7 +818,7 @@ bop_HHE_archard_vladaros = {
 				set_state_flag = state_flag_HHE_industrialize_the_cities
 				if = {
 					limit = {
-						has_state_category = large_town
+						has_state_category = city
 					}
 					add_extra_state_shared_building_slots = 1
 					add_building_construction = {
@@ -819,7 +829,7 @@ bop_HHE_archard_vladaros = {
 				}
 				else_if = {
 					limit = {
-						has_state_category = city
+						has_state_category = large_city
 					}
 					add_extra_state_shared_building_slots = 2
 					add_building_construction = {
@@ -830,7 +840,7 @@ bop_HHE_archard_vladaros = {
 				}
 				else_if = {
 					limit = {
-						has_state_category = large_city
+						has_state_category = metropolis
 					}
 					add_extra_state_shared_building_slots = 3
 					add_building_construction = {
@@ -841,7 +851,7 @@ bop_HHE_archard_vladaros = {
 				}
 				else_if = {
 					limit = {
-						has_state_category = metropolis
+						has_state_category = megalopolis
 					}
 					add_extra_state_shared_building_slots = 4
 					add_building_construction = {
@@ -852,7 +862,11 @@ bop_HHE_archard_vladaros = {
 				}
 				else_if = {
 					limit = {
-						has_state_category = megalopolis
+						OR = {
+							has_state_category = archethnopolis
+							has_state_category = hieropalingenopolis
+							has_state_category = theogennopolis
+						}
 					}
 					add_extra_state_shared_building_slots = 5
 					add_building_construction = {
@@ -860,11 +874,11 @@ bop_HHE_archard_vladaros = {
 						level = 5
 						instant_build = yes
 					}
-				}
-				add_building_construction = {
-					type = construction_complex
-					level = 1
-					instant_build = yes
+					add_building_construction = {
+						type = construction_complex
+						level = 1
+						instant_build = yes
+					}
 				}
 			}
 		}

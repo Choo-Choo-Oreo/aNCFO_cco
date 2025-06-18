@@ -1,9 +1,19 @@
 import re
+import sys
+import os
 
-input_file = "HHE.national_branches.txt"
-output_file = "HHE.national_branches_compressed.txt"
+# Check if a file name was provided as an argument
+if len(sys.argv) < 2:
+    print("Usage: python hoi4_compression.py <input_file>")
+    sys.exit(1)
 
-# python hoi4_compression.py
+input_file = sys.argv[1]
+
+# Derive output file name by appending '_compressed' before the extension
+base, ext = os.path.splitext(input_file)
+output_file = f"{base}_compressed{ext}"
+
+# python hoi4_compression.py input_file
 
 try:
     with open(input_file, "r", encoding="utf-8") as f:
@@ -18,6 +28,9 @@ try:
     # Replace tabs and newlines already removed by join, but ensure no weird whitespace remains
     # Collapse multiple whitespace into single space
     compressed = re.sub(r"\s+", " ", joined).strip()
+
+    # Remove spaces around =, {, }, <, >
+    compressed = re.sub(r"\s*([=\{\}<>])\s*", r"\1", compressed)
 
     with open(output_file, "w", encoding="utf-8") as f:
         f.write(compressed)
