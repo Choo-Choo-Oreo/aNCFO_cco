@@ -4,7 +4,7 @@ technologies = {
 			factor = 500
 		}
 
-		local_resources_factor = 0.10
+		local_resources_factor = 0.05
 		production_factory_max_efficiency_factor = 0.10
 		industrial_capacity_factory = 0.10
 
@@ -1870,7 +1870,7 @@ technologies = {
 
 	excavation0 = { # Excavation
 		
-		local_resources_factor = 0.10
+		local_resources_factor = 0.075
 		production_lack_of_resource_penalty_factor = 0.05
 		
 		path = {
@@ -1920,7 +1920,7 @@ technologies = {
 
 		excavation1 = {
 			
-			local_resources_factor = 0.10
+			local_resources_factor = 0.075
 			production_lack_of_resource_penalty_factor = 0.05
 
 			dependencies = { excavation0 = 1 }
@@ -1972,7 +1972,7 @@ technologies = {
 
 		excavation2 = {
 			
-			local_resources_factor = 0.10
+			local_resources_factor = 0.075
 			production_lack_of_resource_penalty_factor = 0.05
 
 			dependencies = { excavation1 = 1 }
@@ -2024,7 +2024,7 @@ technologies = {
 
 		excavation3 = {
 			
-			local_resources_factor = 0.10
+			local_resources_factor = 0.075
 			production_lack_of_resource_penalty_factor = 0.05
 
 			dependencies = { excavation2 = 1 }
@@ -2076,7 +2076,7 @@ technologies = {
 
 		excavation4 = {
 			
-			local_resources_factor = 0.10
+			local_resources_factor = 0.075
 			production_lack_of_resource_penalty_factor = 0.05
 
 			dependencies = { excavation3 = 1 }
@@ -2128,7 +2128,7 @@ technologies = {
 
 		excavation5 = {
 
-			local_resources_factor = 0.10
+			local_resources_factor = 0.075
 			production_lack_of_resource_penalty_factor = 0.05
 
 			dependencies = { excavation4 = 1 }
@@ -2186,7 +2186,7 @@ technologies = {
 				}
 			}
 			
-			local_resources_factor = 0.10
+			local_resources_factor = 0.075
 			production_lack_of_resource_penalty_factor = 0.05
 
 			dependencies = { excavation5 = 1 }
@@ -2238,7 +2238,7 @@ technologies = {
 
 		excavation7 = {
 			
-			local_resources_factor = 0.10
+			local_resources_factor = 0.075
 			production_lack_of_resource_penalty_factor = 0.05
 
 			dependencies = { excavation6 = 1 }
@@ -2290,7 +2290,7 @@ technologies = {
 
 		excavation8 = {
 			
-			local_resources_factor = 0.10
+			local_resources_factor = 0.075
 			production_lack_of_resource_penalty_factor = 0.05
 
 			dependencies = { excavation7 = 1 }
@@ -2342,7 +2342,7 @@ technologies = {
 
 		excavation9 = {
 			
-			local_resources_factor = 0.10
+			local_resources_factor = 0.075
 			production_lack_of_resource_penalty_factor = 0.05
 
 			dependencies = { excavation8 = 1 }
@@ -2404,7 +2404,7 @@ technologies = {
 		}
 
 		fuel_gain_factor = 0.50
-		local_resources_factor = 0.10
+		local_resources_factor = 0.075
 		production_lack_of_resource_penalty_factor = 0.05
 
 		path = {
@@ -2434,7 +2434,7 @@ technologies = {
 			}
 
 			fuel_gain_factor = 0.65
-			local_resources_factor = 0.30
+			local_resources_factor = 0.15
 			production_lack_of_resource_penalty_factor = 0.15
 
 			path = {
@@ -2464,7 +2464,7 @@ technologies = {
 			}
 
 			fuel_gain_factor = 0.35
-			local_resources_factor = 0.20
+			local_resources_factor = 0.10
 			production_lack_of_resource_penalty_factor = 0.10
 
 			research_cost = 3
@@ -2491,7 +2491,6 @@ technologies = {
 				amount = 5
 			}
 		}
-		local_resources_factor = 0.10
 
 		# only from focus!!! #####
 		allow = {
@@ -2512,7 +2511,6 @@ technologies = {
 				amount = -5
 			}
 		}
-		local_resources_factor = -0.10
 
 		# only from focus!!! #####
 		allow = {
@@ -2533,7 +2531,6 @@ technologies = {
 				amount = 5
 			}
 		}
-		local_resources_factor = 0.10
 
 		# only from focus!!! #####
 		allow = {
@@ -2549,7 +2546,6 @@ technologies = {
 				amount = 5
 			}
 		}
-		local_resources_factor = 0.10
 
 		# only from focus!!! #####
 		allow = {
@@ -4114,6 +4110,86 @@ technologies = {
 	}
 
 		oil_processing = {
+			ai_will_do = {
+				factor = 1
+				modifier = {
+					add = 10
+					num_of_military_factories > 40
+					OR = {
+						AND = { # Foreign First
+							is_major = yes
+							check_variable = { resource_consumed@rubber > resource_imported@rubber }
+							check_variable = { resource_imported@rubber > resource_produced@rubber }
+						}
+						AND = { # Local First
+							has_war = yes
+							is_major = yes
+							check_variable = { resource_consumed@rubber > resource_produced@rubber }
+						}
+						AND = { # Foreign First
+							has_war = yes
+							is_major = no
+							check_variable = { resource_consumed@rubber > resource@rubber }
+						}
+					}
+					OR = {
+						has_country_flag = ai_action_air_small
+						has_country_flag = ai_action_air_medium
+						has_country_flag = ai_action_air_large
+					}
+				}
+				modifier = {
+					add = 10
+					num_of_military_factories > 65
+					OR = {
+						AND = { # Foreign First
+							is_major = yes
+							check_variable = { resource_consumed@rubber > resource_imported@rubber }
+							check_variable = { resource_imported@rubber > resource_produced@rubber }
+						}
+						AND = { # Local First
+							has_war = yes
+							is_major = yes
+							check_variable = { resource_consumed@rubber > resource_produced@rubber }
+						}
+						AND = { # Foreign First
+							has_war = yes
+							is_major = no
+							check_variable = { resource_consumed@rubber > resource@rubber }
+						}
+					}
+					OR = {
+						has_country_flag = ai_action_air_medium
+						has_country_flag = ai_action_air_large
+					}
+				}
+				modifier = {
+					add = 10
+					num_of_military_factories > 100
+					OR = {
+						AND = { # Foreign First
+							is_major = yes
+							check_variable = { resource_consumed@rubber > resource_imported@rubber }
+							check_variable = { resource_imported@rubber > resource_produced@rubber }
+						}
+						AND = { # Local First
+							has_war = yes
+							is_major = yes
+							check_variable = { resource_consumed@rubber > resource_produced@rubber }
+						}
+						AND = { # Foreign First
+							has_war = yes
+							is_major = no
+							check_variable = { resource_consumed@rubber > resource@rubber }
+						}
+					}
+					has_country_flag = ai_action_air_large
+				}
+				modifier = {
+					factor = 50
+					check_variable = { total_constructed_refinery > total_constructed_fuel_silo }
+				}
+			}
 
 			fuel_gain_factor_from_states = 0.45
 
@@ -4141,7 +4217,15 @@ technologies = {
 				industry
 				synth_resources
 			}
+						
+			ai_research_weights = {
+				oil = -2.0
+			}
 			
+			show_effect_as_desc = yes
+		}
+
+		improved_oil_processing = {
 			ai_will_do = {
 				factor = 1
 				modifier = {
@@ -4222,15 +4306,6 @@ technologies = {
 					check_variable = { total_constructed_refinery > total_constructed_fuel_silo }
 				}
 			}
-			
-			ai_research_weights = {
-				oil = -2.0
-			}
-			
-			show_effect_as_desc = yes
-		}
-
-		improved_oil_processing = {
 
 			fuel_gain_factor_from_states = 0.45
 
@@ -4253,7 +4328,15 @@ technologies = {
 				industry
 				synth_resources
 			}
+						
+			ai_research_weights = {
+				oil = -2.0
+			}
 			
+			show_effect_as_desc = yes
+		}
+
+		advanced_oil_processing = {
 			ai_will_do = {
 				factor = 1
 				modifier = {
@@ -4334,15 +4417,6 @@ technologies = {
 					check_variable = { total_constructed_refinery > total_constructed_fuel_silo }
 				}
 			}
-			
-			ai_research_weights = {
-				oil = -2.0
-			}
-			
-			show_effect_as_desc = yes
-		}
-
-		advanced_oil_processing = {
 
 			fuel_gain_factor_from_states = 0.45
 
@@ -4365,88 +4439,7 @@ technologies = {
 				industry
 				synth_resources
 			}
-			
-			ai_will_do = {
-				factor = 1
-				modifier = {
-					add = 10
-					num_of_military_factories > 40
-					OR = {
-						AND = { # Foreign First
-							is_major = yes
-							check_variable = { resource_consumed@rubber > resource_imported@rubber }
-							check_variable = { resource_imported@rubber > resource_produced@rubber }
-						}
-						AND = { # Local First
-							has_war = yes
-							is_major = yes
-							check_variable = { resource_consumed@rubber > resource_produced@rubber }
-						}
-						AND = { # Foreign First
-							has_war = yes
-							is_major = no
-							check_variable = { resource_consumed@rubber > resource@rubber }
-						}
-					}
-					OR = {
-						has_country_flag = ai_action_air_small
-						has_country_flag = ai_action_air_medium
-						has_country_flag = ai_action_air_large
-					}
-				}
-				modifier = {
-					add = 10
-					num_of_military_factories > 65
-					OR = {
-						AND = { # Foreign First
-							is_major = yes
-							check_variable = { resource_consumed@rubber > resource_imported@rubber }
-							check_variable = { resource_imported@rubber > resource_produced@rubber }
-						}
-						AND = { # Local First
-							has_war = yes
-							is_major = yes
-							check_variable = { resource_consumed@rubber > resource_produced@rubber }
-						}
-						AND = { # Foreign First
-							has_war = yes
-							is_major = no
-							check_variable = { resource_consumed@rubber > resource@rubber }
-						}
-					}
-					OR = {
-						has_country_flag = ai_action_air_medium
-						has_country_flag = ai_action_air_large
-					}
-				}
-				modifier = {
-					add = 10
-					num_of_military_factories > 100
-					OR = {
-						AND = { # Foreign First
-							is_major = yes
-							check_variable = { resource_consumed@rubber > resource_imported@rubber }
-							check_variable = { resource_imported@rubber > resource_produced@rubber }
-						}
-						AND = { # Local First
-							has_war = yes
-							is_major = yes
-							check_variable = { resource_consumed@rubber > resource_produced@rubber }
-						}
-						AND = { # Foreign First
-							has_war = yes
-							is_major = no
-							check_variable = { resource_consumed@rubber > resource@rubber }
-						}
-					}
-					has_country_flag = ai_action_air_large
-				}
-				modifier = {
-					factor = 50
-					check_variable = { total_constructed_refinery > total_constructed_fuel_silo }
-				}
-			}
-			
+						
 			ai_research_weights = {
 				rubber = -2.0
 			}
@@ -4455,40 +4448,6 @@ technologies = {
 		}
 
 		rubber_processing = {
-
-			on_research_complete = {
-				modify_building_resources = {
-					building = synthetic_refinery
-					resource = rubber
-					amount = 0.5
-				}
-			}
-			fuel_gain_factor_from_states = -0.15
-
-			production_cost_synthetic_refinery_factor = 0.05
-
-			path = {
-				leads_to_tech = improved_rubber_processing
-				research_cost_coeff = 1
-			}
-			
-			research_cost = 1.5
-			start_year = 1726
-
-			XOR = {
-				oil_processing
-			}
-
-			folder = {
-				name = industry_folder
-				position = { x = 1 y = 4 }
-			}
-			
-			categories = {
-				industry
-				synth_resources
-			}
-			
 			ai_will_do = {
 				factor = 10
 				modifier = {
@@ -4576,7 +4535,40 @@ technologies = {
 					check_variable = { total_constructed_refinery > total_constructed_fuel_silo }
 				}
 			}
+
+			on_research_complete = {
+				modify_building_resources = {
+					building = synthetic_refinery
+					resource = rubber
+					amount = 1.0
+				}
+			}
+			fuel_gain_factor_from_states = -0.30
+
+			production_cost_synthetic_refinery_factor = 0.05
+
+			path = {
+				leads_to_tech = improved_rubber_processing
+				research_cost_coeff = 1
+			}
 			
+			research_cost = 1.5
+			start_year = 1726
+
+			XOR = {
+				oil_processing
+			}
+
+			folder = {
+				name = industry_folder
+				position = { x = 1 y = 4 }
+			}
+			
+			categories = {
+				industry
+				synth_resources
+			}
+						
 			ai_research_weights = {
 				oil = -2.0
 			}
@@ -4585,15 +4577,95 @@ technologies = {
 		}
 
 		improved_rubber_processing = {
-
-			on_research_complete = {
-				modify_building_resources = {
-					building = synthetic_refinery
-					resource = rubber
-					amount = 0.5
+			ai_will_do = {
+				factor = 10
+				modifier = {
+					add = 10
+					num_of_military_factories > 40
+					OR = {
+						AND = { # Foreign First
+							is_major = yes
+							check_variable = { resource_consumed@rubber > resource_imported@rubber }
+							check_variable = { resource_imported@rubber > resource_produced@rubber }
+						}
+						AND = { # Local First
+							has_war = yes
+							is_major = yes
+							check_variable = { resource_consumed@rubber > resource_produced@rubber }
+						}
+						AND = { # Foreign First
+							has_war = yes
+							is_major = no
+							check_variable = { resource_consumed@rubber > resource@rubber }
+						}
+					}
+					OR = {
+						has_country_flag = ai_action_air_small
+						has_country_flag = ai_action_air_medium
+						has_country_flag = ai_action_air_large
+					}
+				}
+				modifier = {
+					add = 10
+					num_of_military_factories > 65
+					OR = {
+						AND = { # Foreign First
+							is_major = yes
+							check_variable = { resource_consumed@rubber > resource_imported@rubber }
+							check_variable = { resource_imported@rubber > resource_produced@rubber }
+						}
+						AND = { # Local First
+							has_war = yes
+							is_major = yes
+							check_variable = { resource_consumed@rubber > resource_produced@rubber }
+						}
+						AND = { # Foreign First
+							has_war = yes
+							is_major = no
+							check_variable = { resource_consumed@rubber > resource@rubber }
+						}
+					}
+					OR = {
+						has_country_flag = ai_action_air_medium
+						has_country_flag = ai_action_air_large
+					}
+				}
+				modifier = {
+					add = 10
+					num_of_military_factories > 100
+					OR = {
+						AND = { # Foreign First
+							is_major = yes
+							check_variable = { resource_consumed@rubber > resource_imported@rubber }
+							check_variable = { resource_imported@rubber > resource_produced@rubber }
+						}
+						AND = { # Local First
+							has_war = yes
+							is_major = yes
+							check_variable = { resource_consumed@rubber > resource_produced@rubber }
+						}
+						AND = { # Foreign First
+							has_war = yes
+							is_major = no
+							check_variable = { resource_consumed@rubber > resource@rubber }
+						}
+					}
+					has_country_flag = ai_action_air_large
+				}
+				modifier = {
+					factor = 50
+					check_variable = { total_constructed_refinery > total_constructed_fuel_silo }
 				}
 			}
-			fuel_gain_factor_from_states = -0.15
+
+			#on_research_complete = {
+			#	modify_building_resources = {
+			#		building = synthetic_refinery
+			#		resource = rubber
+			#		amount = 1.0
+			#	}
+			#}
+			fuel_gain_factor_from_states = 0.10
 
 			production_cost_synthetic_refinery_factor = 0.05
 
@@ -4614,7 +4686,15 @@ technologies = {
 				industry
 				synth_resources
 			}
+						
+			ai_research_weights = {
+				oil = -2.0
+			}
 			
+			show_effect_as_desc = yes
+		}
+
+		advanced_rubber_processing = {
 			ai_will_do = {
 				factor = 10
 				modifier = {
@@ -4695,24 +4775,15 @@ technologies = {
 					check_variable = { total_constructed_refinery > total_constructed_fuel_silo }
 				}
 			}
-			
-			ai_research_weights = {
-				oil = -2.0
-			}
-			
-			show_effect_as_desc = yes
-		}
 
-		advanced_rubber_processing = {
-
-			on_research_complete = {
-				modify_building_resources = {
-					building = synthetic_refinery
-					resource = rubber
-					amount = 0.5
-				}
-			}
-			fuel_gain_factor_from_states = -0.15
+			#on_research_complete = {
+			#	modify_building_resources = {
+			#		building = synthetic_refinery
+			#		resource = rubber
+			#		amount = 1.0
+			#	}
+			#}
+			fuel_gain_factor_from_states = 0.10
 
 			production_cost_synthetic_refinery_factor = 0.05
 
@@ -4733,88 +4804,7 @@ technologies = {
 				industry
 				synth_resources
 			}
-			
-			ai_will_do = {
-				factor = 10
-				modifier = {
-					add = 10
-					num_of_military_factories > 40
-					OR = {
-						AND = { # Foreign First
-							is_major = yes
-							check_variable = { resource_consumed@rubber > resource_imported@rubber }
-							check_variable = { resource_imported@rubber > resource_produced@rubber }
-						}
-						AND = { # Local First
-							has_war = yes
-							is_major = yes
-							check_variable = { resource_consumed@rubber > resource_produced@rubber }
-						}
-						AND = { # Foreign First
-							has_war = yes
-							is_major = no
-							check_variable = { resource_consumed@rubber > resource@rubber }
-						}
-					}
-					OR = {
-						has_country_flag = ai_action_air_small
-						has_country_flag = ai_action_air_medium
-						has_country_flag = ai_action_air_large
-					}
-				}
-				modifier = {
-					add = 10
-					num_of_military_factories > 65
-					OR = {
-						AND = { # Foreign First
-							is_major = yes
-							check_variable = { resource_consumed@rubber > resource_imported@rubber }
-							check_variable = { resource_imported@rubber > resource_produced@rubber }
-						}
-						AND = { # Local First
-							has_war = yes
-							is_major = yes
-							check_variable = { resource_consumed@rubber > resource_produced@rubber }
-						}
-						AND = { # Foreign First
-							has_war = yes
-							is_major = no
-							check_variable = { resource_consumed@rubber > resource@rubber }
-						}
-					}
-					OR = {
-						has_country_flag = ai_action_air_medium
-						has_country_flag = ai_action_air_large
-					}
-				}
-				modifier = {
-					add = 10
-					num_of_military_factories > 100
-					OR = {
-						AND = { # Foreign First
-							is_major = yes
-							check_variable = { resource_consumed@rubber > resource_imported@rubber }
-							check_variable = { resource_imported@rubber > resource_produced@rubber }
-						}
-						AND = { # Local First
-							has_war = yes
-							is_major = yes
-							check_variable = { resource_consumed@rubber > resource_produced@rubber }
-						}
-						AND = { # Foreign First
-							has_war = yes
-							is_major = no
-							check_variable = { resource_consumed@rubber > resource@rubber }
-						}
-					}
-					has_country_flag = ai_action_air_large
-				}
-				modifier = {
-					factor = 50
-					check_variable = { total_constructed_refinery > total_constructed_fuel_silo }
-				}
-			}
-			
+						
 			ai_research_weights = {
 				oil = -2.0
 			}
@@ -4904,6 +4894,14 @@ technologies = {
 				}
 			}
 
+			#on_research_complete = {
+			#	modify_building_resources = {
+			#		building = synthetic_refinery
+			#		resource = rubber
+			#		amount = 1.0
+			#	}
+			#}
+
 			enable_building = {
 				building = synthetic_refinery
 				level = 5
@@ -4939,6 +4937,86 @@ technologies = {
 		}
 
 		semi_modernize_oil_processing = {
+			ai_will_do = {
+				factor = 1
+				modifier = {
+					add = 10
+					num_of_military_factories > 40
+					OR = {
+						AND = { # Foreign First
+							is_major = yes
+							check_variable = { resource_consumed@rubber > resource_imported@rubber }
+							check_variable = { resource_imported@rubber > resource_produced@rubber }
+						}
+						AND = { # Local First
+							has_war = yes
+							is_major = yes
+							check_variable = { resource_consumed@rubber > resource_produced@rubber }
+						}
+						AND = { # Foreign First
+							has_war = yes
+							is_major = no
+							check_variable = { resource_consumed@rubber > resource@rubber }
+						}
+					}
+					OR = {
+						has_country_flag = ai_action_air_small
+						has_country_flag = ai_action_air_medium
+						has_country_flag = ai_action_air_large
+					}
+				}
+				modifier = {
+					add = 10
+					num_of_military_factories > 65
+					OR = {
+						AND = { # Foreign First
+							is_major = yes
+							check_variable = { resource_consumed@rubber > resource_imported@rubber }
+							check_variable = { resource_imported@rubber > resource_produced@rubber }
+						}
+						AND = { # Local First
+							has_war = yes
+							is_major = yes
+							check_variable = { resource_consumed@rubber > resource_produced@rubber }
+						}
+						AND = { # Foreign First
+							has_war = yes
+							is_major = no
+							check_variable = { resource_consumed@rubber > resource@rubber }
+						}
+					}
+					OR = {
+						has_country_flag = ai_action_air_medium
+						has_country_flag = ai_action_air_large
+					}
+				}
+				modifier = {
+					add = 10
+					num_of_military_factories > 100
+					OR = {
+						AND = { # Foreign First
+							is_major = yes
+							check_variable = { resource_consumed@rubber > resource_imported@rubber }
+							check_variable = { resource_imported@rubber > resource_produced@rubber }
+						}
+						AND = { # Local First
+							has_war = yes
+							is_major = yes
+							check_variable = { resource_consumed@rubber > resource_produced@rubber }
+						}
+						AND = { # Foreign First
+							has_war = yes
+							is_major = no
+							check_variable = { resource_consumed@rubber > resource@rubber }
+						}
+					}
+					has_country_flag = ai_action_air_large
+				}
+				modifier = {
+					factor = 50
+					check_variable = { total_constructed_refinery > total_constructed_fuel_silo }
+				}
+			}
 
 			fuel_gain_factor_from_states = 0.30
 
@@ -4965,7 +5043,15 @@ technologies = {
 				industry
 				synth_resources
 			}
+						
+			ai_research_weights = {
+				rubber = -2.0
+			}
 			
+			show_effect_as_desc = yes
+		}
+
+		modernize_oil_processing = {
 			ai_will_do = {
 				factor = 1
 				modifier = {
@@ -5046,15 +5132,6 @@ technologies = {
 					check_variable = { total_constructed_refinery > total_constructed_fuel_silo }
 				}
 			}
-			
-			ai_research_weights = {
-				rubber = -2.0
-			}
-			
-			show_effect_as_desc = yes
-		}
-
-		modernize_oil_processing = {
 
 			fuel_gain_factor_from_states = 0.30
 
@@ -5077,7 +5154,15 @@ technologies = {
 				industry
 				synth_resources
 			}
+						
+			ai_research_weights = {
+				rubber = -2.0
+			}
 			
+			show_effect_as_desc = yes
+		}
+
+		highly_modernize_oil_processing = {
 			ai_will_do = {
 				factor = 1
 				modifier = {
@@ -5158,15 +5243,6 @@ technologies = {
 					check_variable = { total_constructed_refinery > total_constructed_fuel_silo }
 				}
 			}
-			
-			ai_research_weights = {
-				rubber = -2.0
-			}
-			
-			show_effect_as_desc = yes
-		}
-
-		highly_modernize_oil_processing = {
 
 			fuel_gain_factor_from_states = 0.30
 
@@ -5184,88 +5260,7 @@ technologies = {
 				industry
 				synth_resources
 			}
-			
-			ai_will_do = {
-				factor = 1
-				modifier = {
-					add = 10
-					num_of_military_factories > 40
-					OR = {
-						AND = { # Foreign First
-							is_major = yes
-							check_variable = { resource_consumed@rubber > resource_imported@rubber }
-							check_variable = { resource_imported@rubber > resource_produced@rubber }
-						}
-						AND = { # Local First
-							has_war = yes
-							is_major = yes
-							check_variable = { resource_consumed@rubber > resource_produced@rubber }
-						}
-						AND = { # Foreign First
-							has_war = yes
-							is_major = no
-							check_variable = { resource_consumed@rubber > resource@rubber }
-						}
-					}
-					OR = {
-						has_country_flag = ai_action_air_small
-						has_country_flag = ai_action_air_medium
-						has_country_flag = ai_action_air_large
-					}
-				}
-				modifier = {
-					add = 10
-					num_of_military_factories > 65
-					OR = {
-						AND = { # Foreign First
-							is_major = yes
-							check_variable = { resource_consumed@rubber > resource_imported@rubber }
-							check_variable = { resource_imported@rubber > resource_produced@rubber }
-						}
-						AND = { # Local First
-							has_war = yes
-							is_major = yes
-							check_variable = { resource_consumed@rubber > resource_produced@rubber }
-						}
-						AND = { # Foreign First
-							has_war = yes
-							is_major = no
-							check_variable = { resource_consumed@rubber > resource@rubber }
-						}
-					}
-					OR = {
-						has_country_flag = ai_action_air_medium
-						has_country_flag = ai_action_air_large
-					}
-				}
-				modifier = {
-					add = 10
-					num_of_military_factories > 100
-					OR = {
-						AND = { # Foreign First
-							is_major = yes
-							check_variable = { resource_consumed@rubber > resource_imported@rubber }
-							check_variable = { resource_imported@rubber > resource_produced@rubber }
-						}
-						AND = { # Local First
-							has_war = yes
-							is_major = yes
-							check_variable = { resource_consumed@rubber > resource_produced@rubber }
-						}
-						AND = { # Foreign First
-							has_war = yes
-							is_major = no
-							check_variable = { resource_consumed@rubber > resource@rubber }
-						}
-					}
-					has_country_flag = ai_action_air_large
-				}
-				modifier = {
-					factor = 50
-					check_variable = { total_constructed_refinery > total_constructed_fuel_silo }
-				}
-			}
-			
+						
 			ai_research_weights = {
 				rubber = -2.0
 			}
@@ -5274,40 +5269,6 @@ technologies = {
 		}
 
 		semi_modernize_rubber_processing = {
-
-			on_research_complete = {
-				modify_building_resources = {
-					building = synthetic_refinery
-					resource = rubber
-					amount = 0.5
-				}
-			}
-			fuel_gain_factor_from_states = -0.225
-
-			production_cost_synthetic_refinery_factor = 0.05
-			
-			path = {
-				leads_to_tech = modernize_rubber_processing 
-				research_cost_coeff = 1
-			}
-
-			research_cost = 1.5
-			start_year = 1734
-
-			XOR = {
-				semi_modernize_oil_processing
-			}
-
-			folder = {
-				name = industry_folder
-				position = { x = 1 y = 12 }
-			}
-			
-			categories = {
-				industry
-				synth_resources
-			}
-			
 			ai_will_do = {
 				factor = 10
 				modifier = {
@@ -5395,7 +5356,40 @@ technologies = {
 					check_variable = { total_constructed_refinery > total_constructed_fuel_silo }
 				}
 			}
+
+			on_research_complete = {
+				modify_building_resources = {
+					building = synthetic_refinery
+					resource = rubber
+					amount = 1.0
+				}
+			}
+			fuel_gain_factor_from_states = -0.50
+
+			production_cost_synthetic_refinery_factor = 0.05
 			
+			path = {
+				leads_to_tech = modernize_rubber_processing 
+				research_cost_coeff = 1
+			}
+
+			research_cost = 1.5
+			start_year = 1734
+
+			XOR = {
+				semi_modernize_oil_processing
+			}
+
+			folder = {
+				name = industry_folder
+				position = { x = 1 y = 12 }
+			}
+			
+			categories = {
+				industry
+				synth_resources
+			}
+						
 			ai_research_weights = {
 				oil = -2.0
 			}
@@ -5404,15 +5398,95 @@ technologies = {
 		}
 
 		modernize_rubber_processing = {
-
-			on_research_complete = {
-				modify_building_resources = {
-					building = synthetic_refinery
-					resource = rubber
-					amount = 0.5
+			ai_will_do = {
+				factor = 10
+				modifier = {
+					add = 10
+					num_of_military_factories > 40
+					OR = {
+						AND = { # Foreign First
+							is_major = yes
+							check_variable = { resource_consumed@rubber > resource_imported@rubber }
+							check_variable = { resource_imported@rubber > resource_produced@rubber }
+						}
+						AND = { # Local First
+							has_war = yes
+							is_major = yes
+							check_variable = { resource_consumed@rubber > resource_produced@rubber }
+						}
+						AND = { # Foreign First
+							has_war = yes
+							is_major = no
+							check_variable = { resource_consumed@rubber > resource@rubber }
+						}
+					}
+					OR = {
+						has_country_flag = ai_action_air_small
+						has_country_flag = ai_action_air_medium
+						has_country_flag = ai_action_air_large
+					}
+				}
+				modifier = {
+					add = 10
+					num_of_military_factories > 65
+					OR = {
+						AND = { # Foreign First
+							is_major = yes
+							check_variable = { resource_consumed@rubber > resource_imported@rubber }
+							check_variable = { resource_imported@rubber > resource_produced@rubber }
+						}
+						AND = { # Local First
+							has_war = yes
+							is_major = yes
+							check_variable = { resource_consumed@rubber > resource_produced@rubber }
+						}
+						AND = { # Foreign First
+							has_war = yes
+							is_major = no
+							check_variable = { resource_consumed@rubber > resource@rubber }
+						}
+					}
+					OR = {
+						has_country_flag = ai_action_air_medium
+						has_country_flag = ai_action_air_large
+					}
+				}
+				modifier = {
+					add = 10
+					num_of_military_factories > 100
+					OR = {
+						AND = { # Foreign First
+							is_major = yes
+							check_variable = { resource_consumed@rubber > resource_imported@rubber }
+							check_variable = { resource_imported@rubber > resource_produced@rubber }
+						}
+						AND = { # Local First
+							has_war = yes
+							is_major = yes
+							check_variable = { resource_consumed@rubber > resource_produced@rubber }
+						}
+						AND = { # Foreign First
+							has_war = yes
+							is_major = no
+							check_variable = { resource_consumed@rubber > resource@rubber }
+						}
+					}
+					has_country_flag = ai_action_air_large
+				}
+				modifier = {
+					factor = 50
+					check_variable = { total_constructed_refinery > total_constructed_fuel_silo }
 				}
 			}
-			fuel_gain_factor_from_states = -0.225
+
+			#on_research_complete = {
+			#	modify_building_resources = {
+			#		building = synthetic_refinery
+			#		resource = rubber
+			#		amount = 1.0
+			#	}
+			#}
+			fuel_gain_factor_from_states = 0.15
 
 			production_cost_synthetic_refinery_factor = 0.05
 			
@@ -5433,7 +5507,15 @@ technologies = {
 				industry
 				synth_resources
 			}
+						
+			ai_research_weights = {
+				oil = -2.0
+			}
 			
+			show_effect_as_desc = yes
+		}
+
+		highly_modernize_rubber_processing = {
 			ai_will_do = {
 				factor = 10
 				modifier = {
@@ -5514,24 +5596,15 @@ technologies = {
 					check_variable = { total_constructed_refinery > total_constructed_fuel_silo }
 				}
 			}
-			
-			ai_research_weights = {
-				oil = -2.0
-			}
-			
-			show_effect_as_desc = yes
-		}
-
-		highly_modernize_rubber_processing = {
 
 			on_research_complete = {
 				modify_building_resources = {
 					building = synthetic_refinery
 					resource = rubber
-					amount = 0.5
+					amount = 1.0
 				}
 			}
-			fuel_gain_factor_from_states = -0.225
+			fuel_gain_factor_from_states = 0.15
 
 			production_cost_synthetic_refinery_factor = 0.05
 			
@@ -5546,87 +5619,6 @@ technologies = {
 			categories = {
 				industry
 				synth_resources
-			}
-			
-			ai_will_do = {
-				factor = 10
-				modifier = {
-					add = 10
-					num_of_military_factories > 40
-					OR = {
-						AND = { # Foreign First
-							is_major = yes
-							check_variable = { resource_consumed@rubber > resource_imported@rubber }
-							check_variable = { resource_imported@rubber > resource_produced@rubber }
-						}
-						AND = { # Local First
-							has_war = yes
-							is_major = yes
-							check_variable = { resource_consumed@rubber > resource_produced@rubber }
-						}
-						AND = { # Foreign First
-							has_war = yes
-							is_major = no
-							check_variable = { resource_consumed@rubber > resource@rubber }
-						}
-					}
-					OR = {
-						has_country_flag = ai_action_air_small
-						has_country_flag = ai_action_air_medium
-						has_country_flag = ai_action_air_large
-					}
-				}
-				modifier = {
-					add = 10
-					num_of_military_factories > 65
-					OR = {
-						AND = { # Foreign First
-							is_major = yes
-							check_variable = { resource_consumed@rubber > resource_imported@rubber }
-							check_variable = { resource_imported@rubber > resource_produced@rubber }
-						}
-						AND = { # Local First
-							has_war = yes
-							is_major = yes
-							check_variable = { resource_consumed@rubber > resource_produced@rubber }
-						}
-						AND = { # Foreign First
-							has_war = yes
-							is_major = no
-							check_variable = { resource_consumed@rubber > resource@rubber }
-						}
-					}
-					OR = {
-						has_country_flag = ai_action_air_medium
-						has_country_flag = ai_action_air_large
-					}
-				}
-				modifier = {
-					add = 10
-					num_of_military_factories > 100
-					OR = {
-						AND = { # Foreign First
-							is_major = yes
-							check_variable = { resource_consumed@rubber > resource_imported@rubber }
-							check_variable = { resource_imported@rubber > resource_produced@rubber }
-						}
-						AND = { # Local First
-							has_war = yes
-							is_major = yes
-							check_variable = { resource_consumed@rubber > resource_produced@rubber }
-						}
-						AND = { # Foreign First
-							has_war = yes
-							is_major = no
-							check_variable = { resource_consumed@rubber > resource@rubber }
-						}
-					}
-					has_country_flag = ai_action_air_large
-				}
-				modifier = {
-					factor = 50
-					check_variable = { total_constructed_refinery > total_constructed_fuel_silo }
-				}
 			}
 			
 			ai_research_weights = {
