@@ -1,12 +1,60 @@
 political_actions = {
-	#MRC_switch_to_MER = {
-	#	priority = 100
-	#	allowed = { AND = { is_debug = yes is_ai = no } }
-	#	visible = { is_debug = yes }
-	#	complete_effect = {
-	#		MER = { change_tag_from = ROOT }
-	#	}
-	#}
+	SEK_merge_with_MRC = {
+		priority = 100
+		available = {
+			tag = SEK
+			has_war_with = HHE
+		}
+		visible = {
+			tag = SEK
+			MRC = { has_war_with = HHE }
+		}
+		complete_effect = {
+			every_country = {
+				LIMIT = { is_in_faction_with = SEK }
+				MRC = { add_to_faction = PREV }
+			}
+			MRC = { add_to_faction = ROOT }
+		}
+		ai_will_do = { factor = 10
+			modifier = { factor = 100
+				is_historical_focus_on = yes
+			}
+		}
+	}
+
+	EPY_prevent_HHE_victory_over_MRC = {
+		priority = 100
+		available = {
+			HHE = { has_war_with = MRC }
+			MRC = { surrender_progress > 0.50 }
+			OR = {
+				has_war = no
+				EPC = {
+					OR = {
+						has_capitulated = yes
+						is_subject = no
+					}
+				}
+			}
+		}
+		visible = {
+			tag = EPY
+			HHE = { has_war_with = MRC }
+		}
+		complete_effect = {
+			every_country = {
+				LIMIT = { is_in_faction_with = EPY }
+				MRC = { add_to_faction = PREV }
+			}
+			MRC = { add_to_faction = ROOT }
+		}
+		ai_will_do = { factor = 10
+			modifier = { factor = 100
+				is_historical_focus_on = yes
+			}
+		}
+	}
 }
 # BoP
 	bop_MRC_political_balance = {
@@ -19,6 +67,7 @@ political_actions = {
 				remove_power_balance = { id = power_balance_MRC_political_balance }
 			}
 		}
+
 		DEBUG_left_test_bop_MRC_political_balance_20 = {
 			visible = {
 				is_debug = yes
@@ -27,6 +76,7 @@ political_actions = {
 				add_power_balance_value = { id = power_balance_MRC_political_balance value = -0.20 }
 			}
 		}
+
 		DEBUG_left_test_bop_MRC_political_balance_10 = {
 			visible = {
 				is_debug = yes
@@ -35,6 +85,7 @@ political_actions = {
 				add_power_balance_value = { id = power_balance_MRC_political_balance value = -0.10 }
 			}
 		}
+
 		DEBUG_right_test_bop_MRC_political_balance_10 = {
 			visible = {
 				is_debug = yes
@@ -43,6 +94,7 @@ political_actions = {
 				add_power_balance_value = { id = power_balance_MRC_political_balance value = 0.10 }
 			}
 		}
+
 		DEBUG_right_test_bop_MRC_political_balance_20 = {
 			visible = {
 				is_debug = yes
@@ -101,6 +153,7 @@ political_actions = {
 				}
 			}
 		}
+
 		MRC_negotiate_with_UFS_for_canal_medium = {
 			icon = generic_form_nation
 			allowed = {
@@ -148,6 +201,7 @@ political_actions = {
 				}
 			}
 		}
+
 		MRC_negotiate_with_UFS_for_canal_large = {
 			icon = generic_form_nation
 			allowed = {
