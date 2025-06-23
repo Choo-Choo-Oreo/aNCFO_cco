@@ -233,6 +233,268 @@
 # War Elections vvv
 
 add_namespace = MRC
+	country_event = { # Merchants Isles Military(MIM) to Insulae Defense Force(IDF)
+		id = MRC.0
+		title = MRC.0.t
+		desc = MRC.0.d
+		picture = GFX_report_event_ger_civil_war
+
+		is_triggered_only = yes
+
+		immediate = { log = "[GetDateText]: [Root.GetName]: Event MRC.0" }
+
+		after = {
+			complete_national_focus = MRC_focus_military_insulae_ground_defense_force
+			complete_national_focus = MRC_focus_military_insulae_airspace_defense_force
+			complete_national_focus = MRC_focus_military_insulae_maritime_defense_force
+		}
+
+		option = {
+			name = MRC.0.OptA
+			ai_chance = { factor = 1.0 }
+		}
+	}
+
+	country_event = { # Stand with the Insulae Defense Force!
+		id = MRC.1
+		title = MRC.1.t
+		desc = MRC.1.d
+		picture = GFX_report_event_ger_civil_war
+
+		is_triggered_only = yes
+
+		immediate = { log = "[GetDateText]: [Root.GetName]: Event MRC.1" }
+
+		option = {
+			name = MRC.1.OptA
+			ai_chance = { factor = 1.0 }
+		}
+	}
+
+	country_event = { # Invitation to Champion Program
+		id = MRC.2
+		title = MRC.2.t
+		desc = MRC.2.d
+		picture = GFX_report_event_ace_promoted
+
+		is_triggered_only = yes
+
+		immediate = { log = "[GetDateText]: [Root.GetName]: Event MRC.2" }
+
+		option = {
+			name = MRC.2.OptA
+			set_country_flag = MRC_air_manufacturing_champion_declined_flag
+			MRC = {
+				country_event = MRC.6
+			}
+			ai_chance = {
+				factor = 1.0
+				modifier = {
+					add = 10.0
+					is_major = yes
+				}
+			}
+		}
+		option = {
+			name = MRC.2.OptB
+			set_country_flag = MRC_air_manufacturing_champion_accepted_flag
+			add_to_tech_sharing_group = MRC_tech_group_champion
+			MRC = {
+				country_event = MRC.4
+			}
+			ai_chance = {
+				factor = 1.0
+				modifier = {
+					add = 10.0
+					is_major = no
+				}
+			}
+		}
+	}
+
+	country_event = { # Invitation to Triton Program
+		id = MRC.3
+		title = MRC.3.t
+		desc = MRC.3.d
+		picture = GFX_report_event_ast_navy
+
+		is_triggered_only = yes
+
+		immediate = { log = "[GetDateText]: [Root.GetName]: Event MRC.3" }
+
+		option = {
+			name = MRC.2.OptA
+			set_country_flag = MRC_navy_manufacturing_triton_declined_flag
+			MRC = {
+				country_event = MRC.7
+			}
+			ai_chance = {
+				factor = 1.0
+				modifier = {
+					add = 10.0
+					check_variable = { 49 > ROOT.num_ships }
+				}
+			}
+		}
+		option = {
+			name = MRC.2.OptB
+			set_country_flag = MRC_navy_manufacturing_triton_accepted_flag
+			add_to_tech_sharing_group = MRC_tech_group_triton
+			MRC = {
+				country_event = MRC.5
+			}
+			ai_chance = {
+				factor = 1.0
+				modifier = {
+					add = 10.0
+					check_variable = { 74 < ROOT.num_ships }
+				}
+			}
+		}
+	}
+
+	country_event = { # [FROM.GetName] Accepted to join Champion Program
+		id = MRC.4
+		title = MRC.4.t
+		desc = MRC.4.d
+		picture = GFX_report_event_ace_promoted
+
+		is_triggered_only = yes
+
+		immediate = { log = "[GetDateText]: [Root.GetName]: Event MRC.4" }
+
+		option = {
+			name = MRC.4.OptA
+			ai_chance = { factor = 1.0 }
+			effect_tooltip = {
+				FROM = { add_to_tech_sharing_group = MRC_tech_group_champion }
+			}
+		}
+	}
+
+	country_event = { # [FROM.GetName] Accepted to join Triton Program
+		id = MRC.5
+		title = MRC.5.t
+		desc = MRC.5.d
+		picture = GFX_report_event_ast_navy
+
+		is_triggered_only = yes
+
+		immediate = { log = "[GetDateText]: [Root.GetName]: Event MRC.5" }
+
+		option = {
+			name = MRC.5.OptA
+			ai_chance = { factor = 1.0 }
+			effect_tooltip = {
+				FROM = { add_to_tech_sharing_group = MRC_tech_group_triton }
+			}
+		}
+	}
+
+	country_event = { # [FROM.GetName] Declined to join Champion Program
+		id = MRC.6
+		title = MRC.6.t
+		desc = MRC.6.d
+		picture = GFX_report_event_ace_promoted
+
+		is_triggered_only = yes
+
+		immediate = { log = "[GetDateText]: [Root.GetName]: Event MRC.6" }
+
+		option = {
+			name = MRC.6.OptA
+			trigger = {
+				NOT = { has_country_flag = MRC_blacklist_declined_champion_flag }
+			}
+			add_political_power = 25
+			ai_chance = { factor = 1.0 }
+		}
+		option = {
+			name = MRC.6.OptB
+			trigger = {
+				has_country_flag = MRC_blacklist_declined_champion_flag
+			}
+			add_political_power = 25
+			ai_chance = { factor = 1.0 }
+		}
+	}
+
+	country_event = { # [FROM.GetName] Declined to join Triton Program
+		id = MRC.7
+		title = MRC.7.t
+		desc = MRC.7.d
+		picture = GFX_report_event_ast_navy
+
+		is_triggered_only = yes
+
+		immediate = { log = "[GetDateText]: [Root.GetName]: Event MRC.7" }
+
+		option = {
+			name = MRC.7.OptA
+			trigger = {
+				NOT = { has_country_flag = MRC_blacklist_declined_triton_flag }
+			}
+			add_political_power = 25
+			ai_chance = { factor = 1.0 }
+		}
+		option = {
+			name = MRC.7.OptB
+			trigger = {
+				has_country_flag = MRC_blacklist_declined_triton_flag
+			}
+			add_political_power = 25
+			ai_chance = { factor = 1.0 }
+		}
+	}
+
+	country_event = { # Manufacturing Partnership
+		id = MRC.8
+		title = MRC.8.t
+		desc = MRC.8.d
+		#picture = GFX_report_event_
+
+		is_triggered_only = yes
+
+		immediate = { log = "[GetDateText]: [Root.GetName]: Event MRC.8" }
+
+		option = {
+			name = MRC.8.OptA
+			trigger = {
+			}
+			ai_chance = { factor = 1.0 }
+		}
+		option = {
+			name = MRC.8.OptB
+			trigger = {
+			}
+			ai_chance = { factor = 1.0 }
+		}
+	}
+
+	country_event = { # Major League Ally
+		id = MRC.9
+		title = MRC.9.t
+		desc = MRC.9.d
+		#picture = GFX_report_event_
+
+		is_triggered_only = yes
+
+		immediate = { log = "[GetDateText]: [Root.GetName]: Event MRC.9" }
+
+		option = {
+			name = MRC.9.OptA
+			trigger = {
+			}
+			ai_chance = { factor = 1.0 }
+		}
+		option = {
+			name = MRC.9.OptB
+			trigger = {
+			}
+			ai_chance = { factor = 1.0 }
+		}
+	}
+
 	country_event = { # MRC Civil-War Theo
 		id = MRC.10
 		title = MRC.10.t
@@ -240,6 +502,8 @@ add_namespace = MRC
 		picture = GFX_report_event_ger_civil_war
 
 		is_triggered_only = yes
+
+		immediate = { log = "[GetDateText]: [Root.GetName]: Event MRC.10" }
 
 		# The Civil-War Starts
 		option = {
@@ -362,6 +626,8 @@ add_namespace = MRC
 
 		is_triggered_only = yes
 
+		immediate = { log = "[GetDateText]: [Root.GetName]: Event MRC.11" }
+
 		# The Civil-War Starts
 		option = {
 			name = MRC.11.a
@@ -471,5 +737,602 @@ add_namespace = MRC
 			load_focus_tree = { tree = mrc_philippus_unity_focus keep_completed = yes }
 			custom_effect_tooltip = generic_skip_one_line_tt
 			custom_effect_tooltip = MRC_mercantile_republicism_civil_war_tt
+		}
+	}
+
+	country_event = { # Choose Focus for Champion Program
+		id = MRC.12
+		title = MRC.12.t
+		desc = MRC.12.d
+		picture = GFX_report_event_ace_promoted
+
+		is_triggered_only = yes
+
+		immediate = { log = "[GetDateText]: [Root.GetName]: Event MRC.12" }
+
+		option = { # Fighter       (Light Fighter and Heavy Fighter)
+			name = MRC.12.OptA
+			country_event = MRC.13
+			ai_chance = {
+				factor = 0.0
+				modifier = {
+					add = 100.0
+					has_country_flag = MRC_amc_primary_champion_flag
+					NOT = { has_country_flag = MRC_amc_secondary_champion_flag }
+				}
+			}
+		}
+		option = { # Light Bombing (Light CAS and Light Naval)
+			name = MRC.12.OptB
+			country_event = MRC.14
+			ai_chance = {
+				factor = 0.0
+			}
+		}
+		option = { # Heavy Bombing (Tactical CAS, Tactical Naval, and Heavy)
+			name = MRC.12.OptC
+			country_event = MRC.15
+			ai_chance = {
+				factor = 0.0
+				modifier = {
+					add = 100.0
+					has_country_flag = MRC_amc_secondary_champion_flag
+					NOT = { has_country_flag = MRC_amc_trinary_champion_flag }
+				}
+			}
+		}
+		option = { # Carrier       (Carrier Fighter, Carrier CAS, and Carrier Naval)
+			name = MRC.12.OptD
+			country_event = MRC.16
+			ai_chance = {
+				factor = 0.0
+				modifier = {
+					add = 100.0
+					has_country_flag = MRC_amc_trinary_champion_flag
+				}
+			}
+		}
+	}
+
+	country_event = { # Fighter       (Light Fighter and Heavy Fighter)
+		id = MRC.13
+		title = MRC.12.t
+		desc = MRC.12.d
+		picture = GFX_report_event_ace_promoted
+
+		is_triggered_only = yes
+
+		immediate = { log = "[GetDateText]: [Root.GetName]: Event MRC.13" }
+
+		option = { # Light Fighter
+			name = MRC.13.OptA
+			trigger = {
+				NOT = {
+					OR = {
+						has_country_flag = MRC_amc_primary_champion_light_fighter
+						has_country_flag = MRC_amc_secondary_champion_light_fighter
+						has_country_flag = MRC_amc_trinary_champion_light_fighter
+					}
+				}
+			}
+			IF = {
+				LIMIT = { NOT = { has_country_flag = MRC_amc_primary_champion_choosen_flag } }
+				set_country_flag = MRC_amc_primary_champion_choosen_flag
+				set_country_flag = MRC_amc_primary_champion_light_fighter
+			}
+			ELSE_IF = {
+				LIMIT = { NOT = { has_country_flag = MRC_amc_secondary_champion_choosen_flag } }
+				set_country_flag = MRC_amc_secondary_champion_choosen_flag
+				set_country_flag = MRC_amc_secondary_champion_light_fighter
+			}
+			ELSE_IF = {
+				LIMIT = { NOT = { has_country_flag = MRC_amc_trinary_champion_choosen_flag } }
+				set_country_flag = MRC_amc_trinary_champion_choosen_flag
+				set_country_flag = MRC_amc_trinary_champion_light_fighter
+			}
+			ai_chance = { factor = 1.0 }
+		}
+		option = { # Heavy Fighter
+			name = MRC.13.OptB
+			trigger = {
+				NOT = {
+					OR = {
+						has_country_flag = MRC_amc_primary_champion_heavy_fighter
+						has_country_flag = MRC_amc_secondary_champion_heavy_fighter
+						has_country_flag = MRC_amc_trinary_champion_heavy_fighter
+					}
+				}
+			}
+			IF = {
+				LIMIT = { NOT = { has_country_flag = MRC_amc_primary_champion_choosen_flag } }
+				set_country_flag = MRC_amc_primary_champion_choosen_flag
+				set_country_flag = MRC_amc_primary_champion_heavy_fighter
+			}
+			ELSE_IF = {
+				LIMIT = { NOT = { has_country_flag = MRC_amc_secondary_champion_choosen_flag } }
+				set_country_flag = MRC_amc_secondary_champion_choosen_flag
+				set_country_flag = MRC_amc_secondary_champion_heavy_fighter
+			}
+			ELSE_IF = {
+				LIMIT = { NOT = { has_country_flag = MRC_amc_trinary_champion_choosen_flag } }
+				set_country_flag = MRC_amc_trinary_champion_choosen_flag
+				set_country_flag = MRC_amc_trinary_champion_heavy_fighter
+			}
+			ai_chance = {
+				factor = 1.0
+				modifier = {
+					add = 100.0
+					has_country_flag = MRC_amc_primary_champion_flag
+					NOT = { has_country_flag = MRC_amc_secondary_champion_flag }
+				}
+			}
+		}
+		option = { # Prevous Document
+			name = MRC.OptDocument
+			country_event = MRC.12
+			ai_chance = { factor = 0.0 }
+		}
+	}
+
+	country_event = { # Light Bombing (Light CAS and Light Naval)
+		id = MRC.14
+		title = MRC.12.t
+		desc = MRC.12.d
+		picture = GFX_report_event_ace_promoted
+
+		is_triggered_only = yes
+
+		immediate = { log = "[GetDateText]: [Root.GetName]: Event MRC.14" }
+
+		option = { # Light CAS
+			name = MRC.14.OptA
+			trigger = {
+				NOT = {
+					OR = {
+						has_country_flag = MRC_amc_primary_champion_light_cas
+						has_country_flag = MRC_amc_secondary_champion_light_cas
+						has_country_flag = MRC_amc_trinary_champion_light_cas
+					}
+				}
+			}
+			IF = {
+				LIMIT = { NOT = { has_country_flag = MRC_amc_primary_champion_choosen_flag } }
+				set_country_flag = MRC_amc_primary_champion_choosen_flag
+				set_country_flag = MRC_amc_primary_champion_light_cas
+			}
+			ELSE_IF = {
+				LIMIT = { NOT = { has_country_flag = MRC_amc_secondary_champion_choosen_flag } }
+				set_country_flag = MRC_amc_secondary_champion_choosen_flag
+				set_country_flag = MRC_amc_secondary_champion_light_cas
+			}
+			ELSE_IF = {
+				LIMIT = { NOT = { has_country_flag = MRC_amc_trinary_champion_choosen_flag } }
+				set_country_flag = MRC_amc_trinary_champion_choosen_flag
+				set_country_flag = MRC_amc_trinary_champion_light_cas
+			}
+			ai_chance = { factor = 1.0 }
+		}
+		option = { # Light Naval
+			name = MRC.14.OptB
+			trigger = {
+				NOT = {
+					OR = {
+						has_country_flag = MRC_amc_primary_champion_light_naval
+						has_country_flag = MRC_amc_secondary_champion_light_naval
+						has_country_flag = MRC_amc_trinary_champion_light_naval
+					}
+				}
+			}
+			IF = {
+				LIMIT = { NOT = { has_country_flag = MRC_amc_primary_champion_choosen_flag } }
+				set_country_flag = MRC_amc_primary_champion_choosen_flag
+				set_country_flag = MRC_amc_primary_champion_light_naval
+			}
+			ELSE_IF = {
+				LIMIT = { NOT = { has_country_flag = MRC_amc_secondary_champion_choosen_flag } }
+				set_country_flag = MRC_amc_secondary_champion_choosen_flag
+				set_country_flag = MRC_amc_secondary_champion_light_naval
+			}
+			ELSE_IF = {
+				LIMIT = { NOT = { has_country_flag = MRC_amc_trinary_champion_choosen_flag } }
+				set_country_flag = MRC_amc_trinary_champion_choosen_flag
+				set_country_flag = MRC_amc_trinary_champion_light_naval
+			}
+			ai_chance = { factor = 1.0 }
+		}
+		option = { # Prevous Document
+			name = MRC.OptDocument
+			country_event = MRC.12
+			ai_chance = { factor = 0.0 }
+		}
+	}
+
+	country_event = { # Heavy Bombing (Tactical CAS, Tactical Naval, and Heavy)
+		id = MRC.15
+		title = MRC.12.t
+		desc = MRC.12.d
+		picture = GFX_report_event_ace_promoted
+
+		is_triggered_only = yes
+
+		immediate = { log = "[GetDateText]: [Root.GetName]: Event MRC.15" }
+
+		option = { # Tactical CAS
+			name = MRC.15.OptA
+			trigger = {
+				NOT = {
+					OR = {
+						has_country_flag = MRC_amc_primary_champion_tactical
+						has_country_flag = MRC_amc_secondary_champion_tactical
+						has_country_flag = MRC_amc_trinary_champion_tactical
+					}
+				}
+			}
+			IF = {
+				LIMIT = { NOT = { has_country_flag = MRC_amc_primary_champion_choosen_flag } }
+				set_country_flag = MRC_amc_primary_champion_choosen_flag
+				set_country_flag = MRC_amc_primary_champion_tactical
+			}
+			ELSE_IF = {
+				LIMIT = { NOT = { has_country_flag = MRC_amc_secondary_champion_choosen_flag } }
+				set_country_flag = MRC_amc_secondary_champion_choosen_flag
+				set_country_flag = MRC_amc_secondary_champion_tactical
+			}
+			ELSE_IF = {
+				LIMIT = { NOT = { has_country_flag = MRC_amc_trinary_champion_choosen_flag } }
+				set_country_flag = MRC_amc_trinary_champion_choosen_flag
+				set_country_flag = MRC_amc_trinary_champion_tactical
+			}
+			ai_chance = {
+				factor = 1.0
+				modifier = {
+					add = 100.0
+					has_country_flag = MRC_amc_secondary_champion_flag
+					NOT = { has_country_flag = MRC_amc_trinary_champion_flag }
+				}
+			}
+		}
+		option = { # Strategic Bomber
+			name = MRC.15.OptB
+			trigger = {
+				NOT = {
+					OR = {
+						has_country_flag = MRC_amc_primary_champion_strategic_bomber
+						has_country_flag = MRC_amc_secondary_champion_strategic_bomber
+						has_country_flag = MRC_amc_trinary_champion_strategic_bomber
+					}
+				}
+			}
+			IF = {
+				LIMIT = { NOT = { has_country_flag = MRC_amc_primary_champion_choosen_flag } }
+				set_country_flag = MRC_amc_primary_champion_choosen_flag
+				set_country_flag = MRC_amc_primary_champion_strategic_bomber
+			}
+			ELSE_IF = {
+				LIMIT = { NOT = { has_country_flag = MRC_amc_secondary_champion_choosen_flag } }
+				set_country_flag = MRC_amc_secondary_champion_choosen_flag
+				set_country_flag = MRC_amc_secondary_champion_strategic_bomber
+			}
+			ELSE_IF = {
+				LIMIT = { NOT = { has_country_flag = MRC_amc_trinary_champion_choosen_flag } }
+				set_country_flag = MRC_amc_trinary_champion_choosen_flag
+				set_country_flag = MRC_amc_trinary_champion_strategic_bomber
+			}
+			ai_chance = { factor = 1.0 }
+		}
+		option = { # Maritime Patrol
+			name = MRC.15.OptC
+			trigger = {
+				NOT = {
+					OR = {
+						has_country_flag = MRC_amc_primary_champion_maritime_patrol
+						has_country_flag = MRC_amc_secondary_champion_maritime_patrol
+						has_country_flag = MRC_amc_trinary_champion_maritime_patrol
+					}
+				}
+			}
+			IF = {
+				LIMIT = { NOT = { has_country_flag = MRC_amc_primary_champion_choosen_flag } }
+				set_country_flag = MRC_amc_primary_champion_choosen_flag
+				set_country_flag = MRC_amc_primary_champion_maritime_patrol
+			}
+			ELSE_IF = {
+				LIMIT = { NOT = { has_country_flag = MRC_amc_secondary_champion_choosen_flag } }
+				set_country_flag = MRC_amc_secondary_champion_choosen_flag
+				set_country_flag = MRC_amc_secondary_champion_maritime_patrol
+			}
+			ELSE_IF = {
+				LIMIT = { NOT = { has_country_flag = MRC_amc_trinary_champion_choosen_flag } }
+				set_country_flag = MRC_amc_trinary_champion_choosen_flag
+				set_country_flag = MRC_amc_trinary_champion_maritime_patrol
+			}
+			ai_chance = { factor = 1.0 }
+		}
+		option = { # Prevous Document
+			name = MRC.OptDocument
+			country_event = MRC.12
+			ai_chance = { factor = 0.0 }
+		}
+	}
+
+	country_event = { # Carrier       (Carrier Fighter, Carrier CAS, and Carrier Naval)
+		id = MRC.16
+		title = MRC.12.t
+		desc = MRC.12.d
+		picture = GFX_report_event_ace_promoted
+
+		is_triggered_only = yes
+
+		immediate = { log = "[GetDateText]: [Root.GetName]: Event MRC.16" }
+
+		option = { # Carrier Fighter
+			name = MRC.16.OptA
+			trigger = {
+				NOT = {
+					OR = {
+						has_country_flag = MRC_amc_primary_champion_carrier_fighter
+						has_country_flag = MRC_amc_secondary_champion_carrier_fighter
+						has_country_flag = MRC_amc_trinary_champion_carrier_fighter
+					}
+				}
+			}
+			IF = {
+				LIMIT = { NOT = { has_country_flag = MRC_amc_primary_champion_choosen_flag } }
+				set_country_flag = MRC_amc_primary_champion_choosen_flag
+				set_country_flag = MRC_amc_primary_champion_carrier_fighter
+			}
+			ELSE_IF = {
+				LIMIT = { NOT = { has_country_flag = MRC_amc_secondary_champion_choosen_flag } }
+				set_country_flag = MRC_amc_secondary_champion_choosen_flag
+				set_country_flag = MRC_amc_secondary_champion_carrier_fighter
+			}
+			ELSE_IF = {
+				LIMIT = { NOT = { has_country_flag = MRC_amc_trinary_champion_choosen_flag } }
+				set_country_flag = MRC_amc_trinary_champion_choosen_flag
+				set_country_flag = MRC_amc_trinary_champion_carrier_fighter
+			}
+			ai_chance = { factor = 1.0 }
+		}
+		option = { # Carrier CAS
+			name = MRC.16.OptB
+			trigger = {
+				NOT = {
+					OR = {
+						has_country_flag = MRC_amc_primary_champion_carrier_cas
+						has_country_flag = MRC_amc_secondary_champion_carrier_cas
+						has_country_flag = MRC_amc_trinary_champion_carrier_cas
+					}
+				}
+			}
+			IF = {
+				LIMIT = { NOT = { has_country_flag = MRC_amc_primary_champion_choosen_flag } }
+				set_country_flag = MRC_amc_primary_champion_choosen_flag
+				set_country_flag = MRC_amc_primary_champion_carrier_cas
+			}
+			ELSE_IF = {
+				LIMIT = { NOT = { has_country_flag = MRC_amc_secondary_champion_choosen_flag } }
+				set_country_flag = MRC_amc_secondary_champion_choosen_flag
+				set_country_flag = MRC_amc_secondary_champion_carrier_cas
+			}
+			ELSE_IF = {
+				LIMIT = { NOT = { has_country_flag = MRC_amc_trinary_champion_choosen_flag } }
+				set_country_flag = MRC_amc_trinary_champion_choosen_flag
+				set_country_flag = MRC_amc_trinary_champion_carrier_cas
+			}
+			ai_chance = { factor = 1.0 }
+		}
+		option = { # Carrier Naval
+			name = MRC.16.OptC
+			trigger = {
+				NOT = {
+					OR = {
+						has_country_flag = MRC_amc_primary_champion_carrier_naval
+						has_country_flag = MRC_amc_secondary_champion_carrier_naval
+						has_country_flag = MRC_amc_trinary_champion_carrier_naval
+					}
+				}
+			}
+			IF = {
+				LIMIT = { NOT = { has_country_flag = MRC_amc_primary_champion_choosen_flag } }
+				set_country_flag = MRC_amc_primary_champion_choosen_flag
+				set_country_flag = MRC_amc_primary_champion_carrier_naval
+			}
+			ELSE_IF = {
+				LIMIT = { NOT = { has_country_flag = MRC_amc_secondary_champion_choosen_flag } }
+				set_country_flag = MRC_amc_secondary_champion_choosen_flag
+				set_country_flag = MRC_amc_secondary_champion_carrier_naval
+			}
+			ELSE_IF = {
+				LIMIT = { NOT = { has_country_flag = MRC_amc_trinary_champion_choosen_flag } }
+				set_country_flag = MRC_amc_trinary_champion_choosen_flag
+				set_country_flag = MRC_amc_trinary_champion_carrier_naval
+			}
+			ai_chance = {
+				factor = 1.0
+				modifier = {
+					add = 100.0
+					has_country_flag = MRC_amc_trinary_champion_flag
+				}
+			}
+		}
+		option = { # Prevous Document
+			name = MRC.OptDocument
+			country_event = MRC.12
+			ai_chance = { factor = 0.0 }
+		}
+	}
+
+add_namespace = MRC_state
+	country_event = { # Request lease to [FROM.GetName]
+		id = MRC.20
+		title = MRC.20.t
+		desc = MRC.20.d
+		picture = GFX_report_event_ace_promoted
+
+		is_triggered_only = yes
+
+		immediate = { log = "[GetDateText]: [Root.GetName]: Event MRC.20" }
+
+		option = {
+			name = MRC.20.OptA
+			MRC = {
+				country_event = MRC.23
+			}
+			effect_tooltip = { FROM = { add_political_power = 25 } }
+			ai_chance = {
+				factor = 1.0
+				modifier = {
+					add = 10.0
+					is_major = yes
+				}
+			}
+		}
+		option = {
+			name = MRC.20.OptB
+			set_country_flag = MRC_air_manufacturing_champion_accepted
+			MRC = {
+				country_event = MRC.22
+			}
+			give_resource_rights = {
+				receiver = FROM
+				state = event_target:target_state
+				resources = { aluminium rubber }
+			}
+			event_target:target_state = { add_dynamic_modifier = { modifier = MRC_state_air_manufacturing_champion_modifier } }
+			ai_chance = {
+				factor = 3.5
+				modifier = {
+					add = 10.0
+					is_major = no
+				}
+			}
+		}
+	}
+
+	country_event = { # Request lease to [FROM.GetName]
+		id = MRC.21
+		title = MRC.21.t
+		desc = MRC.21.d
+		picture = GFX_report_event_ace_promoted
+
+		is_triggered_only = yes
+
+		immediate = { log = "[GetDateText]: [Root.GetName]: Event MRC.21" }
+
+		option = {
+			name = MRC.21.OptA
+			MRC = {
+				country_event = MRC.25
+			}
+			effect_tooltip = { FROM = { add_political_power = 25 } }
+			ai_chance = {
+				factor = 3.5
+				modifier = {
+					add = 10.0
+					check_variable = { 49 > ROOT.resource_produced@steel }
+				}
+			}
+		}
+		option = {
+			name = MRC.21.OptB
+			set_country_flag = MRC_navy_manufacturing_triton_accepted
+			MRC = {
+				country_event = MRC.24
+			}
+			give_resource_rights = {
+				receiver = FROM
+				state = event_target:target_state
+				resources = { steel chromium }
+			}
+			event_target:target_state = { add_dynamic_modifier = { modifier = MRC_state_navy_manufacturing_triton_modifier } }
+			ai_chance = {
+				factor = 1.0
+				modifier = {
+					add = 10.0
+					check_variable = { 74 < ROOT.resource_produced@steel }
+				}
+			}
+		}
+	}
+
+	country_event = { # [FROM.GetName] Accepted to Lease
+		id = MRC.22
+		title = MRC.22.t
+		desc = MRC.22.d
+		picture = GFX_report_event_ace_promoted
+
+		is_triggered_only = yes
+
+		immediate = { log = "[GetDateText]: [Root.GetName]: Event MRC.22" }
+
+		option = {
+			name = MRC.22.OptA
+			effect_tooltip = {
+				give_resource_rights = {
+					receiver = FROM
+					state = event_target:target_state
+					resources = { aluminium rubber }
+				}
+				event_target:target_state = { add_dynamic_modifier = { modifier = MRC_state_air_manufacturing_champion_modifier } }
+			}
+			ai_chance = { factor = 1.0 }
+		}
+	}
+
+	country_event = { # [FROM.GetName] Declined to Lease
+		id = MRC.23
+		title = MRC.23.t
+		desc = MRC.23.d
+		picture = GFX_report_event_ace_promoted
+
+		is_triggered_only = yes
+
+		immediate = { log = "[GetDateText]: [Root.GetName]: Event MRC.23" }
+
+		option = {
+			name = MRC.23.OptA
+			add_political_power = 25
+			ai_chance = { factor = 1.0 }
+		}
+	}
+
+	country_event = { # [FROM.GetName] Accepted to Lease
+		id = MRC.24
+		title = MRC.24.t
+		desc = MRC.24.d
+		picture = GFX_report_event_ace_promoted
+
+		is_triggered_only = yes
+
+		immediate = { log = "[GetDateText]: [Root.GetName]: Event MRC.24" }
+
+		option = {
+			name = MRC.24.OptA
+			effect_tooltip = {
+				give_resource_rights = {
+					receiver = FROM
+					state = event_target:target_state
+					resources = { steel chromium }
+				}
+				event_target:target_state = { add_dynamic_modifier = { modifier = MRC_state_navy_manufacturing_triton_modifier } }
+			}
+			ai_chance = { factor = 1.0 }
+		}
+	}
+
+	country_event = { # [FROM.GetName] Declined to Lease
+		id = MRC.25
+		title = MRC.25.t
+		desc = MRC.25.d
+		picture = GFX_report_event_ace_promoted
+
+		is_triggered_only = yes
+
+		immediate = { log = "[GetDateText]: [Root.GetName]: Event MRC.25" }
+
+		option = {
+			name = MRC.25.OptA
+			add_political_power = 25
+			ai_chance = { factor = 1.0 }
 		}
 	}

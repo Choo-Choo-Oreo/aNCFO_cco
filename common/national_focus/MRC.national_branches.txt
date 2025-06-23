@@ -8,9 +8,11 @@ focus_tree = { # Merchant-Republicism
 	}
 	default = no
 
-	shared_focus = MRC_military_learn_cyrstallo_peninsula_failures # Modifers
-	shared_focus = MRC_military_third_dimensional # Modifers
-	shared_focus = MRC_ambitious_great_fleet # Modifers
+	shared_focus = MRC_focus_military_insulae_ground_defense_force # Modifers
+	shared_focus = MRC_focus_military_insulae_airspace_defense_force # Modifers
+	shared_focus = MRC_focus_military_nearing_speed_sound # Addional Air Force
+	shared_focus = MRC_focus_military_far_reaching_range  # Addional Air Force
+	shared_focus = MRC_focus_military_insulae_maritime_defense_force # Modifers
 
 	focus = { # Party Elections Branch: Political Lobbying
 		id = MRC_political_lobbying
@@ -316,7 +318,7 @@ focus_tree = { # Merchant-Republicism
 			}
 		}
 
-	focus = { # Home Isle Buildup
+	focus = { # Home Isles Buildup
 		id = MRC_home_islands_buildup
 		icon = GFX_focus_unknown_industry
 		prerequisite = { focus = MRC_foreign_intervention_focus focus = MRC_internal_balanced_focus focus = MRC_foreign_neutrality_focus }
@@ -506,13 +508,13 @@ focus_tree = { # Merchant-Republicism
 			}
 		}
 
-		focus = { # Industral Buildup Policies
-			id = MRC_industral_buildup_actions
-			icon = GFX_focus_unknown_industry
-			prerequisite = { focus = MRC_merchents_outpost focus = MRC_secondary_islands_buildup }
+		focus = { # Most Serene Republic of Insulae
+			id = MRC_focus_most_serene_republic_of_insulae
+			icon = GFX_focus_unknown_political
+			prerequisite = { focus = MRC_home_islands_buildup }
 			relative_position_id = MRC_home_islands_buildup
 			x = 0
-			y = 2
+			y = 1
 		
 			cost = 5
 			cancel_if_invalid = yes
@@ -529,7 +531,7 @@ focus_tree = { # Merchant-Republicism
 			}
 
 			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_industral_buildup_actions"
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_most_serene_republic_of_insulae"
 				unlock_decision_tooltip = industry_dynamic_MRC
 				add_dynamic_modifier = { modifier = MRC_idea_most_serene_republic_of_insulae_modifier }
 			}
@@ -622,7 +624,7 @@ focus_tree = { # Merchant-Republicism
 				336 = { add_core_of = ROOT }
 				338 = { add_core_of = ROOT }
 			}
-		} # Branch VVV
+		}
 
 		focus = { # Southern Financial Assistance
 			id = MRC_southern_financial_help
@@ -659,7 +661,7 @@ focus_tree = { # Merchant-Republicism
 				add_war_support = 0.05
 				add_political_power = -50
 			}
-		} # Branch VVV
+		}
 
 	focus = { # Progressive Neutrality Branch: Neutrality Focus Foreign Diplomacy
 		id = MRC_foreign_neutrality_focus
@@ -701,8 +703,6 @@ focus_tree = { # Merchant-Republicism
 			log = "[GetDateText]: [Root.GetName]: Focus MRC_foreign_neutrality_focus"
 			set_politics = { ruling_party = pluralism elections_allowed = yes }
 			add_political_power = 25
-			add_war_support = -0.15
-			add_ideas = MRC_idea_trade_neutrality
 		}
 	}
 
@@ -750,7 +750,7 @@ focus_tree = { # Merchant-Republicism
 				336 = { add_core_of = ROOT }
 				338 = { add_core_of = ROOT }
 			}
-		} # Branch VVV
+		}
 
 		focus = { # Southern Military Withdrawal
 			id = MRC_southern_retreat
@@ -790,7 +790,7 @@ focus_tree = { # Merchant-Republicism
 				133 = { owner = { transfer_state = 249 } }
 				173 = { owner = { transfer_state = 252 } }
 			}
-		} # Branch VVV
+		}
 	# Middle Chapter 1: Merchant-Republicism Equilibrium Branch
 	focus = { # Balanced Focus Internal Policy
 		id = MRC_internal_balanced_focus
@@ -915,9 +915,8 @@ focus_tree = { # Merchant-Republicism
 		id = MRC_intervention_policy
 		icon = GFX_focus_unknown_military
 		mutually_exclusive = { focus = MRC_neutrality_policy }
-		prerequisite = { focus = MRC_foreign_trade }
-		prerequisite = { focus = MRC_canal_trade_deal }
-		relative_position_id = MRC_industral_buildup_actions
+		prerequisite = { focus = MRC_focus_most_serene_republic_of_insulae }
+		relative_position_id = MRC_focus_most_serene_republic_of_insulae
 		x = -1
 		y = 1
 	
@@ -936,7 +935,7 @@ focus_tree = { # Merchant-Republicism
 		}
 	
 		ai_will_do = {
-			factor = 2
+			factor = 5
 			modifier = {
 				add = 0.10
 				factor = 1.10
@@ -962,7 +961,9 @@ focus_tree = { # Merchant-Republicism
 		completion_reward = {
 			log = "[GetDateText]: [Root.GetName]: Focus MRC_intervention_policy"
 			custom_effect_tooltip = unlocks_focus_tt
+			country_event = MRC.0
 			add_power_balance_value = { id = power_balance_MRC_political_balance value = -0.025 }
+			add_war_support = 0.05
 		}
 	}
 
@@ -970,9 +971,8 @@ focus_tree = { # Merchant-Republicism
 		id = MRC_neutrality_policy
 		icon = GFX_focus_unknown_military
 		mutually_exclusive = { focus = MRC_intervention_policy }
-		prerequisite = { focus = MRC_foreign_trade }
-		prerequisite = { focus = MRC_canal_trade_deal }
-		relative_position_id = MRC_industral_buildup_actions
+		prerequisite = { focus = MRC_focus_most_serene_republic_of_insulae }
+		relative_position_id = MRC_focus_most_serene_republic_of_insulae
 		x = 1
 		y = 1
 	
@@ -987,7 +987,7 @@ focus_tree = { # Merchant-Republicism
 		}
 	
 		ai_will_do = {
-			factor = 2
+			factor = 5
 			modifier = {
 				add = 0.10
 				factor = 1.10
@@ -998,7 +998,9 @@ focus_tree = { # Merchant-Republicism
 		completion_reward = {
 			log = "[GetDateText]: [Root.GetName]: Focus MRC_neutrality_policy"
 			custom_effect_tooltip = unlocks_focus_tt
-			add_power_balance_value = { id = power_balance_MRC_political_balance value = 0.025 }
+			country_event = MRC.0
+			add_power_balance_value = { id = power_balance_MRC_political_balance value = 0.035 }
+			add_war_support = -0.05
 		}
 	}
 	# Mercantilism Branch
@@ -1008,9 +1010,9 @@ focus_tree = { # Merchant-Republicism
 		mutually_exclusive = { focus = MRC_economic_reform }
 		prerequisite = { focus = MRC_foreign_trade }
 		prerequisite = { focus = MRC_canal_trade_deal }
-		relative_position_id = MRC_industral_buildup_actions
+		relative_position_id = MRC_focus_most_serene_republic_of_insulae
 		x = -5
-		y = 1
+		y = 2
 	
 		cost = 10
 		cancel_if_invalid = yes
@@ -1053,7 +1055,7 @@ focus_tree = { # Merchant-Republicism
 				tooltip = MODIFIER_LOCAL_BUILDING_SLOTS_FACTOR_tt
 			}
 		}
-	} # Branch VVV
+	}
 
 		focus = { # Development Tariffs
 			id = MRC_development_tariffs
@@ -1119,9 +1121,9 @@ focus_tree = { # Merchant-Republicism
 		mutually_exclusive = { focus = MRC_economic_status_quo }
 		prerequisite = { focus = MRC_foreign_trade }
 		prerequisite = { focus = MRC_canal_trade_deal }
-		relative_position_id = MRC_industral_buildup_actions
+		relative_position_id = MRC_focus_most_serene_republic_of_insulae
 		x = -3
-		y = 1
+		y = 2
 	
 		cost = 10
 		cancel_if_invalid = yes
@@ -1159,7 +1161,7 @@ focus_tree = { # Merchant-Republicism
 				tooltip = MODIFIER_LOCAL_BUILDING_SLOTS_FACTOR_tt
 			}
 		}
-	} # Branch VVV
+	}
 
 		focus = { # Loosen Protectionist Tariffs
 			id = MRC_loosen_protectionist_tariffs
@@ -1261,9 +1263,9 @@ focus_tree = { # Merchant-Republicism
 		mutually_exclusive = { focus = MRC_change_couse }
 		prerequisite = { focus = MRC_foreign_trade }
 		prerequisite = { focus = MRC_canal_trade_deal }
-		relative_position_id = MRC_industral_buildup_actions
+		relative_position_id = MRC_focus_most_serene_republic_of_insulae
 		x = 3
-		y = 1
+		y = 2
 	
 		cost = 5
 		cancel_if_invalid = yes
@@ -1293,7 +1295,7 @@ focus_tree = { # Merchant-Republicism
 			log = "[GetDateText]: [Root.GetName]: Focus MRC_steady_couse"
 			add_timed_idea = { idea = MRC_idea_steady_as_she_goes days = 365 }
 		}
-	} # Branch VVV
+	}
 
 		focus = { # End Temporary Military Women Law
 			id = MRC_end_temporary_military_women
@@ -1358,12 +1360,12 @@ focus_tree = { # Merchant-Republicism
 
 			completion_reward = {
 				log = "[GetDateText]: [Root.GetName]: Focus MRC_codification_of_military_women"
-				swap_ideas = { remove_idea = women_in_the_army add_idea = women_in_the_frontlines }
+				swap_ideas = { remove_idea = women_in_the_army add_idea = MRC_women_volunteer_service }
 			}
 		}
 
-		focus = { # Women in the Workforce
-			id = MRC_women_workforce
+		focus = { # Internal Harmonainus Negotiations
+			id = MRC_focus_harmonainus_church
 			icon = GFX_focus_unknown_political
 			prerequisite = { focus = MRC_loosen_protectionist_tariffs }
 			prerequisite = { focus = MRC_end_temporary_military_women }
@@ -1377,10 +1379,6 @@ focus_tree = { # Merchant-Republicism
 			available_if_capitulated = no
 		
 			available = {
-				NOT = { OR = {
-					has_completed_focus = MRC_support_progressive_movement
-					has_completed_focus = MRC_local_governance
-				} }
 			}
 			bypass = {
 			}
@@ -1390,8 +1388,8 @@ focus_tree = { # Merchant-Republicism
 			}
 
 			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_women_workforce"
-				swap_ideas = { remove_idea = limited_women_in_the_workforce add_idea = women_in_the_workforce }
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_harmonainus_church"
+				swap_ideas = { remove_idea = MRC_idea_harmonainus_pushback add_idea = MRC_idea_harmonainus_compliants }
 			}
 		}
 
@@ -1429,9 +1427,9 @@ focus_tree = { # Merchant-Republicism
 		mutually_exclusive = { focus = MRC_steady_couse }
 		prerequisite = { focus = MRC_foreign_trade }
 		prerequisite = { focus = MRC_canal_trade_deal }
-		relative_position_id = MRC_industral_buildup_actions
+		relative_position_id = MRC_focus_most_serene_republic_of_insulae
 		x = 5
-		y = 1
+		y = 2
 	
 		cost = 5
 		cancel_if_invalid = yes
@@ -1466,7 +1464,7 @@ focus_tree = { # Merchant-Republicism
 			log = "[GetDateText]: [Root.GetName]: Focus MRC_change_couse"
 			add_timed_idea = { idea = MRC_idea_change_in_course days = 365 }
 		}
-	} # Branch VVV
+	}
 
 		focus = { # Rule from Aborroas
 			id = MRC_rule_from_aborroas
@@ -1684,7 +1682,7 @@ focus_tree = { # Merchant-Republicism
 			}
 		}
 	}
-	# Left Chapter 2:   Foreign Intervention Branch
+	# Reactionary/Theocratic Branch
 	focus = { # Strong State
 		id = MRC_strong_state
 		icon = GFX_
@@ -1714,7 +1712,7 @@ focus_tree = { # Merchant-Republicism
 		completion_reward = {
 			log = "[GetDateText]: [Root.GetName]: Focus MRC_strong_state"
 		}
-	} # Branch VVV
+	}
 
 	focus = { # Theocratic Coup
 		id = MRC_theocratism_coup
@@ -1746,8 +1744,8 @@ focus_tree = { # Merchant-Republicism
 			log = "[GetDateText]: [Root.GetName]: Focus MRC_theocratism_coup"
 			country_event = MRC.10
 		}
-	} # Branch VVV
-	# Right Chapter 2:  Progressive Neutrality Branch
+	}
+	# Progressive/Unitist Branch
 	focus = { # Unitist Coup
 		id = MRC_unitism_coup
 		icon = GFX_
@@ -1778,7 +1776,7 @@ focus_tree = { # Merchant-Republicism
 			log = "[GetDateText]: [Root.GetName]: Focus MRC_unitism_coup"
 			country_event = MRC.11
 		}
-	} # Branch VVV
+	}
 
 	focus = { # Free State
 		id = MRC_free_state
@@ -1809,8 +1807,8 @@ focus_tree = { # Merchant-Republicism
 		completion_reward = {
 			log = "[GetDateText]: [Root.GetName]: Focus MRC_free_state"
 		}
-	} # Branch VVV
-	# Middle Chapter 2: Merchant-Republicism Equilibrium Branch
+	}
+	# Republicanism Branch: Mid-Game Content
 	focus = { # Deal with Independent Factionalism
 		id = MRC_dealing_with_independent_factionalism_focus
 		icon = GFX_focus_unknown_political
@@ -1845,7 +1843,7 @@ focus_tree = { # Merchant-Republicism
 				tooltip = drift_defence_factor_tt
 			}
 		}
-	} # Branch VVV
+	}
 
 		focus = { # Mercanaries Government Rights
 			id = MRC_mercanaries_government_rights
@@ -1906,10 +1904,10 @@ focus_tree = { # Merchant-Republicism
 		}
 
 	focus = { # Nation of Progress
-		id = MRC_nation_of_progress_focus
+		id = MRC_focus_nation_of_progress
 		icon = GFX_focus_unknown_political
-		prerequisite = { focus = MRC_women_workforce focus = MRC_women_attuners }
-		relative_position_id = MRC_women_workforce
+		prerequisite = { focus = MRC_focus_harmonainus_church focus = MRC_women_attuners }
+		relative_position_id = MRC_focus_harmonainus_church
 		x = 1
 		y = 1
 	
@@ -1928,19 +1926,172 @@ focus_tree = { # Merchant-Republicism
 		}
 
 		completion_reward = {
-			log = "[GetDateText]: [Root.GetName]: Focus MRC_nation_of_progress_focus"
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_nation_of_progress"
 			add_research_slot = 1
 			custom_effect_tooltip = modify_MRC_country_most_serene_republic_modifier_tt
 			add_to_variable = {
-				MRC.MRC_defensive_war_stability_factor_modifier = 0.10
+				MRC.MRC_defensive_war_stability_factor_modifier = 0.025
 				tooltip = defensive_war_stability_factor_tt
 			}
 			add_to_variable = {
-				MRC.MRC_drift_defence_factor_modifier = 0.10
+				MRC.MRC_drift_defence_factor_modifier = 0.025
 				tooltip = drift_defence_factor_tt
 			}
 		}
-	} # Branch VVV
+	}
+
+		focus = { # Left
+			id = MRC_focus_left
+			icon = GFX_focus_unknown_political
+			prerequisite = { focus = MRC_focus_nation_of_progress }
+			relative_position_id = MRC_focus_nation_of_progress
+			x = -1
+			y = 1
+		
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+		
+			available = {
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				factor = 2
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_left"
+			}
+		}
+
+		focus = { # Right
+			id = MRC_focus_right
+			icon = GFX_focus_unknown_political
+			prerequisite = { focus = MRC_focus_nation_of_progress }
+			relative_position_id = MRC_focus_nation_of_progress
+			x = 1
+			y = 1
+		
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+		
+			available = {
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				factor = 2
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_right"
+			}
+		}
+
+		focus = { # Deal with the Harmonainus Church
+			id = MRC_focus_deal_with_theocrats
+			icon = GFX_focus_unknown_political
+			prerequisite = { focus = MRC_focus_nation_of_progress }
+			relative_position_id = MRC_focus_nation_of_progress
+			x = 0
+			y = 2
+		
+			cost = 10
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+		
+			available = {
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				factor = 3.5
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_deal_with_theocrats"
+				custom_effect_tooltip = modify_MRC_country_most_serene_republic_modifier_tt
+				add_to_variable = {
+					MRC.MRC_defensive_war_stability_factor_modifier = 0.075
+					tooltip = defensive_war_stability_factor_tt
+				}
+				add_to_variable = {
+					MRC.MRC_drift_defence_factor_modifier = 0.075
+					tooltip = drift_defence_factor_tt
+				}
+			}
+		}
+
+			focus = { # Compromise with the Harmonainus Church
+				id = MRC_focus_compromise_theocrats
+				icon = GFX_focus_unknown_political
+				mutually_exclusive = { focus = MRC_focus_crackdown_theocrats }
+				prerequisite = { focus = MRC_focus_deal_with_theocrats }
+				relative_position_id = MRC_focus_deal_with_theocrats
+				x = -1
+				y = 1
+			
+				cost = 10
+				cancel_if_invalid = yes
+				continue_if_invalid = no
+				available_if_capitulated = no
+			
+				available = {
+					has_idea = MRC_idea_harmonainus_compliants
+				}
+				bypass = {
+				}
+			
+				ai_will_do = {
+					factor = 3.5
+				}
+
+				completion_reward = {
+					log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_compromise_theocrats"
+					swap_ideas = { remove_idea = MRC_idea_harmonainus_compliants add_idea = MRC_idea_harmonainus_compromise }
+				}
+			}
+
+			focus = { # Crackdown the Harmonainus Church
+				id = MRC_focus_crackdown_theocrats
+				icon = GFX_focus_unknown_political
+				mutually_exclusive = { focus = MRC_focus_compromise_theocrats }
+				prerequisite = { focus = MRC_focus_deal_with_theocrats }
+				relative_position_id = MRC_focus_deal_with_theocrats
+				x = 1
+				y = 1
+			
+				cost = 10
+				cancel_if_invalid = yes
+				continue_if_invalid = no
+				available_if_capitulated = no
+			
+				available = {
+				}
+				bypass = {
+				}
+			
+				ai_will_do = {
+					factor = 3.5
+				}
+
+				completion_reward = {
+					log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_crackdown_theocrats"
+					remove_ideas = {
+						MRC_idea_harmonainus_negotiations
+						MRC_idea_harmonainus_pushback
+						MRC_idea_harmonainus_compliants
+					}
+				}
+			}
 
 	focus = { # Constitution Amendments
 		id = MRC_constitution_amendments
@@ -1976,8 +2127,8 @@ focus_tree = { # Merchant-Republicism
 				tooltip = drift_defence_factor_tt
 			}
 		}
-	} # Branch VVV
-	
+	}
+
 		focus = { # Wartime Taxes
 			id = MRC_wartime_taxes_focus
 			icon = GFX_focus_unknown_political
@@ -2074,7 +2225,7 @@ focus_tree = { # Merchant-Republicism
 				conscripts_age_raise = yes
 				conscripts_foreign_raise = yes
 			}
-		} # Branch VVV
+		}
 
 			focus = { # Wartime Readiness
 				id = MRC_wartime_readiness
@@ -2238,7 +2389,7 @@ focus_tree = { # Merchant-Republicism
 					swap_ideas = { remove_idea = MRC_perditio_project_0 add_idea = MRC_perditio_project_1 }
 				}
 			}
-	# Left+Middle:      Industrial Complex
+	# Republicanism + Reactionary Branch
 	focus = { # Heavy Industry Construction
 		id = MRC_heavy_industry_construction
 		icon = GFX_focus_unknown_industry
@@ -2275,7 +2426,7 @@ focus_tree = { # Merchant-Republicism
 				tooltip = MODIFIER_STATE_PRODUCTION_SPEED_BUILDINGS_FACTOR_tt
 			}
 		}
-	} # Branch VVV
+	}
 
 		focus = { # Military Districts
 			id = MRC_military_districts
@@ -2445,7 +2596,7 @@ focus_tree = { # Merchant-Republicism
 				tooltip = MODIFIER_STATE_PRODUCTION_SPEED_BUILDINGS_FACTOR_tt
 			}
 		}
-	} # Branch VVV
+	}
 
 		focus = { # Civilian Districts
 			id = MRC_civilian_districts
@@ -2565,34 +2716,34 @@ focus_tree = { # Merchant-Republicism
 				}
 			}
 		}
-	# Left+Middle Shared
-		focus = { # Industrial Age Research
-			id = MRC_industrial_research
-			icon = GFX_focus_unknown_political
-			prerequisite = { focus = MRC_light_industry_construction focus = MRC_heavy_industry_construction }
-			relative_position_id = MRC_heavy_industry_construction
-			x = 1
-			y = 3
-		
-			cost = 5
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = no
-		
-			available = {
-			}
-			bypass = {
-			}
-		
-			ai_will_do = {
-				factor = 2
-			}
 
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_industrial_research"
-				add_research_slot = 1
-			}
+	focus = { # Industrial Age Research
+		id = MRC_industrial_research
+		icon = GFX_focus_unknown_political
+		prerequisite = { focus = MRC_light_industry_construction focus = MRC_heavy_industry_construction }
+		relative_position_id = MRC_heavy_industry_construction
+		x = 1
+		y = 3
+	
+		cost = 5
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+	
+		available = {
 		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			factor = 2
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_industrial_research"
+			add_research_slot = 1
+		}
+	}
 
 		focus = { # Corporate Guilds 
 			id = MRC_guilds_corporate_focus
@@ -2688,7 +2839,7 @@ focus_tree = { # Merchant-Republicism
 				swap_ideas = { remove_idea = MRC_idea_workers_guilds add_idea = MRC_idea_union_guilds }
 			}
 		}
-	# Right+Middle:     Isle Constitution
+	# Republicanism + Progressive Branch
 	focus = { # Enshrine Civil Rights
 		id = MRC_enshrine_civil_rights
 		icon = GFX_focus_unknown_political
@@ -2719,7 +2870,7 @@ focus_tree = { # Merchant-Republicism
 				add_idea = MRC_idea_independence_constitucion_deplutocratization_merchant
 			}
 		}
-	} # Branch VVV
+	}
 
 		focus = { # votes for Businesses and Women
 			id = MRC_votes_businesses_women
@@ -2783,7 +2934,7 @@ focus_tree = { # Merchant-Republicism
 			}
 			set_cosmetic_tag = MRC_deplutocratization
 		}
-	} # Branch VVV
+	}
 
 		focus = { # votes for Women
 			id = MRC_votes_women
@@ -2811,34 +2962,34 @@ focus_tree = { # Merchant-Republicism
 				log = "[GetDateText]: [Root.GetName]: Focus MRC_votes_women"
 			}
 		}
-	# Right+Middle Shared
-		focus = { # Proper Education
-			id = MRC_proper_education
-			icon = GFX_focus_unknown_political
-			prerequisite = { focus = MRC_enshrine_civil_rights focus = MRC_doge_gracia_constitutional_reforms }
-			relative_position_id = MRC_enshrine_civil_rights
-			x = 1
-			y = 1
-		
-			cost = 5
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = no
-		
-			available = {
-			}
-			bypass = {
-			}
-		
-			ai_will_do = {
-				factor = 2
-			}
 
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_proper_education"
-				add_ideas = MRC_idea_center_of_knowledge0
-			}
+	focus = { # Proper Education
+		id = MRC_proper_education
+		icon = GFX_focus_unknown_political
+		prerequisite = { focus = MRC_enshrine_civil_rights focus = MRC_doge_gracia_constitutional_reforms }
+		relative_position_id = MRC_enshrine_civil_rights
+		x = 1
+		y = 1
+	
+		cost = 5
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+	
+		available = {
 		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			factor = 2
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_proper_education"
+			add_ideas = MRC_idea_center_of_knowledge0
+		}
+	}
 
 		focus = { # Subsidized Education
 			id = MRC_subsidized_education
@@ -2917,9 +3068,11 @@ focus_tree = { # Theocratic
 	}
 	default = no
 
-	shared_focus = MRC_military_learn_cyrstallo_peninsula_failures # Modifers
-	shared_focus = MRC_military_third_dimensional # Modifers
-	shared_focus = MRC_ambitious_great_fleet # Modifers
+	shared_focus = MRC_focus_military_insulae_ground_defense_force # Modifers
+	shared_focus = MRC_focus_military_insulae_airspace_defense_force # Modifers
+	shared_focus = MRC_focus_military_nearing_speed_sound # Addional Air Force
+	shared_focus = MRC_focus_military_far_reaching_range  # Addional Air Force
+	shared_focus = MRC_focus_military_insulae_maritime_defense_force # Modifers
 	continuous_focus_position = { x = 0 y = 50 }
 }
 
@@ -2939,55 +3092,59 @@ focus_tree = { # Unity
 	}
 	default = no
 
-	shared_focus = MRC_military_learn_cyrstallo_peninsula_failures # Modifers
-	shared_focus = MRC_military_third_dimensional # Modifers
-	shared_focus = MRC_ambitious_great_fleet # Modifers
+	shared_focus = MRC_focus_military_insulae_ground_defense_force # Modifers
+	shared_focus = MRC_focus_military_insulae_airspace_defense_force # Modifers
+	shared_focus = MRC_focus_military_nearing_speed_sound # Addional Air Force
+	shared_focus = MRC_focus_military_far_reaching_range  # Addional Air Force
+	shared_focus = MRC_focus_military_insulae_maritime_defense_force # Modifers
 	continuous_focus_position = { x = 0 y = 50 }
 }
 
-shared_focus = { # Learn from the Cyrstallo Peninsula Failures
-	id = MRC_military_learn_cyrstallo_peninsula_failures
+shared_focus = { # Insulae Ground Defense Force
+	id = MRC_focus_military_insulae_ground_defense_force
 	icon = GFX_focus_unknown_military
 	#prerequisite = { focus =  }
 	#mutually_exclusive = { focus =  }
 	#relative_position_id = 
-	x = 15
+	x = 21
 	y = 0
 
-	cost = 5
+	cost = 0
 	cancel_if_invalid = yes
 	continue_if_invalid = no
 	available_if_capitulated = yes
 
+	allow_branch = {
+	}
 	available = {
-		OR = {
-			has_completed_focus = MRC_foreign_intervention_focus
-			has_completed_focus = MRC_intervention_policy
-			has_completed_focus = MRC_foreign_neutrality_focus
-			has_completed_focus = MRC_neutrality_policy
-		}
+		always = no
 	}
 	bypass = {
 	}
 
 	ai_will_do = {
-		base = 2
+		factor = 5
+		modifier = {
+			add = 0.10
+			factor = 1.10
+			has_war = yes
+		}
 	}
 
 	completion_reward = {
-		log = "[GetDateText]: [Root.GetName]: Focus MRC_military_learn_cyrstallo_peninsula_failures"
-		army_experience = 25
+		log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_insulae_ground_defense_force"
+		custom_effect_tooltip = MRC_expeditionary_experience_how_gain_tt
 		add_dynamic_modifier = { modifier = MRC_idea_insulae_defense_force_army_modifier }
 	}
 }
 
-	shared_focus = { # Mobile Infantry Groups
-		id = MRC_mobile_infantry
+	shared_focus = { # Expeditionary Experience(EE)
+		id = MRC_focus_military_expeditionary_experience
 		icon = GFX_focus_unknown_military
-		prerequisite = { focus = MRC_military_learn_cyrstallo_peninsula_failures }
+		prerequisite = { focus = MRC_focus_military_insulae_ground_defense_force }
 		#mutually_exclusive = { focus =  }
-		relative_position_id = MRC_military_learn_cyrstallo_peninsula_failures
-		x = -1
+		relative_position_id = MRC_focus_military_insulae_ground_defense_force
+		x = -2
 		y = 1
 
 		cost = 10
@@ -2995,27 +3152,557 @@ shared_focus = { # Learn from the Cyrstallo Peninsula Failures
 		continue_if_invalid = no
 		available_if_capitulated = yes
 
+		allow_branch = {
+		}
 		available = {
+			custom_trigger_tooltip = {
+				tooltip = MRC_expeditionary_experience_GTE_1_tt
+				check_variable = { MRC_expeditionary_experience_var > 0 }
+			}
 		}
 		bypass = {
 		}
 
 		ai_will_do = {
-			base = 2
+			factor = 2
+			modifier = {
+				add = 0.10
+				factor = 1.10
+				has_war = yes
+			}
 		}
 
 		completion_reward = {
 			log = "[GetDateText]: [Root.GetName]: Focus MRC_mobile_infantry"
+			custom_effect_tooltip = MRC_expeditionary_experience_how_gain_tt
+			custom_effect_tooltip = generic_skip_one_line_tt
+			custom_effect_tooltip = modify_MRC_idea_insulae_defense_force_army_modifier_tt
+			add_to_variable = { 
+				MRC.MRC_land_doctrine_cost_factor_modifier = -0.025
+				tooltip = land_doctrine_cost_factor_tt
+			}
+			add_to_variable = { 
+				MRC.MRC_air_doctrine_cost_factor_modifier = -0.025
+				tooltip = air_doctrine_cost_factor_tt
+			}
 		}
 	}
 
-	shared_focus = { # Renew Tank Production Focus
-		id = MRC_renew_tank_focus
+			shared_focus = { # Ground and Air Academia(GAA)
+				id = MRC_focus_military_ground_air_academia
+				icon = GFX_focus_unknown_military
+				prerequisite = { focus = MRC_focus_military_expeditionary_experience }
+				#mutually_exclusive = { focus =  }
+				relative_position_id = MRC_focus_military_expeditionary_experience
+				x = -1
+				y = 1
+
+				cost = 5
+				cancel_if_invalid = yes
+				continue_if_invalid = no
+				available_if_capitulated = yes
+
+				allow_branch = {
+				}
+				available = {
+				}
+				bypass = {
+				}
+
+				ai_will_do = {
+					factor = 2
+					modifier = {
+						add = 0.10
+						factor = 1.10
+						has_war = yes
+					}
+				}
+
+				completion_reward = {
+					log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_ground_air_academia"
+					custom_effect_tooltip = modify_MRC_idea_insulae_defense_force_army_modifier_tt
+					add_to_variable = { 
+						MRC.MRC_experience_gain_army_modifier = 0.10
+						tooltip = experience_gain_army_tt
+					}
+					add_to_variable = { 
+						MRC.MRC_experience_gain_air_modifier = 0.10
+						tooltip = experience_gain_air_tt
+					}
+				}
+			}
+
+			shared_focus = { # Frontline Knowledge
+				id = MRC_focus_military_frontline_knowledge
+				icon = GFX_focus_unknown_military
+				prerequisite = { focus = MRC_focus_military_expeditionary_experience }
+				#mutually_exclusive = { focus =  }
+				relative_position_id = MRC_focus_military_expeditionary_experience
+				x = -3
+				y = 1
+
+				cost = 5
+				cancel_if_invalid = yes
+				continue_if_invalid = no
+				available_if_capitulated = yes
+
+				allow_branch = {
+				}
+				available = {
+				}
+				bypass = {
+				}
+
+				ai_will_do = {
+					factor = 2
+					modifier = {
+						add = 0.10
+						factor = 1.10
+						has_war = yes
+					}
+				}
+
+				completion_reward = {
+					log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_frontline_knowledge"
+					custom_effect_tooltip = modify_MRC_idea_insulae_defense_force_army_modifier_tt
+					add_to_variable = { 
+						MRC.MRC_army_leader_start_level_modifier = 1.0
+						tooltip = army_leader_start_level_tt
+					}
+					add_to_variable = { 
+						MRC.MRC_experience_gain_factor_modifier = 0.05
+						tooltip = xp_grain_factor_tt
+					}
+				}
+			}
+
+		shared_focus = { # EE Growth I
+			id = MRC_focus_military_ee_growth_1
+			icon = GFX_focus_unknown_military
+			prerequisite = { focus = MRC_focus_military_expeditionary_experience }
+			#mutually_exclusive = { focus =  }
+			relative_position_id = MRC_focus_military_expeditionary_experience
+			x = 1
+			y = 1
+
+			cost = 10
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = yes
+
+			allow_branch = {
+			}
+			available = {
+				custom_trigger_tooltip = {
+					tooltip = MRC_expeditionary_experience_GTE_3_tt
+					check_variable = { MRC_expeditionary_experience_var > 2 }
+				}
+			}
+			bypass = {
+			}
+
+			ai_will_do = {
+				factor = 2
+				modifier = {
+					add = 0.10
+					factor = 1.10
+					has_war = yes
+				}
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_ee_growth_1"
+				custom_effect_tooltip = modify_MRC_idea_insulae_defense_force_army_modifier_tt
+				add_to_variable = { 
+					MRC.MRC_land_doctrine_cost_factor_modifier = -0.05
+					tooltip = land_doctrine_cost_factor_tt
+				}
+				add_to_variable = { 
+					MRC.MRC_air_doctrine_cost_factor_modifier = -0.05
+					tooltip = air_doctrine_cost_factor_tt
+				}
+			}
+		}
+
+			shared_focus = { # Enhanced Training
+				id = MRC_focus_military_enhanced_training
+				icon = GFX_focus_unknown_military
+				prerequisite = { focus = MRC_focus_military_ee_growth_1 }
+				#mutually_exclusive = { focus =  }
+				relative_position_id = MRC_focus_military_ee_growth_1
+				x = -2
+				y = 1
+
+				cost = 5
+				cancel_if_invalid = yes
+				continue_if_invalid = no
+				available_if_capitulated = yes
+
+				allow_branch = {
+				}
+				available = {
+				}
+				bypass = {
+				}
+
+				ai_will_do = {
+					factor = 2
+					modifier = {
+						add = 0.10
+						factor = 1.10
+						has_war = yes
+					}
+				}
+
+				completion_reward = {
+					log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_enhanced_training"
+					custom_effect_tooltip = modify_MRC_idea_insulae_defense_force_army_modifier_tt
+					add_to_variable = { 
+						MRC.MRC_training_time_army_factor_modifier = -0.10
+						tooltip = training_time_army_factor_tt
+					}
+					add_to_variable = { 
+						MRC.MRC_experience_gain_factor_modifier = 0.05
+						tooltip = xp_grain_factor_tt
+					}
+				}
+			}
+
+			shared_focus = { # Chess vs Checkers
+				id = MRC_focus_military_chess_vs_checkers
+				icon = GFX_focus_unknown_military
+				prerequisite = { focus = MRC_focus_military_ee_growth_1 }
+				#mutually_exclusive = { focus =  }
+				relative_position_id = MRC_focus_military_ee_growth_1
+				x = -4
+				y = 1
+
+				cost = 5
+				cancel_if_invalid = yes
+				continue_if_invalid = no
+				available_if_capitulated = yes
+
+				allow_branch = {
+				}
+				available = {
+				}
+				bypass = {
+				}
+
+				ai_will_do = {
+					factor = 2
+					modifier = {
+						add = 0.10
+						factor = 1.10
+						has_war = yes
+					}
+				}
+
+				completion_reward = {
+					log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_chess_vs_checkers"
+					every_unit_leader = {
+						add_planning = 1
+						add_logistics = 1
+					}
+					custom_effect_tooltip = modify_MRC_idea_insulae_defense_force_army_modifier_tt
+					add_to_variable = { 
+						MRC.MRC_army_leader_start_planning_level_modifier = 1.0
+						tooltip = army_leader_start_planning_level_tt
+					}
+					add_to_variable = { 
+						MRC.MRC_army_leader_start_logistics_level_modifier = 1.0
+						tooltip = army_leader_start_logistics_level_tt
+					}
+				}
+			}
+
+		shared_focus = { # EE Growth II
+			id = MRC_focus_military_ee_growth_2
+			icon = GFX_focus_unknown_military
+			prerequisite = { focus = MRC_focus_military_ee_growth_1 }
+			#mutually_exclusive = { focus =  }
+			relative_position_id = MRC_focus_military_ee_growth_1
+			x = 0
+			y = 1
+
+			cost = 10
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = yes
+
+			allow_branch = {
+			}
+			available = {
+				custom_trigger_tooltip = {
+					tooltip = MRC_expeditionary_experience_GTE_5_tt
+					check_variable = { MRC_expeditionary_experience_var > 4 }
+				}
+			}
+			bypass = {
+			}
+
+			ai_will_do = {
+				factor = 2
+				modifier = {
+					add = 0.10
+					factor = 1.10
+					has_war = yes
+				}
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_ee_growth_2"
+				custom_effect_tooltip = modify_MRC_idea_insulae_defense_force_army_modifier_tt
+				add_to_variable = { 
+					MRC.MRC_land_doctrine_cost_factor_modifier = -0.075
+					tooltip = land_doctrine_cost_factor_tt
+				}
+				add_to_variable = { 
+					MRC.MRC_air_doctrine_cost_factor_modifier = -0.075
+					tooltip = air_doctrine_cost_factor_tt
+				}
+			}
+		}
+
+			shared_focus = { # Expanded GAA Program
+				id = MRC_focus_military_expanded_gaa
+				icon = GFX_focus_unknown_military
+				prerequisite = { focus = MRC_focus_military_ee_growth_2 }
+				#mutually_exclusive = { focus =  }
+				relative_position_id = MRC_focus_military_ee_growth_2
+				x = -2
+				y = 1
+
+				cost = 5
+				cancel_if_invalid = yes
+				continue_if_invalid = no
+				available_if_capitulated = yes
+
+				allow_branch = {
+				}
+				available = {
+				}
+				bypass = {
+				}
+
+				ai_will_do = {
+					factor = 2
+					modifier = {
+						add = 0.10
+						factor = 1.10
+						has_war = yes
+					}
+				}
+
+				completion_reward = {
+					log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_expanded_gaa"
+					custom_effect_tooltip = modify_MRC_idea_insulae_defense_force_army_modifier_tt
+					add_to_variable = { 
+						MRC.MRC_experience_gain_army_modifier = 0.05
+						tooltip = experience_gain_army_tt
+					}
+					add_to_variable = { 
+						MRC.MRC_experience_gain_air_modifier = 0.05
+						tooltip = experience_gain_air_tt
+					}
+					add_to_variable = { 
+						MRC.MRC_experience_gain_factor_modifier = 0.05
+						tooltip = xp_grain_factor_tt
+					}
+				}
+			}
+
+			shared_focus = { # New Age Tactics
+				id = MRC_focus_military_new_age_tactics
+				icon = GFX_focus_unknown_military
+				prerequisite = { focus = MRC_focus_military_ee_growth_2 }
+				#mutually_exclusive = { focus =  }
+				relative_position_id = MRC_focus_military_ee_growth_2
+				x = -4
+				y = 1
+
+				cost = 5
+				cancel_if_invalid = yes
+				continue_if_invalid = no
+				available_if_capitulated = yes
+
+				allow_branch = {
+				}
+				available = {
+				}
+				bypass = {
+				}
+
+				ai_will_do = {
+					factor = 2
+					modifier = {
+						add = 0.10
+						factor = 1.10
+						has_war = yes
+					}
+				}
+
+				completion_reward = {
+					log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_new_age_tactics"
+					every_unit_leader = {
+						add_attack = 1
+						add_defense = 1
+					}
+					custom_effect_tooltip = modify_MRC_idea_insulae_defense_force_army_modifier_tt
+					add_to_variable = { 
+						MRC.MRC_army_leader_start_attack_level_modifier = 1.0
+						tooltip = army_leader_start_attack_level_tt
+					}
+					add_to_variable = { 
+						MRC.MRC_army_leader_start_defense_level_modifier = 1.0
+						tooltip = army_leader_start_defense_level_tt
+					}
+				}
+			}
+
+		shared_focus = { # EE Growth III
+			id = MRC_focus_military_ee_growth_3
+			icon = GFX_focus_unknown_military
+			prerequisite = { focus = MRC_focus_military_ee_growth_2 }
+			#mutually_exclusive = { focus =  }
+			relative_position_id = MRC_focus_military_ee_growth_2
+			x = 0
+			y = 1
+
+			cost = 10
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = yes
+
+			allow_branch = {
+			}
+			available = {
+				custom_trigger_tooltip = {
+					tooltip = MRC_expeditionary_experience_GTE_10_tt
+					check_variable = { MRC_expeditionary_experience_var > 9 }
+				}
+			}
+			bypass = {
+			}
+
+			ai_will_do = {
+				factor = 2
+				modifier = {
+					add = 0.10
+					factor = 1.10
+					has_war = yes
+				}
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_ee_growth_3"
+				custom_effect_tooltip = modify_MRC_idea_insulae_defense_force_army_modifier_tt
+				add_to_variable = { 
+					MRC.MRC_land_doctrine_cost_factor_modifier = -0.10
+					tooltip = land_doctrine_cost_factor_tt
+				}
+				add_to_variable = { 
+					MRC.MRC_air_doctrine_cost_factor_modifier = -0.10
+					tooltip = air_doctrine_cost_factor_tt
+				}
+			}
+		}
+
+			shared_focus = { # GAA Officer Academy
+				id = MRC_focus_military_officer_academy
+				icon = GFX_focus_unknown_military
+				prerequisite = { focus = MRC_focus_military_ee_growth_3 }
+				#mutually_exclusive = { focus =  }
+				relative_position_id = MRC_focus_military_ee_growth_3
+				x = -1
+				y = 1
+
+				cost = 5
+				cancel_if_invalid = yes
+				continue_if_invalid = no
+				available_if_capitulated = yes
+
+				allow_branch = {
+				}
+				available = {
+				}
+				bypass = {
+				}
+
+				ai_will_do = {
+					factor = 2
+					modifier = {
+						add = 0.10
+						factor = 1.10
+						has_war = yes
+					}
+				}
+
+				completion_reward = {
+					log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_officer_academy"
+					custom_effect_tooltip = modify_MRC_idea_insulae_defense_force_army_modifier_tt
+					add_to_variable = { 
+						MRC.MRC_army_leader_start_level_modifier = 1.0
+						tooltip = army_leader_start_level_tt
+					}
+					add_to_variable = { 
+						MRC.MRC_skill_bonus_factor_modifier = 0.20
+						tooltip = unit_leader_skill_bonus_factor_tt
+					}
+				}
+			}
+
+			shared_focus = { # Trust in Command
+				id = MRC_focus_military_trust_in_command
+				icon = GFX_focus_unknown_military
+				prerequisite = { focus = MRC_focus_military_ee_growth_3 }
+				#mutually_exclusive = { focus =  }
+				relative_position_id = MRC_focus_military_ee_growth_3
+				x = -3
+				y = 1
+
+				cost = 5
+				cancel_if_invalid = yes
+				continue_if_invalid = no
+				available_if_capitulated = yes
+
+				allow_branch = {
+				}
+				available = {
+				}
+				bypass = {
+				}
+
+				ai_will_do = {
+					factor = 2
+					modifier = {
+						add = 0.10
+						factor = 1.10
+						has_war = yes
+					}
+				}
+
+				completion_reward = {
+					log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_trust_in_command"
+					custom_effect_tooltip = modify_MRC_idea_insulae_defense_force_army_modifier_tt
+					add_to_variable = { 
+						MRC.MRC_training_time_army_factor_modifier = -0.10
+						tooltip = training_time_army_factor_tt
+					}
+					add_to_variable = { 
+						MRC.MRC_command_abilities_cost_factor_modifier = -0.20
+						tooltip = command_abilities_cost_factor_tt
+					}
+				}
+			}
+
+	shared_focus = { # Lessons of Independence
+		id = MRC_focus_military_lessons_independence
 		icon = GFX_focus_unknown_military
-		prerequisite = { focus = MRC_military_learn_cyrstallo_peninsula_failures }
+		prerequisite = { focus = MRC_focus_military_insulae_ground_defense_force }
 		#mutually_exclusive = { focus =  }
-		relative_position_id = MRC_military_learn_cyrstallo_peninsula_failures
-		x = 1
+		relative_position_id = MRC_focus_military_insulae_ground_defense_force
+		x = 5
 		y = 1
 
 		cost = 10
@@ -3023,62 +3710,876 @@ shared_focus = { # Learn from the Cyrstallo Peninsula Failures
 		continue_if_invalid = no
 		available_if_capitulated = yes
 
+		allow_branch = {
+		}
 		available = {
 		}
 		bypass = {
 		}
 
 		ai_will_do = {
-			base = 2
+			factor = 2
+			modifier = {
+				add = 0.10
+				factor = 1.10
+				has_war = yes
+			}
 		}
 
 		completion_reward = {
-			log = "[GetDateText]: [Root.GetName]: Focus MRC_renew_tank_focus"
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_lessons_independence"
+			army_experience = 25
 		}
 	}
 
-shared_focus = { # Third Dimension Project
-	id = MRC_military_third_dimensional
+		shared_focus = { # Grand Strategy
+			id = MRC_focus_grand_strategy
+			icon = GFX_focus_unknown_military
+			prerequisite = { focus = MRC_focus_military_lessons_independence }
+			mutually_exclusive = { focus = MRC_focus_tactful_strategy }
+			relative_position_id = MRC_focus_military_lessons_independence
+			x = -4
+			y = 1
+
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = yes
+
+			allow_branch = {
+			}
+			available = {
+			}
+			bypass = {
+			}
+
+			ai_will_do = {
+				factor = 2
+				modifier = {
+					add = 0.10
+					factor = 1.10
+					has_war = yes
+				}
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_grand_strategy"
+				custom_effect_tooltip = modify_MRC_idea_insulae_defense_force_army_modifier_tt
+				add_to_variable = { 
+					MRC.MRC_max_planning_modifier = 0.05
+					tooltip = max_planning_factor_tt
+				}
+				add_to_variable = { 
+					MRC.MRC_planning_speed_modifier = 0.05
+					tooltip = planning_speed_factor_tt
+				}
+				custom_effect_tooltip = focus_branch_effect_tt
+			}
+		}
+
+		shared_focus = { # Tactful Strategy
+			id = MRC_focus_tactful_strategy
+			icon = GFX_focus_unknown_military
+			prerequisite = { focus = MRC_focus_military_lessons_independence }
+			mutually_exclusive = { focus = MRC_focus_grand_strategy }
+			relative_position_id = MRC_focus_military_lessons_independence
+			x = -2
+			y = 1
+
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = yes
+
+			allow_branch = {
+			}
+			available = {
+			}
+			bypass = {
+			}
+
+			ai_will_do = {
+				factor = 2
+				modifier = {
+					add = 0.10
+					factor = 1.10
+					has_war = yes
+				}
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_tactful_strategy"
+				custom_effect_tooltip = modify_MRC_idea_insulae_defense_force_army_modifier_tt
+				add_to_variable = { 
+					MRC.MRC_coordination_bonus_modifier = 0.05
+					tooltip = coordination_bonus_tt
+				}
+				add_to_variable = { 
+					MRC.MRC_initiative_factor_modifier = 0.05
+					tooltip = initiative_factor_tt
+				}
+				custom_effect_tooltip = focus_branch_effect_tt
+			}
+		}
+
+			shared_focus = { # Communication Priority
+				id = MRC_focus_communication_priority
+				icon = GFX_focus_unknown_military
+				prerequisite = { focus = MRC_focus_grand_strategy focus = MRC_focus_tactful_strategy }
+				#mutually_exclusive = { focus =  }
+				relative_position_id = MRC_focus_military_lessons_independence
+				x = -3
+				y = 2
+
+				cost = 5
+				cancel_if_invalid = yes
+				continue_if_invalid = no
+				available_if_capitulated = yes
+
+				allow_branch = {
+				}
+				available = {
+				}
+				bypass = {
+				}
+
+				ai_will_do = {
+					factor = 2
+					modifier = {
+						add = 0.10
+						factor = 1.10
+						has_war = yes
+					}
+				}
+
+				completion_reward = {
+					log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_communication_priority"
+					IF = {
+						LIMIT = { has_completed_focus = MRC_focus_grand_strategy }
+						custom_effect_tooltip = modify_MRC_idea_insulae_defense_force_army_modifier_tt
+						add_to_variable = { 
+							MRC.MRC_coordination_bonus_modifier = 0.05
+							tooltip = coordination_bonus_tt
+						}
+						add_to_variable = { 
+							MRC.MRC_initiative_factor_modifier = 0.05
+							tooltip = initiative_factor_tt
+						}
+					}
+					IF = {
+						LIMIT = { has_completed_focus = MRC_focus_tactful_strategy }
+						custom_effect_tooltip = modify_MRC_idea_insulae_defense_force_army_modifier_tt
+						add_to_variable = { 
+							MRC.MRC_max_planning_modifier = 0.05
+							tooltip = max_planning_factor_tt
+						}
+						add_to_variable = { 
+							MRC.MRC_planning_speed_modifier = 0.05
+							tooltip = planning_speed_factor_tt
+						}
+					}
+					IF = {
+						LIMIT = {
+							NOT = {
+								has_completed_focus = MRC_focus_grand_strategy
+								has_completed_focus = MRC_focus_tactful_strategy
+							}
+						}
+						custom_effect_tooltip = gain_one_of_the_following_tt # We do this for clearer reading.
+						custom_effect_tooltip = modify_MRC_idea_insulae_defense_force_army_modifier_tt
+						add_to_variable = { 
+							MRC.MRC_coordination_bonus_modifier = 0.05
+							tooltip = coordination_bonus_tt
+						}
+						add_to_variable = { 
+							MRC.MRC_initiative_factor_modifier = 0.05
+							tooltip = initiative_factor_tt
+						}
+						custom_effect_tooltip = generic_skip_one_line_tt # We do this for clearer reading.
+						custom_effect_tooltip = modify_MRC_idea_insulae_defense_force_army_modifier_tt
+						add_to_variable = { 
+							MRC.MRC_max_planning_modifier = 0.05
+							tooltip = max_planning_factor_tt
+						}
+						add_to_variable = { 
+							MRC.MRC_planning_speed_modifier = 0.05
+							tooltip = planning_speed_factor_tt
+						}
+					}
+				}
+			}
+
+		shared_focus = { # Enhanced Grand Strategy
+			id = MRC_focus_enhanced_grand_strategy
+			icon = GFX_focus_unknown_military
+			prerequisite = { focus = MRC_focus_grand_strategy }
+			mutually_exclusive = { focus = MRC_focus_enhanced_tactful_strategy }
+			relative_position_id = MRC_focus_grand_strategy
+			x = 0
+			y = 2
+
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = yes
+
+			allow_branch = {
+			}
+			available = {
+			}
+			bypass = {
+			}
+
+			ai_will_do = {
+				factor = 2
+				modifier = {
+					add = 0.10
+					factor = 1.10
+					has_war = yes
+				}
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_enhanced_grand_strategy"
+				custom_effect_tooltip = modify_MRC_idea_insulae_defense_force_army_modifier_tt
+				add_to_variable = { 
+					MRC.MRC_max_planning_modifier = 0.05
+					tooltip = max_planning_factor_tt
+				}
+				add_to_variable = { 
+					MRC.MRC_planning_speed_modifier = 0.05
+					tooltip = planning_speed_factor_tt
+				}
+			}
+		}
+
+		shared_focus = { # Enhanced Tactful Strategy
+			id = MRC_focus_enhanced_tactful_strategy
+			icon = GFX_focus_unknown_military
+			prerequisite = { focus = MRC_focus_tactful_strategy }
+			mutually_exclusive = { focus = MRC_focus_enhanced_grand_strategy }
+			relative_position_id = MRC_focus_tactful_strategy
+			x = 0
+			y = 2
+
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = yes
+
+			allow_branch = {
+			}
+			available = {
+			}
+			bypass = {
+			}
+
+			ai_will_do = {
+				factor = 2
+				modifier = {
+					add = 0.10
+					factor = 1.10
+					has_war = yes
+				}
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_enhanced_tactful_strategy"
+				custom_effect_tooltip = modify_MRC_idea_insulae_defense_force_army_modifier_tt
+				add_to_variable = { 
+					MRC.MRC_coordination_bonus_modifier = 0.05
+					tooltip = coordination_bonus_tt
+				}
+				add_to_variable = { 
+					MRC.MRC_initiative_factor_modifier = 0.05
+					tooltip = initiative_factor_tt
+				}
+			}
+		}
+
+		shared_focus = { # Motorized Supplies
+			id = MRC_focus_military_motorized_supply
+			icon = GFX_focus_unknown_military
+			prerequisite = { focus = MRC_focus_military_lessons_independence }
+			#mutually_exclusive = { focus =  }
+			relative_position_id = MRC_focus_military_lessons_independence
+			x = 0
+			y = 1
+
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = yes
+
+			allow_branch = {
+			}
+			available = {
+			}
+			bypass = {
+			}
+
+			ai_will_do = {
+				factor = 2
+				modifier = {
+					add = 0.10
+					factor = 1.10
+					has_war = yes
+				}
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_motorized_supply"
+				add_tech_bonus = {
+					bonus = 0.5
+					uses = 1
+					category = motorized_equipment
+				}
+				custom_effect_tooltip = modify_MRC_idea_insulae_defense_force_army_modifier_tt
+				add_to_variable = { 
+					MRC.MRC_supply_factor_modifier = 0.05
+					tooltip = supply_factor_tt
+				}
+			}
+		}
+
+			shared_focus = { # Armored Personal Carrier
+				id = MRC_focus_military_apc_research
+				icon = GFX_focus_unknown_military
+				prerequisite = { focus = MRC_focus_military_motorized_supply }
+				#mutually_exclusive = { focus =  }
+				relative_position_id = MRC_focus_military_motorized_supply
+				x = 0
+				y = 1
+
+				cost = 5
+				cancel_if_invalid = yes
+				continue_if_invalid = no
+				available_if_capitulated = yes
+
+				allow_branch = {
+				}
+				available = {
+				}
+				bypass = {
+				}
+
+				ai_will_do = {
+					factor = 2
+					modifier = {
+						add = 0.10
+						factor = 1.10
+						has_war = yes
+					}
+				}
+
+				completion_reward = {
+					log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_motorized_supply"
+					add_tech_bonus = {
+						bonus = 0.5
+						uses = 1
+						category = cat_mechanized_equipment
+					}
+					custom_effect_tooltip = modify_MRC_idea_insulae_defense_force_army_modifier_tt
+					add_to_variable = { 
+						MRC.MRC_army_strength_factor_modifier = 0.05
+						tooltip = army_strength_factor_tt
+					}
+				}
+			}
+
+			shared_focus = { # Mechanized Backbone
+				id = MRC_focus_military_mechanized_backbone
+				icon = GFX_focus_unknown_military
+				prerequisite = { focus = MRC_focus_military_apc_research }
+				#mutually_exclusive = { focus =  }
+				relative_position_id = MRC_focus_military_apc_research
+				x = 0
+				y = 1
+
+				cost = 10
+				cancel_if_invalid = yes
+				continue_if_invalid = no
+				available_if_capitulated = yes
+
+				allow_branch = {
+				}
+				available = {
+				}
+				bypass = {
+				}
+
+				ai_will_do = {
+					factor = 2
+					modifier = {
+						add = 0.10
+						factor = 1.10
+						has_war = yes
+					}
+				}
+
+				completion_reward = {
+					log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_mechanized_backbone"
+					custom_effect_tooltip = modify_MRC_idea_insulae_defense_force_army_modifier_tt
+					add_to_variable = { 
+						MRC.MRC_army_strength_factor_modifier = 0.05
+						tooltip = army_strength_factor_tt
+					}
+					add_to_variable = { 
+						MRC.MRC_supply_factor_modifier = 0.05
+						tooltip = supply_factor_tt
+					}
+				}
+			}
+
+		shared_focus = { # Hold the Fort
+			id = MRC_focus_military_hold_the_fort
+			icon = GFX_focus_unknown_military
+			prerequisite = { focus = MRC_focus_enhanced_grand_strategy focus = MRC_focus_enhanced_tactful_strategy }
+			prerequisite = { focus = MRC_focus_military_mechanized_backbone }
+			mutually_exclusive = { focus = MRC_focus_military_modern_pincer_movement }
+			relative_position_id = MRC_focus_military_lessons_independence
+			x = -1
+			y = 4
+
+			cost = 10
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = yes
+
+			allow_branch = {
+			}
+			available = {
+			}
+			bypass = {
+			}
+
+			ai_will_do = {
+				factor = 2
+				modifier = {
+					add = 0.10
+					factor = 1.10
+					has_war = yes
+				}
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_hold_the_fort"
+				custom_effect_tooltip = modify_MRC_idea_insulae_defense_force_army_modifier_tt
+				add_to_variable = {
+					MRC.MRC_army_infantry_attack_factor_modifier = 0.10
+					tooltip = army_infantry_attack_factor_tt
+				}
+				add_to_variable = {
+					MRC.MRC_army_infantry_defence_factor_modifier = 0.10
+					tooltip = army_infantry_defence_factor_tt
+				}
+				add_to_variable = {
+					MRC.MRC_army_artillery_attack_factor_modifier = 0.10
+					tooltip = army_artillery_attack_factor_tt
+				}
+				add_to_variable = {
+					MRC.MRC_army_artillery_defence_factor_modifier = 0.10
+					tooltip = army_artillery_defence_factor_tt
+				}
+			}
+		}
+
+		shared_focus = { # Modern Pincer Movement
+			id = MRC_focus_military_modern_pincer_movement
+			icon = GFX_focus_unknown_military
+			prerequisite = { focus = MRC_focus_enhanced_grand_strategy focus = MRC_focus_enhanced_tactful_strategy }
+			prerequisite = { focus = MRC_focus_military_mechanized_backbone }
+			mutually_exclusive = { focus = MRC_focus_military_hold_the_fort }
+			relative_position_id = MRC_focus_military_lessons_independence
+			x = 1
+			y = 4
+
+			cost = 10
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = yes
+
+			allow_branch = {
+			}
+			available = {
+			}
+			bypass = {
+			}
+
+			ai_will_do = {
+				factor = 2
+				modifier = {
+					add = 0.10
+					factor = 1.10
+					has_war = yes
+				}
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_modern_pincer_movement"
+				custom_effect_tooltip = modify_MRC_idea_insulae_defense_force_army_modifier_tt
+				add_to_variable = {
+					MRC.MRC_armor_attack_factor_modifier = 0.05
+					tooltip = army_armor_attack_factor_tt
+				}
+				add_to_variable = {
+					MRC.MRC_armor_defence_factor_modifier = 0.05
+					tooltip = army_armor_defence_factor_tt
+				}
+				add_to_variable = {
+					MRC.MRC_motorized_attack_factor_modifier = 0.10
+					tooltip = motorized_attack_factor_tt
+				}
+				add_to_variable = {
+					MRC.MRC_motorized_defence_factor_modifier = 0.10
+					tooltip = motorized_defence_factor_tt
+				}
+				add_to_variable = {
+					MRC.MRC_mechanized_attack_factor_modifier = 0.10
+					tooltip = mechanized_attack_factor_tt
+				}
+				add_to_variable = {
+					MRC.MRC_mechanized_defence_factor_modifier = 0.10
+					tooltip = mechanized_defence_factor_tt
+				}
+			}
+		}
+
+	shared_focus = { # Our Special Forces
+		id = MRC_focus_military_special_forces
+		icon = GFX_focus_unknown_industry
+		prerequisite = { focus = MRC_focus_military_insulae_ground_defense_force }
+		#mutually_exclusive = { focus =  }
+		relative_position_id = MRC_focus_military_insulae_ground_defense_force
+		x = 0
+		y = 6
+
+		cost = 10
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = yes
+
+		allow_branch = {
+		}
+		available = {
+			any_enemy_country = {
+				is_major_not_original_tag_root = yes
+			}
+		}
+		bypass = {
+		}
+
+		ai_will_do = {
+			factor = 2
+			modifier = {
+				add = 0.10
+				factor = 1.10
+				has_war = yes
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_special_forces"
+			add_potential_special_forces_tree = yes
+		}
+	}
+
+		shared_focus = { # The Mountaineers
+			id = MRC_focus_military_moutaineers
+			icon = GFX_focus_unknown_military
+			prerequisite = { focus = MRC_focus_military_special_forces }
+			#mutually_exclusive = { focus =  }
+			relative_position_id = MRC_focus_military_special_forces
+			x = -3
+			y = 1
+
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = yes
+
+			allow_branch = {
+			}
+			available = {
+				has_tech = special_forces_mountaineers
+			}
+			bypass = {
+			}
+
+			ai_will_do = {
+				factor = 2
+				modifier = {
+					add = 0.10
+					factor = 1.10
+					has_war = yes
+				}
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_special_forces"
+				custom_effect_tooltip = modify_MRC_idea_insulae_defense_force_army_modifier_tt
+				add_to_variable = { 
+					MRC.MRC_recon_factor_modifier = 0.10
+					tooltip = recon_factor_tt
+				}
+			}
+		}
+
+		shared_focus = { # The Marines
+			id = MRC_focus_military_marines
+			icon = GFX_focus_unknown_military
+			prerequisite = { focus = MRC_focus_military_special_forces }
+			#mutually_exclusive = { focus =  }
+			relative_position_id = MRC_focus_military_special_forces
+			x = 0
+			y = 1
+
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = yes
+
+			allow_branch = {
+			}
+			available = {
+				has_tech = special_forces_marines
+			}
+			bypass = {
+			}
+
+			ai_will_do = {
+				factor = 2
+				modifier = {
+					add = 0.10
+					factor = 1.10
+					has_war = yes
+				}
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_special_forces"
+				custom_effect_tooltip = modify_MRC_idea_insulae_defense_force_army_modifier_tt
+				add_to_variable = { 
+					MRC.MRC_land_night_attack_modifier = 0.10
+					tooltip = land_night_attack_tt
+				}
+			}
+		}
+
+		shared_focus = { # The Paratroopers
+			id = MRC_focus_military_paratroopers
+			icon = GFX_focus_unknown_military
+			prerequisite = { focus = MRC_focus_military_special_forces }
+			#mutually_exclusive = { focus =  }
+			relative_position_id = MRC_focus_military_special_forces
+			x = 3
+			y = 1
+
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = yes
+
+			allow_branch = {
+			}
+			available = {
+				has_tech = special_forces_paratroopers
+			}
+			bypass = {
+			}
+
+			ai_will_do = {
+				factor = 2
+				modifier = {
+					add = 0.10
+					factor = 1.10
+					has_war = yes
+				}
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_special_forces"
+				custom_effect_tooltip = modify_MRC_idea_insulae_defense_force_army_modifier_tt
+				add_to_variable = { 
+					MRC.MRC_pocket_penalty_modifier = -0.10
+					tooltip = pocket_penalty_tt
+				}
+			}
+		}
+
+shared_focus = { # Insulae Airspace Defense Force
+	id = MRC_focus_military_insulae_airspace_defense_force
 	icon = GFX_focus_unknown_military
 	#prerequisite = { focus =  }
 	#mutually_exclusive = { focus =  }
 	#relative_position_id = 
-	x = 22
-	y = 0
+	offset = {
+		x = 35
+		y = 0
+		trigger = { NOT = { AND = { is_debug = yes is_ai = no } } }
+	}
+	offset = {
+		x = 37
+		y = 0
+		trigger = { AND = { is_debug = yes is_ai = no } }
+	}
 
-	cost = 5
+	cost = 0
 	cancel_if_invalid = yes
 	continue_if_invalid = no
 	available_if_capitulated = yes
 
+	allow_branch = {
+	}
 	available = {
-		OR = {
-			has_completed_focus = MRC_foreign_intervention_focus
-			has_completed_focus = MRC_intervention_policy
-			has_completed_focus = MRC_foreign_neutrality_focus
-			has_completed_focus = MRC_neutrality_policy
-		}
+		always = no
 	}
 	bypass = {
 	}
 
 	ai_will_do = {
-		base = 2
+		factor = 5
+		modifier = {
+			add = 0.10
+			factor = 1.10
+			has_war = yes
+		}
 	}
 
 	completion_reward = {
-		log = "[GetDateText]: [Root.GetName]: Focus MRC_military_third_dimensional"
-		air_experience = 25
+		log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_insulae_airspace_defense_force"
 		add_dynamic_modifier = { modifier = MRC_idea_insulae_defense_force_air_modifier }
+		add_dynamic_modifier = { modifier = MRC_idea_air_manufacturing_modifier }
 	}
 }
 
-	shared_focus = { # Synthetics
-		id = MRC_synthetics
+	shared_focus = { # Fighter Force
+		id = MRC_focus_military_fighter_force
 		icon = GFX_focus_unknown_military
-		prerequisite = { focus = MRC_military_third_dimensional }
+		prerequisite = { focus = MRC_focus_military_insulae_airspace_defense_force }
 		#mutually_exclusive = { focus =  }
-		relative_position_id = MRC_military_third_dimensional
+		relative_position_id = MRC_focus_military_insulae_airspace_defense_force
+		x = -4
+		y = 1
+
+		cost = 5
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = yes
+
+		allow_branch = {
+		}
+		available = {
+		}
+		bypass = {
+		}
+
+		ai_will_do = {
+			factor = 2
+			modifier = {
+				add = 0.10
+				factor = 1.10
+				has_war = yes
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_fighter_force"
+			air_experience = 10
+		}
+	}
+
+		shared_focus = { # Guaranteed Gun-Down
+			id = MRC_focus_military_fighter_guaranteed_gundown
+			icon = GFX_focus_unknown_military
+			prerequisite = { focus = MRC_focus_military_fighter_force }
+			mutually_exclusive = { focus = MRC_focus_military_fighter_survivability_studies }
+			relative_position_id = MRC_focus_military_fighter_force
+			x = -1
+			y = 1
+
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = yes
+
+			allow_branch = {
+			}
+			available = {
+			}
+			bypass = {
+			}
+
+			ai_will_do = {
+				factor = 2
+				modifier = {
+					add = 0.10
+					factor = 1.10
+					has_war = yes
+				}
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_fighter_guaranteed_gundown"
+				add_tech_bonus = {
+					bonus = 0.5
+					uses = 2
+					category = cat_air_guns
+				}
+				custom_effect_tooltip = unlocks_manufacturing_tt # Unlocks Manufacturing Decision(s)
+			}
+		}
+
+		shared_focus = { # Dog-Fighting Survivability Studies
+			id = MRC_focus_military_fighter_survivability_studies
+			icon = GFX_focus_unknown_military
+			prerequisite = { focus = MRC_focus_military_fighter_force }
+			mutually_exclusive = { focus = MRC_focus_military_fighter_guaranteed_gundown }
+			relative_position_id = MRC_focus_military_fighter_force
+			x = 1
+			y = 1
+
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = yes
+
+			allow_branch = {
+			}
+			available = {
+			}
+			bypass = {
+			}
+
+			ai_will_do = {
+				factor = 1
+				modifier = {
+					add = 0.10
+					factor = 1.10
+					has_war = yes
+				}
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_fighter_survivability_studies"
+				IF = {
+					LIMIT = { NOT = { has_tech = survivability_studies } }
+					add_tech_bonus = {
+						bonus = 1.0
+						uses = 1
+						technology = survivability_studies
+					}
+				}
+				custom_effect_tooltip = unlocks_manufacturing_tt # Unlocks Manufacturing Decision(s)
+			}
+		}
+
+	shared_focus = { # Ground Support
+		id = MRC_focus_military_ground_support
+		icon = GFX_focus_unknown_military
+		prerequisite = { focus = MRC_focus_military_insulae_airspace_defense_force }
+		#mutually_exclusive = { focus =  }
+		relative_position_id = MRC_focus_military_insulae_airspace_defense_force
 		x = 0
 		y = 1
 
@@ -3087,296 +4588,2221 @@ shared_focus = { # Third Dimension Project
 		continue_if_invalid = no
 		available_if_capitulated = yes
 
+		allow_branch = {
+		}
 		available = {
 		}
 		bypass = {
 		}
 
 		ai_will_do = {
-			base = 2
+			factor = 2
+			modifier = {
+				add = 0.10
+				factor = 1.10
+				has_war = yes
+			}
 		}
 
 		completion_reward = {
-			log = "[GetDateText]: [Root.GetName]: Focus MRC_synthetics"
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_ground_support"
+			air_experience = 10
+		}
+	}
+
+		shared_focus = { # IGDF Air Support
+			id = MRC_focus_military_cas_igdf
+			icon = GFX_focus_unknown_military
+			prerequisite = { focus = MRC_focus_military_ground_support }
+			mutually_exclusive = { focus = MRC_focus_military_cas_iadf }
+			relative_position_id = MRC_focus_military_ground_support
+			x = -1
+			y = 1
+
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = yes
+
+			allow_branch = {
+			}
+			available = {
+			}
+			bypass = {
+			}
+
+			ai_will_do = {
+				factor = 2
+				modifier = {
+					add = 0.10
+					factor = 1.10
+					has_war = yes
+				}
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_cas_igdf"
+				custom_effect_tooltip = modify_MRC_idea_insulae_defense_force_air_modifier_tt
+				add_to_variable = { 
+					MRC.MRC_air_cas_present_factor_modifier = 0.10
+					tooltip = air_cas_present_factor_tt
+				}
+				custom_effect_tooltip = unlocks_manufacturing_tt # Unlocks Manufacturing Decision(s)
+			}
+		}
+
+		shared_focus = { # IADF Air Support
+			id = MRC_focus_military_cas_iadf
+			icon = GFX_focus_unknown_military
+			prerequisite = { focus = MRC_focus_military_ground_support }
+			mutually_exclusive = { focus = MRC_focus_military_cas_igdf }
+			relative_position_id = MRC_focus_military_ground_support
+			x = 1
+			y = 1
+
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = yes
+
+			allow_branch = {
+			}
+			available = {
+			}
+			bypass = {
+			}
+
+			ai_will_do = {
+				factor = 1
+				modifier = {
+					add = 0.10
+					factor = 1.10
+					has_war = yes
+				}
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_cas_iadf"
+				custom_effect_tooltip = modify_MRC_idea_insulae_defense_force_air_modifier_tt
+				add_to_variable = { 
+					MRC.MRC_air_cas_efficiency_modifier = 0.15
+					tooltip = air_cas_efficiency_tt
+				}
+				custom_effect_tooltip = unlocks_manufacturing_tt # Unlocks Manufacturing Decision(s)
+			}
+		}
+
+	shared_focus = { # Bomber Force
+		id = MRC_focus_military_bomber_force
+		icon = GFX_focus_unknown_military
+		prerequisite = { focus = MRC_focus_military_insulae_airspace_defense_force }
+		#mutually_exclusive = { focus =  }
+		relative_position_id = MRC_focus_military_insulae_airspace_defense_force
+		x = 4
+		y = 1
+
+		cost = 5
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = yes
+
+		allow_branch = {
+		}
+		available = {
+		}
+		bypass = {
+		}
+
+		ai_will_do = {
+			factor = 2
+			modifier = {
+				add = 0.10
+				factor = 1.10
+				has_war = yes
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_bomber_force"
+			air_experience = 10
+		}
+	}
+
+		shared_focus = { # Escorting Defense
+			id = MRC_focus_military_bomber_escorting_defense
+			icon = GFX_focus_unknown_military
+			prerequisite = { focus = MRC_focus_military_bomber_force }
+			mutually_exclusive = { focus = MRC_focus_military_bomber_personal_capabilities }
+			relative_position_id = MRC_focus_military_bomber_force
+			x = -1
+			y = 1
+
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = yes
+
+			allow_branch = {
+			}
+			available = {
+			}
+			bypass = {
+			}
+
+			ai_will_do = {
+				factor = 1
+				modifier = {
+					add = 0.10
+					factor = 1.10
+					has_war = yes
+				}
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_bomber_escorting_defense"
+				custom_effect_tooltip = modify_MRC_idea_insulae_defense_force_air_modifier_tt
+				add_to_variable = { 
+					MRC.MRC_air_escort_efficiency_modifier = 0.15
+					tooltip = air_escort_efficiency_tt
+				}
+				custom_effect_tooltip = unlocks_manufacturing_tt # Unlocks Manufacturing Decision(s)
+			}
+		}
+
+		shared_focus = { # Personal Capabilities
+			id = MRC_focus_military_bomber_personal_capabilities
+			icon = GFX_focus_unknown_military
+			prerequisite = { focus = MRC_focus_military_bomber_force }
+			mutually_exclusive = { focus = MRC_focus_military_bomber_escorting_defense }
+			relative_position_id = MRC_focus_military_bomber_force
+			x = 1
+			y = 1
+
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = yes
+
+			allow_branch = {
+			}
+			available = {
+			}
+			bypass = {
+			}
+
+			ai_will_do = {
+				factor = 2
+				modifier = {
+					add = 0.10
+					factor = 1.10
+					has_war = yes
+				}
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_bomber_personal_capabilities"
+				add_tech_bonus = {
+					bonus = 3.0
+					uses = 1
+					category = cat_strategic_bomber
+				}
+				add_tech_bonus = {
+					bonus = 0.5
+					uses = 2
+					category = plane_modules_tech
+				}
+				custom_effect_tooltip = unlocks_manufacturing_tt # Unlocks Manufacturing Decision(s)
+			}
+		}
+
+	shared_focus = { # Synthetic Rubber Project
+		id = MRC_focus_military_synthetics
+		icon = GFX_focus_unknown_industry
+		prerequisite = { focus = MRC_focus_military_fighter_force focus = MRC_focus_military_ground_support focus = MRC_focus_military_bomber_force }
+		#mutually_exclusive = { focus =  }
+		relative_position_id = MRC_focus_military_insulae_airspace_defense_force
+		x = 0
+		y = 3
+
+		cost = 5
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = yes
+
+		allow_branch = {
+		}
+		available = {
+		}
+		bypass = {
+		}
+
+		ai_will_do = {
+			factor = 2
+			modifier = {
+				add = 0.10
+				factor = 1.10
+				has_war = yes
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_synthetics"
 			add_tech_bonus = {
 				name = GER_coal_liquidization
 				bonus = 2.0
 				uses = 2
 				category = synth_resources
 			}
-        	modify_building_resources = {
-        	   building = synthetic_refinery
-        	   resource = rubber
-        	   amount = 1
-        	}
+	    	modify_building_resources = {
+	    	   building = synthetic_refinery
+	    	   resource = rubber
+	    	   amount = 1
+	    	}
 		}
 	}
 
-shared_focus = { # Ambition of a Great Mesi Fleet
-	id = MRC_ambitious_great_fleet
+	shared_focus = { # Home Isles Defense
+		id = MRC_focus_military_home_islands_defense
+		icon = GFX_focus_unknown_industry
+		prerequisite = { focus = MRC_focus_military_synthetics }
+		#mutually_exclusive = { focus =  }
+		relative_position_id = MRC_focus_military_synthetics
+		x = 0
+		y = 2
+
+		cost = 5
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = yes
+
+		allow_branch = {
+		}
+		available = {
+		}
+		bypass = {
+		}
+
+		ai_will_do = {
+			factor = 2
+			modifier = {
+				add = 0.10
+				factor = 1.10
+				has_war = yes
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_home_islands_defense"
+			13 = {
+				add_building_construction = {
+					type = air_base
+					level = 2
+					instant_build = yes
+				}
+			}
+			14 = {
+				add_building_construction = {
+					type = air_base
+					level = 2
+					instant_build = yes
+				}
+			}
+			15 = {
+				add_building_construction = {
+					type = air_base
+					level = 2
+					instant_build = yes
+				}
+			}
+			72 = {
+				add_building_construction = {
+					type = air_base
+					level = 2
+					instant_build = yes
+				}
+			}
+			442 = {
+				add_building_construction = {
+					type = air_base
+					level = 2
+					instant_build = yes
+				}
+			}
+			443 = {
+				add_building_construction = {
+					type = air_base
+					level = 2
+					instant_build = yes
+				}
+			}
+			445 = {
+				add_building_construction = {
+					type = air_base
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+		shared_focus = { # Air Raiders
+			id = MRC_focus_military_air_raiders
+			icon = GFX_focus_unknown_industry
+			prerequisite = { focus = MRC_focus_military_home_islands_defense }
+			mutually_exclusive = { focus = MRC_focus_military_homeland_defense focus = MRC_focus_military_fire_and_bombs }
+			relative_position_id = MRC_focus_military_home_islands_defense
+			x = -2
+			y = 1
+
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = yes
+
+			allow_branch = {
+			}
+			available = {
+			}
+			bypass = {
+			}
+
+			ai_will_do = {
+				factor = 2
+				modifier = {
+					add = 0.10
+					factor = 1.10
+					has_war = yes
+				}
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_air_raiders"
+				add_tech_bonus = {
+					bonus = 1.0
+					uses = 1
+					category = cat_heavy_fighter
+				}
+				MRC_idea_medium_plane_airframe_build_cost_ic_num_ns = yes
+				hidden_effect = { MRC_idea_medium_plane_airframe_build_cost_ic_num_ns = yes }
+				custom_effect_tooltip = MRC_military_medium_plane_airframe_build_cost_ic_1_key
+			}
+		}
+
+		shared_focus = { # Homeland Defense
+			id = MRC_focus_military_homeland_defense
+			icon = GFX_focus_unknown_industry
+			prerequisite = { focus = MRC_focus_military_home_islands_defense }
+			mutually_exclusive = { focus = MRC_focus_military_air_raiders focus = MRC_focus_military_fire_and_bombs }
+			relative_position_id = MRC_focus_military_home_islands_defense
+			x = 0
+			y = 1
+
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = yes
+
+			allow_branch = {
+			}
+			available = {
+			}
+			bypass = {
+			}
+
+			ai_will_do = {
+				factor = 1
+				modifier = {
+					add = 0.10
+					factor = 1.10
+					has_war = yes
+				}
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_homeland_defense"
+				add_tech_bonus = {
+					bonus = 1.0
+					uses = 1
+					category = light_fighter
+				}
+				MRC_idea_small_plane_airframe_build_cost_ic_num_ns = yes
+				custom_effect_tooltip = MRC_military_small_plane_airframe_build_cost_ic_0_key
+			}
+		}
+
+		shared_focus = { # Fire and Bombs
+			id = MRC_focus_military_fire_and_bombs
+			icon = GFX_focus_unknown_industry
+			prerequisite = { focus = MRC_focus_military_home_islands_defense }
+			mutually_exclusive = { focus = MRC_focus_military_air_raiders focus = MRC_focus_military_homeland_defense }
+			relative_position_id = MRC_focus_military_home_islands_defense
+			x = 2
+			y = 1
+
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = yes
+
+			allow_branch = {
+			}
+			available = {
+			}
+			bypass = {
+			}
+
+			ai_will_do = {
+				factor = 1
+				modifier = {
+					add = 0.10
+					factor = 1.10
+					has_war = yes
+				}
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_fire_and_bombs"
+				add_tech_bonus = {
+					bonus = 1.0
+					uses = 1
+					category = cat_strategic_bomber
+				}
+				MRC_idea_large_plane_airframe_build_cost_ic_num_ns = yes
+				hidden_effect = { MRC_idea_large_plane_airframe_build_cost_ic_num_ns = yes }
+				custom_effect_tooltip = MRC_military_large_plane_airframe_build_cost_ic_1_key
+			}
+		}
+
+	shared_focus = { # Secondary Isles Defense
+		id = MRC_focus_military_secondary_islands_defense
+		icon = GFX_focus_unknown_industry
+		prerequisite = { focus = MRC_focus_military_air_raiders focus = MRC_focus_military_homeland_defense focus = MRC_focus_military_fire_and_bombs }
+		#mutually_exclusive = { focus =  }
+		relative_position_id = MRC_focus_military_home_islands_defense
+		x = 0
+		y = 2
+
+		cost = 5
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = yes
+
+		allow_branch = {
+		}
+		available = {
+		}
+		bypass = {
+		}
+
+		ai_will_do = {
+			factor = 2
+			modifier = {
+				add = 0.10
+				factor = 1.10
+				has_war = yes
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_secondary_islands_defense"
+			16 = {
+				add_building_construction = {
+					type = air_base
+					level = 2
+					instant_build = yes
+				}
+			}
+			17 = {
+				add_building_construction = {
+					type = air_base
+					level = 2
+					instant_build = yes
+				}
+			}
+			70 = {
+				add_building_construction = {
+					type = air_base
+					level = 2
+					instant_build = yes
+				}
+			}
+			240 = {
+				add_building_construction = {
+					type = air_base
+					level = 2
+					instant_build = yes
+				}
+			}
+			IF = {
+				LIMIT = { has_full_control_of_state = 249 }
+				249 = {
+					add_building_construction = {
+						type = air_base
+						level = 2
+						instant_build = yes
+					}
+				}
+			}
+			IF = {
+				LIMIT = { has_full_control_of_state = 250 }
+				250 = {
+					add_building_construction = {
+						type = air_base
+						level = 2
+						instant_build = yes
+					}
+				}
+			}
+			IF = {
+				LIMIT = { has_full_control_of_state = 251 }
+				251 = {
+					add_building_construction = {
+						type = air_base
+						level = 2
+						instant_build = yes
+					}
+				}
+			}
+			IF = {
+				LIMIT = { has_full_control_of_state = 252 }
+				252 = {
+					add_building_construction = {
+						type = air_base
+						level = 2
+						instant_build = yes
+					}
+				}
+			}
+			IF = {
+				LIMIT = { has_full_control_of_state = 253 }
+				253 = {
+					add_building_construction = {
+						type = air_base
+						level = 2
+						instant_build = yes
+					}
+				}
+			}
+			IF = {
+				LIMIT = { has_full_control_of_state = 254 }
+				254 = {
+					add_building_construction = {
+						type = air_base
+						level = 2
+						instant_build = yes
+					}
+				}
+			}
+			IF = {
+				LIMIT = { has_full_control_of_state = 255 }
+				255 = {
+					add_building_construction = {
+						type = air_base
+						level = 2
+						instant_build = yes
+					}
+				}
+			}
+			IF = {
+				LIMIT = { has_full_control_of_state = 256 }
+				256 = {
+					add_building_construction = {
+						type = air_base
+						level = 2
+						instant_build = yes
+					}
+				}
+			}
+		}
+	}
+
+shared_focus = { # Piercing Sound
+	id = MRC_focus_military_nearing_speed_sound
 	icon = GFX_focus_unknown_military
 	#prerequisite = { focus =  }
 	#mutually_exclusive = { focus =  }
-	#relative_position_id = 
-	x = 29
-	y = 0
+	relative_position_id = MRC_focus_military_insulae_airspace_defense_force
+	offset = {
+		x = -2
+		y = 0
+		trigger = {
+			OR = {
+				has_completed_focus = MRC_focus_military_fire_and_bombs
+				AND = { is_debug = yes is_ai = no }
+			}
+		}
+	}
+	offset = {
+		x = -2
+		y = 1
+		trigger = {
+			NOT = {
+				has_completed_focus = MRC_focus_military_fire_and_bombs
+				AND = { is_debug = yes is_ai = no }
+			}
+			OR = {
+				has_completed_focus = MRC_focus_military_air_raiders
+				has_completed_focus = MRC_focus_military_homeland_defense
+			}
+		}
+	}
 
 	cost = 5
 	cancel_if_invalid = yes
 	continue_if_invalid = no
 	available_if_capitulated = yes
 
-	available = {
+	allow_branch = {
 		OR = {
-			has_completed_focus = MRC_foreign_intervention_focus
-			has_completed_focus = MRC_intervention_policy
-			has_completed_focus = MRC_foreign_neutrality_focus
-			has_completed_focus = MRC_neutrality_policy
+			has_completed_focus = MRC_focus_military_air_raiders
+			has_completed_focus = MRC_focus_military_homeland_defense
+			has_completed_focus = MRC_focus_military_fire_and_bombs
+			AND = { is_debug = yes is_ai = no }
 		}
+	}
+	available = {
 	}
 	bypass = {
 	}
 
 	ai_will_do = {
-		base = 2
+		factor = 5
+		modifier = {
+			add = 0.10
+			factor = 1.10
+			has_war = yes
+		}
 	}
 
 	completion_reward = {
-		log = "[GetDateText]: [Root.GetName]: Focus MRC_ambitious_great_fleet"
-		navy_experience = 25
-		add_dynamic_modifier = { modifier = MRC_idea_insulae_defense_force_navy_modifier }
+		log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_"
+		add_tech_bonus = {
+			bonus = 0.5
+			uses = 2
+			category = cat_air_engine
+		}
 	}
 }
 
-shared_focus = { # Expand Naval Dockyards
-	id = MRC_ambitious_final_stepping_stones
-	icon = GFX_focus_unknown_industry
-	prerequisite = { focus = MRC_ambitious_great_fleet }
-	#mutually_exclusive = { focus =  }
-	relative_position_id = MRC_ambitious_great_fleet
-	x = 0
-	y = 2
+	shared_focus = { # 
+		id = MRC_focus_military_supporting_
+		icon = GFX_focus_unknown_military
+		prerequisite = { focus = MRC_focus_military_nearing_speed_sound }
+		#mutually_exclusive = { focus =  }
+		relative_position_id = MRC_focus_military_nearing_speed_sound
+		offset = {
+			x = -6
+			y = 1
+			trigger = { AND = { is_debug = yes is_ai = no } }
+		}
+		offset = {
+			x = 0
+			y = 2
+			trigger = { NOT = { AND = { is_debug = yes is_ai = no } } }
+		}
 
-	cost = 10
+		cost = 5
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = yes
+
+		allow_branch = {
+			OR = {
+				has_completed_focus = MRC_focus_military_air_raiders
+				AND = { is_debug = yes is_ai = no }
+			}
+		}
+		available = {
+		}
+		bypass = {
+		}
+
+		ai_will_do = {
+			factor = 2
+			modifier = {
+				add = 0.10
+				factor = 1.10
+				has_war = yes
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_supporting_"
+		}
+	}
+
+	shared_focus = { # 
+		id = MRC_focus_military_fighting_
+		icon = GFX_focus_unknown_military
+		prerequisite = { focus = MRC_focus_military_nearing_speed_sound }
+		#mutually_exclusive = { focus =  }
+		relative_position_id = MRC_focus_military_nearing_speed_sound
+		offset = {
+			x = -4
+			y = 1
+			trigger = { AND = { is_debug = yes is_ai = no } }
+		}
+		offset = {
+			x = 0
+			y = 2
+			trigger = { NOT = { AND = { is_debug = yes is_ai = no } } }
+		}
+
+		cost = 5
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = yes
+
+		allow_branch = {
+			OR = {
+				has_completed_focus = MRC_focus_military_homeland_defense
+				AND = { is_debug = yes is_ai = no }
+			}
+		}
+		available = {
+		}
+		bypass = {
+		}
+
+		ai_will_do = {
+			factor = 2
+			modifier = {
+				add = 0.10
+				factor = 1.10
+				has_war = yes
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_fighting_"
+		}
+	}
+
+	shared_focus = { # 
+		id = MRC_focus_military_bombing_damage
+		icon = GFX_focus_unknown_military
+		prerequisite = { focus = MRC_focus_military_nearing_speed_sound }
+		#mutually_exclusive = { focus =  }
+		relative_position_id = MRC_focus_military_nearing_speed_sound
+		x = 0
+		y = 1
+
+		cost = 5
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = yes
+
+		allow_branch = {
+			OR = {
+				has_completed_focus = MRC_focus_military_fire_and_bombs
+				AND = { is_debug = yes is_ai = no }
+			}
+		}
+		available = {
+		}
+		bypass = {
+		}
+
+		ai_will_do = {
+			factor = 2
+			modifier = {
+				add = 0.10
+				factor = 1.10
+				has_war = yes
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_bombing_damage"
+		}
+	}
+
+	shared_focus = { # 
+		id = MRC_focus_military_bombing_capacity
+		icon = GFX_focus_unknown_military
+		prerequisite = { focus = MRC_focus_military_bombing_damage }
+		#mutually_exclusive = { focus =  }
+		relative_position_id = MRC_focus_military_nearing_speed_sound
+		x = 0
+		y = 3
+
+		cost = 5
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = yes
+
+		allow_branch = {
+		}
+		available = {
+		}
+		bypass = {
+		}
+
+		ai_will_do = {
+			factor = 2
+			modifier = {
+				add = 0.10
+				factor = 1.10
+				has_war = yes
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_bombing_capacity"
+		}
+	}
+
+shared_focus = { # Levav Home Range Doctrine
+	id = MRC_focus_military_far_reaching_range
+	icon = GFX_focus_unknown_military
+	#prerequisite = { focus =  }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = MRC_focus_military_insulae_airspace_defense_force
+	offset = {
+		x = 2
+		y = 0
+		trigger = {
+			OR = {
+				has_completed_focus = MRC_focus_military_fire_and_bombs
+				AND = { is_debug = yes is_ai = no }
+			}
+		}
+	}
+	offset = {
+		x = 2
+		y = 1
+		trigger = {
+			NOT = {
+				has_completed_focus = MRC_focus_military_fire_and_bombs
+				AND = { is_debug = yes is_ai = no }
+			}
+			OR = {
+				has_completed_focus = MRC_focus_military_air_raiders
+				has_completed_focus = MRC_focus_military_homeland_defense
+			}
+		}
+	}
+
+	cost = 5
 	cancel_if_invalid = yes
 	continue_if_invalid = no
 	available_if_capitulated = yes
 
+	allow_branch = {
+		OR = {
+			has_completed_focus = MRC_focus_military_air_raiders
+			has_completed_focus = MRC_focus_military_homeland_defense
+			has_completed_focus = MRC_focus_military_fire_and_bombs
+			AND = { is_debug = yes is_ai = no }
+		}
+	}
 	available = {
 	}
 	bypass = {
 	}
 
 	ai_will_do = {
-		base = 2
+		factor = 5
+		modifier = {
+			add = 0.10
+			factor = 1.10
+			has_war = yes
+		}
 	}
 
-	complete_tooltip = {
-		add_extra_state_shared_building_slots = 4
-		add_building_construction = {
-			type = dockyard
-			level = 4
-			instant_build = yes
-		}
-	}
 	completion_reward = {
-		log = "[GetDateText]: [Root.GetName]: Focus MRC_expand_naval_dockyards"
-		if = {
-			limit = {
-				NOT = {
-					any_owned_state = {
-						dockyard > 0
-						free_building_slots = {
-							building = dockyard
-							size > 1
-							include_locked = yes
-						}
-					}
-				}
-				any_owned_state = {
-					is_coastal = yes
-				}
-			}
-			random_owned_controlled_state = {
-				limit = {
-					is_coastal = yes
-					free_building_slots = {
-						building = dockyard
-						size > 1
-						include_locked = yes
-					}
-				}
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = dockyard
-					level = 2
-					instant_build = yes
-				}
-			}
-			set_country_flag = naval_effort_built
-		}
-		if = {
-			limit = {
-				NOT = { has_country_flag = naval_effort_built }
-				any_owned_state = {
-					dockyard > 0
-					free_building_slots = {
-						building = dockyard
-						size > 1
-						include_locked = yes
-					}
-				}
-			}
-			random_owned_controlled_state = {
-				limit = {
-					dockyard > 0
-					free_building_slots = {
-						building = dockyard
-						size > 1
-						include_locked = yes
-					}
-				}
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = dockyard
-					level = 2
-					instant_build = yes
-				}
-			}
-			set_country_flag = naval_effort_built
-		}
-		if = {
-			limit = {
-				NOT = { has_country_flag = naval_effort_built }
-				NOT = {
-					any_owned_state = {
-						free_building_slots = {
-							building = dockyard
-							size > 1
-							include_locked = yes
-						}
-					}
-				}
-			}
-			random_state = {
-				limit = {
-					controller = { tag = ROOT }
-					free_building_slots = {
-						building = dockyard
-						size > 1
-						include_locked = yes
-					}
-				}
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = dockyard
-					level = 2
-					instant_build = yes
-				}
+		log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_"
+		IF = {
+			LIMIT = { NOT = { has_tech = range_improvements } }
+			add_tech_bonus = {
+				bonus = 1.0
+				uses = 1
+				technology = range_improvements
 			}
 		}
-		if = {
-			limit = {
-				NOT = {
-					any_owned_state = {
-						dockyard > 0
-						free_building_slots = {
-							building = dockyard
-							size > 1
-							include_locked = yes
-						}
-					}
-				}
-				any_owned_state = {
-					is_coastal = yes
-				}
-			}
-			random_owned_controlled_state = {
-				limit = {
-					is_coastal = yes
-					free_building_slots = {
-						building = dockyard
-						size > 1
-						include_locked = yes
-					}
-				}
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = dockyard
-					level = 2
-					instant_build = yes
-				}
-			}
-			set_country_flag = naval_effort_built
-		}
-		if = {
-			limit = {
-				NOT = { has_country_flag = naval_effort_built }
-				any_owned_state = {
-					dockyard > 0
-					free_building_slots = {
-						building = dockyard
-						size > 1
-						include_locked = yes
-					}
-				}
-			}
-			random_owned_controlled_state = {
-				limit = {
-					dockyard > 0
-					free_building_slots = {
-						building = dockyard
-						size > 1
-						include_locked = yes
-					}
-				}
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = dockyard
-					level = 2
-					instant_build = yes
-				}
-			}
-			set_country_flag = naval_effort_built
-		}
-		if = {
-			limit = {
-				NOT = { has_country_flag = naval_effort_built }
-				NOT = {
-					any_owned_state = {
-						free_building_slots = {
-							building = dockyard
-							size > 1
-							include_locked = yes
-						}
-					}
-				}
-			}
-			random_state = {
-				limit = {
-					controller = { tag = ROOT }
-					free_building_slots = {
-						building = dockyard
-						size > 1
-						include_locked = yes
-					}
-				}
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = dockyard
-					level = 2
-					instant_build = yes
-				}
-			}
+		custom_effect_tooltip = modify_MRC_idea_insulae_defense_force_air_modifier_tt
+		add_to_variable = { 
+			MRC.MRC_air_range_factor_modifier = 0.05
+			tooltip = air_range_factor_tt
 		}
 	}
 }
 
 	shared_focus = { # 
+		id = MRC_focus_military_bombing_range
+		icon = GFX_focus_unknown_military
+		prerequisite = { focus = MRC_focus_military_far_reaching_range }
+		#mutually_exclusive = { focus =  }
+		relative_position_id = MRC_focus_military_far_reaching_range
+		x = 0
+		y = 1
+
+		cost = 5
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = yes
+
+		allow_branch = {
+			OR = {
+				has_completed_focus = MRC_focus_military_fire_and_bombs
+				AND = { is_debug = yes is_ai = no }
+			}
+		}
+		available = {
+		}
+		bypass = {
+		}
+
+		ai_will_do = {
+			factor = 2
+			modifier = {
+				add = 0.10
+				factor = 1.10
+				has_war = yes
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_bombing_range"
+		}
 	}
 
 	shared_focus = { # 
+		id = MRC_focus_military_bombing_high_altitude
+		icon = GFX_focus_unknown_military
+		prerequisite = { focus = MRC_focus_military_bombing_range }
+		#mutually_exclusive = { focus =  }
+		relative_position_id = MRC_focus_military_far_reaching_range
+		x = 0
+		y = 3
+
+		cost = 5
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = yes
+
+		allow_branch = {
+		}
+		available = {
+		}
+		bypass = {
+		}
+
+		ai_will_do = {
+			factor = 2
+			modifier = {
+				add = 0.10
+				factor = 1.10
+				has_war = yes
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_bombing_high_altitude"
+		}
 	}
 
 	shared_focus = { # 
+		id = MRC_focus_military_fighting_range
+		icon = GFX_focus_unknown_military
+		prerequisite = { focus = MRC_focus_military_far_reaching_range }
+		#mutually_exclusive = { focus =  }
+		relative_position_id = MRC_focus_military_far_reaching_range
+		offset = {
+			x = 4
+			y = 1
+			trigger = { AND = { is_debug = yes is_ai = no } }
+		}
+		offset = {
+			x = 0
+			y = 2
+			trigger = { NOT = { AND = { is_debug = yes is_ai = no } } }
+		}
+
+		cost = 5
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = yes
+
+		allow_branch = {
+			OR = {
+				has_completed_focus = MRC_focus_military_homeland_defense
+				AND = { is_debug = yes is_ai = no }
+			}
+		}
+		available = {
+		}
+		bypass = {
+		}
+
+		ai_will_do = {
+			factor = 2
+			modifier = {
+				add = 0.10
+				factor = 1.10
+				has_war = yes
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_fighting_range"
+		}
 	}
+
+	shared_focus = { # 
+		id = MRC_focus_military_supporting_range
+		icon = GFX_focus_unknown_military
+		prerequisite = { focus = MRC_focus_military_far_reaching_range }
+		#mutually_exclusive = { focus =  }
+		relative_position_id = MRC_focus_military_far_reaching_range
+		offset = {
+			x = 6
+			y = 1
+			trigger = { AND = { is_debug = yes is_ai = no } }
+		}
+		offset = {
+			x = 0
+			y = 2
+			trigger = { NOT = { AND = { is_debug = yes is_ai = no } } }
+		}
+
+		cost = 5
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = yes
+
+		allow_branch = {
+			OR = {
+				has_completed_focus = MRC_focus_military_air_raiders
+				AND = { is_debug = yes is_ai = no }
+			}
+		}
+		available = {
+		}
+		bypass = {
+		}
+
+		ai_will_do = {
+			factor = 2
+			modifier = {
+				add = 0.10
+				factor = 1.10
+				has_war = yes
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_supporting_range"
+		}
+	}
+
+shared_focus = { # Insulae Maritime Defense Force
+	id = MRC_focus_military_insulae_maritime_defense_force
+	icon = GFX_focus_unknown_military
+	#prerequisite = { focus =  }
+	#mutually_exclusive = { focus =  }
+	#relative_position_id = 
+	offset = {
+		x = 49
+		y = 0
+		trigger = { NOT = { AND = { is_debug = yes is_ai = no } } }
+	}
+	offset = {
+		x = 53
+		y = 0
+		trigger = { AND = { is_debug = yes is_ai = no } }
+	}
+
+	cost = 0
+	cancel_if_invalid = yes
+	continue_if_invalid = no
+	available_if_capitulated = yes
+
+	allow_branch = {
+	}
+	available = {
+		always = no
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		factor = 5
+		modifier = {
+			add = 0.10
+			factor = 1.10
+			has_war = yes
+		}
+	}
+
+	completion_reward = {
+		log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_insulae_maritime_defense_force"
+		add_dynamic_modifier = { modifier = MRC_idea_insulae_defense_force_navy_modifier }
+		add_dynamic_modifier = { modifier = MRC_idea_navy_manufacturing_modifier }
+	}
+}
+
+	shared_focus = { # Prospecting the Future
+		id = MRC_focus_military_prospecting_future
+		icon = GFX_focus_unknown_military
+		prerequisite = { focus = MRC_focus_military_insulae_maritime_defense_force }
+		#mutually_exclusive = { focus =  }
+		relative_position_id = MRC_focus_military_insulae_maritime_defense_force
+		x = -2
+		y = 1
+
+		cost = 10
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = yes
+
+		allow_branch = {
+		}
+		available = {
+		}
+		bypass = {
+		}
+
+		ai_will_do = {
+			factor = 2
+			modifier = {
+				add = 0.10
+				factor = 1.10
+				has_war = yes
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_prospecting_future"
+			navy_experience = 25
+		}
+	}
+
+		shared_focus = { # R&D
+			id = MRC_focus_military_rad0
+			icon = GFX_focus_unknown_military
+			prerequisite = { focus = MRC_focus_military_prospecting_future }
+			#mutually_exclusive = { focus =  }
+			relative_position_id = MRC_focus_military_prospecting_future
+			x = -1
+			y = 1
+
+			cost = 10
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = yes
+
+			allow_branch = {
+			}
+			available = {
+			}
+			bypass = {
+			}
+
+			ai_will_do = {
+				factor = 2
+				modifier = {
+					add = 0.10
+					factor = 1.10
+					has_war = yes
+				}
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_rad0"
+			}
+		}
+
+		shared_focus = { # R&D
+			id = MRC_focus_military_rad1
+			icon = GFX_focus_unknown_military
+			prerequisite = { focus = MRC_focus_military_rad0 }
+			#mutually_exclusive = { focus =  }
+			relative_position_id = MRC_focus_military_prospecting_future
+			x = -1
+			y = 2
+
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = yes
+
+			allow_branch = {
+			}
+			available = {
+			}
+			bypass = {
+			}
+
+			ai_will_do = {
+				factor = 2
+				modifier = {
+					add = 0.10
+					factor = 1.10
+					has_war = yes
+				}
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_rad1"
+			}
+		}
+
+		shared_focus = { # R&D
+			id = MRC_focus_military_rad2
+			icon = GFX_focus_unknown_military
+			prerequisite = { focus = MRC_focus_military_rad0 }
+			#mutually_exclusive = { focus =  }
+			relative_position_id = MRC_focus_military_prospecting_future
+			x = 1
+			y = 2
+
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = yes
+
+			allow_branch = {
+			}
+			available = {
+			}
+			bypass = {
+			}
+
+			ai_will_do = {
+				factor = 2
+				modifier = {
+					add = 0.10
+					factor = 1.10
+					has_war = yes
+				}
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_rad2"
+			}
+		}
+
+		shared_focus = { # R&D
+			id = MRC_focus_military_rad3
+			icon = GFX_focus_unknown_military
+			prerequisite = { focus = MRC_focus_military_rad1 }
+			#mutually_exclusive = { focus =  }
+			relative_position_id = MRC_focus_military_prospecting_future
+			x = -2
+			y = 3
+
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = yes
+
+			allow_branch = {
+			}
+			available = {
+			}
+			bypass = {
+			}
+
+			ai_will_do = {
+				factor = 2
+				modifier = {
+					add = 0.10
+					factor = 1.10
+					has_war = yes
+				}
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_rad3"
+			}
+		}
+
+		shared_focus = { # R&D
+			id = MRC_focus_military_rad4
+			icon = GFX_focus_unknown_military
+			prerequisite = { focus = MRC_focus_military_rad1 }
+			#mutually_exclusive = { focus =  }
+			relative_position_id = MRC_focus_military_prospecting_future
+			x = 0
+			y = 3
+
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = yes
+
+			allow_branch = {
+			}
+			available = {
+			}
+			bypass = {
+			}
+
+			ai_will_do = {
+				factor = 2
+				modifier = {
+					add = 0.10
+					factor = 1.10
+					has_war = yes
+				}
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_rad4"
+			}
+		}
+
+		shared_focus = { # R&D
+			id = MRC_focus_military_rad5
+			icon = GFX_focus_unknown_military
+			prerequisite = { focus = MRC_focus_military_rad2 }
+			#mutually_exclusive = { focus =  }
+			relative_position_id = MRC_focus_military_prospecting_future
+			x = 1
+			y = 4
+
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = yes
+
+			allow_branch = {
+			}
+			available = {
+			}
+			bypass = {
+			}
+
+			ai_will_do = {
+				factor = 2
+				modifier = {
+					add = 0.10
+					factor = 1.10
+					has_war = yes
+				}
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_rad5"
+				MRC_idea_screen_ship_build_cost_ic_num_ns = yes
+				custom_effect_tooltip = MRC_military_screen_ship_build_cost_ic_0_key
+			}
+		}
+
+		shared_focus = { # R&D
+			id = MRC_focus_military_rad6
+			icon = GFX_focus_unknown_military
+			prerequisite = { focus = MRC_focus_military_rad3 }
+			#mutually_exclusive = { focus =  }
+			relative_position_id = MRC_focus_military_prospecting_future
+			x = -2
+			y = 5
+
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = yes
+
+			allow_branch = {
+			}
+			available = {
+			}
+			bypass = {
+			}
+
+			ai_will_do = {
+				factor = 2
+				modifier = {
+					add = 0.10
+					factor = 1.10
+					has_war = yes
+				}
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_rad6"
+				MRC_idea_carrier_build_cost_ic_num_ns = yes
+				custom_effect_tooltip = MRC_military_carrier_build_cost_ic_0_key
+			}
+		}
+
+		shared_focus = { # R&D
+			id = MRC_focus_military_rad7
+			icon = GFX_focus_unknown_military
+			prerequisite = { focus = MRC_focus_military_rad4 }
+			#mutually_exclusive = { focus =  }
+			relative_position_id = MRC_focus_military_prospecting_future
+			x = 0
+			y = 5
+
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = yes
+
+			allow_branch = {
+			}
+			available = {
+			}
+			bypass = {
+			}
+
+			ai_will_do = {
+				factor = 2
+				modifier = {
+					add = 0.10
+					factor = 1.10
+					has_war = yes
+				}
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_rad7"
+				MRC_idea_capital_ship_build_cost_ic_num_ns = yes
+				custom_effect_tooltip = MRC_military_capital_ship_build_cost_ic_0_key
+			}
+		}
+
+	shared_focus = { # New BC-Class
+		id = MRC_focus_military_nav0
+		icon = GFX_focus_unknown_military
+		prerequisite = { focus = MRC_focus_military_insulae_maritime_defense_force }
+		#mutually_exclusive = { focus =  }
+		relative_position_id = MRC_focus_military_insulae_maritime_defense_force
+		x = 1
+		y = 1
+
+		cost = 5
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = yes
+
+		allow_branch = {
+		}
+		available = {
+		}
+		bypass = {
+		}
+
+		ai_will_do = {
+			factor = 2
+			modifier = {
+				add = 0.10
+				factor = 1.10
+				has_war = yes
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_nav0"
+			add_tech_bonus = {
+				bonus = 1.0
+				uses = 1
+				category = bc_tech
+			}
+			MRC_naval_equipment_gain_battlecruiser_maritimus = yes
+		}
+	}
+
+		shared_focus = { # New DD-Class
+			id = MRC_focus_military_nav1
+			icon = GFX_focus_unknown_military
+			prerequisite = { focus = MRC_focus_military_insulae_maritime_defense_force focus = MRC_focus_military_nav0 }
+			#mutually_exclusive = { focus =  }
+			relative_position_id = MRC_focus_military_insulae_maritime_defense_force
+			x = 0
+			y = 2
+
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = yes
+
+			allow_branch = {
+			}
+			available = {
+			}
+			bypass = {
+			}
+
+			ai_will_do = {
+				factor = 2
+				modifier = {
+					add = 0.10
+					factor = 1.10
+					has_war = yes
+				}
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_nav1"
+				add_tech_bonus = {
+					bonus = 1.0
+					uses = 1
+					category = dd_tech
+				}
+				MRC_naval_equipment_gain_destroyer_deleo = yes
+			}
+		}
+
+		shared_focus = { # New BB-Class
+			id = MRC_focus_military_nav2
+			icon = GFX_focus_unknown_military
+			prerequisite = { focus = MRC_focus_military_nav0 focus = MRC_focus_military_nav1 }
+			#mutually_exclusive = { focus =  }
+			relative_position_id = MRC_focus_military_insulae_maritime_defense_force
+			x = 1
+			y = 3
+
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = yes
+
+			allow_branch = {
+			}
+			available = {
+			}
+			bypass = {
+			}
+
+			ai_will_do = {
+				factor = 2
+				modifier = {
+					add = 0.10
+					factor = 1.10
+					has_war = yes
+				}
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_nav2"
+				add_tech_bonus = {
+					bonus = 1.0
+					uses = 1
+					category = bb_tech
+				}
+				MRC_naval_equipment_gain_battleship_argenti = yes
+			}
+		}
+
+		shared_focus = { # New CL-Class
+			id = MRC_focus_military_nav3
+			icon = GFX_focus_unknown_military
+			prerequisite = { focus = MRC_focus_military_nav1 focus = MRC_focus_military_nav2 }
+			#mutually_exclusive = { focus =  }
+			relative_position_id = MRC_focus_military_insulae_maritime_defense_force
+			x = 0
+			y = 4
+
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = yes
+
+			allow_branch = {
+			}
+			available = {
+			}
+			bypass = {
+			}
+
+			ai_will_do = {
+				factor = 2
+				modifier = {
+					add = 0.10
+					factor = 1.10
+					has_war = yes
+				}
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_nav3"
+				add_tech_bonus = {
+					bonus = 1.0
+					uses = 1
+					category = cl_tech
+				}
+				MRC_naval_equipment_gain_light_cruiser_vispluvia = yes
+			}
+		}
+
+		shared_focus = { # New CV-Class
+			id = MRC_focus_military_nav4
+			icon = GFX_focus_unknown_military
+			prerequisite = { focus = MRC_focus_military_nav2 focus = MRC_focus_military_nav3 }
+			#mutually_exclusive = { focus =  }
+			relative_position_id = MRC_focus_military_insulae_maritime_defense_force
+			x = 1
+			y = 5
+
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = yes
+
+			allow_branch = {
+			}
+			available = {
+			}
+			bypass = {
+			}
+
+			ai_will_do = {
+				factor = 2
+				modifier = {
+					add = 0.10
+					factor = 1.10
+					has_war = yes
+				}
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_nav4"
+				add_tech_bonus = {
+					bonus = 1.0
+					uses = 1
+					category = cv_tech
+				}
+				HHE_naval_equipment_gain_carrier_promontorium = yes
+			}
+		}
+
+	shared_focus = { # Ambitious Fever of the Levav Sea
+		id = MRC_focus_military_ambitious_fever_levav_sea
+		icon = GFX_focus_unknown_industry
+		prerequisite = { focus = MRC_focus_military_nav3 focus = MRC_focus_military_nav4 }
+		#mutually_exclusive = { focus =  }
+		relative_position_id = MRC_focus_military_insulae_maritime_defense_force
+		x = 0
+		y = 6
+
+		cost = 10
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = yes
+
+		allow_branch = {
+		}
+		available = {
+			any_enemy_country = {
+				is_major_not_original_tag_root = yes
+			}
+		}
+		bypass = {
+		}
+
+		ai_will_do = {
+			factor = 2
+			modifier = {
+				add = 0.10
+				factor = 1.10
+				has_war = yes
+			}
+		}
+
+		complete_tooltip = {
+			add_extra_state_shared_building_slots = 4
+			add_building_construction = {
+				type = dockyard
+				level = 4
+				instant_build = yes
+			}
+		}
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_ambitious_fever_levav_sea"
+			custom_effect_tooltip = modify_MRC_idea_insulae_defense_force_air_modifier_tt
+			add_to_variable = { 
+				MRC.MRC_naval_equipment_upgrade_xp_cost_modifier = 0.075
+				tooltip = naval_equipment_upgrade_xp_cost_tt
+			}
+			if = {
+				limit = {
+					NOT = {
+						any_owned_state = {
+							dockyard > 0
+							free_building_slots = {
+								building = dockyard
+								size > 1
+								include_locked = yes
+							}
+						}
+					}
+					any_owned_state = {
+						is_coastal = yes
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						is_coastal = yes
+						free_building_slots = {
+							building = dockyard
+							size > 1
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = dockyard
+						level = 2
+						instant_build = yes
+					}
+				}
+				set_country_flag = naval_effort_built
+			}
+			if = {
+				limit = {
+					NOT = { has_country_flag = naval_effort_built }
+					any_owned_state = {
+						dockyard > 0
+						free_building_slots = {
+							building = dockyard
+							size > 1
+							include_locked = yes
+						}
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						dockyard > 0
+						free_building_slots = {
+							building = dockyard
+							size > 1
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = dockyard
+						level = 2
+						instant_build = yes
+					}
+				}
+				set_country_flag = naval_effort_built
+			}
+			if = {
+				limit = {
+					NOT = { has_country_flag = naval_effort_built }
+					NOT = {
+						any_owned_state = {
+							free_building_slots = {
+								building = dockyard
+								size > 1
+								include_locked = yes
+							}
+						}
+					}
+				}
+				random_state = {
+					limit = {
+						controller = { tag = ROOT }
+						free_building_slots = {
+							building = dockyard
+							size > 1
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = dockyard
+						level = 2
+						instant_build = yes
+					}
+				}
+			}
+			if = {
+				limit = {
+					NOT = {
+						any_owned_state = {
+							dockyard > 0
+							free_building_slots = {
+								building = dockyard
+								size > 1
+								include_locked = yes
+							}
+						}
+					}
+					any_owned_state = {
+						is_coastal = yes
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						is_coastal = yes
+						free_building_slots = {
+							building = dockyard
+							size > 1
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = dockyard
+						level = 2
+						instant_build = yes
+					}
+				}
+				set_country_flag = naval_effort_built
+			}
+			if = {
+				limit = {
+					NOT = { has_country_flag = naval_effort_built }
+					any_owned_state = {
+						dockyard > 0
+						free_building_slots = {
+							building = dockyard
+							size > 1
+							include_locked = yes
+						}
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						dockyard > 0
+						free_building_slots = {
+							building = dockyard
+							size > 1
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = dockyard
+						level = 2
+						instant_build = yes
+					}
+				}
+				set_country_flag = naval_effort_built
+			}
+			if = {
+				limit = {
+					NOT = { has_country_flag = naval_effort_built }
+					NOT = {
+						any_owned_state = {
+							free_building_slots = {
+								building = dockyard
+								size > 1
+								include_locked = yes
+							}
+						}
+					}
+				}
+				random_state = {
+					limit = {
+						controller = { tag = ROOT }
+						free_building_slots = {
+							building = dockyard
+							size > 1
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = dockyard
+						level = 2
+						instant_build = yes
+					}
+				}
+			}
+		}
+	}
+
+		shared_focus = { # Sea-Air(SA) project
+			id = MRC_focus_military_seaair_project
+			icon = GFX_focus_unknown_military
+			prerequisite = { focus = MRC_focus_military_ambitious_fever_levav_sea }
+			mutually_exclusive = { focus = MRC_focus_military_ironside_project focus = MRC_focus_military_mercantile_freedom_project }
+			relative_position_id = MRC_focus_military_ambitious_fever_levav_sea
+			x = -2
+			y = 1
+
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = yes
+
+			allow_branch = {
+			}
+			available = {
+			}
+			bypass = {
+			}
+
+			ai_will_do = {
+				factor = 2
+				modifier = {
+					add = 0.10
+					factor = 1.10
+					has_war = yes
+				}
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_seaair_project"
+				custom_effect_tooltip = unlocks_branch_tt # Unlocks Branch
+				MRC_idea_carrier_build_cost_ic_num_ns = yes
+				custom_effect_tooltip = MRC_military_carrier_build_cost_ic_0_key
+				mark_focus_tree_layout_dirty = yes
+			}
+		}
+
+			shared_focus = { # Carrier Dominance
+				id = MRC_focus_military_sa_carrier_dominance
+				icon = GFX_focus_unknown_military
+				prerequisite = { focus = MRC_focus_military_seaair_project }
+				#mutually_exclusive = { focus =  }
+				relative_position_id = MRC_focus_military_ambitious_fever_levav_sea
+				offset = {
+					x = 0
+					y = 2
+					trigger = { NOT = { AND = { is_debug = yes is_ai = no } } }
+				}
+				offset = {
+					x = -7
+					y = 2
+					trigger = { AND = { is_debug = yes is_ai = no } }
+				}
+
+				cost = 5
+				cancel_if_invalid = yes
+				continue_if_invalid = no
+				available_if_capitulated = yes
+
+				allow_branch = {
+					OR = {
+						has_completed_focus = MRC_focus_military_seaair_project
+						AND = { is_debug = yes is_ai = no }
+					}
+				}
+				available = {
+				}
+				bypass = {
+				}
+
+				ai_will_do = {
+					factor = 2
+					modifier = {
+						add = 0.10
+						factor = 1.10
+						has_war = yes
+					}
+				}
+
+				completion_reward = {
+					log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_sa_carrier_dominance"
+				}
+			}
+
+		shared_focus = { # Ironside(IS) Project
+			id = MRC_focus_military_ironside_project
+			icon = GFX_focus_unknown_military
+			prerequisite = { focus = MRC_focus_military_ambitious_fever_levav_sea }
+			mutually_exclusive = { focus = MRC_focus_military_seaair_project focus = MRC_focus_military_mercantile_freedom_project }
+			relative_position_id = MRC_focus_military_ambitious_fever_levav_sea
+			x = 0
+			y = 1
+
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = yes
+
+			allow_branch = {
+			}
+			available = {
+			}
+			bypass = {
+			}
+
+			ai_will_do = {
+				factor = 2
+				modifier = {
+					add = 0.10
+					factor = 1.10
+					has_war = yes
+				}
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_ironside_project"
+				custom_effect_tooltip = unlocks_branch_tt # Unlocks Branch
+				MRC_idea_capital_ship_build_cost_ic_num_ns = yes
+				custom_effect_tooltip = MRC_military_capital_ship_build_cost_ic_0_key
+				mark_focus_tree_layout_dirty = yes
+			}
+		}
+
+			shared_focus = { # Battleship Dominance
+				id = MRC_focus_military_sa_Battleship_dominance
+				icon = GFX_focus_unknown_military
+				prerequisite = { focus = MRC_focus_military_ironside_project }
+				#mutually_exclusive = { focus =  }
+				relative_position_id = MRC_focus_military_ambitious_fever_levav_sea
+				offset = {
+					x = 0
+					y = 2
+					trigger = { NOT = { AND = { is_debug = yes is_ai = no } } }
+				}
+				offset = {
+					x = 0
+					y = 2
+					trigger = { AND = { is_debug = yes is_ai = no } }
+				}
+
+				cost = 5
+				cancel_if_invalid = yes
+				continue_if_invalid = no
+				available_if_capitulated = yes
+
+				allow_branch = {
+					OR = {
+						has_completed_focus = MRC_focus_military_ironside_project
+						AND = { is_debug = yes is_ai = no }
+					}
+				}
+				available = {
+				}
+				bypass = {
+				}
+
+				ai_will_do = {
+					factor = 2
+					modifier = {
+						add = 0.10
+						factor = 1.10
+						has_war = yes
+					}
+				}
+
+				completion_reward = {
+					log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_sa_carrier_dominance"
+				}
+			}
+
+		shared_focus = { # Mercantile Freedom(MF) Project
+			id = MRC_focus_military_mercantile_freedom_project
+			icon = GFX_focus_unknown_military
+			prerequisite = { focus = MRC_focus_military_ambitious_fever_levav_sea }
+			mutually_exclusive = { focus = MRC_focus_military_seaair_project focus = MRC_focus_military_ironside_project }
+			relative_position_id = MRC_focus_military_ambitious_fever_levav_sea
+			x = 2
+			y = 1
+
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = yes
+
+			allow_branch = {
+			}
+			available = {
+			}
+			bypass = {
+			}
+
+			ai_will_do = {
+				factor = 2
+				modifier = {
+					add = 0.10
+					factor = 1.10
+					has_war = yes
+				}
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_mercantile_freedom_project"
+				custom_effect_tooltip = unlocks_branch_tt # Unlocks Branch
+				MRC_idea_screen_ship_build_cost_ic_num_ns = yes
+				custom_effect_tooltip = MRC_military_screen_ship_build_cost_ic_0_key
+				mark_focus_tree_layout_dirty = yes
+			}
+		}
+
+			shared_focus = { # Maritime Security Operations
+				id = MRC_focus_military_sa_maritime_security_operations
+				icon = GFX_focus_unknown_military
+				prerequisite = { focus = MRC_focus_military_mercantile_freedom_project }
+				#mutually_exclusive = { focus =  }
+				relative_position_id = MRC_focus_military_ambitious_fever_levav_sea
+				offset = {
+					x = 0
+					y = 2
+					trigger = { NOT = { AND = { is_debug = yes is_ai = no } } }
+				}
+				offset = {
+					x = 7
+					y = 2
+					trigger = { AND = { is_debug = yes is_ai = no } }
+				}
+
+				cost = 5
+				cancel_if_invalid = yes
+				continue_if_invalid = no
+				available_if_capitulated = yes
+
+				allow_branch = {
+					OR = {
+						has_completed_focus = MRC_focus_military_mercantile_freedom_project
+						AND = { is_debug = yes is_ai = no }
+					}
+				}
+				available = {
+				}
+				bypass = {
+				}
+
+				ai_will_do = {
+					factor = 2
+					modifier = {
+						add = 0.10
+						factor = 1.10
+						has_war = yes
+					}
+				}
+
+				completion_reward = {
+					log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_sa_carrier_dominance"
+				}
+			}
+
+		shared_focus = { # Ruler of Levav
+			id = MRC_focus_military_ruler_of_levav
+			icon = GFX_focus_unknown_military
+			prerequisite = { focus = MRC_focus_military_sa_carrier_dominance focus = MRC_focus_military_sa_Battleship_dominance focus = MRC_focus_military_sa_maritime_security_operations }
+			#mutually_exclusive = { focus =  }
+			relative_position_id = MRC_focus_military_ambitious_fever_levav_sea
+			x = 0
+			y = 7
+
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = yes
+
+			allow_branch = {
+				OR = {
+					has_completed_focus = MRC_focus_military_seaair_project
+					has_completed_focus = MRC_focus_military_ironside_project
+					has_completed_focus = MRC_focus_military_mercantile_freedom_project
+					AND = { is_debug = yes is_ai = no }
+				}
+			}
+			available = {
+			}
+			bypass = {
+			}
+
+			ai_will_do = {
+				factor = 2
+				modifier = {
+					add = 0.10
+					factor = 1.10
+					has_war = yes
+				}
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_sa_carrier_dominance"
+			}
+		}

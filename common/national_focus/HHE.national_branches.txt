@@ -10725,27 +10725,79 @@ focus_tree = { # Void
 	continuous_focus_position = { x = 1960 y = 750 }
 }
 
-# Army
-	shared_focus = { # New Theory of Warfare
-		id = HHE_military_new_theory
+shared_focus = { # New Theory of Warfare
+	id = HHE_military_new_theory
+	icon = GFX_focus_unknown_military
+	#prerequisite = { focus =  }
+	#mutually_exclusive = { focus =  }
+	#relative_position_id = 
+	x = 20
+	y = 0
+	cost = 10
+
+	allow_branch = {
+	}
+	available = {
+		not = { has_idea = disjointed_military1 }
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		factor = 1
+		modifier = { # Improve Economy
+			add = 1
+			factor = 3
+			has_idea = HHE_piller_economic0
+		}
+		modifier = { # Rush to Revisit R.t.t.F
+			add = 1
+			factor = 3
+			has_completed_focus = HHE_warmonger_revisit_rttf
+		}
+		modifier = { # Historical Encouragement 
+			factor = 10
+			date > 1730.01.01
+		}
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		log = "[GetDateText]: [Root.GetName]: Focus HHE_military_new_theory"
+		army_experience = 25
+	}
+}
+
+	shared_focus = { # Theory of Mobile Warfare
+		id = HHE_military_theory_mobile_warfare
 		icon = GFX_focus_unknown_military
-		#prerequisite = { focus =  }
-		#mutually_exclusive = { focus =  }
-		#relative_position_id = 
-		x = 20
-		y = 0
-		cost = 10
+		prerequisite = { focus = HHE_military_new_theory }
+		mutually_exclusive = { focus = HHE_military_theory_superior_firepower focus = HHE_military_theory_grand_battleplan focus = HHE_military_theory_mass_assault }
+		relative_position_id = HHE_military_new_theory
+		x = -6
+		y = 1
+		offset = {
+			x = 6
+			y = 0
+			trigger = { has_completed_focus = HHE_military_theory_mobile_warfare }
+		}
+		cost = 5
 
 		allow_branch = {
+			NOT = { OR = { has_completed_focus = HHE_military_theory_superior_firepower has_completed_focus = HHE_military_theory_grand_battleplan has_completed_focus = HHE_military_theory_mass_assault } }
 		}
 		available = {
-			not = { has_idea = disjointed_military1 }
 		}
 		bypass = {
 		}
 
 		ai_will_do = {
 			factor = 1
+			modifier = {
+				factor = 10
+				has_tech = mobile_warfare
+			}
 			modifier = { # Improve Economy
 				add = 1
 				factor = 3
@@ -10765,68 +10817,15 @@ focus_tree = { # Void
 		available_if_capitulated = yes
 
 		completion_reward = {
-			log = "[GetDateText]: [Root.GetName]: Focus HHE_military_new_theory"
-			army_experience = 25
+			log = "[GetDateText]: [Root.GetName]: Focus HHE_military_theory_mobile_warfare"
+			add_doctrine_cost_reduction = {
+				name = army_mobile_warfare_bonus
+				cost_reduction = 0.25
+				uses = 2
+				category = cat_mobile_warfare
+			}
 		}
 	}
-	# Mobile Warfare
-		shared_focus = { # Theory of Mobile Warfare
-			id = HHE_military_theory_mobile_warfare
-			icon = GFX_focus_unknown_military
-			prerequisite = { focus = HHE_military_new_theory }
-			mutually_exclusive = { focus = HHE_military_theory_superior_firepower focus = HHE_military_theory_grand_battleplan focus = HHE_military_theory_mass_assault }
-			relative_position_id = HHE_military_new_theory
-			x = -6
-			y = 1
-			offset = {
-				x = 6
-				y = 0
-				trigger = { has_completed_focus = HHE_military_theory_mobile_warfare }
-			}
-			cost = 5
-
-			allow_branch = {
-				NOT = { OR = { has_completed_focus = HHE_military_theory_superior_firepower has_completed_focus = HHE_military_theory_grand_battleplan has_completed_focus = HHE_military_theory_mass_assault } }
-			}
-			available = {
-			}
-			bypass = {
-			}
-
-			ai_will_do = {
-				factor = 1
-				modifier = {
-					factor = 10
-					has_tech = mobile_warfare
-				}
-				modifier = { # Improve Economy
-					add = 1
-					factor = 3
-					has_idea = HHE_piller_economic0
-				}
-				modifier = { # Rush to Revisit R.t.t.F
-					add = 1
-					factor = 3
-					has_completed_focus = HHE_warmonger_revisit_rttf
-				}
-				modifier = { # Historical Encouragement 
-					factor = 10
-					date > 1730.01.01
-				}
-			}
-
-			available_if_capitulated = yes
-
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus HHE_military_theory_mobile_warfare"
-				add_doctrine_cost_reduction = {
-					name = army_mobile_warfare_bonus
-					cost_reduction = 0.25
-					uses = 2
-					category = cat_mobile_warfare
-				}
-			}
-		}
 
 		shared_focus = { # Armor Revitalization Program
 			id = HHE_military_armor_revitalization_program
@@ -11040,64 +11039,64 @@ focus_tree = { # Void
 				}
 			}
 		}
-	# Superior Firepower
-		shared_focus = { # Theory of Superior Firepower
-			id = HHE_military_theory_superior_firepower
-			icon = GFX_focus_unknown_military
-			prerequisite = { focus = HHE_military_new_theory }
-			mutually_exclusive = { focus = HHE_military_theory_mobile_warfare focus = HHE_military_theory_grand_battleplan focus = HHE_military_theory_mass_assault }
-			relative_position_id = HHE_military_new_theory
-			x = -2
-			y = 1
-			offset = {
-				x = 2
-				y = 0
-				trigger = { has_completed_focus = HHE_military_theory_superior_firepower }
-			}
-			cost = 5
 
-			allow_branch = {
-				NOT = { OR = { has_completed_focus = HHE_military_theory_mobile_warfare has_completed_focus = HHE_military_theory_grand_battleplan has_completed_focus = HHE_military_theory_mass_assault } }
-			}
-			available = {
-			}
-			bypass = {
-			}
+	shared_focus = { # Theory of Superior Firepower
+		id = HHE_military_theory_superior_firepower
+		icon = GFX_focus_unknown_military
+		prerequisite = { focus = HHE_military_new_theory }
+		mutually_exclusive = { focus = HHE_military_theory_mobile_warfare focus = HHE_military_theory_grand_battleplan focus = HHE_military_theory_mass_assault }
+		relative_position_id = HHE_military_new_theory
+		x = -2
+		y = 1
+		offset = {
+			x = 2
+			y = 0
+			trigger = { has_completed_focus = HHE_military_theory_superior_firepower }
+		}
+		cost = 5
 
-			ai_will_do = {
-				factor = 1
-				modifier = {
-					factor = 10
-					has_tech = superior_firepower
-				}
-				modifier = { # Improve Economy
-					add = 1
-					factor = 3
-					has_idea = HHE_piller_economic0
-				}
-				modifier = { # Rush to Revisit R.t.t.F
-					add = 1
-					factor = 3
-					has_completed_focus = HHE_warmonger_revisit_rttf
-				}
-				modifier = { # Historical Encouragement 
-					factor = 10
-					date > 1730.01.01
-				}
+		allow_branch = {
+			NOT = { OR = { has_completed_focus = HHE_military_theory_mobile_warfare has_completed_focus = HHE_military_theory_grand_battleplan has_completed_focus = HHE_military_theory_mass_assault } }
+		}
+		available = {
+		}
+		bypass = {
+		}
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 10
+				has_tech = superior_firepower
 			}
-
-			available_if_capitulated = yes
-
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus HHE_military_theory_superior_firepower"
-				add_doctrine_cost_reduction = {
-					name = army_superior_firepower_bonus
-					cost_reduction = 0.25
-					uses = 2
-					category = cat_superior_firepower
-				}
+			modifier = { # Improve Economy
+				add = 1
+				factor = 3
+				has_idea = HHE_piller_economic0
+			}
+			modifier = { # Rush to Revisit R.t.t.F
+				add = 1
+				factor = 3
+				has_completed_focus = HHE_warmonger_revisit_rttf
+			}
+			modifier = { # Historical Encouragement 
+				factor = 10
+				date > 1730.01.01
 			}
 		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus HHE_military_theory_superior_firepower"
+			add_doctrine_cost_reduction = {
+				name = army_superior_firepower_bonus
+				cost_reduction = 0.25
+				uses = 2
+				category = cat_superior_firepower
+			}
+		}
+	}
 
 		shared_focus = { # Firepower Doctrine
 			id = HHE_military_firepower_doctrine
@@ -11146,64 +11145,64 @@ focus_tree = { # Void
 				}
 			}
 		}
-	# Grand Battleplan
-		shared_focus = { # Theory of Grand Battleplan
-			id = HHE_military_theory_grand_battleplan
-			icon = GFX_focus_unknown_military
-			prerequisite = { focus = HHE_military_new_theory }
-			mutually_exclusive = { focus = HHE_military_theory_mobile_warfare focus = HHE_military_theory_superior_firepower focus = HHE_military_theory_mass_assault }
-			relative_position_id = HHE_military_new_theory
-			x = 2
-			y = 1
-			offset = {
-				x = -2
-				y = 0
-				trigger = { has_completed_focus = HHE_military_theory_grand_battleplan }
-			}
-			cost = 5
 
-			allow_branch = {
-				NOT = { OR = { has_completed_focus = HHE_military_theory_mobile_warfare has_completed_focus = HHE_military_theory_superior_firepower has_completed_focus = HHE_military_theory_mass_assault } }
-			}
-			available = {
-			}
-			bypass = {
-			}
+	shared_focus = { # Theory of Grand Battleplan
+		id = HHE_military_theory_grand_battleplan
+		icon = GFX_focus_unknown_military
+		prerequisite = { focus = HHE_military_new_theory }
+		mutually_exclusive = { focus = HHE_military_theory_mobile_warfare focus = HHE_military_theory_superior_firepower focus = HHE_military_theory_mass_assault }
+		relative_position_id = HHE_military_new_theory
+		x = 2
+		y = 1
+		offset = {
+			x = -2
+			y = 0
+			trigger = { has_completed_focus = HHE_military_theory_grand_battleplan }
+		}
+		cost = 5
 
-			ai_will_do = {
-				factor = 1
-				modifier = {
-					factor = 10
-					has_tech = trench_warfare
-				}
-				modifier = { # Improve Economy
-					add = 1
-					factor = 3
-					has_idea = HHE_piller_economic0
-				}
-				modifier = { # Rush to Revisit R.t.t.F
-					add = 1
-					factor = 3
-					has_completed_focus = HHE_warmonger_revisit_rttf
-				}
-				modifier = { # Historical Encouragement 
-					factor = 10
-					date > 1730.01.01
-				}
+		allow_branch = {
+			NOT = { OR = { has_completed_focus = HHE_military_theory_mobile_warfare has_completed_focus = HHE_military_theory_superior_firepower has_completed_focus = HHE_military_theory_mass_assault } }
+		}
+		available = {
+		}
+		bypass = {
+		}
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 10
+				has_tech = trench_warfare
 			}
-
-			available_if_capitulated = yes
-
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus HHE_military_theory_grand_battleplan"
-				add_doctrine_cost_reduction = {
-					name = army_grand_battle_plan_bonus
-					cost_reduction = 0.25
-					uses = 2
-					category = cat_grand_battle_plan
-				}
+			modifier = { # Improve Economy
+				add = 1
+				factor = 3
+				has_idea = HHE_piller_economic0
+			}
+			modifier = { # Rush to Revisit R.t.t.F
+				add = 1
+				factor = 3
+				has_completed_focus = HHE_warmonger_revisit_rttf
+			}
+			modifier = { # Historical Encouragement 
+				factor = 10
+				date > 1730.01.01
 			}
 		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus HHE_military_theory_grand_battleplan"
+			add_doctrine_cost_reduction = {
+				name = army_grand_battle_plan_bonus
+				cost_reduction = 0.25
+				uses = 2
+				category = cat_grand_battle_plan
+			}
+		}
+	}
 
 		shared_focus = { # Battleplan Doctrine
 			id = HHE_military_battleplan_doctrine
@@ -11252,64 +11251,64 @@ focus_tree = { # Void
 				}
 			}
 		}
-	# Mass Assault
-		shared_focus = { # Theory of Mass Assault
-			id = HHE_military_theory_mass_assault
-			icon = GFX_focus_unknown_military
-			prerequisite = { focus = HHE_military_new_theory }
-			mutually_exclusive = { focus = HHE_military_theory_mobile_warfare focus = HHE_military_theory_superior_firepower focus = HHE_military_theory_grand_battleplan }
-			relative_position_id = HHE_military_new_theory
-			x = 6
-			y = 1
-			offset = {
-				x = -6
-				y = 0
-				trigger = { has_completed_focus = HHE_military_theory_mass_assault }
-			}
-			cost = 5
 
-			allow_branch = {
-				NOT = { OR = { has_completed_focus = HHE_military_theory_mobile_warfare has_completed_focus = HHE_military_theory_superior_firepower has_completed_focus = HHE_military_theory_grand_battleplan } }
-			}
-			available = {
-			}
-			bypass = {
-			}
+	shared_focus = { # Theory of Mass Assault
+		id = HHE_military_theory_mass_assault
+		icon = GFX_focus_unknown_military
+		prerequisite = { focus = HHE_military_new_theory }
+		mutually_exclusive = { focus = HHE_military_theory_mobile_warfare focus = HHE_military_theory_superior_firepower focus = HHE_military_theory_grand_battleplan }
+		relative_position_id = HHE_military_new_theory
+		x = 6
+		y = 1
+		offset = {
+			x = -6
+			y = 0
+			trigger = { has_completed_focus = HHE_military_theory_mass_assault }
+		}
+		cost = 5
 
-			ai_will_do = {
-				factor = 1
-				modifier = {
-					factor = 10
-					has_tech = mass_assault
-				}
-				modifier = { # Improve Economy
-					add = 1
-					factor = 3
-					has_idea = HHE_piller_economic0
-				}
-				modifier = { # Rush to Revisit R.t.t.F
-					add = 1
-					factor = 3
-					has_completed_focus = HHE_warmonger_revisit_rttf
-				}
-				modifier = { # Historical Encouragement 
-					factor = 10
-					date > 1730.01.01
-				}
+		allow_branch = {
+			NOT = { OR = { has_completed_focus = HHE_military_theory_mobile_warfare has_completed_focus = HHE_military_theory_superior_firepower has_completed_focus = HHE_military_theory_grand_battleplan } }
+		}
+		available = {
+		}
+		bypass = {
+		}
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 10
+				has_tech = mass_assault
 			}
-
-			available_if_capitulated = yes
-
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus HHE_military_theory_mass_assault"
-				add_doctrine_cost_reduction = {
-					name = army_mass_assault_bonus
-					cost_reduction = 0.25
-					uses = 2
-					category = cat_mass_assault
-				}
+			modifier = { # Improve Economy
+				add = 1
+				factor = 3
+				has_idea = HHE_piller_economic0
+			}
+			modifier = { # Rush to Revisit R.t.t.F
+				add = 1
+				factor = 3
+				has_completed_focus = HHE_warmonger_revisit_rttf
+			}
+			modifier = { # Historical Encouragement 
+				factor = 10
+				date > 1730.01.01
 			}
 		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus HHE_military_theory_mass_assault"
+			add_doctrine_cost_reduction = {
+				name = army_mass_assault_bonus
+				cost_reduction = 0.25
+				uses = 2
+				category = cat_mass_assault
+			}
+		}
+	}
 
 		shared_focus = { # Assault Doctrine
 			id = HHE_military_assault_doctrine
@@ -11358,102 +11357,102 @@ focus_tree = { # Void
 				}
 			}
 		}
-# Air
-	shared_focus = { # The Third Front
-		id = HHE_military_third_front
-		icon = GFX_focus_unknown_military
-		#prerequisite = { focus =  }
-		#mutually_exclusive = { focus =  }
-		#relative_position_id = 
-		x = 33
-		y = 0
-		cost = 10
 
-		allow_branch = {
-		}
-		available = {
-			not = { has_idea = disjointed_military1 }
-		}
-		bypass = {
-		}
+shared_focus = { # The Third Front
+	id = HHE_military_third_front
+	icon = GFX_focus_unknown_military
+	#prerequisite = { focus =  }
+	#mutually_exclusive = { focus =  }
+	#relative_position_id = 
+	x = 33
+	y = 0
+	cost = 10
 
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				add = -1
-				factor = -2
-				OR = { has_idea = disjointed_military1 has_idea = disjointed_military0 }
-			}
-			modifier = {
-				add = -1
-				factor = -2
-				OR = { has_idea = disjointed_navy1 has_idea = disjointed_navy0 }
-			}
-			# -Military Weights ^^^
-			modifier = { factor = 3.5 # Luke Deed
-				# Need tiggers later.
-				always = no
-			}
-			modifier = { factor = 3.5 # Tradition
-				# Need tiggers later.
-				always = no
-			}
-			modifier = { factor = 3.5 # Influencer
-				# Need tiggers later.
-				always = no
-			}
-			modifier = { factor = 3.5 # Authority
-				# Need tiggers later.
-				always = no
-			}
-			modifier = { factor = 3.5 # Warmonger
-				# Need tiggers later.
-				has_completed_focus = HHE_warmonger_replace_with_our_men
-				has_completed_focus = HHE_warmonger_war_research
-				OR = {
-					has_completed_focus = HHE_warmonger_revenge_machines
-					has_completed_focus = HHE_warmonger_spark_the_machines
-				}
-			}
-			# +Military Weights VVV
-			modifier = {
-				add = 1
-				factor = 2
-				ROOT = { NOT = { OR = { has_idea = disjointed_military1 has_idea = disjointed_military0 } } }
-			}
-			modifier = {
-				add = 1
-				factor = 2
-				ROOT = { NOT = { OR = { has_idea = disjointed_navy1 has_idea = disjointed_navy0 } } }
-			}
-			modifier = { # Improve Economy
-				add = -1
-				factor = -3
-				NOT = { has_idea = HHE_piller_economic0 }
-			}
-			modifier = { # Improve Economy
-				add = 1
-				factor = 3
-				has_idea = HHE_piller_economic0
-			}
-			modifier = { # Rush to Revisit R.t.t.F
-				add = 1
-				factor = 3
-				has_completed_focus = HHE_warmonger_revisit_rttf
+	allow_branch = {
+	}
+	available = {
+		not = { has_idea = disjointed_military1 }
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		factor = 1
+		modifier = {
+			add = -1
+			factor = -2
+			OR = { has_idea = disjointed_military1 has_idea = disjointed_military0 }
+		}
+		modifier = {
+			add = -1
+			factor = -2
+			OR = { has_idea = disjointed_navy1 has_idea = disjointed_navy0 }
+		}
+		# -Military Weights ^^^
+		modifier = { factor = 3.5 # Luke Deed
+			# Need tiggers later.
+			always = no
+		}
+		modifier = { factor = 3.5 # Tradition
+			# Need tiggers later.
+			always = no
+		}
+		modifier = { factor = 3.5 # Influencer
+			# Need tiggers later.
+			always = no
+		}
+		modifier = { factor = 3.5 # Authority
+			# Need tiggers later.
+			always = no
+		}
+		modifier = { factor = 3.5 # Warmonger
+			# Need tiggers later.
+			has_completed_focus = HHE_warmonger_replace_with_our_men
+			has_completed_focus = HHE_warmonger_war_research
+			OR = {
+				has_completed_focus = HHE_warmonger_revenge_machines
+				has_completed_focus = HHE_warmonger_spark_the_machines
 			}
 		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-			log = "[GetDateText]: [Root.GetName]: Focus HHE_military_third_front"
-			air_experience = 25
-			swap_ideas = {
-				remove_idea = disjointed_airforce1
-				add_idea = disjointed_airforce0
-			}
+		# +Military Weights VVV
+		modifier = {
+			add = 1
+			factor = 2
+			ROOT = { NOT = { OR = { has_idea = disjointed_military1 has_idea = disjointed_military0 } } }
+		}
+		modifier = {
+			add = 1
+			factor = 2
+			ROOT = { NOT = { OR = { has_idea = disjointed_navy1 has_idea = disjointed_navy0 } } }
+		}
+		modifier = { # Improve Economy
+			add = -1
+			factor = -3
+			NOT = { has_idea = HHE_piller_economic0 }
+		}
+		modifier = { # Improve Economy
+			add = 1
+			factor = 3
+			has_idea = HHE_piller_economic0
+		}
+		modifier = { # Rush to Revisit R.t.t.F
+			add = 1
+			factor = 3
+			has_completed_focus = HHE_warmonger_revisit_rttf
 		}
 	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		log = "[GetDateText]: [Root.GetName]: Focus HHE_military_third_front"
+		air_experience = 25
+		swap_ideas = {
+			remove_idea = disjointed_airforce1
+			add_idea = disjointed_airforce0
+		}
+	}
+}
 
 	shared_focus = { # Tactful Aircraft
 		id = HHE_military_tactful_aircraft
@@ -12930,27 +12929,136 @@ focus_tree = { # Void
 			}
 		}
 	}
-# Navy
-	shared_focus = { # A Navy that can Rival the Isles
-		id = HHE_military_navy_rival_isles
+
+shared_focus = { # A Navy that can Rival the Isles
+	id = HHE_military_navy_rival_isles
+	icon = GFX_focus_unknown_military
+	#prerequisite = { focus =  }
+	#mutually_exclusive = { focus =  }
+	#relative_position_id = 
+	x = 45
+	y = 0
+	cost = 10
+
+	allow_branch = {
+	}
+	available = {
+		not = { has_idea = disjointed_military1 }
+	}
+	bypass = {
+	}
+
+	ai_will_do = {
+		factor = 1
+		modifier = {
+			add = -1
+			factor = -2
+			OR = { has_idea = disjointed_military1 has_idea = disjointed_military0 }
+		}
+		modifier = {
+			add = -1
+			factor = -2
+			OR = { has_idea = disjointed_airforce1 has_idea = disjointed_airforce0 }
+		}
+		# -Military Weights ^^^
+		modifier = { factor = 3.5 # Luke Deed
+			# Need tiggers later.
+			always = no
+		}
+		modifier = { factor = 3.5 # Tradition
+			# Need tiggers later.
+			always = no
+		}
+		modifier = { factor = 3.5 # Influencer
+			# Need tiggers later.
+			always = no
+		}
+		modifier = { factor = 3.5 # Authority
+			# Need tiggers later.
+			always = no
+		}
+		modifier = { factor = 3.5 # Warmonger
+			# Need tiggers later.
+			has_completed_focus = HHE_warmonger_replace_with_our_men
+			has_completed_focus = HHE_warmonger_war_research
+			OR = {
+				has_completed_focus = HHE_warmonger_revenge_machines
+				has_completed_focus = HHE_warmonger_spark_the_machines
+			}
+		}
+		# +Military Weights VVV
+		modifier = {
+			add = 1
+			factor = 2
+			ROOT = { NOT = { OR = { has_idea = disjointed_military1 has_idea = disjointed_military0 } } }
+		}
+		modifier = {
+			add = 1
+			factor = 2
+			ROOT = { NOT = { OR = { has_idea = disjointed_airforce1 has_idea = disjointed_airforce0 } } }
+		}
+		modifier = { # Improve Economy
+			add = -1
+			factor = -3
+			OR = {
+				AND = {
+					NOT = { has_idea = HHE_piller_economic0 }
+					OR = { has_idea = disjointed_military1 has_idea = disjointed_military0 }
+					OR = { has_idea = disjointed_airforce1 has_idea = disjointed_airforce0 }
+					has_war = yes
+				}
+				AND = {
+					NOT = { has_idea = HHE_piller_economic0 }
+					has_war = no
+				}
+			}
+		}
+		modifier = { # Improve Economy
+			add = 2
+			factor = 5
+			has_idea = HHE_piller_economic0
+			has_war = yes
+		}
+		modifier = { # Rush to Revisit R.t.t.F
+			add = 2
+			factor = 5
+			has_completed_focus = HHE_warmonger_revisit_rttf
+			has_war = yes
+		}
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		log = "[GetDateText]: [Root.GetName]: Focus HHE_military_navy_rival_isles"
+		navy_experience = 25
+		swap_ideas = {
+			remove_idea = disjointed_navy1
+			add_idea = disjointed_navy0
+		}
+	}
+}
+
+	shared_focus = { # Modernized Imperious Aerial Naval Fleet
+		id = HHE_military_modernized_imperious_aerial_navy
 		icon = GFX_focus_unknown_military
-		#prerequisite = { focus =  }
-		#mutually_exclusive = { focus =  }
-		#relative_position_id = 
-		x = 45
-		y = 0
+		prerequisite = { focus = HHE_military_navy_rival_isles }
+		mutually_exclusive = { focus = HHE_military_modernized_imperious_heavy_navy focus = HHE_military_modernized_imperious_light_navy }
+		relative_position_id = HHE_military_navy_rival_isles
+		x = -2
+		y = 5
 		cost = 10
 
 		allow_branch = {
 		}
 		available = {
-			not = { has_idea = disjointed_military1 }
+			has_completed_focus = HHE_military_carrier_imperious
 		}
 		bypass = {
 		}
 
 		ai_will_do = {
-			factor = 1
+			factor = 1.5
 			modifier = {
 				add = -1
 				factor = -2
@@ -13015,14 +13123,14 @@ focus_tree = { # Void
 				}
 			}
 			modifier = { # Improve Economy
-				add = 2
-				factor = 5
+				add = 1
+				factor = 3
 				has_idea = HHE_piller_economic0
 				has_war = yes
 			}
 			modifier = { # Rush to Revisit R.t.t.F
-				add = 2
-				factor = 5
+				add = 1
+				factor = 3
 				has_completed_focus = HHE_warmonger_revisit_rttf
 				has_war = yes
 			}
@@ -13031,341 +13139,232 @@ focus_tree = { # Void
 		available_if_capitulated = yes
 
 		completion_reward = {
-			log = "[GetDateText]: [Root.GetName]: Focus HHE_military_navy_rival_isles"
+			log = "[GetDateText]: [Root.GetName]: Focus HHE_military_modernized_imperious_aerial_navy"
 			navy_experience = 25
 			swap_ideas = {
-				remove_idea = disjointed_navy1
-				add_idea = disjointed_navy0
+				remove_idea = disjointed_navy0
+				add_idea = HHE_idea_military_aerial_navy
 			}
 		}
 	}
 
-		shared_focus = { # Modernized Imperious Aerial Naval Fleet
-			id = HHE_military_modernized_imperious_aerial_navy
-			icon = GFX_focus_unknown_military
-			prerequisite = { focus = HHE_military_navy_rival_isles }
-			mutually_exclusive = { focus = HHE_military_modernized_imperious_heavy_navy focus = HHE_military_modernized_imperious_light_navy }
-			relative_position_id = HHE_military_navy_rival_isles
-			x = -2
-			y = 5
-			cost = 10
+	shared_focus = { # Modernized Imperious Heavy Naval Fleet
+		id = HHE_military_modernized_imperious_heavy_navy
+		icon = GFX_focus_unknown_military
+		prerequisite = { focus = HHE_military_navy_rival_isles }
+		mutually_exclusive = { focus = HHE_military_modernized_imperious_aerial_navy focus = HHE_military_modernized_imperious_light_navy }
+		relative_position_id = HHE_military_navy_rival_isles
+		x = 0
+		y = 5
+		cost = 10
 
-			allow_branch = {
-			}
-			available = {
-				has_completed_focus = HHE_military_carrier_imperious
-			}
-			bypass = {
-			}
+		allow_branch = {
+		}
+		available = {
+			has_completed_focus = HHE_military_carrier_imperious
+		}
+		bypass = {
+		}
 
-			ai_will_do = {
-				factor = 1.5
-				modifier = {
-					add = -1
-					factor = -2
-					OR = { has_idea = disjointed_military1 has_idea = disjointed_military0 }
+		ai_will_do = {
+			factor = 1.5
+			modifier = {
+				add = -1
+				factor = -2
+				OR = { has_idea = disjointed_military1 has_idea = disjointed_military0 }
+			}
+			modifier = {
+				add = -1
+				factor = -2
+				OR = { has_idea = disjointed_airforce1 has_idea = disjointed_airforce0 }
+			}
+			# -Military Weights ^^^
+			modifier = { factor = 3.5 # Luke Deed
+				# Need tiggers later.
+				always = no
+			}
+			modifier = { factor = 3.5 # Tradition
+				# Need tiggers later.
+				always = no
+			}
+			modifier = { factor = 3.5 # Influencer
+				# Need tiggers later.
+				always = no
+			}
+			modifier = { factor = 3.5 # Authority
+				# Need tiggers later.
+				always = no
+			}
+			modifier = { factor = 3.5 # Warmonger
+				# Need tiggers later.
+				has_completed_focus = HHE_warmonger_replace_with_our_men
+				has_completed_focus = HHE_warmonger_war_research
+				OR = {
+					has_completed_focus = HHE_warmonger_revenge_machines
+					has_completed_focus = HHE_warmonger_spark_the_machines
 				}
-				modifier = {
-					add = -1
-					factor = -2
-					OR = { has_idea = disjointed_airforce1 has_idea = disjointed_airforce0 }
-				}
-				# -Military Weights ^^^
-				modifier = { factor = 3.5 # Luke Deed
-					# Need tiggers later.
-					always = no
-				}
-				modifier = { factor = 3.5 # Tradition
-					# Need tiggers later.
-					always = no
-				}
-				modifier = { factor = 3.5 # Influencer
-					# Need tiggers later.
-					always = no
-				}
-				modifier = { factor = 3.5 # Authority
-					# Need tiggers later.
-					always = no
-				}
-				modifier = { factor = 3.5 # Warmonger
-					# Need tiggers later.
-					has_completed_focus = HHE_warmonger_replace_with_our_men
-					has_completed_focus = HHE_warmonger_war_research
-					OR = {
-						has_completed_focus = HHE_warmonger_revenge_machines
-						has_completed_focus = HHE_warmonger_spark_the_machines
+			}
+			# +Military Weights VVV
+			modifier = {
+				add = 1
+				factor = 2
+				ROOT = { NOT = { OR = { has_idea = disjointed_military1 has_idea = disjointed_military0 } } }
+			}
+			modifier = {
+				add = 1
+				factor = 2
+				ROOT = { NOT = { OR = { has_idea = disjointed_airforce1 has_idea = disjointed_airforce0 } } }
+			}
+			modifier = { # Improve Economy
+				add = -1
+				factor = -3
+				OR = {
+					AND = {
+						NOT = { has_idea = HHE_piller_economic0 }
+						OR = { has_idea = disjointed_military1 has_idea = disjointed_military0 }
+						OR = { has_idea = disjointed_airforce1 has_idea = disjointed_airforce0 }
+						has_war = yes
+					}
+					AND = {
+						NOT = { has_idea = HHE_piller_economic0 }
+						has_war = no
 					}
 				}
-				# +Military Weights VVV
-				modifier = {
-					add = 1
-					factor = 2
-					ROOT = { NOT = { OR = { has_idea = disjointed_military1 has_idea = disjointed_military0 } } }
-				}
-				modifier = {
-					add = 1
-					factor = 2
-					ROOT = { NOT = { OR = { has_idea = disjointed_airforce1 has_idea = disjointed_airforce0 } } }
-				}
-				modifier = { # Improve Economy
-					add = -1
-					factor = -3
-					OR = {
-						AND = {
-							NOT = { has_idea = HHE_piller_economic0 }
-							OR = { has_idea = disjointed_military1 has_idea = disjointed_military0 }
-							OR = { has_idea = disjointed_airforce1 has_idea = disjointed_airforce0 }
-							has_war = yes
-						}
-						AND = {
-							NOT = { has_idea = HHE_piller_economic0 }
-							has_war = no
-						}
-					}
-				}
-				modifier = { # Improve Economy
-					add = 1
-					factor = 3
-					has_idea = HHE_piller_economic0
-					has_war = yes
-				}
-				modifier = { # Rush to Revisit R.t.t.F
-					add = 1
-					factor = 3
-					has_completed_focus = HHE_warmonger_revisit_rttf
-					has_war = yes
-				}
 			}
-
-			available_if_capitulated = yes
-
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus HHE_military_modernized_imperious_aerial_navy"
-				navy_experience = 25
-				swap_ideas = {
-					remove_idea = disjointed_navy0
-					add_idea = HHE_idea_military_aerial_navy
-				}
+			modifier = { # Improve Economy
+				add = 1
+				factor = 3
+				has_idea = HHE_piller_economic0
+				has_war = yes
+			}
+			modifier = { # Rush to Revisit R.t.t.F
+				add = 1
+				factor = 3
+				has_completed_focus = HHE_warmonger_revisit_rttf
+				has_war = yes
 			}
 		}
 
-		shared_focus = { # Modernized Imperious Heavy Naval Fleet
-			id = HHE_military_modernized_imperious_heavy_navy
-			icon = GFX_focus_unknown_military
-			prerequisite = { focus = HHE_military_navy_rival_isles }
-			mutually_exclusive = { focus = HHE_military_modernized_imperious_aerial_navy focus = HHE_military_modernized_imperious_light_navy }
-			relative_position_id = HHE_military_navy_rival_isles
-			x = 0
-			y = 5
-			cost = 10
+		available_if_capitulated = yes
 
-			allow_branch = {
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus HHE_military_modernized_imperious_heavy_navy"
+			navy_experience = 25
+			swap_ideas = {
+				remove_idea = disjointed_navy0
+				add_idea = HHE_idea_military_heavy_navy
 			}
-			available = {
-				has_completed_focus = HHE_military_carrier_imperious
-			}
-			bypass = {
-			}
+		}
+	}
 
-			ai_will_do = {
-				factor = 1.5
-				modifier = {
-					add = -1
-					factor = -2
-					OR = { has_idea = disjointed_military1 has_idea = disjointed_military0 }
+	shared_focus = { # Modernized Imperious Light Naval Fleet
+		id = HHE_military_modernized_imperious_light_navy
+		icon = GFX_focus_unknown_military
+		prerequisite = { focus = HHE_military_navy_rival_isles }
+		mutually_exclusive = { focus = HHE_military_modernized_imperious_aerial_navy focus = HHE_military_modernized_imperious_heavy_navy }
+		relative_position_id = HHE_military_navy_rival_isles
+		x = 2
+		y = 5
+		cost = 10
+
+		allow_branch = {
+		}
+		available = {
+			has_completed_focus = HHE_military_carrier_imperious
+		}
+		bypass = {
+		}
+
+		ai_will_do = {
+			factor = 1.5
+			modifier = {
+				add = -1
+				factor = -2
+				OR = { has_idea = disjointed_military1 has_idea = disjointed_military0 }
+			}
+			modifier = {
+				add = -1
+				factor = -2
+				OR = { has_idea = disjointed_airforce1 has_idea = disjointed_airforce0 }
+			}
+			# -Military Weights ^^^
+			modifier = { factor = 3.5 # Luke Deed
+				# Need tiggers later.
+				always = no
+			}
+			modifier = { factor = 3.5 # Tradition
+				# Need tiggers later.
+				always = no
+			}
+			modifier = { factor = 3.5 # Influencer
+				# Need tiggers later.
+				always = no
+			}
+			modifier = { factor = 3.5 # Authority
+				# Need tiggers later.
+				always = no
+			}
+			modifier = { factor = 3.5 # Warmonger
+				# Need tiggers later.
+				has_completed_focus = HHE_warmonger_replace_with_our_men
+				has_completed_focus = HHE_warmonger_war_research
+				OR = {
+					has_completed_focus = HHE_warmonger_revenge_machines
+					has_completed_focus = HHE_warmonger_spark_the_machines
 				}
-				modifier = {
-					add = -1
-					factor = -2
-					OR = { has_idea = disjointed_airforce1 has_idea = disjointed_airforce0 }
-				}
-				# -Military Weights ^^^
-				modifier = { factor = 3.5 # Luke Deed
-					# Need tiggers later.
-					always = no
-				}
-				modifier = { factor = 3.5 # Tradition
-					# Need tiggers later.
-					always = no
-				}
-				modifier = { factor = 3.5 # Influencer
-					# Need tiggers later.
-					always = no
-				}
-				modifier = { factor = 3.5 # Authority
-					# Need tiggers later.
-					always = no
-				}
-				modifier = { factor = 3.5 # Warmonger
-					# Need tiggers later.
-					has_completed_focus = HHE_warmonger_replace_with_our_men
-					has_completed_focus = HHE_warmonger_war_research
-					OR = {
-						has_completed_focus = HHE_warmonger_revenge_machines
-						has_completed_focus = HHE_warmonger_spark_the_machines
+			}
+			# +Military Weights VVV
+			modifier = {
+				add = 1
+				factor = 2
+				ROOT = { NOT = { OR = { has_idea = disjointed_military1 has_idea = disjointed_military0 } } }
+			}
+			modifier = {
+				add = 1
+				factor = 2
+				ROOT = { NOT = { OR = { has_idea = disjointed_airforce1 has_idea = disjointed_airforce0 } } }
+			}
+			modifier = { # Improve Economy
+				add = -1
+				factor = -3
+				OR = {
+					AND = {
+						NOT = { has_idea = HHE_piller_economic0 }
+						OR = { has_idea = disjointed_military1 has_idea = disjointed_military0 }
+						OR = { has_idea = disjointed_airforce1 has_idea = disjointed_airforce0 }
+						has_war = yes
+					}
+					AND = {
+						NOT = { has_idea = HHE_piller_economic0 }
+						has_war = no
 					}
 				}
-				# +Military Weights VVV
-				modifier = {
-					add = 1
-					factor = 2
-					ROOT = { NOT = { OR = { has_idea = disjointed_military1 has_idea = disjointed_military0 } } }
-				}
-				modifier = {
-					add = 1
-					factor = 2
-					ROOT = { NOT = { OR = { has_idea = disjointed_airforce1 has_idea = disjointed_airforce0 } } }
-				}
-				modifier = { # Improve Economy
-					add = -1
-					factor = -3
-					OR = {
-						AND = {
-							NOT = { has_idea = HHE_piller_economic0 }
-							OR = { has_idea = disjointed_military1 has_idea = disjointed_military0 }
-							OR = { has_idea = disjointed_airforce1 has_idea = disjointed_airforce0 }
-							has_war = yes
-						}
-						AND = {
-							NOT = { has_idea = HHE_piller_economic0 }
-							has_war = no
-						}
-					}
-				}
-				modifier = { # Improve Economy
-					add = 1
-					factor = 3
-					has_idea = HHE_piller_economic0
-					has_war = yes
-				}
-				modifier = { # Rush to Revisit R.t.t.F
-					add = 1
-					factor = 3
-					has_completed_focus = HHE_warmonger_revisit_rttf
-					has_war = yes
-				}
 			}
-
-			available_if_capitulated = yes
-
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus HHE_military_modernized_imperious_heavy_navy"
-				navy_experience = 25
-				swap_ideas = {
-					remove_idea = disjointed_navy0
-					add_idea = HHE_idea_military_heavy_navy
-				}
+			modifier = { # Improve Economy
+				add = 1
+				factor = 3
+				has_idea = HHE_piller_economic0
+				has_war = yes
+			}
+			modifier = { # Rush to Revisit R.t.t.F
+				add = 1
+				factor = 3
+				has_completed_focus = HHE_warmonger_revisit_rttf
+				has_war = yes
 			}
 		}
 
-		shared_focus = { # Modernized Imperious Light Naval Fleet
-			id = HHE_military_modernized_imperious_light_navy
-			icon = GFX_focus_unknown_military
-			prerequisite = { focus = HHE_military_navy_rival_isles }
-			mutually_exclusive = { focus = HHE_military_modernized_imperious_aerial_navy focus = HHE_military_modernized_imperious_heavy_navy }
-			relative_position_id = HHE_military_navy_rival_isles
-			x = 2
-			y = 5
-			cost = 10
+		available_if_capitulated = yes
 
-			allow_branch = {
-			}
-			available = {
-				has_completed_focus = HHE_military_carrier_imperious
-			}
-			bypass = {
-			}
-
-			ai_will_do = {
-				factor = 1.5
-				modifier = {
-					add = -1
-					factor = -2
-					OR = { has_idea = disjointed_military1 has_idea = disjointed_military0 }
-				}
-				modifier = {
-					add = -1
-					factor = -2
-					OR = { has_idea = disjointed_airforce1 has_idea = disjointed_airforce0 }
-				}
-				# -Military Weights ^^^
-				modifier = { factor = 3.5 # Luke Deed
-					# Need tiggers later.
-					always = no
-				}
-				modifier = { factor = 3.5 # Tradition
-					# Need tiggers later.
-					always = no
-				}
-				modifier = { factor = 3.5 # Influencer
-					# Need tiggers later.
-					always = no
-				}
-				modifier = { factor = 3.5 # Authority
-					# Need tiggers later.
-					always = no
-				}
-				modifier = { factor = 3.5 # Warmonger
-					# Need tiggers later.
-					has_completed_focus = HHE_warmonger_replace_with_our_men
-					has_completed_focus = HHE_warmonger_war_research
-					OR = {
-						has_completed_focus = HHE_warmonger_revenge_machines
-						has_completed_focus = HHE_warmonger_spark_the_machines
-					}
-				}
-				# +Military Weights VVV
-				modifier = {
-					add = 1
-					factor = 2
-					ROOT = { NOT = { OR = { has_idea = disjointed_military1 has_idea = disjointed_military0 } } }
-				}
-				modifier = {
-					add = 1
-					factor = 2
-					ROOT = { NOT = { OR = { has_idea = disjointed_airforce1 has_idea = disjointed_airforce0 } } }
-				}
-				modifier = { # Improve Economy
-					add = -1
-					factor = -3
-					OR = {
-						AND = {
-							NOT = { has_idea = HHE_piller_economic0 }
-							OR = { has_idea = disjointed_military1 has_idea = disjointed_military0 }
-							OR = { has_idea = disjointed_airforce1 has_idea = disjointed_airforce0 }
-							has_war = yes
-						}
-						AND = {
-							NOT = { has_idea = HHE_piller_economic0 }
-							has_war = no
-						}
-					}
-				}
-				modifier = { # Improve Economy
-					add = 1
-					factor = 3
-					has_idea = HHE_piller_economic0
-					has_war = yes
-				}
-				modifier = { # Rush to Revisit R.t.t.F
-					add = 1
-					factor = 3
-					has_completed_focus = HHE_warmonger_revisit_rttf
-					has_war = yes
-				}
-			}
-
-			available_if_capitulated = yes
-
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus HHE_military_modernized_imperious_light_navy"
-				navy_experience = 25
-				swap_ideas = {
-					remove_idea = disjointed_navy0
-					add_idea = HHE_idea_military_light_navy
-				}
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus HHE_military_modernized_imperious_light_navy"
+			navy_experience = 25
+			swap_ideas = {
+				remove_idea = disjointed_navy0
+				add_idea = HHE_idea_military_light_navy
 			}
 		}
+	}
 
 	shared_focus = { # Research Plan Sea Birds
 		id = HHE_military_research_plan_carrier

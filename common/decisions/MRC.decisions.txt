@@ -9,6 +9,7 @@ political_actions = {
 			tag = SEK
 			MRC = { has_war_with = HHE }
 		}
+
 		complete_effect = {
 			every_country = {
 				LIMIT = { is_in_faction_with = SEK }
@@ -16,8 +17,11 @@ political_actions = {
 			}
 			MRC = { add_to_faction = ROOT }
 		}
-		ai_will_do = { factor = 10
-			modifier = { factor = 100
+
+		ai_will_do = {
+			factor = 10
+			modifier = {
+				factor = 100
 				is_historical_focus_on = yes
 			}
 		}
@@ -42,6 +46,7 @@ political_actions = {
 			tag = EPY
 			HHE = { has_war_with = MRC }
 		}
+
 		complete_effect = {
 			every_country = {
 				LIMIT = { is_in_faction_with = EPY }
@@ -49,204 +54,1366 @@ political_actions = {
 			}
 			MRC = { add_to_faction = ROOT }
 		}
-		ai_will_do = { factor = 10
-			modifier = { factor = 100
+
+		ai_will_do = {
+			factor = 10
+			modifier = {
+				factor = 100
 				is_historical_focus_on = yes
 			}
 		}
 	}
 }
-# BoP
-	bop_MRC_political_balance = {
-		DEBUG_deactivate_bop_MRC_political_balance = {
-			priority = 91
-			visible = {
-				is_debug = yes
-			}
-			complete_effect = {
-				remove_power_balance = { id = power_balance_MRC_political_balance }
+
+bop_MRC_political_balance = {
+	DEBUG_deactivate_bop_MRC_political_balance = {
+		priority = 91
+		visible = {
+			is_debug = yes
+		}
+		complete_effect = {
+			remove_power_balance = { id = power_balance_MRC_political_balance }
+		}
+	}
+
+	DEBUG_left_test_bop_MRC_political_balance_20 = {
+		visible = {
+			is_debug = yes
+		}
+		complete_effect = {
+			add_power_balance_value = { id = power_balance_MRC_political_balance value = -0.20 }
+		}
+	}
+
+	DEBUG_left_test_bop_MRC_political_balance_10 = {
+		visible = {
+			is_debug = yes
+		}
+		complete_effect = {
+			add_power_balance_value = { id = power_balance_MRC_political_balance value = -0.10 }
+		}
+	}
+
+	DEBUG_right_test_bop_MRC_political_balance_10 = {
+		visible = {
+			is_debug = yes
+		}
+		complete_effect = {
+			add_power_balance_value = { id = power_balance_MRC_political_balance value = 0.10 }
+		}
+	}
+
+	DEBUG_right_test_bop_MRC_political_balance_20 = {
+		visible = {
+			is_debug = yes
+		}
+		complete_effect = {
+			add_power_balance_value = { id = power_balance_MRC_political_balance value = 0.20 }
+		}
+	}
+}
+
+negotiate_grand_canal = {
+	MRC_negotiate_with_UFS_for_canal_small = {
+		icon = generic_form_nation
+		allowed = {
+			original_tag = MRC
+			#97 = { is_controlled_by = UFS }
+			#has_completed_focus = MRC_canal_trade_deal
+			#OR = {
+			#	has_country_flag = MRC_negotiate_grand_canal
+			#}
+		}
+		available = {
+			original_tag = MRC
+			97 = { is_controlled_by = UFS }
+			#has_completed_focus = MRC_canal_trade_deal
+			#OR = {
+				has_country_flag = MRC_negotiate_grand_canal
+			#}
+			NOT = {
+				has_global_flag = grand_canal_purchase_processing
 			}
 		}
 
-		DEBUG_left_test_bop_MRC_political_balance_20 = {
-			visible = {
-				is_debug = yes
-			}
-			complete_effect = {
-				add_power_balance_value = { id = power_balance_MRC_political_balance value = -0.20 }
+		fire_only_once = no
+		cost = 50
+
+		visible = {
+			original_tag = MRC
+			97 = { is_controlled_by = UFS }
+			#has_completed_focus = MRC_canal_trade_deal
+			#OR = {
+				has_country_flag = MRC_negotiate_grand_canal
+			#}
+		}
+		complete_effect = {
+			set_global_flag = grand_canal_purchase_processing
+			UFS = {
+				country_event = { id = grand_canal_purchase.1 days = 0}
 			}
 		}
-
-		DEBUG_left_test_bop_MRC_political_balance_10 = {
-			visible = {
-				is_debug = yes
-			}
-			complete_effect = {
-				add_power_balance_value = { id = power_balance_MRC_political_balance value = -0.10 }
-			}
-		}
-
-		DEBUG_right_test_bop_MRC_political_balance_10 = {
-			visible = {
-				is_debug = yes
-			}
-			complete_effect = {
-				add_power_balance_value = { id = power_balance_MRC_political_balance value = 0.10 }
-			}
-		}
-
-		DEBUG_right_test_bop_MRC_political_balance_20 = {
-			visible = {
-				is_debug = yes
-			}
-			complete_effect = {
-				add_power_balance_value = { id = power_balance_MRC_political_balance value = 0.20 }
+		ai_will_do = {
+			factor = 5
+			modifier = {
+				factor = 5
+				is_historical_focus_on = yes
 			}
 		}
 	}
-# Territory Acquisition
-	negotiate_grand_canal = {
-		MRC_negotiate_with_UFS_for_canal_small = {
-			icon = generic_form_nation
-			allowed = {
-				original_tag = MRC
-				#97 = { is_controlled_by = UFS }
-				#has_completed_focus = MRC_canal_trade_deal
-				#OR = {
-				#	has_country_flag = MRC_negotiate_grand_canal
-				#}
-			}
-			available = {
-				original_tag = MRC
-				97 = { is_controlled_by = UFS }
-				#has_completed_focus = MRC_canal_trade_deal
-				#OR = {
-					has_country_flag = MRC_negotiate_grand_canal
-				#}
-				NOT = {
-					has_global_flag = grand_canal_purchase_processing
-				}
-			}
 
-			fire_only_once = no
-			cost = 50
-
-			visible = {
-				original_tag = MRC
-				97 = { is_controlled_by = UFS }
-				#has_completed_focus = MRC_canal_trade_deal
-				#OR = {
-					has_country_flag = MRC_negotiate_grand_canal
-				#}
-			}
-			complete_effect = {
-				set_global_flag = grand_canal_purchase_processing
-				UFS = {
-					country_event = { id = grand_canal_purchase.1 days = 0}
-				}
-			}
-			ai_will_do = {
-				base = 5
-				modifier = {
-					factor = 5
-					is_historical_focus_on = yes
-				}
+	MRC_negotiate_with_UFS_for_canal_medium = {
+		icon = generic_form_nation
+		allowed = {
+			original_tag = MRC
+			#97 = { is_controlled_by = UFS }
+			#has_completed_focus = MRC_canal_trade_deal
+			#OR = {
+			#	has_country_flag = MRC_negotiate_grand_canal
+			#}
+		}
+		available = {
+			original_tag = MRC
+			97 = { is_controlled_by = UFS }
+			#has_completed_focus = MRC_canal_trade_deal
+			#OR = {
+				has_country_flag = MRC_negotiate_grand_canal
+			#}
+			NOT = {
+				has_global_flag = grand_canal_purchase_processing
 			}
 		}
 
-		MRC_negotiate_with_UFS_for_canal_medium = {
-			icon = generic_form_nation
-			allowed = {
-				original_tag = MRC
-				#97 = { is_controlled_by = UFS }
-				#has_completed_focus = MRC_canal_trade_deal
-				#OR = {
-				#	has_country_flag = MRC_negotiate_grand_canal
-				#}
-			}
-			available = {
-				original_tag = MRC
-				97 = { is_controlled_by = UFS }
-				#has_completed_focus = MRC_canal_trade_deal
-				#OR = {
-					has_country_flag = MRC_negotiate_grand_canal
-				#}
-				NOT = {
-					has_global_flag = grand_canal_purchase_processing
-				}
-			}
+		fire_only_once = no
+		cost = 50
 
-			fire_only_once = no
-			cost = 50
-
-			visible = {
-				original_tag = MRC
-				97 = { is_controlled_by = UFS }
-				#has_completed_focus = MRC_canal_trade_deal
-				#OR = {
-					has_country_flag = MRC_negotiate_grand_canal
-				#}
-			}
-			complete_effect = {
-				set_global_flag = grand_canal_purchase_processing
-				UFS = {
-					country_event = { id = grand_canal_purchase.4 days = 0}
-				}
-			}
-			ai_will_do = {
-				base = 20
-				modifier = {
-					factor = 20
-					is_historical_focus_on = yes
-				}
+		visible = {
+			original_tag = MRC
+			97 = { is_controlled_by = UFS }
+			#has_completed_focus = MRC_canal_trade_deal
+			#OR = {
+				has_country_flag = MRC_negotiate_grand_canal
+			#}
+		}
+		complete_effect = {
+			set_global_flag = grand_canal_purchase_processing
+			UFS = {
+				country_event = { id = grand_canal_purchase.4 days = 0}
 			}
 		}
-
-		MRC_negotiate_with_UFS_for_canal_large = {
-			icon = generic_form_nation
-			allowed = {
-				original_tag = MRC
-				#97 = { is_controlled_by = UFS }
-				#has_completed_focus = MRC_canal_trade_deal
-				#OR = {
-				#	has_country_flag = MRC_negotiate_grand_canal
-				#}
-			}
-			available = {
-				original_tag = MRC
-				97 = { is_controlled_by = UFS }
-				#has_completed_focus = MRC_canal_trade_deal
-				#OR = {
-					has_country_flag = MRC_negotiate_grand_canal
-				#}
-				NOT = {
-					has_global_flag = grand_canal_purchase_processing
-				}
-			}
-
-			fire_only_once = no
-			cost = 50
-
-			visible = {
-				original_tag = MRC
-				97 = { is_controlled_by = UFS }
-				#has_completed_focus = MRC_canal_trade_deal
-				#OR = {
-					has_country_flag = MRC_negotiate_grand_canal
-				#}
-			}
-			complete_effect = {
-				set_global_flag = grand_canal_purchase_processing
-				UFS = {
-					country_event = { id = grand_canal_purchase.7 days = 0}
-				}
-			}
-			ai_will_do = {
-				base = 80
-				modifier = {
-					factor = 80
-					is_historical_focus_on = yes
-				}
+		ai_will_do = {
+			factor = 20
+			modifier = {
+				factor = 20
+				is_historical_focus_on = yes
 			}
 		}
 	}
+
+	MRC_negotiate_with_UFS_for_canal_large = {
+		icon = generic_form_nation
+		allowed = {
+			original_tag = MRC
+			#97 = { is_controlled_by = UFS }
+			#has_completed_focus = MRC_canal_trade_deal
+			#OR = {
+			#	has_country_flag = MRC_negotiate_grand_canal
+			#}
+		}
+		available = {
+			original_tag = MRC
+			97 = { is_controlled_by = UFS }
+			#has_completed_focus = MRC_canal_trade_deal
+			#OR = {
+				has_country_flag = MRC_negotiate_grand_canal
+			#}
+			NOT = {
+				has_global_flag = grand_canal_purchase_processing
+			}
+		}
+
+		fire_only_once = no
+		cost = 50
+
+		visible = {
+			original_tag = MRC
+			97 = { is_controlled_by = UFS }
+			#has_completed_focus = MRC_canal_trade_deal
+			#OR = {
+				has_country_flag = MRC_negotiate_grand_canal
+			#}
+		}
+		complete_effect = {
+			set_global_flag = grand_canal_purchase_processing
+			UFS = {
+				country_event = { id = grand_canal_purchase.7 days = 0}
+			}
+		}
+		ai_will_do = {
+			factor = 80
+			modifier = {
+				factor = 80
+				is_historical_focus_on = yes
+			}
+		}
+	}
+}
+
+MRC_decision_air_manufacturing_champion = {
+	debug_mrc_air_manufacturing_allies = {
+		available = {
+			AND = { is_debug = yes is_ai = no }
+		}
+		visible = {
+			AND = { is_debug = yes is_ai = no }
+			NOT = { has_country_flag = MRC_expeditionary_experience_debug_flag }
+		}
+
+		fire_only_once = no
+
+		complete_effect = {
+			ROOT = {
+				set_country_flag = MRC_expeditionary_experience_debug_flag
+				add_to_variable = {
+					var = MRC_expeditionary_experience_var
+					value = 13
+				}
+			}
+			ABL = { set_country_flag = MRC_expeditionary_experience_received_flag }
+			AGC = { set_country_flag = MRC_expeditionary_experience_received_flag }
+			AUC = { set_country_flag = MRC_expeditionary_experience_received_flag }
+			ATL = { set_country_flag = MRC_expeditionary_experience_received_flag }
+			DMP = { set_country_flag = MRC_expeditionary_experience_received_flag }
+			FDN = { set_country_flag = MRC_expeditionary_experience_received_flag }
+			FFN = { set_country_flag = MRC_expeditionary_experience_received_flag }
+			MTR = { set_country_flag = MRC_expeditionary_experience_received_flag }
+			OAK = { set_country_flag = MRC_expeditionary_experience_received_flag }
+			RVV = { set_country_flag = MRC_expeditionary_experience_received_flag }
+			SFG = { set_country_flag = MRC_expeditionary_experience_received_flag }
+			SPP = { set_country_flag = MRC_expeditionary_experience_received_flag }
+			UFS = { set_country_flag = MRC_expeditionary_experience_received_flag }
+		}
+	}
+
+	debug_mrc_air_manufacturing_amc_primary_star_add = {
+		available = {
+			AND = { is_debug = yes is_ai = no }
+		}
+		visible = {
+			AND = { is_debug = yes is_ai = no }
+		}
+
+		fire_only_once = no
+
+		complete_effect = {
+			MRC_amc_primary_champion_star_add = yes
+			MRC_amc_primary_champion_star_add = yes
+			MRC_amc_primary_champion_star_add = yes
+			MRC_amc_primary_champion_star_add = yes
+			MRC_amc_primary_champion_star_add = yes
+		}
+	}
+
+	debug_mrc_air_manufacturing_amc_primary_star_remove = {
+		available = {
+			AND = { is_debug = yes is_ai = no }
+		}
+		visible = {
+			AND = { is_debug = yes is_ai = no }
+		}
+
+		fire_only_once = no
+
+		complete_effect = {
+			MRC_amc_primary_champion_star_remove = yes
+		}
+	}
+
+	debug_mrc_air_manufacturing_amc_secondary_star_add = {
+		available = {
+			AND = { is_debug = yes is_ai = no }
+		}
+		visible = {
+			AND = { is_debug = yes is_ai = no }
+		}
+
+		fire_only_once = no
+
+		complete_effect = {
+			MRC_amc_secondary_champion_star_add = yes
+			MRC_amc_secondary_champion_star_add = yes
+			MRC_amc_secondary_champion_star_add = yes
+			MRC_amc_secondary_champion_star_add = yes
+			MRC_amc_secondary_champion_star_add = yes
+		}
+	}
+
+	debug_mrc_air_manufacturing_amc_secondary_star_remove = {
+		available = {
+			AND = { is_debug = yes is_ai = no }
+		}
+		visible = {
+			AND = { is_debug = yes is_ai = no }
+		}
+
+		fire_only_once = no
+
+		complete_effect = {
+			MRC_amc_secondary_champion_star_remove = yes
+		}
+	}
+
+	debug_mrc_air_manufacturing_amc_trinary_star_add = {
+		available = {
+			AND = { is_debug = yes is_ai = no }
+		}
+		visible = {
+			AND = { is_debug = yes is_ai = no }
+		}
+
+		fire_only_once = no
+
+		complete_effect = {
+			MRC_amc_trinary_champion_star_add = yes
+			MRC_amc_trinary_champion_star_add = yes
+			MRC_amc_trinary_champion_star_add = yes
+			MRC_amc_trinary_champion_star_add = yes
+			MRC_amc_trinary_champion_star_add = yes
+		}
+	}
+
+	debug_mrc_air_manufacturing_amc_trinary_star_remove = {
+		available = {
+			AND = { is_debug = yes is_ai = no }
+		}
+		visible = {
+			AND = { is_debug = yes is_ai = no }
+		}
+
+		fire_only_once = no
+
+		complete_effect = {
+			MRC_amc_trinary_champion_star_remove = yes
+		}
+	}
+
+	MRC_amc_choose_primary = {
+		#icon = GFX_decision_generic_merge_plant_aircraft
+		priority = 50
+
+		visible = {
+			NOT = { has_country_flag = MRC_amc_primary_champion_flag }
+		}
+		available = {
+			always = yes
+		}
+
+		fire_only_once = yes
+        custom_cost_trigger = {
+            command_power > 24
+        }
+        custom_cost_text = decision_cost_command_power_25
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision MRC_amc_choose_primary"
+            hidden_effect = { add_command_power = -25 }
+			set_country_flag = MRC_amc_primary_champion_flag
+			country_event = MRC.12
+			custom_effect_tooltip = MRC_unlocks_air_primary_tt
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+	} # Needs 10
+
+		MRC_amc_primary_debug = {
+			#icon = GFX_decision_generic_merge_plant_aircraft
+
+			#target_trigger = {
+			#	FROM = {
+			#		has_country_flag = MRC_air_manufacturing_champion_accepted_flag
+			#	}
+			#}
+			visible = {
+				AND = { is_debug = yes is_ai = no }
+			}
+			available = {
+				has_country_flag = MRC_amc_primary_champion_flag
+				NOT = { has_country_flag = MRC_amc_actively_improving_flag }
+			}
+
+			fire_only_once = yes
+	        cost = 10
+
+			complete_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision MRC_amc_primary_debug"
+			}
+
+			ai_will_do = {
+				factor = 100
+			}
+		}
+
+		MRC_amc_primary_ic_expand_facility = { # Primary IC General
+			#icon = GFX_decision_generic_merge_plant_aircraft
+
+			visible = {
+				OR = {
+					has_country_flag = MRC_amc_primary_champion_choosen_flag
+					AND = { is_debug = yes is_ai = no }
+				}
+			}
+			available = {
+				has_country_flag = MRC_amc_primary_champion_flag
+				NOT = { has_country_flag = MRC_amc_actively_improving_flag }
+			}
+
+			days_remove = 70
+			fire_only_once = yes
+	        cost = 10
+
+			complete_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision MRC_amc_primary_ic_expand_facility"
+				set_country_flag = MRC_amc_actively_improving_flag
+			}
+			remove_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision remove MRC_amc_primary_ic_expand_facility"
+				MRC_amc_primary_champion_star_add = yes
+				MRC_idea_primary_champion_build_cost_ic_ns = yes
+				clr_country_flag = MRC_amc_actively_improving_flag
+				72 = {
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = { type = arms_factory level = 1 instant_build = yes }
+				}
+			}
+
+			ai_will_do = {
+				factor = 100
+			}
+		}
+
+		MRC_amc_primary_ic_carrier_manufacturing = { # Primary IC Carrier
+			#icon = GFX_decision_generic_merge_plant_aircraft
+
+			visible = {
+				OR = {
+					AND = {
+						MRC_idea_amc_primary_champion_carrier = yes
+						has_country_flag = MRC_amc_primary_champion_choosen_flag
+					}
+					AND = { is_debug = yes is_ai = no }
+				}
+			}
+			available = {
+				has_country_flag = MRC_amc_primary_champion_flag
+				NOT = { has_country_flag = MRC_amc_actively_improving_flag }
+			}
+
+			days_remove = 70
+			fire_only_once = yes
+	        cost = 10
+
+			complete_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision MRC_amc_primary_ic_carrier_manufacturing"
+				set_country_flag = MRC_amc_actively_improving_flag
+			}
+			remove_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision remove MRC_amc_primary_ic_carrier_manufacturing"
+				MRC_amc_primary_champion_star_add = yes
+				MRC_idea_primary_champion_build_cost_ic_ns = yes
+				clr_country_flag = MRC_amc_actively_improving_flag
+				13 = {
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = { type = arms_factory level = 1 instant_build = yes }
+				}
+			}
+
+			ai_will_do = {
+				factor = 100
+			}
+		}
+
+		MRC_amc_primary_stats_specification_tenders = { # Primary Stats+
+			#icon = GFX_decision_generic_merge_plant_aircraft
+
+			visible = {
+				OR = {
+					has_country_flag = MRC_amc_primary_champion_choosen_flag
+					AND = { is_debug = yes is_ai = no }
+				}
+			}
+			available = {
+				has_country_flag = MRC_amc_primary_champion_flag
+				NOT = { has_country_flag = MRC_amc_actively_improving_flag }
+			}
+
+			days_remove = 365
+			fire_only_once = yes
+	        cost = 50
+
+			complete_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision MRC_amc_primary_stats_specification_tenders"
+				set_country_flag = MRC_amc_actively_improving_flag
+			}
+			remove_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision remove MRC_amc_primary_stats_specification_tenders"
+				MRC_amc_primary_champion_star_add = yes
+				MRC_idea_primary_champion_equipment_bonus = yes
+				clr_country_flag = MRC_amc_actively_improving_flag
+			}
+
+			ai_will_do = {
+				factor = 100
+			}
+		}
+
+		MRC_amc_primary_foreign_light_weight_metals = { # Foreign
+			#icon = GFX_decision_generic_merge_plant_aircraft
+			state_target = yes
+			on_map_mode = map_only
+
+			target_trigger = {
+				FROM = {
+					NOT = { has_dynamic_modifier = { modifier = MRC_state_air_manufacturing_champion_modifier } }
+					impassable = no
+					OR = {
+						aluminium > 0
+						rubber > 0
+					}
+					OWNER = {
+						is_in_tech_sharing_group = MRC_tech_group_champion
+						FROM = { is_core_of = PREV }
+						NOT = {
+							TAG = ROOT # Only Foreign
+							has_country_flag = MRC_air_manufacturing_champion_accepted
+						}
+					}
+				}
+			}
+			visible = {  }
+			available = {
+				has_country_flag = MRC_amc_primary_champion_flag
+				OWNER = {
+					is_in_tech_sharing_group = MRC_tech_group_champion
+					NOT = { has_country_flag = MRC_air_manufacturing_champion_accepted }
+				}
+			}
+
+			fire_only_once = no
+			cost = 10
+
+			complete_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision MRC_amc_primary_foreign_light_weight_metals"
+
+				FROM = {
+					save_event_target_as = target_state
+					controller = { country_event = MRC.20 }
+				}
+
+				effect_tooltip = {
+					custom_effect_tooltip = if_they_accept
+					give_resource_rights = {
+						receiver = ROOT
+						state = FROM
+						resources = { aluminium rubber }
+					}
+					FROM = { add_dynamic_modifier = { modifier = MRC_state_air_manufacturing_champion_modifier } }
+					MRC_amc_primary_champion_star_add = yes
+				}
+				custom_effect_tooltip = generic_skip_one_line_tt # We do this for clearer reading.
+				effect_tooltip = {
+					custom_effect_tooltip = if_they_reject
+					add_political_power = 25
+				}
+			}
+
+			ai_will_do = {
+				factor = 100
+			}
+		}
+
+		MRC_amc_primary_stats_overseas_trails = { # Primary Stats+
+			#icon = GFX_decision_generic_merge_plant_aircraft
+			state_target = yes
+			on_map_mode = map_only
+
+			target_trigger = {
+				FROM = {
+					has_dynamic_modifier = { modifier = MRC_state_air_manufacturing_champion_modifier }
+					OWNER = {
+						is_in_tech_sharing_group = MRC_tech_group_champion
+						FROM = { is_core_of = PREV }
+						NOT = {
+							TAG = ROOT # Only Foreign
+							has_country_flag = MRC_champion_overseas_trails
+						}
+					}
+				}
+			}
+			visible = {  }
+			available = {
+				has_country_flag = MRC_amc_primary_champion_flag
+				OWNER = {
+					is_in_tech_sharing_group = MRC_tech_group_champion
+					NOT = { has_country_flag = MRC_champion_overseas_trails }
+				}
+			}
+
+			fire_only_once = no
+			cost = 10
+
+			complete_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision MRC_amc_primary_stats_overseas_trails"
+
+				FROM = {
+					controller = { set_country_flag = MRC_champion_overseas_trails }
+				}
+
+				MRC_amc_primary_champion_star_add = yes
+			}
+
+			ai_will_do = {
+				factor = 100
+			}
+		}
+
+	MRC_amc_choose_secondary = {
+		#icon = GFX_decision_generic_merge_plant_aircraft
+		priority = 50
+
+		visible = {
+			has_country_flag = MRC_amc_primary_champion_choosen_flag
+			NOT = { has_country_flag = MRC_amc_secondary_champion_flag }
+		}
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = MRC_amc_primary_champion_star_GTE_3_tt
+				check_variable = { MRC_amc_primary_champion_star > 4 }
+			}
+		}
+
+		fire_only_once = yes
+        custom_cost_trigger = {
+            command_power > 24
+        }
+        custom_cost_text = decision_cost_command_power_25
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision MRC_amc_choose_secondary"
+            hidden_effect = { add_command_power = -25 }
+			set_country_flag = MRC_amc_secondary_champion_flag
+			country_event = MRC.12
+			custom_effect_tooltip = MRC_unlocks_air_secondary_tt
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+	} # Needs 7
+
+		MRC_amc_secondary_debug = {
+			#icon = GFX_decision_generic_merge_plant_aircraft
+
+			#target_trigger = {
+			#	FROM = {
+			#		has_country_flag = MRC_air_manufacturing_champion_accepted_flag
+			#	}
+			#}
+			visible = {
+				has_country_flag = MRC_amc_primary_champion_choosen_flag
+				AND = { is_debug = yes is_ai = no }
+			}
+			available = {
+				has_country_flag = MRC_amc_secondary_champion_flag
+				NOT = { has_country_flag = MRC_amc_actively_improving_flag }
+			}
+
+			fire_only_once = yes
+	        cost = 10
+
+			complete_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision MRC_amc_secondary_debug"
+			}
+
+			ai_will_do = {
+				factor = 100
+			}
+		}
+
+		MRC_amc_primary_ic_secondary_ic_learned_experience = { # Primary IC General
+			#icon = GFX_decision_generic_merge_plant_aircraft
+
+			visible = {
+				OR = {
+					has_country_flag = MRC_amc_secondary_champion_choosen_flag
+					AND = { is_debug = yes is_ai = no }
+				}
+			}
+			available = {
+				has_country_flag = MRC_amc_primary_champion_flag
+				NOT = { has_country_flag = MRC_amc_actively_improving_flag }
+			}
+
+			days_remove = 70
+			fire_only_once = yes
+	        cost = 10
+
+			complete_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision MRC_amc_primary_ic_secondary_ic_learned_experience"
+				set_country_flag = MRC_amc_actively_improving_flag
+			}
+			remove_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision remove MRC_amc_primary_ic_secondary_ic_learned_experience"
+				MRC_amc_primary_champion_star_add = yes
+				MRC_idea_primary_champion_build_cost_ic_ns = yes
+				MRC_amc_secondary_champion_star_add = yes
+				MRC_idea_secondary_champion_build_cost_ic_ns = yes
+				clr_country_flag = MRC_amc_actively_improving_flag
+				14 = {
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = { type = arms_factory level = 1 instant_build = yes }
+				}
+			}
+
+			ai_will_do = {
+				factor = 100
+			}
+		}
+
+		MRC_amc_primary_ic_hmg_and_hf_intergration = { # Primary IC Heavy Fighter
+			#icon = GFX_decision_generic_merge_plant_aircraft
+
+			visible = {
+				OR = {
+					AND = {
+						has_country_flag = MRC_amc_primary_champion_heavy_fighter
+						has_country_flag = MRC_amc_secondary_champion_choosen_flag
+					}
+					AND = { is_debug = yes is_ai = no }
+				}
+			}
+			available = {
+				has_country_flag = MRC_amc_primary_champion_flag
+				NOT = { has_country_flag = MRC_amc_actively_improving_flag }
+			}
+
+			days_remove = 70
+			fire_only_once = yes
+	        cost = 10
+
+			complete_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision MRC_amc_primary_ic_hmg_and_hf_intergration"
+				set_country_flag = MRC_amc_actively_improving_flag
+			}
+			remove_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision remove MRC_amc_primary_ic_hmg_and_hf_intergration"
+				MRC_amc_primary_champion_star_add = yes
+				MRC_idea_primary_champion_build_cost_ic_ns = yes
+				clr_country_flag = MRC_amc_actively_improving_flag
+			}
+
+			ai_will_do = {
+				factor = 100
+			}
+		}
+
+		MRC_amc_primary_ic_energetic_casing = { # Primary IC Tact/Heav
+			#icon = GFX_decision_generic_merge_plant_aircraft
+
+			visible = {
+				OR = {
+					AND = {
+						MRC_idea_amc_primary_champion_heavy_bomber = yes
+						has_country_flag = MRC_amc_secondary_champion_choosen_flag
+					}
+					AND = { is_debug = yes is_ai = no }
+				}
+			}
+			available = {
+				has_country_flag = MRC_amc_primary_champion_flag
+				NOT = { has_country_flag = MRC_amc_actively_improving_flag }
+			}
+
+			days_remove = 70
+			fire_only_once = yes
+	        cost = 10
+
+			complete_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision MRC_amc_primary_ic_energetic_casing"
+				set_country_flag = MRC_amc_actively_improving_flag
+			}
+			remove_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision remove MRC_amc_primary_ic_energetic_casing"
+				MRC_amc_primary_champion_star_add = yes
+				MRC_idea_primary_champion_build_cost_ic_ns = yes
+				clr_country_flag = MRC_amc_actively_improving_flag
+				17 = {
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = { type = arms_factory level = 1 instant_build = yes }
+				}
+			}
+
+			ai_will_do = {
+				factor = 100
+			}
+		}
+
+		# Secondary needs 4 ic (3 left)
+
+		MRC_amc_secondary_stats_specification_tenders = { # Secondary Stats+
+			#icon = GFX_decision_generic_merge_plant_aircraft
+
+			visible = {
+				OR = {
+					has_country_flag = MRC_amc_secondary_champion_choosen_flag
+					AND = { is_debug = yes is_ai = no }
+				}
+			}
+			available = {
+				has_country_flag = MRC_amc_secondary_champion_flag
+				NOT = { has_country_flag = MRC_amc_actively_improving_flag }
+			}
+
+			days_remove = 183
+			fire_only_once = yes
+	        cost = 50
+
+			complete_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision MRC_amc_secondary_stats_specification_tenders"
+				set_country_flag = MRC_amc_actively_improving_flag
+			}
+			remove_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision remove MRC_amc_secondary_stats_specification_tenders"
+				MRC_amc_secondary_champion_star_add = yes
+				MRC_idea_secondary_champion_equipment_bonus = yes
+				clr_country_flag = MRC_amc_actively_improving_flag
+			}
+
+			ai_will_do = {
+				factor = 100
+			}
+		}
+
+		# Secondary Foreign
+
+	MRC_amc_choose_trinary = {
+		#icon = GFX_decision_generic_merge_plant_aircraft
+		priority = 50
+
+		visible = {
+			has_country_flag = MRC_amc_secondary_champion_choosen_flag
+			NOT = { has_country_flag = MRC_amc_trinary_champion_flag }
+		}
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = MRC_amc_secondary_champion_star_GTE_3_tt
+				check_variable = { MRC_amc_secondary_champion_star > 2 }
+			}
+		}
+
+		fire_only_once = yes
+        custom_cost_trigger = {
+            command_power > 24
+        }
+        custom_cost_text = decision_cost_command_power_25
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision MRC_amc_choose_trinary"
+            hidden_effect = { add_command_power = -25 }
+			set_country_flag = MRC_amc_trinary_champion_flag
+			country_event = MRC.12
+			custom_effect_tooltip = MRC_unlocks_air_trinary_tt
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+	} # Needs 5
+
+		MRC_amc_trinary_debug = {
+			#icon = GFX_decision_generic_merge_plant_aircraft
+
+			#target_trigger = {
+			#	FROM = {
+			#		has_country_flag = MRC_air_manufacturing_champion_accepted_flag
+			#	}
+			#}
+			visible = {
+				has_country_flag = MRC_amc_trinary_champion_choosen_flag
+				AND = { is_debug = yes is_ai = no }
+			}
+			available = {
+				has_country_flag = MRC_amc_trinary_champion_flag
+				NOT = { has_country_flag = MRC_amc_actively_improving_flag }
+			}
+
+			fire_only_once = yes
+	        cost = 10
+
+			complete_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision MRC_amc_trinary_debug"
+			}
+
+			ai_will_do = {
+				factor = 100
+			}
+		}
+
+		MRC_amc_primary_ic_air_cannons = { # Primary IC Heavy Fighter
+			#icon = GFX_decision_generic_merge_plant_aircraft
+
+			visible = {
+				OR = {
+					AND = {
+						has_country_flag = MRC_amc_primary_champion_heavy_fighter
+						has_country_flag = MRC_amc_trinary_champion_choosen_flag
+					}
+					AND = { is_debug = yes is_ai = no }
+				}
+			}
+			available = {
+				has_country_flag = MRC_amc_primary_champion_flag
+				NOT = { has_country_flag = MRC_amc_actively_improving_flag }
+			}
+
+			days_remove = 70
+			fire_only_once = yes
+	        cost = 10
+
+			complete_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision MRC_amc_primary_ic_air_cannons"
+				set_country_flag = MRC_amc_actively_improving_flag
+			}
+			remove_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision remove MRC_amc_primary_ic_air_cannons"
+				MRC_amc_primary_champion_star_add = yes
+				MRC_idea_primary_champion_build_cost_ic_ns = yes
+				clr_country_flag = MRC_amc_actively_improving_flag
+			}
+
+			ai_will_do = {
+				factor = 100
+			}
+		}
+
+		MRC_amc_primary_ic_energetic_enhancement = { # Primary IC Tact/Heav
+			#icon = GFX_decision_generic_merge_plant_aircraft
+
+			visible = {
+				OR = {
+					AND = {
+						MRC_idea_amc_primary_champion_heavy_bomber = yes
+						has_country_flag = MRC_amc_trinary_champion_choosen_flag
+					}
+					AND = { is_debug = yes is_ai = no }
+				}
+			}
+			available = {
+				has_country_flag = MRC_amc_primary_champion_flag
+				NOT = { has_country_flag = MRC_amc_actively_improving_flag }
+			}
+
+			days_remove = 70
+			fire_only_once = yes
+	        cost = 10
+
+			complete_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision MRC_amc_secondary_ic_energetic_enhancement"
+				set_country_flag = MRC_amc_actively_improving_flag
+			}
+			remove_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision remove MRC_amc_secondary_ic_energetic_enhancement"
+				MRC_amc_primary_champion_star_add = yes
+				MRC_idea_primary_champion_build_cost_ic_ns = yes
+				clr_country_flag = MRC_amc_actively_improving_flag
+				17 = {
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = { type = arms_factory level = 1 instant_build = yes }
+				}
+			}
+
+			ai_will_do = {
+				factor = 100
+			}
+		}
+
+		# Trinary needs 3 IC (3 left)
+
+		MRC_amc_trinary_stats_specification_tenders = { # Trinary Stats+
+			#icon = GFX_decision_generic_merge_plant_aircraft
+
+			visible = {
+				OR = {
+					has_country_flag = MRC_amc_trinary_champion_choosen_flag
+					AND = { is_debug = yes is_ai = no }
+				}
+			}
+			available = {
+				has_country_flag = MRC_amc_trinary_champion_flag
+				NOT = { has_country_flag = MRC_amc_actively_improving_flag }
+			}
+
+			days_remove = 122
+			fire_only_once = yes
+	        cost = 50
+
+			complete_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision MRC_amc_trinary_stats_specification_tenders"
+				set_country_flag = MRC_amc_actively_improving_flag
+			}
+			remove_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision remove MRC_amc_trinary_stats_specification_tenders"
+				MRC_amc_trinary_champion_star_add = yes
+				MRC_idea_trinary_champion_equipment_bonus = yes
+				clr_country_flag = MRC_amc_actively_improving_flag
+			}
+
+			ai_will_do = {
+				factor = 100
+			}
+		} # Should consider alterntives since trinary stats max are lower
+
+		# Trinary Foreign
+
+	MRC_amc_invite_to_champion = {
+		icon = GFX_decision_generic_merge_plant_aircraft
+		on_map_mode = map_only
+		priority = -10
+
+		target_trigger = {
+			FROM = {
+				OR = {
+					is_in_faction_with = MRC
+					has_country_flag = MRC_expeditionary_experience_received_flag
+					has_country_flag = accept.ally_with_MRC
+				}
+			}
+		}
+		visible = {
+			NOT = { has_country_flag = MRC_blacklist_declined_champion_flag }
+			FROM = {
+				NOT = { has_country_flag = MRC_air_manufacturing_champion_accepted_flag }
+			}
+		}
+		available = {
+			always = yes
+		}
+
+		fire_only_once = no
+		days_re_enable = 15
+		cost = 50
+
+		modifier = {  }
+
+		complete_effect = {
+            log = "[GetDateText]: [Root.GetName]: Decision MRC_amc_invite_to_champion"
+			FROM = {
+				country_event = MRC.2
+			}
+
+			effect_tooltip = {
+				custom_effect_tooltip = if_they_accept
+				FROM = { add_to_tech_sharing_group = MRC_tech_group_champion }
+			}
+			custom_effect_tooltip = generic_skip_one_line_tt # We do this for clearer reading.
+			effect_tooltip = {
+				custom_effect_tooltip = if_they_reject
+				add_political_power = 25
+			}
+
+			IF = {
+				LIMIT = { NOT = { is_in_tech_sharing_group = MRC_tech_group_champion } }
+				add_to_tech_sharing_group = MRC_tech_group_champion
+			}
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+	}
+
+	# Fighter
+	# MRC_amc_primary_champion_light_fighter
+	# MRC_amc_primary_champion_heavy_fighter
+	# Light Bombing
+	# MRC_amc_primary_champion_light_cas
+	# MRC_amc_primary_champion_light_naval
+	# Shares with Light and Heavy Bombing
+	# MRC_amc_primary_champion_tactical
+	# Heavy Bombing
+	# MRC_amc_primary_champion_strategic_bomber
+	# MRC_amc_primary_champion_maritime_patrol
+	# Carrier
+	# MRC_amc_primary_champion_carrier_fighter
+	# MRC_amc_primary_champion_carrier_cas
+	# MRC_amc_primary_champion_carrier_naval
+
+	MRC_amc_blacklisted_on = {
+		#icon = GFX_decision_generic_merge_plant_aircraft
+
+		visible = {
+			NOT = { has_country_flag = MRC_blacklist_declined_champion_flag }
+		}
+		available = {
+			always = yes
+		}
+
+		fire_only_once = no
+
+		complete_effect = {
+            log = "[GetDateText]: [Root.GetName]: Decision MRC_amc_blacklisted_on"
+            set_country_flag = MRC_blacklist_declined_champion_flag
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+	}
+
+	MRC_amc_blacklisted_off = {
+		#icon = GFX_decision_generic_merge_plant_aircraft
+
+		visible = {
+			has_country_flag = MRC_blacklist_declined_champion_flag
+		}
+		available = {
+			always = yes
+		}
+
+		fire_only_once = no
+
+		complete_effect = {
+            log = "[GetDateText]: [Root.GetName]: Decision MRC_amc_blacklisted_off"
+            clr_country_flag = MRC_blacklist_declined_champion_flag
+		}
+	}
+}
+
+MRC_decision_navy_manufacturing_triton = {
+	debug_mrc_navy_manufacturing_allies = {
+		available = {
+			AND = { is_debug = yes is_ai = no }
+		}
+		visible = {
+			AND = { is_debug = yes is_ai = no }
+			NOT = { has_country_flag = MRC_expeditionary_experience_debug_flag }
+		}
+
+		fire_only_once = no
+
+		complete_effect = {
+			ROOT = {
+				set_country_flag = MRC_expeditionary_experience_debug_flag
+				add_to_variable = {
+					var = MRC_expeditionary_experience_var
+					value = 13
+				}
+			}
+			ABL = { set_country_flag = MRC_expeditionary_experience_received_flag }
+			AGC = { set_country_flag = MRC_expeditionary_experience_received_flag }
+			AUC = { set_country_flag = MRC_expeditionary_experience_received_flag }
+			ATL = { set_country_flag = MRC_expeditionary_experience_received_flag }
+			DMP = { set_country_flag = MRC_expeditionary_experience_received_flag }
+			FDN = { set_country_flag = MRC_expeditionary_experience_received_flag }
+			FFN = { set_country_flag = MRC_expeditionary_experience_received_flag }
+			MTR = { set_country_flag = MRC_expeditionary_experience_received_flag }
+			OAK = { set_country_flag = MRC_expeditionary_experience_received_flag }
+			RVV = { set_country_flag = MRC_expeditionary_experience_received_flag }
+			SFG = { set_country_flag = MRC_expeditionary_experience_received_flag }
+			SPP = { set_country_flag = MRC_expeditionary_experience_received_flag }
+			UFS = { set_country_flag = MRC_expeditionary_experience_received_flag }
+		}
+	}
+
+		MRC_nmt_primary_expand_facility = {
+			#icon = GFX_decision_generic_merge_plant_aircraft
+
+			visible = {  }
+			available = {
+				NOT = { has_country_flag = MRC_nmt_actively_improving_flag }
+			}
+
+			days_remove = 70
+			fire_only_once = yes
+	        cost = 10
+
+			complete_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision MRC_nmt_primary_expand_facility"
+				set_country_flag = MRC_nmt_actively_improving_flag
+			}
+			remove_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision remove MRC_nmt_primary_expand_facility"
+				clr_country_flag = MRC_nmt_actively_improving_flag
+				13 = {
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = { type = dockyard level = 1 instant_build = yes }
+				}
+			}
+
+			ai_will_do = {
+				factor = 100
+			}
+		}
+
+		MRC_nmt_primary_reinforced_metals = { # Foreign
+			#icon = GFX_decision_generic_merge_plant_aircraft
+			state_target = yes
+			on_map_mode = map_only
+
+			target_trigger = {
+				FROM = {
+					NOT = { has_dynamic_modifier = { modifier = MRC_state_navy_manufacturing_triton_modifier } }
+					is_coastal = yes
+					impassable = no
+					OR = {
+						steel > 0
+						chromium > 0
+					}
+					OWNER = {
+						OWNER = { is_in_tech_sharing_group = MRC_tech_group_triton }
+						FROM = { is_core_of = PREV }
+						NOT = {
+							TAG = ROOT # Only Foreign
+							has_country_flag = MRC_navy_manufacturing_triton_accepted
+						}
+					}
+				}
+			}
+			visible = {  }
+			available = {
+				OWNER = {
+					is_in_tech_sharing_group = MRC_tech_group_triton
+					NOT = { has_country_flag = MRC_navy_manufacturing_triton_accepted }
+				}
+			}
+
+			fire_only_once = no
+			cost = 10
+
+			complete_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision MRC_nmt_primary_reinforced_metals"
+
+				FROM = {
+					save_event_target_as = target_state
+					controller = { country_event = MRC.21 }
+				}
+
+				effect_tooltip = {
+					custom_effect_tooltip = if_they_accept
+					give_resource_rights = {
+						receiver = ROOT
+						state = FROM
+						resources = { steel chromium }
+					}
+					FROM = { add_dynamic_modifier = { modifier = MRC_state_navy_manufacturing_triton_modifier } }
+				}
+				custom_effect_tooltip = generic_skip_one_line_tt # We do this for clearer reading.
+				effect_tooltip = {
+					custom_effect_tooltip = if_they_reject
+					add_political_power = 25
+				}
+			}
+
+			ai_will_do = {
+				factor = 100
+			}
+		}
+
+	MRC_nmt_invite_to_triton = {
+		icon = GFX_decision_generic_merge_plant_ship
+		on_map_mode = map_only
+		priority = -10
+
+		target_trigger = {
+			FROM = {
+				OR = {
+					is_in_faction_with = MRC
+					has_country_flag = MRC_expeditionary_experience_received_flag
+					has_country_flag = accept.ally_with_MRC
+				}
+			}
+		}
+		visible = {
+			NOT = { has_country_flag = MRC_blacklist_declined_triton_flag }
+			FROM = {
+				NOT = { has_country_flag = MRC_navy_manufacturing_triton_accepted_flag }
+			}
+		}
+		available = {
+			always = yes
+		}
+
+		fire_only_once = no
+		days_re_enable = 15
+		cost = 50
+
+		modifier = {  }
+
+		complete_effect = {
+            log = "[GetDateText]: [Root.GetName]: Decision MRC_nmt_invite_to_triton"
+			FROM = {
+				country_event = MRC.3
+			}
+
+			effect_tooltip = {
+				custom_effect_tooltip = if_they_accept
+				FROM = { add_to_tech_sharing_group = MRC_tech_group_triton }
+			}
+			custom_effect_tooltip = generic_skip_one_line_tt # We do this for clearer reading.
+			effect_tooltip = {
+				custom_effect_tooltip = if_they_reject
+				add_political_power = 25
+			}
+
+			IF = {
+				LIMIT = { NOT = { is_in_tech_sharing_group = MRC_tech_group_triton } }
+				add_to_tech_sharing_group = MRC_tech_group_triton
+			}
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+	}
+
+	MRC_nmt_blacklisted_on = {
+		#icon = GFX_decision_generic_merge_plant_ship
+
+		visible = {
+			NOT = { has_country_flag = MRC_blacklist_declined_triton_flag }
+		}
+		available = {
+			always = yes
+		}
+
+		fire_only_once = no
+
+		complete_effect = {
+            log = "[GetDateText]: [Root.GetName]: Decision MRC_nmt_blacklisted_on"
+            set_country_flag = MRC_blacklist_declined_triton_flag
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+	}
+
+	MRC_nmt_blacklisted_off = {
+		#icon = GFX_decision_generic_merge_plant_ship
+
+		visible = {
+			has_country_flag = MRC_blacklist_declined_triton_flag
+		}
+		available = {
+			always = yes
+		}
+
+		fire_only_once = no
+
+		complete_effect = {
+            log = "[GetDateText]: [Root.GetName]: Decision MRC_nmt_blacklisted_off"
+            clr_country_flag = MRC_blacklist_declined_triton_flag
+		}
+	}
+}

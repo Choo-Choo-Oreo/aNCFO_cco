@@ -693,4 +693,26 @@ on_actions = {
 			}
 		}
 	}
+
+	on_send_volunteers = {
+		effect = {
+			IF = {
+				LIMIT = {
+					ROOT = { TAG = MRC }
+					FROM = { NOT = { has_country_flag = MRC_expeditionary_experience_received_flag } }
+				}
+				ROOT = {
+					add_to_variable = {
+						var = MRC_expeditionary_experience_var
+						value = 1
+						tooltip = MRC_expeditionary_experience_gain_tt
+					}
+				}
+				FROM = {
+					set_country_flag = MRC_expeditionary_experience_received_flag
+				}
+				log = "[GetDateText]: [Root.GetName]: on_send_volunteers: MRC_expeditionary_experience"
+			}
+		}
+	}
 }

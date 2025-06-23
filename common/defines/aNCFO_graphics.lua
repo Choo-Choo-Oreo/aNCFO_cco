@@ -1,5 +1,5 @@
 -- GFX for clearer visuals
-	NDefines_Graphics.NMapMode.MAP_MODE_MANPOWER_RANGE_MAX = 5000000
+	NDefines_Graphics.NMapMode.MAP_MODE_MANPOWER_RANGE_MAX = 10000000
 
 -- Map‐icon priorities
 	NDefines.NMapIcons.STRATEGIC_AIR_PRIORITY_AIR_MISSION = 290
