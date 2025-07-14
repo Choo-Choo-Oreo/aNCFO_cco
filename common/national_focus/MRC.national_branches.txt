@@ -3831,7 +3831,7 @@ shared_focus = { # Insulae Ground Defense Force
 				x = -3
 				y = 2
 
-				cost = 5
+				cost = 10
 				cancel_if_invalid = yes
 				continue_if_invalid = no
 				available_if_capitulated = yes
@@ -3906,96 +3906,115 @@ shared_focus = { # Insulae Ground Defense Force
 							tooltip = planning_speed_factor_tt
 						}
 					}
+					add_tech_bonus = {
+						bonus = 0.5
+						uses = 1
+						technology = radio
+						technology = improved_radio
+						technology = advanced_radio
+					}
 				}
 			}
 
-		shared_focus = { # Enhanced Grand Strategy
-			id = MRC_focus_enhanced_grand_strategy
-			icon = GFX_focus_unknown_military
-			prerequisite = { focus = MRC_focus_grand_strategy }
-			mutually_exclusive = { focus = MRC_focus_enhanced_tactful_strategy }
-			relative_position_id = MRC_focus_grand_strategy
-			x = 0
-			y = 2
+			shared_focus = { # Enhanced Grand Strategy
+				id = MRC_focus_enhanced_grand_strategy
+				icon = GFX_focus_unknown_military
+				prerequisite = { focus = MRC_focus_grand_strategy }
+				prerequisite = { focus = MRC_focus_communication_priority }
+				mutually_exclusive = { focus = MRC_focus_enhanced_tactful_strategy }
+				relative_position_id = MRC_focus_grand_strategy
+				x = 0
+				y = 2
 
-			cost = 5
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = yes
+				cost = 5
+				cancel_if_invalid = yes
+				continue_if_invalid = no
+				available_if_capitulated = yes
 
-			allow_branch = {
-			}
-			available = {
-			}
-			bypass = {
-			}
+				allow_branch = {
+				}
+				available = {
+				}
+				bypass = {
+				}
 
-			ai_will_do = {
-				factor = 2
-				modifier = {
-					add = 0.10
-					factor = 1.10
-					has_war = yes
+				ai_will_do = {
+					factor = 2
+					modifier = {
+						add = 0.10
+						factor = 1.10
+						has_war = yes
+					}
+				}
+
+				completion_reward = {
+					log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_enhanced_grand_strategy"
+					custom_effect_tooltip = modify_MRC_idea_insulae_defense_force_army_modifier_tt
+					add_to_variable = { 
+						MRC.MRC_max_planning_modifier = 0.05
+						tooltip = max_planning_factor_tt
+					}
+					add_to_variable = { 
+						MRC.MRC_planning_speed_modifier = 0.05
+						tooltip = planning_speed_factor_tt
+					}
+					add_doctrine_cost_reduction = {
+						cost_reduction = 0.5
+						uses = 1
+						category = land_doctrine
+					}
 				}
 			}
 
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_enhanced_grand_strategy"
-				custom_effect_tooltip = modify_MRC_idea_insulae_defense_force_army_modifier_tt
-				add_to_variable = { 
-					MRC.MRC_max_planning_modifier = 0.05
-					tooltip = max_planning_factor_tt
+			shared_focus = { # Enhanced Tactful Strategy
+				id = MRC_focus_enhanced_tactful_strategy
+				icon = GFX_focus_unknown_military
+				prerequisite = { focus = MRC_focus_tactful_strategy }
+				prerequisite = { focus = MRC_focus_communication_priority }
+				mutually_exclusive = { focus = MRC_focus_enhanced_grand_strategy }
+				relative_position_id = MRC_focus_tactful_strategy
+				x = 0
+				y = 2
+
+				cost = 5
+				cancel_if_invalid = yes
+				continue_if_invalid = no
+				available_if_capitulated = yes
+
+				allow_branch = {
 				}
-				add_to_variable = { 
-					MRC.MRC_planning_speed_modifier = 0.05
-					tooltip = planning_speed_factor_tt
+				available = {
 				}
-			}
-		}
-
-		shared_focus = { # Enhanced Tactful Strategy
-			id = MRC_focus_enhanced_tactful_strategy
-			icon = GFX_focus_unknown_military
-			prerequisite = { focus = MRC_focus_tactful_strategy }
-			mutually_exclusive = { focus = MRC_focus_enhanced_grand_strategy }
-			relative_position_id = MRC_focus_tactful_strategy
-			x = 0
-			y = 2
-
-			cost = 5
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = yes
-
-			allow_branch = {
-			}
-			available = {
-			}
-			bypass = {
-			}
-
-			ai_will_do = {
-				factor = 2
-				modifier = {
-					add = 0.10
-					factor = 1.10
-					has_war = yes
+				bypass = {
 				}
-			}
 
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_enhanced_tactful_strategy"
-				custom_effect_tooltip = modify_MRC_idea_insulae_defense_force_army_modifier_tt
-				add_to_variable = { 
-					MRC.MRC_coordination_bonus_modifier = 0.05
-					tooltip = coordination_bonus_tt
+				ai_will_do = {
+					factor = 2
+					modifier = {
+						add = 0.10
+						factor = 1.10
+						has_war = yes
+					}
 				}
-				add_to_variable = { 
-					MRC.MRC_initiative_factor_modifier = 0.05
-					tooltip = initiative_factor_tt
+
+				completion_reward = {
+					log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_enhanced_tactful_strategy"
+					custom_effect_tooltip = modify_MRC_idea_insulae_defense_force_army_modifier_tt
+					add_to_variable = { 
+						MRC.MRC_coordination_bonus_modifier = 0.05
+						tooltip = coordination_bonus_tt
+					}
+					add_to_variable = { 
+						MRC.MRC_initiative_factor_modifier = 0.05
+						tooltip = initiative_factor_tt
+					}
+					add_doctrine_cost_reduction = {
+						cost_reduction = 0.5
+						uses = 1
+						category = land_doctrine
+					}
 				}
 			}
-		}
 
 		shared_focus = { # Motorized Supplies
 			id = MRC_focus_military_motorized_supply
@@ -4127,6 +4146,106 @@ shared_focus = { # Insulae Ground Defense Force
 					add_to_variable = { 
 						MRC.MRC_supply_factor_modifier = 0.05
 						tooltip = supply_factor_tt
+					}
+				}
+			}
+
+		shared_focus = { # 
+			id = MRC_focus_tmp
+			icon = GFX_focus_unknown_military
+			prerequisite = { focus = MRC_focus_military_lessons_independence }
+			#mutually_exclusive = { focus =  }
+			relative_position_id = MRC_focus_military_lessons_independence
+			x = 2
+			y = 1
+
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = yes
+
+			allow_branch = {
+			}
+			available = {
+			}
+			bypass = {
+			}
+
+			ai_will_do = {
+				factor = 2
+				modifier = {
+					add = 0.10
+					factor = 1.10
+					has_war = yes
+				}
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_tmp"
+				custom_effect_tooltip = modify_MRC_idea_insulae_defense_force_army_modifier_tt
+				add_to_variable = {
+					MRC.MRC_army_morale_factor_modifier = 0.05
+					tooltip = army_morale_factor_tt
+				}
+				add_to_variable = {
+					MRC.MRC_army_org_factor_modifier = 0.05
+					tooltip = army_org_factor_tt
+				}
+				add_to_variable = {
+					MRC.MRC_army_org_regain_modifier = 0.05
+					tooltip = army_org_regain_tt
+				}
+				add_to_variable = {
+					MRC.MRC_dig_in_speed_factor_modifier = 0.05
+					tooltip = dig_in_speed_factor_tt
+				}
+				add_to_variable = {
+					MRC.MRC_max_dig_in_factor_modifier = 0.05
+					tooltip = max_dig_in_factor_tt
+				}
+			}
+		}
+
+			shared_focus = { # Will of Soldiers
+				id = MRC_focus_will_of_soldiers
+				icon = GFX_focus_unknown_military
+				prerequisite = { focus = MRC_focus_tmp }
+				#mutually_exclusive = { focus =  }
+				relative_position_id = MRC_focus_military_lessons_independence
+				x = 3
+				y = 2
+
+				cost = 5
+				cancel_if_invalid = yes
+				continue_if_invalid = no
+				available_if_capitulated = yes
+
+				allow_branch = {
+				}
+				available = {
+				}
+				bypass = {
+				}
+
+				ai_will_do = {
+					factor = 2
+					modifier = {
+						add = 0.10
+						factor = 1.10
+						has_war = yes
+					}
+				}
+
+				completion_reward = {
+					log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_will_of_soldiers"
+					custom_effect_tooltip = modify_MRC_idea_insulae_defense_force_army_modifier_tt
+					add_to_variable = {
+						MRC.MRC_org_loss_at_low_org_factor_modifier = 0.25
+						tooltip = org_loss_at_low_org_factor_tt
+					}
+					add_to_variable = {
+						MRC.MRC_org_loss_when_moving_modifier = -0.10
+						tooltip = org_loss_when_moving_tt
 					}
 				}
 			}
