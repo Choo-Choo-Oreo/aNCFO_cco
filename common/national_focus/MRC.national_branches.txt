@@ -1967,6 +1967,33 @@ focus_tree = { # Merchant-Republicism
 			}
 		}
 
+		focus = { # Left 2
+			id = MRC_focus_left_2
+			icon = GFX_focus_unknown_political
+			prerequisite = { focus = MRC_focus_left }
+			relative_position_id = MRC_focus_left
+			x = -1
+			y = 1
+		
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+		
+			available = {
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				factor = 2
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_left_2"
+			}
+		}
+
 		focus = { # Right
 			id = MRC_focus_right
 			icon = GFX_focus_unknown_political
@@ -1991,6 +2018,33 @@ focus_tree = { # Merchant-Republicism
 
 			completion_reward = {
 				log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_right"
+			}
+		}
+
+		focus = { # Right 2
+			id = MRC_focus_right_2
+			icon = GFX_focus_unknown_political
+			prerequisite = { focus = MRC_focus_right }
+			relative_position_id = MRC_focus_right
+			x = 1
+			y = 1
+		
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+		
+			available = {
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				factor = 2
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_right_2"
 			}
 		}
 
@@ -3106,7 +3160,7 @@ shared_focus = { # Insulae Ground Defense Force
 	#prerequisite = { focus =  }
 	#mutually_exclusive = { focus =  }
 	#relative_position_id = 
-	x = 21
+	x = 27
 	y = 0
 
 	cost = 0
@@ -3144,7 +3198,7 @@ shared_focus = { # Insulae Ground Defense Force
 		prerequisite = { focus = MRC_focus_military_insulae_ground_defense_force }
 		#mutually_exclusive = { focus =  }
 		relative_position_id = MRC_focus_military_insulae_ground_defense_force
-		x = -2
+		x = -7
 		y = 1
 
 		cost = 10
@@ -3702,7 +3756,7 @@ shared_focus = { # Insulae Ground Defense Force
 		prerequisite = { focus = MRC_focus_military_insulae_ground_defense_force }
 		#mutually_exclusive = { focus =  }
 		relative_position_id = MRC_focus_military_insulae_ground_defense_force
-		x = 5
+		x = 0
 		y = 1
 
 		cost = 10
@@ -3799,7 +3853,7 @@ shared_focus = { # Insulae Ground Defense Force
 			}
 
 			ai_will_do = {
-				factor = 2
+				factor = 1
 				modifier = {
 					add = 0.10
 					factor = 1.10
@@ -4150,13 +4204,57 @@ shared_focus = { # Insulae Ground Defense Force
 				}
 			}
 
-		shared_focus = { # 
-			id = MRC_focus_tmp
+		shared_focus = { # Steadfast Focus
+			id = MRC_focus_steadfast
 			icon = GFX_focus_unknown_military
 			prerequisite = { focus = MRC_focus_military_lessons_independence }
-			#mutually_exclusive = { focus =  }
+			mutually_exclusive = { focus = MRC_focus_flexible }
 			relative_position_id = MRC_focus_military_lessons_independence
 			x = 2
+			y = 1
+
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = yes
+
+			allow_branch = {
+			}
+			available = {
+			}
+			bypass = {
+			}
+
+			ai_will_do = {
+				factor = 1
+				modifier = {
+					add = 0.10
+					factor = 1.10
+					has_war = yes
+				}
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_tmp"
+				custom_effect_tooltip = modify_MRC_idea_insulae_defense_force_army_modifier_tt
+				add_to_variable = {
+					MRC.MRC_army_org_regain_modifier = 0.05
+					tooltip = army_org_regain_tt
+				}
+				add_to_variable = {
+					MRC.MRC_dig_in_speed_factor_modifier = 0.05
+					tooltip = dig_in_speed_factor_tt
+				}
+			}
+		}
+
+		shared_focus = { # Flexible Mindset
+			id = MRC_focus_flexible
+			icon = GFX_focus_unknown_military
+			prerequisite = { focus = MRC_focus_military_lessons_independence }
+			mutually_exclusive = { focus = MRC_focus_steadfast }
+			relative_position_id = MRC_focus_military_lessons_independence
+			x = 4
 			y = 1
 
 			cost = 5
@@ -4181,23 +4279,11 @@ shared_focus = { # Insulae Ground Defense Force
 			}
 
 			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_tmp"
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_flexible"
 				custom_effect_tooltip = modify_MRC_idea_insulae_defense_force_army_modifier_tt
-				add_to_variable = {
-					MRC.MRC_army_morale_factor_modifier = 0.05
-					tooltip = army_morale_factor_tt
-				}
 				add_to_variable = {
 					MRC.MRC_army_org_factor_modifier = 0.05
 					tooltip = army_org_factor_tt
-				}
-				add_to_variable = {
-					MRC.MRC_army_org_regain_modifier = 0.05
-					tooltip = army_org_regain_tt
-				}
-				add_to_variable = {
-					MRC.MRC_dig_in_speed_factor_modifier = 0.05
-					tooltip = dig_in_speed_factor_tt
 				}
 				add_to_variable = {
 					MRC.MRC_max_dig_in_factor_modifier = 0.05
@@ -4209,7 +4295,7 @@ shared_focus = { # Insulae Ground Defense Force
 			shared_focus = { # Will of Soldiers
 				id = MRC_focus_will_of_soldiers
 				icon = GFX_focus_unknown_military
-				prerequisite = { focus = MRC_focus_tmp }
+				prerequisite = { focus = MRC_focus_steadfast focus = MRC_focus_flexible }
 				#mutually_exclusive = { focus =  }
 				relative_position_id = MRC_focus_military_lessons_independence
 				x = 3
@@ -4250,14 +4336,103 @@ shared_focus = { # Insulae Ground Defense Force
 				}
 			}
 
+			shared_focus = { # Enhanced Steadfast Focus
+				id = MRC_focus_enhanced_steadfast
+				icon = GFX_focus_unknown_military
+				prerequisite = { focus = MRC_focus_steadfast }
+				prerequisite = { focus = MRC_focus_will_of_soldiers }
+				mutually_exclusive = { focus = MRC_focus_enhanced_flexible }
+				relative_position_id = MRC_focus_military_lessons_independence
+				x = 2
+				y = 3
+
+				cost = 5
+				cancel_if_invalid = yes
+				continue_if_invalid = no
+				available_if_capitulated = yes
+
+				allow_branch = {
+				}
+				available = {
+				}
+				bypass = {
+				}
+
+				ai_will_do = {
+					factor = 2
+					modifier = {
+						add = 0.10
+						factor = 1.10
+						has_war = yes
+					}
+				}
+
+				completion_reward = {
+					log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_enhanced_steadfast"
+					custom_effect_tooltip = modify_MRC_idea_insulae_defense_force_army_modifier_tt
+					add_to_variable = {
+						MRC.MRC_army_org_regain_modifier = 0.05
+						tooltip = army_org_regain_tt
+					}
+					add_to_variable = {
+						MRC.MRC_dig_in_speed_factor_modifier = 0.05
+						tooltip = dig_in_speed_factor_tt
+					}
+				}
+			}
+
+			shared_focus = { # Enhanced Flexible Mindset
+				id = MRC_focus_enhanced_flexible
+				icon = GFX_focus_unknown_military
+				prerequisite = { focus = MRC_focus_flexible }
+				prerequisite = { focus = MRC_focus_will_of_soldiers }
+				mutually_exclusive = { focus = MRC_focus_enhanced_steadfast }
+				relative_position_id = MRC_focus_military_lessons_independence
+				x = 4
+				y = 3
+
+				cost = 5
+				cancel_if_invalid = yes
+				continue_if_invalid = no
+				available_if_capitulated = yes
+
+				allow_branch = {
+				}
+				available = {
+				}
+				bypass = {
+				}
+
+				ai_will_do = {
+					factor = 2
+					modifier = {
+						add = 0.10
+						factor = 1.10
+						has_war = yes
+					}
+				}
+
+				completion_reward = {
+					log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_enhanced_flexible"
+					custom_effect_tooltip = modify_MRC_idea_insulae_defense_force_army_modifier_tt
+					add_to_variable = {
+						MRC.MRC_army_org_factor_modifier = 0.05
+						tooltip = army_org_factor_tt
+					}
+					add_to_variable = {
+						MRC.MRC_max_dig_in_factor_modifier = 0.05
+						tooltip = max_dig_in_factor_tt
+					}
+				}
+			}
+
 		shared_focus = { # Hold the Fort
 			id = MRC_focus_military_hold_the_fort
 			icon = GFX_focus_unknown_military
-			prerequisite = { focus = MRC_focus_enhanced_grand_strategy focus = MRC_focus_enhanced_tactful_strategy }
-			prerequisite = { focus = MRC_focus_military_mechanized_backbone }
+			prerequisite = { focus = MRC_focus_enhanced_grand_strategy focus = MRC_focus_enhanced_tactful_strategy focus = MRC_focus_military_mechanized_backbone focus = MRC_focus_enhanced_steadfast focus = MRC_focus_enhanced_flexible }
 			mutually_exclusive = { focus = MRC_focus_military_modern_pincer_movement }
 			relative_position_id = MRC_focus_military_lessons_independence
-			x = -1
+			x = -3
 			y = 4
 
 			cost = 10
@@ -4273,7 +4448,7 @@ shared_focus = { # Insulae Ground Defense Force
 			}
 
 			ai_will_do = {
-				factor = 2
+				factor = 3.5
 				modifier = {
 					add = 0.10
 					factor = 1.10
@@ -4306,11 +4481,10 @@ shared_focus = { # Insulae Ground Defense Force
 		shared_focus = { # Modern Pincer Movement
 			id = MRC_focus_military_modern_pincer_movement
 			icon = GFX_focus_unknown_military
-			prerequisite = { focus = MRC_focus_enhanced_grand_strategy focus = MRC_focus_enhanced_tactful_strategy }
-			prerequisite = { focus = MRC_focus_military_mechanized_backbone }
+			prerequisite = { focus = MRC_focus_enhanced_grand_strategy focus = MRC_focus_enhanced_tactful_strategy focus = MRC_focus_military_mechanized_backbone focus = MRC_focus_enhanced_steadfast focus = MRC_focus_enhanced_flexible }
 			mutually_exclusive = { focus = MRC_focus_military_hold_the_fort }
 			relative_position_id = MRC_focus_military_lessons_independence
-			x = 1
+			x = 3
 			y = 4
 
 			cost = 10
@@ -4326,7 +4500,7 @@ shared_focus = { # Insulae Ground Defense Force
 			}
 
 			ai_will_do = {
-				factor = 2
+				factor = 3.5
 				modifier = {
 					add = 0.10
 					factor = 1.10
@@ -4367,7 +4541,7 @@ shared_focus = { # Insulae Ground Defense Force
 	shared_focus = { # Our Special Forces
 		id = MRC_focus_military_special_forces
 		icon = GFX_focus_unknown_industry
-		prerequisite = { focus = MRC_focus_military_insulae_ground_defense_force }
+		prerequisite = { focus = MRC_focus_military_hold_the_fort focus = MRC_focus_military_modern_pincer_movement }
 		#mutually_exclusive = { focus =  }
 		relative_position_id = MRC_focus_military_insulae_ground_defense_force
 		x = 0
@@ -4389,7 +4563,7 @@ shared_focus = { # Insulae Ground Defense Force
 		}
 
 		ai_will_do = {
-			factor = 2
+			factor = 3.5
 			modifier = {
 				add = 0.10
 				factor = 1.10
@@ -4533,12 +4707,12 @@ shared_focus = { # Insulae Airspace Defense Force
 	#mutually_exclusive = { focus =  }
 	#relative_position_id = 
 	offset = {
-		x = 35
+		x = 43
 		y = 0
 		trigger = { NOT = { AND = { is_debug = yes is_ai = no } } }
 	}
 	offset = {
-		x = 37
+		x = 45
 		y = 0
 		trigger = { AND = { is_debug = yes is_ai = no } }
 	}
@@ -5822,12 +5996,12 @@ shared_focus = { # Insulae Maritime Defense Force
 	#mutually_exclusive = { focus =  }
 	#relative_position_id = 
 	offset = {
-		x = 49
+		x = 59
 		y = 0
 		trigger = { NOT = { AND = { is_debug = yes is_ai = no } } }
 	}
 	offset = {
-		x = 53
+		x = 63
 		y = 0
 		trigger = { AND = { is_debug = yes is_ai = no } }
 	}
