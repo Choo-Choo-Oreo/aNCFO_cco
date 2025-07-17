@@ -1,20 +1,135 @@
+OAK_front_management_rush_COA_ai = {
+    allowed = { TAG = OAK }
+    enable = {
+        has_war_with = COA
+        COA = { is_ai = yes }
+        date < 1928.01.01
+    }
+
+    abort_when_not_enabled = yes
+
+    ai_strategy = {
+        type = front_control
+
+        strategic_region = 148
+        #country_trigger = {
+        #    OR = {
+        #        TAG = OAK
+        #        TAG = COA
+        #    }
+        #}
+
+        ratio = 3.0
+        priority = 200
+        ordertype = front
+        execution_type = rush_weak
+        execute_order = no
+        manual_attack = yes
+    }
+}
+
+OAK_front_management_rush_COA_player = {
+    allowed = { TAG = OAK }
+    enable = {
+        has_war_with = COA
+        COA = { NOT = { is_ai = yes } }
+        date < 1928.01.01
+    }
+
+    abort_when_not_enabled = yes
+
+    ai_strategy = {
+        type = front_control
+
+        strategic_region = 148
+        #country_trigger = {
+        #    OR = {
+        #        TAG = OAK
+        #        TAG = COA
+        #    }
+        #}
+
+        ratio = -1.0
+        priority = 200
+        ordertype = front
+        execution_type = rush_weak
+        execute_order = no
+        manual_attack = yes
+    }
+}
+
 OAK_front_management_rush_COA = {
+    allowed = { TAG = OAK }
+    enable = {
+        has_war_with = COA
+        date > 1928.01.01
+    }
+
+    abort_when_not_enabled = yes
+
+    ai_strategy = {
+        type = front_control
+
+        strategic_region = 148
+        #country_trigger = {
+        #    OR = {
+        #        TAG = OAK
+        #        TAG = COA
+        #    }
+        #}
+
+        ratio = 3.0
+        priority = 200
+        ordertype = front
+        execution_type = rush
+        execute_order = no
+        manual_attack = yes
+    }
+}
+
+OAK_front_management_garrison = {
     allowed = { TAG = OAK }
     enable = { has_war_with = COA }
 
     abort_when_not_enabled = yes
     
     ai_strategy = {
-        type = front_control
+        type = garrison
+        value = -100
+    }
 
-        strategic_region = 148
-        country_trigger = { TAG = COA }
+    ai_strategy = {
+        type = garrison_reinforcement_priority
+        value = -50
+    }
+}
 
-        ratio = 2.0
-        priority = 200
-        ordertype = front
-        execution_type = rush_weak
-        execute_order = yes
-        manual_attack = yes
+COA_front_management_garrison = {
+    allowed = { TAG = COA }
+    enable = { has_war_with = OAK }
+
+    abort_when_not_enabled = yes
+    
+    ai_strategy = {
+        type = garrison
+        value = 50
+    }
+}
+
+OAK_front_management_invade = {
+    allowed = { TAG = OAK }
+    enable = { has_war_with = COA }
+
+    abort_when_not_enabled = yes
+    
+    ai_strategy = {
+        type = invade
+        id = OAK
+        value = 100
+    }
+
+    ai_strategy = {
+        type = naval_invasion_focus
+        value = 100
     }
 }

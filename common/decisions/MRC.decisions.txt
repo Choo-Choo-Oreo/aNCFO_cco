@@ -571,7 +571,7 @@ MRC_decision_air_manufacturing_champion = {
 		MRC_amc_primary_foreign_light_weight_metals = { # Foreign Invite
 			#icon = GFX_decision_generic_merge_plant_aircraft
 			state_target = yes
-			on_map_mode = map_only
+			on_map_mode = map_and_decisions_view
 
 			target_trigger = {
 				any_controlled_state = {
@@ -637,7 +637,7 @@ MRC_decision_air_manufacturing_champion = {
 		MRC_amc_primary_stats_overseas_trails = { # Primary Stats+
 			#icon = GFX_decision_generic_merge_plant_aircraft
 			state_target = yes
-			on_map_mode = map_only
+			on_map_mode = map_and_decisions_view
 
 			target_trigger = {
 				FROM = {
@@ -673,6 +673,350 @@ MRC_decision_air_manufacturing_champion = {
 
 				MRC_amc_primary_champion_star_add = yes
 				MRC_idea_primary_champion_equipment_bonus = yes
+			}
+
+			ai_will_do = {
+				factor = 100
+			}
+		}
+
+		MRC_amc_primary_stats_air_attack = { # Primary Attack
+			#icon = GFX_decision_generic_merge_plant_aircraft
+
+			visible = {
+				OR = {
+					MRC_idea_amc_primary_is_air_attack_airframe = yes
+					AND = { is_debug = yes is_ai = no }
+				}
+			}
+			available = {
+				check_variable = { MRC_amc_primary_stats_air_attack < 4.5 }
+				custom_trigger_tooltip = {
+					tooltip = MRC_primary_star_GTE_target_tt
+					check_variable = {
+						var = MRC_amc_primary_champion_star
+						value = 7
+						compare = less_than_or_equals
+					}
+				}
+				NOT = { has_country_flag = MRC_amc_actively_improving_flag }
+			}
+
+			days_remove = 70
+			fire_only_once = no
+			cost = 10
+
+			complete_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision MRC_amc_primary_stats_air_attack"
+				set_country_flag = MRC_amc_actively_improving_flag
+			}
+			remove_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision remove MRC_amc_primary_stats_air_attack"
+				add_to_variable = { var = MRC_amc_primary_stats_air_attack value = 1 }
+				clr_country_flag = MRC_amc_actively_improving_flag
+				MRC_amc_primary_champion_star_add = yes
+				MRC_idea_primary_champion_air_attack_ns = yes
+			}
+
+			ai_will_do = {
+				factor = 100
+			}
+		}
+
+		MRC_amc_primary_stats_air_defence = { # Primary Defence
+			#icon = GFX_decision_generic_merge_plant_aircraft
+
+			visible = {
+				OR = {
+					MRC_idea_amc_primary_is_air_defence_airframe = yes
+					AND = { is_debug = yes is_ai = no }
+				}
+			}
+			available = {
+				check_variable = { MRC_amc_primary_stats_air_defence < 4.5 }
+				custom_trigger_tooltip = {
+					tooltip = MRC_primary_star_GTE_target_tt
+					check_variable = {
+						var = MRC_amc_primary_champion_star
+						value = 7
+						compare = less_than_or_equals
+					}
+				}
+				NOT = { has_country_flag = MRC_amc_actively_improving_flag }
+			}
+
+			days_remove = 70
+			fire_only_once = no
+			cost = 10
+
+			complete_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision MRC_amc_primary_stats_air_defence"
+				set_country_flag = MRC_amc_actively_improving_flag
+			}
+			remove_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision remove MRC_amc_primary_stats_air_defence"
+				add_to_variable = { var = MRC_amc_primary_stats_air_defence value = 1 }
+				clr_country_flag = MRC_amc_actively_improving_flag
+				MRC_amc_primary_champion_star_add = yes
+				MRC_idea_primary_champion_air_defence_ns = yes
+			}
+
+			ai_will_do = {
+				factor = 100
+			}
+		}
+
+		MRC_amc_primary_stats_air_range = { # Primary Range
+			#icon = GFX_decision_generic_merge_plant_aircraft
+
+			visible = {
+				OR = {
+					MRC_idea_amc_primary_is_air_range_airframe = yes
+					AND = { is_debug = yes is_ai = no }
+				}
+			}
+			available = {
+				check_variable = { MRC_amc_primary_stats_air_range < 4.5 }
+				custom_trigger_tooltip = {
+					tooltip = MRC_primary_star_GTE_target_tt
+					check_variable = {
+						var = MRC_amc_primary_champion_star
+						value = 7
+						compare = less_than_or_equals
+					}
+				}
+				NOT = { has_country_flag = MRC_amc_actively_improving_flag }
+			}
+
+			days_remove = 70
+			fire_only_once = no
+			cost = 10
+
+			complete_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision MRC_amc_primary_stats_air_range"
+				set_country_flag = MRC_amc_actively_improving_flag
+			}
+			remove_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision remove MRC_amc_primary_stats_air_range"
+				add_to_variable = { var = MRC_amc_primary_stats_air_range value = 1 }
+				clr_country_flag = MRC_amc_actively_improving_flag
+				MRC_amc_primary_champion_star_add = yes
+				MRC_idea_primary_champion_air_range_ns = yes
+			}
+
+			ai_will_do = {
+				factor = 100
+			}
+		}
+
+		MRC_amc_primary_stats_air_agility = { # Primary Agility
+			#icon = GFX_decision_generic_merge_plant_aircraft
+
+			visible = {
+				OR = {
+					MRC_idea_amc_primary_is_air_agility_airframe = yes
+					AND = { is_debug = yes is_ai = no }
+				}
+			}
+			available = {
+				check_variable = { MRC_amc_primary_stats_air_agility < 4.5 }
+				custom_trigger_tooltip = {
+					tooltip = MRC_primary_star_GTE_target_tt
+					check_variable = {
+						var = MRC_amc_primary_champion_star
+						value = 7
+						compare = less_than_or_equals
+					}
+				}
+				NOT = { has_country_flag = MRC_amc_actively_improving_flag }
+			}
+
+			days_remove = 70
+			fire_only_once = no
+			cost = 10
+
+			complete_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision MRC_amc_primary_stats_air_agility"
+				set_country_flag = MRC_amc_actively_improving_flag
+			}
+			remove_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision remove MRC_amc_primary_stats_air_agility"
+				add_to_variable = { var = MRC_amc_primary_stats_air_agility value = 1 }
+				clr_country_flag = MRC_amc_actively_improving_flag
+				MRC_amc_primary_champion_star_add = yes
+				MRC_idea_primary_champion_air_agility_ns = yes
+			}
+
+			ai_will_do = {
+				factor = 100
+			}
+		}
+
+		MRC_amc_primary_stats_air_ground_attack = { # Primary Ground Attack
+			#icon = GFX_decision_generic_merge_plant_aircraft
+
+			visible = {
+				OR = {
+					MRC_idea_amc_primary_is_air_ground_attack_airframe = yes
+					AND = { is_debug = yes is_ai = no }
+				}
+			}
+			available = {
+				check_variable = { MRC_amc_primary_stats_air_ground_attack < 4.5 }
+				custom_trigger_tooltip = {
+					tooltip = MRC_primary_star_GTE_target_tt
+					check_variable = {
+						var = MRC_amc_primary_champion_star
+						value = 7
+						compare = less_than_or_equals
+					}
+				}
+				NOT = { has_country_flag = MRC_amc_actively_improving_flag }
+			}
+
+			days_remove = 70
+			fire_only_once = no
+			cost = 10
+
+			complete_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision MRC_amc_primary_stats_air_ground_attack"
+				set_country_flag = MRC_amc_actively_improving_flag
+			}
+			remove_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision remove MRC_amc_primary_stats_air_ground_attack"
+				add_to_variable = { var = MRC_amc_primary_stats_air_ground_attack value = 1 }
+				clr_country_flag = MRC_amc_actively_improving_flag
+				MRC_amc_primary_champion_star_add = yes
+				MRC_idea_primary_champion_air_ground_attack_ns = yes
+			}
+
+			ai_will_do = {
+				factor = 100
+			}
+		}
+
+		MRC_amc_primary_stats_air_bombing = { # Primary Bombing
+			#icon = GFX_decision_generic_merge_plant_aircraft
+
+			visible = {
+				OR = {
+					MRC_idea_amc_primary_is_air_bombing_airframe = yes
+					AND = { is_debug = yes is_ai = no }
+				}
+			}
+			available = {
+				check_variable = { MRC_amc_primary_stats_air_bombing < 4.5 }
+				custom_trigger_tooltip = {
+					tooltip = MRC_primary_star_GTE_target_tt
+					check_variable = {
+						var = MRC_amc_primary_champion_star
+						value = 7
+						compare = less_than_or_equals
+					}
+				}
+				NOT = { has_country_flag = MRC_amc_actively_improving_flag }
+			}
+
+			days_remove = 70
+			fire_only_once = no
+			cost = 10
+
+			complete_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision MRC_amc_primary_stats_air_bombing"
+				set_country_flag = MRC_amc_actively_improving_flag
+			}
+			remove_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision remove MRC_amc_primary_stats_air_bombing"
+				add_to_variable = { var = MRC_amc_primary_stats_air_bombing value = 1 }
+				clr_country_flag = MRC_amc_actively_improving_flag
+				MRC_amc_primary_champion_star_add = yes
+				MRC_idea_primary_champion_air_bombing_ns = yes
+			}
+
+			ai_will_do = {
+				factor = 100
+			}
+		}
+
+		MRC_amc_primary_stats_naval_strike_attack = { # Primary Naval Strike Attack
+			#icon = GFX_decision_generic_merge_plant_aircraft
+
+			visible = {
+				OR = {
+					MRC_idea_amc_primary_is_naval_strike_attack_airframe = yes
+					AND = { is_debug = yes is_ai = no }
+				}
+			}
+			available = {
+				check_variable = { MRC_amc_primary_stats_naval_strike_attack < 4.5 }
+				custom_trigger_tooltip = {
+					tooltip = MRC_primary_star_GTE_target_tt
+					check_variable = {
+						var = MRC_amc_primary_champion_star
+						value = 7
+						compare = less_than_or_equals
+					}
+				}
+				NOT = { has_country_flag = MRC_amc_actively_improving_flag }
+			}
+
+			days_remove = 70
+			fire_only_once = no
+			cost = 10
+
+			complete_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision MRC_amc_primary_stats_naval_strike_attack"
+				set_country_flag = MRC_amc_actively_improving_flag
+			}
+			remove_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision remove MRC_amc_primary_stats_naval_strike_attack"
+				add_to_variable = { var = MRC_amc_primary_stats_naval_strike_attack value = 1 }
+				clr_country_flag = MRC_amc_actively_improving_flag
+				MRC_amc_primary_champion_star_add = yes
+				MRC_idea_primary_champion_naval_strike_attack_ns = yes
+			}
+
+			ai_will_do = {
+				factor = 100
+			}
+		}
+
+		MRC_amc_primary_stats_naval_strike_targetting = { # Primary Naval Strike Targetting
+			#icon = GFX_decision_generic_merge_plant_aircraft
+
+			visible = {
+				OR = {
+					MRC_idea_amc_primary_is_naval_strike_targetting_airframe = yes
+					AND = { is_debug = yes is_ai = no }
+				}
+			}
+			available = {
+				check_variable = { MRC_amc_primary_stats_naval_strike_targetting < 4.5 }
+				custom_trigger_tooltip = {
+					tooltip = MRC_primary_star_GTE_target_tt
+					check_variable = {
+						var = MRC_amc_primary_champion_star
+						value = 7
+						compare = less_than_or_equals
+					}
+				}
+				NOT = { has_country_flag = MRC_amc_actively_improving_flag }
+			}
+
+			days_remove = 70
+			fire_only_once = no
+			cost = 10
+
+			complete_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision MRC_amc_primary_stats_naval_strike_targetting"
+				set_country_flag = MRC_amc_actively_improving_flag
+			}
+			remove_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision remove MRC_amc_primary_stats_naval_strike_targetting"
+				add_to_variable = { var = MRC_amc_primary_stats_naval_strike_targetting value = 1 }
+				clr_country_flag = MRC_amc_actively_improving_flag
+				MRC_amc_primary_champion_star_add = yes
+				MRC_idea_primary_champion_naval_strike_targetting_ns = yes
 			}
 
 			ai_will_do = {
@@ -899,6 +1243,350 @@ MRC_decision_air_manufacturing_champion = {
 
 		# Secondary Foreign
 
+		MRC_amc_secondary_stats_air_attack = { # Secondary Attack
+			#icon = GFX_decision_generic_merge_plant_aircraft
+
+			visible = {
+				OR = {
+					MRC_idea_amc_secondary_is_air_attack_airframe = yes
+					AND = { is_debug = yes is_ai = no }
+				}
+			}
+			available = {
+				check_variable = { MRC_amc_secondary_stats_air_attack < 4.5 }
+				custom_trigger_tooltip = {
+					tooltip = MRC_secondary_star_GTE_target_tt
+					check_variable = {
+						var = MRC_amc_secondary_champion_star
+						value = 5
+						compare = less_than_or_equals
+					}
+				}
+				NOT = { has_country_flag = MRC_amc_actively_improving_flag }
+			}
+
+			days_remove = 70
+			fire_only_once = no
+			cost = 10
+
+			complete_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision MRC_amc_secondary_stats_air_attack"
+				set_country_flag = MRC_amc_actively_improving_flag
+			}
+			remove_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision remove MRC_amc_secondary_stats_air_attack"
+				add_to_variable = { var = MRC_amc_secondary_stats_air_attack value = 1 }
+				clr_country_flag = MRC_amc_actively_improving_flag
+				MRC_amc_secondary_champion_star_add = yes
+				MRC_idea_secondary_champion_air_attack_ns = yes
+			}
+
+			ai_will_do = {
+				factor = 100
+			}
+		}
+
+		MRC_amc_secondary_stats_air_defence = { # Secondary Defence
+			#icon = GFX_decision_generic_merge_plant_aircraft
+
+			visible = {
+				OR = {
+					MRC_idea_amc_secondary_is_air_defence_airframe = yes
+					AND = { is_debug = yes is_ai = no }
+				}
+			}
+			available = {
+				check_variable = { MRC_amc_secondary_stats_air_defence < 4.5 }
+				custom_trigger_tooltip = {
+					tooltip = MRC_secondary_star_GTE_target_tt
+					check_variable = {
+						var = MRC_amc_secondary_champion_star
+						value = 5
+						compare = less_than_or_equals
+					}
+				}
+				NOT = { has_country_flag = MRC_amc_actively_improving_flag }
+			}
+
+			days_remove = 70
+			fire_only_once = no
+			cost = 10
+
+			complete_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision MRC_amc_secondary_stats_air_defence"
+				set_country_flag = MRC_amc_actively_improving_flag
+			}
+			remove_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision remove MRC_amc_secondary_stats_air_defence"
+				add_to_variable = { var = MRC_amc_secondary_stats_air_defence value = 1 }
+				clr_country_flag = MRC_amc_actively_improving_flag
+				MRC_amc_secondary_champion_star_add = yes
+				MRC_idea_secondary_champion_air_defence_ns = yes
+			}
+
+			ai_will_do = {
+				factor = 100
+			}
+		}
+
+		MRC_amc_secondary_stats_air_range = { # Secondary Range
+			#icon = GFX_decision_generic_merge_plant_aircraft
+
+			visible = {
+				OR = {
+					MRC_idea_amc_secondary_is_air_range_airframe = yes
+					AND = { is_debug = yes is_ai = no }
+				}
+			}
+			available = {
+				check_variable = { MRC_amc_secondary_stats_air_range < 4.5 }
+				custom_trigger_tooltip = {
+					tooltip = MRC_secondary_star_GTE_target_tt
+					check_variable = {
+						var = MRC_amc_secondary_champion_star
+						value = 5
+						compare = less_than_or_equals
+					}
+				}
+				NOT = { has_country_flag = MRC_amc_actively_improving_flag }
+			}
+
+			days_remove = 70
+			fire_only_once = no
+			cost = 10
+
+			complete_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision MRC_amc_secondary_stats_air_range"
+				set_country_flag = MRC_amc_actively_improving_flag
+			}
+			remove_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision remove MRC_amc_secondary_stats_air_range"
+				add_to_variable = { var = MRC_amc_secondary_stats_air_range value = 1 }
+				clr_country_flag = MRC_amc_actively_improving_flag
+				MRC_amc_secondary_champion_star_add = yes
+				MRC_idea_secondary_champion_air_range_ns = yes
+			}
+
+			ai_will_do = {
+				factor = 100
+			}
+		}
+
+		MRC_amc_secondary_stats_air_agility = { # Secondary Agility
+			#icon = GFX_decision_generic_merge_plant_aircraft
+
+			visible = {
+				OR = {
+					MRC_idea_amc_secondary_is_air_agility_airframe = yes
+					AND = { is_debug = yes is_ai = no }
+				}
+			}
+			available = {
+				check_variable = { MRC_amc_secondary_stats_air_agility < 4.5 }
+				custom_trigger_tooltip = {
+					tooltip = MRC_secondary_star_GTE_target_tt
+					check_variable = {
+						var = MRC_amc_secondary_champion_star
+						value = 5
+						compare = less_than_or_equals
+					}
+				}
+				NOT = { has_country_flag = MRC_amc_actively_improving_flag }
+			}
+
+			days_remove = 70
+			fire_only_once = no
+			cost = 10
+
+			complete_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision MRC_amc_secondary_stats_air_agility"
+				set_country_flag = MRC_amc_actively_improving_flag
+			}
+			remove_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision remove MRC_amc_secondary_stats_air_agility"
+				add_to_variable = { var = MRC_amc_secondary_stats_air_agility value = 1 }
+				clr_country_flag = MRC_amc_actively_improving_flag
+				MRC_amc_secondary_champion_star_add = yes
+				MRC_idea_secondary_champion_air_agility_ns = yes
+			}
+
+			ai_will_do = {
+				factor = 100
+			}
+		}
+
+		MRC_amc_secondary_stats_air_ground_attack = { # Secondary Ground Attack
+			#icon = GFX_decision_generic_merge_plant_aircraft
+
+			visible = {
+				OR = {
+					MRC_idea_amc_secondary_is_air_ground_attack_airframe = yes
+					AND = { is_debug = yes is_ai = no }
+				}
+			}
+			available = {
+				check_variable = { MRC_amc_secondary_stats_air_ground_attack < 4.5 }
+				custom_trigger_tooltip = {
+					tooltip = MRC_secondary_star_GTE_target_tt
+					check_variable = {
+						var = MRC_amc_secondary_champion_star
+						value = 5
+						compare = less_than_or_equals
+					}
+				}
+				NOT = { has_country_flag = MRC_amc_actively_improving_flag }
+			}
+
+			days_remove = 70
+			fire_only_once = no
+			cost = 10
+
+			complete_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision MRC_amc_secondary_stats_air_ground_attack"
+				set_country_flag = MRC_amc_actively_improving_flag
+			}
+			remove_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision remove MRC_amc_secondary_stats_air_ground_attack"
+				add_to_variable = { var = MRC_amc_secondary_stats_air_ground_attack value = 1 }
+				clr_country_flag = MRC_amc_actively_improving_flag
+				MRC_amc_secondary_champion_star_add = yes
+				MRC_idea_secondary_champion_air_ground_attack_ns = yes
+			}
+
+			ai_will_do = {
+				factor = 100
+			}
+		}
+
+		MRC_amc_secondary_stats_air_bombing = { # Secondary Bombing
+			#icon = GFX_decision_generic_merge_plant_aircraft
+
+			visible = {
+				OR = {
+					MRC_idea_amc_secondary_is_air_bombing_airframe = yes
+					AND = { is_debug = yes is_ai = no }
+				}
+			}
+			available = {
+				check_variable = { MRC_amc_secondary_stats_air_bombing < 4.5 }
+				custom_trigger_tooltip = {
+					tooltip = MRC_secondary_star_GTE_target_tt
+					check_variable = {
+						var = MRC_amc_secondary_champion_star
+						value = 5
+						compare = less_than_or_equals
+					}
+				}
+				NOT = { has_country_flag = MRC_amc_actively_improving_flag }
+			}
+
+			days_remove = 70
+			fire_only_once = no
+			cost = 10
+
+			complete_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision MRC_amc_secondary_stats_air_bombing"
+				set_country_flag = MRC_amc_actively_improving_flag
+			}
+			remove_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision remove MRC_amc_secondary_stats_air_bombing"
+				add_to_variable = { var = MRC_amc_secondary_stats_air_bombing value = 1 }
+				clr_country_flag = MRC_amc_actively_improving_flag
+				MRC_amc_secondary_champion_star_add = yes
+				MRC_idea_secondary_champion_air_bombing_ns = yes
+			}
+
+			ai_will_do = {
+				factor = 100
+			}
+		}
+
+		MRC_amc_secondary_stats_naval_strike_attack = { # Secondary Naval Strike Attack
+			#icon = GFX_decision_generic_merge_plant_aircraft
+
+			visible = {
+				OR = {
+					MRC_idea_amc_secondary_is_naval_strike_attack_airframe = yes
+					AND = { is_debug = yes is_ai = no }
+				}
+			}
+			available = {
+				check_variable = { MRC_amc_secondary_stats_naval_strike_attack < 4.5 }
+				custom_trigger_tooltip = {
+					tooltip = MRC_secondary_star_GTE_target_tt
+					check_variable = {
+						var = MRC_amc_secondary_champion_star
+						value = 5
+						compare = less_than_or_equals
+					}
+				}
+				NOT = { has_country_flag = MRC_amc_actively_improving_flag }
+			}
+
+			days_remove = 70
+			fire_only_once = no
+			cost = 10
+
+			complete_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision MRC_amc_secondary_stats_naval_strike_attack"
+				set_country_flag = MRC_amc_actively_improving_flag
+			}
+			remove_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision remove MRC_amc_secondary_stats_naval_strike_attack"
+				add_to_variable = { var = MRC_amc_secondary_stats_naval_strike_attack value = 1 }
+				clr_country_flag = MRC_amc_actively_improving_flag
+				MRC_amc_secondary_champion_star_add = yes
+				MRC_idea_secondary_champion_naval_strike_attack_ns = yes
+			}
+
+			ai_will_do = {
+				factor = 100
+			}
+		}
+
+		MRC_amc_secondary_stats_naval_strike_targetting = { # Secondary Naval Strike Targetting
+			#icon = GFX_decision_generic_merge_plant_aircraft
+
+			visible = {
+				OR = {
+					MRC_idea_amc_secondary_is_naval_strike_targetting_airframe = yes
+					AND = { is_debug = yes is_ai = no }
+				}
+			}
+			available = {
+				check_variable = { MRC_amc_secondary_stats_naval_strike_targetting < 4.5 }
+				custom_trigger_tooltip = {
+					tooltip = MRC_secondary_star_GTE_target_tt
+					check_variable = {
+						var = MRC_amc_secondary_champion_star
+						value = 5
+						compare = less_than_or_equals
+					}
+				}
+				NOT = { has_country_flag = MRC_amc_actively_improving_flag }
+			}
+
+			days_remove = 70
+			fire_only_once = no
+			cost = 10
+
+			complete_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision MRC_amc_secondary_stats_naval_strike_targetting"
+				set_country_flag = MRC_amc_actively_improving_flag
+			}
+			remove_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision remove MRC_amc_secondary_stats_naval_strike_targetting"
+				add_to_variable = { var = MRC_amc_secondary_stats_naval_strike_targetting value = 1 }
+				clr_country_flag = MRC_amc_actively_improving_flag
+				MRC_amc_secondary_champion_star_add = yes
+				MRC_idea_secondary_champion_naval_strike_targetting_ns = yes
+			}
+
+			ai_will_do = {
+				factor = 100
+			}
+		}
+
 	MRC_amc_choose_trinary = {
 		#icon = GFX_decision_generic_merge_plant_aircraft
 		priority = 50
@@ -1078,9 +1766,353 @@ MRC_decision_air_manufacturing_champion = {
 
 		# Trinary Foreign
 
+		MRC_amc_trinary_stats_air_attack = { # Secondary Attack
+			#icon = GFX_decision_generic_merge_plant_aircraft
+
+			visible = {
+				OR = {
+					MRC_idea_amc_trinary_is_air_attack_airframe = yes
+					AND = { is_debug = yes is_ai = no }
+				}
+			}
+			available = {
+				check_variable = { MRC_amc_trinary_stats_air_attack < 4.5 }
+				custom_trigger_tooltip = {
+					tooltip = MRC_trinary_star_GTE_target_tt
+					check_variable = {
+						var = MRC_amc_trinary_champion_star
+						value = 3
+						compare = less_than_or_equals
+					}
+				}
+				NOT = { has_country_flag = MRC_amc_actively_improving_flag }
+			}
+
+			days_remove = 70
+			fire_only_once = no
+			cost = 10
+
+			complete_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision MRC_amc_trinary_stats_air_attack"
+				set_country_flag = MRC_amc_actively_improving_flag
+			}
+			remove_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision remove MRC_amc_trinary_stats_air_attack"
+				add_to_variable = { var = MRC_amc_trinary_stats_air_attack value = 1 }
+				clr_country_flag = MRC_amc_actively_improving_flag
+				MRC_amc_trinary_champion_star_add = yes
+				MRC_idea_trinary_champion_air_attack_ns = yes
+			}
+
+			ai_will_do = {
+				factor = 100
+			}
+		}
+
+		MRC_amc_trinary_stats_air_defence = { # Secondary Defence
+			#icon = GFX_decision_generic_merge_plant_aircraft
+
+			visible = {
+				OR = {
+					MRC_idea_amc_trinary_is_air_defence_airframe = yes
+					AND = { is_debug = yes is_ai = no }
+				}
+			}
+			available = {
+				check_variable = { MRC_amc_trinary_stats_air_defence < 4.5 }
+				custom_trigger_tooltip = {
+					tooltip = MRC_trinary_star_GTE_target_tt
+					check_variable = {
+						var = MRC_amc_trinary_champion_star
+						value = 3
+						compare = less_than_or_equals
+					}
+				}
+				NOT = { has_country_flag = MRC_amc_actively_improving_flag }
+			}
+
+			days_remove = 70
+			fire_only_once = no
+			cost = 10
+
+			complete_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision MRC_amc_trinary_stats_air_defence"
+				set_country_flag = MRC_amc_actively_improving_flag
+			}
+			remove_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision remove MRC_amc_trinary_stats_air_defence"
+				add_to_variable = { var = MRC_amc_trinary_stats_air_defence value = 1 }
+				clr_country_flag = MRC_amc_actively_improving_flag
+				MRC_amc_trinary_champion_star_add = yes
+				MRC_idea_trinary_champion_air_defence_ns = yes
+			}
+
+			ai_will_do = {
+				factor = 100
+			}
+		}
+
+		MRC_amc_trinary_stats_air_range = { # Secondary Range
+			#icon = GFX_decision_generic_merge_plant_aircraft
+
+			visible = {
+				OR = {
+					MRC_idea_amc_trinary_is_air_range_airframe = yes
+					AND = { is_debug = yes is_ai = no }
+				}
+			}
+			available = {
+				check_variable = { MRC_amc_trinary_stats_air_range < 4.5 }
+				custom_trigger_tooltip = {
+					tooltip = MRC_trinary_star_GTE_target_tt
+					check_variable = {
+						var = MRC_amc_trinary_champion_star
+						value = 3
+						compare = less_than_or_equals
+					}
+				}
+				NOT = { has_country_flag = MRC_amc_actively_improving_flag }
+			}
+
+			days_remove = 70
+			fire_only_once = no
+			cost = 10
+
+			complete_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision MRC_amc_trinary_stats_air_range"
+				set_country_flag = MRC_amc_actively_improving_flag
+			}
+			remove_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision remove MRC_amc_trinary_stats_air_range"
+				add_to_variable = { var = MRC_amc_trinary_stats_air_range value = 1 }
+				clr_country_flag = MRC_amc_actively_improving_flag
+				MRC_amc_trinary_champion_star_add = yes
+				MRC_idea_trinary_champion_air_range_ns = yes
+			}
+
+			ai_will_do = {
+				factor = 100
+			}
+		}
+
+		MRC_amc_trinary_stats_air_agility = { # Secondary Agility
+			#icon = GFX_decision_generic_merge_plant_aircraft
+
+			visible = {
+				OR = {
+					MRC_idea_amc_trinary_is_air_agility_airframe = yes
+					AND = { is_debug = yes is_ai = no }
+				}
+			}
+			available = {
+				check_variable = { MRC_amc_trinary_stats_air_agility < 4.5 }
+				custom_trigger_tooltip = {
+					tooltip = MRC_trinary_star_GTE_target_tt
+					check_variable = {
+						var = MRC_amc_trinary_champion_star
+						value = 3
+						compare = less_than_or_equals
+					}
+				}
+				NOT = { has_country_flag = MRC_amc_actively_improving_flag }
+			}
+
+			days_remove = 70
+			fire_only_once = no
+			cost = 10
+
+			complete_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision MRC_amc_trinary_stats_air_agility"
+				set_country_flag = MRC_amc_actively_improving_flag
+			}
+			remove_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision remove MRC_amc_trinary_stats_air_agility"
+				add_to_variable = { var = MRC_amc_trinary_stats_air_agility value = 1 }
+				clr_country_flag = MRC_amc_actively_improving_flag
+				MRC_amc_trinary_champion_star_add = yes
+				MRC_idea_trinary_champion_air_agility_ns = yes
+			}
+
+			ai_will_do = {
+				factor = 100
+			}
+		}
+
+		MRC_amc_trinary_stats_air_ground_attack = { # Secondary Ground Attack
+			#icon = GFX_decision_generic_merge_plant_aircraft
+
+			visible = {
+				OR = {
+					MRC_idea_amc_trinary_is_air_ground_attack_airframe = yes
+					AND = { is_debug = yes is_ai = no }
+				}
+			}
+			available = {
+				check_variable = { MRC_amc_trinary_stats_air_ground_attack < 4.5 }
+				custom_trigger_tooltip = {
+					tooltip = MRC_trinary_star_GTE_target_tt
+					check_variable = {
+						var = MRC_amc_trinary_champion_star
+						value = 3
+						compare = less_than_or_equals
+					}
+				}
+				NOT = { has_country_flag = MRC_amc_actively_improving_flag }
+			}
+
+			days_remove = 70
+			fire_only_once = no
+			cost = 10
+
+			complete_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision MRC_amc_trinary_stats_air_ground_attack"
+				set_country_flag = MRC_amc_actively_improving_flag
+			}
+			remove_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision remove MRC_amc_trinary_stats_air_ground_attack"
+				add_to_variable = { var = MRC_amc_trinary_stats_air_ground_attack value = 1 }
+				clr_country_flag = MRC_amc_actively_improving_flag
+				MRC_amc_trinary_champion_star_add = yes
+				MRC_idea_trinary_champion_air_ground_attack_ns = yes
+			}
+
+			ai_will_do = {
+				factor = 100
+			}
+		}
+
+		MRC_amc_trinary_stats_air_bombing = { # Secondary Bombing
+			#icon = GFX_decision_generic_merge_plant_aircraft
+
+			visible = {
+				OR = {
+					MRC_idea_amc_trinary_is_air_bombing_airframe = yes
+					AND = { is_debug = yes is_ai = no }
+				}
+			}
+			available = {
+				check_variable = { MRC_amc_trinary_stats_air_bombing < 4.5 }
+				custom_trigger_tooltip = {
+					tooltip = MRC_trinary_star_GTE_target_tt
+					check_variable = {
+						var = MRC_amc_trinary_champion_star
+						value = 3
+						compare = less_than_or_equals
+					}
+				}
+				NOT = { has_country_flag = MRC_amc_actively_improving_flag }
+			}
+
+			days_remove = 70
+			fire_only_once = no
+			cost = 10
+
+			complete_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision MRC_amc_trinary_stats_air_bombing"
+				set_country_flag = MRC_amc_actively_improving_flag
+			}
+			remove_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision remove MRC_amc_trinary_stats_air_bombing"
+				add_to_variable = { var = MRC_amc_trinary_stats_air_bombing value = 1 }
+				clr_country_flag = MRC_amc_actively_improving_flag
+				MRC_amc_trinary_champion_star_add = yes
+				MRC_idea_trinary_champion_air_bombing_ns = yes
+			}
+
+			ai_will_do = {
+				factor = 100
+			}
+		}
+
+		MRC_amc_trinary_stats_naval_strike_attack = { # Secondary Naval Strike Attack
+			#icon = GFX_decision_generic_merge_plant_aircraft
+
+			visible = {
+				OR = {
+					MRC_idea_amc_trinary_is_naval_strike_attack_airframe = yes
+					AND = { is_debug = yes is_ai = no }
+				}
+			}
+			available = {
+				check_variable = { MRC_amc_trinary_stats_naval_strike_attack < 4.5 }
+				custom_trigger_tooltip = {
+					tooltip = MRC_trinary_star_GTE_target_tt
+					check_variable = {
+						var = MRC_amc_trinary_champion_star
+						value = 3
+						compare = less_than_or_equals
+					}
+				}
+				NOT = { has_country_flag = MRC_amc_actively_improving_flag }
+			}
+
+			days_remove = 70
+			fire_only_once = no
+			cost = 10
+
+			complete_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision MRC_amc_trinary_stats_naval_strike_attack"
+				set_country_flag = MRC_amc_actively_improving_flag
+			}
+			remove_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision remove MRC_amc_trinary_stats_naval_strike_attack"
+				add_to_variable = { var = MRC_amc_trinary_stats_naval_strike_attack value = 1 }
+				clr_country_flag = MRC_amc_actively_improving_flag
+				MRC_amc_trinary_champion_star_add = yes
+				MRC_idea_trinary_champion_naval_strike_attack_ns = yes
+			}
+
+			ai_will_do = {
+				factor = 100
+			}
+		}
+
+		MRC_amc_trinary_stats_naval_strike_targetting = { # Secondary Naval Strike Targetting
+			#icon = GFX_decision_generic_merge_plant_aircraft
+
+			visible = {
+				OR = {
+					MRC_idea_amc_trinary_is_naval_strike_targetting_airframe = yes
+					AND = { is_debug = yes is_ai = no }
+				}
+			}
+			available = {
+				check_variable = { MRC_amc_trinary_stats_naval_strike_targetting < 4.5 }
+				custom_trigger_tooltip = {
+					tooltip = MRC_trinary_star_GTE_target_tt
+					check_variable = {
+						var = MRC_amc_trinary_champion_star
+						value = 3
+						compare = less_than_or_equals
+					}
+				}
+				NOT = { has_country_flag = MRC_amc_actively_improving_flag }
+			}
+
+			days_remove = 70
+			fire_only_once = no
+			cost = 10
+
+			complete_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision MRC_amc_trinary_stats_naval_strike_targetting"
+				set_country_flag = MRC_amc_actively_improving_flag
+			}
+			remove_effect = {
+				log = "[GetDateText]: [Root.GetName]: Decision remove MRC_amc_trinary_stats_naval_strike_targetting"
+				add_to_variable = { var = MRC_amc_trinary_stats_naval_strike_targetting value = 1 }
+				clr_country_flag = MRC_amc_actively_improving_flag
+				MRC_amc_trinary_champion_star_add = yes
+				MRC_idea_trinary_champion_naval_strike_targetting_ns = yes
+			}
+
+			ai_will_do = {
+				factor = 100
+			}
+		}
+
 	MRC_amc_invite_to_champion = {
 		icon = GFX_decision_generic_merge_plant_aircraft
-		on_map_mode = map_only
+		on_map_mode = map_and_decisions_view
 		priority = -10
 
 		target_trigger = {
@@ -1270,7 +2302,7 @@ MRC_decision_navy_manufacturing_triton = {
 		MRC_nmt_primary_reinforced_metals = { # Foreign Invite
 			#icon = GFX_decision_generic_merge_plant_aircraft
 			state_target = yes
-			on_map_mode = map_only
+			on_map_mode = map_and_decisions_view
 
 			target_trigger = {
 				any_controlled_state = {
@@ -1335,7 +2367,7 @@ MRC_decision_navy_manufacturing_triton = {
 
 	MRC_nmt_invite_to_triton = {
 		icon = GFX_decision_generic_merge_plant_ship
-		on_map_mode = map_only
+		on_map_mode = map_and_decisions_view
 		priority = -10
 
 		target_trigger = {

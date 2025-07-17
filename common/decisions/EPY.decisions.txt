@@ -1,0 +1,103 @@
+foreign_politics = {
+	EPY_sue_for_peace_LMN = {
+		priority = 100
+
+		target_array = enemies
+
+		target_trigger = {
+			#Target is FROM
+			FROM = {
+				#tag = event_target:WTT_current_china_leader
+				is_literally_china = yes
+				has_war_with = ROOT
+			}
+		}
+
+		available = {
+			FROM = { 
+				surrender_progress < 0.2 # if they are losing, lets not allow it
+			}
+			custom_trigger_tooltip = {
+				tooltip = JAP_sue_for_peace_TT
+				NOT = {
+					controls_state = 288
+					controls_state = 289
+					controls_state = 290
+					controls_state = 346
+					controls_state = 347
+					controls_state = 348
+					controls_state = 349
+					controls_state = 350
+					controls_state = 352
+					controls_state = 353
+					controls_state = 354
+					controls_state = 355
+				}
+				NOT = {
+					any_of = {
+						array = LMN.core_states
+						var:v = {
+							NOT = {
+								state = 30
+								state = 31
+								state = 351
+								state = 386
+								state = 387
+								state = 663
+							}
+							controller = {
+								OR = {
+									tag = JAP
+									AND = {
+										is_subject_of = JAP
+										OR = {
+											tag = MEN
+											tag = MAN
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+				MAN = {
+					OR = {
+						exists = no
+						NOT = {
+							is_subject_of = JAP
+						}
+						has_capitulated = yes
+					}
+				}
+			}
+		}
+
+		visible = {
+			FROM = { 
+				exists = yes 
+				is_subject = no
+			}
+			is_subject = no
+			any_enemy_country = {
+				is_literally_china = yes
+			}
+		}
+
+		cost = 0
+		fire_only_once = yes
+
+		complete_effect = {
+			#event_target:WTT_current_china_leader = {
+			FROM = {
+				country_event = { 
+					id = wtt_japan.126 
+					days = 1 
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+	}
+}
