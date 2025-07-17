@@ -4858,7 +4858,7 @@ shared_focus = { # Insulae Airspace Defense Force
 				IF = {
 					LIMIT = { NOT = { has_tech = survivability_studies } }
 					add_tech_bonus = {
-						bonus = 1.0
+						bonus = 0.5
 						uses = 1
 						technology = survivability_studies
 					}
@@ -4940,6 +4940,11 @@ shared_focus = { # Insulae Airspace Defense Force
 					MRC.MRC_air_cas_present_factor_modifier = 0.10
 					tooltip = air_cas_present_factor_tt
 				}
+				add_tech_bonus = {
+					bonus = 0.5
+					uses = 1
+					technology = heavy_bombs
+				}
 				custom_effect_tooltip = unlocks_manufacturing_tt # Unlocks Manufacturing Decision(s)
 			}
 		}
@@ -4980,6 +4985,11 @@ shared_focus = { # Insulae Airspace Defense Force
 				add_to_variable = { 
 					MRC.MRC_air_cas_efficiency_modifier = 0.15
 					tooltip = air_cas_efficiency_tt
+				}
+				add_tech_bonus = {
+					bonus = 0.5
+					uses = 1
+					technology = armor_piercing_bombs
 				}
 				custom_effect_tooltip = unlocks_manufacturing_tt # Unlocks Manufacturing Decision(s)
 			}
@@ -5057,6 +5067,11 @@ shared_focus = { # Insulae Airspace Defense Force
 				add_to_variable = { 
 					MRC.MRC_air_escort_efficiency_modifier = 0.15
 					tooltip = air_escort_efficiency_tt
+				}
+				add_tech_bonus = {
+					bonus = 0.5
+					uses = 1
+					technology = aa_hmg
 				}
 				custom_effect_tooltip = unlocks_manufacturing_tt # Unlocks Manufacturing Decision(s)
 			}
@@ -5270,14 +5285,16 @@ shared_focus = { # Insulae Airspace Defense Force
 
 			completion_reward = {
 				log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_air_raiders"
+				custom_effect_tooltip = modify_MRC_idea_insulae_defense_force_air_modifier_tt
+				add_to_variable = { 
+					MRC.MRC_air_superiority_bonus_in_combat_modifier = 0.15
+					tooltip = air_superiority_bonus_in_combat_tt
+				}
 				add_tech_bonus = {
 					bonus = 1.0
 					uses = 1
 					category = cat_heavy_fighter
 				}
-				MRC_idea_medium_plane_airframe_build_cost_ic_num_ns = yes
-				hidden_effect = { MRC_idea_medium_plane_airframe_build_cost_ic_num_ns = yes }
-				custom_effect_tooltip = MRC_military_medium_plane_airframe_build_cost_ic_1_key
 			}
 		}
 
@@ -5313,13 +5330,16 @@ shared_focus = { # Insulae Airspace Defense Force
 
 			completion_reward = {
 				log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_homeland_defense"
+				custom_effect_tooltip = modify_MRC_idea_insulae_defense_force_air_modifier_tt
+				add_to_variable = { 
+					MRC.MRC_cas_damage_reduction_modifier = 0.15
+					tooltip = cas_damage_reduction_tt
+				}
 				add_tech_bonus = {
 					bonus = 1.0
 					uses = 1
 					category = light_fighter
 				}
-				MRC_idea_small_plane_airframe_build_cost_ic_num_ns = yes
-				custom_effect_tooltip = MRC_military_small_plane_airframe_build_cost_ic_0_key
 			}
 		}
 
@@ -5355,14 +5375,16 @@ shared_focus = { # Insulae Airspace Defense Force
 
 			completion_reward = {
 				log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_military_fire_and_bombs"
+				custom_effect_tooltip = modify_MRC_idea_insulae_defense_force_air_modifier_tt
+				add_to_variable = { 
+					MRC.MRC_air_cas_present_factor_modifier = 0.15
+					tooltip = air_cas_present_factor_tt
+				}
 				add_tech_bonus = {
 					bonus = 1.0
 					uses = 1
 					category = cat_strategic_bomber
 				}
-				MRC_idea_large_plane_airframe_build_cost_ic_num_ns = yes
-				hidden_effect = { MRC_idea_large_plane_airframe_build_cost_ic_num_ns = yes }
-				custom_effect_tooltip = MRC_military_large_plane_airframe_build_cost_ic_1_key
 			}
 		}
 
@@ -5530,8 +5552,10 @@ shared_focus = { # Piercing Sound
 		y = 1
 		trigger = {
 			NOT = {
-				has_completed_focus = MRC_focus_military_fire_and_bombs
-				AND = { is_debug = yes is_ai = no }
+				OR = {
+					has_completed_focus = MRC_focus_military_fire_and_bombs
+					AND = { is_debug = yes is_ai = no }
+				}
 			}
 			OR = {
 				has_completed_focus = MRC_focus_military_air_raiders
@@ -5766,8 +5790,10 @@ shared_focus = { # Levav Home Range Doctrine
 		y = 1
 		trigger = {
 			NOT = {
-				has_completed_focus = MRC_focus_military_fire_and_bombs
-				AND = { is_debug = yes is_ai = no }
+				OR = {
+					has_completed_focus = MRC_focus_military_fire_and_bombs
+					AND = { is_debug = yes is_ai = no }
+				}
 			}
 			OR = {
 				has_completed_focus = MRC_focus_military_air_raiders

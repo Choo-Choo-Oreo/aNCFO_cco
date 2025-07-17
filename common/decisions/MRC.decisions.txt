@@ -619,7 +619,6 @@ MRC_decision_air_manufacturing_champion = {
 						resources = { aluminium rubber }
 					}
 					FROM = { add_dynamic_modifier = { modifier = MRC_state_air_manufacturing_champion_modifier } }
-					MRC_amc_primary_champion_star_add = yes
 				}
 				custom_effect_tooltip = generic_skip_one_line_tt # We do this for clearer reading.
 				effect_tooltip = {
@@ -646,7 +645,7 @@ MRC_decision_air_manufacturing_champion = {
 						FROM = { is_core_of = PREV }
 						NOT = {
 							TAG = ROOT # Only Foreign
-							has_country_flag = MRC_champion_overseas_trails
+							#has_country_flag = MRC_champion_overseas_trails
 						}
 					}
 				}
@@ -656,21 +655,22 @@ MRC_decision_air_manufacturing_champion = {
 				has_country_flag = MRC_amc_primary_champion_flag
 				OWNER = {
 					is_in_tech_sharing_group = MRC_tech_group_champion
-					NOT = { has_country_flag = MRC_champion_overseas_trails }
+					#NOT = { has_country_flag = MRC_champion_overseas_trails }
 				}
 			}
 
-			fire_only_once = no
+			fire_only_once = yes
 			cost = 10
 
 			complete_effect = {
 				log = "[GetDateText]: [Root.GetName]: Decision MRC_amc_primary_stats_overseas_trails"
 
 				FROM = {
-					controller = { set_country_flag = MRC_champion_overseas_trails }
+					#controller = { set_country_flag = MRC_champion_overseas_trails }
 				}
 
 				MRC_amc_primary_champion_star_add = yes
+				MRC_idea_primary_champion_equipment_bonus = yes
 			}
 
 			ai_will_do = {
@@ -1087,6 +1087,15 @@ MRC_decision_air_manufacturing_champion = {
 					is_in_faction_with = MRC
 					has_country_flag = MRC_expeditionary_experience_received_flag
 					has_country_flag = accept.ally_with_MRC
+					AND = {
+						has_opinion = { target = MRC value > 50 }
+						is_ai = yes
+					}
+					AND = {
+						has_opinion = { target = MRC value > 50 }
+						MRC = { has_opinion = { target = FROM value > 50 } }
+						is_ai = no
+					}
 				}
 			}
 		}
@@ -1331,6 +1340,15 @@ MRC_decision_navy_manufacturing_triton = {
 					is_in_faction_with = MRC
 					has_country_flag = MRC_expeditionary_experience_received_flag
 					has_country_flag = accept.ally_with_MRC
+					AND = {
+						has_opinion = { target = MRC value > 50 }
+						is_ai = yes
+					}
+					AND = {
+						has_opinion = { target = MRC value > 50 }
+						MRC = { has_opinion = { target = FROM value > 50 } }
+						is_ai = no
+					}
 				}
 			}
 		}
