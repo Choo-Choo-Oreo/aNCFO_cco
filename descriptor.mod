@@ -1,4 +1,4 @@
-version="1.0.0"
+version="1.1.0"
 replace_path="common/ai_equipment"
 replace_path="common/ai_focuses"
 replace_path="common/ai_strategy"
