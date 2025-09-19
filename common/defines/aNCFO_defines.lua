@@ -86,7 +86,7 @@
 		NDefines.NCountry.MAX_CONVOYS_BEING_RAIDED_WAR_SUPPORT_IMPACT = -0.70
 		NDefines.NCountry.RADAR_RANGE_MAX = 240; -- 20% higher than base.
 		-- Optimization
-			NDefines.NCountry.EVENT_PROCESS_OFFSET = 25 -- Performance enhancer. --TW/WTT
+			NDefines.NCountry.EVENT_PROCESS_OFFSET = 30 -- Performance enhancer. --TW/WTT
 
 	-- NResistance
 
@@ -165,7 +165,7 @@
 
 	-- NAI
 		-- Days between Updates Start --
-			NDefines.NAI.AI_UPDATE_ROLES_FREQUENCY_HOURS = 72 				-- Base 48
+			NDefines.NAI.AI_UPDATE_ROLES_FREQUENCY_HOURS = 168 				-- Base 48
 			NDefines.NAI.AIFC_UPDATE_FREQUENCY_DAYS = 7						-- Base 5
 			NDefines.NAI.DAYS_BETWEEN_AIR_PRIORITIES_UPDATE = 7 			-- Base 4
 			NDefines.NAI.RESEARCH_DAYS_BETWEEN_WEIGHT_UPDATE = 30 			-- Base 7

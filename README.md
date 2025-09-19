@@ -64,7 +64,7 @@ Contributions are tracked in one of the following formats:
 - **truck gaming** – *Graphics Integrated*
   [Modifier Icons](https://steamcommunity.com/sharedfiles/filedetails/?id=2668048070) | *Götterdämmerung*
 
-- **Amine Alkaline, Sheep, Code, Vonkaja, & Kaarlo – Better Mechanics Collection** – *Various Components Integrated*
+- **Amine Alkaline, Kaarlo, Sheep, Code, Vonkaja, & Yard1 – Better Mechanics Collection** – *Various Components Integrated*
   ["Better Mechanics Collection"](https://steamcommunity.com/workshop/filedetails/?id=2994645469)
   Components include:  
     "Better Mechanics : Optimization" | *19 Jan 2024*

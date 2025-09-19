@@ -4,7 +4,7 @@ import os
 
 # Check if a file name was provided as an argument
 if len(sys.argv) < 2:
-    print("Usage: python hoi4_compression.py <input_file>")
+    print("Usage: python pdx_file_compression.py <input_file>")
     sys.exit(1)
 
 input_file = sys.argv[1]

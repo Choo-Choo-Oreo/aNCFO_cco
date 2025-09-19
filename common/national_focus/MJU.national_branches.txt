@@ -1,5 +1,5 @@
 focus_tree = {
-	id = mju_military_junta_focus
+	id = mju_military_nationalist_focus
 	
 	country = { factor = 0
 		modifier = { add = 10
@@ -8,9 +8,7 @@ focus_tree = {
 	}
 	default = no
 
-# zhou common in china
-
-	#shared_focus = MJU_focus__force
+	#shared_focus = MJU_focus_army_force
 	focus = { # Interal Policies
 		id = MJU_focus_internal_policies
 		icon = GFX_focus_unknown_political
@@ -18,7 +16,7 @@ focus_tree = {
 		#prerequisite = { focus =  }
 		#relative_position_id = 
 		x = 5
-		y = 0
+		y = 2
 	
 		cost = 10
 		cancel_if_invalid = yes
@@ -26,6 +24,7 @@ focus_tree = {
 		available_if_capitulated = no
 
 		available = {
+			NOT = { has_idea = MJU_idea_leaderless_nation }
 		}
 		bypass = {
 		}
@@ -68,8 +67,8 @@ focus_tree = {
 		}
 	}
 
-		focus = { # 
-			id = MJU_focus_
+		focus = { # Railway Expansion
+			id = MJU_focus_railway_expansion
 			icon = GFX_focus_unknown_political
 			#mutually_exclusive = { focus =  }
 			prerequisite = { focus = MJU_focus_economic_development }
@@ -92,9 +91,129 @@ focus_tree = {
 			}
 
 			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_"
+				log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_railway_expansion"
 			}
 		}
+
+		focus = { # Railway Network
+			id = MJU_focus_railway_network
+			icon = GFX_focus_unknown_political
+			#mutually_exclusive = { focus =  }
+			prerequisite = { focus = MJU_focus_railway_expansion }
+			relative_position_id = MJU_focus_railway_expansion
+			x = 0
+			y = 3
+		
+			cost = 10
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+
+			available = {
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				factor = 2
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_railway_network"
+			}
+		}
+
+		focus = { # Unification Economics
+			id = MJU_focus_unification_economics
+			icon = GFX_focus_unknown_political
+			#mutually_exclusive = { focus =  }
+			prerequisite = { focus = MJU_focus_economic_development }
+			relative_position_id = MJU_focus_economic_development
+			x = 0
+			y = 4
+		
+			cost = 10
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+
+			available = {
+				NOT = {
+					country_exists = SPC
+					country_exists = UPF
+				}
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				factor = 3
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_unification_economics"
+			}
+		}
+
+			focus = { # Infrastructure to the Reconquest Castravia
+				id = MJU_focus_infrastructure_to_castravia
+				icon = GFX_focus_unknown_political
+				#mutually_exclusive = { focus =  }
+				prerequisite = { focus = MJU_focus_railway_network }
+				prerequisite = { focus = MJU_focus_unification_economics }
+				relative_position_id = MJU_focus_unification_economics
+				x = -2
+				y = 1
+			
+				cost = 10
+				cancel_if_invalid = yes
+				continue_if_invalid = no
+				available_if_capitulated = no
+
+				available = {
+				}
+				bypass = {
+				}
+			
+				ai_will_do = {
+					factor = 3
+				}
+
+				completion_reward = {
+					log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_infrastructure_to_castravia"
+					add_research_slot = 1
+				}
+			}
+
+			focus = { # Infrastructure to the Reconquest Southeast
+				id = MJU_focus_infrastructure_to_confederation
+				icon = GFX_focus_unknown_political
+				#mutually_exclusive = { focus =  }
+				prerequisite = { focus = MJU_focus_railway_network }
+				prerequisite = { focus = MJU_focus_unification_economics }
+				relative_position_id = MJU_focus_unification_economics
+				x = 1
+				y = 1
+			
+				cost = 10
+				cancel_if_invalid = yes
+				continue_if_invalid = no
+				available_if_capitulated = no
+
+				available = {
+				}
+				bypass = {
+				}
+			
+				ai_will_do = {
+					factor = 3
+				}
+
+				completion_reward = {
+					log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_infrastructure_to_confederation"
+					add_research_slot = 1
+				}
+			}
 
 	focus = { # National Policies
 		id = MJU_focus_national_policies
@@ -155,10 +274,10 @@ focus_tree = {
 	focus = { # Reform
 		id = MJU_focus_reform
 		icon = GFX_focus_unknown_political
-		mutually_exclusive = { focus = MJU_focus_status_quo focus = MJU_focus_militarism }
+		mutually_exclusive = { focus = MJU_focus_status_quo focus = MJU_focus_nationalist }
 		#prerequisite = { focus =  }
 		#relative_position_id = 
-		x = 15
+		x = 12
 		y = 0
 	
 		cost = 10
@@ -177,13 +296,43 @@ focus_tree = {
 
 		completion_reward = {
 			log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_reform"
+			swap_ideas = { remove_idea = MJU_idea_leaderless_nation add_idea = MJU_idea_reform_initial }
 		}
 	}
+
+		focus = { # Free and Open Elections
+			id = MJU_focus_free_elections
+			icon = GFX_focus_unknown_political
+			#mutually_exclusive = { focus =  }
+			prerequisite = { focus = MJU_focus_reform }
+			relative_position_id = MJU_focus_reform
+			x = 0
+			y = 3
+		
+			cost = 10
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+
+			available = {
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				factor = 2
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_free_elections"
+				set_politics = { ruling_party = semidemocracy elections_allowed = yes }
+			}
+		}
 
 	focus = { # Status-Quo
 		id = MJU_focus_status_quo
 		icon = GFX_focus_unknown_political
-		mutually_exclusive = { focus = MJU_focus_reform focus = MJU_focus_militarism }
+		mutually_exclusive = { focus = MJU_focus_reform focus = MJU_focus_nationalist }
 		#prerequisite = { focus =  }
 		#relative_position_id = 
 		x = 20
@@ -200,21 +349,22 @@ focus_tree = {
 		}
 	
 		ai_will_do = {
-			factor = 2
+			factor = 3.5
 		}
 
 		completion_reward = {
 			log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_status_quo"
+			swap_ideas = { remove_idea = MJU_idea_leaderless_nation add_idea = MJU_idea_statusquo_initial }
 		}
 	}
 
-	focus = { # Militarism
-		id = MJU_focus_militarism
+	focus = { # Nationalist
+		id = MJU_focus_nationalist
 		icon = GFX_focus_unknown_political
 		mutually_exclusive = { focus = MJU_focus_reform focus = MJU_focus_status_quo }
 		#prerequisite = { focus =  }
 		#relative_position_id = 
-		x = 25
+		x = 28
 		y = 0
 	
 		cost = 10
@@ -232,8 +382,133 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_militarism"
+			log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_nationalist"
+			swap_ideas = { remove_idea = MJU_idea_leaderless_nation add_idea = MJU_idea_nationalist_initial }
 		}
 	}
-	continuous_focus_position = { x = 33 y = 550 }
+
+		focus = { # Establish the First Fascist State
+			id = MJU_focus_establish_fascism
+			icon = GFX_focus_unknown_political
+			#mutually_exclusive = { focus =  }
+			prerequisite = { focus = MJU_focus_nationalist }
+			relative_position_id = MJU_focus_nationalist
+			x = 0
+			y = 3
+		
+			cost = 10
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+
+			available = {
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				factor = 2
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_establish_fascism"
+				set_politics = { ruling_party = unitism elections_allowed = no }
+			}
+		}
+
+		focus = { # Aquilavara Pack
+			id = MJU_focus_aquilavara_pack
+			icon = GFX_focus_unknown_political
+			#mutually_exclusive = { focus =  }
+			prerequisite = { focus = MJU_focus_establish_fascism }
+			relative_position_id = MJU_focus_establish_fascism
+			x = 0
+			y = 3
+		
+			cost = 10
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+
+			available = {
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				factor = 2
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_establish_fascism"
+				create_faction = MJU_aquilavara_pack
+			}
+		}
+
+	focus = { # Invasion of Castravia
+		id = MJU_focus_invade_castravia
+		icon = GFX_focus_unknown_political
+		#mutually_exclusive = { focus =  }
+		prerequisite = { focus = MJU_focus_reform focus = MJU_focus_status_quo }
+		relative_position_id = MJU_focus_status_quo
+		x = -4
+		y = 1
+	
+		cost = 10
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		available = {
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			factor = 2
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_invade_castravia"
+			create_wargoal = {
+				type = annex_everything
+				target = UPF
+				expire = 0
+			}
+		}
+	}
+
+	focus = { # Invasion of Confederation
+		id = MJU_focus_invade_confederation
+		icon = GFX_focus_unknown_political
+		#mutually_exclusive = { focus =  }
+		prerequisite = { focus = MJU_focus_status_quo focus = MJU_focus_nationalist }
+		relative_position_id = MJU_focus_status_quo
+		x = 4
+		y = 1
+	
+		cost = 10
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		available = {
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			factor = 2
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_invade_confederation"
+			create_wargoal = {
+				type = annex_everything
+				target = SPC
+				expire = 0
+			}
+		}
+	}
+	continuous_focus_position = { x = 18 y = 18 }
 }
