@@ -369,15 +369,13 @@ default_market_stockpile_management_if_at_war = {
 }
 
 default_market_convoy_purchases = {
-	enable = {
-		naval_base > 0  # not land-locked
-	}
+	enable = { any_owned_state = { is_coastal = yes } } # not land-locked
 	abort_when_not_enabled = yes
 
 	ai_strategy = {
 		type = equipment_market_buying_threshold
 		id = convoy
-		value = 30  # Consider buying if we have too few (less than 30) convoys
+		value = 30 # Consider buying if we have too few (less than 30) convoys
 	}
 }
 
@@ -403,7 +401,7 @@ aNCFO_AI_motorized_surplus = {
 	ai_strategy = {
 		type = equipment_production_factor
 		id = motorized
-		value = -100
+		value = -50
 	}
 }
 
@@ -421,9 +419,7 @@ aNCFO_AI_train_supplies = {
 }
 
 default_build_a_gun_emplacement = { # TODO MANU or THOMAS
-	enable = {
-		is_major = yes
-	}
+	enable = { is_major = yes }
 	abort_when_not_enabled = yes
 	ai_strategy = {
 		type = build_building
@@ -433,9 +429,7 @@ default_build_a_gun_emplacement = { # TODO MANU or THOMAS
 }
 # Build some rockets (simple strats to have a minimum production at least )
 if_we_can_build_v1_rockets_we_want_rockets = {
-	enable = {
-		is_special_project_completed = sp:sp_rockets_flying_bomb
-	}
+	enable = { is_special_project_completed = sp:sp_rockets_flying_bomb }
 	abort_when_not_enabled = yes
 
 	ai_strategy = {
@@ -446,9 +440,7 @@ if_we_can_build_v1_rockets_we_want_rockets = {
 }
 
 if_we_can_build_v2_rockets_we_want_v2_rockets = {
-	enable = {
-		is_special_project_completed = sp:sp_rockets_ballistic_missile
-	}
+	enable = { is_special_project_completed = sp:sp_rockets_ballistic_missile }
 	abort_when_not_enabled = yes
 
 	ai_strategy = {
@@ -459,9 +451,7 @@ if_we_can_build_v2_rockets_we_want_v2_rockets = {
 }
 
 if_we_can_build_sams_we_want_sams = {
-	enable = {
-		is_special_project_completed = sp:sp_rockets_ground_to_air_missile
-	}
+	enable = { is_special_project_completed = sp:sp_rockets_ground_to_air_missile }
 	abort_when_not_enabled = yes
 
 	ai_strategy = {
@@ -472,9 +462,7 @@ if_we_can_build_sams_we_want_sams = {
 }
 
 if_we_can_build_nuclear_missiles_we_want_nuclear_missiles = {
-	enable = {
-		is_special_project_completed = sp:sp_nuclear_warheads
-	}
+	enable = { is_special_project_completed = sp:sp_nuclear_warheads }
 	abort_when_not_enabled = yes
 
 	ai_strategy = {
@@ -543,7 +531,7 @@ krohmapsari_military_offset = {
 	abort_when_not_enabled = yes
 }
 
-ZZZ_harmless = {
+fillerstate_harmless = {
 	enable = { always = yes }
 	abort_when_not_enabled = yes
 	ai_strategy = {
@@ -554,6 +542,6 @@ ZZZ_harmless = {
 	ai_strategy = {
 		type = ignore
 		id = ZZZ
-		value = -100
+		value = 100
 	}
 }

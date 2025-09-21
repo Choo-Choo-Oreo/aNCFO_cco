@@ -620,6 +620,11 @@
 				NDefines.NAI.WANTED_MAX_FUEL_BUFFER_IN_DAYS_FOR_AIR_MAX_CONSUMPTION  = 15
 				NDefines.NAI.MAX_FUEL_CONSUMPTION_RATIO_FOR_AIR_TRAINING = 3.00
 				NDefines.NAI.BUILDING_TARGETS_BUILDING_PRIORITIES = {
+					'air_base',
+					'infrastructure',
+					'nuclear_reactor',
+					'nuclear_reactor_heavy_water',
+					'synthetic_refinery',
 					'dockyard',
 					'industrial_complex',
 				}
