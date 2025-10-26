@@ -1,54 +1,107 @@
-# Adding tags to culture groups - edit the following in common/scripted_triggers/EAW_race_triggers.txt:
-#    - is_country_main_culture_CULTURE
-#    - is_state_main_culture_CULTURE
-#    - is_operative_main_culture_CULTURE
-# Adding a new culture group - ask Yard. In case I die/become unresponsive, you'll need to:
-# 1. In common/scripted_triggers/EAW_race_triggers.txt:
-#    a) Add new main_culture triggers as above
-#    b) Add a is_country_secondary_culture_CULTURE trigger
-# 3. In common/scripted_effects/EAW_race_effects.txt:
-#    a) operative_add_nationalities_CULTURE (look at existing ones for guidiance, add a new cultures index)
-#    b) add an entry in operative_add_main_nationalities_from_PREV
-#    c) add an entry in operative_add_secondary_nationalities_from_PREV
-#    d) add an entry in operative_add_starting_nationalities_and_race
-#    e) depending on tag, add an entry in operative_add_secondary_nationalities and operative_handle_secondary_cultures_races
+is_eligible_for_armor_production = {
+	AND = {
+		num_of_military_factories > 14 
+		has_tech = motorised_infantry
+	}
+}
 
-#New Triggers from Expert AI
+is_eligible_for_light_aircraft_production = {
+	num_of_military_factories > 14
+}
+
+is_eligible_for_improved_light_aircraft_production = {
+	num_of_military_factories > 14
+}
+
+is_eligible_for_medium_aircraft_production = {
+	has_deployed_air_force_size = {
+		type = fighter
+		size > 300
+	}
+	num_of_military_factories > 29
+}
+
+is_eligible_for_heavy_aircraft_production = {
+	has_deployed_air_force_size = {
+		type = fighter
+		size > 500
+	}
+	num_of_military_factories > 49
+}
+
+is_eligible_for_light_naval_aircraft_production = {
+	has_navy_size = { size > 9 }
+	num_of_military_factories > 19
+}
+
+is_eligible_for_naval_aircraft_production = {
+	has_navy_size = { size > 29 }
+	num_of_military_factories > 49
+}
+
+is_eligible_for_cv_aircraft_production = {
+	has_navy_size = { unit = carrier size > 0 }
+}
+
+is_eligible_for_heavy_naval_production = {
+	has_navy_size = { size > 29 }
+	num_of_naval_factories > 14
+}
+
+is_eligible_for_super_heavy_naval_production = {
+	has_navy_size = { size > 49 }
+	num_of_naval_factories > 49
+}
+
+is_eligible_for_cv_naval_production = {
+	has_navy_size = { size > 49 }
+	num_of_naval_factories > 29
+}
+
+is_eligible_for_convoy_production = {
+	num_of_naval_factories > 29
+}
+
+is_eligible_for_heavy_convoy_production = {
+	num_of_naval_factories > 59
+}
+
+
 
 muchstronger = {
 	all_enemy_country = {
-			add_to_temp_variable = { yours = num_battalions }
-		}
-		set_temp_variable = { mine = num_battalions }
-			divide_temp_variable = { mine = yours }
-			check_variable = { mine > 2.00 }
+		add_to_temp_variable = { yours = num_battalions }
+	}
+	set_temp_variable = { mine = num_battalions }
+	divide_temp_variable = { mine = yours }
+	check_variable = { mine > 2.00 }
 }
 
 stronger = {
 	all_enemy_country = {
-			add_to_temp_variable = { yours = num_battalions }
-		}
-		set_temp_variable = { mine = num_battalions }
-			divide_temp_variable = { mine = yours }
-			check_variable = { mine > 1.00 }
+		add_to_temp_variable = { yours = num_battalions }
+	}
+	set_temp_variable = { mine = num_battalions }
+	divide_temp_variable = { mine = yours }
+	check_variable = { mine > 1.00 }
 }
 
 weaker = {
 	all_enemy_country = {
-			add_to_temp_variable = { yours = num_battalions }
-		}
-		set_temp_variable = { mine = num_battalions }
-			divide_temp_variable = { mine = yours }
-			check_variable = { mine < 1.00 }
+		add_to_temp_variable = { yours = num_battalions }
+	}
+	set_temp_variable = { mine = num_battalions }
+	divide_temp_variable = { mine = yours }
+	check_variable = { mine < 1.00 }
 }
 
 muchweaker = {
 	all_enemy_country = {
-			add_to_temp_variable = { yours = num_battalions }
-		}
-		set_temp_variable = { mine = num_battalions }
-			divide_temp_variable = { mine = yours }
-			check_variable = { mine < 0.50 }
+		add_to_temp_variable = { yours = num_battalions }
+	}
+	set_temp_variable = { mine = num_battalions }
+	divide_temp_variable = { mine = yours }
+	check_variable = { mine < 0.50 }
 }
 
 
@@ -61,15 +114,15 @@ mil_vs_civ = {
 
 Productioncheck = {
 	all_enemy_country = {
-			add_to_temp_variable = { yours = num_of_available_military_factories }
-		}
-			set_temp_variable = { mine = num_of_available_military_factories }
-			
-			all_allied_country = {
-			add_to_temp_variable = { mine = num_of_available_military_factories }
-			}			
-			divide_temp_variable = { mine = yours }
-			check_variable = { mine > 1.00 }
+		add_to_temp_variable = { yours = num_of_available_military_factories }
+	}
+	set_temp_variable = { mine = num_of_available_military_factories }
+	
+	all_allied_country = {
+		add_to_temp_variable = { mine = num_of_available_military_factories }
+	}			
+	divide_temp_variable = { mine = yours }
+	check_variable = { mine > 1.00 }
 }
 
 bigimporter = {
@@ -84,14 +137,70 @@ bigimporter = {
 	check_variable = { importfactor > 0.10 }
 }
 
-#experiencecalc = {
-#set_temp_variable = { xpgain = 0.93 }
-#set_temp_variale = { units = num_battalions }
-#multiply_temp_variable = { xpgain = units }
-#multiply_temp_variable = { xpgain = 30 }
-#divide_temp_variable = { xpgain = 100 }
-#divide_temp_variable = { xpgain = num_divisions }
-#
-#army_experience = xpgain
-#
-#}
+
+
+# AI Research Weights #
+wants_tank_chassis_research = {
+	OR = {
+		has_tech = gw_light_tank_chassis
+		has_tech = gw_medium_tank_chassis
+		has_tech = gw_heavy_tank_chassis
+	}
+}
+
+low_armor_focus_nation = {
+	num_of_military_factories > 12
+	has_tech = motorised_infantry
+}
+
+medium_armor_focus_nation = {
+	num_of_military_factories > 24
+	has_tech = mechanised_infantry
+}
+high_armor_focus_nation = {
+	num_of_military_factories > 36
+	has_tech = mechanised_infantry
+}
+
+wants_plane_airframes_research = {
+	OR = {
+		has_tech = iw_small_airframe
+		has_tech = iw_medium_airframe
+		has_tech = iw_large_airframe
+	}
+}
+
+stall_aircraft_focus_nation = {
+	num_of_military_factories < 12
+	NOT = {
+		OR = {
+			num_of_military_factories > 12
+			wants_plane_airframes_research = yes
+			is_major = yes
+		}
+	}
+}
+
+low_aircraft_focus_nation = {
+	num_of_military_factories > 16
+}
+
+medium_aircraft_focus_nation = {
+	num_of_military_factories > 24
+	has_deployed_air_force_size = {
+		type = fighter
+		size > 1600
+	}
+}
+
+high_aircraft_focus_nation = {
+	num_of_military_factories > 54
+	has_deployed_air_force_size = {
+		type = fighter
+		size > 2400
+	}
+}
+# AI Production Weights #
+wants_cv_aircraft_equipment_production = {
+	has_navy_size = { unit = carrier size > 1 }
+}

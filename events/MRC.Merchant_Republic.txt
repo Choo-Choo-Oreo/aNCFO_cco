@@ -295,6 +295,7 @@ add_namespace = MRC
 				}
 			}
 		}
+
 		option = {
 			name = MRC.2.OptB
 			set_country_flag = MRC_air_manufacturing_champion_accepted_flag
@@ -336,6 +337,7 @@ add_namespace = MRC
 				}
 			}
 		}
+
 		option = {
 			name = MRC.2.OptB
 			set_country_flag = MRC_navy_manufacturing_triton_accepted_flag
@@ -403,19 +405,20 @@ add_namespace = MRC
 
 		option = {
 			name = MRC.6.OptA
+			ai_chance = { factor = 1.0 }
 			trigger = {
 				NOT = { has_country_flag = MRC_blacklist_declined_champion_flag }
 			}
 			add_political_power = 25
-			ai_chance = { factor = 1.0 }
 		}
+
 		option = {
 			name = MRC.6.OptB
+			ai_chance = { factor = 1.0 }
 			trigger = {
 				has_country_flag = MRC_blacklist_declined_champion_flag
 			}
 			add_political_power = 25
-			ai_chance = { factor = 1.0 }
 		}
 	}
 
@@ -430,20 +433,21 @@ add_namespace = MRC
 		immediate = { log = "[GetDateText]: [Root.GetName]: Event MRC.7" }
 
 		option = {
+			ai_chance = { factor = 1.0 }
 			name = MRC.7.OptA
 			trigger = {
 				NOT = { has_country_flag = MRC_blacklist_declined_triton_flag }
 			}
-			add_political_power = 25
-			ai_chance = { factor = 1.0 }
+			add_political_power = 25x
 		}
+
 		option = {
+			ai_chance = { factor = 1.0 }
 			name = MRC.7.OptB
 			trigger = {
 				has_country_flag = MRC_blacklist_declined_triton_flag
 			}
 			add_political_power = 25
-			ai_chance = { factor = 1.0 }
 		}
 	}
 
@@ -459,14 +463,11 @@ add_namespace = MRC
 
 		option = {
 			name = MRC.8.OptA
-			trigger = {
-			}
 			ai_chance = { factor = 1.0 }
 		}
+
 		option = {
 			name = MRC.8.OptB
-			trigger = {
-			}
 			ai_chance = { factor = 1.0 }
 		}
 	}
@@ -483,14 +484,11 @@ add_namespace = MRC
 
 		option = {
 			name = MRC.9.OptA
-			trigger = {
-			}
 			ai_chance = { factor = 1.0 }
 		}
+
 		option = {
 			name = MRC.9.OptB
-			trigger = {
-			}
 			ai_chance = { factor = 1.0 }
 		}
 	}
@@ -508,6 +506,7 @@ add_namespace = MRC
 		# The Civil-War Starts
 		option = {
 			name = MRC.10.a
+			ai_chance = { factor = 1.0 }
 			hidden_effect = { # Borders
 
 				set_global_flag = MRC_civil_war_has_started
@@ -631,6 +630,7 @@ add_namespace = MRC
 		# The Civil-War Starts
 		option = {
 			name = MRC.11.a
+			ai_chance = { factor = 1.0 }
 			hidden_effect = { # Borders
 
 				set_global_flag = MRC_civil_war_has_started
@@ -755,14 +755,9 @@ add_namespace = MRC
 			country_event = MRC.13
 			ai_chance = {
 				factor = 0.0
-				modifier = {
-					add = 100.0
-					has_country_flag = MRC_amc_primary_champion_decision_flag
-					NOT = { has_country_flag = MRC_amc_secondary_champion_decision_flag }
-					NOT = { has_country_flag = MRC_amc_trinary_champion_decision_flag }
-				}
 			}
 		}
+
 		option = { # Light Bombing (Light CAS and Light Naval)
 			name = MRC.12.OptB
 			country_event = MRC.14
@@ -770,27 +765,61 @@ add_namespace = MRC
 				factor = 0.0
 			}
 		}
+
 		option = { # Heavy Bombing (Tactical CAS, Tactical Naval, and Heavy)
 			name = MRC.12.OptC
 			country_event = MRC.15
 			ai_chance = {
 				factor = 0.0
-				modifier = {
-					add = 100.0
-					has_country_flag = MRC_amc_secondary_champion_decision_flag
-					NOT = { has_country_flag = MRC_amc_trinary_champion_decision_flag }
-				}
 			}
 		}
+
 		option = { # Carrier       (Carrier Fighter, Carrier CAS, and Carrier Naval)
 			name = MRC.12.OptD
 			country_event = MRC.16
 			ai_chance = {
 				factor = 0.0
-				modifier = {
-					add = 100.0
-					has_country_flag = MRC_amc_trinary_champion_decision_flag
-				}
+			}
+		}
+
+		option = { # AI Primary
+			name = MRC.13.OptB
+			trigger = {
+				is_ai = yes
+				NOT = { has_country_flag = MRC_amc_secondary_champion_decision_flag }
+				NOT = { has_country_flag = MRC_amc_trinary_champion_decision_flag }
+			}
+			set_country_flag = MRC_amc_primary_champion_choosen_flag
+			set_country_flag = MRC_amc_primary_champion_heavy_fighter
+			ai_chance = {
+				factor = 10.0
+			}
+		}
+
+		option = { # AI Secondary
+			name = MRC.15.OptA
+			trigger = {
+				is_ai = yes
+				has_country_flag = MRC_amc_secondary_champion_decision_flag
+				NOT = { has_country_flag = MRC_amc_trinary_champion_decision_flag }
+			}
+			set_country_flag = MRC_amc_secondary_champion_choosen_flag
+			set_country_flag = MRC_amc_secondary_champion_tactical
+			ai_chance = {
+				factor = 10.0
+			}
+		}
+
+		option = { # AI Trinary
+			name = MRC.16.OptC
+			trigger = {
+				is_ai = yes
+				has_country_flag = MRC_amc_trinary_champion_decision_flag
+			}
+			set_country_flag = MRC_amc_trinary_champion_choosen_flag
+			set_country_flag = MRC_amc_trinary_champion_carrier_naval
+			ai_chance = {
+				factor = 10.0
 			}
 		}
 	}
@@ -831,8 +860,8 @@ add_namespace = MRC
 				set_country_flag = MRC_amc_trinary_champion_choosen_flag
 				set_country_flag = MRC_amc_trinary_champion_light_fighter
 			}
-			ai_chance = { factor = 1.0 }
 		}
+
 		option = { # Heavy Fighter
 			name = MRC.13.OptB
 			trigger = {
@@ -859,19 +888,11 @@ add_namespace = MRC
 				set_country_flag = MRC_amc_trinary_champion_choosen_flag
 				set_country_flag = MRC_amc_trinary_champion_heavy_fighter
 			}
-			ai_chance = {
-				factor = 1.0
-				modifier = {
-					add = 100.0
-					has_country_flag = MRC_amc_primary_champion_decision_flag
-					NOT = { has_country_flag = MRC_amc_secondary_champion_decision_flag }
-				}
-			}
 		}
+
 		option = { # Prevous Document
 			name = MRC.OptDocument
 			country_event = MRC.12
-			ai_chance = { factor = 0.0 }
 		}
 	}
 
@@ -911,8 +932,8 @@ add_namespace = MRC
 				set_country_flag = MRC_amc_trinary_champion_choosen_flag
 				set_country_flag = MRC_amc_trinary_champion_light_cas
 			}
-			ai_chance = { factor = 1.0 }
 		}
+
 		option = { # Light Naval
 			name = MRC.14.OptB
 			trigger = {
@@ -939,12 +960,11 @@ add_namespace = MRC
 				set_country_flag = MRC_amc_trinary_champion_choosen_flag
 				set_country_flag = MRC_amc_trinary_champion_light_naval
 			}
-			ai_chance = { factor = 1.0 }
 		}
+
 		option = { # Prevous Document
 			name = MRC.OptDocument
 			country_event = MRC.12
-			ai_chance = { factor = 0.0 }
 		}
 	}
 
@@ -984,15 +1004,8 @@ add_namespace = MRC
 				set_country_flag = MRC_amc_trinary_champion_choosen_flag
 				set_country_flag = MRC_amc_trinary_champion_tactical
 			}
-			ai_chance = {
-				factor = 1.0
-				modifier = {
-					add = 100.0
-					has_country_flag = MRC_amc_secondary_champion_decision_flag
-					NOT = { has_country_flag = MRC_amc_trinary_champion_decision_flag }
-				}
-			}
 		}
+
 		option = { # Strategic Bomber
 			name = MRC.15.OptB
 			trigger = {
@@ -1019,8 +1032,8 @@ add_namespace = MRC
 				set_country_flag = MRC_amc_trinary_champion_choosen_flag
 				set_country_flag = MRC_amc_trinary_champion_strategic_bomber
 			}
-			ai_chance = { factor = 1.0 }
 		}
+
 		option = { # Maritime Patrol
 			name = MRC.15.OptC
 			trigger = {
@@ -1047,12 +1060,11 @@ add_namespace = MRC
 				set_country_flag = MRC_amc_trinary_champion_choosen_flag
 				set_country_flag = MRC_amc_trinary_champion_maritime_patrol
 			}
-			ai_chance = { factor = 1.0 }
 		}
+
 		option = { # Prevous Document
 			name = MRC.OptDocument
 			country_event = MRC.12
-			ai_chance = { factor = 0.0 }
 		}
 	}
 
@@ -1092,8 +1104,8 @@ add_namespace = MRC
 				set_country_flag = MRC_amc_trinary_champion_choosen_flag
 				set_country_flag = MRC_amc_trinary_champion_carrier_fighter
 			}
-			ai_chance = { factor = 1.0 }
 		}
+
 		option = { # Carrier CAS
 			name = MRC.16.OptB
 			trigger = {
@@ -1120,8 +1132,8 @@ add_namespace = MRC
 				set_country_flag = MRC_amc_trinary_champion_choosen_flag
 				set_country_flag = MRC_amc_trinary_champion_carrier_cas
 			}
-			ai_chance = { factor = 1.0 }
 		}
+
 		option = { # Carrier Naval
 			name = MRC.16.OptC
 			trigger = {
@@ -1148,18 +1160,11 @@ add_namespace = MRC
 				set_country_flag = MRC_amc_trinary_champion_choosen_flag
 				set_country_flag = MRC_amc_trinary_champion_carrier_naval
 			}
-			ai_chance = {
-				factor = 1.0
-				modifier = {
-					add = 100.0
-					has_country_flag = MRC_amc_trinary_champion_decision_flag
-				}
-			}
 		}
+
 		option = { # Prevous Document
 			name = MRC.OptDocument
 			country_event = MRC.12
-			ai_chance = { factor = 0.0 }
 		}
 	}
 
@@ -1188,6 +1193,7 @@ add_namespace = MRC_state
 				}
 			}
 		}
+
 		option = {
 			name = MRC.20.OptB
 			set_country_flag = MRC_air_manufacturing_champion_accepted
@@ -1234,6 +1240,7 @@ add_namespace = MRC_state
 				}
 			}
 		}
+
 		option = {
 			name = MRC.21.OptB
 			set_country_flag = MRC_navy_manufacturing_triton_accepted
