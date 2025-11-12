@@ -3,11 +3,11 @@ form_harmonainus_imperious_category = {
 		icon = generic_form_nation
 		allowed = { always = yes }
 		available = {
+			controls_state = 5
 			OR = {
 				AND = {
 					is_subject = no
 					controls_state = 1
-					controls_state = 5
 					controls_state = 77
 					controls_state = 78
 					controls_state = 80
@@ -23,8 +23,7 @@ form_harmonainus_imperious_category = {
 					}
 				}
 				AND = {
-					has_global_flag = HHE_warmonger_civil_war_first
-					has_global_flag = HHE_warmonger_civil_war_final
+					has_global_flag = HHE_collapse_of_the_nation
 					count_triggers = {
 						amount = 7
 						NOT = { country_exists = HER }
@@ -35,6 +34,16 @@ form_harmonainus_imperious_category = {
 						NOT = { country_exists = HFR }
 						NOT = { country_exists = HFS }
 						NOT = { country_exists = HPG }
+					}
+					OR = {
+						TAG = HER
+						TAG = HHE
+						TAG = HSP
+						TAG = HTP
+						TAG = HFF
+						TAG = HFR
+						TAG = HFS
+						TAG = HPG
 					}
 				}
 			}
@@ -64,10 +73,12 @@ form_harmonainus_imperious_category = {
 			}
 			NOT = { has_country_flag = form_harmonainus_imperious_flag }
 		}
+
 		complete_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision form_new_harmonainus_imperious"
 			custom_effect_tooltip = form_country_core_territories_tt
 			add_research_slot = 1
+
 			if = {
 				limit = {
 					original_tag = HHE
@@ -84,9 +95,9 @@ form_harmonainus_imperious_category = {
 				reset_province_name = 15115
 			}
 			set_capital = { state = 5 }
+
 			custom_effect_tooltip = form_country_integrate_states_tt
 			hidden_effect = {
-				set_country_flag = form_harmonainus_imperious_flag
 				1 = { add_core_of = ROOT }
 				5 = { add_core_of = ROOT }
 				77 = { add_core_of = ROOT }
@@ -97,6 +108,7 @@ form_harmonainus_imperious_category = {
 				236 = { add_core_of = ROOT }
 				447 = { add_core_of = ROOT }
 			}
+			set_country_flag = form_harmonainus_imperious_flag
 		}
 		ai_will_do = {
 			base = 5
@@ -125,8 +137,7 @@ form_harmonainus_imperious_category = {
 					controls_state = 410
 				}
 				AND = {
-					has_global_flag = HHE_warmonger_civil_war_first
-					has_global_flag = HHE_warmonger_civil_war_final
+					has_global_flag = HHE_collapse_of_the_nation
 					count_triggers = {
 						amount = 7
 						NOT = { country_exists = HBB }
@@ -137,6 +148,16 @@ form_harmonainus_imperious_category = {
 						NOT = { country_exists = HDW }
 						NOT = { country_exists = HJU }
 						NOT = { country_exists = HUF }
+					}
+					OR = {
+						TAG = HBB
+						TAG = HLF
+						TAG = HNO
+						TAG = HUM
+						TAG = HCO
+						TAG = HDW
+						TAG = HJU
+						TAG = HUF
 					}
 				}
 			}
@@ -160,15 +181,19 @@ form_harmonainus_imperious_category = {
 			}
 			NOT = { has_country_flag = form_harmonainus_imperious_center_flag }
 		}
+
 		complete_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision harmonainus_imperious_triumph_for_center_lands"
 			custom_effect_tooltip = form_country_core_territories_tt
 			add_research_slot = 1
-			if = { limit = { OR = { has_country_flag = form_harmonainus_imperious_flag has_country_flag = form_harmonainus_imperious_west_flag } } }
+			
+			if = { # Blocker for customization
+				limit = { OR = { has_country_flag = form_harmonainus_imperious_flag has_country_flag = form_harmonainus_imperious_west_flag } }
+			}
 			else = { set_cosmetic_tag = HARMONAINUS_IMPERIOUS_UNIFIED_CENTER set_capital = { state = 159 } }
+			
 			custom_effect_tooltip = form_country_integrate_states_tt
 			hidden_effect = {
-				set_country_flag = form_harmonainus_imperious_center_flag
 				18 = { add_core_of = ROOT }
 				20 = { add_core_of = ROOT }
 				79 = { add_core_of = ROOT }
@@ -179,6 +204,7 @@ form_harmonainus_imperious_category = {
 				407 = { add_core_of = ROOT }
 				410 = { add_core_of = ROOT }
 			}
+			set_country_flag = form_harmonainus_imperious_center_flag
 		}
 		ai_will_do = {
 			base = 5
@@ -208,8 +234,7 @@ form_harmonainus_imperious_category = {
 					controls_state = 271
 				}
 				AND = {
-					has_global_flag = HHE_warmonger_civil_war_first
-					has_global_flag = HHE_warmonger_civil_war_final
+					has_global_flag = HHE_collapse_of_the_nation
 					count_triggers = {
 						amount = 7
 						NOT = { country_exists = HCR }
@@ -220,6 +245,16 @@ form_harmonainus_imperious_category = {
 						NOT = { country_exists = HAN }
 						NOT = { country_exists = HAP }
 						NOT = { country_exists = HAW }
+					}
+					OR = {
+						TAG = HCR
+						TAG = HET
+						TAG = HPP
+						TAG = HST
+						TAG = HWA
+						TAG = HAN
+						TAG = HAP
+						TAG = HAW
 					}
 				}
 			}
@@ -244,15 +279,19 @@ form_harmonainus_imperious_category = {
 			}
 			NOT = { has_country_flag = form_harmonainus_imperious_west_flag }
 		}
+
 		complete_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision harmonainus_imperious_triumph_for_western_lands"
 			custom_effect_tooltip = form_country_core_territories_tt
 			add_research_slot = 1
-			if = { limit = { OR = { has_country_flag = form_harmonainus_imperious_flag has_country_flag = form_harmonainus_imperious_center_flag } } }
+			
+			if = { # Blocker for customization
+				limit = { OR = { has_country_flag = form_harmonainus_imperious_flag has_country_flag = form_harmonainus_imperious_center_flag } }
+			}
 			else = { set_cosmetic_tag = HARMONAINUS_IMPERIOUS_UNIFIED_WEST set_capital = { state = 7 } }
+			
 			custom_effect_tooltip = form_country_integrate_states_tt
 			hidden_effect = {
-				set_country_flag = form_harmonainus_imperious_west_flag
 				7 = { add_core_of = ROOT }
 				91 = { add_core_of = ROOT }
 				134 = { add_core_of = ROOT }
@@ -264,6 +303,7 @@ form_harmonainus_imperious_category = {
 				162 = { add_core_of = ROOT }
 				271 = { add_core_of = ROOT }
 			}
+			set_country_flag = form_harmonainus_imperious_west_flag
 		}
 		ai_will_do = {
 			base = 5
@@ -1656,14 +1696,19 @@ form_archaiga_imperious_category = {
 			}
 		}
 		visible = {
+			OR = {
+				has_country_leader = { character = HHE_archard_vladaros }
+			}
 		}
 		complete_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision reform_archaiga_imperious"
 			custom_effect_tooltip = form_country_core_territories_tt
 			if = {
-				limit = { OR = {
-					has_country_leader = { character = HHE_archard_vladaros }
-				} }
+				limit = {
+					OR = {
+						has_country_leader = { character = HHE_archard_vladaros }
+					}
+				}
 				set_cosmetic_tag = ARCHAIGA_IMPERIOUS_REUNIFIED
 				#5 = { set_state_name = "Vladopolis City" }
 				#set_province_name = { id = 15115 name = "Vladopolis" }
@@ -3868,7 +3913,18 @@ form_elven_wum_high_kingdom = {
 		}
 		complete_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision form_elven_wum_high_kingdom"
-			set_cosmetic_tag = UNIFIED_WUM_HIGH_KINGDOM
+			IF = {
+				LIMIT = {
+					OR = {
+						has_government = theocratism
+						has_government = authoritarianism
+					}
+				}
+				set_cosmetic_tag = UNIFIED_WUM_HIGH_KINGDOM
+				ELSE = {
+					set_cosmetic_tag = UNIFIED_WUM_HIGH_KINGDOM_uic_for_zakariah
+				}
+			}
 			set_capital = { state = 636 }
 			hidden_effect = {
 			# Main Core

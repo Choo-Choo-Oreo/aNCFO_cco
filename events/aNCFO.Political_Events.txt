@@ -1,1 +1,71 @@
-﻿#
+﻿add_namespace = harmonainus_event
+
+add_namespace = harmonainus_reformed_event
+
+add_namespace = pullus_event
+	country_event = { # Call the Faith's Aid
+		id = pullus_event.1
+		title = pullus_event.1.t
+		desc = pullus_event.1.d
+		picture = GFX_report_event_generic_communist_congress
+
+		is_triggered_only = yes
+
+		option = {
+			name = pullus_event.1.optA
+			ai_chance = { factor = 10 }
+			every_other_country = {
+				limit = {
+					has_idea = cooped_up_behind_our_walls_idea
+					is_puppet = no
+					NOT = { has_war_with = ROOT }
+					NOT = { has_war_together_with = ROOT }
+				}
+				country_event = pullus_event.1
+			}
+		}
+
+		option = {
+			name = pullus_event.1.optB
+			ai_chance = { factor = 1 }
+		}
+	}
+
+	country_event = { # Called to Aid
+		id = pullus_event.2
+		title = pullus_event.2.t
+		desc = pullus_event.2.d
+		picture = GFX_report_event_generic_communist_congress
+
+		is_triggered_only = yes
+
+		option = {
+			name = pullus_event.2.optA
+			ai_chance = { factor = 10 }
+			add_to_war = {
+				targeted_alliance = FROM
+				enemy = FROM.FROM
+			}
+		}
+
+		option = {
+			name = pullus_event.2.optB
+			ai_chance = { factor = 1 }
+			add_stability = -0.02
+			add_war_support = -0.05
+		}
+	}
+
+add_namespace = ideological_event
+
+add_namespace = emperor_personality_event
+
+add_namespace = thalassaus_event
+
+add_namespace = ager_montis_event
+
+add_namespace = animaekin_event
+
+add_namespace = yellow_reg_event # Will be replaced
+
+add_namespace = secular_event

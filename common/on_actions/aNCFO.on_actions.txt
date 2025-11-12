@@ -454,9 +454,9 @@ on_actions = {
 				}
 				IF = {
 					LIMIT = { NOT = { TAG = ZZZ } }
-		            set_country_flag = start_EcoDevelopment
-		            set_variable = { EcoDevelopmentTimer = 365 }
-		            activate_mission = EcoDevelopment_free_market
+					set_country_flag = start_EcoDevelopment
+					set_variable = { EcoDevelopmentTimer = 365 }
+					activate_mission = EcoDevelopment_free_market
 				}
 				IF = { # Human
 					LIMIT = { is_species_human = yes }
@@ -497,28 +497,34 @@ on_actions = {
 
 	on_monthly = { # 12 per Year
 		random_events = {
-		    1 = random_event.2
-		    1 = random_event.3
-		    1 = random_event.4
-		    1 = random_event.5
-		    1 = random_event.6
-		    1 = random_event.7
-		    1 = random_event.8
-		    1 = random_event.9
-		    100 = 0
+			1 = random_event.2
+			1 = random_event.3
+			1 = random_event.4
+			1 = random_event.5
+			1 = random_event.6
+			1 = random_event.7
+			1 = random_event.8
+			1 = random_event.9
+			100 = 0
 		}
 	}
 
 	on_government_change = {
-		effect = {
+		effect = { # Unitism Religion Updater
 			IF = {
-				limit = { has_government = unitism NOT = { has_country_flag = ideological_religion } }
+				limit = {
+					has_government = unitism
+					NOT = { has_country_flag = ideological_religion }
+				}
 				log = "[GetDateText]: [Root.GetName]: on_government_change: update_unitism_dogmata_stance Switch to"
 				update_unitism_dogmata_stance = yes
 				update_religious_stance = yes # Must update.
 			}
 			IF = {
-				limit = { has_country_flag = ideological_religion NOT = { has_government = unitism } }
+				limit = {
+					has_country_flag = ideological_religion
+					NOT = { has_government = unitism }
+				}
 				log = "[GetDateText]: [Root.GetName]: on_government_change: update_unitism_dogmata_stance Switch away"
 				update_unitism_dogmata_stance = yes
 				update_religious_stance = yes # Must update.
@@ -533,15 +539,21 @@ on_actions = {
 	}
 
 	on_ruling_party_change = {
-		effect = {
+		effect = { # Unitism Religion Updater
 			IF = {
-				limit = { has_government = unitism NOT = { has_country_flag = ideological_religion } }
+				limit = {
+					has_government = unitism
+					NOT = { has_country_flag = ideological_religion }
+				}
 				log = "[GetDateText]: [Root.GetName]: on_ruling_party_change: update_unitism_dogmata_stance Switch to"
 				update_unitism_dogmata_stance = yes
 				update_religious_stance = yes # Must update.
 			}
 			IF = {
-				limit = { has_country_flag = ideological_religion NOT = { has_government = unitism } }
+				limit = {
+					has_country_flag = ideological_religion
+					NOT = { has_government = unitism }
+				}
 				log = "[GetDateText]: [Root.GetName]: on_ruling_party_change: update_unitism_dogmata_stance Switch away"
 				update_unitism_dogmata_stance = yes
 				update_religious_stance = yes # Must update.
@@ -555,7 +567,29 @@ on_actions = {
 		}
 	}
 
-	on_new_term_electZZZ = {
+	on_send_volunteers = {
+		effect = { # Merchant Expeditionary Experience
+			IF = {
+				LIMIT = {
+					ROOT = { TAG = MRC }
+					FROM = { NOT = { has_country_flag = MRC_expeditionary_experience_received_flag } }
+				}
+				ROOT = {
+					add_to_variable = {
+						var = MRC_expeditionary_experience_var
+						value = 1
+						tooltip = MRC_expeditionary_experience_gain_tt
+					}
+				}
+				FROM = {
+					set_country_flag = MRC_expeditionary_experience_received_flag
+				}
+				log = "[GetDateText]: [Root.GetName]: on_send_volunteers: MRC_expeditionary_experience"
+			}
+		}
+	}
+
+	on_new_term_election = {
 		random_events = {
 			100 = election.2
 			100 = election.3
@@ -571,62 +605,96 @@ on_actions = {
 	}
 
 	on_declare_war = {
-	    effect = {
-	        log = "[GetDateText]: on_declare_war: ROOT [Root.GetName] FROM [FROM.GetName]"
-	        IF = {
-	        	limit = {
-	        		OR = { tag = COA tag = OAK }
-	        		FROM = { OR = { tag = COA tag = OAK } }
-	        	}
-        		remove_power_balance = { id = power_balance_OAK_v_COA }
-	        	IF = {
-	        		LIMIT = { NOT = { any_other_country = {
-		        		check_variable = { resource_produced@steel > OAK.resource_produced@steel }
-		        	} } }
-	        		log = "[GetDateText]: [Root.GetName]: on_declare_war: Global Iron Shortage"
-		        	news_event = news.7
+		effect = { # Artificier Steel Shortage
+			log = "[GetDateText]: on_declare_war: ROOT [Root.GetName] FROM [FROM.GetName]"
+			IF = {
+				limit = {
+					OR = { tag = COA tag = OAK }
+					FROM = { OR = { tag = COA tag = OAK } }
+				}
+				remove_power_balance = { id = power_balance_OAK_v_COA }
+				IF = {
+					LIMIT = {
+						NOT = {
+							any_other_country = {
+								check_variable = { resource_produced@steel > OAK.resource_produced@steel }
+							}
+						}
+					}
+					log = "[GetDateText]: [Root.GetName]: on_declare_war: Global Iron Shortage"
+					news_event = news.7
 
-		        	set_global_flag = Artificers.GlobalIronShortage
+					set_global_flag = Artificers.GlobalIronShortage
 					every_country = { # Dwarf
-						limit = { is_species_dwarf = yes NOT = {
-							OR = { tag = COA tag = OAK }
-							has_country_flag = species.dwarf_isolationism
-						} }
+						limit = {
+							is_species_dwarf = yes
+							NOT = {
+								OR = { tag = COA tag = OAK }
+								has_country_flag = species.dwarf_isolationism
+							}
+						}
 						log = "[GetDateText]: [Root.GetName]: Effected DWARF: Global Iron Shortage"
 						country_event = { id = Artificers.0 days = 3 }
 					}
 					every_country = { # Non-Dwarf+Rhyniognatha
-						limit = { NOT = { OR = { tag = COA tag = OAK }
-							has_idea = closed_economy
-							is_species_dwarf = yes
-							is_species_rhyniognatha = yes
-						} }
+						limit = {
+							NOT = {
+								OR = { tag = COA tag = OAK }
+								has_idea = closed_economy
+								is_species_dwarf = yes
+								is_species_rhyniognatha = yes
+							}
+						}
 						log = "[GetDateText]: [Root.GetName]: Effected NON-DWARF: Global Iron Shortage"
 						country_event = { id = Artificers.1 days = 7 }
 					}
 
-	        		ELSE = {
-		        		LIMIT = { any_other_country = {
-			        		check_variable = { resource_produced@steel > OAK.resource_produced@steel }
-			        	} }
-	        			log = "[GetDateText]: [Root.GetName]: on_declare_war: Global Iron Reshuffle"
-	        			news_event = news.8
-	        		}
-	        	}
-	        }
-	    }
+					ELSE = {
+						LIMIT = {
+							any_other_country = {
+								check_variable = { resource_produced@steel > OAK.resource_produced@steel }
+							}
+						}
+						log = "[GetDateText]: [Root.GetName]: on_declare_war: Global Iron Reshuffle"
+						news_event = news.8
+					}
+				}
+			}
+		}
+
+		effect = { # Pullus's Cooped Up Behind our Walls
+			IF = {
+				LIMIT = {
+					FROM = { has_idea = cooped_up_behind_our_walls_idea }
+				}
+				log = "[GetDateText]: [FROM.GetName]: on_declare_war: Cooped Up Behind our Walls"
+				FROM = { country_event = pullus_event.1 }
+			}
+		}
 	}
 
-	on_war = {
-	    effect = {
+	on_war = { # THIS is country that has just gotten into a war.
+		effect = {
 
-	    }
+		}
 	}
 
-	on_peace = {
-	    effect = {
+	on_peace = { # THIS is country that is no longer at war.
+		effect = {
 
-	    }
+		}
+	}
+
+	on_capitulation = { # ROOT is capitulated country, FROM is winner. Several processes such as the deletion of units and transfer of equipment have already been executed by this point.
+		effect = {
+
+		}
+	}
+
+	on_capitulation_immediate = { # ROOT is capitulated country, FROM is winner.
+		effect = {
+
+		}
 	}
 
 	on_state_control_changed = {
@@ -684,28 +752,6 @@ on_actions = {
 				}
 				log = "[GetDateText]: [Root.GetName]: on_state_control_changed: Fall of Regiusurbs"
 				set_global_flag = regiusurbs_is_lost
-			}
-		}
-	}
-
-	on_send_volunteers = {
-		effect = {
-			IF = {
-				LIMIT = {
-					ROOT = { TAG = MRC }
-					FROM = { NOT = { has_country_flag = MRC_expeditionary_experience_received_flag } }
-				}
-				ROOT = {
-					add_to_variable = {
-						var = MRC_expeditionary_experience_var
-						value = 1
-						tooltip = MRC_expeditionary_experience_gain_tt
-					}
-				}
-				FROM = {
-					set_country_flag = MRC_expeditionary_experience_received_flag
-				}
-				log = "[GetDateText]: [Root.GetName]: on_send_volunteers: MRC_expeditionary_experience"
 			}
 		}
 	}

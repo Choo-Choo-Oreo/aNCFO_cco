@@ -1,0 +1,479 @@
+on_actions = {
+# General
+	on_startup = { # Trigger the following commands at the first day of a new game, after country selection. Doesn't work with save loading.
+		effect = {
+			set_global_flag = disable_tag_related_strats # For Smarter AI by TheGamingNot
+			IF = {
+				LIMIT = { check_variable = { num_ships > 0 } }
+				IF = {
+					limit = {
+						check_variable = { num_ships < 100 }
+						check_variable = { num_ships > 49 }
+					}
+					log = "[GetDateText]: [Root.GetName]: Navy: Small"
+					set_country_flag = ai_action_navy_small
+					clr_country_flag = ai_action_navy_medium
+					clr_country_flag = ai_action_navy_large
+				}
+				ELSE_IF = {
+					limit = {
+						check_variable = { num_ships < 200 }
+						check_variable = { num_ships > 99 }
+					}
+					log = "[GetDateText]: [Root.GetName]: Navy: Medium"
+					clr_country_flag = ai_action_navy_small
+					set_country_flag = ai_action_navy_medium
+					clr_country_flag = ai_action_navy_large
+				}
+				ELSE_IF = {
+					limit = { check_variable = { num_ships > 200 } }
+					log = "[GetDateText]: [Root.GetName]: Navy: Large"
+					clr_country_flag = ai_action_navy_small
+					clr_country_flag = ai_action_navy_medium
+					set_country_flag = ai_action_navy_large
+				}
+			}
+			IF = {
+				LIMIT = { check_variable = { num_deployed_planes > 0 } }
+				IF = {
+					limit = {
+						check_variable = { num_deployed_planes < 1000 }
+						check_variable = { num_deployed_planes > 499 }
+					}
+					log = "[GetDateText]: [Root.GetName]: Navy: Small"
+					set_country_flag = ai_action_air_small
+					set_country_flag = ai_action_air_medium
+					set_country_flag = ai_action_air_large
+				}
+				ELSE_IF = {
+					limit = {
+						check_variable = { num_deployed_planes < 2000 }
+						check_variable = { num_deployed_planes > 999 }
+					}
+					log = "[GetDateText]: [Root.GetName]: Navy: Medium"
+					set_country_flag = ai_action_air_small
+					set_country_flag = ai_action_air_medium
+					set_country_flag = ai_action_air_large
+				}
+				ELSE_IF = {
+					limit = { check_variable = { num_deployed_planes > 2000 } }
+					log = "[GetDateText]: [Root.GetName]: Navy: Large"
+					set_country_flag = ai_action_air_small
+					set_country_flag = ai_action_air_medium
+					set_country_flag = ai_action_air_large
+				}
+			}
+		}
+
+		effect = { # Starting Construction Queues
+			IF = {
+				LIMIT = { OAK = { is_ai = yes } }
+				467 = { add_building_construction = { type = arms_factory level = 7 instant_build = no } }
+				483 = { add_building_construction = { type = arms_factory level = 5 instant_build = no } }
+				484 = { add_building_construction = { type = arms_factory level = 3 instant_build = no } }
+			}
+			IF = {
+				LIMIT = { HHE = { is_ai = yes } }
+				5 = { add_building_construction = { type = arms_factory level = 5 instant_build = no } }
+			}
+			IF = {
+				LIMIT = { MJU = { is_ai = yes } }
+				10 = { add_building_construction = { type = industrial_complex level = 3 instant_build = no } }
+				215 = { add_building_construction = { type = industrial_complex level = 1 instant_build = no } }
+				241 = { add_building_construction = { type = industrial_complex level = 1 instant_build = no } }
+			}
+			IF = {
+				LIMIT = { MRC = { is_ai = yes } }
+				14 = { add_building_construction = { type = industrial_complex level = 2 instant_build = no } }
+				13 = { add_building_construction = { type = industrial_complex level = 1 instant_build = no } }
+				442 = { add_building_construction = { type = industrial_complex level = 1 instant_build = no } }
+				72 = { add_building_construction = { type = steel_complex level = 2 instant_build = no } }
+				13 = { add_building_construction = { type = steel_complex level = 1 instant_build = no } }
+				71 = { add_building_construction = { type = steel_complex level = 1 instant_build = no } }
+			}
+		}
+	}
+
+	on_daily = { # Triggers each day for every country separately (performance heavy, use carefully)
+		effect = {
+
+		}
+	}
+
+	on_weekly = { # Triggers each week for every country separately
+		effect = {
+
+		}
+	}
+
+	on_monthly = { # Triggers each month for every country separately
+		effect = { # Micro Checker
+			TAG_has_war_with_TAG = yes
+		}
+
+		effect = { # Army Size Checker
+			IF = {
+				LIMIT = { check_variable = { num_ships > 0 } }
+				IF = {
+					limit = {
+						check_variable = { num_ships < 100 }
+						check_variable = { num_ships > 49 }
+					}
+					log = "[GetDateText]: [Root.GetName]: Navy: Small"
+					set_country_flag = ai_action_navy_small
+					clr_country_flag = ai_action_navy_medium
+					clr_country_flag = ai_action_navy_large
+				}
+				ELSE_IF = {
+					limit = {
+						check_variable = { num_ships < 200 }
+						check_variable = { num_ships > 99 }
+					}
+					log = "[GetDateText]: [Root.GetName]: Navy: Medium"
+					clr_country_flag = ai_action_navy_small
+					set_country_flag = ai_action_navy_medium
+					clr_country_flag = ai_action_navy_large
+				}
+				ELSE_IF = {
+					limit = { check_variable = { num_ships > 200 } }
+					log = "[GetDateText]: [Root.GetName]: Navy: Large"
+					clr_country_flag = ai_action_navy_small
+					clr_country_flag = ai_action_navy_medium
+					set_country_flag = ai_action_navy_large
+				}
+			}
+			IF = {
+				LIMIT = { check_variable = { num_deployed_planes > 0 } }
+				IF = {
+					limit = {
+						check_variable = { num_deployed_planes < 1000 }
+						check_variable = { num_deployed_planes > 499 }
+					}
+					log = "[GetDateText]: [Root.GetName]: Navy: Small"
+					set_country_flag = ai_action_air_small
+					set_country_flag = ai_action_air_medium
+					set_country_flag = ai_action_air_large
+				}
+				ELSE_IF = {
+					limit = {
+						check_variable = { num_deployed_planes < 2000 }
+						check_variable = { num_deployed_planes > 999 }
+					}
+					log = "[GetDateText]: [Root.GetName]: Navy: Medium"
+					set_country_flag = ai_action_air_small
+					set_country_flag = ai_action_air_medium
+					set_country_flag = ai_action_air_large
+				}
+				ELSE_IF = {
+					limit = { check_variable = { num_deployed_planes > 2000 } }
+					log = "[GetDateText]: [Root.GetName]: Navy: Large"
+					set_country_flag = ai_action_air_small
+					set_country_flag = ai_action_air_medium
+					set_country_flag = ai_action_air_large
+				}
+			}
+		}
+
+		effect = { # Industry Size Checker
+			IF = {
+				LIMIT = {
+					NOT = {
+						any_owned_state = { free_building_slots = { building = arms_factory size > 0 } }
+					}
+				}
+				ROOT = { log = "[GetDateText]: [Root.GetName]: Industry: Capacity"
+					set_country_flag = ai_action_industry_capacity
+					clr_country_flag = ai_action_industry_vacancy
+				}
+				ELSE = {
+					ROOT = { log = "[GetDateText]: [Root.GetName]: Industry: Vacancy"
+						clr_country_flag = ai_action_industry_capacity
+						set_country_flag = ai_action_industry_vacancy
+					}
+				}
+			}
+		}
+	}
+# Politics
+	on_government_change = { # This includes set_politics and start_civil_war (always for both sides) and excludes being puppeted. Will always also trigger on_ruling_party_change.
+		effect = {
+
+		}
+	}
+
+	on_ruling_party_change = { # old_ideology_token is a temporary variable that stores the old ideology as a token. Alongside what triggers on_government_change, also includes being puppeted or changing the ideology via a console command.
+		effect = {
+
+		}
+	}
+
+	on_new_term_election = { # Trigger the following commands whenever an election happens or is called by the hold_election command.
+		effect = {
+
+		}
+	}
+
+	on_before_peace_conference_start = { # ROOT is winner, FROM is loser (called for all winners against all losers).
+		effect = {
+
+		}
+	}
+
+	on_peaceconference_ended = { # ROOT is the winner, FROM is the loser. Is also triggered by the white_peace effect is used or when a conditional surrender is accepted.
+		effect = {
+
+		}
+	}
+
+	on_peaceconference_started = { # ROOT is the winner, FROM is the loser. Is also triggered by the white_peace effect is used or when a conditional surrender is accepted.
+		effect = {
+
+		}
+	}
+# Diplomacy/War
+	on_send_volunteers = { # ROOT is sender, FROM is receiver.
+		effect = {
+			add_to_array = { aligned_to_help_countries = FROM }
+		}
+	}
+
+	on_declare_war = { # FROM is war target. ROOT is for the country who is declaring war
+		effect = { # Micro Checker
+			TAG_has_war_with_TAG = yes
+		}
+	}
+
+	on_war = { # THIS is country that has just gotten into a war.
+		effect = {
+
+		}
+	}
+
+	on_peace = { # THIS is country that is no longer at war.
+		effect = {
+
+		}
+	}
+
+	on_capitulation = { # ROOT is capitulated country, FROM is winner. Several processes such as the deletion of units and transfer of equipment have already been executed by this point.
+		effect = { # Micro Checker
+			TAG_has_war_with_TAG = yes
+		}
+	}
+
+	on_capitulation_immediate = { # ROOT is capitulated country, FROM is winner.
+		effect = { # Micro Checker
+			TAG_has_war_with_TAG = yes
+		}
+	}
+
+	on_uncapitulation = { # ROOT is the country affected.
+		effect = {
+
+		}
+	}
+
+	on_annex = { # ROOT is winner, FROM gets annexed. For civil wars on_civil_war_end is also fired.
+		effect = {
+
+		}
+	}
+
+	on_puppet = { # ROOT is the nation being puppeted, FROM is the overlord.
+		effect = {
+
+		}
+	}
+
+	on_liberate = { # ROOT is the nation being liberated, FROM is the leader of the liberators.
+		effect = {
+
+		}
+	}
+
+	on_release_as_free = { # ROOT is free nation FROM is releaser.
+		effect = {
+
+		}
+	}
+
+	on_release_as_puppet = { # ROOT is the nation being released, FROM is the overlord.
+		effect = {
+
+		}
+	}
+
+	on_guarantee = { # ROOT is the country which guarantees, FROM is the country that is guaranteed.
+		effect = {
+
+		}
+	}
+
+	on_military_access = { # ROOT is the country which requested, FROM is the country that accepted.
+		effect = {
+
+		}
+	}
+
+	on_offer_military_access = { # ROOT is the country which offered, FROM is the country that accepted.
+		effect = {
+
+		}
+	}
+
+	on_call_allies = { # ROOT is the country which called, FROM is the country that joined.
+		effect = {
+
+		}
+	}
+
+	on_join_allies = { # ROOT is the country which joined, FROM is the country whose war was joined.
+		effect = {
+
+		}
+	}
+
+	on_lend_lease = { # ROOT is the country that sent the lend lease, FROM is the country that accepted.
+		effect = {
+			add_to_array = { aligned_to_help_countries = FROM }
+		}
+	}
+
+	on_incoming_lend_lease = { # ROOT is the country that accepted, FROM is the country that requested.
+		effect = {
+
+		}
+	}
+
+	on_send_expeditionary_force = { # ROOT is the country that sent, FROM is the country that accepted.
+		effect = {
+
+		}
+	}
+
+	on_return_expeditionary_forces = { # ROOT is the owner of the forces, FROM is the country where the forces were sent.
+		effect = {
+
+		}
+	}
+
+	on_request_expeditionary_forces = { # ROOT is the country that requests, FROM is the target of the request.
+		effect = {
+
+		}
+	}
+
+	on_ask_for_state_control = { # ROOT is the requester, FROM is the country in control of the state.
+		effect = {
+
+		}
+	}
+
+	on_give_state_control = { # ROOT is the giver, FROM is the receiver.
+		effect = {
+
+		}
+	}
+
+	on_peace_proposal = { # ROOT is sender of conditional surrender, FROM is the receiver.
+		effect = {
+
+		}
+	}
+
+	on_send_attache = { # Default scope is sender, FROM = receiver
+		effect = {
+
+		}
+	}
+# Faction
+	on_create_faction = { # FROM is the one that joins the faction.
+		effect = {
+
+		}
+	}
+
+	on_faction_formed = { # Trigger the following commands when a faction is formed.
+		effect = {
+
+		}
+	}
+
+	on_offer_join_faction = { # FROM is the country invited, THIS and ROOT are the faction leader.
+		effect = {
+
+		}
+	}
+
+	on_join_faction = { # FROM is faction leader, ROOT and THIS are the country that joins.
+		effect = {
+
+		}
+	}
+
+	on_assume_faction_leadership = { # ROOT is the new faction leader FROM is the old faction leader
+		effect = {
+
+		}
+	}
+
+	on_leave_faction = { # FROM is the faction Leader, ROOT is the country leaving the faction
+		effect = {
+
+		}
+	}
+# Autonomy
+	on_subject_annexed = { # ROOT is the subject, FROM is the overlord.
+		effect = {
+
+		}
+	}
+
+	on_subject_free = { # ROOT is the subject, FROM is the previous overlord.
+		effect = {
+
+		}
+	}
+
+	on_subject_autonomy_level_change = { # ROOT is the subject, FROM is the overlord.
+		effect = {
+
+		}
+	}
+# Governments in Exile
+	on_government_exiled = { # ROOT is the government in exile, FROM is the country that is hosting the government in exile.
+		effect = {
+
+		}
+	}
+
+	on_host_changed_from_capitulation = { # ROOT is the government in exile, FROM is the new country hosting the government in exile, FROM:FROM is the old country that was hosting the government in exile.
+		effect = {
+
+		}
+	}
+
+	on_exile_government_reinstated = { # ROOT is the government in exile, FROM is the country that was hosting the government in exile.
+		effect = {
+
+		}
+	}
+# Wargoals
+	on_generate_wargoal = { # ROOT is the wargoal owner, FROM is the wargoal target
+		effect = {
+
+		}
+	}
+
+	on_justifying_wargoal_pulse = { # FROM = target nation. Checked every day.
+		effect = {
+
+		}
+	}
+
+	on_wargoal_expire = { # FROM is the wargoal owner.
+		effect = {
+
+		}
+	}
+}

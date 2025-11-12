@@ -1,0 +1,36 @@
+FAI_decision_diplomacy = { # Fantasy AI Diplomacy
+	FAI_DD_attache = {
+		icon = GFX_decision_generic_decision
+
+		available = {
+			NOT = {
+				FROM = { has_attache_from = ROOT }
+			}
+		}
+
+	    targets_dynamic = yes
+	    target_array = aligned_to_help_countries
+		cost = 99
+
+        complete_effect = {
+            log = "[GetDateText]: [Root.GetName]: Decision FAI_DD_attache"
+			diplomatic_relation = {
+				country = FROM
+				relation = send_attache
+				active = yes
+			}
+        }
+
+		ai_will_do = {
+			factor = 100.0
+			modifier = {
+				factor = -10.0
+				has_war = yes
+			}
+			modifier = {
+				factor = 7.5
+				has_war = no
+			}
+		}
+	}
+}

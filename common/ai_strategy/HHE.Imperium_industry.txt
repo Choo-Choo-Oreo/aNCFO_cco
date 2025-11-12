@@ -4,7 +4,9 @@ HHE_earlygame_capital_steel = {
 		date < 1727.01.01 # Three year of steel build up.
 		5 = { is_controlled_by = ROOT }
 	}
+
 	abort_when_not_enabled = yes
+
 	ai_strategy = {
 		type = build_building
 		id = steel_complex
@@ -19,7 +21,9 @@ HHE_earlygame_industrializion = {
 		date < 1727.01.01 # Three year of civ build up.
 		NOT = { has_global_flag = Artificers.GlobalIronShortage }
 	}
+
 	abort_when_not_enabled = yes
+
 	ai_strategy = {
 		type = building_target
 		id = industrial_complex
@@ -43,7 +47,9 @@ HHE_railway_industrializion = {
 		has_country_leader = { character = HHE_archard_vladaros ruling_only = yes }
 		NOT = { has_completed_focus = HHE_warmonger_revisit_rttf }
 	}
+
 	abort_when_not_enabled = yes
+
 	ai_strategy = {
 		type = building_target
 		id = industrial_complex
@@ -68,7 +74,9 @@ HHE_peacetime_industrializion = {
 		has_war = no
 		NOT = { has_global_flag = Artificers.GlobalIronShortage }
 	}
+
 	abort_when_not_enabled = yes
+
 	ai_strategy = {
 		type = building_target
 		id = industrial_complex
@@ -90,7 +98,9 @@ HHE_wartime_industrializion = {
 		}
 		NOT = { has_global_flag = Artificers.GlobalIronShortage }
 	}
+
 	abort_when_not_enabled = yes
+
 	ai_strategy = {
 		type = building_target
 		id = arms_factory
@@ -106,7 +116,9 @@ HHE_wartime_industrializion_bonus = {
 		has_idea = HHE_piller_economic0
 		has_completed_focus = HHE_warmonger_revisit_rttf
 	}
+
 	abort_when_not_enabled = yes
+
 	ai_strategy = {
 		type = building_target
 		id = rail_way
@@ -132,12 +144,6 @@ HHE_rich_boy = {
 		id = armor
 		value = 15
 	}
-	
-	ai_strategy = {
-		type = role_ratio
-		id = cas
-		value = 10
-	}
 
 	ai_strategy = {
 		type = equipment_production_factor
@@ -151,13 +157,147 @@ HHE_rich_boy = {
 	}
 }
 
+HHE_singular_economy_locations = {
+	allowed = { original_tag = HHE }
+	enable = {
+		has_active_mission = HHE_mission_archard_vladaros_single_economy
+	}
+
+	abort_when_not_enabled = yes	
+
+	ai_strategy = {
+		type = factory_build_score_factor
+		target = 1
+		value = 1
+	}
+	ai_strategy = {
+		type = factory_build_score_factor
+		target = 5
+		value = 1
+	}
+	ai_strategy = {
+		type = factory_build_score_factor
+		target = 7
+		value = 1
+	}
+	ai_strategy = {
+		type = factory_build_score_factor
+		target = 77
+		value = 1
+	}
+	ai_strategy = {
+		type = factory_build_score_factor
+		target = 78
+		value = 1
+	}
+	ai_strategy = {
+		type = factory_build_score_factor
+		target = 79
+		value = 1
+	}
+	ai_strategy = {
+		type = factory_build_score_factor
+		target = 80
+		value = 1
+	}
+	ai_strategy = {
+		type = factory_build_score_factor
+		target = 105
+		value = 1
+	}
+	ai_strategy = {
+		type = factory_build_score_factor
+		target = 159
+		value = 1
+	}
+	ai_strategy = {
+		type = factory_build_score_factor
+		target = 271
+		value = 1
+	}
+}
+
+HHE_singular_economy_steel = {
+	allowed = { original_tag = HHE }
+	enable = {
+		has_active_mission = HHE_mission_archard_vladaros_single_economy
+		OR = { # This needs to correspond to the Bypass values in the previous focuses
+			has_resources_in_country = {
+				resource = steel
+				amount < 1199
+				extracted = yes
+			}
+			any_subject_country = {
+				has_resources_in_country = {
+					resource = steel
+					amount < 1199
+					extracted = yes
+				}
+			}
+		}
+	}
+
+	abort_when_not_enabled = yes	
+
+	ai_strategy = {
+		type = build_building
+		id = steel_complex
+		value = 100
+	}
+}
+
+HHE_singular_economy_aluminium = {
+	allowed = { original_tag = HHE }
+	enable = {
+		has_active_mission = HHE_mission_archard_vladaros_single_economy
+		OR = { # This needs to correspond to the Bypass values in the previous focuses
+			has_resources_in_country = {
+				resource = aluminium
+				amount < 399
+				extracted = yes
+			}
+			any_subject_country = {
+				has_resources_in_country = {
+					resource = aluminium
+					amount < 399
+					extracted = yes
+				}
+			}
+		}
+	}
+
+	abort_when_not_enabled = yes	
+
+	ai_strategy = {
+		type = build_building
+		id = aluminium_complex
+		value = 100
+	}
+}
+
+HHE_wartime_economy = {
+	allowed = { original_tag = HHE }
+	enable = {
+		has_active_mission = HHE_mission_archard_vladaros_wartime_economy
+	}
+
+	abort_when_not_enabled = yes	
+
+	ai_strategy = {
+		type = added_military_to_civilian_factory_ratio
+		value = 100
+	}
+}
+
 HHE_fight_for_life_1 = {
     allowed = { original_tag = HHE }
 	enable = {
 		has_country_leader = { character = HHE_archard_vladaros ruling_only = yes }
 		surrender_progress > 0.1
 	}
+
 	abort_when_not_enabled = yes
+
 	ai_strategy = {
 		type = building_target
 		id = arms_factory
@@ -171,7 +311,9 @@ HHE_fight_for_life_2 = {
 		has_country_leader = { character = HHE_archard_vladaros ruling_only = yes }
 		surrender_progress > 0.2
 	}
+
 	abort_when_not_enabled = yes
+
 	ai_strategy = {
 		type = building_target
 		id = arms_factory
@@ -185,7 +327,9 @@ HHE_fight_for_life_3 = {
 		has_country_leader = { character = HHE_archard_vladaros ruling_only = yes }
 		surrender_progress > 0.3
 	}
+
 	abort_when_not_enabled = yes
+
 	ai_strategy = {
 		type = building_target
 		id = arms_factory
@@ -199,7 +343,9 @@ HHE_fight_for_life_4 = {
 		has_country_leader = { character = HHE_archard_vladaros ruling_only = yes }
 		surrender_progress > 0.4
 	}
+
 	abort_when_not_enabled = yes
+
 	ai_strategy = {
 		type = building_target
 		id = arms_factory
@@ -213,7 +359,9 @@ HHE_fight_for_life_5 = {
 		has_country_leader = { character = HHE_archard_vladaros ruling_only = yes }
 		surrender_progress > 0.5
 	}
+
 	abort_when_not_enabled = yes
+
 	ai_strategy = {
 		type = building_target
 		id = arms_factory
@@ -227,7 +375,9 @@ HHE_fight_for_life_6 = {
 		has_country_leader = { character = HHE_archard_vladaros ruling_only = yes }
 		surrender_progress > 0.6
 	}
+
 	abort_when_not_enabled = yes
+
 	ai_strategy = {
 		type = building_target
 		id = arms_factory
@@ -241,7 +391,9 @@ HHE_fight_for_life_7 = {
 		has_country_leader = { character = HHE_archard_vladaros ruling_only = yes }
 		surrender_progress > 0.7
 	}
+
 	abort_when_not_enabled = yes
+
 	ai_strategy = {
 		type = building_target
 		id = arms_factory
@@ -255,7 +407,9 @@ HHE_fight_for_life_8 = {
 		has_country_leader = { character = HHE_archard_vladaros ruling_only = yes }
 		surrender_progress > 0.8
 	}
+
 	abort_when_not_enabled = yes
+
 	ai_strategy = {
 		type = building_target
 		id = arms_factory
@@ -269,7 +423,9 @@ HHE_fight_for_life_9 = {
 		has_country_leader = { character = HHE_archard_vladaros ruling_only = yes }
 		surrender_progress > 0.9
 	}
+
 	abort_when_not_enabled = yes
+
 	ai_strategy = {
 		type = building_target
 		id = arms_factory
