@@ -17,7 +17,7 @@ focus_tree = {
 		#mutually_exclusive = { focus =  }
 		#prerequisite = { focus =  }
 		#relative_position_id = 
-		x = 5
+		x = 0
 		y = 2
 	
 		cost = 10
@@ -171,7 +171,7 @@ focus_tree = {
 			    x = 0
 			    y = 1
 
-			    cost = 10
+			    cost = 5
 				cancel_if_invalid = yes
 				continue_if_invalid = no
 				available_if_capitulated = no
@@ -230,7 +230,7 @@ focus_tree = {
 			    x = 0
 			    y = 1
 
-			    cost = 10
+			    cost = 5
 				cancel_if_invalid = yes
 				continue_if_invalid = no
 				available_if_capitulated = no
@@ -288,7 +288,7 @@ focus_tree = {
 			    x = 2
 			    y = 1
 
-			    cost = 10
+			    cost = 5
 				cancel_if_invalid = yes
 				continue_if_invalid = no
 				available_if_capitulated = no
@@ -514,7 +514,7 @@ focus_tree = {
 
 	focus = { # Development of a National Bank
 	    id = MJU_focus_national_development_bank
-	    icon = GFX_focus_unknown_industry
+	    icon = GFX_focus_PER_national_bank
 	    prerequisite = { focus = MJU_focus_rural_settlement_investments }
 	    relative_position_id = MJU_focus_rural_settlement_investments
 	    x = 0
@@ -592,7 +592,7 @@ focus_tree = {
 		    prerequisite = { focus = MJU_focus_national_development_bank }
 		    mutually_exclusive = { focus = MJU_focus_state_banking_system }
 		    relative_position_id = MJU_focus_national_development_bank
-		    x = -1
+		    x = -2
 		    y = 1
 
 		    cost = 10
@@ -637,7 +637,7 @@ focus_tree = {
 		    prerequisite = { focus = MJU_focus_national_development_bank }
 		    mutually_exclusive = { focus = MJU_focus_financial_liberalization }
 		    relative_position_id = MJU_focus_national_development_bank
-		    x = 1
+		    x = 2
 		    y = 1
 
 		    cost = 10
@@ -675,7 +675,7 @@ focus_tree = {
 		    }
 		}
 
-	focus = { # 
+	focus = { # Militarism
 		id = MJU_focus_militarism
 		icon = GFX_focus_unknown_industry
 		#mutually_exclusive = { focus =  }
@@ -726,7 +726,7 @@ focus_tree = {
 
 	focus = { # Railway Expansion
 		id = MJU_focus_railway_expansion
-		icon = GFX_focus_unknown_industry
+		icon = GFX_focus_generic_railroad
 		#mutually_exclusive = { focus =  }
 		prerequisite = { focus = MJU_focus_economic_development }
 		relative_position_id = MJU_focus_economic_development
@@ -798,7 +798,7 @@ focus_tree = {
 
 		focus = { # Farmland Development
 			id = MJU_focus_farmland_development
-			icon = GFX_focus_unknown_industry
+			icon = GFX_SOV_infrastructure_effort_nsb_ccp_2d_sov_compatibility
 			#mutually_exclusive = { focus =  }
 			prerequisite = { focus = MJU_focus_railway_expansion }
 			relative_position_id = MJU_focus_railway_expansion
@@ -840,7 +840,7 @@ focus_tree = {
 
 		focus = { # Outskirt Cities Development
 			id = MJU_focus_outskirt_cities_development
-			icon = GFX_focus_unknown_industry
+			icon = GFX_goal_generic_construct_civ_factory
 			#mutually_exclusive = { focus =  }
 			prerequisite = { focus = MJU_focus_railway_expansion }
 			relative_position_id = MJU_focus_railway_expansion
@@ -890,9 +890,100 @@ focus_tree = {
 			}
 		}
 
+		focus = { # Expand Mining Operations
+			id = MJU_focus_expand_mining_operations
+			icon = GFX_focus_generic_resource_extraction
+			#mutually_exclusive = { focus =  }
+			prerequisite = { focus = MJU_focus_farmland_development }
+			prerequisite = { focus = MJU_focus_outskirt_cities_development }
+			relative_position_id = MJU_focus_farmland_development
+			x = 1
+			y = 1
+		
+			cost = 10
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+
+			available = {
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				factor = 2.0
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_expand_mining_operations"
+				189 = {
+					add_resource = { type = steel amount = 8 }
+				}
+				190 = {
+					add_resource = { type = steel amount = 6 }
+				}
+				599 = {
+					add_resource = { type = steel amount = 4 }
+				}
+			}
+		}
+
+		focus = { # Laity Railway Route
+			id = MJU_focus_laity_railway_route
+			icon = GFX_focus_unknown_industry
+			#mutually_exclusive = { focus =  }
+			prerequisite = { focus = MJU_focus_expand_mining_operations }
+			prerequisite = { focus = MJU_focus_outskirt_cities_development }
+			relative_position_id = MJU_focus_expand_mining_operations
+			x = 1
+			y = 1
+		
+			cost = 10
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+
+			available = {
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				factor = 2.0
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_laity_railway_route"
+				9 = {
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = infrastructure
+						level = 1
+						instant_build = yes
+					}
+				}
+				245 = {
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = infrastructure
+						level = 1
+						instant_build = yes
+					}
+				}
+				build_railway = {
+					level = 1 fallback = yes build_only_on_allied = yes
+					path = { 6079 5274 10135 10093 }
+				}
+				build_railway = {
+					level = 1 fallback = yes build_only_on_allied = yes
+					path = { 6079 10253 10309 }
+				}
+			}
+		}
+
 		focus = { # Railway Network
 			id = MJU_focus_railway_network
-			icon = GFX_focus_unknown_industry
+			icon = GFX_focus_generic_railroad
 			#mutually_exclusive = { focus =  }
 			prerequisite = { focus = MJU_focus_railway_expansion }
 			relative_position_id = MJU_focus_railway_expansion
@@ -968,7 +1059,7 @@ focus_tree = {
 		#mutually_exclusive = { focus =  }
 		prerequisite = { focus = MJU_focus_railway_network }
 		relative_position_id = MJU_focus_railway_network
-		x = -1
+		x = -2
 		y = 1
 	
 		cost = 10
@@ -1002,7 +1093,7 @@ focus_tree = {
 		#mutually_exclusive = { focus =  }
 		prerequisite = { focus = MJU_focus_railway_network }
 		relative_position_id = MJU_focus_railway_network
-		x = 1
+		x = 2
 		y = 1
 	
 		cost = 10
@@ -1273,14 +1364,316 @@ focus_tree = {
 		}
 	}
 
+	focus = { # Opening the Cities
+		id = MJU_focus_opening_the_cities
+		icon = GFX_focus_BUL_form_a_regency_council
+		#mutually_exclusive = { focus =  }
+		#prerequisite = { focus =  }
+		#relative_position_id = 
+		x = 24
+		y = 0
+
+		cost = 5
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		allow_branch = {
+		}
+		available = {
+		}
+		bypass = {
+		}
+
+		ai_will_do = {
+			factor = 1.0
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_opening_the_cities"
+			country_event = MJU.0
+		}
+	}
+
+		focus = { # Limited Trade
+			id = MJU_focus_limited_trade
+			icon = GFX_focus_unknown_political
+			mutually_exclusive = { focus = MJU_focus_mercantile_trade }
+			prerequisite = { focus = MJU_focus_opening_the_cities }
+			relative_position_id = MJU_focus_opening_the_cities
+			x = -1
+			y = 1
+
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+
+			allow_branch = {
+			}
+			available = {
+			}
+			bypass = {
+			}
+
+			ai_will_do = {
+				factor = 2.0
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_limited_trade"
+				add_war_support = 0.05
+				swap_ideas = {
+				    remove_idea = closed_economy
+				    add_idea = limited_exports
+				}
+			}
+		}
+
+		focus = { # Domestic Investments
+			id = MJU_focus_domestic_investments
+			icon = GFX_focus_unknown_political
+			#mutually_exclusive = { focus =  }
+			prerequisite = { focus = MJU_focus_limited_trade }
+			relative_position_id = MJU_focus_limited_trade
+			x = -1
+			y = 1
+
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+
+			allow_branch = {
+			}
+			available = {
+			}
+			bypass = {
+			}
+
+			ai_will_do = {
+				factor = 1.0
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_domestic_investments"
+				add_timed_idea = { idea = MJU_idea_domestic_tallent days = 365 }
+				add_tech_bonus = {
+					name = industrial_bonus
+					bonus = 1.0
+					uses = 1
+					category = industry
+				}
+			}
+		}
+
+		focus = { # Modernist Candidates
+			id = MJU_focus_modernist_candidates
+			icon = GFX_focus_unknown_political
+			#mutually_exclusive = { focus =  }
+			prerequisite = { focus = MJU_focus_limited_trade }
+			relative_position_id = MJU_focus_limited_trade
+			x = -3
+			y = 1
+
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+
+			allow_branch = {
+			}
+			available = {
+			}
+			bypass = {
+			}
+
+			ai_will_do = {
+				factor = 1.0
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_modernist_candidates"
+				remove_05_current_party_popularity = yes
+			}
+		}
+
+		focus = { # Looking Ahead
+			id = MJU_focus_looking_ahead
+			icon = GFX_focus_unknown_political
+			mutually_exclusive = { focus = MJU_focus_steadfast_foundation }
+			prerequisite = { focus = MJU_focus_domestic_investments }
+			prerequisite = { focus = MJU_focus_modernist_candidates }
+			relative_position_id = MJU_focus_limited_trade
+			x = -2
+			y = 2
+
+			cost = 10
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+
+			allow_branch = {
+			}
+			available = {
+			}
+			bypass = {
+			}
+
+			ai_will_do = {
+				factor = 1.0
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_looking_ahead"
+				add_political_power = 35
+				add_stability = -0.10
+			}
+		}
+
+		focus = { # Mercantile Trade
+			id = MJU_focus_mercantile_trade
+			icon = GFX_focus_unknown_political
+			mutually_exclusive = { focus = MJU_focus_limited_trade }
+			prerequisite = { focus = MJU_focus_opening_the_cities }
+			relative_position_id = MJU_focus_opening_the_cities
+			x = 1
+			y = 1
+
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+
+			allow_branch = {
+			}
+			available = {
+			}
+			bypass = {
+			}
+
+			ai_will_do = {
+				factor = 1.0
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_mercantile_trade"
+				add_stability = 0.05
+				swap_ideas = {
+				    remove_idea = closed_economy
+				    add_idea = export_focus
+				}
+			}
+		}
+
+		focus = { # Foreign Tallent
+			id = MJU_focus_foreign_tallent
+			icon = GFX_focus_unknown_political
+			#mutually_exclusive = { focus =  }
+			prerequisite = { focus = MJU_focus_mercantile_trade }
+			relative_position_id = MJU_focus_mercantile_trade
+			x = 1
+			y = 1
+
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+
+			allow_branch = {
+			}
+			available = {
+			}
+			bypass = {
+			}
+
+			ai_will_do = {
+				factor = 1.0
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_foreign_tallent"
+				add_ideas = MJU_idea_foreign_experts
+				add_tech_bonus = {
+					name = industrial_bonus
+					bonus = 0.75
+					uses = 2
+					category = industry
+				}
+			}
+		}
+
+		focus = { # Reinforcing Candidates
+			id = MJU_focus_reinforcing_candidates
+			icon = GFX_focus_unknown_political
+			#mutually_exclusive = { focus =  }
+			prerequisite = { focus = MJU_focus_mercantile_trade }
+			relative_position_id = MJU_focus_mercantile_trade
+			x = 3
+			y = 1
+
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+
+			allow_branch = {
+			}
+			available = {
+			}
+			bypass = {
+			}
+
+			ai_will_do = {
+				factor = 1.0
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_reinforcing_candidates"
+				add_05_current_party_popularity = yes
+			}
+		}
+
+		focus = { # Steadfast Foundation
+			id = MJU_focus_steadfast_foundation
+			icon = GFX_focus_unknown_political
+			mutually_exclusive = { focus = MJU_focus_looking_ahead }
+			prerequisite = { focus = MJU_focus_foreign_tallent }
+			prerequisite = { focus = MJU_focus_reinforcing_candidates }
+			relative_position_id = MJU_focus_mercantile_trade
+			x = 2
+			y = 2
+
+			cost = 10
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+
+			allow_branch = {
+			}
+			available = {
+			}
+			bypass = {
+			}
+
+			ai_will_do = {
+				factor = 1.0
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_steadfast_foundation"
+				add_stability = 0.10
+			}
+		}
+
 	focus = { # Reform
 		id = MJU_focus_reform
 		icon = GFX_focus_unknown_political
 		mutually_exclusive = { focus = MJU_focus_status_quo focus = MJU_focus_nationalist }
-		#prerequisite = { focus =  }
-		#relative_position_id = 
-		x = 12
-		y = 0
+		prerequisite = { focus = MJU_focus_looking_ahead }
+		relative_position_id = MJU_focus_opening_the_cities
+		x = -6
+		y = 4
 	
 		cost = 10
 		cancel_if_invalid = yes
@@ -1296,7 +1689,7 @@ focus_tree = {
 		}
 	
 		ai_will_do = {
-			factor = 2
+			factor = 1.75
 		}
 
 		completion_reward = {
@@ -1382,10 +1775,10 @@ focus_tree = {
 		id = MJU_focus_status_quo
 		icon = GFX_focus_unknown_political
 		mutually_exclusive = { focus = MJU_focus_reform focus = MJU_focus_nationalist }
-		#prerequisite = { focus =  }
-		#relative_position_id = 
-		x = 20
-		y = 0
+		prerequisite = { focus = MJU_focus_looking_ahead focus = MJU_focus_steadfast_foundation }
+		relative_position_id = MJU_focus_opening_the_cities
+		x = 0
+		y = 4
 	
 		cost = 10
 		cancel_if_invalid = yes
@@ -1400,7 +1793,7 @@ focus_tree = {
 		}
 	
 		ai_will_do = {
-			factor = 3.5
+			factor = 3
 		}
 
 		completion_reward = {
@@ -1486,10 +1879,10 @@ focus_tree = {
 		id = MJU_focus_nationalist
 		icon = GFX_focus_unknown_political
 		mutually_exclusive = { focus = MJU_focus_reform focus = MJU_focus_status_quo }
-		#prerequisite = { focus =  }
-		#relative_position_id = 
-		x = 28
-		y = 0
+		prerequisite = { focus = MJU_focus_steadfast_foundation }
+		relative_position_id = MJU_focus_opening_the_cities
+		x = 6
+		y = 4
 	
 		cost = 10
 		cancel_if_invalid = yes
@@ -1592,9 +1985,9 @@ focus_tree = {
 		icon = GFX_focus_unknown_political
 		mutually_exclusive = { focus = MJU_focus_intelligentsia_underground_crackdown }
 		prerequisite = { focus = MJU_focus_reform focus = MJU_focus_status_quo }
-		relative_position_id = MJU_focus_status_quo
-		x = -4
-		y = 1
+		relative_position_id = MJU_focus_opening_the_cities
+		x = -16
+		y = 5
 	
 		cost = 5
 		cancel_if_invalid = yes
@@ -1604,6 +1997,10 @@ focus_tree = {
 		allow_branch = {
 		}
 		available = {
+			OR = {
+				has_completed_focus = MJU_focus_reform
+				has_completed_focus = MJU_focus_status_quo
+			}
 		}
 		bypass = {
 		}
@@ -1613,7 +2010,7 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_nationalist"
+			log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_intelligentsia_open_up_conversation"
 			
 		}
 	}
@@ -1811,9 +2208,9 @@ focus_tree = {
 		icon = GFX_focus_unknown_political
 		mutually_exclusive = { focus = MJU_focus_intelligentsia_open_up_conversation }
 		prerequisite = { focus = MJU_focus_status_quo focus = MJU_focus_nationalist }
-		relative_position_id = MJU_focus_status_quo
-		x = 4
-		y = 1
+		relative_position_id = MJU_focus_opening_the_cities
+		x = -12
+		y = 5
 	
 		cost = 5
 		cancel_if_invalid = yes
@@ -1823,6 +2220,10 @@ focus_tree = {
 		allow_branch = {
 		}
 		available = {
+			OR = {
+				has_completed_focus = MJU_focus_status_quo
+				has_completed_focus = MJU_focus_nationalist
+			}
 		}
 		bypass = {
 		}
@@ -1832,7 +2233,7 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_nationalist"
+			log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_intelligentsia_underground_crackdown"
 			
 		}
 	}
@@ -2168,10 +2569,10 @@ focus_tree = {
 
 shared_focus = { # Military Reforms Root
 	id = MJU_focus_reforms_root
-	icon = GFX_focus_unknown_political
+	icon = GFX_focus_generic_army_doctrines_2
 	#prerequisite = { focus = MJU_focus_national_policies }
 	#relative_position_id = MJU_focus_national_policies
-	x = 40
+	x = 44
 	y = 0
 	cost = 10
 
@@ -2348,8 +2749,8 @@ shared_focus = { # Above the Plains
 
 	shared_focus = { # Light Air Wings Effort
 		id = MJU_focus_light_air_wings
-		icon = GFX_focus_unknown_military
-		#mutually_exclusive = { focus =  }
+		icon = GFX_goal_generic_air_fighter
+		mutually_exclusive = { focus = MJU_focus_medium_air_wings focus = MJU_focus_heavy_air_wings }
 		prerequisite = { focus = MJU_focus_above_the_plains }
 		relative_position_id = MJU_focus_above_the_plains
 		x = -2
@@ -2373,6 +2774,7 @@ shared_focus = { # Above the Plains
 
 		completion_reward = {
 			log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_light_air_wings"
+			air_experience = 35
 			add_tech_bonus = {
 				bonus = 0.50
 				uses = 2
@@ -2383,8 +2785,8 @@ shared_focus = { # Above the Plains
 
 	shared_focus = { # Medium Air Wings Effort
 		id = MJU_focus_medium_air_wings
-		icon = GFX_focus_unknown_military
-		#mutually_exclusive = { focus =  }
+		icon = GFX_goal_generic_air_bomber
+		mutually_exclusive = { focus = MJU_focus_light_air_wings focus = MJU_focus_heavy_air_wings }
 		prerequisite = { focus = MJU_focus_above_the_plains }
 		relative_position_id = MJU_focus_above_the_plains
 		x = 0
@@ -2403,11 +2805,12 @@ shared_focus = { # Above the Plains
 		}
 	
 		ai_will_do = {
-			factor = 2.0
+			factor = 1.75
 		}
 
 		completion_reward = {
 			log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_medium_air_wings"
+			air_experience = 35
 			add_tech_bonus = {
 				bonus = 0.50
 				uses = 2
@@ -2418,8 +2821,8 @@ shared_focus = { # Above the Plains
 
 	shared_focus = { # Heavy Air Wings Effort
 		id = MJU_focus_heavy_air_wings
-		icon = GFX_focus_unknown_military
-		#mutually_exclusive = { focus =  }
+		icon = GFX_focus_generic_long_range_aircraft
+		mutually_exclusive = { focus = MJU_focus_light_air_wings focus = MJU_focus_medium_air_wings }
 		prerequisite = { focus = MJU_focus_above_the_plains }
 		relative_position_id = MJU_focus_above_the_plains
 		x = 2
@@ -2443,6 +2846,7 @@ shared_focus = { # Above the Plains
 
 		completion_reward = {
 			log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_heavy_air_wings"
+			air_experience = 35
 			add_tech_bonus = {
 				bonus = 0.50
 				uses = 2
@@ -2735,7 +3139,7 @@ shared_focus = { # Novus Pueblanuran Military
 
 	shared_focus = { # Logistics Upgrade
 		id = MJU_focus_reforms_logistics_upgrade
-		icon = GFX_focus_unknown_military
+		icon = GFX_focus_generic_railroad
 		prerequisite = { focus = MJU_focus_reforms_officer_training focus = MJU_focus_reforms_nco_corps }
 		relative_position_id = MJU_focus_reforms_officer_training
 		x = 1
@@ -2745,8 +3149,12 @@ shared_focus = { # Novus Pueblanuran Military
 		completion_reward = {
 			log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_reforms_logistics_upgrade"
 			add_political_power = 20
-			add_manpower = 15000
-			add_equipment_to_stockpile = { type = support_equipment amount = 5000 producer = ROOT }
+			add_equipment_to_stockpile = { type = support_equipment amount = 1000 producer = ROOT }
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 2
+				category = train_tech
+			}
 		}
 	}
 
@@ -2787,7 +3195,7 @@ shared_focus = { # Novus Pueblanuran Military
 
 	shared_focus = { # Battlefield Experience
 		id = MJU_focus_reforms_battlefield_experience
-		icon = GFX_focus_unknown_military
+		icon = GFX_focus_generic_anti_tank_guns
 		prerequisite = { focus = MJU_focus_reforms_logistics_upgrade }
 		relative_position_id = MJU_focus_reforms_logistics_upgrade
 		x = -1
@@ -2808,10 +3216,11 @@ shared_focus = { # Novus Pueblanuran Military
 		completion_reward = {
 			log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_reforms_battlefield_experience"
 			add_political_power = 30
-			army_experience = 100
-			add_unit_bonus = {
-				infantry = { soft_attack = 0.07 hard_attack = 0.04 }
-				category_tanks = { hard_attack = 0.05 soft_attack = 0.03 }
+			army_experience = 10
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 2
+				category = cat_anti_tank
 			}
 		}
 	}
