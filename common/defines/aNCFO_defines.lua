@@ -91,14 +91,18 @@
 	-- NResistance
 
 	-- NProduction
-		NDefines.NProduction.MAX_EQUIPMENT_RESOURCES_NEED = 6   -- Was 3
-		NDefines.NProduction.MAX_CIV_FACTORIES_PER_LINE = 10.0	-- Was 15.0
-		NDefines.NProduction.EFFICIENCY_LOSS_PER_UNUSED_DAY = 2 -- Was 1
-		NDefines.NProduction.BASE_FACTORY_SPEED = 5.00			-- Was 5.00
-		NDefines.NProduction.BASE_FACTORY_SPEED_MIL = 4.5		-- Was 9.00
-		NDefines.NProduction.BASE_FACTORY_SPEED_NAV = 2.5		-- Was 5.00
-		NDefines.NProduction.BASE_FACTORY_START_EFFICIENCY_FACTOR = 1	-- Was 10
-		NDefines.NProduction.BASE_FACTORY_MAX_EFFICIENCY_FACTOR = 10	-- Was 50
+		NDefines.NProduction.MAX_EQUIPMENT_RESOURCES_NEED = 6   			-- Was 3
+		NDefines.NProduction.MAX_CIV_FACTORIES_PER_LINE = 10.0				-- Was 15.0
+		NDefines.NProduction.EFFICIENCY_LOSS_PER_UNUSED_DAY = 2 			-- Was 1
+		NDefines.NProduction.RESOURCE_TO_ENERGY_COEFFICIENT = 9.0			-- Was 9.0, How much energy per coal produces
+		NDefines.NProduction.BASE_COUNTRY_ENERGY_PRODUCTION = 12.0			-- Was 10.0, The base energy production of a country
+		NDefines.NProduction.ENERGY_SCALING_COST_BY_FACTORY_COUNT = 0.03375	-- Was 0.0225, Scales energy cost based on the total number of factories
+		NDefines.NProduction.BASE_ENERGY_COST = 0.25						-- Was 0.25, How much energy per factory consumes
+		NDefines.NProduction.BASE_FACTORY_SPEED = 2.50						-- Was 5.00
+		NDefines.NProduction.BASE_FACTORY_SPEED_MIL = 4.5					-- Was 9.00
+		NDefines.NProduction.BASE_FACTORY_SPEED_NAV = 2.5					-- Was 5.00
+		NDefines.NProduction.BASE_FACTORY_START_EFFICIENCY_FACTOR = 1		-- Was 10
+		NDefines.NProduction.BASE_FACTORY_MAX_EFFICIENCY_FACTOR = 10		-- Was 50
 
 	-- NMarket
 
