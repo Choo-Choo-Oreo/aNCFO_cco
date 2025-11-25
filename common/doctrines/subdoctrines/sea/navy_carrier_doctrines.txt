@@ -16,35 +16,56 @@ carrier_battlegroups = {
     }
 
     available = {
-        always = yes
+        has_tech = aviation_dawn
     }
 
     ai_will_do = { }
 
     # EFFECTS
 	port_strike = 0.20
+    strike_force_movement_org_loss = -0.1
 
     rewards = {
 		long_distance_logistics = {
-			navy_max_range_factor = 0.1
+            carrier = {
+                max_organisation = 10
+            }
+			modifier = {
+                navy_max_range_factor = 0.1
+                navy_fuel_consumption_factor = -0.05
+            }
 		}
-        long_range_target_acquisition = {
-			navy_carrier_air_targetting_factor = 0.1
-		}
-		personnel_management = {
+        bomber_scouting = {
 			carrier = {
-				max_organisation = 60
-			}
+                carrier_surface_detection = 0.15
+            }
+            modifier = {
+                navy_carrier_air_agility_factor = 0.1
+            }
 		}
-		dedicated_record_keeping = {
+		professional_deck_management = {
 			carrier = {
-				carrier_surface_detection = 0.20
+				max_organisation = 15
 			}
+            modifier = {
+                sortie_efficiency = 0.1
+            }
 		}
-		floating_fortresses = {
+		fleet_antiair = {
 			carrier = {
-				anti_air_attack = 0.35
+                max_organisation = 15
+				anti_air_attack = 0.15
 			}
+            modifier = {
+                sortie_efficiency = 0.1
+            }
+		}
+		alpha_strike = {
+            modifier = {
+                sortie_efficiency = 0.1
+                navy_carrier_air_targetting_factor = 0.1
+                carrier_capacity_penalty_reduction = -0.1
+            }
 		}
     }
 }
@@ -59,7 +80,7 @@ floating_airfields = {
     xp_type = navy
 
     available = {
-        always = yes
+        has_tech = aviation_dawn
     }
 
     ai_will_do = { 
@@ -82,165 +103,90 @@ floating_airfields = {
     }
 
     # EFFECTS
-	sortie_efficiency = 0.10
+	navy_anti_air_attack_factor = 0.10
 	
     rewards = {
-       traffic_control_systems = {
-			carrier_capacity_penalty_reduction = -0.20
-	   }
-	   floating_city = {
+       enclosed_hangar = {
 			carrier = {
-				max_organisation = 40
+                max_organisation = 10
+                reliability = 0.1
+            }
+	   }
+	   fleet_antiair = {
+			carrier = {
+				max_organisation = 15
+                anti_air_attack = 0.15
 			}
 	   }
-	   veteran_pilots = {
-			navy_carrier_air_attack_factor = 0.15
+	   reserved_fighters = {
+			fighter_sortie_efficiency = 0.15
 	   }
-	   night_fighting_expertise = {
-			air_carrier_night_penalty_reduction_factor = 0.15
+	   dogfight_training = {
+			navy_carrier_air_agility_factor = 0.1
+            sortie_efficiency = 0.05
+            carrier = {
+                anti_air_attack = 0.05
+            }
 	   }
 	   rough_weather_procedures = {
+            sortie_efficiency = 0.1
 			equipment_bonus = {
                 carrier = {
-				    naval_weather_penalty_factor = -0.25
+				    naval_weather_penalty_factor = -0.15
 			    }
             }
 	   }
     }
 }
 
-escort_carrier_support = {
+subsidiary_carrier_support = {
     track = carriers
-    name = SUBDOCTRINE_ESCORT_CARRIER_SUPPORT
-    description = SUBDOCTRINE_ESCORT_CARRIER_SUPPORT_DESC
+    name = SUBDOCTRINE_SUBSIDIARY_CARRIER_SUPPORT
+    description = SUBDOCTRINE_SUBSIDIARY_CARRIER_SUPPORT_DESC
     icon = GFX_doctrine_escort_carriers_medium
 
     xp_cost = 100
     xp_type = navy
 
     available = {
-        is_special_project_completed = sp:sp_naval_escort_carrier
-    }
-    visible = {
-        has_dlc = "No Compromise, No Surrender"
+        has_tech = early_ship_hull_carrier
     }
     
-    convoy_escort_efficiency = 0.5
+    convoy_escort_efficiency = 0.2
 
     rewards = {
     	evasive_convoy_maneuvers = {
-    		convoy_retreat_speed = 0.5
+    		convoy_retreat_speed = 0.2
     	}
     	anti_submarine_escorts = {
     		carrier = {
-    		 sub_detection = 0.2
+    		    carrier_sub_detection = 0.2
     		}
     	}
-    	civilian_hull_shapes = {
-            equipment_bonus = {
-                ship_hull_escort_carrier = {
-                    surface_visibility = -0.2
-                    instant = yes
-                }
-            }
-    	}
+    	fleet_antiair = {
+            carrier = {
+				max_organisation = 15
+                anti_air_attack = 0.15
+			}
+        }
     	integrated_convoy_escorts = {
-            equipment_bonus = {
-                ship_hull_escort_carrier = {
-                    sub_detection = 0.15
-                    instant = yes
-                }
-                convoy = {
-                    naval_speed = 0.25
-                    instant = yes
-                }
+			modifier = {
+                navy_carrier_air_targetting_factor = 0.05
+                convoy_escort_efficiency = 0.1
             }
-			carrier = {
-				max_organisation = 20
-			}
-
     	}
-    	convoy_carrier_support_groups = {
-            equipment_bonus = {
-                ship_hull_escort_carrier = {
-                    build_cost_ic = -0.1
-                    instant = yes
-                }
+    	carrier_support_groups = {
+            modifier = {
+                fighter_sortie_efficiency = 0.15
             }
-			repair_ship = {
-				reliability = 0.2
-			}
-
-			support_ship = {
-				reliability = 0.2
-			}
-
     	}
    	}
 }
 
-broad_naval_support = {
+carrier_concentration = {
     track = carriers
-    name = SUBDOCTRINE_BROAD_NAVAL_SUPPORT
-    description = SUBDOCTRINE_BROAD_NAVAL_SUPPORT_DESC
-    icon = GFX_doctrine_carrier_task_forces_medium
-
-    xp_cost = 100
-    xp_type = navy
-
-    available = {
-        OR = {
-            is_special_project_completed = sp:sp_naval_escort_carrier
-            is_special_project_completed = sp:sp_naval_support_ships
-        }
-    }
-    visible = {
-        has_dlc = "No Compromise, No Surrender"
-    }
-
-    critical_receive_chance = -0.1
-
-    rewards = {
-    	carrier_maneuvering = {
-    		carrier = {
-    			naval_speed = 0.1
-    		}
-    	}
-    	task_force_concentration = {
-    		ships_at_battle_start = 0.1
-    	}
-
-    	organized_support_protocols = {
-    		naval_repair_support_value_factor = 0.25
-    		naval_general_support_value_factor = 0.25 
-    	}
-    	escorts_in_battle = {
-            equipment_bonus = {
-                escort_carrier = {
-                    lg_attack = 0.15
-                    anti_air_attack = 0.1
-                    lg_armor_piercing = 0.15
-                    instant = yes
-                }
-            }
-    	}
-    	support_rotation = {
-    		naval_repair_support_factor = 0.25
-    		naval_general_support_factor = 0.25 
-    		repair_ship = {
-    			max_organisation = 20
-    		}
-    		support_ship = {
-    			max_organisation = 20
-    		}
-    	}
-	}
-}
-
-massed_carrier_fleet = {
-    track = carriers
-    name = SUBDOCTRINE_MASSED_CARRIER_FLEET
-    description = SUBDOCTRINE_MASSED_CARRIER_FLEET_DESC
+    name = SUBDOCTRINE_CARRIER_CONCENTRATION
+    description = SUBDOCTRINE_CARRIER_CONCENTRATION_DESC
     icon = GFX_doctrine_carrier_primacy_medium
 
     xp_cost = 100
@@ -254,10 +200,11 @@ massed_carrier_fleet = {
         }
     }
     available = {
-        always = yes
+        has_tech = aviation_dawn
     }
 
-    naval_morale_factor	= 0.05
+    sortie_efficiency = 0.1
+    strike_force_movement_org_loss = -0.05
 
     rewards = {
     	deep_operative_support = {
@@ -266,106 +213,87 @@ massed_carrier_fleet = {
     			naval_range = 0.2
     		}
     	}
-    	carrier_independence = {
-    		screening_without_screens = 0.3
+    	mobile_force = {
+    		carrier = {
+                max_organisation = 15
+            }
+            modifier = {
+                navy_carrier_air_targetting_factor = 0.1
+            }
     	}
-    	crew_shifts = {
-    		sortie_efficiency = 0.3
-    		carrier_sortie_hours_delay = -2
+    	improved_mission_oriented = {
+    		carrier = {
+                max_organisation = 10
+                anti_air_attack = 0.15
+            }
+            fighter_sortie_efficiency = 0.05
     	}
     	efficient_rearming = {
     		carrier = {
-    			supply_consumption = -0.2
+                max_organisation = 5
+    			supply_consumption = -0.15
     			fuel_consumption = -0.1
     		}
     	}
-    	unceasing_airpower = {
-    		carrier_traffic = 0.3
-    		carrier_night_traffic = 0.3
-    		carrier = {
-    			anti_air_attack = 0.2
-    		}
+    	massed_air_raid = {
+    		modifier = {
+                sortie_efficiency = 0.1
+                carrier_capacity_penalty_reduction = -0.1
+                navy_carrier_air_attack_factor = 0.1
+            }
     	}
     }
 }
 
 
-light_task_forces = {
+naval_airfoce = {
     track = carriers
-    name = SUBDOCTRINE_LIGHT_TASK_FORCES
-    description = SUBDOCTRINE_LIGHT_TASK_FORCES_DESC
-    icon = GFX_doctrine_subsidiary_carrier_role_medium
+    name = SUBDOCTRINE_NAVAL_AIRFOCE
+    description = SUBDOCTRINE_NAVAL_AIRFOCE_DESC
+    icon = GFX_doctrine_naval_airforce_medium
 
     xp_cost = 100
     xp_type = navy
 
     ai_will_do = { 
         base = 1
-        modifier = {
-            factor = 25
-            original_tag = GER
-        }
-        modifier = {
-            factor = 25
-            original_tag = ITA
-        }
-        modifier = {
-            factor = 25
-            original_tag = SOV
-        }
-    }
-    mastery = { 
-        multiplier = 2 
-        sub_units = { 
-            carrier
-            destroyer
-        }
-        
     }
     available = {
-        always = yes
-    }
-    visible = {
-        has_dlc = "No Compromise, No Surrender"
+        has_tech = early_ship_hull_carrier
     }
 
-
-    naval_retreat_speed_after_initial_combat = 0.2
+    naval_retreat_speed_after_initial_combat = 0.1
+    naval_strike_attack_factor = 0.05
 
     rewards = {
     	direct_fire_avoidance = {
     		carrier = {
-    			naval_speed = 0.1
     			surface_visibility = -0.1
     		}
     	}
-    	surface_fleets = {
-    		carrier = {
-                surface_visibility = -0.10
-			}
-			destroyer = {
-                surface_visibility = -0.10
-			}
+    	land_based_support = {
+    		category_nav_bomber = {
+                air_range = 0.2
+            }
     	}
-    	screen_raiders = {
-    		destroyer = {
-    			lg_attack = 0.2
-    			lg_armor_piercing = 0.2
-    			max_organisation = 20
-    		}
+    	air_raiders = {
+    		carrier = {
+                max_organisation = 10
+            }
+            modifier = {
+                sortie_efficiency = 0.05
+                navy_carrier_air_targetting_factor = 0.05
+            }
     	}
     	evasive_engagements_focus = {
     		carrier = {
-    			max_organisation = 30
+    			max_organisation = 10
     		}
-    		destroyer = {
-    			naval_speed = 0.2
-    			surface_detection = 0.2
-    		}
+            naval_enemy_fleet_size_ratio_penalty_factor = 0.1
     	}
-    	localized_sea_power = {
-    		strike_force_movement_org_loss = -0.3
-    		naval_enemy_fleet_size_ratio_penalty_factor = 0.2	
+    	airpower = {
+    		naval_strike_attack_factor = 0.1
+            naval_strike_agility_factor = 0.1
     	}
     }
 

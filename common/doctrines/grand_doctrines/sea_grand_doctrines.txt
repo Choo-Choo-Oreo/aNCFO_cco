@@ -23,52 +23,40 @@ new_fleet_in_being = {
     }
 
     # EFFECTS
+    SH_battleship = {
+        max_organisation = 5
+    }
 	battleship = {
-		max_organisation = 15			
+		max_organisation = 5
 	}
-	navy_capital_ship_defence_factor = 0.1
+    battle_cruiser = {
+        max_organisation = 5
+    }
+	positioning = 0.1
 	
     milestones = {
-        {
-            #Capital Ships
-			mines_planting_by_fleets_factor = 0.2
-			convoy_escort_efficiency = 0.15
+		{
+            #Submarines
+	        naval_torpedo_reveal_chance_factor = -0.05
+			convoy_raiding_efficiency_factor = 0.1
             effect = {
                 if = {
                     limit = {
                         NOT = {
-                            has_variable = capital_ships_milestone_var
+                            has_variable = submarines_milestone_var
                         }
                     }
-                    set_variable = { capital_ships_milestone_var = 1 }
+                    set_variable = { submarines_milestone_var = 1 }
                 }
                 else = {
-                    add_to_variable = { capital_ships_milestone_var = 1 }
+                    add_to_variable = { submarines_milestone_var = 1 }
                 }
             }
         }
-        {
-            #Carriers
-	        navy_capital_ship_attack_factor = 0.1
-
-            effect = {
-                if = {
-                    limit = {
-                        NOT = {
-                            has_variable = carriers_milestone_var
-                        }
-                    }
-                    set_variable = { carriers_milestone_var = 1 }
-                }
-                else = {
-                    add_to_variable = { carriers_milestone_var = 1 }
-                }
-            }
-        }
-        {
+		{
             #Screens
 			navy_anti_air_attack_factor = 0.10
-
+            screening_efficiency = 0.05
             effect = {
                 if = {
                     limit = {
@@ -84,21 +72,38 @@ new_fleet_in_being = {
             }
         }
         {
-            #Submarines
-	        naval_torpedo_reveal_chance_factor = -0.05
-			strike_force_movement_org_loss = -0.2
-
+            #Carriers
+	        sortie_efficiency = 0.1
+            navy_anti_air_attack_factor = 0.1
             effect = {
                 if = {
                     limit = {
                         NOT = {
-                            has_variable = submarines_milestone_var
+                            has_variable = carriers_milestone_var
                         }
                     }
-                    set_variable = { submarines_milestone_var = 1 }
+                    set_variable = { carriers_milestone_var = 1 }
                 }
                 else = {
-                    add_to_variable = { submarines_milestone_var = 1 }
+                    add_to_variable = { carriers_milestone_var = 1 }
+                }
+            }
+        }
+        {
+            #Capital Ships
+			positioning = 0.1
+            strike_force_movement_org_loss = -0.1
+            effect = {
+                if = {
+                    limit = {
+                        NOT = {
+                            has_variable = capital_ships_milestone_var
+                        }
+                    }
+                    set_variable = { capital_ships_milestone_var = 1 }
+                }
+                else = {
+                    add_to_variable = { capital_ships_milestone_var = 1 }
                 }
             }
         }
@@ -141,51 +146,32 @@ new_convoy_raiding = {
 		max_organisation = 10
 		surface_detection = 0.10
 	}
-	convoy_raiding_efficiency_factor = 0.15
+	convoy_raiding_efficiency_factor = 0.05
 	
     milestones = {
-        {
-            #Capital Ships
-			convoy_escort_efficiency = 0.10
-
+		{
+            #Submarines
+	        naval_torpedo_reveal_chance_factor = -0.1
+			convoy_raiding_efficiency_factor = 0.1
+            navy_submarine_attack_factor = 0.1
             effect = {
                 if = {
                     limit = {
                         NOT = {
-                            has_variable = capital_ships_milestone_var
+                            has_variable = submarines_milestone_var
                         }
                     }
-                    set_variable = { capital_ships_milestone_var = 1 }
+                    set_variable = { submarines_milestone_var = 1 }
                 }
                 else = {
-                    add_to_variable = { capital_ships_milestone_var = 1 }
+                    add_to_variable = { submarines_milestone_var = 1 }
                 }
             }
         }
-        {
-            #Carriers
-	        submarine_attack = 0.10
-			naval_torpedo_reveal_chance_factor = -0.10
-
-            effect = {
-                if = {
-                    limit = {
-                        NOT = {
-                            has_variable = carriers_milestone_var
-                        }
-                    }
-                    set_variable = { carriers_milestone_var = 1 }
-                }
-                else = {
-                    add_to_variable = { carriers_milestone_var = 1 }
-                }
-            }
-        }
-        {
+		{
             #Screens
-			strike_force_movement_org_loss = -0.15
-			naval_detection = 0.1
-
+			screening_efficiency = 0.05
+            convoy_escort_efficiency = 0.1
             effect = {
                 if = {
                     limit = {
@@ -201,22 +187,37 @@ new_convoy_raiding = {
             }
         }
         {
-            #Submarines
-	        sortie_efficiency = 0.30
-			naval_strike_targetting_factor = 0.1
-			convoy_raiding_efficiency_factor = 0.1
-
+            #Carriers
+	        sortie_efficiency = 0.1
             effect = {
                 if = {
                     limit = {
                         NOT = {
-                            has_variable = submarines_milestone_var
+                            has_variable = carriers_milestone_var
                         }
                     }
-                    set_variable = { submarines_milestone_var = 1 }
+                    set_variable = { carriers_milestone_var = 1 }
                 }
                 else = {
-                    add_to_variable = { submarines_milestone_var = 1 }
+                    add_to_variable = { carriers_milestone_var = 1 }
+                }
+            }
+        }
+        {
+            #Capital Ships
+			navy_max_range_factor = 0.1
+            naval_enemy_fleet_size_ratio_penalty_factor = 0.1
+            effect = {
+                if = {
+                    limit = {
+                        NOT = {
+                            has_variable = capital_ships_milestone_var
+                        }
+                    }
+                    set_variable = { capital_ships_milestone_var = 1 }
+                }
+                else = {
+                    add_to_variable = { capital_ships_milestone_var = 1 }
                 }
             }
         }
@@ -251,53 +252,34 @@ new_base_strike = {
 	
 	
 	carrier = {
-		max_organisation = 20
+		max_organisation = 10
 	}
 	port_strike = 0.4
 	
     milestones = {
-        {
-            #Capital Ships
-			convoy_escort_efficiency = 0.15
-
+		{
+            #Submarines
+	        naval_torpedo_reveal_chance_factor = -0.05
+			convoy_raiding_efficiency_factor = 0.1
             effect = {
                 if = {
                     limit = {
                         NOT = {
-                            has_variable = capital_ships_milestone_var
+                            has_variable = submarines_milestone_var
                         }
                     }
-                    set_variable = { capital_ships_milestone_var = 1 }
+                    set_variable = { submarines_milestone_var = 1 }
                 }
                 else = {
-                    add_to_variable = { capital_ships_milestone_var = 1 }
+                    add_to_variable = { submarines_milestone_var = 1 }
                 }
             }
         }
-        {
-            #Carriers
-	        naval_strike_targetting_factor = 0.1
-			naval_torpedo_reveal_chance_factor = -0.10
-
-            effect = {
-                if = {
-                    limit = {
-                        NOT = {
-                            has_variable = carriers_milestone_var
-                        }
-                    }
-                    set_variable = { carriers_milestone_var = 1 }
-                }
-                else = {
-                    add_to_variable = { carriers_milestone_var = 1 }
-                }
-            }
-        }
-        {
+		{
             #Screens
-			carrier_capacity_penalty_reduction = -0.1
-			naval_detection = 0.05
-
+			convoy_escort_efficiency = 0.1
+            screening_efficiency = 0.05
+            naval_retreat_speed = 0.05
             effect = {
                 if = {
                     limit = {
@@ -313,22 +295,38 @@ new_base_strike = {
             }
         }
         {
-            #Submarines
-	        sortie_efficiency = 0.30
-			naval_strike_targetting_factor = 0.1
-			navy_carrier_air_agility_factor = 0.10
-
+            #Carriers
+	        carrier_capacity_penalty_reduction = -0.1
+			sortie_efficiency = 0.1
             effect = {
                 if = {
                     limit = {
                         NOT = {
-                            has_variable = submarines_milestone_var
+                            has_variable = carriers_milestone_var
                         }
                     }
-                    set_variable = { submarines_milestone_var = 1 }
+                    set_variable = { carriers_milestone_var = 1 }
                 }
                 else = {
-                    add_to_variable = { submarines_milestone_var = 1 }
+                    add_to_variable = { carriers_milestone_var = 1 }
+                }
+            }
+        }
+        {
+            #Capital Ships
+			navy_anti_air_attack_factor = 0.15
+            positioning = 0.05
+            effect = {
+                if = {
+                    limit = {
+                        NOT = {
+                            has_variable = capital_ships_milestone_var
+                        }
+                    }
+                    set_variable = { capital_ships_milestone_var = 1 }
+                }
+                else = {
+                    add_to_variable = { capital_ships_milestone_var = 1 }
                 }
             }
         }
