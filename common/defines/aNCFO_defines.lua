@@ -96,7 +96,7 @@
 		NDefines.NProduction.EFFICIENCY_LOSS_PER_UNUSED_DAY = 2 			-- Defualt 1
 		NDefines.NProduction.RESOURCE_TO_ENERGY_COEFFICIENT = 9.0			-- Defualt 9.0, How much energy per coal produces
 		NDefines.NProduction.BASE_COUNTRY_ENERGY_PRODUCTION = 12.0			-- Defualt 10.0, The base energy production of a country
-		NDefines.NProduction.ENERGY_SCALING_COST_BY_FACTORY_COUNT = 0.03375	-- Defualt 0.0225, Scales energy cost based on the total number of factories
+		NDefines.NProduction.ENERGY_SCALING_COST_BY_FACTORY_COUNT = 0.0225	-- Defualt 0.0225, do not use 0.03375, Scales energy cost based on the total number of factories
 		NDefines.NProduction.BASE_ENERGY_COST = 0.25						-- Defualt 0.25, How much energy per factory consumes
 		NDefines.NProduction.BASE_FACTORY_SPEED = 2.50						-- Defualt 5.00
 		NDefines.NProduction.BASE_FACTORY_SPEED_MIL = 4.5					-- Defualt 9.00
