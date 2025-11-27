@@ -109,7 +109,6 @@ Not a valid value: screen_support_focus, near line: 362" in file: "common/ideas/
  GFX_naval_equipment_role_icons_selected 92 - defined in army_icons.txt and 84 specified in GFX file
 [no_game_date][database_scoped_variables.cpp:266]: invalid database object for effect/trigger: base_strike. use var:var_name to explicitly use variables in effects/triggers
 [no_game_date][database_scoped_variables.cpp:266]: invalid database object for effect/trigger: fleet_in_being. use var:var_name to explicitly use variables in effects/triggers
-[no_game_date][database_scoped_variables.cpp:266]: invalid database object for effect/trigger: rangers_tech. use var:var_name to explicitly use variables in effects/triggers
 [no_game_date][database_scoped_variables.cpp:266]: invalid database object for effect/trigger: masterful_blitz. use var:var_name to explicitly use variables in effects/triggers
 [no_game_date][database_scoped_variables.cpp:266]: invalid database object for effect/trigger: marines_commandoes_mechanised_non_mtg. use var:var_name to explicitly use variables in effects/triggers
 [no_game_date][database_scoped_variables.cpp:266]: invalid database object for effect/trigger: trench_warfare. use var:var_name to explicitly use variables in effects/triggers
