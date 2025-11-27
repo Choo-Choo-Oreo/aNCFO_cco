@@ -53,23 +53,53 @@ ideas = {
 			cancel_if_invalid = no
 
 			ai_will_do = {
-				base = 0
-				modifier = {
-					add = 200.0
-					has_war = no
-				}
-				modifier = {
-					factor = 100.0
-					has_war = no
-					or = {
-						has_government = pluralism
-						has_government = semidemocracy
-					}
-				}
-				modifier = {
-					factor = -300.0
-					original_tag = HHE has_global_flag = elected_warmonger OR = { has_government = theocratism has_government = authoritarianism has_government = unitism }
-				}
+				factor = 1
+                modifier = {
+                    # ratio = produced / consumed, safe against consumed == 0
+                    set_temp_variable = { ratio = resource_produced@coal }
+                    set_temp_variable = { denom = resource_consumed@coal }
+
+                    # if denom == 0, treat as very large surplus
+                    if = {
+                        limit = { check_variable = { var = denom value = 0 compare = equals } }
+                        set_temp_variable = { ratio = 999999 } # sentinel large number
+                    }
+
+                    # if denom > 0, perform ratio = produced / consumed
+                    if = {
+                        limit = { check_variable = { var = denom value = 0 compare = greater_than } }
+                        divide_temp_variable = { ratio = denom }
+                    }
+
+                    # base propensity
+                    set_temp_variable = { temp = 1.0 }
+
+                    # strong boost if large surplus (ratio > 2)
+                    if = {
+                        limit = { check_variable = { var = ratio value = 2 compare = greater_than } }
+                        multiply_temp_variable = { temp = 1.5 }
+                    }
+
+                    # moderate boost if surplus (ratio >= 1)
+                    if = {
+                        limit = { check_variable = { var = ratio value = 1 compare = greater_than_or_equals } }
+                        multiply_temp_variable = { temp = 1.2 }
+                    }
+
+                    # small boost if no imports
+                    if = {
+                        limit = { check_variable = { var = resource_imported@coal value = 0 compare = equals } }
+                        multiply_temp_variable = { temp = 1.1 }
+                    }
+
+                    # large penalty if deficit (ratio < 1)
+                    if = {
+                        limit = { check_variable = { var = ratio value = 1 compare = less_than } }
+                        multiply_temp_variable = { temp = 0.05 }
+                    }
+
+                    factor = temp
+                }
 			}
 		}
 
@@ -123,23 +153,53 @@ ideas = {
 			cancel_if_invalid = no
 
 			ai_will_do = {
-				base = 0
-				modifier = {
-					add = 100.0
-					has_war = no
-				}
-				modifier = {
-					factor = 100.0
-					has_war = no
-					or = {
-						has_government = theocratism
-						has_government = authoritarianism
-					}
-				}
-				modifier = {
-					factor = -150.0
-					original_tag = HHE has_global_flag = elected_warmonger OR = { has_government = theocratism has_government = authoritarianism has_government = unitism }
-				}
+				factor = 1
+                modifier = {
+                    set_temp_variable = { ratio = resource_produced@coal }
+                    set_temp_variable = { denom = resource_consumed@coal }
+
+                    if = {
+                        limit = { check_variable = { var = denom value = 0 compare = equals } }
+                        set_temp_variable = { ratio = 999999 }
+                    }
+                    if = {
+                        limit = { check_variable = { var = denom value = 0 compare = greater_than } }
+                        divide_temp_variable = { ratio = denom }
+                    }
+
+                    set_temp_variable = { temp = 1.0 }
+
+                    # boost when clear surplus (ratio > 1)
+                    if = {
+                        limit = { check_variable = { var = ratio value = 1 compare = greater_than } }
+                        multiply_temp_variable = { temp = 1.25 }
+                    }
+
+                    # extra boost if exports already positive and surplus
+                    if = {
+                        limit = {
+                            AND = {
+                                check_variable = { var = resource_exported@coal value = 0 compare = greater_than }
+                                check_variable = { var = ratio value = 1 compare = greater_than }
+                            }
+                        }
+                        multiply_temp_variable = { temp = 1.15 }
+                    }
+
+                    # penalty if dependent on imports
+                    if = {
+                        limit = { check_variable = { var = resource_imported@coal value = 0 compare = greater_than } }
+                        multiply_temp_variable = { temp = 0.6 }
+                    }
+
+                    # stronger penalty if deficit
+                    if = {
+                        limit = { check_variable = { var = ratio value = 1 compare = less_than } }
+                        multiply_temp_variable = { temp = 0.2 }
+                    }
+
+                    factor = temp
+                }
    			}
 		}
 
@@ -237,26 +297,47 @@ ideas = {
 			cancel_if_invalid = no
 
 			ai_will_do = {
-				base = 0
-				modifier = {
-					add = 350.0
-					has_war = yes
-					is_in_faction = yes
-				}
-				# minors not at war should want to get the bonuses from free trade
-				modifier = {
-					factor = -75.0
-					is_major = no
-					has_war = no
-				}
-				modifier = {
-					factor = -50.0
-					has_war = no
-				}
-				modifier = {
-					factor = -50.0
-					original_tag = HHE has_global_flag = elected_warmonger OR = { has_government = theocratism has_government = authoritarianism has_government = unitism }
-				}
+				factor = 1
+                modifier = {
+                    set_temp_variable = { ratio = resource_produced@coal }
+                    set_temp_variable = { denom = resource_consumed@coal }
+
+                    if = {
+                        limit = { check_variable = { var = denom value = 0 compare = equals } }
+                        set_temp_variable = { ratio = 999999 }
+                    }
+                    if = {
+                        limit = { check_variable = { var = denom value = 0 compare = greater_than } }
+                        divide_temp_variable = { ratio = denom }
+                    }
+
+                    set_temp_variable = { temp = 1.0 }
+
+                    # small boost if balanced or barely surplus (ratio >= 1)
+                    if = {
+                        limit = { check_variable = { var = ratio value = 1 compare = greater_than_or_equals } }
+                        multiply_temp_variable = { temp = 1.1 }
+                    }
+
+                    # if importing but still meeting demand, prefer limited
+                    if = {
+                        limit = {
+                            AND = {
+                                check_variable = { var = resource_imported@coal value = 0 compare = greater_than }
+                                check_variable = { var = ratio value = 1 compare = greater_than_or_equals }
+                            }
+                        }
+                        multiply_temp_variable = { temp = 1.2 }
+                    }
+
+                    # if deficit, limited slightly better than free/export focus
+                    if = {
+                        limit = { check_variable = { var = ratio value = 1 compare = less_than } }
+                        multiply_temp_variable = { temp = 0.8 }
+                    }
+
+                    factor = temp
+                }
    			}
 		}
 
@@ -273,7 +354,7 @@ ideas = {
 				NOT = { has_idea = autarkic_economy }
 			}
 
-			cost = 150
+			cost = 200
 			removal_cost = -1
 
 			modifier = {
@@ -320,7 +401,7 @@ ideas = {
 				NOT = { has_idea = autarkic_economy_improved }
 			}
 
-			cost = 150
+			cost = 200
 			removal_cost = -1
 
 			modifier = {
@@ -422,26 +503,42 @@ ideas = {
 			}
 
 			ai_will_do = {
-   				base = 0
-				modifier = {
-					add = 500.0
-					has_war = yes
-					is_in_faction = no
-				}
-				# minors not at war should want to get the bonuses from free trade
-				modifier = {
-					factor = -100.0
-					is_major = no
-					has_war = no
-				}
-				modifier = {
-					factor = -100.0
-					has_war = no
-				}
-				modifier = {
-					factor = 100.0
-					has_government = unitism
-				}
+   				factor = 1
+                modifier = {
+                    set_temp_variable = { ratio = resource_produced@coal }
+                    set_temp_variable = { denom = resource_consumed@coal }
+
+                    if = {
+                        limit = { check_variable = { var = denom value = 0 compare = equals } }
+                        set_temp_variable = { ratio = 999999 }
+                    }
+                    if = {
+                        limit = { check_variable = { var = denom value = 0 compare = greater_than } }
+                        divide_temp_variable = { ratio = denom }
+                    }
+
+                    set_temp_variable = { temp = 1.0 }
+
+                    # strong boost if deficit (ratio < 1)
+                    if = {
+                        limit = { check_variable = { var = ratio value = 1 compare = less_than } }
+                        multiply_temp_variable = { temp = 2.0 }
+                    }
+
+                    # boost if importing at all
+                    if = {
+                        limit = { check_variable = { var = resource_imported@coal value = 0 compare = greater_than } }
+                        multiply_temp_variable = { temp = 1.5 }
+                    }
+
+                    # penalty if large surplus
+                    if = {
+                        limit = { check_variable = { var = ratio value = 2 compare = greater_than } }
+                        multiply_temp_variable = { temp = 0.1 }
+                    }
+
+                    factor = temp
+                }
    			}
 		}
 	}

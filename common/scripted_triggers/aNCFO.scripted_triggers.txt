@@ -1,56 +1,120 @@
-has_military_academy = {
-	IF = {
-		limit = { 
-			original_tag = ZZZ
-		}
-		custom_trigger_tooltip = {
-			tooltip = has_military_academy_tt 
-			#has_completed_focus = ETH_ecole_militaire_haile_selassie_1er
-		}
-	}
-}
-
-has_naval_academy = {
-	IF = {
-		limit = { 
-			original_tag = ZZZ
-		}
-		custom_trigger_tooltip = {
-			tooltip = has_naval_academy_tt 
-			#has_completed_focus = ETH_asmera_naval_college
-		}
-	}
-}
-
-has_air_academy = {
-	IF = {
-		limit = { 
-			original_tag = ZZZ
-		}
-		custom_trigger_tooltip = {
-			tooltip = has_air_academy_tt 
-			#has_completed_focus = ETH_debre_zeyit_air_force_training_center
-		}
-	}
-}
-
-has_air_force_command = {
-	IF = {
-		limit = { 
-			original_tag = ZZZ
-		}
-		custom_trigger_tooltip = {
-			tooltip = has_air_force_command_tt 
-			#has_completed_focus = ETH_the_ethiopian_air_force
-		}
-	}
-}
-
 is_historical_railroading_on = {
 	custom_trigger_tooltip = {
 		tooltip = historically_locked_tt
 		is_historical_focus_on = no
 	}
+}
+
+do_expand_oil = {
+    OR = {
+        # Domestic deficit: consumption > production
+        check_variable = { resource_consumed@oil > resource_produced@oil }
+
+        # Import dependency: country is importing oil
+        check_variable = { resource_imported@oil > 0 }
+
+        # Exporting while still short: exports exist but consumption > production
+        AND = {
+            check_variable = { resource_exported@oil > 0 }
+            check_variable = { resource_consumed@oil > resource_produced@oil }
+        }
+    }
+}
+
+do_expand_coal = {
+    OR = {
+        # Domestic deficit: consumption > production
+        check_variable = { resource_consumed@coal > resource_produced@coal }
+
+        # Import dependency: country is importing coal
+        check_variable = { resource_imported@coal > 0 }
+
+        # Exporting while still short: exports exist but consumption > production
+        AND = {
+            check_variable = { resource_exported@coal > 0 }
+            check_variable = { resource_consumed@coal > resource_produced@coal }
+        }
+    }
+}
+
+do_expand_aluminium = {
+    OR = {
+        # Domestic deficit: consumption > production
+        check_variable = { resource_consumed@aluminium > resource_produced@aluminium }
+
+        # Import dependency: country is importing aluminium
+        check_variable = { resource_imported@aluminium > 0 }
+
+        # Exporting while still short: exports exist but consumption > production
+        AND = {
+            check_variable = { resource_exported@aluminium > 0 }
+            check_variable = { resource_consumed@aluminium > resource_produced@aluminium }
+        }
+    }
+}
+
+do_expand_rubber = {
+    OR = {
+        # Domestic deficit: consumption > production
+        check_variable = { resource_consumed@rubber > resource_produced@rubber }
+
+        # Import dependency: country is importing rubber
+        check_variable = { resource_imported@rubber > 0 }
+
+        # Exporting while still short: exports exist but consumption > production
+        AND = {
+            check_variable = { resource_exported@rubber > 0 }
+            check_variable = { resource_consumed@rubber > resource_produced@rubber }
+        }
+    }
+}
+
+do_expand_tungsten = {
+    OR = {
+        # Domestic deficit: consumption > production
+        check_variable = { resource_consumed@tungsten > resource_produced@tungsten }
+
+        # Import dependency: country is importing tungsten
+        check_variable = { resource_imported@tungsten > 0 }
+
+        # Exporting while still short: exports exist but consumption > production
+        AND = {
+            check_variable = { resource_exported@tungsten > 0 }
+            check_variable = { resource_consumed@tungsten > resource_produced@tungsten }
+        }
+    }
+}
+
+do_expand_steel = {
+    OR = {
+        # Domestic deficit: consumption > production
+        check_variable = { resource_consumed@steel > resource_produced@steel }
+
+        # Import dependency: country is importing coal
+        check_variable = { resource_imported@steel > 0 }
+
+        # Exporting while still short: exports exist but consumption > production
+        AND = {
+            check_variable = { resource_exported@steel > 0 }
+            check_variable = { resource_consumed@steel > resource_produced@steel }
+        }
+    }
+}
+
+do_expand_chromium = {
+    OR = {
+        # Domestic deficit: consumption > production
+        check_variable = { resource_consumed@chromium > resource_produced@chromium }
+
+        # Import dependency: country is importing chromium
+        check_variable = { resource_imported@chromium > 0 }
+
+        # Exporting while still short: exports exist but consumption > production
+        AND = {
+            check_variable = { resource_exported@chromium > 0 }
+            check_variable = { resource_consumed@chromium > resource_produced@chromium }
+        }
+    }
 }
 
 is_island_nation = {

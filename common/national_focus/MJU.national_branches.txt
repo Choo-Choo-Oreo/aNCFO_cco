@@ -1184,13 +1184,46 @@ focus_tree = {
 		}
 	}
 
+		focus = { # Peaceful Resolution
+			id = MJU_focus_peaceful_resolution
+			icon = GFX_focus_unknown_political
+			mutually_exclusive = { focus = MJU_focus_invade_confederation }
+			prerequisite = { focus = MJU_focus_national_policies }
+			relative_position_id = MJU_focus_national_policies
+			x = -3
+			y = 1
+
+			cost = 10
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+
+			available = {
+			}
+			bypass = {
+			}
+
+			ai_will_do = {
+				factor = 5
+				modifier = {
+					factor = 5.0
+					date > 1726.01.01
+				}
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_invade_confederation"
+				annex_country = { target = SPC transfer_troops = yes }
+			}
+		}
+
 		focus = { # Invasion of Confederation
 			id = MJU_focus_invade_confederation
 			icon = GFX_focus_unknown_political
-			#mutually_exclusive = { focus =  }
+			mutually_exclusive = { focus = MJU_focus_peaceful_resolution }
 			prerequisite = { focus = MJU_focus_national_policies }
 			relative_position_id = MJU_focus_national_policies
-			x = -1
+			x = 0
 			y = 1
 
 			cost = 10
@@ -1234,7 +1267,7 @@ focus_tree = {
 			#mutually_exclusive = { focus =  }
 			prerequisite = { focus = MJU_focus_national_policies }
 			relative_position_id = MJU_focus_national_policies
-			x = 1
+			x = 3
 			y = 1
 
 			cost = 10
@@ -1337,8 +1370,8 @@ focus_tree = {
 		#mutually_exclusive = { focus =  }
 		prerequisite = { focus = MJU_focus_national_policies }
 		prerequisite = { focus = MJU_focus_lower_council }
-		relative_position_id = MJU_focus_national_policies
-		x = 4
+		relative_position_id = MJU_focus_lower_council
+		x = -2
 		y = 1
 
 		cost = 10
@@ -1725,6 +1758,7 @@ focus_tree = {
 			allow_branch = {
 			}
 			available = {
+				semidemocracy > 0.50
 			}
 			bypass = {
 			}
@@ -1829,6 +1863,7 @@ focus_tree = {
 			allow_branch = {
 			}
 			available = {
+				authoritarianism > 0.50
 			}
 			bypass = {
 			}
@@ -1934,6 +1969,7 @@ focus_tree = {
 			allow_branch = {
 			}
 			available = {
+				unitism > 0.50
 			}
 			bypass = {
 			}

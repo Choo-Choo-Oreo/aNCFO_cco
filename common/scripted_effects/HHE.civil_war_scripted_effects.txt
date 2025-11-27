@@ -326,10 +326,47 @@ HHE_civil_war_regional = {
 }
 
 HHE_civil_war_ignited = {
-	HFF = {
-		create_faction = HFF_coalition_of_free_states
-		add_to_faction = HCO
-		add_to_faction = HFR
+	IF = {
+		limit = { country_exists = HFF }
+		HFF = {
+			create_faction_from_template = faction_template_HFF_coalition_of_free_states
+			IF = {
+				limit = { country_exists = HCO }
+				add_to_faction = HCO
+			}
+			IF = {
+				limit = { country_exists = HFR }
+				add_to_faction = HFR
+			}
+		}
+	}
+	ELSE_IF = {
+		limit = { country_exists = HCO }
+		HCO = {
+			create_faction_from_template = faction_template_HFF_coalition_of_free_states
+			IF = {
+				limit = { country_exists = HFF }
+				add_to_faction = HFF
+			}
+			IF = {
+				limit = { country_exists = HFR }
+				add_to_faction = HFR
+			}
+		}
+	}
+	ELSE_IF = {
+		limit = { country_exists = HFR }
+		HFR = {
+			create_faction_from_template = faction_template_HFF_coalition_of_free_states
+			IF = {
+				limit = { country_exists = HFF }
+				add_to_faction = HFF
+			}
+			IF = {
+				limit = { country_exists = HCO }
+				add_to_faction = HCO
+			}
+		}
 	}
 	if = {
 		limit = { OR = { original_tag = HHE original_tag = HBB original_tag = HCR original_tag = HER original_tag = HET original_tag = HLF original_tag = HNO original_tag = HPP #original_tag = HRF # Removed BC they can cause issues
