@@ -52,11 +52,10 @@
 [no_game_date][subunitdefinition.cpp:494]: No localisation for modifier_experience_gain_battlecarrier_mission_factor
 [no_game_date][subunitdefinition.cpp:494]: No localisation for modifier_experience_gain_medium_cruiser_mission_factor
 [no_game_date][subunitdefinition.cpp:494]: No localisation for modifier_experience_gain_SH_battleship_mission_factor
-[no_game_date][persistent.cpp:66]: Error: "Invalid subunit category: category_bus, near line: 20" in file: "common/units/bus.txt" near line: 21
-[no_game_date][persistent.cpp:66]: Error: "Unknown modifier: state_bunker_max_level_terrain_limit, near line: 438" in file: "common/buildings/00_buildings.txt" near line: 438
-[no_game_date][persistent.cpp:66]: Error: "Unknown modifier: state_coastal_bunker_max_level_terrain_limit, near line: 439" in file: "common/buildings/00_buildings.txt" near line: 439
-[no_game_date][persistent.cpp:66]: Error: "Unknown modifier: state_production_speed_bunker_factor, near line: 441" in file: "common/buildings/00_buildings.txt" near line: 441
-[no_game_date][persistent.cpp:66]: Error: "Unknown modifier: state_production_speed_coastal_bunker_factor, near line: 442" in file: "common/buildings/00_buildings.txt" near line: 442
+[no_game_date][persistent.cpp:66]: Error: "Unknown modifier: state_bunker_max_level_terrain_limit, near line: 431" in file: "common/buildings/00_buildings.txt" near line: 431
+[no_game_date][persistent.cpp:66]: Error: "Unknown modifier: state_coastal_bunker_max_level_terrain_limit, near line: 432" in file: "common/buildings/00_buildings.txt" near line: 432
+[no_game_date][persistent.cpp:66]: Error: "Unknown modifier: state_production_speed_bunker_factor, near line: 434" in file: "common/buildings/00_buildings.txt" near line: 434
+[no_game_date][persistent.cpp:66]: Error: "Unknown modifier: state_production_speed_coastal_bunker_factor, near line: 435" in file: "common/buildings/00_buildings.txt" near line: 435
 [no_game_date][trigger.cpp:700]: Invalid trigger 'has_air_force_command' in common/ideas/aNCFO.spirits_of_air.txt line : 147
 [no_game_date][trigger.cpp:568]: Error: "Unknown trigger-type: has_air_force_command, near line: 147" in file: "common/ideas/aNCFO.spirits_of_air.txt" near line: 147
 [no_game_date][trigger.cpp:700]: Invalid trigger 'has_air_force_command' in common/ideas/aNCFO.spirits_of_air.txt line : 179
@@ -76,15 +75,11 @@
 [no_game_date][doctrine_triggers.cpp:88]: Invalid doctrine token in has_doctrine trigger: screen_support_focus
 [no_game_date][trigger.cpp:568]: Error: "Not a valid value: screen_support_focus, near line: 292" in file: "common/ideas/aNCFO.spirits_of_navy.txt" near line: 293
 [no_game_date][doctrine_triggers.cpp:88]: Invalid doctrine token in has_doctrine trigger: anti_aircraft_cruisers
-[no_game_date][doctrine_triggers.cpp:88]: Invalid doctrine token in has_doctrine trigger: escort_carrier_support
-[no_game_date][trigger.cpp:568]: Error: "Not a valid value: anti_aircraft_cruisers, near line: 314
-Not a valid value: escort_carrier_support, near line: 316" in file: "common/ideas/aNCFO.spirits_of_navy.txt" near line: 317
+[no_game_date][trigger.cpp:568]: Error: "Not a valid value: anti_aircraft_cruisers, near line: 314" in file: "common/ideas/aNCFO.spirits_of_navy.txt" near line: 317
 [no_game_date][doctrine_triggers.cpp:88]: Invalid doctrine token in has_doctrine trigger: massed_carrier_fleet
 [no_game_date][trigger.cpp:568]: Error: "Not a valid value: massed_carrier_fleet, near line: 338" in file: "common/ideas/aNCFO.spirits_of_navy.txt" near line: 340
 [no_game_date][doctrine_triggers.cpp:88]: Invalid doctrine token in has_doctrine trigger: broad_naval_support
-[no_game_date][doctrine_triggers.cpp:88]: Invalid doctrine token in has_doctrine trigger: screen_support_focus
-[no_game_date][trigger.cpp:568]: Error: "Not a valid value: broad_naval_support, near line: 361
-Not a valid value: screen_support_focus, near line: 362" in file: "common/ideas/aNCFO.spirits_of_navy.txt" near line: 363
+[no_game_date][trigger.cpp:568]: Error: "Not a valid value: broad_naval_support, near line: 361" in file: "common/ideas/aNCFO.spirits_of_navy.txt" near line: 363
 [no_game_date][doctrine_triggers.cpp:88]: Invalid doctrine token in has_doctrine trigger: coastal_minelaying
 [no_game_date][trigger.cpp:568]: Error: "Not a valid value: coastal_minelaying, near line: 508" in file: "common/ideas/aNCFO.spirits_of_navy.txt" near line: 509
 [no_game_date][doctrine_triggers.cpp:88]: Invalid doctrine token in has_doctrine trigger: coastal_minelaying
@@ -159,7 +154,6 @@ Not a valid value: screen_support_focus, near line: 362" in file: "common/ideas/
 [no_game_date][database_scoped_variables.cpp:266]: invalid database object for effect/trigger: integrated_convoy_defence. use var:var_name to explicitly use variables in effects/triggers
 [no_game_date][database_scoped_variables.cpp:266]: invalid database object for effect/trigger: submarine_offensive_bs. use var:var_name to explicitly use variables in effects/triggers
 [no_game_date][database_scoped_variables.cpp:266]: invalid database object for effect/trigger: carrier_battlegroups. use var:var_name to explicitly use variables in effects/triggers
-[no_game_date][database_scoped_variables.cpp:266]: invalid database object for effect/trigger: repair_ship. use var:var_name to explicitly use variables in effects/triggers
 [no_game_date][database_scoped_variables.cpp:266]: invalid database object for effect/trigger: improved_medium_heavy_battery. use var:var_name to explicitly use variables in effects/triggers
 [no_game_date][database_scoped_variables.cpp:266]: invalid database object for effect/trigger: gas_turbine. use var:var_name to explicitly use variables in effects/triggers
 [no_game_date][doctrine_triggers.cpp:97]: Invalid doctrine in has_doctrine trigger
@@ -171,13 +165,9 @@ Not a valid value: screen_support_focus, near line: 362" in file: "common/ideas/
 [no_game_date][doctrine_triggers.cpp:97]: Invalid doctrine in has_doctrine trigger
 [no_game_date][trigger.cpp:117]: Trigger failed to validate: common/ideas/aNCFO.spirits_of_navy.txt:314: has_doctrine
 [no_game_date][doctrine_triggers.cpp:97]: Invalid doctrine in has_doctrine trigger
-[no_game_date][trigger.cpp:117]: Trigger failed to validate: common/ideas/aNCFO.spirits_of_navy.txt:316: has_doctrine
-[no_game_date][doctrine_triggers.cpp:97]: Invalid doctrine in has_doctrine trigger
 [no_game_date][trigger.cpp:117]: Trigger failed to validate: common/ideas/aNCFO.spirits_of_navy.txt:338: has_doctrine
 [no_game_date][doctrine_triggers.cpp:97]: Invalid doctrine in has_doctrine trigger
 [no_game_date][trigger.cpp:117]: Trigger failed to validate: common/ideas/aNCFO.spirits_of_navy.txt:361: has_doctrine
-[no_game_date][doctrine_triggers.cpp:97]: Invalid doctrine in has_doctrine trigger
-[no_game_date][trigger.cpp:117]: Trigger failed to validate: common/ideas/aNCFO.spirits_of_navy.txt:362: has_doctrine
 [no_game_date][doctrine_triggers.cpp:97]: Invalid doctrine in has_doctrine trigger
 [no_game_date][trigger.cpp:117]: Trigger failed to validate: common/ideas/aNCFO.spirits_of_navy.txt:508: has_doctrine
 [no_game_date][doctrine_triggers.cpp:97]: Invalid doctrine in has_doctrine trigger
@@ -194,5 +184,4 @@ Not a valid value: screen_support_focus, near line: 362" in file: "common/ideas/
 [no_game_date][trigger.cpp:117]: Trigger failed to validate: common/ideas/aNCFO.spirits_of_navy.txt:653: has_doctrine
 [no_game_date][doctrine_triggers.cpp:97]: Invalid doctrine in has_doctrine trigger
 [no_game_date][trigger.cpp:117]: Trigger failed to validate: common/ideas/aNCFO.spirits_of_navy.txt:729: has_doctrine
-[no_game_date][database_scoped_variables.cpp:266]: invalid database object for effect/trigger: repair_ship. use var:var_name to explicitly use variables in effects/triggers
 [no_game_date][gameapplication.cpp:841]: The game has loc key collisions. Check logs/text.log for more details

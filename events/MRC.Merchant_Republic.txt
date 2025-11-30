@@ -283,10 +283,6 @@ add_namespace = MRC
 
 		option = {
 			name = MRC.2.OptA
-			set_country_flag = MRC_air_manufacturing_champion_declined_flag
-			MRC = {
-				country_event = MRC.6
-			}
 			ai_chance = {
 				factor = 1.0
 				modifier = {
@@ -294,21 +290,25 @@ add_namespace = MRC
 					is_major = yes
 				}
 			}
+			set_country_flag = MRC_air_manufacturing_champion_declined_flag
+			MRC = {
+				country_event = MRC.6
+			}
 		}
 
 		option = {
 			name = MRC.2.OptB
-			set_country_flag = MRC_air_manufacturing_champion_accepted_flag
-			add_to_tech_sharing_group = MRC_tech_group_champion
-			MRC = {
-				country_event = MRC.4
-			}
 			ai_chance = {
 				factor = 1.0
 				modifier = {
 					add = 10.0
 					is_major = no
 				}
+			}
+			set_country_flag = MRC_air_manufacturing_champion_accepted_flag
+			add_to_tech_sharing_group = MRC_tech_group_champion
+			MRC = {
+				country_event = MRC.4
 			}
 		}
 	}
@@ -325,10 +325,6 @@ add_namespace = MRC
 
 		option = {
 			name = MRC.2.OptA
-			set_country_flag = MRC_navy_manufacturing_triton_declined_flag
-			MRC = {
-				country_event = MRC.7
-			}
 			ai_chance = {
 				factor = 1.0
 				modifier = {
@@ -336,15 +332,14 @@ add_namespace = MRC
 					check_variable = { 49 > ROOT.num_ships }
 				}
 			}
+			set_country_flag = MRC_navy_manufacturing_triton_declined_flag
+			MRC = {
+				country_event = MRC.7
+			}
 		}
 
 		option = {
 			name = MRC.2.OptB
-			set_country_flag = MRC_navy_manufacturing_triton_accepted_flag
-			add_to_tech_sharing_group = MRC_tech_group_triton
-			MRC = {
-				country_event = MRC.5
-			}
 			ai_chance = {
 				factor = 1.0
 				modifier = {
@@ -352,43 +347,10 @@ add_namespace = MRC
 					check_variable = { 74 < ROOT.num_ships }
 				}
 			}
-		}
-	}
-
-	country_event = { # [FROM.GetName] Accepted to join Champion Program
-		id = MRC.4
-		title = MRC.4.t
-		desc = MRC.4.d
-		picture = GFX_report_event_ace_promoted
-
-		is_triggered_only = yes
-
-		immediate = { log = "[GetDateText]: [Root.GetName]: Event MRC.4" }
-
-		option = {
-			name = MRC.4.OptA
-			ai_chance = { factor = 1.0 }
-			effect_tooltip = {
-				FROM = { add_to_tech_sharing_group = MRC_tech_group_champion }
-			}
-		}
-	}
-
-	country_event = { # [FROM.GetName] Accepted to join Triton Program
-		id = MRC.5
-		title = MRC.5.t
-		desc = MRC.5.d
-		picture = GFX_report_event_ast_navy
-
-		is_triggered_only = yes
-
-		immediate = { log = "[GetDateText]: [Root.GetName]: Event MRC.5" }
-
-		option = {
-			name = MRC.5.OptA
-			ai_chance = { factor = 1.0 }
-			effect_tooltip = {
-				FROM = { add_to_tech_sharing_group = MRC_tech_group_triton }
+			set_country_flag = MRC_navy_manufacturing_triton_accepted_flag
+			add_to_tech_sharing_group = MRC_tech_group_triton
+			MRC = {
+				country_event = MRC.5
 			}
 		}
 	}
@@ -438,7 +400,7 @@ add_namespace = MRC
 			trigger = {
 				NOT = { has_country_flag = MRC_blacklist_declined_triton_flag }
 			}
-			add_political_power = 25x
+			add_political_power = 25
 		}
 
 		option = {
@@ -448,6 +410,44 @@ add_namespace = MRC
 				has_country_flag = MRC_blacklist_declined_triton_flag
 			}
 			add_political_power = 25
+		}
+	}
+
+	country_event = { # [FROM.GetName] Accepted to join Champion Program
+		id = MRC.4
+		title = MRC.4.t
+		desc = MRC.4.d
+		picture = GFX_report_event_ace_promoted
+
+		is_triggered_only = yes
+
+		immediate = { log = "[GetDateText]: [Root.GetName]: Event MRC.4" }
+
+		option = {
+			name = MRC.4.OptA
+			ai_chance = { factor = 1.0 }
+			effect_tooltip = {
+				FROM = { add_to_tech_sharing_group = MRC_tech_group_champion }
+			}
+		}
+	}
+
+	country_event = { # [FROM.GetName] Accepted to join Triton Program
+		id = MRC.5
+		title = MRC.5.t
+		desc = MRC.5.d
+		picture = GFX_report_event_ast_navy
+
+		is_triggered_only = yes
+
+		immediate = { log = "[GetDateText]: [Root.GetName]: Event MRC.5" }
+
+		option = {
+			name = MRC.5.OptA
+			ai_chance = { factor = 1.0 }
+			effect_tooltip = {
+				FROM = { add_to_tech_sharing_group = MRC_tech_group_triton }
+			}
 		}
 	}
 

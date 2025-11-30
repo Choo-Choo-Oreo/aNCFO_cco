@@ -1,20 +1,3 @@
-HHE_earlygame_capital_steel = {
-    allowed = { is_harmonainus_imperious_extras = yes }
-	enable = {
-		date < 1727.01.01 # Three year of steel build up.
-		5 = { is_controlled_by = ROOT }
-	}
-
-	abort_when_not_enabled = yes
-
-	ai_strategy = {
-		type = build_building
-		id = steel_complex
-		target = 5
-		value = 500
-	}
-}
-
 HHE_earlygame_industrializion = {
     allowed = { is_harmonainus_imperious_extras = yes }
 	enable = {
@@ -64,6 +47,23 @@ HHE_railway_industrializion = {
 		type = building_target
 		id = naval_base
 		value = -34
+	}
+}
+
+HHE_the_national_economy = {
+    allowed = { original_tag = HHE }
+	enable = {
+		set_temp_variable = { total_industry = building_level@arms_factory }
+		add_to_temp_variable = { total_industry = building_level@dockyard }
+		check_variable = { var = total_industry value = industrial_complex_level compare = less_than }
+	}
+
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = building_target
+		id = arms_factory
+		value = 100
 	}
 }
 

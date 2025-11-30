@@ -154,90 +154,48 @@ bop_HHE_archard_vladaros = {
 
 		available = {
 			has_idea = HHE_autarky_idea
-			all_core_state = { is_fully_controlled_by = ROOT }
-			OR = { # This needs to correspond to the Bypass values in the previous focuses
-				has_resources_in_country = {
-					resource = steel
-					amount > 1199
-					extracted = yes
-				}
-				any_subject_country = {
-					has_resources_in_country = {
-						resource = steel
-						amount > 1199
-						extracted = yes
-					}
-				}
+			#all_core_state = { is_fully_controlled_by = ROOT }
+			has_resources_in_collection = {
+				collection = collection:country_and_all_subjects
+				resource = oil
+				amount > 299 # This needs to correspond to the Bypass values in the previous focuses
+				extracted = yes
 			}
-			OR = { # This needs to correspond to the Bypass values in the previous focuses
-				has_resources_in_country = {
-					resource = aluminium
-					amount > 399
-					extracted = yes
-				}
-				any_subject_country = {
-					has_resources_in_country = {
-						resource = aluminium
-						amount > 399
-						extracted = yes
-					}
-				}
+			has_resources_in_collection = {
+				collection = collection:country_and_all_subjects
+				resource = coal
+				amount > 799 # This needs to correspond to the Bypass values in the previous focuses
+				extracted = yes
 			}
-			OR = { # This needs to correspond to the Bypass values in the previous focuses
-				has_resources_in_country = {
-					resource = oil
-					amount > 224
-					extracted = yes
-				}
-				any_subject_country = {
-					has_resources_in_country = {
-						resource = oil
-						amount > 224
-						extracted = yes
-					}
-				}
+			has_resources_in_collection = {
+				collection = collection:country_and_all_subjects
+				resource = aluminium
+				amount > 399 # This needs to correspond to the Bypass values in the previous focuses
+				extracted = yes
 			}
-			OR = { # This needs to correspond to the Bypass values in the previous focuses
-				has_resources_in_country = {
-					resource = tungsten
-					amount > 149
-					extracted = yes
-				}
-				any_subject_country = {
-					has_resources_in_country = {
-						resource = tungsten
-						amount > 149
-						extracted = yes
-					}
-				}
+			has_resources_in_collection = {
+				collection = collection:country_and_all_subjects
+				resource = rubber
+				amount > 99 # This needs to correspond to the Bypass values in the previous focuses
+				extracted = yes
 			}
-			OR = { # This needs to correspond to the Bypass values in the previous focuses
-				has_resources_in_country = {
-					resource = chromium
-					amount > 149
-					extracted = yes
-				}
-				any_subject_country = {
-					has_resources_in_country = {
-						resource = chromium
-						amount > 149
-						extracted = yes
-					}
-				}
+			has_resources_in_collection = {
+				collection = collection:country_and_all_subjects
+				resource = tungsten
+				amount > 299 # This needs to correspond to the Bypass values in the previous focuses
+				extracted = yes
 			}
-			OR = { # This needs to correspond to the Bypass values in the previous focuses
-				has_resources_in_country = {
-					resource = rubber
-					amount > 74
-					extracted = yes
-				}
-				any_subject_country = {
-					has_resources_in_country = {
-						resource = rubber
-						amount > 74
-						extracted = yes
-					}
-				}
+			has_resources_in_collection = {
+				collection = collection:country_and_all_subjects
+				resource = chromium
+				amount > 299 # This needs to correspond to the Bypass values in the previous focuses
+				extracted = yes
+			}
+			has_resources_in_collection = {
+				collection = collection:country_and_all_subjects
+				resource = steel
+				amount > 1199 # This needs to correspond to the Bypass values in the previous focuses
+				extracted = yes
 			}
 		}
 
@@ -304,9 +262,9 @@ bop_HHE_archard_vladaros = {
 		available = {
 			FROM = {
 				custom_trigger_tooltip = { tooltip = HHE_mission_archard_vladaros_wartime_economy_tt }
-				#set_temp_variable = { temp_militarized = ROOT.num_of_military_factories }
-				#add_to_variable = { ROOT.temp_militarized = ROOT.num_of_naval_factories }
-				check_variable = { ROOT.num_of_civilian_factories < ROOT.num_of_military_factories }
+				set_temp_variable = { total_industry = building_level@arms_factory }
+				add_to_temp_variable = { total_industry = building_level@dockyard }
+				check_variable = { var = total_industry value = industrial_complex_level compare = less_than }
 			}
 		}
 

@@ -70,8 +70,6 @@ Using Pdn I Gaussian blur'ed then erased 10x to get the distance from land start
 * ai_action_air_small
 * ai_action_air_medium
 * ai_action_air_large
-* ai_action_industry_capacity
-* ai_action_industry_vacancy
 * denied.ally_with_HHE
 * denied.ally_with_OAK
 * denied.ally_with_MRC

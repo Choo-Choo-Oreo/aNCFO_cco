@@ -452,12 +452,6 @@ on_actions = {
 					LIMIT = { is_coastal = yes is_controlled_by = PREV }
 					PREV = { add_equipment_to_stockpile = { type = convoy amount = 25 } }
 				}
-				#IF = {
-				#	LIMIT = { NOT = { TAG = ZZZ } }
-				#	set_country_flag = start_EcoDevelopment
-				#	set_variable = { EcoDevelopmentTimer = 365 }
-				#	activate_mission = EcoDevelopment_free_market
-				#}
 				IF = { # Human
 					LIMIT = { is_species_human = yes }
 					#add_to_tech_sharing_group = human_individualism_and_openness_research # VERY LAGGY
@@ -483,6 +477,36 @@ on_actions = {
 						can_generate_female_aces = yes
 						can_generate_female_unit_leaders  = yes
 						can_generate_female_country_leaders = yes
+					}
+				}
+			}
+		}
+
+		effect = { # Pulling infomation when modding.
+			IF = {
+				limit = { is_debug = yes }
+				every_state = {
+					IF = {
+						limit = {
+							infrastructure > 2
+							oil_fired_generator < 1
+							industrial_complex > 0
+							arms_factory > 0
+							dockyard > 0
+						}
+						log = "State: [THIS.GetID] infrastructure > 2, no oil_fired_generator"
+					}
+					IF = {
+						limit = {
+							steel_complex > 0
+						}
+						log = "State: [THIS.GetID] steel_complex > 0"
+					}
+					IF = {
+						limit = {
+							aluminium_complex > 0
+						}
+						log = "State: [THIS.GetID] aluminium_complex > 0"
 					}
 				}
 			}

@@ -5,10 +5,8 @@ buildings = {
 		icon_frame = 3
 		infrastructure = yes
 		value = 1
-
 		show_modifier = yes
 		allied_build = yes
-
 		infrastructure_construction_effect = yes
 		level_cap = {
 			state_max = 5
@@ -28,10 +26,8 @@ buildings = {
 		per_level_extra_cost = 6400
 		icon_frame = 33
 		value = 2
-
 		show_modifier = yes
 		hide_if_missing_tech = yes
-
 		infrastructure_construction_effect = yes
 		level_cap = {
 			state_max = 10
@@ -43,16 +39,40 @@ buildings = {
 		}
 	}
 
+	oil_fired_generator = { # Oil-Fired Generator
+		base_cost = 9600
+		icon_frame = 35
+		value = 4
+		show_modifier = yes
+		hide_if_missing_tech = yes
+		infrastructure_construction_effect = yes
+		building_prerequisite = {
+			building_dependency = {
+				building = infrastructure
+				level = 3
+			}
+		}
+		level_cap = {
+			state_max = 1
+		}
+		state_modifiers = {
+			local_factory_energy_consumption = -0.25
+		}
+		country_modifiers = {
+			modifiers = {
+				fuel_cost = 10.0
+			}
+		}
+	}
+
 	barracks = { # Conscription Center
 		base_cost = 6400
 		per_level_extra_cost = 6400
 		icon_frame = 34
 		value = 2
-
 		show_modifier = yes
 		disabled_in_dmz = yes
 		hide_if_missing_tech = yes
-
 		infrastructure_construction_effect = yes
 		level_cap = {
 			state_max = 5
@@ -75,12 +95,10 @@ buildings = {
 		icon_frame = 11
 		damage_factor = 0.5
 		value = 4
-
 		radar = yes
 		centered = yes
 		allied_build = yes
 		hide_if_missing_tech = yes
-
 		infrastructure_construction_effect = yes
 		level_cap = {
 			state_max = 7 # This is the max unlock level
@@ -94,11 +112,9 @@ buildings = {
 		icon_frame = 5
 		value = 1
 		damage_factor = 0.5
-
 		air_base = yes
 		allied_build = yes
 		hide_if_missing_tech = yes
-
 		infrastructure_construction_effect = yes
 		level_cap = {
 			state_max = 20
@@ -113,11 +129,9 @@ buildings = {
 		air_defence = 1
 		damage_factor = 0.1
 		value = 1
-
 		anti_air = yes
 		disabled_in_dmz = yes
 		hide_if_missing_tech = yes
-
 		infrastructure_construction_effect = yes
 		level_cap = {
 			state_max = 7
@@ -131,10 +145,7 @@ buildings = {
 		general_production = 1
 		icon_frame = 1
 		value = 8
-
-		#refinery = yes
 		show_modifier = yes
-
 		infrastructure_construction_effect = yes
 		level_cap = {
 			shares_slots = yes
@@ -142,7 +153,7 @@ buildings = {
 		}
 		country_modifiers = {
 			modifiers = {
-				fuel_cost = 0.35 # Reduce for now
+				#fuel_cost = 0.35 # Moved to Oil-Fired Generator
 				country_resource_cost_steel = 2
 			}
 		}
@@ -155,11 +166,9 @@ buildings = {
 		icon_frame = 30
 		local_resources_steel = 12
 		value = 8
-
 		refinery = yes
 		show_modifier = yes
 		hide_if_missing_tech = yes
-
 		infrastructure_construction_effect = yes
 		level_cap = {
 			shares_slots = yes
@@ -183,11 +192,9 @@ buildings = {
 		icon_frame = 31
 		local_resources_aluminium = 8
 		value = 8
-
 		refinery = yes
 		show_modifier = yes
 		hide_if_missing_tech = yes
-
 		infrastructure_construction_effect = yes
 		level_cap = {
 			shares_slots = yes
@@ -210,7 +217,6 @@ buildings = {
 		military_production = 1
 		icon_frame = 2
 		value = 6
-
 		infrastructure_construction_effect = yes
 		level_cap = {
 			shares_slots = yes
@@ -225,10 +231,9 @@ buildings = {
 		naval_production = 1
 		icon_frame = 4
 		value = 6
-
 		only_costal = yes
-
 		infrastructure_construction_effect = yes
+		tags = { naval_buildings_tag }
 		level_cap = {
 			shares_slots = yes
 			state_max = 30
@@ -243,10 +248,8 @@ buildings = {
 		damage_factor = 0 # This building can't be damaged by regular strat bombing
 		icon_frame = 24
 		value = 1
-
 		disabled_in_dmz = yes
 		gun_emplacement = yes
-
 		infrastructure_construction_effect = yes
 		spawn_point = rocket_site_spawn
 		level_cap = {
@@ -265,10 +268,8 @@ buildings = {
 		rocket_launch_capacity = 1
 		value = 1
 		tags = {}
-
 		disabled_in_dmz = yes
 		hide_if_missing_tech = yes
-
 		infrastructure_construction_effect = yes
 		spawn_point = rocket_site_spawn
 		level_cap = {
@@ -292,7 +293,6 @@ buildings = {
 		value = 12
 		tags = { specialization_nuclear }
 		infrastructure_construction_effect = yes
-
 		country_modifiers = {
 			modifiers = {
 				nuclear_production_factor = 3
@@ -301,7 +301,6 @@ buildings = {
 				thermonuclear_production_factor = 2
 			}
 		}
-
 		level_cap = {
 			state_max = 3
 			shares_slots = yes
@@ -322,7 +321,6 @@ buildings = {
 		nuclear_reactor = yes
 		value = 10
 		infrastructure_construction_effect = yes
-
 		country_modifiers = {
 			modifiers = {
 				nuclear_production_factor = 2
@@ -331,7 +329,6 @@ buildings = {
 				thermonuclear_production_factor = 1
 			}
 		}
-
 		level_cap = {
 			state_max = 3
 			shares_slots = yes
@@ -340,6 +337,7 @@ buildings = {
 	}
 
 	commercial_nuclear_reactor = { # Commercial Nuclear Reactor
+		dlc_allowed = { has_dlc = Gotterdammerung }
 		hide_if_missing_tech = yes
 		missing_tech_loc = { 
 			localization_key = SP_BUILDING_MISSING_PROJECT
@@ -352,21 +350,18 @@ buildings = {
 		#nuclear_reactor = yes
 		value = 10
 		infrastructure_construction_effect = yes
-		
 		country_modifiers = {
 			modifiers = {
 				nuclear_production_factor = 3
 				thermonuclear_production_factor = 2
-				#consumer_goods_factor = -0.05
 			}
 		}
-
 		state_modifiers = {
 			state_production_speed_buildings_factor = 0.15
 			local_building_slots_factor = 0.15
 			state_resources_factor = 0.10
+			local_factory_energy_consumption = -0.50
 		}
-
 		level_cap = {
 			state_max = 1
 			shares_slots = yes
@@ -380,11 +375,9 @@ buildings = {
 		icon_frame = 10
 		local_resources_rubber = 0 # May use local_resources_ + any resource name
 		value = 6
-
 		refinery = yes
 		show_modifier = yes
 		hide_if_missing_tech = yes
-
 		infrastructure_construction_effect = yes
 		level_cap = {
 			shares_slots = yes
@@ -404,19 +397,19 @@ buildings = {
 		base_cost = 6400
 		per_level_extra_cost = -512
 		icon_frame = 14
-
 		fuel_silo = yes
 		show_modifier = yes
 		hide_if_missing_tech = yes
-
 		infrastructure_construction_effect = yes
 		level_cap = {
 			shares_slots = yes
 			state_max = 5
 		}
-		country_modifiers = { modifiers = {
-			max_fuel_building = 300.0 #k They create it why not store it as well?
-		} }
+		country_modifiers = {
+			modifiers = {
+				max_fuel_building = 300.0 #k They create it why not store it as well?
+			}
+		}
 	}
 
 	stronghold_network = {
@@ -555,12 +548,13 @@ buildings = {
 		base_cost = 1720
 		per_level_extra_cost = 172
 		spawn_point = naval_base_spawn 
-		only_costal = yes
 		is_port = yes
 		icon_frame = 6
 		value = 1
 		allied_build = yes
 		infrastructure_construction_effect = yes
+		only_costal = yes
+		tags = { naval_buildings_tag }
 		level_cap = {
 			province_max = 10
 		}

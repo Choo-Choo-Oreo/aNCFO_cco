@@ -1,5 +1,5 @@
 add_namespace = MJU
-	country_event = { # Context of the Past
+	country_event = { # Context of the Past / Introduction
 		id = MJU.0
 		title = MJU.0.t
 		desc = MJU.0.d
@@ -10,7 +10,291 @@ add_namespace = MJU
 
 		option = {
 			name = MJU.0.OptA
-			ai_chance = { factor = 1.67 }
+			ai_chance = { factor = 1.0 }
 			add_political_power = 70
+		}
+	}
+
+	country_event = { # MJU_focus_temerarium_rad_community
+		id = MJU.1
+		title = MJU.1.t
+		desc = MJU.1.d
+		picture = GFX_report_event_generic_read_write
+		is_triggered_only = yes
+
+		immediate = { log = "[GetDateText]: [Root.GetName]: Event MJU.1" }
+
+		option = {
+			name = MJU.1.OptA
+			ai_chance = { factor = 1.0 }
+			FROM = {
+				country_event = MJU.2
+			}
+		}
+		option = {
+			name = MJU.1.OptB
+			ai_chance = {
+				factor = 1.0
+				modifier = {
+					factor = 5.0
+					OR = {
+						FROM = { is_enemy_ideology = no }
+						has_war_with_major = yes
+					}
+				}
+			}
+			add_to_tech_sharing_group = MJU_tech_group_temerarium_rad_community
+			FROM = {
+				add_to_tech_sharing_group = MJU_tech_group_temerarium_rad_community
+				country_event = MJU.3
+			}
+		}
+	}
+
+	country_event = { # Declined
+		id = MJU.2
+		title = MJU.2.t
+		desc = MJU.2.d
+		picture = GFX_report_event_generic_read_write
+		is_triggered_only = yes
+
+		immediate = { log = "[GetDateText]: [Root.GetName]: Event MJU.2" }
+
+		option = {
+			name = MJU.2.OptA
+			ai_chance = { factor = 1.0 }
+			add_political_power = 35
+		}
+	}
+
+	country_event = { # Accepted
+		id = MJU.3
+		title = MJU.3.t
+		desc = MJU.3.d
+		picture = GFX_report_event_generic_read_write
+		is_triggered_only = yes
+
+		immediate = { log = "[GetDateText]: [Root.GetName]: Event MJU.3" }
+
+		option = {
+			name = MJU.3.OptA
+			ai_chance = { factor = 1.0 }
+			effect_tooltip = {
+				MRC = { add_to_tech_sharing_group = MJU_tech_group_temerarium_rad_community }
+				add_to_tech_sharing_group = MJU_tech_group_temerarium_rad_community
+			}
+		}
+	}
+
+	country_event = { # MJU_focus_resource_equalization_treaty
+		id = MJU.4
+		title = MJU.4.t
+		desc = MJU.4.d
+		picture = GFX_report_event_generic_read_write
+		is_triggered_only = yes
+
+		immediate = { log = "[GetDateText]: [Root.GetName]: Event MJU.4" }
+
+		option = {
+			name = MJU.4.OptA
+			ai_chance = { factor = 1.0 }
+			FROM = {
+				country_event = MJU.5
+			}
+		}
+		option = {
+			name = MJU.4.OptB
+			ai_chance = {
+				factor = 1.0
+				modifier = {
+					factor = 5.0
+					OR = {
+						FROM = { is_enemy_ideology = no }
+						has_war_with_major = yes
+					}
+				}
+			}
+			add_to_tech_sharing_group = MJU_tech_group_resource_equalization_treaty
+			FROM = {
+				add_to_tech_sharing_group = MJU_tech_group_resource_equalization_treaty
+				country_event = MJU.6
+			}
+		}
+	}
+
+	country_event = { # Declined
+		id = MJU.5
+		title = MJU.5.t
+		desc = MJU.5.d
+		picture = GFX_report_event_generic_read_write
+		is_triggered_only = yes
+
+		immediate = { log = "[GetDateText]: [Root.GetName]: Event MJU.5" }
+
+		option = {
+			name = MJU.5.OptA
+			ai_chance = { factor = 1.0 }
+			add_political_power = 35
+		}
+	}
+
+	country_event = { # Accepted
+		id = MJU.6
+		title = MJU.6.t
+		desc = MJU.6.d
+		picture = GFX_report_event_generic_read_write
+		is_triggered_only = yes
+
+		immediate = { log = "[GetDateText]: [Root.GetName]: Event MJU.6" }
+
+		option = {
+			name = MJU.6.OptA
+			ai_chance = { factor = 1.0 }
+			effect_tooltip = {
+				MRC = { add_to_tech_sharing_group = MJU_tech_group_resource_equalization_treaty }
+				add_to_tech_sharing_group = MJU_tech_group_resource_equalization_treaty
+			}
+		}
+	}
+
+	country_event = { # MJU_focus_food_production_securities
+		id = MJU.7
+		title = MJU.7.t
+		desc = MJU.7.d
+		picture = GFX_report_event_generic_read_write
+		is_triggered_only = yes
+
+		immediate = { log = "[GetDateText]: [Root.GetName]: Event MJU.7" }
+
+		option = {
+			name = MJU.7.OptA
+			ai_chance = { factor = 1.0 }
+			FROM = {
+				country_event = MJU.8
+			}
+		}
+		option = {
+			name = MJU.7.OptB
+			ai_chance = {
+				factor = 1.0
+				modifier = {
+					factor = 5.0
+					OR = {
+						FROM = { is_enemy_ideology = no }
+						has_war_with_major = yes
+					}
+				}
+			}
+			add_ideas = MJU_idea_MRC_food_production_and_securities
+			FROM = {
+				add_ideas = MJU_idea_MJU_food_production_and_securities
+				country_event = MJU.9
+			}
+		}
+	}
+
+	country_event = { # Declined
+		id = MJU.8
+		title = MJU.8.t
+		desc = MJU.8.d
+		picture = GFX_report_event_generic_read_write
+		is_triggered_only = yes
+
+		immediate = { log = "[GetDateText]: [Root.GetName]: Event MJU.8" }
+
+		option = {
+			name = MJU.8.OptA
+			ai_chance = { factor = 1.0 }
+			add_political_power = 35
+		}
+	}
+
+	country_event = { # Accepted
+		id = MJU.9
+		title = MJU.9.t
+		desc = MJU.9.d
+		picture = GFX_report_event_generic_read_write
+		is_triggered_only = yes
+
+		immediate = { log = "[GetDateText]: [Root.GetName]: Event MJU.9" }
+
+		option = {
+			name = MJU.9.OptA
+			ai_chance = { factor = 1.0 }
+			effect_tooltip = {
+				MRC = { add_ideas = MJU_idea_MRC_food_production_and_securities }
+				add_ideas = MJU_idea_MJU_food_production_and_securities
+			}
+		}
+	}
+
+	country_event = { # MJU_focus_inter_alliance_agreement
+		id = MJU.10
+		title = MJU.10.t
+		desc = MJU.10.d
+		picture = GFX_report_event_generic_read_write
+		is_triggered_only = yes
+
+		immediate = { log = "[GetDateText]: [Root.GetName]: Event MJU.10" }
+
+		option = {
+			name = MJU.10.OptA
+			ai_chance = { factor = 1.0 }
+			FROM = {
+				country_event = MJU.11
+			}
+		}
+		option = {
+			name = MJU.10.OptB
+			ai_chance = {
+				factor = 1.0
+				modifier = {
+					factor = 5.0
+					OR = {
+						FROM = { is_enemy_ideology = no }
+						has_war_with_major = yes
+					}
+				}
+			}
+			give_guarantee = MJU
+			FROM = {
+				give_guarantee = MRC
+				country_event = MJU.12
+			}
+		}
+	}
+
+	country_event = { # Declined
+		id = MJU.11
+		title = MJU.11.t
+		desc = MJU.11.d
+		picture = GFX_report_event_generic_read_write
+		is_triggered_only = yes
+
+		immediate = { log = "[GetDateText]: [Root.GetName]: Event MJU.11" }
+
+		option = {
+			name = MJU.11.OptA
+			ai_chance = { factor = 1.0 }
+			add_political_power = 35
+		}
+	}
+
+	country_event = { # Accepted
+		id = MJU.12
+		title = MJU.12.t
+		desc = MJU.12.d
+		picture = GFX_report_event_generic_read_write
+		is_triggered_only = yes
+
+		immediate = { log = "[GetDateText]: [Root.GetName]: Event MJU.12" }
+
+		option = {
+			name = MJU.12.OptA
+			ai_chance = { factor = 1.0 }
+			effect_tooltip = {
+				MRC = { give_guarantee = MJU }
+				give_guarantee = MRC
+			}
 		}
 	}

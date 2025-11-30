@@ -181,6 +181,9 @@ focus_tree = {
 						is_core_of = ROOT
 						infrastructure < 4
 					}
+					NOT = {
+						has_completed_focus = MJU_focus_national_development_bank
+					}
 				}
 				bypass = {
 				}
@@ -240,6 +243,9 @@ focus_tree = {
 						is_core_of = ROOT
 						infrastructure < 4
 					}
+					NOT = {
+						has_completed_focus = MJU_focus_national_development_bank
+					}
 				}
 				bypass = {
 				}
@@ -297,6 +303,9 @@ focus_tree = {
 					any_owned_state = {
 						is_core_of = ROOT
 						infrastructure < 4
+					}
+					NOT = {
+						has_completed_focus = MJU_focus_national_development_bank
 					}
 				}
 				bypass = {
@@ -356,6 +365,9 @@ focus_tree = {
 						is_core_of = ROOT
 						infrastructure < 4
 					}
+					NOT = {
+						has_completed_focus = MJU_focus_national_development_bank
+					}
 				}
 				bypass = {
 				}
@@ -414,6 +426,9 @@ focus_tree = {
 						is_core_of = ROOT
 						infrastructure < 4
 					}
+					NOT = {
+						has_completed_focus = MJU_focus_national_development_bank
+					}
 				}
 				bypass = {
 				}
@@ -471,6 +486,9 @@ focus_tree = {
 					any_owned_state = {
 						is_core_of = ROOT
 						infrastructure < 4
+					}
+					NOT = {
+						has_completed_focus = MJU_focus_national_development_bank
 					}
 				}
 				bypass = {
@@ -533,21 +551,21 @@ focus_tree = {
 		ai_will_do = {
 			factor = 0.1
 			modifier = {
-				add = 100.0
+				factor = 100.0
 				has_war = yes
 				has_completed_focus = MJU_focus_state_recapitalization
 				has_completed_focus = MJU_focus_public_works
 				has_completed_focus = MJU_focus_private_bailin
 			}
 			modifier = {
-				add = 100.0
+				factor = 100.0
 				has_war = no
 				has_completed_focus = MJU_focus_industrial_credit
 				has_completed_focus = MJU_focus_domestic_investment
 				has_completed_focus = MJU_focus_foreign_investment
 			}
 			modifier = {
-				factor = 10.0
+				factor = 100.0
 				has_completed_focus = MJU_focus_state_recapitalization
 				has_completed_focus = MJU_focus_public_works
 				has_completed_focus = MJU_focus_private_bailin
@@ -1161,7 +1179,7 @@ focus_tree = {
 		x = -4
 		y = 1
 	
-		cost = 10
+		cost = 5
 		cancel_if_invalid = yes
 		continue_if_invalid = no
 		available_if_capitulated = no
@@ -1190,7 +1208,7 @@ focus_tree = {
 			mutually_exclusive = { focus = MJU_focus_invade_confederation }
 			prerequisite = { focus = MJU_focus_national_policies }
 			relative_position_id = MJU_focus_national_policies
-			x = -3
+			x = -2
 			y = 1
 
 			cost = 10
@@ -1345,7 +1363,7 @@ focus_tree = {
 		x = 4
 		y = 1
 	
-		cost = 10
+		cost = 5
 		cancel_if_invalid = yes
 		continue_if_invalid = no
 		available_if_capitulated = no
@@ -1371,7 +1389,7 @@ focus_tree = {
 		prerequisite = { focus = MJU_focus_national_policies }
 		prerequisite = { focus = MJU_focus_lower_council }
 		relative_position_id = MJU_focus_lower_council
-		x = -2
+		x = -3
 		y = 1
 
 		cost = 10
@@ -1758,7 +1776,10 @@ focus_tree = {
 			allow_branch = {
 			}
 			available = {
-				semidemocracy > 0.50
+				semidemocracy > party_popularity@pluralism
+				semidemocracy > party_popularity@theocratism
+				semidemocracy > party_popularity@authoritarianism
+				semidemocracy > party_popularity@unitism
 			}
 			bypass = {
 			}
@@ -1863,7 +1884,10 @@ focus_tree = {
 			allow_branch = {
 			}
 			available = {
-				authoritarianism > 0.50
+				authoritarianism > party_popularity@pluralism
+				authoritarianism > party_popularity@semidemocracy
+				authoritarianism > party_popularity@theocratism
+				authoritarianism > party_popularity@unitism
 			}
 			bypass = {
 			}
@@ -1969,7 +1993,10 @@ focus_tree = {
 			allow_branch = {
 			}
 			available = {
-				unitism > 0.50
+				unitism > party_popularity@pluralism
+				unitism > party_popularity@semidemocracy
+				unitism > party_popularity@theocratism
+				unitism > party_popularity@authoritarianism
 			}
 			bypass = {
 			}
@@ -2519,6 +2546,9 @@ focus_tree = {
 			allow_branch = {
 			}
 			available = {
+				country_exists = MRC
+				MRC = { is_subject = no }
+				NOT = { has_war_with = MRC }
 			}
 			bypass = {
 			}
@@ -2600,6 +2630,240 @@ focus_tree = {
 				create_faction_from_template = faction_template_MJU_aquilavara_pack
 			}
 		}
+
+	focus = { # Two Enclaves, One Foe
+		id = MJU_focus_two_enclaves_one_foe
+		icon = GFX_focus_unknown_political
+		#mutually_exclusive = { focus =  }
+		prerequisite = { focus = MJU_focus_temerarium_levav_pack focus = MJU_focus_nuestro_propio_camino }
+		relative_position_id = MJU_focus_temerarium_levav_pack
+		x = 4
+		y = 1
+	
+		cost = 10
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		allow_branch = {
+		}
+		available = {
+			OR = {
+				country_exists = MRC
+				country_exists = HHE
+				5 = { owner = { has_country_flag = harmonainus_religion } }
+			}
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			factor = 2
+			modifier = {
+				add = 3.5
+				HHE = { is_enemy_ideology = yes }
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_two_enclaves_one_foe"
+		}
+	}
+
+		focus = { # Temerarium R&D Community
+			id = MJU_focus_temerarium_rad_community
+			icon = GFX_focus_unknown_political
+			#mutually_exclusive = { focus =  }
+			prerequisite = { focus = MJU_focus_two_enclaves_one_foe }
+			relative_position_id = MJU_focus_two_enclaves_one_foe
+			x = -2
+			y = 1
+		
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+
+			allow_branch = {
+			}
+			available = {
+				country_exists = MRC
+				MRC = { is_subject = no }
+				NOT = { has_war_with = MRC }
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				factor = 2
+				modifier = {
+					add = 5.0
+					has_war_with_major = yes
+				}
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_two_enclaves_one_foe"
+				# research group
+				MRC = { country_event = { id = MJU.1 } }
+				effect_tooltip = {
+					custom_effect_tooltip = if_they_accept
+					MRC = { add_to_tech_sharing_group = MJU_tech_group_temerarium_rad_community }
+					add_to_tech_sharing_group = MJU_tech_group_temerarium_rad_community
+				}
+				custom_effect_tooltip = generic_skip_one_line_tt # We do this for clearer reading.
+				effect_tooltip = {
+					custom_effect_tooltip = if_they_reject
+					add_political_power = 35
+				}
+			}
+		}
+
+		focus = { # Resource Equalization Treaty
+			id = MJU_focus_resource_equalization_treaty
+			icon = GFX_focus_unknown_political
+			#mutually_exclusive = { focus =  }
+			prerequisite = { focus = MJU_focus_two_enclaves_one_foe }
+			relative_position_id = MJU_focus_two_enclaves_one_foe
+			x = -1
+			y = 2
+		
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+
+			allow_branch = {
+			}
+			available = {
+				country_exists = MRC
+				MRC = { is_subject = no }
+				NOT = { has_war_with = MRC }
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				factor = 2
+				modifier = {
+					add = 5.0
+					has_war_with_major = yes
+				}
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_resource_equalization_treaty"
+				# Idea when remove adds resources
+				MRC = { country_event = { id = MJU.4 } }
+				effect_tooltip = {
+					custom_effect_tooltip = if_they_accept
+					MRC = { add_to_tech_sharing_group = MJU_tech_group_resource_equalization_treaty }
+					add_to_tech_sharing_group = MJU_tech_group_resource_equalization_treaty
+				}
+				custom_effect_tooltip = generic_skip_one_line_tt # We do this for clearer reading.
+				effect_tooltip = {
+					custom_effect_tooltip = if_they_reject
+					add_political_power = 35
+				}
+			}
+		}
+
+		focus = { # Food Production and Securities
+			id = MJU_focus_food_production_securities
+			icon = GFX_focus_unknown_political
+			#mutually_exclusive = { focus =  }
+			prerequisite = { focus = MJU_focus_two_enclaves_one_foe }
+			relative_position_id = MJU_focus_two_enclaves_one_foe
+			x = 1
+			y = 2
+		
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+
+			allow_branch = {
+			}
+			available = {
+				country_exists = MRC
+				MRC = { is_subject = no }
+				NOT = { has_war_with = MRC }
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				factor = 2
+				modifier = {
+					add = 5.0
+					has_war_with_major = yes
+				}
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_food_production_securities"
+				# small idea to buff both nations
+				MRC = { country_event = { id = MJU.7 } }
+				effect_tooltip = {
+					custom_effect_tooltip = if_they_accept
+					MRC = { add_ideas = MJU_idea_MRC_food_production_and_securities }
+					add_ideas = MJU_idea_MJU_food_production_and_securities
+				}
+				custom_effect_tooltip = generic_skip_one_line_tt # We do this for clearer reading.
+				effect_tooltip = {
+					custom_effect_tooltip = if_they_reject
+					add_political_power = 35
+				}
+			}
+		}
+
+		focus = { # Inter-Alliance Agreement
+			id = MJU_focus_inter_alliance_agreement
+			icon = GFX_focus_unknown_political
+			#mutually_exclusive = { focus =  }
+			prerequisite = { focus = MJU_focus_two_enclaves_one_foe }
+			relative_position_id = MJU_focus_two_enclaves_one_foe
+			x = 2
+			y = 1
+		
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+
+			allow_branch = {
+			}
+			available = {
+				country_exists = MRC
+				MRC = { is_subject = no }
+				NOT = { has_war_with = MRC }
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				factor = 2
+				modifier = {
+					add = 5.0
+					has_war_with_major = yes
+				}
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_inter_alliance_agreement"
+				MRC = { country_event = { id = MJU.10 } }
+				effect_tooltip = {
+					custom_effect_tooltip = if_they_accept
+					MRC = { give_guarantee = MJU }
+					give_guarantee = MRC
+				}
+				custom_effect_tooltip = generic_skip_one_line_tt # We do this for clearer reading.
+				effect_tooltip = {
+					custom_effect_tooltip = if_they_reject
+					add_political_power = 35
+				}
+			}
+		}
 	continuous_focus_position = { x = 568 y = 18 }
 }
 
@@ -2635,12 +2899,12 @@ shared_focus = { # Military Reforms Root
 
 	shared_focus = { # Command Review
 		id = MJU_focus_reforms_review_command
-		icon = GFX_focus_unknown_military
+		icon = GFX_focus_BEL_royal_commander_in_chief
 		prerequisite = { focus = MJU_focus_reforms_root }
 		relative_position_id = MJU_focus_reforms_root
 		x = -1
 		y = 1
-		cost = 10
+		cost = 5
 
 		available = {
 			NOT = { has_completed_focus = MJU_focus_reforms_combined_arms_doctrine }
@@ -2655,12 +2919,12 @@ shared_focus = { # Military Reforms Root
 
 	shared_focus = { # Promote Merit
 		id = MJU_focus_reforms_promote_merit
-		icon = GFX_focus_unknown_military
+		icon = GFX_focus_AFG_promote_the_counter_elite
 		prerequisite = { focus = MJU_focus_reforms_review_command }
 		relative_position_id = MJU_focus_reforms_review_command
 		x = -1
 		y = 1
-		cost = 10
+		cost = 5
 
 		available = {
 			NOT = { has_completed_focus = MJU_focus_reforms_combined_arms_doctrine }
@@ -2678,12 +2942,12 @@ shared_focus = { # Military Reforms Root
 
 	shared_focus = { # Staff Review
 		id = MJU_focus_reforms_staff_review
-		icon = GFX_focus_unknown_military
+		icon = GFX_focus_CONGO_congolese_generals
 		prerequisite = { focus = MJU_focus_reforms_root }
 		relative_position_id = MJU_focus_reforms_root
 		x = 1
 		y = 1
-		cost = 10
+		cost = 5
 
 		available = {
 			NOT = { has_completed_focus = MJU_focus_reforms_combined_arms_doctrine }
@@ -2698,12 +2962,12 @@ shared_focus = { # Military Reforms Root
 
 	shared_focus = { # Professionalize Staff
 		id = MJU_focus_reforms_professionalize_staff
-		icon = GFX_focus_unknown_military
+		icon = GFX_focus_generic_military_mission
 		prerequisite = { focus = MJU_focus_reforms_staff_review }
 		relative_position_id = MJU_focus_reforms_staff_review
 		x = 1
 		y = 1
-		cost = 10
+		cost = 5
 
 		available = {
 			NOT = { has_completed_focus = MJU_focus_reforms_combined_arms_doctrine }
@@ -2926,41 +3190,6 @@ shared_focus = { # Above the Plains
 		}
 	}
 
-	shared_focus = { # Aerial Supplies
-		id = MJU_focus_aerial_supplies
-		icon = GFX_focus_unknown_military
-		#mutually_exclusive = { focus =  }
-		prerequisite = { focus = MJU_focus_aerial_supremacy }
-		relative_position_id = MJU_focus_aerial_supremacy
-		x = 0
-		y = 1
-
-		cost = 10
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = no
-
-		allow_branch = {
-		}
-		available = {
-		}
-		bypass = {
-		}
-	
-		ai_will_do = {
-			factor = 3.5
-		}
-
-		completion_reward = {
-			log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_aerial_supplies"
-			add_tech_bonus = {
-				bonus = 0.50
-				uses = 1
-				category = transport_planes_cat
-			}
-		}
-	}
-
 	shared_focus = { # Aerial Support
 		id = MJU_focus_aerial_support
 		icon = GFX_focus_unknown_military
@@ -2996,6 +3225,75 @@ shared_focus = { # Above the Plains
 		}
 	}
 
+	shared_focus = { # Enhanced Engines
+		id = MJU_focus_enhanced_engines
+		icon = GFX_SOV_pc_of_mechanical_engineering_ccp_2d_sov_compatibility
+		#mutually_exclusive = { focus =  }
+		prerequisite = { focus = MJU_focus_aerial_supremacy focus = MJU_focus_aerial_support }
+		relative_position_id = MJU_focus_above_the_plains
+		x = 0
+		y = 3
+
+		cost = 10
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		allow_branch = {
+		}
+		available = { has_war_with_major = yes }
+		bypass = {
+		}
+	
+		ai_will_do = {
+			factor = 2.35
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_enhanced_engines"
+			add_tech_bonus = {
+				bonus = 1.00
+				uses = 1
+				category = cat_air_engine
+			}
+		}
+	}
+
+	shared_focus = { # Aerial Supplies
+		id = MJU_focus_aerial_supplies
+		icon = GFX_focus_unknown_military
+		#mutually_exclusive = { focus =  }
+		prerequisite = { focus = MJU_focus_aerial_supremacy }
+		relative_position_id = MJU_focus_aerial_supremacy
+		x = 0
+		y = 2
+
+		cost = 10
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		allow_branch = {
+		}
+		available = {
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			factor = 3.5
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_aerial_supplies"
+			add_tech_bonus = {
+				bonus = 0.50
+				uses = 1
+				category = transport_planes_cat
+			}
+		}
+	}
+
 	shared_focus = { # Aerial Air to Ground
 		id = MJU_focus_aerial_air_to_ground
 		icon = GFX_focus_unknown_military
@@ -3003,7 +3301,7 @@ shared_focus = { # Above the Plains
 		prerequisite = { focus = MJU_focus_aerial_support }
 		relative_position_id = MJU_focus_aerial_support
 		x = 0
-		y = 1
+		y = 2
 
 		cost = 10
 		cancel_if_invalid = yes
@@ -3031,50 +3329,16 @@ shared_focus = { # Above the Plains
 		}
 	}
 
-	shared_focus = { # Enhanced Engines
-		id = MJU_focus_enhanced_engines
-		icon = GFX_focus_unknown_military
-		#mutually_exclusive = { focus =  }
-		prerequisite = { focus = MJU_focus_aerial_supplies }
-		prerequisite = { focus = MJU_focus_aerial_air_to_ground }
-		relative_position_id = MJU_focus_above_the_plains
-		x = 0
-		y = 4
-
-		cost = 10
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = no
-
-		allow_branch = {
-		}
-		available = {
-		}
-		bypass = {
-		}
-	
-		ai_will_do = {
-			factor = 2.35
-		}
-
-		completion_reward = {
-			log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_enhanced_engines"
-			add_tech_bonus = {
-				bonus = 1.00
-				uses = 1
-				category = cat_air_engine
-			}
-		}
-	}
-
 	shared_focus = { # Pueblanuran Airmen
 		id = MJU_focus_pueblanuran_airmen
-		icon = GFX_focus_unknown_military
+		icon = GFX_focus_CZE_military_aeronautical_institute
 		#mutually_exclusive = { focus =  }
 		prerequisite = { focus = MJU_focus_enhanced_engines }
+		prerequisite = { focus = MJU_focus_aerial_supplies }
+		prerequisite = { focus = MJU_focus_aerial_air_to_ground }
 		relative_position_id = MJU_focus_enhanced_engines
 		x = 0
-		y = 1
+		y = 2
 
 		cost = 10
 		cancel_if_invalid = yes
@@ -3137,17 +3401,18 @@ shared_focus = { # Novus Pueblanuran Military
 		x = -1
 		y = 1
 		cost = 10
-
-		available = {  } # buff locked behind war with a major
-
+		ai_will_do = {
+			factor = 2
+			modifier = {
+				factor = 2
+				has_war_with_major = yes
+			}
+		}
 		completion_reward = {
 			log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_reforms_officer_training"
 			add_political_power = 20
 			army_experience = 50
-			add_unit_bonus = {
-				infantry = { soft_attack = 0.05 hard_attack = 0.03 }
-				category_light_infantry = { soft_attack = 0.03 }
-			}
+			remove_ideas = { MJU_idea_professional_command }
 		}
 	}
 
@@ -3159,16 +3424,18 @@ shared_focus = { # Novus Pueblanuran Military
 		x = 1
 		y = 1
 		cost = 10
-
-		available = {  }
-
+		ai_will_do = {
+			factor = 2
+			modifier = {
+				factor = 2
+				has_war_with_major = yes
+			}
+		}
 		completion_reward = {
 			log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_reforms_nco_corps"
 			add_political_power = 15
 			army_experience = 35
-			add_unit_bonus = {
-				cavalry = { soft_attack = 0.03 hard_attack = 0.02 }
-			}
+			remove_ideas = { MJU_idea_professional_staff }
 			add_offsite_building = { type = industrial_complex level = 1 }
 		}
 	}
@@ -3182,10 +3449,17 @@ shared_focus = { # Novus Pueblanuran Military
 		y = 1
 		cost = 10
 		available = { has_war_with_major = yes }
+		ai_will_do = {
+			factor = 10
+		}
 		completion_reward = {
 			log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_reforms_logistics_upgrade"
 			add_political_power = 20
-			add_equipment_to_stockpile = { type = support_equipment amount = 1000 producer = ROOT }
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 2
+				category = logistics_tech
+			}
 			add_tech_bonus = {
 				bonus = 0.5
 				uses = 2
@@ -3196,7 +3470,7 @@ shared_focus = { # Novus Pueblanuran Military
 
 	shared_focus = { # Armament Program
 		id = MJU_focus_reforms_armament_program
-		icon = GFX_focus_unknown_military
+		icon = GFX_focus_AUS_raid_military_storages
 		prerequisite = { focus = MJU_focus_reforms_logistics_upgrade }
 		relative_position_id = MJU_focus_reforms_logistics_upgrade
 		x = 1
@@ -3263,7 +3537,7 @@ shared_focus = { # Novus Pueblanuran Military
 
 	shared_focus = { # Reserve Mobilization
 		id = MJU_focus_reforms_reserve_mobilization
-		icon = GFX_focus_unknown_military
+		icon = GFX_focus_generic_full_social_mobilization
 		prerequisite = { focus = MJU_focus_reforms_armament_program }
 		prerequisite = { focus = MJU_focus_reforms_battlefield_experience }
 		relative_position_id = MJU_focus_reforms_battlefield_experience
@@ -3297,7 +3571,7 @@ shared_focus = { # Novus Pueblanuran Military
 
 	shared_focus = { # Combined Arms Doctrine
 		id = MJU_focus_reforms_combined_arms_doctrine
-		icon = GFX_focus_unknown_military
+		icon = GFX_focus_generic_combined_arms
 		prerequisite = { focus = MJU_focus_reforms_battlefield_experience focus = MJU_focus_reforms_reserve_mobilization }
 		relative_position_id = MJU_focus_reforms_battlefield_experience
 		x = 1
@@ -3312,17 +3586,17 @@ shared_focus = { # Novus Pueblanuran Military
 		}
 
 		ai_will_do = {
-			factor = 2
+			factor = 5
+			modifier = {
+				factor = 2
+				has_war_with_major = yes
+			}
 		}
 
 		completion_reward = {
 			log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_reforms_combined_arms_doctrine"
 			add_political_power = 50
-			army_experience = 200
-			remove_ideas = {
-				MJU_idea_professional_command
-				MJU_idea_professional_staff
-			}
+			army_experience = 50
 			add_ideas = MJU_idea_pueblanuran_armed_forces
 			add_offsite_building = { type = industrial_complex level = 1 }
 		}
@@ -3361,7 +3635,7 @@ shared_focus = { # Temerarium Dominance
 
 	shared_focus = { # Invest in Dockyard Construction
 		id = MJU_focus_invest_in_dockyard
-		icon = GFX_focus_unknown_military
+		icon = GFX_goal_generic_construct_infrastructure
 		#mutually_exclusive = { focus =  }
 		prerequisite = { focus = MJU_focus_temerarium_dominance }
 		relative_position_id = MJU_focus_temerarium_dominance
@@ -3415,7 +3689,7 @@ shared_focus = { # Temerarium Dominance
 
 	shared_focus = { # PJCF Schooling
 		id = MJU_focus_PJCF_schooling
-		icon = GFX_focus_unknown_military
+		icon = GFX_goal_generic_navy_doctrines_tactics
 		#mutually_exclusive = { focus =  }
 		prerequisite = { focus = MJU_focus_invest_in_dockyard }
 		relative_position_id = MJU_focus_invest_in_dockyard
@@ -3451,7 +3725,7 @@ shared_focus = { # Temerarium Dominance
 
 	shared_focus = { # Dockyard Capacity
 		id = MJU_focus_dockyard_capacity
-		icon = GFX_focus_unknown_military
+		icon = GFX_goal_generic_construct_naval_dockyard
 		#mutually_exclusive = { focus =  }
 		prerequisite = { focus = MJU_focus_temerarium_dominance }
 		relative_position_id = MJU_focus_temerarium_dominance
@@ -3486,7 +3760,7 @@ shared_focus = { # Temerarium Dominance
 
 	shared_focus = { # Naval Infrastructure Efforts
 		id = MJU_focus_naval_infrastructure_efforts
-		icon = GFX_focus_unknown_military
+		icon = GFX_focus_generic_refit_civilian_ships
 		#mutually_exclusive = { focus =  }
 		prerequisite = { focus = MJU_focus_dockyard_capacity }
 		relative_position_id = MJU_focus_dockyard_capacity
@@ -3542,22 +3816,21 @@ shared_focus = { # Temerarium Dominance
 
 	shared_focus = { # Destroyer Backbone
 		id = MJU_focus_dd_backbone
-		icon = GFX_focus_unknown_military
+		icon = GFX_focus_generic_cruiser2
 		#mutually_exclusive = { focus =  }
 		prerequisite = { focus = MJU_focus_dockyard_capacity focus = MJU_focus_invest_in_dockyard }
 		relative_position_id = MJU_focus_invest_in_dockyard
 		x = 2
 		y = 1
 
-		cost = 10
+		cost = 5
 		cancel_if_invalid = yes
 		continue_if_invalid = no
 		available_if_capitulated = no
 
 		allow_branch = {
 		}
-		available = {
-		}
+		available = { has_war_with_major = yes }
 		bypass = {
 		}
 	
@@ -3577,14 +3850,14 @@ shared_focus = { # Temerarium Dominance
 
 	shared_focus = { # Cruiser Support
 		id = MJU_focus_cl_support
-		icon = GFX_focus_unknown_military
+		icon = GFX_focus_generic_navy_battleship2
 		#mutually_exclusive = { focus =  }
 		prerequisite = { focus = MJU_focus_dd_backbone }
 		relative_position_id = MJU_focus_dd_backbone
 		x = 0
 		y = 1
 
-		cost = 10
+		cost = 5
 		cancel_if_invalid = yes
 		continue_if_invalid = no
 		available_if_capitulated = no
@@ -3614,7 +3887,8 @@ shared_focus = { # Temerarium Dominance
 		id = MJU_focus_green_water_cruisers
 		icon = GFX_focus_unknown_military
 		#mutually_exclusive = { focus =  }
-		prerequisite = { focus = MJU_focus_PJCF_schooling focus = MJU_focus_naval_infrastructure_efforts }
+		prerequisite = { focus = MJU_focus_PJCF_schooling }
+		prerequisite = { focus = MJU_focus_cl_support }
 		relative_position_id = MJU_focus_PJCF_schooling
 		x = 1
 		y = 1
@@ -3649,7 +3923,8 @@ shared_focus = { # Temerarium Dominance
 		id = MJU_focus_ship_of_the_line
 		icon = GFX_focus_unknown_military
 		#mutually_exclusive = { focus =  }
-		prerequisite = { focus = MJU_focus_PJCF_schooling focus = MJU_focus_naval_infrastructure_efforts }
+		prerequisite = { focus = MJU_focus_naval_infrastructure_efforts }
+		prerequisite = { focus = MJU_focus_cl_support }
 		relative_position_id = MJU_focus_PJCF_schooling
 		x = 3
 		y = 1
@@ -3682,7 +3957,7 @@ shared_focus = { # Temerarium Dominance
 
 	shared_focus = { # Green Water Pueblanuran Navy
 		id = MJU_focus_green_water_pueblanuran_navy
-		icon = GFX_focus_unknown_military
+		icon = GFX_focus_SMB_blue_water_fleet
 		#mutually_exclusive = { focus =  }
 		prerequisite = { focus = MJU_focus_green_water_cruisers }
 		prerequisite = { focus = MJU_focus_ship_of_the_line }

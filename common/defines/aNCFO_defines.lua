@@ -70,9 +70,9 @@
 		NDefines.NCountry.WAR_SUPPORT_TENSION_IMPACT = 0.20
 		NDefines.NCountry.WEEKLY_STABILITY_GAIN = 0.0
 		NDefines.NCountry.WEEKLY_WAR_SUPPORT_GAIN = 0.0
-		NDefines.NCountry.BUILDING_IMPORTANCE_FACTOR = 6.0		-- Defualt 3.0
-		NDefines.NCountry.RESOURCE_IMPORTANCE_FACTOR = 2.0		-- Defualt 1.0
-		NDefines.NCountry.STATE_VALUE_BUILDING_SLOTS_MULT = 8.0	-- Defualt 4.0
+		NDefines.NCountry.BUILDING_IMPORTANCE_FACTOR = 6.0		-- Default 3.0
+		NDefines.NCountry.RESOURCE_IMPORTANCE_FACTOR = 2.0		-- Default 1.0
+		NDefines.NCountry.STATE_VALUE_BUILDING_SLOTS_MULT = 8.0	-- Default 4.0
 		NDefines.NCountry.DEFAULT_STABILITY = 0.50 	-- Could be the 'Middle' for modifers -- Default stability if not scripted otherwise.
 		NDefines.NCountry.DEFAULT_WAR_SUPPORT = 0.50 	-- Could be the 'Middle' for modifers -- Default war support if not scripted otherwise.
 		NDefines.NCountry.MIN_STABILITY = -0.50		-- 100% total negative, as -100% is nobody but -50% is vast majority.
@@ -91,18 +91,19 @@
 	-- NResistance
 
 	-- NProduction
-		NDefines.NProduction.MAX_EQUIPMENT_RESOURCES_NEED = 6   			-- Defualt 3
-		NDefines.NProduction.MAX_CIV_FACTORIES_PER_LINE = 10.0				-- Defualt 15.0
-		NDefines.NProduction.EFFICIENCY_LOSS_PER_UNUSED_DAY = 2 			-- Defualt 1
-		NDefines.NProduction.RESOURCE_TO_ENERGY_COEFFICIENT = 9.0			-- Defualt 9.0, How much energy per coal produces
-		NDefines.NProduction.BASE_COUNTRY_ENERGY_PRODUCTION = 12.0			-- Defualt 10.0, The base energy production of a country
-		NDefines.NProduction.ENERGY_SCALING_COST_BY_FACTORY_COUNT = 0.0225	-- Defualt 0.0225, do not use 0.03375, Scales energy cost based on the total number of factories
-		NDefines.NProduction.BASE_ENERGY_COST = 0.25						-- Defualt 0.25, How much energy per factory consumes
-		NDefines.NProduction.BASE_FACTORY_SPEED = 2.50						-- Defualt 5.00
-		NDefines.NProduction.BASE_FACTORY_SPEED_MIL = 4.5					-- Defualt 9.00
-		NDefines.NProduction.BASE_FACTORY_SPEED_NAV = 2.5					-- Defualt 5.00
-		NDefines.NProduction.BASE_FACTORY_START_EFFICIENCY_FACTOR = 1		-- Defualt 10
-		NDefines.NProduction.BASE_FACTORY_MAX_EFFICIENCY_FACTOR = 10		-- Defualt 50
+		NDefines.NProduction.MAX_EQUIPMENT_RESOURCES_NEED = 6   			-- Default 3
+		NDefines.NProduction.MAX_CIV_FACTORIES_PER_LINE = 10.0				-- Default 15.0
+		NDefines.NProduction.EFFICIENCY_LOSS_PER_UNUSED_DAY = 2 			-- Default 1
+		NDefines.NProduction.RESOURCE_TO_ENERGY_COEFFICIENT = 9.0			-- Default 9.0, How much energy per coal produces
+		NDefines.NProduction.BASE_COUNTRY_ENERGY_PRODUCTION = 12.0			-- Default 10.0, The base energy production of a country
+		NDefines.NProduction.ENERGY_SCALING_COST_BY_FACTORY_COUNT = 0.0225	-- Default 0.0225, do not use 0.03375, Scales energy cost based on the total number of factories
+		NDefines.NProduction.BASE_ENERGY_COST = 0.25						-- Default 0.25, How much energy per factory consumes
+		NDefines.NProduction.BASE_FACTORY_SPEED = 2.50						-- Default 5.00
+		NDefines.NProduction.BASE_FACTORY_SPEED_MIL = 4.5					-- Default 9.00
+		NDefines.NProduction.BASE_FACTORY_SPEED_NAV = 2.5					-- Default 5.00
+		NDefines.NProduction.BASE_FACTORY_START_EFFICIENCY_FACTOR = 1		-- Default 10
+		NDefines.NProduction.BASE_FACTORY_MAX_EFFICIENCY_FACTOR = 10		-- Default 50
+		NDefines.NCountry.BASE_MAX_COMMAND_POWER = 120.0					-- Default 80
 
 	-- NMarket
 
@@ -116,12 +117,12 @@
 		NDefines.NBuildings.ANTI_AIR_SUPERIORITY_MULT = 5.0
 		NDefines.NBuildings.SAM_MISSION_SUPERIORITY = 5.0
 
-		NDefines.NBuildings.BASE_FACTORY_REPAIR = 1.0				-- Defualt 1.0
-		NDefines.NBuildings.BASE_FACTORY_REPAIR_FACTOR = 1.0		-- Defualt 2.0
+		NDefines.NBuildings.BASE_FACTORY_REPAIR = 1.0				-- Default 1.0
+		NDefines.NBuildings.BASE_FACTORY_REPAIR_FACTOR = 1.0		-- Default 2.0
 
 		NDefines.NBuildings.MAX_BUILDING_LEVELS = 66
 		NDefines.NBuildings.MAX_SHARED_SLOTS = 66
-		NDefines.NBuildings.DESTRUCTION_COOLDOWN_IN_WAR = 90		-- Defualt 30
+		NDefines.NBuildings.DESTRUCTION_COOLDOWN_IN_WAR = 90		-- Default 30
 
 		NDefines.NBuildings.INFRASTRUCTURE_RESOURCE_BONUS = 0.30	-- Was 0.20, we increase this to improve industrialization.
 		NDefines.NBuildings.SUPPLY_ROUTE_RESOURCE_BONUS = 0.30		-- Was 0.20, we increase this to improve industrialization.
@@ -156,6 +157,10 @@
 
 		NDefines.NAir.MAX_QUICK_WING_SELECTION = 5				-- Max possible selection for airwing quick deploy
 
+		NDefines.NAI.RAIDS_CREATE_FREQUENCY_DAYS = 35.0			-- Default 7
+		NDefines.NAI.RAIDS_COMMAND_POWER_CAP_TO_CREATE = 30.0 	-- Default 60
+		NDefines.NAI.COMMAND_POWER_BEFORE_SPEND_ON_TRAITS = 0.0	-- Default 30
+
 	-- NNavy
 		NDefines.NNavy.MAX_CAPITALS_PER_AUTO_TASK_FORCE = 10
 		NDefines.NNavy.BEST_CAPITALS_TO_CARRIER_RATIO = 2
@@ -169,35 +174,35 @@
 
 	-- NAI
 		-- Days between Updates Start --
-			NDefines.NAI.AI_UPDATE_ROLES_FREQUENCY_HOURS = 168 				-- Defualt 48
-			NDefines.NAI.AIFC_UPDATE_FREQUENCY_DAYS = 7						-- Defualt 5
-			NDefines.NAI.DAYS_BETWEEN_AIR_PRIORITIES_UPDATE = 7 			-- Defualt 4
-			NDefines.NAI.RESEARCH_DAYS_BETWEEN_WEIGHT_UPDATE = 30 			-- Defualt 7
-			NDefines.NAI.UPDATE_SUPPLY_BOTTLENECKS_FREQUENCY_HOURS = 168 	-- Defualt 168
-			NDefines.NAI.UPDATE_SUPPLY_MOTORIZATION_FREQUENCY_HOURS = 168 	-- Defualt 52
+			NDefines.NAI.AI_UPDATE_ROLES_FREQUENCY_HOURS = 168 				-- Default 48
+			NDefines.NAI.AIFC_UPDATE_FREQUENCY_DAYS = 7						-- Default 5
+			NDefines.NAI.DAYS_BETWEEN_AIR_PRIORITIES_UPDATE = 7 			-- Default 4
+			NDefines.NAI.RESEARCH_DAYS_BETWEEN_WEIGHT_UPDATE = 30 			-- Default 7
+			NDefines.NAI.UPDATE_SUPPLY_BOTTLENECKS_FREQUENCY_HOURS = 168 	-- Default 168
+			NDefines.NAI.UPDATE_SUPPLY_MOTORIZATION_FREQUENCY_HOURS = 168 	-- Default 52
 
 			NDefines.NAI.EQUIPMENT_MARKET_BASE_MARKET_RATIO = 0.35
-			NDefines.NAI.EQUIPMENT_MARKET_UPDATE_FREQUENCY_DAYS = 30 		-- Defualt 11
+			NDefines.NAI.EQUIPMENT_MARKET_UPDATE_FREQUENCY_DAYS = 30 		-- Default 11
 
 			NDefines.NAI.FIX_SUPPLY_BOTTLENECK_SATURATION_THRESHOLD = 0.75
 		-- DBU End --
 		NDefines.NAI.CONSTRUCTION_PRIO_INFRASTRUCTURE = 0.20
 		NDefines.NAI.CONSTRUCTION_PRIO_CIV_FACTORY = 0.80
 		NDefines.NAI.CONSTRUCTION_PRIO_MIL_FACTORY = 0.70
-		NDefines.NAI.CONSTRUCTION_PRIO_SUPPLY_BUILDING = 1.65			-- Defualt 1.10
+		NDefines.NAI.CONSTRUCTION_PRIO_SUPPLY_BUILDING = 1.65			-- Default 1.10
 		NDefines.NAI.CONSTRUCTION_PRIO_RAILWAY = 4.00
 		NDefines.NAI.CONSTRUCTION_PRIO_RAILWAY_GUN_REPAIR = 15.00
 		NDefines.NAI.CONSTRUCTION_PRIO_UNSPECIFIED = 0.50
 		NDefines.NAI.CONSTRUCTION_PRIO_FACTOR_OCCUPIED_TERRITORY = 0.50
-		NDefines.NAI.CONSTRUCTION_PRIO_FACTOR_OWNED_NONCORE = 0.75		-- Defualt 1.50
-		NDefines.NAI.CONSTRUCTION_PRIO_FACTOR_OWNED_CORE = 4.00			-- Defualt 2.00
-		NDefines.NAI.CONSTRUCTION_PRIO_FACTOR_REPAIRING = 0.60			-- Defualt 0.30
+		NDefines.NAI.CONSTRUCTION_PRIO_FACTOR_OWNED_NONCORE = 0.75		-- Default 1.50
+		NDefines.NAI.CONSTRUCTION_PRIO_FACTOR_OWNED_CORE = 4.00			-- Default 2.00
+		NDefines.NAI.CONSTRUCTION_PRIO_FACTOR_REPAIRING = 0.60			-- Default 0.30
 
 		NDefines.NAI.AREA_DEFENSE_SETTING_VP = false
 		NDefines.NAI.AREA_DEFENSE_SETTING_PORTS = true
 		NDefines.NAI.AREA_DEFENSE_SETTING_AIRBASES = false
 		NDefines.NAI.AREA_DEFENSE_SETTING_BORDERS = false
-		NDefines.NAI.AREA_DEFENSE_SETTING_FORTS = true					-- Defualt false
+		NDefines.NAI.AREA_DEFENSE_SETTING_FORTS = true					-- Default false
 		NDefines.NAI.AREA_DEFENSE_SETTING_COASTLINES = true
 		NDefines.NAI.AREA_DEFENSE_SETTING_RAILWAYS = false
 		NDefines.NAI.AREA_DEFENSE_SETTING_FACILITY = false
@@ -212,47 +217,47 @@
 		-- aNCFO AI
 		---------------------------
 			--------- AIFC PLANS ---------
-				NDefines.NAI.AIFC_FRESHNESS_BASE_VALUE = 50.0					-- Defualt 45
-				NDefines.NAI.AIFC_REFRESH_NEED_PER_DAY = 2.0					-- Defualt 1
-				NDefines.NAI.AIFC_REFRESH_NEED_SUPPLY_FACTOR_PER_DAY = 4.0		-- Defualt 0.8
-				NDefines.NAI.AIFC_FRESHNESS_ADD_ON_PROGRESS = 18.0				-- Defualt 25
-				NDefines.NAI.AIFC_MAX_NR_FRONTS = 4								-- Defualt 4
-				NDefines.NAI.AIFC_CA_DIVISIONS_PER_PROVINCE = 2					-- Defualt 3
-				NDefines.NAI.AIFC_ACTIVATE_AVG_ORG_RATIO_THRESHOLD = 0.3		-- Defualt 0.2
-				NDefines.NAI.AIFC_ACTIVATE_IN_POSITION_RATIO_THRESHOLD = 0.4	-- Defualt 0.3
-				NDefines.NAI.AIFC_OFFENSIVE_DEACTIVATION_DAYS_THRESHOLD = 5		-- Defualt 5
-				NDefines.NAI.AIFC_UNIT_NUDGE_FREQUENCY_DAYS = 15				-- Defualt 15
+				NDefines.NAI.AIFC_FRESHNESS_BASE_VALUE = 50.0					-- Default 45
+				NDefines.NAI.AIFC_REFRESH_NEED_PER_DAY = 2.0					-- Default 1
+				NDefines.NAI.AIFC_REFRESH_NEED_SUPPLY_FACTOR_PER_DAY = 4.0		-- Default 0.8
+				NDefines.NAI.AIFC_FRESHNESS_ADD_ON_PROGRESS = 18.0				-- Default 25
+				NDefines.NAI.AIFC_MAX_NR_FRONTS = 4								-- Default 4
+				NDefines.NAI.AIFC_CA_DIVISIONS_PER_PROVINCE = 2					-- Default 3
+				NDefines.NAI.AIFC_ACTIVATE_AVG_ORG_RATIO_THRESHOLD = 0.3		-- Default 0.2
+				NDefines.NAI.AIFC_ACTIVATE_IN_POSITION_RATIO_THRESHOLD = 0.4	-- Default 0.3
+				NDefines.NAI.AIFC_OFFENSIVE_DEACTIVATION_DAYS_THRESHOLD = 5		-- Default 5
+				NDefines.NAI.AIFC_UNIT_NUDGE_FREQUENCY_DAYS = 15				-- Default 15
 
-				NDefines.NAI.AIFC_UNIT_OFFENSIVE_SCORE_FACTOR_BREAKTHROUGH = -10.0	-- Defualt 11.0
-				NDefines.NAI.AIFC_UNIT_OFFENSIVE_SCORE_FACTOR_SOFT_ATTACK = -10.0	-- Defualt 6.0
-				NDefines.NAI.AIFC_UNIT_OFFENSIVE_SCORE_FACTOR_HARD_ATTACK = -10.0	-- Defualt 8.0
-				NDefines.NAI.AIFC_UNIT_OFFENSIVE_SCORE_FACTOR_ARMOR = 800.0			-- Defualt 30.0
-				NDefines.NAI.AIFC_UNIT_OFFENSIVE_SCORE_FACTOR_PIERCING = -10.0		-- Defualt 4.0
-				NDefines.NAI.AIFC_UNIT_OFFENSIVE_SCORE_FACTOR_HARDNESS = 40.0		-- Defualt 300.0
-				NDefines.NAI.AIFC_UNIT_OFFENSIVE_SCORE_FACTOR_SPEED = 5.0			-- Defualt 15.0
-				NDefines.NAI.AIFC_UNIT_OFFENSIVE_SCORE_FACTOR_INITIATIVE = -10.0	-- Defualt 5.0
-				NDefines.NAI.AIFC_UNIT_OFFENSIVE_SCORE_FACTOR_ORGANISATION = -10.0	-- Defualt 0.3
-				NDefines.NAI.AIFC_UNIT_OFFENSIVE_SCORE_FACTOR_HITPOINTS = -10.0		-- Defualt 0.3
-				NDefines.NAI.AIFC_UNIT_OFFENSIVE_SCORE_FACTOR_EXPERIENCE = 1.0		-- Defualt 300.0
+				NDefines.NAI.AIFC_UNIT_OFFENSIVE_SCORE_FACTOR_BREAKTHROUGH = -10.0	-- Default 11.0
+				NDefines.NAI.AIFC_UNIT_OFFENSIVE_SCORE_FACTOR_SOFT_ATTACK = -10.0	-- Default 6.0
+				NDefines.NAI.AIFC_UNIT_OFFENSIVE_SCORE_FACTOR_HARD_ATTACK = -10.0	-- Default 8.0
+				NDefines.NAI.AIFC_UNIT_OFFENSIVE_SCORE_FACTOR_ARMOR = 800.0			-- Default 30.0
+				NDefines.NAI.AIFC_UNIT_OFFENSIVE_SCORE_FACTOR_PIERCING = -10.0		-- Default 4.0
+				NDefines.NAI.AIFC_UNIT_OFFENSIVE_SCORE_FACTOR_HARDNESS = 40.0		-- Default 300.0
+				NDefines.NAI.AIFC_UNIT_OFFENSIVE_SCORE_FACTOR_SPEED = 5.0			-- Default 15.0
+				NDefines.NAI.AIFC_UNIT_OFFENSIVE_SCORE_FACTOR_INITIATIVE = -10.0	-- Default 5.0
+				NDefines.NAI.AIFC_UNIT_OFFENSIVE_SCORE_FACTOR_ORGANISATION = -10.0	-- Default 0.3
+				NDefines.NAI.AIFC_UNIT_OFFENSIVE_SCORE_FACTOR_HITPOINTS = -10.0		-- Default 0.3
+				NDefines.NAI.AIFC_UNIT_OFFENSIVE_SCORE_FACTOR_EXPERIENCE = 1.0		-- Default 300.0
 
-				NDefines.NAI.AIFC_TARGET_SUPPLY_HUB_BASE_SCORE = 52.5		-- Defualt 20.0
-				NDefines.NAI.AIFC_TARGET_NAVAL_BASE_BASE_SCORE = 57.5		-- Defualt 10.0
-				NDefines.NAI.AIFC_TARGET_NAVAL_BASE_SCORE_PER_LEVEL = 16.0	-- Defualt 1.0
-				NDefines.NAI.AIFC_TARGET_VP_SCORE_FACTOR = 20.0				-- Defualt 1.0
-				NDefines.NAI.AIFC_TARGET_CAPITAL_SCORE_EXTRA = 70.0			-- Defualt 5.0
-				NDefines.NAI.AIFC_TARGET_SHORT_PATH_PENALTY_FACTOR = 1.0	-- Defualt 0.1
-				NDefines.NAI.AIFC_TARGET_PERSISTED_FACTOR = 5.0				-- Defualt 30.0
+				NDefines.NAI.AIFC_TARGET_SUPPLY_HUB_BASE_SCORE = 52.5		-- Default 20.0
+				NDefines.NAI.AIFC_TARGET_NAVAL_BASE_BASE_SCORE = 57.5		-- Default 10.0
+				NDefines.NAI.AIFC_TARGET_NAVAL_BASE_SCORE_PER_LEVEL = 16.0	-- Default 1.0
+				NDefines.NAI.AIFC_TARGET_VP_SCORE_FACTOR = 20.0				-- Default 1.0
+				NDefines.NAI.AIFC_TARGET_CAPITAL_SCORE_EXTRA = 70.0			-- Default 5.0
+				NDefines.NAI.AIFC_TARGET_SHORT_PATH_PENALTY_FACTOR = 1.0	-- Default 0.1
+				NDefines.NAI.AIFC_TARGET_PERSISTED_FACTOR = 5.0				-- Default 30.0
 
-				NDefines.NAI.AIFC_PATH_COST_ADJ_STRAIT = 10.0			-- Defualt 4.0
-				NDefines.NAI.AIFC_PATH_COST_ADJ_RIVER = 10.0			-- Defualt 2.0
-				NDefines.NAI.AIFC_PATH_COST_ADJ_RIVER_LARGE = 10.0		-- Defualt 3.0
-				NDefines.NAI.AIFC_PATH_COST_TRN_MOUNTAINS = 6.5			-- Defualt 2.0
-				NDefines.NAI.AIFC_PATH_COST_TRN_JUNGLE = 6.0			-- Defualt 3.0
-				NDefines.NAI.AIFC_PATH_COST_TRN_URBAN = 2.0				-- Defualt 1.0
-				NDefines.NAI.AIFC_PATH_COST_TRN_MARSH = 4.5				-- Defualt 3.0
-				NDefines.NAI.AIFC_PATH_COST_PER_FORT_LEVEL = 60.0		-- Defualt 0.3
-				NDefines.NAI.AIFC_PATH_COST_HAS_SUPPLY_HUB = 0.1		-- Defualt 0.5
-				NDefines.NAI.AIFC_PATH_COST_HAS_NAVAL_BASE = 0.1		-- Defualt 0.5
+				NDefines.NAI.AIFC_PATH_COST_ADJ_STRAIT = 10.0			-- Default 4.0
+				NDefines.NAI.AIFC_PATH_COST_ADJ_RIVER = 10.0			-- Default 2.0
+				NDefines.NAI.AIFC_PATH_COST_ADJ_RIVER_LARGE = 10.0		-- Default 3.0
+				NDefines.NAI.AIFC_PATH_COST_TRN_MOUNTAINS = 6.5			-- Default 2.0
+				NDefines.NAI.AIFC_PATH_COST_TRN_JUNGLE = 6.0			-- Default 3.0
+				NDefines.NAI.AIFC_PATH_COST_TRN_URBAN = 2.0				-- Default 1.0
+				NDefines.NAI.AIFC_PATH_COST_TRN_MARSH = 4.5				-- Default 3.0
+				NDefines.NAI.AIFC_PATH_COST_PER_FORT_LEVEL = 60.0		-- Default 0.3
+				NDefines.NAI.AIFC_PATH_COST_HAS_SUPPLY_HUB = 0.1		-- Default 0.5
+				NDefines.NAI.AIFC_PATH_COST_HAS_NAVAL_BASE = 0.1		-- Default 0.5
 			--------- AIFC END ---------
 
 			--------- DESIGNS PLANS ---------
@@ -263,22 +268,22 @@
 				NDefines.NAI.DESIRE_USE_XP_TO_UNLOCK_NAVAL_DOCTRINE = 0.5
 				NDefines.NAI.DESIRE_USE_XP_TO_UNLOCK_AIR_DOCTRINE = 0.5
 				--EAI: make sure land template desire is always at the top, if the doctrine desire is high but the mod blocks it, AI wont create templates
-				NDefines.NAI.DESIRE_USE_XP_TO_UPDATE_LAND_TEMPLATE = 62.5		-- Defualt
+				NDefines.NAI.DESIRE_USE_XP_TO_UPDATE_LAND_TEMPLATE = 62.5		-- Default
 
-				NDefines.NAI.DESIRE_USE_XP_TO_UPGRADE_LAND_EQUIPMENT = 5.0		-- Defualt
-				NDefines.NAI.DESIRE_USE_XP_TO_UPGRADE_NAVAL_EQUIPMENT = 1.0		-- Defualt
-				NDefines.NAI.DESIRE_USE_XP_TO_UPGRADE_AIR_EQUIPMENT = 62.5		-- Defualt
+				NDefines.NAI.DESIRE_USE_XP_TO_UPGRADE_LAND_EQUIPMENT = 5.0		-- Default
+				NDefines.NAI.DESIRE_USE_XP_TO_UPGRADE_NAVAL_EQUIPMENT = 1.0		-- Default
+				NDefines.NAI.DESIRE_USE_XP_TO_UPGRADE_AIR_EQUIPMENT = 62.5		-- Default
 
-				NDefines.NAI.DESIRE_USE_XP_TO_UNLOCK_ARMY_SPIRIT = 0.4			-- Defualt
-				NDefines.NAI.DESIRE_USE_XP_TO_UNLOCK_NAVY_SPIRIT = 0.4			-- Defualt
-				NDefines.NAI.DESIRE_USE_XP_TO_UNLOCK_AIR_SPIRIT = 0.4			-- Defualt
+				NDefines.NAI.DESIRE_USE_XP_TO_UNLOCK_ARMY_SPIRIT = 0.4			-- Default
+				NDefines.NAI.DESIRE_USE_XP_TO_UNLOCK_NAVY_SPIRIT = 0.4			-- Default
+				NDefines.NAI.DESIRE_USE_XP_TO_UNLOCK_AIR_SPIRIT = 0.4			-- Default
 
-				NDefines.NAI.DAYS_BETWEEN_CHECK_BEST_DOCTRINE = 7				-- Defualt
-				NDefines.NAI.DAYS_BETWEEN_CHECK_BEST_TEMPLATE = 7				-- Defualt
-				NDefines.NAI.DAYS_BETWEEN_CHECK_BEST_EQUIPMENT = 7				-- Defualt
+				NDefines.NAI.DAYS_BETWEEN_CHECK_BEST_DOCTRINE = 7				-- Default
+				NDefines.NAI.DAYS_BETWEEN_CHECK_BEST_TEMPLATE = 7				-- Default
+				NDefines.NAI.DAYS_BETWEEN_CHECK_BEST_EQUIPMENT = 7				-- Default
 
-				NDefines.NAI.GARRISON_TEMPLATE_SCORE_IC_FACTOR = 1.0			-- Defualt
-				NDefines.NAI.GARRISON_TEMPLATE_SCORE_MANPOWER_FACTOR = 0.05		-- Defualt
+				NDefines.NAI.GARRISON_TEMPLATE_SCORE_IC_FACTOR = 1.0			-- Default
+				NDefines.NAI.GARRISON_TEMPLATE_SCORE_MANPOWER_FACTOR = 0.05		-- Default
 
 
 
@@ -382,8 +387,8 @@
 
 				NDefines.NAI.NAVAL_MISSION_DISTANCE_BASE = 50000				-- Base value when AI is evaluating distance score to places
 
-				NDefines.NAI.REFIT_SHIP_RELUCTANCE = 14							-- Defualt 28
-				NDefines.NAI.REFIT_SHIP_PERCENTAGE_OF_FORCES = 0.3				-- Defualt 0.1
+				NDefines.NAI.REFIT_SHIP_RELUCTANCE = 14							-- Default 28
+				NDefines.NAI.REFIT_SHIP_PERCENTAGE_OF_FORCES = 0.3				-- Default 0.1
 
 				NDefines.NAI.MIN_MAIN_SHIP_RATIO = 0.3                      -- if main ship ratio is below this steal other ships.
 				NDefines.NAI.MIN_SUPPORT_SHIP_RATIO = 0.7                   -- if support ship ratio is below this steal other ships.
@@ -637,9 +642,9 @@
 				NDefines.NAI.INDUSTRIAL_ORG_RESEARCH_ASSIGN_RANDOMNESS = 1.0
 				NDefines.NAI.INDUSTRIAL_ORG_PRODUCTION_ASSIGN_RANDOMNESS = 1.0
 				NDefines.NAI.CONSTRUCTION_PRIO_SUPPLY_BUILDING = 2.50
-				NDefines.NAI.RAIDS_CREATE_FREQUENCY_DAYS = 20
-				NDefines.NAI.RAIDS_COMMAND_POWER_CAP_TO_CREATE = 150.0 
-				NDefines.NAI.COMMAND_POWER_BEFORE_SPEND_ON_TRAITS = 0.0
+				-- NDefines.NAI.RAIDS_CREATE_FREQUENCY_DAYS = 20.0
+				-- NDefines.NAI.RAIDS_COMMAND_POWER_CAP_TO_CREATE = 150.0 
+				-- NDefines.NAI.COMMAND_POWER_BEFORE_SPEND_ON_TRAITS = 0.0
 				NDefines.NAI.ARMY_LEADER_ASSIGN_NR_TRAITS = 0
 				NDefines.NAI.MAX_VOLUNTEER_ARMY_FRACTION = 0.50
 				NDefines.NAI.DIPLOMACY_ACCEPT_VOLUNTEERS_BASE = 150
@@ -772,48 +777,48 @@
 	-- NCharacter
 
 	-- NSupply
-		NDefines.NSupply.MAX_RAILWAY_LEVEL = 5.0				-- Defualt 5.0
+		NDefines.NSupply.MAX_RAILWAY_LEVEL = 5.0				-- Default 5.0
 
-		NDefines.NSupply.SUPPLY_HUB_FULL_MOTORIZATION_BONUS = 2.8				-- Defualt 2.2
-		NDefines.NSupply.SUPPLY_HUB_FULL_MOTORIZATION_TRUCK_COST = 75.0			-- Defualt 60.0
-		NDefines.NSupply.SUPPLY_HUB_MOTORIZATION_MARGINAL_EFFECT_DECAY = 1.6	-- Defualt 1.6
+		NDefines.NSupply.SUPPLY_HUB_FULL_MOTORIZATION_BONUS = 2.8				-- Default 2.2
+		NDefines.NSupply.SUPPLY_HUB_FULL_MOTORIZATION_TRUCK_COST = 75.0			-- Default 60.0
+		NDefines.NSupply.SUPPLY_HUB_MOTORIZATION_MARGINAL_EFFECT_DECAY = 1.6	-- Default 1.6
 
-		NDefines.NSupply.RAILWAY_BASE_FLOW = 15.0				-- Defualt 10.0
-		NDefines.NSupply.RAILWAY_FLOW_PER_LEVEL = 5.0			-- Defualt 5.0
-		NDefines.NSupply.RAILWAY_FLOW_PENALTY_PER_DAMAGED = 5.0	-- Defualt 5.0
-		NDefines.NSupply.RAILWAY_MIN_FLOW = 1.0					-- Defualt 5.0
+		NDefines.NSupply.RAILWAY_BASE_FLOW = 15.0				-- Default 10.0
+		NDefines.NSupply.RAILWAY_FLOW_PER_LEVEL = 5.0			-- Default 5.0
+		NDefines.NSupply.RAILWAY_FLOW_PENALTY_PER_DAMAGED = 5.0	-- Default 5.0
+		NDefines.NSupply.RAILWAY_MIN_FLOW = 1.0					-- Default 5.0
 
-		NDefines.NSupply.NAVAL_BASE_FLOW = 5.0		-- Defualt 5.0
-		NDefines.NSupply.NAVAL_FLOW_PER_LEVEL = 3.0	-- Defualt 3.0
+		NDefines.NSupply.NAVAL_BASE_FLOW = 5.0		-- Default 5.0
+		NDefines.NSupply.NAVAL_FLOW_PER_LEVEL = 3.0	-- Default 3.0
 
-		NDefines.NSupply.INFRA_TO_SUPPLY = 0.3						-- Defualt 0.3
-		NDefines.NSupply.VP_TO_SUPPLY_BASE = 0.2					-- Defualt 0.2
-		NDefines.NSupply.VP_TO_SUPPLY_BONUS_CONVERSION = 0.05		-- Defualt 0.05
-		NDefines.NSupply.SUPPLY_FROM_DAMAGED_INFRA = 0.075			-- Defualt 0.15
-		NDefines.NSupply.SUPPLY_BASE_MULT = 0.2						-- Defualt 0.2
-		NDefines.NSupply.SUPPLY_DISRUPTION_DAILY_RECOVERY = 0.75	-- Defualt 1.5
+		NDefines.NSupply.INFRA_TO_SUPPLY = 0.3						-- Default 0.3
+		NDefines.NSupply.VP_TO_SUPPLY_BASE = 0.2					-- Default 0.2
+		NDefines.NSupply.VP_TO_SUPPLY_BONUS_CONVERSION = 0.05		-- Default 0.05
+		NDefines.NSupply.SUPPLY_FROM_DAMAGED_INFRA = 0.075			-- Default 0.15
+		NDefines.NSupply.SUPPLY_BASE_MULT = 0.2						-- Default 0.2
+		NDefines.NSupply.SUPPLY_DISRUPTION_DAILY_RECOVERY = 0.75	-- Default 1.5
 
-		NDefines.NSupply.SUPPLY_POINTS_PER_TRAIN = 0.4		-- Defualt 1.0	-- Amount of supply that can fit in a train. (Trains distribute supply from capital to a supply node.)
-		NDefines.NSupply.NUM_RAILWAYS_TRAIN_FACTOR = 0.075	-- Defualt 0.03	-- the train usage is scaled by railway distance between the supply node and the capital multiplied by this factor
+		NDefines.NSupply.SUPPLY_POINTS_PER_TRAIN = 0.4		-- Default 1.0	-- Amount of supply that can fit in a train. (Trains distribute supply from capital to a supply node.)
+		NDefines.NSupply.NUM_RAILWAYS_TRAIN_FACTOR = 0.075	-- Default 0.03	-- the train usage is scaled by railway distance between the supply node and the capital multiplied by this factor
 
 	-- NAITheatre
 
 	-- NIndustrialOrganisation
 
 	-- NProject
-		NDefines.NProject.RECRUIT_SCIENTIST_COST = {50, 65, 80, 100}	-- Defualt 25, 50, 75, 100
+		NDefines.NProject.RECRUIT_SCIENTIST_COST = {50, 65, 80, 100}	-- Default 25, 50, 75, 100
 
-		NDefines.NProject.BREAKTHROUGH_DAILY_TECHNOLOGY_GAIN = 14		-- Defualt 12
-		NDefines.NProject.BREAKTHROUGH_DAILY_SCIENTIST_SKILL_GAIN = 7	-- Defualt 5
-		NDefines.NProject.BREAKTHROUGH_DAILY_ROCKET_SITE_GAIN = 3		-- Defualt 3
-		NDefines.NProject.BREAKTHROUGH_DAILY_NUCLEAR_REACTOR_GAIN = 3	-- Defualt 1
+		NDefines.NProject.BREAKTHROUGH_DAILY_TECHNOLOGY_GAIN = 14		-- Default 12
+		NDefines.NProject.BREAKTHROUGH_DAILY_SCIENTIST_SKILL_GAIN = 7	-- Default 5
+		NDefines.NProject.BREAKTHROUGH_DAILY_ROCKET_SITE_GAIN = 3		-- Default 3
+		NDefines.NProject.BREAKTHROUGH_DAILY_NUCLEAR_REACTOR_GAIN = 3	-- Default 1
 
 	-- NRaids
-		NDefines.NRaids.NUCLEAR_BOMB_PRODUCTION_SCALE = 2555.0			-- Defualt 2555.0
-		NDefines.NRaids.THERMONUCLEAR_BOMB_PRODUCTION_SCALE = 2255.0	-- Defualt 2555.0
+		NDefines.NRaids.NUCLEAR_BOMB_PRODUCTION_SCALE = 2555.0			-- Default 2555.0
+		NDefines.NRaids.THERMONUCLEAR_BOMB_PRODUCTION_SCALE = 2255.0	-- Default 2555.0
 
-		NDefines.NRaids.NUCLEAR_BOMB_MIN_DAMAGE_PERCENT = 0.1			-- Defualt 0.1
-		NDefines.NRaids.NUCLEAR_BOMB_MAX_DAMAGE_PERCENT = 0.6			-- Defualt 0.9
+		NDefines.NRaids.NUCLEAR_BOMB_MIN_DAMAGE_PERCENT = 0.1			-- Default 0.1
+		NDefines.NRaids.NUCLEAR_BOMB_MAX_DAMAGE_PERCENT = 0.6			-- Default 0.9
 
 -- VNR Naval Defines
 	NDefines.NAI.SHIPS_PRODUCTION_BASE_COST = 25000;
