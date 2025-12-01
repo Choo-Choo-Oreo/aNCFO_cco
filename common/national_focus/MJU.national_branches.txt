@@ -150,10 +150,16 @@ focus_tree = {
 				}
 
 				ai_will_do = {
-					factor = 3.5
+					factor = 1.0
 					modifier = {
-						factor = 3.5
-						has_war = no
+						add = 500.0
+						has_war = yes
+					}
+					modifier = {
+						factor = 100.0
+						has_completed_focus = MJU_focus_state_recapitalization
+						has_completed_focus = MJU_focus_public_works
+						has_completed_focus = MJU_focus_private_bailin
 					}
 				}
 
@@ -189,7 +195,7 @@ focus_tree = {
 				}
 
 				ai_will_do = {
-					factor = 2.0
+					factor = 4.0
 					modifier = {
 						factor = 5.0
 						has_war = yes
@@ -251,7 +257,7 @@ focus_tree = {
 				}
 
 				ai_will_do = {
-					factor = 2.0
+					factor = 4.0
 					modifier = {
 						factor = 5.0
 						has_war = yes
@@ -312,7 +318,7 @@ focus_tree = {
 				}
 
 				ai_will_do = {
-					factor = 2.0
+					factor = 4.0
 					modifier = {
 						factor = 5.0
 						has_war = yes
@@ -943,6 +949,8 @@ focus_tree = {
 				599 = {
 					add_resource = { type = steel amount = 4 }
 				}
+				custom_effect_tooltip = MJU_expand_mining_operations_tt
+				set_global_flag = MJU_expand_mining_operations_flag
 			}
 		}
 
@@ -1170,8 +1178,8 @@ focus_tree = {
 			}
 		}
 
-	focus = { # National Policies
-		id = MJU_focus_national_policies
+	focus = { # Lower Council
+		id = MJU_focus_lower_council
 		icon = GFX_focus_unknown_political
 		#mutually_exclusive = { focus =  }
 		prerequisite = { focus = MJU_focus_internal_policies }
@@ -1191,14 +1199,11 @@ focus_tree = {
 	
 		ai_will_do = {
 			factor = 2
-			modifier = {
-				factor = 3.0
-				date > 1725.01.01
-			}
 		}
 
 		completion_reward = {
-			log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_national_policies"
+			log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_lower_council"
+			add_stability = 0.05
 		}
 	}
 
@@ -1206,8 +1211,8 @@ focus_tree = {
 			id = MJU_focus_peaceful_resolution
 			icon = GFX_focus_unknown_political
 			mutually_exclusive = { focus = MJU_focus_invade_confederation }
-			prerequisite = { focus = MJU_focus_national_policies }
-			relative_position_id = MJU_focus_national_policies
+			prerequisite = { focus = MJU_focus_lower_council }
+			relative_position_id = MJU_focus_lower_council
 			x = -2
 			y = 1
 
@@ -1239,8 +1244,8 @@ focus_tree = {
 			id = MJU_focus_invade_confederation
 			icon = GFX_focus_unknown_political
 			mutually_exclusive = { focus = MJU_focus_peaceful_resolution }
-			prerequisite = { focus = MJU_focus_national_policies }
-			relative_position_id = MJU_focus_national_policies
+			prerequisite = { focus = MJU_focus_lower_council }
+			relative_position_id = MJU_focus_lower_council
 			x = 0
 			y = 1
 
@@ -1283,8 +1288,8 @@ focus_tree = {
 			id = MJU_focus_invade_castravia
 			icon = GFX_focus_unknown_political
 			#mutually_exclusive = { focus =  }
-			prerequisite = { focus = MJU_focus_national_policies }
-			relative_position_id = MJU_focus_national_policies
+			prerequisite = { focus = MJU_focus_lower_council }
+			relative_position_id = MJU_focus_lower_council
 			x = 3
 			y = 1
 
@@ -1321,7 +1326,7 @@ focus_tree = {
 			icon = GFX_focus_unknown_political
 			#mutually_exclusive = { focus =  }
 			prerequisite = { focus = MJU_focus_invade_confederation focus = MJU_focus_invade_castravia }
-			relative_position_id = MJU_focus_national_policies
+			relative_position_id = MJU_focus_lower_council
 			x = 0
 			y = 2
 		
@@ -1354,8 +1359,8 @@ focus_tree = {
 			}
 		}
 
-	focus = { # Lower Council
-		id = MJU_focus_lower_council
+	focus = { # National Policies
+		id = MJU_focus_national_policies
 		icon = GFX_focus_unknown_political
 		#mutually_exclusive = { focus =  }
 		prerequisite = { focus = MJU_focus_internal_policies }
@@ -1375,45 +1380,92 @@ focus_tree = {
 	
 		ai_will_do = {
 			factor = 2
-		}
-
-		completion_reward = {
-			log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_lower_council"
-		}
-	}
-
-	focus = { # External Threat Preperations
-		id = MJU_focus_threat_preparations
-		icon = GFX_focus_unknown_political
-		#mutually_exclusive = { focus =  }
-		prerequisite = { focus = MJU_focus_national_policies }
-		prerequisite = { focus = MJU_focus_lower_council }
-		relative_position_id = MJU_focus_lower_council
-		x = -3
-		y = 1
-
-		cost = 10
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = no
-
-		available = {
-			any_neighbor_country = {
-				has_added_tension_amount > 25
+			modifier = {
+				factor = 3.0
+				date > 1725.01.01
 			}
 		}
-		bypass = {
-		}
-
-		ai_will_do = {
-			factor = 5.0
-		}
 
 		completion_reward = {
-			log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_threat_preparations"
-			
+			log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_national_policies"
+			add_war_support = 0.05
 		}
 	}
+
+		focus = { # External Threat Preperations
+			id = MJU_focus_threat_preparations
+			icon = GFX_focus_unknown_political
+			#mutually_exclusive = { focus =  }
+			prerequisite = { focus = MJU_focus_national_policies }
+			prerequisite = { focus = MJU_focus_lower_council }
+			relative_position_id = MJU_focus_national_policies
+			x = -3
+			y = 1
+
+			cost = 10
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+
+			available = {
+				threat > 0.20
+			}
+			bypass = {
+			}
+
+			ai_will_do = {
+				factor = 5.0
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_threat_preparations"
+				
+			}
+		}
+
+		focus = { # Northern Entrenchment
+			id = MJU_focus_northern_entrenchment
+			icon = GFX_focus_unknown_political
+			#mutually_exclusive = { focus =  }
+			prerequisite = { focus = MJU_focus_threat_preparations }
+			relative_position_id = MJU_focus_threat_preparations
+			x = 0
+			y = 1
+
+			cost = 10
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+
+			available = {
+				OR = {
+					117 = { owner = { has_added_tension_amount > 0.35 } }
+					118 = { owner = { has_added_tension_amount > 0.35 } }
+					122 = { owner = { has_added_tension_amount > 0.35 } }
+				}
+			}
+			bypass = {
+			}
+
+			ai_will_do = {
+				factor = 5.0
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_northern_entrenchment"
+				192 = {
+					add_building_construction = { type = trench_line province = 1727 level = 3 instant_build = yes }
+					add_building_construction = { type = trench_line province = 9692 level = 3 instant_build = yes }
+					add_building_construction = { type = trench_line province = 9708 level = 3 instant_build = yes }
+					add_building_construction = { type = trench_line province = 9795 level = 3 instant_build = yes }
+					add_building_construction = { type = trench_line province = 9834 level = 3 instant_build = yes }
+				}
+				193 = {
+					add_building_construction = { type = trench_line province = 2145 level = 3 instant_build = yes }
+					add_building_construction = { type = trench_line province = 9842 level = 3 instant_build = yes }
+				}
+			}
+		}
 
 	focus = { # Opening the Cities
 		id = MJU_focus_opening_the_cities
@@ -3443,7 +3495,8 @@ shared_focus = { # Novus Pueblanuran Military
 	shared_focus = { # Logistics Upgrade
 		id = MJU_focus_reforms_logistics_upgrade
 		icon = GFX_focus_generic_railroad
-		prerequisite = { focus = MJU_focus_reforms_officer_training focus = MJU_focus_reforms_nco_corps }
+		prerequisite = { focus = MJU_focus_reforms_officer_training }
+		prerequisite = { focus = MJU_focus_reforms_nco_corps }
 		relative_position_id = MJU_focus_reforms_officer_training
 		x = 1
 		y = 1
