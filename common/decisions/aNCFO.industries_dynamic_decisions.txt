@@ -217,24 +217,45 @@ industries_dynamic_category = {
 			FROM = { add_dynamic_modifier = { modifier = OAK_state_heart_of_iron_modifier } }
 		}
 
-		ai_will_do = { factor = 0
-			modifier = { add = 10
-				num_of_civilian_factories_available_for_projects > 99
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				add = 5
+				has_political_power > 50
+				FROM = { free_building_slots = { building = industrial_complex size < 1 } }
 			}
-			modifier = { factor = 2.5
+			modifier = {
+				add = 5
+				has_political_power > 100
+				FROM = { free_building_slots = { building = industrial_complex size < 1 } }
+			}
+			modifier = {
+				factor = 10
+				has_political_power > 200
+			}
+			modifier = {
+				factor = 0
+				num_of_civilian_factories_available_for_projects < 49
+			}
+			modifier = {
+				factor = 10
+				FROM = { free_building_slots = { building = industrial_complex size < 1 } }
+			}
+			modifier = {
+				factor = 2.5
 				FROM = { has_state_category = city }
 			}
-			modifier = { factor = 5
+			modifier = {
+				factor = 5
 				FROM = { has_state_category = large_city }
 			}
-			modifier = { factor = 7.5
+			modifier = {
+				factor = 7.5
 				FROM = { has_state_category = metropolis }
 			}
-			modifier = { factor = 10
+			modifier = {
+				factor = 10
 				FROM = { has_state_category = megalopolis }
-			}
-			modifier = { factor = 5
-				has_political_power > 200
 			}
 		}
 	}
@@ -766,37 +787,48 @@ industries_dynamic_category = {
 			}
 		}
 
-		ai_will_do = { factor = 1
-			modifier = {
-				factor = 0
-				has_political_power < 50
-				FROM = { free_building_slots = { building = industrial_complex size > 1 include_locked = no } }
-			}
+		ai_will_do = {
+			factor = 1
 			modifier = {
 				add = 5
 				has_political_power > 50
-				FROM = { free_building_slots = { building = industrial_complex size < 2 include_locked = no } }
+				FROM = { free_building_slots = { building = industrial_complex size < 1 } }
 			}
 			modifier = {
 				add = 5
 				has_political_power > 100
-				FROM = { free_building_slots = { building = industrial_complex size < 1 include_locked = no } }
-			}
-			modifier = { factor = 2.5
-				FROM = { has_state_category = city }
-			}
-			modifier = { factor = 5
-				FROM = { has_state_category = large_city }
-			}
-			modifier = { factor = 7.5
-				FROM = { has_state_category = metropolis }
-			}
-			modifier = { factor = 10
-				FROM = { has_state_category = megalopolis }
+				FROM = { free_building_slots = { building = industrial_complex size < 1 } }
 			}
 			modifier = {
 				factor = 10
 				has_political_power > 200
+			}
+			modifier = {
+				factor = 10
+				FROM = { free_building_slots = { building = industrial_complex size < 1 } }
+			}
+			modifier = {
+				factor = 0
+				OR = {
+					has_political_power < 50
+					FROM = { free_building_slots = { building = industrial_complex size > 1 } }
+				}
+			}
+			modifier = {
+				factor = 2.5
+				FROM = { has_state_category = city }
+			}
+			modifier = {
+				factor = 5
+				FROM = { has_state_category = large_city }
+			}
+			modifier = {
+				factor = 7.5
+				FROM = { has_state_category = metropolis }
+			}
+			modifier = {
+				factor = 10
+				FROM = { has_state_category = megalopolis }
 			}
 		}
 	}

@@ -777,11 +777,11 @@
 	-- NCharacter
 
 	-- NSupply
-		NDefines.NSupply.MAX_RAILWAY_LEVEL = 5.0				-- Default 5.0
+		NDefines.NSupply.MAX_RAILWAY_LEVEL = 5.0 -- Default 5.0
 
-		NDefines.NSupply.SUPPLY_HUB_FULL_MOTORIZATION_BONUS = 2.8				-- Default 2.2
-		NDefines.NSupply.SUPPLY_HUB_FULL_MOTORIZATION_TRUCK_COST = 75.0			-- Default 60.0
-		NDefines.NSupply.SUPPLY_HUB_MOTORIZATION_MARGINAL_EFFECT_DECAY = 1.6	-- Default 1.6
+		NDefines.NSupply.SUPPLY_HUB_FULL_MOTORIZATION_BONUS = 2.8			 -- Default 2.2
+		NDefines.NSupply.SUPPLY_HUB_FULL_MOTORIZATION_TRUCK_COST = 75.0		 -- Default 60.0
+		NDefines.NSupply.SUPPLY_HUB_MOTORIZATION_MARGINAL_EFFECT_DECAY = 1.6 -- Default 1.6
 
 		NDefines.NSupply.RAILWAY_BASE_FLOW = 15.0				-- Default 10.0
 		NDefines.NSupply.RAILWAY_FLOW_PER_LEVEL = 5.0			-- Default 5.0
@@ -791,34 +791,34 @@
 		NDefines.NSupply.NAVAL_BASE_FLOW = 5.0		-- Default 5.0
 		NDefines.NSupply.NAVAL_FLOW_PER_LEVEL = 3.0	-- Default 3.0
 
-		NDefines.NSupply.INFRA_TO_SUPPLY = 0.3						-- Default 0.3
-		NDefines.NSupply.VP_TO_SUPPLY_BASE = 0.2					-- Default 0.2
-		NDefines.NSupply.VP_TO_SUPPLY_BONUS_CONVERSION = 0.05		-- Default 0.05
-		NDefines.NSupply.SUPPLY_FROM_DAMAGED_INFRA = 0.075			-- Default 0.15
-		NDefines.NSupply.SUPPLY_BASE_MULT = 0.2						-- Default 0.2
-		NDefines.NSupply.SUPPLY_DISRUPTION_DAILY_RECOVERY = 0.75	-- Default 1.5
+		NDefines.NSupply.INFRA_TO_SUPPLY = 0.3					 -- Default 0.3
+		NDefines.NSupply.VP_TO_SUPPLY_BASE = 0.2				 -- Default 0.2
+		NDefines.NSupply.VP_TO_SUPPLY_BONUS_CONVERSION = 0.05	 -- Default 0.05
+		NDefines.NSupply.SUPPLY_FROM_DAMAGED_INFRA = 0.075		 -- Default 0.15
+		NDefines.NSupply.SUPPLY_BASE_MULT = 0.2					 -- Default 0.2
+		NDefines.NSupply.SUPPLY_DISRUPTION_DAILY_RECOVERY = 0.75 -- Default 1.5
 
-		NDefines.NSupply.SUPPLY_POINTS_PER_TRAIN = 0.4		-- Default 1.0	-- Amount of supply that can fit in a train. (Trains distribute supply from capital to a supply node.)
-		NDefines.NSupply.NUM_RAILWAYS_TRAIN_FACTOR = 0.075	-- Default 0.03	-- the train usage is scaled by railway distance between the supply node and the capital multiplied by this factor
+		NDefines.NSupply.SUPPLY_POINTS_PER_TRAIN = 0.4	   -- Default 1.0,  Amount of supply that can fit in a train. (Trains distribute supply from capital to a supply node.)
+		NDefines.NSupply.NUM_RAILWAYS_TRAIN_FACTOR = 0.075 -- Default 0.03, the train usage is scaled by railway distance between the supply node and the capital multiplied by this factor
 
 	-- NAITheatre
 
 	-- NIndustrialOrganisation
 
 	-- NProject
-		NDefines.NProject.RECRUIT_SCIENTIST_COST = {50, 65, 80, 100}	-- Default 25, 50, 75, 100
+		NDefines.NProject.RECRUIT_SCIENTIST_COST = {50, 65, 75, 80}	-- Default 25, 50, 75, 100
 
-		NDefines.NProject.BREAKTHROUGH_DAILY_TECHNOLOGY_GAIN = 14		-- Default 12
-		NDefines.NProject.BREAKTHROUGH_DAILY_SCIENTIST_SKILL_GAIN = 7	-- Default 5
-		NDefines.NProject.BREAKTHROUGH_DAILY_ROCKET_SITE_GAIN = 3		-- Default 3
-		NDefines.NProject.BREAKTHROUGH_DAILY_NUCLEAR_REACTOR_GAIN = 3	-- Default 1
+		NDefines.NProject.BREAKTHROUGH_DAILY_TECHNOLOGY_GAIN = 14	  -- Default 12
+		NDefines.NProject.BREAKTHROUGH_DAILY_SCIENTIST_SKILL_GAIN = 7 -- Default 5
+		NDefines.NProject.BREAKTHROUGH_DAILY_ROCKET_SITE_GAIN = 3	  -- Default 3
+		NDefines.NProject.BREAKTHROUGH_DAILY_NUCLEAR_REACTOR_GAIN = 3 -- Default 1
 
 	-- NRaids
-		NDefines.NRaids.NUCLEAR_BOMB_PRODUCTION_SCALE = 2555.0			-- Default 2555.0
-		NDefines.NRaids.THERMONUCLEAR_BOMB_PRODUCTION_SCALE = 2255.0	-- Default 2555.0
+		NDefines.NRaids.NUCLEAR_BOMB_PRODUCTION_SCALE = 2555.0		  -- Default 2555.0
+		NDefines.NRaids.THERMONUCLEAR_BOMB_PRODUCTION_SCALE = 2255.0  -- Default 2555.0
 
-		NDefines.NRaids.NUCLEAR_BOMB_MIN_DAMAGE_PERCENT = 0.1			-- Default 0.1
-		NDefines.NRaids.NUCLEAR_BOMB_MAX_DAMAGE_PERCENT = 0.6			-- Default 0.9
+		NDefines.NRaids.NUCLEAR_BOMB_MIN_DAMAGE_PERCENT = 0.1		  -- Default 0.1
+		NDefines.NRaids.NUCLEAR_BOMB_MAX_DAMAGE_PERCENT = 0.6		  -- Default 0.9
 
 -- VNR Naval Defines
 	NDefines.NAI.SHIPS_PRODUCTION_BASE_COST = 25000;

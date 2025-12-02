@@ -66,6 +66,7 @@ autonomous_occupation = {
 			resistance < autonomous_occupation
 			add = 500
 		}
+
 		modifier = {
 			FROM = {
 				has_capitulated = yes
@@ -73,6 +74,7 @@ autonomous_occupation = {
 			}
 			add = 1000
 		}
+
 		modifier = {
 			FROM = {
 				has_war = no
@@ -105,8 +107,22 @@ foreign_civilian_oversight = {
 	ai_will_do = {
 		base = 120
 		modifier = {
-			check_variable  = { resistance_target_without_law > 0.05}
+			check_variable = { resistance_target_without_law > 0.05 }
 			add = 100
+		}
+
+		modifier = {
+			FROM = {
+				has_capitulated = yes
+			}
+			add = 100
+		}
+
+		modifier = {
+			FROM = {
+				has_war = no
+			}
+			add = 500
 		}
 	}
 }
@@ -128,12 +144,12 @@ local_police_force_garrison = {
 	ai_will_do = {
 		base = 300
 		modifier = {
-			check_variable  = { resistance_target_without_law > 0.09}
+			check_variable = { resistance_target_without_law > 0.09 }
 			add = 200
 		}
 
 		modifier = {
-			check_variable  = { resistance_target_without_law > 0.34}
+			check_variable = { resistance_target_without_law > 0.34 }
 
 			set_temp_variable = { requirement_limit = 0.25 }
 			if = {
@@ -203,12 +219,12 @@ military_governor_occupation = {
 	ai_will_do = {
 		base = 0
 		modifier = {
-			check_variable  = { resistance_target_without_law > 0.24}
+			check_variable = { resistance_target_without_law > 0.24 }
 			add = 200
 		}
 
 		modifier = {
-			check_variable  = { resistance_target_without_law > 0.34}
+			check_variable = { resistance_target_without_law > 0.34 }
 
 			set_temp_variable = { requirement_limit = 0.25 }
 			if = {
@@ -445,6 +461,20 @@ harsh_quotas_occupation = {
 
 			add = -1000
 		}
+
+		modifier = {
+			FROM = {
+				has_capitulated = yes
+			}
+			add = -100
+		}
+
+		modifier = {
+			FROM = {
+				has_war = no
+			}
+			add = -500
+		}
 	}
 }
 
@@ -468,7 +498,7 @@ brutally_oppressive_occupation = {
 	ai_will_do = {
 		base = 0
 		modifier = {
-			check_variable  = { resistance_target_without_law > 0.84 }
+			check_variable = { resistance_target_without_law > 0.84 }
 
 			set_temp_variable = { resistance_limit = 40 }
 			set_temp_variable = { requirement_limit = 2.0 }
@@ -481,6 +511,20 @@ brutally_oppressive_occupation = {
 			resistance > resistance_limit
 
 			add = 1000
+		}
+
+		modifier = {
+			FROM = {
+				has_capitulated = yes
+			}
+			add = -100
+		}
+
+		modifier = {
+			FROM = {
+				has_war = no
+			}
+			add = -500
 		}
 	}
 }
@@ -511,13 +555,26 @@ reconciliation = {
 	}
 
 	state_modifier = {
-		compliance_gain 				= 0.03
-		required_garrison_factor 		= -0.5
-		resistance_damage_to_garrison 	= -0.3
-		resistance_decay 				= 0.5
+		compliance_gain 			  = 0.03
+		required_garrison_factor 	  = -0.5
+		resistance_damage_to_garrison = -0.3
+		resistance_decay 			  = 0.5
 	}
 
 	ai_will_do = {
 		base = 200
+		modifier = {
+			FROM = {
+				has_capitulated = yes
+			}
+			add = 100
+		}
+
+		modifier = {
+			FROM = {
+				has_war = no
+			}
+			add = 500
+		}
 	}
 }

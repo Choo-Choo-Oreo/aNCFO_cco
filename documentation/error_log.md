@@ -48,26 +48,10 @@
 [no_game_date][pdx_entity.cpp:228]: Could not find animation "anti_air_gunner_idle" for state "idle" in entity "choo_gfx_anti_air_crew_gunner_entity"
 [no_game_date][pdx_entity.cpp:324]: Failed to find entity "motorized_vehicle_entity" for attachment in vehicle
 [no_game_date][pdx_entity.cpp:324]: Failed to find entity "motorized_vehicle_entity" for attachment in vehicle
-[no_game_date][subunitdefinition.cpp:494]: No localisation for modifier_experience_gain_auxiliary_ship_mission_factor
-[no_game_date][subunitdefinition.cpp:494]: No localisation for modifier_experience_gain_battlecarrier_mission_factor
-[no_game_date][subunitdefinition.cpp:494]: No localisation for modifier_experience_gain_medium_cruiser_mission_factor
-[no_game_date][subunitdefinition.cpp:494]: No localisation for modifier_experience_gain_SH_battleship_mission_factor
-[no_game_date][persistent.cpp:66]: Error: "Unknown modifier: state_bunker_max_level_terrain_limit, near line: 431" in file: "common/buildings/00_buildings.txt" near line: 431
-[no_game_date][persistent.cpp:66]: Error: "Unknown modifier: state_coastal_bunker_max_level_terrain_limit, near line: 432" in file: "common/buildings/00_buildings.txt" near line: 432
-[no_game_date][persistent.cpp:66]: Error: "Unknown modifier: state_production_speed_bunker_factor, near line: 434" in file: "common/buildings/00_buildings.txt" near line: 434
-[no_game_date][persistent.cpp:66]: Error: "Unknown modifier: state_production_speed_coastal_bunker_factor, near line: 435" in file: "common/buildings/00_buildings.txt" near line: 435
-[no_game_date][trigger.cpp:700]: Invalid trigger 'has_air_force_command' in common/ideas/aNCFO.spirits_of_air.txt line : 147
-[no_game_date][trigger.cpp:568]: Error: "Unknown trigger-type: has_air_force_command, near line: 147" in file: "common/ideas/aNCFO.spirits_of_air.txt" near line: 147
-[no_game_date][trigger.cpp:700]: Invalid trigger 'has_air_force_command' in common/ideas/aNCFO.spirits_of_air.txt line : 179
-[no_game_date][trigger.cpp:568]: Error: "Unknown trigger-type: has_air_force_command, near line: 179" in file: "common/ideas/aNCFO.spirits_of_air.txt" near line: 179
-[no_game_date][trigger.cpp:700]: Invalid trigger 'has_air_force_command' in common/ideas/aNCFO.spirits_of_air.txt line : 194
-[no_game_date][trigger.cpp:568]: Error: "Unknown trigger-type: has_air_force_command, near line: 194" in file: "common/ideas/aNCFO.spirits_of_air.txt" near line: 194
-[no_game_date][trigger.cpp:700]: Invalid trigger 'has_air_force_command' in common/ideas/aNCFO.spirits_of_air.txt line : 211
-[no_game_date][trigger.cpp:568]: Error: "Unknown trigger-type: has_air_force_command, near line: 211" in file: "common/ideas/aNCFO.spirits_of_air.txt" near line: 211
-[no_game_date][trigger.cpp:700]: Invalid trigger 'has_air_force_command' in common/ideas/aNCFO.spirits_of_air.txt line : 226
-[no_game_date][trigger.cpp:568]: Error: "Unknown trigger-type: has_air_force_command, near line: 226" in file: "common/ideas/aNCFO.spirits_of_air.txt" near line: 226
-[no_game_date][trigger.cpp:700]: Invalid trigger 'has_air_force_command' in common/ideas/aNCFO.spirits_of_air.txt line : 241
-[no_game_date][trigger.cpp:568]: Error: "Unknown trigger-type: has_air_force_command, near line: 241" in file: "common/ideas/aNCFO.spirits_of_air.txt" near line: 241
+[no_game_date][persistent.cpp:66]: Error: "Unknown modifier: state_bunker_max_level_terrain_limit, near line: 430" in file: "common/buildings/00_buildings.txt" near line: 430
+[no_game_date][persistent.cpp:66]: Error: "Unknown modifier: state_coastal_bunker_max_level_terrain_limit, near line: 431" in file: "common/buildings/00_buildings.txt" near line: 431
+[no_game_date][persistent.cpp:66]: Error: "Unknown modifier: state_production_speed_bunker_factor, near line: 433" in file: "common/buildings/00_buildings.txt" near line: 433
+[no_game_date][persistent.cpp:66]: Error: "Unknown modifier: state_production_speed_coastal_bunker_factor, near line: 434" in file: "common/buildings/00_buildings.txt" near line: 434
 [no_game_date][doctrine_triggers.cpp:88]: Invalid doctrine token in has_doctrine trigger: screen_support_focus
 [no_game_date][trigger.cpp:568]: Error: "Not a valid value: screen_support_focus, near line: 173" in file: "common/ideas/aNCFO.spirits_of_navy.txt" near line: 174
 [no_game_date][doctrine_triggers.cpp:88]: Invalid doctrine token in has_doctrine trigger: patrol_boats
@@ -96,14 +80,11 @@
 [no_game_date][trigger.cpp:568]: Error: "Not a valid value: line_of_battle, near line: 653" in file: "common/ideas/aNCFO.spirits_of_navy.txt" near line: 656
 [no_game_date][doctrine_triggers.cpp:88]: Invalid doctrine token in has_doctrine trigger: line_of_battle
 [no_game_date][trigger.cpp:568]: Error: "Not a valid value: line_of_battle, near line: 729" in file: "common/ideas/aNCFO.spirits_of_navy.txt" near line: 732
-[no_game_date][faction_template.cpp:85]: Default rule 'change_leader_rule_influence' replaces 'change_leader_rule_influence' that has previously been set as default for 'INFLUENCE_SORT' in 'faction_template_HFF_coalition_of_free_states'
 [no_game_date][pdx_audio.cpp:1369]: Could not find music named 
 [no_game_date][insigniagraphicsdatabase.cpp:262]: Error: Wrong army icon definition
  GFX_naval_equipment_role_icons 92 - defined in army_icons.txt and 84 specified in GFX file
 [no_game_date][insigniagraphicsdatabase.cpp:279]: Error: Wrong army icon definition
  GFX_naval_equipment_role_icons_selected 92 - defined in army_icons.txt and 84 specified in GFX file
-[no_game_date][database_scoped_variables.cpp:266]: invalid database object for effect/trigger: base_strike. use var:var_name to explicitly use variables in effects/triggers
-[no_game_date][database_scoped_variables.cpp:266]: invalid database object for effect/trigger: fleet_in_being. use var:var_name to explicitly use variables in effects/triggers
 [no_game_date][database_scoped_variables.cpp:266]: invalid database object for effect/trigger: masterful_blitz. use var:var_name to explicitly use variables in effects/triggers
 [no_game_date][database_scoped_variables.cpp:266]: invalid database object for effect/trigger: marines_commandoes_mechanised_non_mtg. use var:var_name to explicitly use variables in effects/triggers
 [no_game_date][database_scoped_variables.cpp:266]: invalid database object for effect/trigger: trench_warfare. use var:var_name to explicitly use variables in effects/triggers

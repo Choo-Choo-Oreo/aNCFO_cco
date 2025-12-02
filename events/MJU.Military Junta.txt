@@ -298,3 +298,50 @@ add_namespace = MJU
 			}
 		}
 	}
+
+	country_event = { # Reunite the Pueblanura-Plains?
+		id = MJU.13
+		title = MJU.13.t
+		desc = MJU.13.d
+		picture = GFX_report_event_tur_the_montreux_convention
+		is_triggered_only = yes
+		immediate = { log = "[GetDateText]: [Root.GetName]: Event MJU.13" }
+		option = {
+			name = MJU.13.a
+			ai_chance = { factor = 5 }
+			FROM = { country_event = { id = MJU.14 } }
+		}
+
+		option = {
+			name = MJU.13.b
+			ai_chance = { factor = 95 }
+			FROM = { country_event = { id = MJU.15 } }
+		}
+	}
+
+	country_event = { # Rejects the Intergration
+		id = MJU.14
+		title = MJU.14.t
+		desc = MJU.14.d
+		picture = GFX_report_event_tur_the_montreux_convention
+		is_triggered_only = yes
+		immediate = { log = "[GetDateText]: [Root.GetName]: Event MJU.14" }
+		option = {
+			name = MJU.14.a
+			declare_war_on = { type = annex_everything target = FROM }
+			create_wargoal = { type = annex_everything target = FROM expire = 12 }
+		}
+	}
+
+	country_event = { # Accepts the Intergration
+		id = MJU.15
+		title = MJU.15.t
+		desc = MJU.15.d
+		picture = GFX_report_event_tur_the_montreux_convention
+		is_triggered_only = yes
+		immediate = { log = "[GetDateText]: [Root.GetName]: Event MJU.15" }
+		option = {
+			name = MJU.15.a
+			puppet = { target = FROM end_wars = no }
+		}
+	}

@@ -6,7 +6,7 @@ types = {
 
 		command_power = 20 # command power allocation cost
 		ai_will_do = {
-			base = 1
+			factor = 10
 			modifier = {
 				factor = 0 # Don't target anyone who is not a potential enemy
 				NOT = {
@@ -182,10 +182,20 @@ types = {
 				}
 				victim_effects = {
 					var:target_state = {
+						#CONTROLLER = { war_support_factor = -0.05 }
 						custom_effect_tooltip = raid_nuclear_strike_tt
-						add_dynamic_modifier = {
-							modifier = fallout_atomic
-							days = 365
+						IF = {
+							limit = {
+								NOT = {
+									has_dynamic_modifier = {
+										modifier = fallout_thermonuclear
+									}
+								}
+							}
+							add_dynamic_modifier = {
+								modifier = fallout_atomic
+								days = 365
+							}
 						}
 					}
 					var:actor_country = {
@@ -202,20 +212,29 @@ types = {
 					raid_add_unit_experience = 0.5
 				}
 				victim_effects = {
+					var:target_state = {
+						#CONTROLLER = { war_support_factor = -0.05 }
+						custom_effect_tooltip = raid_nuclear_strike_tt
+						IF = {
+							limit = {
+								NOT = {
+									has_dynamic_modifier = {
+										modifier = fallout_thermonuclear
+									}
+								}
+							}
+							add_dynamic_modifier = {
+								modifier = fallout_atomic
+								days = 730
+							}
+						}
+					}
 					var:actor_country = {
 						launch_nuke = {
 							province = var:ROOT.target_province #optional use either province or state
 							use_nuke = no
 						}
 					}
-					var:target_state = {
-						custom_effect_tooltip = raid_nuclear_strike_tt
-						add_dynamic_modifier = {
-							modifier = fallout_atomic
-							days = 730
-						}
-					}
-					
 				}
 			}
 		}
@@ -227,7 +246,7 @@ types = {
 		days_to_prepare = 14
 		speed_multiplier = 0.08
 		ai_will_do = {
-			base = 1
+			factor = 10
 			modifier = {
 				factor = 0 # Don't target anyone who is not a potential enemy
 				NOT = {
@@ -321,8 +340,6 @@ types = {
 			}
 		}
 
-
-
 		success_levels = {
 			failure = {
 				actor_effects = {
@@ -344,10 +361,19 @@ types = {
 				}
 				victim_effects = {
 					var:target_state = {
-						#custom_effect_tooltip = raid_nuclear_strike_tt
-						add_dynamic_modifier = {
-							modifier = fallout_atomic
-							days = 365
+						#CONTROLLER = { war_support_factor = -0.05 }
+						IF = {
+							limit = {
+								NOT = {
+									has_dynamic_modifier = {
+										modifier = fallout_thermonuclear
+									}
+								}
+							}
+							add_dynamic_modifier = {
+								modifier = fallout_atomic
+								days = 365
+							}
 						}
 					}
 					var:actor_country = {
@@ -364,9 +390,19 @@ types = {
 				}
 				victim_effects = {
 					var:target_state = {
-						add_dynamic_modifier = {
-							modifier = fallout_atomic
-							days = 365
+						#CONTROLLER = { war_support_factor = -0.05 }
+						IF = {
+							limit = {
+								NOT = {
+									has_dynamic_modifier = {
+										modifier = fallout_thermonuclear
+									}
+								}
+							}
+							add_dynamic_modifier = {
+								modifier = fallout_atomic
+								days = 730
+							}
 						}
 					}
 					var:actor_country = {
@@ -386,7 +422,7 @@ types = {
 		category = nuclear_raids
 
 		ai_will_do = {
-			base = 1
+			factor = 10
 			modifier = {
 				# Don't target anyone who is not a potential enemy
 				factor = 0
@@ -404,8 +440,8 @@ types = {
 			modifier = {
 				factor = 20
 				OR = {
-					original_tag = USA
-					original_tag = SOV
+					original_tag = MRC
+					original_tag = OAK
 				}
 			}
 			modifier = {
@@ -555,8 +591,8 @@ types = {
 					raid_add_unit_experience = 0.35
 				}
 				victim_effects = {
-					var:actor_country = { save_global_event_target_as = nuclear_gandhi_actor_country }   
 					var:target_state = {
+						#CONTROLLER = { war_support_factor = -0.10 }
 						custom_effect_tooltip = raid_nuclear_strike_tt
 						hidden_effect = {
 							IF = {
@@ -590,8 +626,8 @@ types = {
 					raid_add_unit_experience = 0.5
 				}
 				victim_effects = {
-					var:actor_country = { save_global_event_target_as = nuclear_gandhi_actor_country }  
 					var:target_state = {
+						#CONTROLLER = { war_support_factor = -0.10 }
 						custom_effect_tooltip = raid_nuclear_strike_tt
 						hidden_effect = {
 							IF = {
@@ -607,7 +643,7 @@ types = {
 						}
 						add_dynamic_modifier = {
 							modifier = fallout_thermonuclear
-							days = 730
+							days = 1095
 						}
 					}
 					var:actor_country = {
@@ -629,7 +665,7 @@ types = {
 		speed_multiplier = 0.08
 
 		ai_will_do = {
-			base = 1
+			factor = 10
 			modifier = {
 				# Don't target anyone who is not a potential enemy
 				factor = 0
@@ -746,7 +782,19 @@ types = {
 				}
 				victim_effects = {
 					var:target_state = {
-						#custom_effect_tooltip = raid_nuclear_strike_tt
+						#CONTROLLER = { war_support_factor = -0.10 }
+						hidden_effect = {
+							IF = {
+								limit = { 
+									has_dynamic_modifier = {
+										modifier = fallout_atomic
+									}
+								}	
+								remove_dynamic_modifier = {
+									modifier = fallout_atomic
+								}
+							}
+						}
 						add_dynamic_modifier = {
 							modifier = fallout_thermonuclear
 							days = 730
@@ -767,9 +815,22 @@ types = {
 				}
 				victim_effects = {
 					var:target_state = {
+						#CONTROLLER = { war_support_factor = -0.10 }
+						hidden_effect = {
+							IF = {
+								limit = { 
+									has_dynamic_modifier = {
+										modifier = fallout_atomic
+									}
+								}	
+								remove_dynamic_modifier = {
+									modifier = fallout_atomic
+								}
+							}
+						}
 						add_dynamic_modifier = {
 							modifier = fallout_thermonuclear
-							days = 730
+							days = 1095
 						}
 					}
 					var:actor_country = {

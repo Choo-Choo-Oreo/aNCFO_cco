@@ -176,8 +176,11 @@ on_actions = {
 
 		effect = { # Building Queuer
 			IF = {
-				LIMIT = { is_ai = yes }
-				every_owned_state = {
+				LIMIT = {
+					is_ai = yes
+					date > 1726.01.01
+				}
+				every_owned_state = { # Oil-Fired Generator Queuing
 					IF = {
 						LIMIT = {
 							set_temp_variable = { total_industry = building_level@industrial_complex }
@@ -203,14 +206,31 @@ on_actions = {
 						}
 					}
 				}
-				every_owned_state = {
-					IF = {
-						LIMIT = {
-							free_building_slots = { building = arms_factory size < 1 }
-							NOT = { has_state_flag = { flag = bq_construction_complex days < 1 } }
+				IF = { # Construction Sector Queuing
+					LIMIT = { num_of_civilian_factories_available_for_projects > 49 }
+					every_owned_state = {
+						random_select_amount = 3 # "random_select_amount" prevents "construction_complex" Queue overload
+						IF = {
+							LIMIT = {
+								free_building_slots = { building = industrial_complex size < 1 }
+								NOT = { has_state_flag = { flag = bq_construction_complex days < 1 } }
+							}
+							add_building_construction = { type = construction_complex level = 1 instant_build = no }
+							set_state_flag = { flag = bq_construction_complex days = 365 }
 						}
-						add_building_construction = { type = construction_complex level = 1 instant_build = no }
-						set_state_flag = { flag = bq_construction_complex days = 365 }
+					}
+					ELSE = {
+						every_owned_state = {
+							random_select_amount = 1 # "random_select_amount" prevents "construction_complex" Queue overload
+							IF = {
+								LIMIT = {
+									free_building_slots = { building = industrial_complex size < 1 }
+									NOT = { has_state_flag = { flag = bq_construction_complex days < 1 } }
+								}
+								add_building_construction = { type = construction_complex level = 1 instant_build = no }
+								set_state_flag = { flag = bq_construction_complex days = 365 }
+							}
+						}
 					}
 				}
 				IF = { # Commercial Nuclear Reactor Queuing
@@ -225,6 +245,31 @@ on_actions = {
 							}
 							add_building_construction = { type = commercial_nuclear_reactor level = 1 instant_build = no }
 							set_state_flag = { flag = bq_commercial_nuclear_reactor days = 365 }
+						}
+					}
+				}
+				IF = { # Air Base Queuing
+					# num_deployed_planes
+					# num_deployed_planes_with_type@fighter
+					# num_equipment@small_plane_airframe > num_deployed_planes_with_type@fighter
+					LIMIT = {
+						OR = {
+							any_allied_country = { # <- Friend
+								is_in_faction_with = ROOT
+								check_variable = { num_equipment@small_plane_airframe > num_deployed_planes_with_type@fighter }
+							}
+							check_variable = { num_equipment@small_plane_airframe > num_deployed_planes_with_type@fighter } # <- Self
+						}
+					}
+					every_owned_state = {
+						random_select_amount = 1
+						IF = {
+							LIMIT = {
+							    check_variable = { var = building_level@air_base value = 1 compare = greater_than_or_equals }
+							    NOT = { has_state_flag = { flag = bq_air_base days < 1 } }
+							}
+							add_building_construction = { type = air_base level = 1 instant_build = no }
+							set_state_flag = { flag = bq_air_base days = 365 }
 						}
 					}
 				}
