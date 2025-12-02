@@ -1143,6 +1143,7 @@ focus_tree = {
 				}
 			}
 
+			will_lead_to_war_with = SPC
 			completion_reward = {
 				log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_invade_confederation"
 				create_wargoal = { type = annex_everything target = SPC expire = 12 }
@@ -1179,6 +1180,7 @@ focus_tree = {
 				}
 			}
 
+			will_lead_to_war_with = UPF
 			completion_reward = {
 				log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_invade_castravia"
 				create_wargoal = { type = annex_everything target = UPF expire = 12 }
@@ -2009,7 +2011,7 @@ focus_tree = {
 			prerequisite = { focus = MJU_focus_status_quo }
 			relative_position_id = MJU_focus_status_quo
 			x = 0
-			y = 3
+			y = 2
 		
 			cost = 10
 			cancel_if_invalid = yes
@@ -2044,7 +2046,7 @@ focus_tree = {
 			prerequisite = { focus = MJU_focus_strengthen_state }
 			relative_position_id = MJU_focus_strengthen_state
 			x = 0
-			y = 3
+			y = 4
 		
 			cost = 10
 			cancel_if_invalid = yes
@@ -2178,7 +2180,7 @@ focus_tree = {
 			}
 		}
 
-	focus = { # Intellgentsia Open
+	focus = { # Open Dialog with the Intellgentsia
 		id = MJU_focus_intelligentsia_open_up_conversation
 		icon = GFX_focus_unknown_political
 		mutually_exclusive = { focus = MJU_focus_intelligentsia_underground_crackdown }
@@ -2213,7 +2215,161 @@ focus_tree = {
 		}
 	}
 
-	focus = { # Intellgentsia Close
+		focus = { # Intellgentsia Reformation
+			id = MJU_focus_intelligentsia_reformation
+			icon = GFX_focus_unknown_political
+			#mutually_exclusive = { focus =  }
+			prerequisite = { focus = MJU_focus_reform }
+			prerequisite = { focus = MJU_focus_intelligentsia_open_up_conversation }
+			relative_position_id = MJU_focus_intelligentsia_open_up_conversation
+			x = -1
+			y = 1
+		
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+
+			allow_branch = {
+			}
+			available = {
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				factor = 2
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_intelligentsia_reformation"
+				IF = {
+					LIMIT = { has_government = authoritarianism }
+					set_politics = { ruling_party = authoritarianism elections_allowed = yes }
+				}
+				ELSE_IF = {
+					LIMIT = { has_government = semidemocracy }
+					set_politics = { ruling_party = semidemocracy elections_allowed = yes }
+				}
+				ELSE_IF = {
+					remove_05_current_party_popularity = yes
+				}
+			}
+		}
+
+		focus = { # Intellgentsia Handshake
+			id = MJU_focus_intelligentsia_handshake
+			icon = GFX_focus_unknown_political
+			#mutually_exclusive = { focus =  }
+			prerequisite = { focus = MJU_focus_intelligentsia_open_up_conversation }
+			relative_position_id = MJU_focus_intelligentsia_open_up_conversation
+			x = 1
+			y = 1
+		
+			cost = 10
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+
+			allow_branch = {
+			}
+			available = {
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				factor = 2
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_intelligentsia_reformation"
+				add_05_current_party_popularity = yes
+			}
+		}
+
+		focus = { # Intraparty Democracy
+			id = MJU_focus_intraparty_democracy
+			icon = GFX_focus_unknown_political
+			#mutually_exclusive = { focus =  }
+			prerequisite = { focus = MJU_focus_intelligentsia_open_up_conversation }
+			relative_position_id = MJU_focus_intelligentsia_open_up_conversation
+			x = 3
+			y = 1
+		
+			cost = 10
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+
+			allow_branch = {
+			}
+			available = {
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				factor = 2
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_intelligentsia_reformation"
+				add_05_current_party_popularity = yes
+			}
+		}
+
+		focus = { # Intellgentsia Agreement
+			id = MJU_focus_intelligentsia_agreement
+			icon = GFX_focus_unknown_political
+			#mutually_exclusive = { focus =  }
+			prerequisite = { focus = MJU_focus_intelligentsia_reformation focus = MJU_focus_intelligentsia_handshake focus = MJU_focus_intraparty_democracy focus = MJU_focus_strengthen_state }
+			relative_position_id = MJU_focus_intelligentsia_open_up_conversation
+			x = 0
+			y = 2
+		
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+
+			allow_branch = {
+			}
+			available = {
+				OR = {
+					AND = {
+						has_completed_focus = MJU_focus_intelligentsia_handshake
+						has_completed_focus = MJU_focus_intraparty_democracy
+						has_completed_focus = MJU_focus_strengthen_state
+					}
+					AND = {
+						has_completed_focus = MJU_focus_intelligentsia_reformation
+						OR = {
+							has_completed_focus = MJU_focus_intelligentsia_handshake
+							has_completed_focus = MJU_focus_intraparty_democracy
+							has_completed_focus = MJU_focus_strengthen_state
+						}
+					}
+				}
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				factor = 2
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_intelligentsia_agreement"
+				IF = {
+					LIMIT = { has_completed_focus = MJU_focus_intelligentsia_reformation }
+					remove_05_current_party_popularity = yes
+				}
+				remove_ideas = MJU_idea_suppressed_intelligentsia
+			}
+		}
+
+	focus = { # Shutdown Intellgentsia Dialog
 		id = MJU_focus_intelligentsia_underground_crackdown
 		icon = GFX_focus_unknown_political
 		mutually_exclusive = { focus = MJU_focus_intelligentsia_open_up_conversation }
@@ -2248,6 +2404,217 @@ focus_tree = {
 		}
 	}
 
+		focus = { # Top-down command rule
+			id = MJU_focus_topdown_command_rule
+			icon = GFX_focus_unknown_political
+			#mutually_exclusive = { focus =  }
+			prerequisite = { focus = MJU_focus_intelligentsia_underground_crackdown }
+			relative_position_id = MJU_focus_intelligentsia_underground_crackdown
+			x = -3
+			y = 1
+		
+			cost = 10
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+
+			allow_branch = {
+			}
+			available = {
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				factor = 2
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_topdown_command_rule"
+				remove_05_current_party_popularity = yes
+			}
+		}
+
+		focus = { # Pistol and Cell
+			id = MJU_focus_pistol_and_cell
+			icon = GFX_focus_unknown_political
+			#mutually_exclusive = { focus =  }
+			prerequisite = { focus = MJU_focus_intelligentsia_underground_crackdown }
+			relative_position_id = MJU_focus_intelligentsia_underground_crackdown
+			x = -1
+			y = 1
+		
+			cost = 10
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+
+			allow_branch = {
+			}
+			available = {
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				factor = 2
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_pistol_and_cell"
+				remove_05_current_party_popularity = yes
+			}
+		}
+
+		focus = { # Intellgentsia Manhunt
+			id = MJU_focus_intelligentsia_manhunt
+			icon = GFX_focus_unknown_political
+			#mutually_exclusive = { focus =  }
+			prerequisite = { focus = MJU_focus_intelligentsia_underground_crackdown }
+			prerequisite = { focus = MJU_focus_nationalist }
+			relative_position_id = MJU_focus_intelligentsia_underground_crackdown
+			x = 1
+			y = 1
+		
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+
+			allow_branch = {
+			}
+			available = {
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				factor = 2
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_intelligentsia_manhunt"
+				add_popularity = { ideology = unitism popularity = 0.05 }
+			}
+		}
+
+		focus = { # Intellgentsia Vanishment
+			id = MJU_focus_intelligentsia_vanishment
+			icon = GFX_focus_unknown_political
+			#mutually_exclusive = { focus =  }
+			prerequisite = { focus = MJU_focus_strengthen_state focus = MJU_focus_topdown_command_rule focus = MJU_focus_pistol_and_cell focus = MJU_focus_intelligentsia_manhunt }
+			relative_position_id = MJU_focus_intelligentsia_underground_crackdown
+			x = 0
+			y = 2
+		
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+
+			allow_branch = {
+			}
+			available = {
+				OR = {
+					AND = {
+						has_completed_focus = MJU_focus_strengthen_state
+						has_completed_focus = MJU_focus_topdown_command_rule
+						has_completed_focus = MJU_focus_pistol_and_cell
+					}
+					AND = {
+						has_completed_focus = MJU_focus_intelligentsia_manhunt
+						OR = {
+							has_completed_focus = MJU_focus_strengthen_state
+							has_completed_focus = MJU_focus_topdown_command_rule
+							has_completed_focus = MJU_focus_pistol_and_cell
+						}
+					}
+				}
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				factor = 2
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_intelligentsia_vanishment"
+				add_popularity = { ideology = unitism popularity = 0.05 }
+				remove_ideas = MJU_idea_suppressed_intelligentsia
+			}
+		}
+
+	focus = { # Republica Militar
+		id = MJU_focus_republica_militar
+		icon = GFX_focus_unknown_political
+		mutually_exclusive = { focus = MJU_focus_la_milicia_es_la_nueva_aristocracia }
+		prerequisite = { focus = MJU_focus_libre_bastion focus = MJU_focus_state_stewardship }
+		relative_position_id = MJU_focus_opening_the_cities
+		x = -6
+		y = 11
+	
+		cost = 5
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		allow_branch = {
+		}
+		available = {
+			OR = {
+				has_completed_focus = MJU_focus_reform
+				has_completed_focus = MJU_focus_status_quo
+			}
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			factor = 2
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_intelligentsia_open_up_conversation"
+			remove_ideas = MJU_idea_old_kingdom_ashes
+		}
+	}
+
+	focus = { # La Milicia Es La Nueva Aristocracia
+		id = MJU_focus_la_milicia_es_la_nueva_aristocracia
+		icon = GFX_focus_unknown_political
+		mutually_exclusive = { focus = MJU_focus_republica_militar }
+		prerequisite = { focus = MJU_focus_state_stewardship focus = MJU_focus_neo_order }
+		relative_position_id = MJU_focus_opening_the_cities
+		x = 6
+		y = 11
+	
+		cost = 5
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		allow_branch = {
+		}
+		available = {
+			OR = {
+				has_completed_focus = MJU_focus_status_quo
+				has_completed_focus = MJU_focus_nationalist
+			}
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			factor = 3.5
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_intelligentsia_underground_crackdown"
+			remove_ideas = MJU_idea_old_kingdom_ashes
+		}
+	}
+
 	focus = { # Temerarium-Levav Pack
 		id = MJU_focus_temerarium_levav_pack
 		icon = GFX_focus_unknown_political
@@ -2255,7 +2622,7 @@ focus_tree = {
 		prerequisite = { focus = MJU_focus_libre_bastion focus = MJU_focus_state_stewardship }
 		relative_position_id = MJU_focus_status_quo
 		x = -4
-		y = 7
+		y = 8
 	
 		cost = 10
 		cancel_if_invalid = yes
@@ -2329,7 +2696,7 @@ focus_tree = {
 		prerequisite = { focus = MJU_focus_state_stewardship focus = MJU_focus_neo_order }
 		relative_position_id = MJU_focus_status_quo
 		x = 4
-		y = 7
+		y = 8
 	
 		cost = 10
 		cancel_if_invalid = yes
