@@ -107,30 +107,151 @@ HHE_fewer_factories_for_purchases_please = {
 	}
 }
 
-HHE_there_is_never_enough = {
+HHE_there_is_never_enough_men = {
 	allowed = { original_tag = HHE }
 	enable = {
-		check_variable = { num_divisions < 365 }
-		date < 1736.1.1
 		date > 1730.1.1
+		check_variable = { var = reserved value = deployed_total compare = greater_than }
+		check_variable = { num_equipment@anti_air_equipment > num_equipment_in_armies@anti_air_equipment }
+		check_variable = { num_equipment@anti_tank_equipment > num_equipment_in_armies@anti_tank_equipment }
+		check_variable = { num_equipment@infantry_equipment > num_equipment_in_armies@infantry_equipment }
+		check_variable = { num_equipment@motorized_equipment > num_equipment_in_armies@motorized_equipment }
+		check_variable = { num_equipment@support_equipment > num_equipment_in_armies@support_equipment }
 	}
 	abort_when_not_enabled = yes
 
 	ai_strategy = {
 		type = force_build_armies
-		value = 730
+		value = 365
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = infantry
+		value = 200
 	}
 
 	ai_strategy = {
 		type = build_army
 		id = infantry
-		value = 30
+		value = 200
 	}
 
 	ai_strategy = {
 		type = build_army
 		id = garrison
-		value = 15
+		value = 65
+	}
+}
+
+HHE_there_is_never_enough_tanks = {
+	allowed = { original_tag = HHE }
+	enable = {
+		date > 1730.1.1
+		check_variable = { var = reserved value = deployed_total compare = greater_than }
+		check_variable = { num_equipment@anti_air_equipment > num_equipment_in_armies@anti_air_equipment }
+		check_variable = { num_equipment@infantry_equipment > num_equipment_in_armies@infantry_equipment }
+		check_variable = { num_equipment@mechanized_equipment > num_equipment_in_armies@mechanized_equipment }
+		check_variable = { num_equipment@motorized_equipment > num_equipment_in_armies@motorized_equipment }
+		check_variable = { num_equipment@armored_support_vehicle > num_equipment_in_armies@armored_support_vehicle }
+		check_variable = { num_equipment@support_equipment > num_equipment_in_armies@support_equipment }
+		check_variable = { num_equipment@medium_tank_chassis > num_equipment_in_armies@medium_tank_chassis }
+	}
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = force_build_armies
+		value = 545
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = armor_role
+		value = 1100
+	}
+
+	ai_strategy = {
+		type = build_army
+		id = armor_role
+		value = 1100
+	}
+}
+
+HHE_there_is_never_enough_marines = {
+	allowed = { original_tag = HHE }
+	enable = {
+		date > 1730.1.1
+		check_variable = { var = reserved value = deployed_total compare = greater_than }
+		check_variable = { num_equipment@anti_air_equipment > num_equipment_in_armies@anti_air_equipment }
+		check_variable = { num_equipment@anti_tank_equipment > num_equipment_in_armies@anti_tank_equipment }
+		check_variable = { num_equipment@infantry_equipment > num_equipment_in_armies@infantry_equipment }
+		check_variable = { num_equipment@motorized_equipment > num_equipment_in_armies@motorized_equipment }
+		check_variable = { num_equipment@support_equipment > num_equipment_in_armies@support_equipment }
+		check_variable = { num_armies_with_type@marine < num_armies_with_type@infantry }
+	}
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = role_ratio
+		id = infantry
+		value = -100
+	}
+
+	ai_strategy = {
+		type = build_army
+		id = infantry
+		value = -100
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = marines
+		value = 350
+	}
+
+	ai_strategy = {
+		type = build_army
+		id = marines
+		value = 350
+	}
+}
+
+HHE_there_is_never_enough_mountaineers = {
+	allowed = { original_tag = HHE }
+	enable = {
+		date > 1730.1.1
+		check_variable = { var = reserved value = deployed_total compare = greater_than }
+		check_variable = { num_equipment@anti_air_equipment > num_equipment_in_armies@anti_air_equipment }
+		check_variable = { num_equipment@anti_tank_equipment > num_equipment_in_armies@anti_tank_equipment }
+		check_variable = { num_equipment@infantry_equipment > num_equipment_in_armies@infantry_equipment }
+		check_variable = { num_equipment@motorized_equipment > num_equipment_in_armies@motorized_equipment }
+		check_variable = { num_equipment@support_equipment > num_equipment_in_armies@support_equipment }
+		check_variable = { num_armies_with_type@mountaineers < num_armies_with_type@infantry }
+	}
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = role_ratio
+		id = infantry
+		value = -100
+	}
+
+	ai_strategy = {
+		type = build_army
+		id = infantry
+		value = -100
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = mountaineers
+		value = 350
+	}
+
+	ai_strategy = {
+		type = build_army
+		id = mountaineers
+		value = 350
 	}
 }
 

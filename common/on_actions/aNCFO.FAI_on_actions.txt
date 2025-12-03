@@ -112,6 +112,16 @@ on_actions = {
 		}
 
 		effect = { # Army Size Checker
+			# Compute on_monthly_deployed_total = army + navy + airforce
+			set_temp_variable = { on_monthly_deployed_total = deployed_army_manpower_k }
+			add_to_temp_variable = { on_monthly_deployed_total = deployed_navy_manpower_k }
+			add_to_temp_variable = { on_monthly_deployed_total = deployed_airforce_manpower_k }
+			# Compute on_monthly_reserved = manpower_k - on_monthly_deployed_total
+			set_temp_variable = { on_monthly_reserved = manpower_k }
+			subtract_from_temp_variable = { on_monthly_reserved = on_monthly_deployed_total }
+			set_variable = { var = deployed_total value = on_monthly_deployed_total }
+			set_variable = { var = reserved value = on_monthly_reserved }
+			# Used for "check_variable = { var = reserved value = deployed_total compare = greater_than }"
 			IF = {
 				LIMIT = { check_variable = { num_ships > 0 } }
 				IF = {

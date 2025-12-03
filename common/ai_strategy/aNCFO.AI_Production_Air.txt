@@ -115,7 +115,7 @@ default_air_production = {
 	}
 }
 
-bba_air_prod_1 = {
+aNCFO_AI_fighter_air_prod_1 = {
 	enable = {
 		date < 1730.1.1
 	}
@@ -138,6 +138,14 @@ bba_air_prod_1 = {
 		id = fighter
 		value = 1
 	}
+}
+
+aNCFO_AI_cas_air_prod_1 = {
+	enable = {
+		date < 1730.1.1
+		check_variable = { num_deployed_planes_with_type@cas < num_deployed_planes_with_type@fighter }
+	}
+	abort_when_not_enabled = yes
 
 	ai_strategy = {
 		type = unit_ratio
@@ -156,6 +164,13 @@ bba_air_prod_1 = {
 		id = cas
 		value = 1
 	}
+}
+
+aNCFO_AI_bomb_air_prod_1 = {
+	enable = {
+		date < 1730.1.1
+	}
+	abort_when_not_enabled = yes
 
 	ai_strategy = {
 		type = equipment_production_factor
@@ -182,7 +197,7 @@ bba_air_prod_1 = {
 	}
 }
 
-bba_air_prod_2 = {
+aNCFO_AI_fighter_air_prod_2 = {
 	enable = {
 		date > 1730.1.1
 	}
@@ -205,6 +220,14 @@ bba_air_prod_2 = {
 		id = fighter
 		value = 4
 	}
+}
+
+aNCFO_AI_cas_air_prod_2 = {
+	enable = {
+		date > 1730.1.1
+		check_variable = { num_deployed_planes_with_type@cas < num_deployed_planes_with_type@fighter }
+	}
+	abort_when_not_enabled = yes
 
 	ai_strategy = {
 		type = unit_ratio
@@ -225,8 +248,9 @@ bba_air_prod_2 = {
 	}
 }
 
-nuke_air_prod_1 = {
+aNCFO_AI_bomb_air_prod_2 = {
 	enable = {
+		is_major = yes
 		num_of_nukes > 0
 	}
 	abort_when_not_enabled = yes
@@ -234,25 +258,25 @@ nuke_air_prod_1 = {
 	ai_strategy = {
 		type = unit_ratio
 		id = strategic_bomber
-		value = 350
+		value = 100
 	}
 
 	ai_strategy = {
 		type = equipment_production_factor
 		id = strategic_bomber
-		value = 350
+		value = 100
 	}
 
 	ai_strategy = {
 		type = equipment_variant_production_factor
 		id = large_plane_airframe
-		value = 100
+		value = 35
 	}
 
 	ai_strategy = {
 		type = equipment_variant_production_factor
 		id = nuclear_missile_equipment
-		value = 100
+		value = 35
 	}
 }
 
@@ -269,121 +293,45 @@ aNCFO_AI_air_production = {
 aNCFO_AI_focus_on_fighters = {
 	enable = {
 		is_major = yes
-		has_tech = basic_small_airframe
-		has_deployed_air_force_size = { size < 3000 type = fighter }
-	}
-	abort = {
-		NOT = {
-			AND = {
-				has_tech = basic_small_airframe
-				has_deployed_air_force_size = { size < 3500 type = fighter }
-			}
-		}
-	}
-
-	ai_strategy = {
-		type = unit_ratio
-		id = fighter
-		value = 10
-	}
-}
-
-aNCFO_AI_sideline_on_fighters_deployed = {
-	enable = {
-		is_major = yes
-		has_tech = basic_small_airframe
-		has_deployed_air_force_size = { size > 12000 type = fighter }
-	}
-	abort = {
-		NOT = {
-			AND = {
-				has_tech = basic_small_airframe
-				has_deployed_air_force_size = { size > 15000 type = fighter }
-			}
-		}
-	}
-
-	ai_strategy = {
-		type = unit_ratio
-		id = fighter
-		value = -85
-	}
-
-	ai_strategy = {
-		type = equipment_production_factor
-		id = fighter
-		value = -85
-	}
-
-	ai_strategy = {
-		type = unit_ratio
-		id = cas
-		value = 10
-	}
-
-	ai_strategy = {
-		type = equipment_production_factor
-		id = cas
-		value = 10
-	}
-
-	ai_strategy = {
-		type = unit_ratio
-		id = strategic_bomber
-		value = 15
-	}
-
-	ai_strategy = {
-		type = equipment_production_factor
-		id = strategic_bomber
-		value = 15
-	}
-}
-
-aNCFO_AI_sideline_on_fighters_stockpile = {
-	enable = {
-		OR = {
-			is_major = yes
-			has_deployed_air_force_size = { size > 18000 type = fighter }
-			has_equipment = { small_plane_airframe > 21000 }
-		}
+		check_variable = { num_deployed_planes_with_type@cas > num_deployed_planes_with_type@fighter }
+		check_variable = { var = num_deployed_planes_with_type@cas value = num_deployed_planes_with_type@fighter compare = greater_than_or_equals }
 	}
 	abort_when_not_enabled = yes
 
 	ai_strategy = {
 		type = unit_ratio
 		id = fighter
-		value = -55
+		value = 50
 	}
 
 	ai_strategy = {
 		type = equipment_production_factor
 		id = fighter
-		value = -55
+		value = 100
+	}
+
+	ai_strategy = {
+		type = equipment_production_min_factories
+		id = fighter
+		value = 8
 	}
 
 	ai_strategy = {
 		type = unit_ratio
 		id = cas
-		value = 10
+		value = -350
 	}
 
 	ai_strategy = {
 		type = equipment_production_factor
 		id = cas
-		value = 10
+		value = -100
 	}
 
 	ai_strategy = {
-		type = unit_ratio
-		id = strategic_bomber
-		value = 15
-	}
-
-	ai_strategy = {
-		type = equipment_production_factor
-		id = strategic_bomber
-		value = 15
+		type = equipment_production_min_factories
+		id = cas
+		value = -1
 	}
 }
 
@@ -399,10 +347,11 @@ aNCFO_AI_fighter_equipment_production_min_factories = {
 		}
 	}
 	abort_when_not_enabled = yes
+
 	ai_strategy = {
 		type = equipment_production_min_factories
 		id = fighter
-		value = 3
+		value = 4
 	}
 }
 
@@ -416,48 +365,14 @@ aNCFO_AI_cas_equipment_production_min_factories = {
 				has_war = yes
 			}
 		}
+		check_variable = { num_deployed_planes_with_type@cas < num_deployed_planes_with_type@fighter }
 	}
 	abort_when_not_enabled = yes
+
 	ai_strategy = {
 		type = equipment_production_min_factories
 		id = cas
-		value = 3
-	}
-}
-
-default_prevent_fighter_over_production = {
-	enable = {
-		has_equipment = { small_plane_airframe > 1000 }
-		has_deployed_air_force_size = {
-			size > 1000
-			type = fighter
-		}
-	}
-
-	abort_when_not_enabled = yes
-
-	ai_strategy = {
-		type = equipment_production_factor
-		id = fighter
-		value = -500
-	}
-}
-
-default_prevent_cas_over_production = {
-	enable = {
-		has_equipment = { small_plane_cas_airframe > 1000 }
-		has_deployed_air_force_size = {
-			size > 1000
-			type = cas
-		}
-	}
-
-	abort_when_not_enabled = yes
-
-	ai_strategy = {
-		type = equipment_production_factor
-		id = cas
-		value = -120
+		value = 1
 	}
 }
 
@@ -465,20 +380,11 @@ default_transport_production = {
 	enable = {
 		is_major = yes
 		OR = {
-			OR = {
-				has_tech = early_transport_plane
-				has_tech = bba_early_transport_plane
-			}
-			#has_equipment = {
-			#	transport_plane_equipment > 50
-			#}
-			has_deployed_air_force_size = {
-				size > 50
-				type = air_transport
-			}
+			has_tech = early_transport_plane
+			has_tech = bba_early_transport_plane
 		}
+		check_variable = { num_deployed_planes_with_type@air_transport < 1000 }
 	}
-
 	abort_when_not_enabled = yes
 
 	ai_strategy = {
@@ -504,20 +410,11 @@ default_spyplanes_production = {
 	enable = {
 		is_major = yes
 		OR = {
-			OR = {
-				has_tech = scout_plane1
-				has_tech = photo_reconnaisance
-			}
-			#has_equipment = {
-			#	scout_plane_equipment > 50
-			#}
-			has_deployed_air_force_size = {
-				size > 50
-				type = scout_plane
-			}
+			has_tech = scout_plane1
+			has_tech = photo_reconnaisance
 		}
+		check_variable = { num_deployed_planes_with_type@scout_plane < 100 }
 	}
-
 	abort_when_not_enabled = yes
 
 	ai_strategy = {
@@ -547,13 +444,12 @@ minors_dont_spy = {
 		}
 		is_major = no
 	}
-
 	abort_when_not_enabled = yes
 
 	ai_strategy = {
 		type = unit_ratio
 		id = scout_plane
-		value = -10
+		value = -100
 	}
 }
 # Location Radar Station
@@ -569,7 +465,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -592,7 +487,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -615,7 +509,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -638,7 +531,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -661,7 +553,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -684,7 +575,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -707,7 +597,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -730,7 +619,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -763,7 +651,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -796,7 +683,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -829,7 +715,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -862,7 +747,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -895,7 +779,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -928,7 +811,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -961,7 +843,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -994,7 +875,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -1027,7 +907,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -1060,7 +939,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -1093,7 +971,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -1126,7 +1003,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -1159,7 +1035,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -1192,7 +1067,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -1225,7 +1099,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -1258,7 +1131,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -1291,7 +1163,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -1324,7 +1195,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -1357,7 +1227,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -1390,7 +1259,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -1423,7 +1291,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -1456,7 +1323,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -1489,7 +1355,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -1522,7 +1387,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -1555,7 +1419,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -1588,7 +1451,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -1621,7 +1483,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -1654,7 +1515,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -1687,7 +1547,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -1720,7 +1579,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -1753,7 +1611,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -1786,7 +1643,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -1819,7 +1675,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -1852,7 +1707,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -1885,7 +1739,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -1918,7 +1771,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -1951,7 +1803,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -1984,7 +1835,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -2017,7 +1867,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -2050,7 +1899,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -2083,7 +1931,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -2116,7 +1963,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -2149,7 +1995,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -2182,7 +2027,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -2215,7 +2059,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -2248,7 +2091,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -2281,7 +2123,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -2314,7 +2155,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -2347,7 +2187,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -2380,7 +2219,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -2413,7 +2251,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -2446,7 +2283,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -2479,7 +2315,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -2512,7 +2347,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -2545,7 +2379,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -2578,7 +2411,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -2611,7 +2443,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -2644,7 +2475,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -2677,7 +2507,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -2710,7 +2539,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -2743,7 +2571,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -2776,7 +2603,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -2809,7 +2635,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -2842,7 +2667,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -2875,7 +2699,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -2908,7 +2731,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -2941,7 +2763,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -2974,7 +2795,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -3007,7 +2827,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -3040,7 +2859,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -3073,7 +2891,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -3106,7 +2923,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -3139,7 +2955,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -3172,7 +2987,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -3205,7 +3019,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -3238,7 +3051,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -3271,7 +3083,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -3304,7 +3115,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -3337,7 +3147,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -3370,7 +3179,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -3403,7 +3211,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -3436,7 +3243,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
@@ -3469,7 +3275,6 @@ minors_dont_spy = {
 				}
 			}
 		}
-
 		abort_when_not_enabled = yes
 
 		ai_strategy = {
