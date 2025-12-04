@@ -5,6 +5,7 @@
 # Custom License for [aNCFO] Assets
 
 This license governs the use of assets contributed to the [aNCFO] repository. By using, modifying, or redistributing any assets from this project, you agree to be bound by the terms of this license.
+The world, characters, lore, and original art in this mod are part of a pre-existing IP owned by the author. This mod is a limited adaptation for gameplay purposes.
 
 ---
 
