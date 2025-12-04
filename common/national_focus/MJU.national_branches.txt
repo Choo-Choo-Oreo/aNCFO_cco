@@ -1251,17 +1251,125 @@ focus_tree = {
 		}
 	
 		ai_will_do = {
-			factor = 3
+			factor = 6
 		}
 
 		completion_reward = {
 			log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_infrastructure_to_castravia_state"
 			every_owned_state = {
-				LIMIT = { is_core_of = SPC }
-				add_compliance = 0.5
+				LIMIT = {
+					is_core_of = UPF
+					NOT = { is_core_of = MJU }
+				}
+				add_compliance = 5
+				add_resistance = 5
 			}
+			custom_effect_tooltip = finish_branch_effect_tt
 		}
 	}
+
+		focus = { # Starting Small
+			id = MJU_focus_starting_small
+			icon = GFX_focus_unknown_industry
+			#mutually_exclusive = { focus =  }
+			prerequisite = { focus = MJU_focus_introduce_castravia_to_new_economic_model }
+			relative_position_id = MJU_focus_introduce_castravia_to_new_economic_model
+			x = -1
+			y = 1
+		
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+
+			available = {
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				factor = 3
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_starting_small"
+				every_owned_state = {
+					LIMIT = {
+						is_core_of = UPF
+						NOT = { is_core_of = MJU }
+					}
+					add_compliance = 5
+				}
+			}
+		}
+
+		focus = { # Invest in Business Owners
+			id = MJU_focus_invest_business_owners
+			icon = GFX_focus_unknown_industry
+			#mutually_exclusive = { focus =  }
+			prerequisite = { focus = MJU_focus_starting_small }
+			relative_position_id = MJU_focus_starting_small
+			x = -1
+			y = 1
+		
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+
+			available = {
+				213 = { controls_or_subject_of = yes }
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				factor = 3
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_invest_business_owners"
+				213 = {
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = industrial_complex
+						level = 1
+						instant_build = yes
+					}
+				}
+			}
+		}
+
+		focus = { # Multinational Businesses
+			id = MJU_focus_multinational_businesses
+			icon = GFX_focus_unknown_industry
+			#mutually_exclusive = { focus =  }
+			prerequisite = { focus = MJU_focus_starting_small }
+			relative_position_id = MJU_focus_starting_small
+			x = 1
+			y = 1
+		
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+
+			available = {
+				213 = { controls_or_subject_of = yes }
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				factor = 3
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_multinational_businesses"
+				213 = { add_resource = { type = coal amount = 5 } }
+				213 = { add_resource = { type = steel amount = 10 } }
+			}
+		}
 
 	focus = { # Infrastructure to Castravia State
 		id = MJU_focus_infrastructure_to_castravia_state
@@ -1294,9 +1402,178 @@ focus_tree = {
 		completion_reward = {
 			log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_infrastructure_to_castravia_state"
 			every_owned_state = {
-				LIMIT = { is_core_of = SPC }
-				add_compliance = 0.5
-				add_resistance = 0.5
+				LIMIT = {
+					is_core_of = UPF
+					NOT = { is_core_of = MJU }
+				}
+				add_compliance = 5
+			}
+		}
+	}
+
+		focus = { # Relief for Castra Valens
+			id = MJU_focus_relief_for_castra_valens
+			icon = GFX_goal_generic_improve_relations
+			#mutually_exclusive = { focus =  }
+			prerequisite = { focus = MJU_focus_infrastructure_to_castravia_state }
+			relative_position_id = MJU_focus_infrastructure_to_castravia_state
+			x = 0
+			y = 2
+		
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+
+			available = {
+				213 = { controls_or_subject_of = yes }
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				factor = 3
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_relief_for_castra_valens"
+				213 = {
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = industrial_complex
+						level = 1
+						instant_build = yes
+					}
+				}
+			}
+		}
+
+	focus = { # Expand Castra Valens
+		id = MJU_focus_expand_castra_valens
+		icon = GFX_goal_generic_fortify_city
+		#mutually_exclusive = { focus =  }
+		prerequisite = { focus = MJU_focus_introduce_castravia_to_new_economic_model focus = MJU_focus_infrastructure_to_castravia_state }
+		relative_position_id = MJU_focus_introduce_castravia_to_new_economic_model
+		x = 1
+		y = 1
+	
+		cost = 5
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		available = {
+			213 = { controls_or_subject_of = yes }
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			factor = 3
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_expand_castra_valens"
+			213 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+				add_manpower = 25000
+			}
+		}
+	}
+
+		focus = { # Full Western Integration
+			id = MJU_focus_full_western_integration
+			icon = GFX_goal_generic_fortify_city
+			#mutually_exclusive = { focus =  }
+			prerequisite = { focus = MJU_focus_invest_business_owners focus = MJU_focus_multinational_businesses focus = MJU_focus_relief_for_castra_valens }
+			prerequisite = { focus = MJU_focus_expand_castra_valens }
+			relative_position_id = MJU_focus_expand_castra_valens
+			x = 0
+			y = 2
+		
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+
+			available = {
+				OR = {
+					has_completed_focus = MJU_focus_relief_for_castra_valens
+					AND = {
+						has_completed_focus = MJU_focus_invest_business_owners
+						has_completed_focus = MJU_focus_multinational_businesses
+					}
+				}
+				213 = { controls_or_subject_of = yes }
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				factor = 3
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_full_western_integration"
+				213 = {
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = industrial_complex
+						level = 1
+						instant_build = yes
+					}
+					add_manpower = 50000
+				}
+				242 = {
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = industrial_complex
+						level = 1
+						instant_build = yes
+					}
+				}
+			}
+		}
+
+	focus = { # Statehood to Castravia
+		id = MJU_focus_statehood_castravia
+		icon = GFX_focus_GER_integration_of_puppet_economies
+		#mutually_exclusive = { focus =  }
+		prerequisite = { focus = MJU_focus_full_western_integration }
+		relative_position_id = MJU_focus_full_western_integration
+		x = 0
+		y = 1
+	
+		cost = 10
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		available = {
+			213 = { controls_or_subject_of = yes }
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			factor = 3
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_statehood_castravia"
+			UPF = { every_core_state = { add_core_of = FROM } }
+			HIDDEN_EFFECT = { UPF = { every_core_state = { remove_core_of = UPF } } }
+			add_political_power = 10
+			IF = {
+				LIMIT = { has_completed_focus = MJU_focus_introduce_castravia_to_new_economic_model }
+				add_stability = 0.05
+				add_manpower = 75000
+				urbanize_state = yes
 			}
 		}
 	}
@@ -1332,41 +1609,44 @@ focus_tree = {
 		completion_reward = {
 			log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_infrastructure_to_southern_pueblanura_plains"
 			every_owned_state = {
-				LIMIT = { is_core_of = SPC }
-				add_compliance = 0.5
+				LIMIT = {
+					is_core_of = SPC
+					NOT = { is_core_of = MJU }
+				}
+				add_compliance = 5
 			}
 		}
 	}
 
-		focus = { # Economic Marvel
-			id = MJU_focus_economic_marvel
-			icon = GFX_focus_research_advance
-			#mutually_exclusive = { focus =  }
-			prerequisite = { focus = MJU_focus_introduce_castravia_to_new_economic_model focus = MJU_focus_infrastructure_to_castravia_state }
-			prerequisite = { focus = MJU_focus_infrastructure_to_southern_pueblanura_plains }
-			relative_position_id = MJU_focus_economic_development
-			x = 0
-			y = 10
-		
-			cost = 10
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = no
+	focus = { # Economic Marvel
+		id = MJU_focus_economic_marvel
+		icon = GFX_focus_research_advance
+		#mutually_exclusive = { focus =  }
+		prerequisite = { focus = MJU_focus_statehood_castravia }
+		prerequisite = { focus = MJU_focus_infrastructure_to_southern_pueblanura_plains }
+		relative_position_id = MJU_focus_economic_development
+		x = 0
+		y = 11
+	
+		cost = 10
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
 
-			available = {
-			}
-			bypass = {
-			}
-		
-			ai_will_do = {
-				factor = 3
-			}
-
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_infrastructure_to_southern_pueblanura_plains"
-				add_research_slot = 1
-			}
+		available = {
 		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			factor = 3
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_infrastructure_to_southern_pueblanura_plains"
+			add_research_slot = 1
+		}
+	}
 
 	focus = { # National Policies
 		id = MJU_focus_national_policies
