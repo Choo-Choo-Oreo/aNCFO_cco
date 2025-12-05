@@ -64,12 +64,6 @@ Using Pdn I Gaussian blur'ed then erased 10x to get the distance from land start
 * divine_right_coring_num2
 * divine_right_coring_num3
 * divine_right_coring_num4
-* ai_action_navy_small
-* ai_action_navy_medium
-* ai_action_navy_large
-* ai_action_air_small
-* ai_action_air_medium
-* ai_action_air_large
 * denied.ally_with_HHE
 * denied.ally_with_OAK
 * denied.ally_with_MRC

@@ -122,66 +122,6 @@ on_actions = {
 			set_variable = { var = deployed_total value = on_monthly_deployed_total }
 			set_variable = { var = reserved value = on_monthly_reserved }
 			# Used for "check_variable = { var = reserved value = deployed_total compare = greater_than }"
-			IF = {
-				LIMIT = { check_variable = { num_ships > 0 } }
-				IF = {
-					LIMIT = {
-						check_variable = { num_ships < 100 }
-						check_variable = { num_ships > 49 }
-					}
-					log = "[GetDateText]: [Root.GetName]: Navy: Small"
-					set_country_flag = ai_action_navy_small
-					clr_country_flag = ai_action_navy_medium
-					clr_country_flag = ai_action_navy_large
-				}
-				ELSE_IF = {
-					LIMIT = {
-						check_variable = { num_ships < 200 }
-						check_variable = { num_ships > 99 }
-					}
-					log = "[GetDateText]: [Root.GetName]: Navy: Medium"
-					clr_country_flag = ai_action_navy_small
-					set_country_flag = ai_action_navy_medium
-					clr_country_flag = ai_action_navy_large
-				}
-				ELSE_IF = {
-					LIMIT = { check_variable = { num_ships > 200 } }
-					log = "[GetDateText]: [Root.GetName]: Navy: Large"
-					clr_country_flag = ai_action_navy_small
-					clr_country_flag = ai_action_navy_medium
-					set_country_flag = ai_action_navy_large
-				}
-			}
-			IF = {
-				LIMIT = { check_variable = { num_deployed_planes > 0 } }
-				IF = {
-					LIMIT = {
-						check_variable = { num_deployed_planes < 1000 }
-						check_variable = { num_deployed_planes > 499 }
-					}
-					log = "[GetDateText]: [Root.GetName]: Navy: Small"
-					set_country_flag = ai_action_air_small
-					set_country_flag = ai_action_air_medium
-					set_country_flag = ai_action_air_large
-				}
-				ELSE_IF = {
-					LIMIT = {
-						check_variable = { num_deployed_planes < 2000 }
-						check_variable = { num_deployed_planes > 999 }
-					}
-					log = "[GetDateText]: [Root.GetName]: Navy: Medium"
-					set_country_flag = ai_action_air_small
-					set_country_flag = ai_action_air_medium
-					set_country_flag = ai_action_air_large
-				}
-				ELSE_IF = {
-					LIMIT = { check_variable = { num_deployed_planes > 2000 } }
-					log = "[GetDateText]: [Root.GetName]: Navy: Large"
-					set_country_flag = ai_action_air_small
-					set_country_flag = ai_action_air_medium
-					set_country_flag = ai_action_air_large
-				}
-			}
 		}
 
 		effect = { # Building Queuer
@@ -220,7 +160,16 @@ on_actions = {
 					LIMIT = { num_of_civilian_factories_available_for_projects > 49 }
 					every_owned_state = {
 						random_select_amount = 3 # "random_select_amount" prevents "construction_complex" Queue overload
-						IF = {
+						LIMIT = {
+							free_building_slots = { building = industrial_complex size < 1 }
+							NOT = { has_state_flag = { flag = bq_construction_complex days < 1 } }
+						}
+						add_building_construction = { type = construction_complex level = 1 instant_build = no }
+						set_state_flag = { flag = bq_construction_complex days = 365 }
+					}
+					ELSE = {
+						every_owned_state = {
+							random_select_amount = 1 # "random_select_amount" prevents "construction_complex" Queue overload
 							LIMIT = {
 								free_building_slots = { building = industrial_complex size < 1 }
 								NOT = { has_state_flag = { flag = bq_construction_complex days < 1 } }
@@ -229,17 +178,32 @@ on_actions = {
 							set_state_flag = { flag = bq_construction_complex days = 365 }
 						}
 					}
-					ELSE = {
-						every_owned_state = {
-							random_select_amount = 1 # "random_select_amount" prevents "construction_complex" Queue overload
-							IF = {
-								LIMIT = {
-									free_building_slots = { building = industrial_complex size < 1 }
-									NOT = { has_state_flag = { flag = bq_construction_complex days < 1 } }
-								}
-								add_building_construction = { type = construction_complex level = 1 instant_build = no }
-								set_state_flag = { flag = bq_construction_complex days = 365 }
+				}
+				every_owned_state = { # "Reinforced Electrical Grid"/"High Capacity Electrical Grid" Queuing
+					random_select_amount = 1 # "random_select_amount" prevents "energy_infrastructure"/"industrial_infrastructure" Queue overload
+					IF = { # industrial_infrastructure
+						LIMIT = {
+							NOT = { has_state_flag = { flag = bq_infrastructure days < 1 } }
+							OR = {
+								check_variable = { var = resource@oil		value = 35 compare = greater_than_or_equals }
+								check_variable = { var = resource@coal		value = 35 compare = greater_than_or_equals }
+								check_variable = { var = resource@aluminium	value = 35 compare = greater_than_or_equals }
+								check_variable = { var = resource@rubber	value = 35 compare = greater_than_or_equals }
+								check_variable = { var = resource@tungsten	value = 35 compare = greater_than_or_equals }
+								check_variable = { var = resource@steel		value = 35 compare = greater_than_or_equals }
+								check_variable = { var = resource@chromium	value = 35 compare = greater_than_or_equals }
 							}
+							check_variable = { var = energy_infrastructure value = 1 compare = less_than }
+							check_variable = { var = industrial_infrastructure value = 1 compare = less_than }
+						}
+						add_building_construction = { type = industrial_infrastructure level = 1 instant_build = no }
+						set_state_flag = { flag = bq_infrastructure days = 365 }
+						ELSE = { # energy_infrastructure
+						    LIMIT = {
+						        NOT = { has_state_flag = { flag = bq_infrastructure days < 1 } }
+						    }
+						    add_building_construction = { type = energy_infrastructure level = 1 instant_build = no }
+							set_state_flag = { flag = bq_infrastructure days = 365 }
 						}
 					}
 				}

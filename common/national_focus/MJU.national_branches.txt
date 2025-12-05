@@ -1098,14 +1098,31 @@ focus_tree = {
 			available_if_capitulated = no
 
 			available = {
+				OR = {
+					has_government = pluralism
+					has_government = semidemocracy
+				}
+				SPC = {
+					OR = {
+						has_government = pluralism
+						has_government = semidemocracy
+					}
+				}
 			}
 			bypass = {
 			}
 
 			ai_will_do = {
-				factor = 5
+				factor = 2
 				modifier = {
-					factor = 5.0
+					factor = 10.0
+					OR = {
+						has_government = pluralism
+						has_government = semidemocracy
+					}
+				}
+				modifier = {
+					factor = 3.5
 					date > 1726.01.01
 				}
 			}
@@ -1137,6 +1154,13 @@ focus_tree = {
 
 			ai_will_do = {
 				factor = 2
+				modifier = {
+					factor = 0.0
+					OR = {
+						has_government = pluralism
+						has_government = semidemocracy
+					}
+				}
 				modifier = {
 					factor = 3.5
 					date > 1726.01.01
@@ -1180,10 +1204,10 @@ focus_tree = {
 				}
 			}
 
-			will_lead_to_war_with = UPF
+			will_lead_to_war_with = CPF
 			completion_reward = {
 				log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_invade_castravia"
-				create_wargoal = { type = annex_everything target = UPF expire = 36 }
+				create_wargoal = { type = annex_everything target = CPF expire = 36 }
 			}
 		}
 
@@ -1208,8 +1232,8 @@ focus_tree = {
 						SPC = { is_subject = yes }
 					}
 					OR = {
-						NOT = { country_exists = UPF }
-						UPF = { is_subject = yes }
+						NOT = { country_exists = CPF }
+						CPF = { is_subject = yes }
 					}
 				}
 			}
@@ -1243,8 +1267,8 @@ focus_tree = {
 
 		available = {
 			OR = {
-				NOT = { country_exists = UPF }
-				UPF = { is_subject = yes }
+				NOT = { country_exists = CPF }
+				CPF = { is_subject = yes }
 			}
 		}
 		bypass = {
@@ -1258,7 +1282,7 @@ focus_tree = {
 			log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_infrastructure_to_castravia_state"
 			every_owned_state = {
 				LIMIT = {
-					is_core_of = UPF
+					is_core_of = CPF
 					NOT = { is_core_of = MJU }
 				}
 				add_compliance = 5
@@ -1295,7 +1319,7 @@ focus_tree = {
 				log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_starting_small"
 				every_owned_state = {
 					LIMIT = {
-						is_core_of = UPF
+						is_core_of = CPF
 						NOT = { is_core_of = MJU }
 					}
 					add_compliance = 5
@@ -1388,8 +1412,8 @@ focus_tree = {
 
 		available = {
 			OR = {
-				NOT = { country_exists = UPF }
-				UPF = { is_subject = yes }
+				NOT = { country_exists = CPF }
+				CPF = { is_subject = yes }
 			}
 		}
 		bypass = {
@@ -1403,7 +1427,7 @@ focus_tree = {
 			log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_infrastructure_to_castravia_state"
 			every_owned_state = {
 				LIMIT = {
-					is_core_of = UPF
+					is_core_of = CPF
 					NOT = { is_core_of = MJU }
 				}
 				add_compliance = 5
@@ -1566,8 +1590,8 @@ focus_tree = {
 
 		completion_reward = {
 			log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_statehood_castravia"
-			UPF = { every_core_state = { add_core_of = FROM } }
-			HIDDEN_EFFECT = { UPF = { every_core_state = { remove_core_of = UPF } } }
+			CPF = { every_core_state = { add_core_of = FROM } }
+			HIDDEN_EFFECT = { CPF = { every_core_state = { remove_core_of = CPF } } }
 			add_political_power = 10
 			IF = {
 				LIMIT = { has_completed_focus = MJU_focus_introduce_castravia_to_new_economic_model }
