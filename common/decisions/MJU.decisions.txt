@@ -1,377 +1,446 @@
-# Military Balance
-	bop_MJU_military_divided = {
-		bop_MJU_strengthen_army = { # Army
-			icon = generic_tank
-			priority = 99
+operations = {
+	mission_MJU_conquer_CPF = {
+		icon = GFX_decision_border_war
 
-			visible = {
-				NOT = { has_country_flag = bop_MJU_strengthen_military }
-			}
-			available = {
-				num_of_civilian_factories_available_for_projects > 9
-				NOT = { has_country_flag = bop_MJU_strengthen_military }
-			}
+		days_mission_timeout = 365
+		fire_only_once = yes
 
-			days_remove = 30
-			fire_only_once = yes
-			cost = 25
-
-			modifier = { civilian_factory_use = 10 }
-
-			complete_effect = { set_country_flag = bop_MJU_strengthen_military }
-			remove_effect = {
-				log = "[GetDateText]: [Root.GetName]: Decision remove bop_MJU_strengthen_army"
-				add_doctrine_cost_reduction = {
-					name = land_doc_bonus
-					cost_reduction = 0.5
-					uses = 2
-					category = land_doctrine
-				}
-			}
-			ai_will_do = {
-				base = 5
+		available = {
+			OR = {
+				NOT = { country_exists = SPC }
+				SPC = { is_subject = yes }
 			}
 		}
 
-		bop_MJU_strengthen_navy = { # Navy
-			icon = generic_naval
-			priority = 99
-
-			visible = {
-				NOT = { has_country_flag = bop_MJU_strengthen_military }
-			}
-			available = {
-				num_of_civilian_factories_available_for_projects > 9
-				NOT = { has_country_flag = bop_MJU_strengthen_military }
-			}
-
-			days_remove = 30
-			fire_only_once = yes
-			cost = 25
-
-			modifier = { civilian_factory_use = 10 }
-
-			complete_effect = { set_country_flag = bop_MJU_strengthen_military }
-			remove_effect = {
-				log = "[GetDateText]: [Root.GetName]: Decision remove bop_MJU_strengthen_navy"
-				add_doctrine_cost_reduction = {
-					name = ti_bonus
-					name = MJU_trade_interdiction
-					cost_reduction = 0.50
-					uses = 2
-					category = trade_interdiction_tree
-				}
-			}
-			ai_will_do = {
-				base = 5
+		activation = {
+			has_completed_focus = MJU_focus_invade_castravia
+			NOT = {
+				has_completed_focus = MJU_focus_victor_against_castravia
+				has_completed_focus = MJU_focus_defeated_by_CPF
 			}
 		}
 
-		bop_MJU_strengthen_airforce = { # Airforce
-			icon = generic_air
-			priority = 99
-
-			visible = {
-				NOT = { has_country_flag = bop_MJU_strengthen_military }
-			}
-			available = {
-				num_of_civilian_factories_available_for_projects > 9
-				NOT = { has_country_flag = bop_MJU_strengthen_military }
-			}
-
-			days_remove = 30
-			fire_only_once = yes
-			cost = 25
-
-			modifier = { civilian_factory_use = 10 }
-
-			complete_effect = { set_country_flag = bop_MJU_strengthen_military }
-			remove_effect = {
-				log = "[GetDateText]: [Root.GetName]: Decision remove bop_MJU_strengthen_airforce"
-				add_doctrine_cost_reduction = {
-					name = air_sup_bonus
-					cost_reduction = 0.50
-					uses = 2
-					category = battlefield_support_tree
-				}
-			}
-			ai_will_do = {
-				base = 5
-			}
+		visible = {
+			tag = MJU
 		}
 
-		bop_MJU_divert_resources_army = { # Army
-			icon = generic_tank
-			priority = 88
-
-			visible = {
-				NOT = { has_country_flag = bop_MJU_divert_resources_military }
-			}
-			available = {
-				num_of_civilian_factories_available_for_projects > 9
-				NOT = { has_country_flag = bop_MJU_divert_resources_military }
-			}
-
-			days_remove = 30
-			fire_only_once = yes
-			cost = 25
-
-			modifier = { civilian_factory_use = 10 }
-
-			complete_effect = { set_country_flag = bop_MJU_divert_resources_military }
-			remove_effect = {
-				log = "[GetDateText]: [Root.GetName]: Decision remove bop_MJU_divert_resources_army"
-				if = {
-					limit = { 
-						has_dlc = "No Step Back"
-					}
-					add_tech_bonus = {
-						name = armor_bonus
-						bonus = 1.0
-						uses = 2
-						category = armor
-					}
-				}
-				else = {
-					add_tech_bonus = {
-						name = med_armor_bonus
-						ahead_reduction = 1
-						category = cat_medium_armor
-					}
-					add_tech_bonus = {
-						name = armor_bonus
-						bonus = 1.0
-						uses = 2
-						category = armor
-					}
-				}
-			}
-			ai_will_do = {
-				base = 5
-			}
-		}
-
-		bop_MJU_divert_resources_navy = { # Navy
-			icon = generic_naval
-			priority = 88
-
-			visible = {
-				NOT = { has_country_flag = bop_MJU_divert_resources_military }
-			}
-			available = {
-				num_of_civilian_factories_available_for_projects > 9
-				NOT = { has_country_flag = bop_MJU_divert_resources_military }
-			}
-
-			days_remove = 30
-			fire_only_once = yes
-			cost = 25
-
-			modifier = { civilian_factory_use = 10 }
-
-			complete_effect = { set_country_flag = bop_MJU_divert_resources_military }
-			remove_effect = {
-				log = "[GetDateText]: [Root.GetName]: Decision remove bop_MJU_divert_resources_navy"
-				add_tech_bonus = {
-					name = dd_bonus
-					bonus = 1.0
-					uses = 2
-					category = dd_tech
-				}
-				add_tech_bonus = {
-					name = cr_bonus
-					bonus = 1.0
-					uses = 2
-					category = cl_tech
-					category = ca_tech
-				}
-			}
-			ai_will_do = {
-				base = 5
-			}
-		}
-
-		bop_MJU_divert_resources_airforce = { # Airforce
-			icon = generic_air
-			priority = 88
-
-			visible = {
-				NOT = { has_country_flag = bop_MJU_divert_resources_military }
-			}
-			available = {
-				num_of_civilian_factories_available_for_projects > 9
-				NOT = { has_country_flag = bop_MJU_divert_resources_military }
-			}
-
-			days_remove = 30
-			fire_only_once = yes
-			cost = 25
-
-			modifier = { civilian_factory_use = 10 }
-
-			complete_effect = { set_country_flag = bop_MJU_divert_resources_military }
-			remove_effect = {
-				log = "[GetDateText]: [Root.GetName]: Decision remove bop_MJU_divert_resources_airforce"
-				if = {
-					limit = { has_dlc = "By Blood Alone" }
-					add_tech_bonus = {
-						bonus = 1.0
-						uses = 2
-						category = medium_air		
-						category = heavy_air
-					}
-				}
-				else = {
-					add_tech_bonus = {
-						bonus = 1.0
-						uses = 2
-						category = cat_heavy_fighter
-						category = cat_strategic_bomber
-					}
-				}
-			}
-			ai_will_do = {
-				base = 5
-			}
-		}
-
-		bop_MJU_focus_production_army = { # Army
-			icon = generic_tank
-			priority = 77
-
-			visible = {
-				NOT = { has_country_flag = bop_MJU_focus_production_military }
-			}
-			available = {
-				num_of_civilian_factories_available_for_projects > 9
-				NOT = { has_country_flag = bop_MJU_focus_production_military }
-			}
-
-			days_remove = 30
-			fire_only_once = yes
-			cost = 25
-
-			modifier = { civilian_factory_use = 10 }
-
-			complete_effect = { set_country_flag = bop_MJU_focus_production_military }
-			remove_effect = {
-				log = "[GetDateText]: [Root.GetName]: Decision remove bop_MJU_focus_production_army"
-				every_core_state = {
-					limit = {
-						impassable = no
-						is_fully_controlled_by = ROOT
-						OR = {
-							has_state_category = city
-							has_state_category = large_city
-							has_state_category = metropolis
-							has_state_category = megalopolis
-						}
-					}
-					random_select_amount = 2
-					add_extra_state_shared_building_slots = 2
-					add_building_construction = {
-						type = arms_factory
-						level = 2
-						instant_build = yes
-					}
-				}
-			}
-			ai_will_do = {
-				base = 5
-			}
-		}
-
-		bop_MJU_focus_production_navy = { # Navy
-			icon = generic_naval
-			priority = 77
-
-			visible = {
-				NOT = { has_country_flag = bop_MJU_focus_production_military }
-			}
-			available = {
-				num_of_civilian_factories_available_for_projects > 9
-				NOT = { has_country_flag = bop_MJU_focus_production_military }
-			}
-
-			days_remove = 30
-			fire_only_once = yes
-			cost = 25
-
-			modifier = { civilian_factory_use = 10 }
-
-			complete_effect = { set_country_flag = bop_MJU_focus_production_military }
-			remove_effect = {
-				log = "[GetDateText]: [Root.GetName]: Decision remove bop_MJU_focus_production_navy"
-				every_core_state = {
-					limit = {
-						impassable = no
-						is_coastal = yes
-						is_fully_controlled_by = ROOT
-						OR = {
-							has_state_category = city
-							has_state_category = large_city
-							has_state_category = metropolis
-							has_state_category = megalopolis
-						}
-					}
-					random_select_amount = 2
-					add_extra_state_shared_building_slots = 2
-					add_building_construction = {
-						type = dockyard
-						level = 2
-						instant_build = yes
-					}
-				}
-			}
-			ai_will_do = {
-				base = 5
-			}
-		}
-
-		bop_MJU_focus_production_airforce = { # Airforce
-			icon = generic_air
-			priority = 77
-
-			visible = {
-				NOT = { has_country_flag = bop_MJU_focus_production_military }
-			}
-			available = {
-				num_of_civilian_factories_available_for_projects > 9
-				NOT = { has_country_flag = bop_MJU_focus_production_military }
-			}
-
-			days_remove = 30
-			fire_only_once = yes
-			cost = 25
-
-			modifier = { civilian_factory_use = 10 }
-
-			complete_effect = { set_country_flag = bop_MJU_focus_production_military }
-			remove_effect = {
-				log = "[GetDateText]: [Root.GetName]: Decision remove bop_MJU_focus_production_airforce"
-				10 = {
-					add_resource = {
-					    type = aluminium
-					    amount = 32
-					}
-					add_resource = {
-					    type = rubber
-					    amount = 8
-					}
-				}
-				215 = {
-					add_resource = {
-					    type = aluminium
-					    amount = 32
-					}
-					add_resource = {
-					    type = rubber
-					    amount = 8
-					}
-				}
-			}
-			ai_will_do = {
-				base = 5
+		timeout_effect = {
+			complete_national_focus = {
+				focus = MJU_focus_defeated_by_CPF
+				use_side_message = yes
+				originator_name = ROOT
 			}
 		}
 	}
+
+	mission_MJU_conquer_SPC = {
+		icon = GFX_decision_border_war
+
+		days_mission_timeout = 730
+		fire_only_once = yes
+
+		available = {
+			OR = {
+				NOT = { country_exists = SPC }
+				SPC = { is_subject = yes }
+			}
+		}
+
+		activation = {
+			has_completed_focus = MJU_focus_invaded_confederation
+			NOT = {
+				has_completed_focus = MJU_focus_victor_against_SPC
+				has_completed_focus = MJU_focus_defeated_by_SPC
+			}
+		}
+
+		visible = {
+			tag = MJU
+		}
+
+		timeout_effect = {
+			complete_national_focus = {
+				focus = MJU_focus_defeated_by_SPC
+				use_side_message = yes
+				originator_name = ROOT
+			}
+		}
+	}
+}
+
+bop_MJU_military_divided = { # Military Balance
+	bop_MJU_strengthen_army = { # Army
+		icon = generic_tank
+		priority = 99
+
+		visible = {
+			NOT = { has_country_flag = bop_MJU_strengthen_military }
+		}
+		available = {
+			num_of_civilian_factories_available_for_projects > 9
+			NOT = { has_country_flag = bop_MJU_strengthen_military }
+		}
+
+		days_remove = 30
+		fire_only_once = yes
+		cost = 25
+
+		modifier = { civilian_factory_use = 10 }
+
+		complete_effect = { set_country_flag = bop_MJU_strengthen_military }
+		remove_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision remove bop_MJU_strengthen_army"
+			add_doctrine_cost_reduction = {
+				name = land_doc_bonus
+				cost_reduction = 0.5
+				uses = 2
+				category = land_doctrine
+			}
+		}
+		ai_will_do = {
+			base = 5
+		}
+	}
+
+	bop_MJU_strengthen_navy = { # Navy
+		icon = generic_naval
+		priority = 99
+
+		visible = {
+			NOT = { has_country_flag = bop_MJU_strengthen_military }
+		}
+		available = {
+			num_of_civilian_factories_available_for_projects > 9
+			NOT = { has_country_flag = bop_MJU_strengthen_military }
+		}
+
+		days_remove = 30
+		fire_only_once = yes
+		cost = 25
+
+		modifier = { civilian_factory_use = 10 }
+
+		complete_effect = { set_country_flag = bop_MJU_strengthen_military }
+		remove_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision remove bop_MJU_strengthen_navy"
+			add_doctrine_cost_reduction = {
+				name = ti_bonus
+				name = MJU_trade_interdiction
+				cost_reduction = 0.50
+				uses = 2
+				category = trade_interdiction_tree
+			}
+		}
+		ai_will_do = {
+			base = 5
+		}
+	}
+
+	bop_MJU_strengthen_airforce = { # Airforce
+		icon = generic_air
+		priority = 99
+
+		visible = {
+			NOT = { has_country_flag = bop_MJU_strengthen_military }
+		}
+		available = {
+			num_of_civilian_factories_available_for_projects > 9
+			NOT = { has_country_flag = bop_MJU_strengthen_military }
+		}
+
+		days_remove = 30
+		fire_only_once = yes
+		cost = 25
+
+		modifier = { civilian_factory_use = 10 }
+
+		complete_effect = { set_country_flag = bop_MJU_strengthen_military }
+		remove_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision remove bop_MJU_strengthen_airforce"
+			add_doctrine_cost_reduction = {
+				name = air_sup_bonus
+				cost_reduction = 0.50
+				uses = 2
+				category = battlefield_support_tree
+			}
+		}
+		ai_will_do = {
+			base = 5
+		}
+	}
+
+	bop_MJU_divert_resources_army = { # Army
+		icon = generic_tank
+		priority = 88
+
+		visible = {
+			NOT = { has_country_flag = bop_MJU_divert_resources_military }
+		}
+		available = {
+			num_of_civilian_factories_available_for_projects > 9
+			NOT = { has_country_flag = bop_MJU_divert_resources_military }
+		}
+
+		days_remove = 30
+		fire_only_once = yes
+		cost = 25
+
+		modifier = { civilian_factory_use = 10 }
+
+		complete_effect = { set_country_flag = bop_MJU_divert_resources_military }
+		remove_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision remove bop_MJU_divert_resources_army"
+			if = {
+				limit = { 
+					has_dlc = "No Step Back"
+				}
+				add_tech_bonus = {
+					name = armor_bonus
+					bonus = 1.0
+					uses = 2
+					category = armor
+				}
+			}
+			else = {
+				add_tech_bonus = {
+					name = med_armor_bonus
+					ahead_reduction = 1
+					category = cat_medium_armor
+				}
+				add_tech_bonus = {
+					name = armor_bonus
+					bonus = 1.0
+					uses = 2
+					category = armor
+				}
+			}
+		}
+		ai_will_do = {
+			base = 5
+		}
+	}
+
+	bop_MJU_divert_resources_navy = { # Navy
+		icon = generic_naval
+		priority = 88
+
+		visible = {
+			NOT = { has_country_flag = bop_MJU_divert_resources_military }
+		}
+		available = {
+			num_of_civilian_factories_available_for_projects > 9
+			NOT = { has_country_flag = bop_MJU_divert_resources_military }
+		}
+
+		days_remove = 30
+		fire_only_once = yes
+		cost = 25
+
+		modifier = { civilian_factory_use = 10 }
+
+		complete_effect = { set_country_flag = bop_MJU_divert_resources_military }
+		remove_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision remove bop_MJU_divert_resources_navy"
+			add_tech_bonus = {
+				name = dd_bonus
+				bonus = 1.0
+				uses = 2
+				category = dd_tech
+			}
+			add_tech_bonus = {
+				name = cr_bonus
+				bonus = 1.0
+				uses = 2
+				category = cl_tech
+				category = ca_tech
+			}
+		}
+		ai_will_do = {
+			base = 5
+		}
+	}
+
+	bop_MJU_divert_resources_airforce = { # Airforce
+		icon = generic_air
+		priority = 88
+
+		visible = {
+			NOT = { has_country_flag = bop_MJU_divert_resources_military }
+		}
+		available = {
+			num_of_civilian_factories_available_for_projects > 9
+			NOT = { has_country_flag = bop_MJU_divert_resources_military }
+		}
+
+		days_remove = 30
+		fire_only_once = yes
+		cost = 25
+
+		modifier = { civilian_factory_use = 10 }
+
+		complete_effect = { set_country_flag = bop_MJU_divert_resources_military }
+		remove_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision remove bop_MJU_divert_resources_airforce"
+			if = {
+				limit = { has_dlc = "By Blood Alone" }
+				add_tech_bonus = {
+					bonus = 1.0
+					uses = 2
+					category = medium_air		
+					category = heavy_air
+				}
+			}
+			else = {
+				add_tech_bonus = {
+					bonus = 1.0
+					uses = 2
+					category = cat_heavy_fighter
+					category = cat_strategic_bomber
+				}
+			}
+		}
+		ai_will_do = {
+			base = 5
+		}
+	}
+
+	bop_MJU_focus_production_army = { # Army
+		icon = generic_tank
+		priority = 77
+
+		visible = {
+			NOT = { has_country_flag = bop_MJU_focus_production_military }
+		}
+		available = {
+			num_of_civilian_factories_available_for_projects > 9
+			NOT = { has_country_flag = bop_MJU_focus_production_military }
+		}
+
+		days_remove = 30
+		fire_only_once = yes
+		cost = 25
+
+		modifier = { civilian_factory_use = 10 }
+
+		complete_effect = { set_country_flag = bop_MJU_focus_production_military }
+		remove_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision remove bop_MJU_focus_production_army"
+			every_core_state = {
+				limit = {
+					impassable = no
+					is_fully_controlled_by = ROOT
+					OR = {
+						has_state_category = city
+						has_state_category = large_city
+						has_state_category = metropolis
+						has_state_category = megalopolis
+					}
+				}
+				random_select_amount = 2
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+		ai_will_do = {
+			base = 5
+		}
+	}
+
+	bop_MJU_focus_production_navy = { # Navy
+		icon = generic_naval
+		priority = 77
+
+		visible = {
+			NOT = { has_country_flag = bop_MJU_focus_production_military }
+		}
+		available = {
+			num_of_civilian_factories_available_for_projects > 9
+			NOT = { has_country_flag = bop_MJU_focus_production_military }
+		}
+
+		days_remove = 30
+		fire_only_once = yes
+		cost = 25
+
+		modifier = { civilian_factory_use = 10 }
+
+		complete_effect = { set_country_flag = bop_MJU_focus_production_military }
+		remove_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision remove bop_MJU_focus_production_navy"
+			every_core_state = {
+				limit = {
+					impassable = no
+					is_coastal = yes
+					is_fully_controlled_by = ROOT
+					OR = {
+						has_state_category = city
+						has_state_category = large_city
+						has_state_category = metropolis
+						has_state_category = megalopolis
+					}
+				}
+				random_select_amount = 2
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = dockyard
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+		ai_will_do = {
+			base = 5
+		}
+	}
+
+	bop_MJU_focus_production_airforce = { # Airforce
+		icon = generic_air
+		priority = 77
+
+		visible = {
+			NOT = { has_country_flag = bop_MJU_focus_production_military }
+		}
+		available = {
+			num_of_civilian_factories_available_for_projects > 9
+			NOT = { has_country_flag = bop_MJU_focus_production_military }
+		}
+
+		days_remove = 30
+		fire_only_once = yes
+		cost = 25
+
+		modifier = { civilian_factory_use = 10 }
+
+		complete_effect = { set_country_flag = bop_MJU_focus_production_military }
+		remove_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision remove bop_MJU_focus_production_airforce"
+			10 = {
+				add_resource = {
+				    type = aluminium
+				    amount = 32
+				}
+				add_resource = {
+				    type = rubber
+				    amount = 8
+				}
+			}
+			215 = {
+				add_resource = {
+				    type = aluminium
+				    amount = 32
+				}
+				add_resource = {
+				    type = rubber
+				    amount = 8
+				}
+			}
+		}
+		ai_will_do = {
+			base = 5
+		}
+	}
+}

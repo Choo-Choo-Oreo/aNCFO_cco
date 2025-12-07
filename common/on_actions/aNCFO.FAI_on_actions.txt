@@ -133,10 +133,11 @@ on_actions = {
 				every_owned_state = { # Oil-Fired Generator Queuing
 					IF = {
 						LIMIT = {
-							set_temp_variable = { total_industry = building_level@industrial_complex }
-							add_to_temp_variable = { total_industry = building_level@arms_factory }
-							add_to_temp_variable = { total_industry = building_level@dockyard }
-							check_variable = { var = total_industry value = 10 compare = greater_than_or_equals }
+							#set_temp_variable = { total_industry = building_level@industrial_complex }
+							#add_to_temp_variable = { total_industry = building_level@arms_factory }
+							#add_to_temp_variable = { total_industry = building_level@dockyard }
+							#check_variable = { var = total_industry value = 10 compare = greater_than_or_equals }
+							check_variable = { var = num_of_factories value = 10 compare = greater_than_or_equals }
 						}
 						IF = {
 							LIMIT = {
@@ -179,31 +180,51 @@ on_actions = {
 						}
 					}
 				}
-				every_owned_state = { # "Reinforced Electrical Grid"/"High Capacity Electrical Grid" Queuing
-					random_select_amount = 1 # "random_select_amount" prevents "energy_infrastructure"/"industrial_infrastructure" Queue overload
-					IF = { # industrial_infrastructure
-						LIMIT = {
-							NOT = { has_state_flag = { flag = bq_infrastructure days < 1 } }
-							OR = {
-								check_variable = { var = resource@oil		value = 35 compare = greater_than_or_equals }
-								check_variable = { var = resource@coal		value = 35 compare = greater_than_or_equals }
-								check_variable = { var = resource@aluminium	value = 35 compare = greater_than_or_equals }
-								check_variable = { var = resource@rubber	value = 35 compare = greater_than_or_equals }
-								check_variable = { var = resource@tungsten	value = 35 compare = greater_than_or_equals }
-								check_variable = { var = resource@steel		value = 35 compare = greater_than_or_equals }
-								check_variable = { var = resource@chromium	value = 35 compare = greater_than_or_equals }
-							}
-							check_variable = { var = energy_infrastructure value = 1 compare = less_than }
-							check_variable = { var = industrial_infrastructure value = 1 compare = less_than }
+				IF = { # "Reinforced Electrical Grid"/"High Capacity Electrical Grid" Queuing
+					LIMIT = {
+						num_of_civilian_factories_available_for_projects > 49
+						OR = {
+							check_variable = { var = resource@oil		value = 35 compare = greater_than_or_equals }
+							check_variable = { var = resource@coal		value = 35 compare = greater_than_or_equals }
+							check_variable = { var = resource@aluminium	value = 35 compare = greater_than_or_equals }
+							check_variable = { var = resource@rubber	value = 35 compare = greater_than_or_equals }
+							check_variable = { var = resource@tungsten	value = 35 compare = greater_than_or_equals }
+							check_variable = { var = resource@steel		value = 35 compare = greater_than_or_equals }
+							check_variable = { var = resource@chromium	value = 35 compare = greater_than_or_equals }
+							check_variable = { var = num_of_factories value = 100 compare = greater_than_or_equals }
 						}
-						add_building_construction = { type = industrial_infrastructure level = 1 instant_build = no }
-						set_state_flag = { flag = bq_infrastructure days = 365 }
-						ELSE = { # energy_infrastructure
-						    LIMIT = {
-						        NOT = { has_state_flag = { flag = bq_infrastructure days < 1 } }
-						    }
-						    add_building_construction = { type = energy_infrastructure level = 1 instant_build = no }
+					}
+					every_owned_state = {
+						random_select_amount = 1 # "random_select_amount" prevents "energy_infrastructure"/"industrial_infrastructure" Queue overload
+						IF = { # industrial_infrastructure
+							LIMIT = {
+								free_building_slots = { building = industrial_complex size < 1 }
+								NOT = { has_state_flag = { flag = bq_infrastructure days < 1 } }
+								OR = {
+									check_variable = { var = resource@oil		value = 35 compare = greater_than_or_equals }
+									check_variable = { var = resource@coal		value = 35 compare = greater_than_or_equals }
+									check_variable = { var = resource@aluminium	value = 35 compare = greater_than_or_equals }
+									check_variable = { var = resource@rubber	value = 35 compare = greater_than_or_equals }
+									check_variable = { var = resource@tungsten	value = 35 compare = greater_than_or_equals }
+									check_variable = { var = resource@steel		value = 35 compare = greater_than_or_equals }
+									check_variable = { var = resource@chromium	value = 35 compare = greater_than_or_equals }
+								}
+								check_variable = { var = energy_infrastructure value = 1 compare = less_than }
+								check_variable = { var = industrial_infrastructure value = 1 compare = less_than }
+							}
+							add_building_construction = { type = industrial_infrastructure level = 1 instant_build = no }
 							set_state_flag = { flag = bq_infrastructure days = 365 }
+							ELSE = { # energy_infrastructure
+							    LIMIT = {
+							    	free_building_slots = { building = industrial_complex size < 1 }
+							        NOT = { has_state_flag = { flag = bq_infrastructure days < 1 } }
+								    check_variable = { var = num_of_factories value = 10 compare = greater_than_or_equals }
+									check_variable = { var = energy_infrastructure value = 1 compare = less_than }
+									check_variable = { var = industrial_infrastructure value = 1 compare = less_than }
+							    }
+							    add_building_construction = { type = energy_infrastructure level = 1 instant_build = no }
+								set_state_flag = { flag = bq_infrastructure days = 365 }
+							}
 						}
 					}
 				}
