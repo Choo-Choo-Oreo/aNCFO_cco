@@ -1,7 +1,7 @@
 # Political advisors
 	every_possible_country = { # pluralism_advisor
 		limit = {
-			is_dynamic_country = no
+			is_dynamic_country = no # Avoid generic advisors in temporary countries.
 			NOT = {
 				has_allowed_idea_with_traits = { idea = pluralism_advisor characters = yes }
 			}
@@ -11,7 +11,7 @@
 			advisor = {
 				slot = political_advisor
 				traits = { pluralism_advisor }
-				cost = 100
+				cost = 150
 				available = {
 					if = {
 						limit = { has_dlc = "Man the Guns" }	
@@ -37,7 +37,7 @@
 
 	every_possible_country = { # semidemocracy_advisor
 		limit = {
-			is_dynamic_country = no
+			is_dynamic_country = no # Avoid generic advisors in temporary countries.
 			NOT = {
 				has_allowed_idea_with_traits = { idea = semidemocracy_advisor characters = yes }
 			}
@@ -47,7 +47,7 @@
 			advisor = {
 				slot = political_advisor
 				traits = { semidemocracy_advisor }
-				cost = 100
+				cost = 150
 				available = {
 					if = {
 						limit = { has_dlc = "Man the Guns" }	
@@ -74,7 +74,7 @@
 
 	every_possible_country = { # theocratism_advisor
 		limit = {
-			is_dynamic_country = no
+			is_dynamic_country = no # Avoid generic advisors in temporary countries.
 			NOT = {
 				has_allowed_idea_with_traits = { idea = theocratism_advisor characters = yes }
 			}
@@ -84,7 +84,7 @@
 			advisor = {
 				slot = political_advisor
 				traits = { theocratism_advisor }
-				cost = 100
+				cost = 150
 				available = {
 					if = {
 						limit = { has_dlc = "Man the Guns" }	
@@ -111,7 +111,7 @@
 
 	every_possible_country = { # authoritarianism_advisor
 		limit = {
-			is_dynamic_country = no
+			is_dynamic_country = no # Avoid generic advisors in temporary countries.
 			NOT = {
 				has_allowed_idea_with_traits = { idea = authoritarianism_advisor characters = yes }
 			}
@@ -121,7 +121,7 @@
 			advisor = {
 				slot = political_advisor
 				traits = { authoritarianism_advisor }
-				cost = 100
+				cost = 150
 				available = {
 					if = {
 						limit = { has_dlc = "Man the Guns" }	
@@ -144,8 +144,7 @@
 
 	every_possible_country = { # unitism_advisor
 		limit = {
-			# avoid generic advisors in temporary countries
-			is_dynamic_country = no
+			is_dynamic_country = no # Avoid generic advisors in temporary countries.
 			NOT = {
 				has_allowed_idea_with_traits = { idea = unitism_advisor characters = yes }
 			}
@@ -155,7 +154,7 @@
 			advisor = {
 				slot = political_advisor
 				traits = { unitism_advisor }
-				cost = 100
+				cost = 150
 				available = {
 					if = {
 						limit = { has_dlc = "Man the Guns" }	
@@ -177,13 +176,20 @@
 	}
 # Chief of staff advisor
 	every_possible_country = { # Vanilla
-		limit = { NOT = { OR = { original_tag = ZZZ } } }
+		limit = {
+			NOT = {
+				OR = {
+					original_tag = ZZZ
+				}
+			}
+		}
 	}
 # National security advisor
 	every_possible_country = { # La Resistance
 		limit = {
 			has_dlc = "La Resistance"
-			if = {
+			is_dynamic_country = no
+			IF = {
 				limit = {
 					has_dlc = "Battle for the Bosporus"
 				}
@@ -191,14 +197,13 @@
 			NOT = {
 				has_allowed_idea_with_traits = { idea = head_of_intelligence characters = yes }
 			}
-			is_dynamic_country = no
 		}
 		generate_character = { # generic_head_of_intelligence
 			token_base = generic_head_of_intelligence # token will be TAG_token_base
 			advisor = {
 				slot = national_security_advisor
 				traits = { head_of_intelligence pl_authoritarianism_national_security_advisor }
-				cost = 100
+				cost = 150
 				available = {
 					has_intelligence_agency = yes
 				}
@@ -221,13 +226,19 @@
 	}
 
 	every_possible_country = { # Vanilla
-		limit = { NOT = { OR = { original_tag = ZZZ } } }
+		limit = {
+			NOT = {
+				OR = {
+					original_tag = ZZZ
+				}
+			}
+		}
 		generate_character = { # rearmer
 			token_base = generic_rearmer # token will be TAG_token_base
 			advisor = {
 				slot = national_security_advisor
 				traits = { rearmer pl_authoritarianism_national_security_advisor }
-				cost = 100
+				cost = 150
 				available = {
 					if = {
 						limit = { has_dlc = "Man the Guns" }	
@@ -249,13 +260,19 @@
 	}
 # Economic advisors
 	every_possible_country = { # Vanilla
-		limit = { NOT = { OR = { original_tag = ZZZ } } }
+		limit = {
+			NOT = {
+				OR = {
+					original_tag = ZZZ
+				}
+			}
+		}
 		generate_character = { # captain_of_industry
 			token_base = generic_captain_of_industry # token will be TAG_token_base
 			advisor = {
 				slot = economic_advisor
 				traits = { captain_of_industry pl_pluralism_economic_advisor }
-				cost = 100
+				cost = 150
 				ai_will_do = {
 					factor = 1
 					modifier = {
@@ -274,7 +291,7 @@
 			advisor = {
 				slot = economic_advisor
 				traits = { captain_of_refining pl_pluralism_economic_advisor }
-				cost = 100
+				cost = 150
 				ai_will_do = {
 					factor = 1
 					modifier = {
@@ -283,17 +300,17 @@
 					}
 				}
 			}
-			portraits = {
-				army = { small = GFX_idea_generic_captain_of_refining }
+			portraits = { 
+				army = { small = GFX_idea_generic_captain_of_industry }
 			}
 		}
 
-		generate_character = { # millatary_industrialist
-			token_base = generic_millatary_industrialist # token will be TAG_token_base
+		generate_character = { # military_industrialist
+			token_base = generic_military_industrialist # token will be TAG_token_base
 			advisor = {
 				slot = economic_advisor
-				traits = { millatary_industrialist }
-				cost = 100
+				traits = { military_industrialist }
+				cost = 150
 				ai_will_do = {
 					factor = 1
 					modifier = {
@@ -307,7 +324,7 @@
 				}
 			}
 			portraits = { 
-				army = { small = GFX_idea_generic_millatary_industrialist }
+				army = { small = GFX_idea_generic_war_industrialist }
 			}
 		}
 
@@ -316,7 +333,7 @@
 			advisor = {
 				slot = economic_advisor
 				traits = { war_industrialist }
-				cost = 100
+				cost = 150
 				ai_will_do = {
 					factor = 1
 					modifier = {
@@ -338,7 +355,7 @@
 			advisor = {
 				slot = economic_advisor
 				traits = { naval_industrialist }
-				cost = 100
+				cost = 150
 				ai_will_do = {
 					factor = 1
 					modifier = {
@@ -352,7 +369,7 @@
 				}
 			}
 			portraits = { 
-				army = { small = GFX_idea_generic_naval_industrialist }
+				army = { small = GFX_idea_generic_war_industrialist }
 			}
 		}
 
@@ -361,7 +378,7 @@
 			advisor = {
 				slot = economic_advisor
 				traits = { quartermaster_general }
-				cost = 100
+				cost = 150
 				ai_will_do = {
 					factor = 1
 					modifier = {
@@ -375,7 +392,7 @@
 				}
 			}
 			portraits = { 
-				army = { small = GFX_idea_generic_quartermaster_general }
+				army = { small = GFX_idea_generic_fortification_engineer }
 			}
 		}
 
@@ -384,7 +401,7 @@
 			advisor = {
 				slot = economic_advisor
 				traits = { fortification_engineer pl_semidemocracy_economic_advisor }
-				cost = 100
+				cost = 150
 				ai_will_do = {
 					factor = 1
 					modifier = {
@@ -403,7 +420,7 @@
 			advisor = {
 				slot = economic_advisor
 				traits = { armaments_organizer pl_unitism_economic_advisor }
-				cost = 100
+				cost = 150
 				ai_will_do = {
 					factor = 1
 					modifier = {
@@ -413,15 +430,27 @@
 				}
 			}
 			portraits = { 
-				army = { small = GFX_idea_generic_armaments_organizer }
+				army = { small = GFX_idea_generic_fortification_engineer }
 			}
 		}
 	}
 # Foreign affairs advisor
 	every_possible_country = { # Vanilla
-		limit = { NOT = { OR = { original_tag = ZZZ } } }
+		limit = {
+			NOT = {
+				OR = {
+					original_tag = ZZZ
+				}
+			}
+		}
 	}
 # Military advisors
 	every_possible_country = { # Vanilla
-		limit = { NOT = { OR = { original_tag = ZZZ } } }
+		limit = {
+			NOT = {
+				OR = {
+					original_tag = ZZZ
+				}
+			}
+		}
 	}
