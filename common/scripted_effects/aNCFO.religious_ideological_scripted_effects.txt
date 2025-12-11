@@ -53,17 +53,19 @@ update_religious_stance = { # +Map Update
 		limit = {
 			OR = {
 				has_country_flag = nihilism_religion
-				NOT = { OR = {
-					has_country_flag = harmonainus_religion
-					has_country_flag = harmonainus_reformed_religion
-					has_country_flag = pullus_religion
-					has_country_flag = emperor_personality_religion
-					has_country_flag = thalassaus_religion
-					has_country_flag = ager_montis_religion
-					has_country_flag = animaekin_religion
-					has_country_flag = yellow_reg_religion
-					has_country_flag = secular_religion
-				} }
+				NOT = {
+					OR = {
+						has_country_flag = harmonainus_religion
+						has_country_flag = harmonainus_reformed_religion
+						has_country_flag = pullus_religion
+						has_country_flag = emperor_personality_religion
+						has_country_flag = thalassaus_religion
+						has_country_flag = ager_montis_religion
+						has_country_flag = animaekin_religion
+						has_country_flag = yellow_reg_religion
+						has_country_flag = secular_religion
+					}
+				}
 			}
 		}
 		add_ideas = nihilism_religion_law
@@ -197,17 +199,21 @@ update_unitism_dogmata_stance = {
 		clr_country_flag = ideological_religion
 	}
 	else_if = { # Just to have a default. Will replace with a event.
-		limit = { NOT = { OR = {
-			has_country_flag = harmonainus_religion
-			has_country_flag = harmonainus_reformed_religion
-			has_country_flag = pullus_religion
-			has_country_flag = emperor_personality_religion
-			has_country_flag = thalassaus_religion
-			has_country_flag = ager_montis_religion
-			has_country_flag = animaekin_religion
-			has_country_flag = yellow_reg_religion
-			has_country_flag = secular_religion
-		} } }
+		limit = {
+			NOT = {
+				OR = {
+					has_country_flag = harmonainus_religion
+					has_country_flag = harmonainus_reformed_religion
+					has_country_flag = pullus_religion
+					has_country_flag = emperor_personality_religion
+					has_country_flag = thalassaus_religion
+					has_country_flag = ager_montis_religion
+					has_country_flag = animaekin_religion
+					has_country_flag = yellow_reg_religion
+					has_country_flag = secular_religion
+				}
+			}
+		}
 		set_country_flag = nihilism_religion
 	}
 }
@@ -303,6 +309,10 @@ update_ideological_dogmata_stance = { # +Map Update
 		add_ideas = sub_authoritarian_law
 	}
 	else_if = {
+		limit = { has_country_leader_ideology = sub_stratocracy }
+		add_ideas = sub_stratocracy_law
+	}
+	else_if = {
 		limit = { has_country_leader_ideology = sub_auth_harmonainism }
 		add_ideas = sub_auth_harmonainism_law
 	}
@@ -344,21 +354,26 @@ update_all_stances = {
 
 update_action_sub_ideology = {
 	IF = {
-		limit = { has_idea = sub_unradical_law NOT = { OR = {
-			has_country_leader_ideology = sub_illuminism
-			has_country_leader_ideology = sub_pluralism
-			has_country_leader_ideology = sub_constitutionalism
-			has_country_leader_ideology = sub_conservatism
-			has_country_leader_ideology = sub_liberalism
-			has_country_leader_ideology = sub_progressivism
-			has_country_leader_ideology = sub_populism
-			has_country_leader_ideology = sub_obscurism
-			has_country_leader_ideology = sub_transitional_democracy
-			has_country_leader_ideology = sub_traditionalism
-			has_country_leader_ideology = sub_mercantile_republicism
-			has_country_leader_ideology = sub_socialism
-			has_country_leader_ideology = sub_illiberalism
-		} } }
+		limit = {
+			has_idea = sub_unradical_law
+			NOT = {
+				OR = {
+					has_country_leader_ideology = sub_illuminism
+					has_country_leader_ideology = sub_pluralism
+					has_country_leader_ideology = sub_constitutionalism
+					has_country_leader_ideology = sub_conservatism
+					has_country_leader_ideology = sub_liberalism
+					has_country_leader_ideology = sub_progressivism
+					has_country_leader_ideology = sub_populism
+					has_country_leader_ideology = sub_obscurism
+					has_country_leader_ideology = sub_transitional_democracy
+					has_country_leader_ideology = sub_traditionalism
+					has_country_leader_ideology = sub_mercantile_republicism
+					has_country_leader_ideology = sub_socialism
+					has_country_leader_ideology = sub_illiberalism
+				}
+			}
+		}
 		log = "[GetDateText]: [Root.GetName]: Switch away from sub_unradical"
 		update_ideological_dogmata_stance = yes
 	}
@@ -405,6 +420,11 @@ update_action_sub_ideology = {
 	IF = {
 		limit = { has_idea = sub_authoritarian_law NOT = { has_country_leader_ideology = sub_authoritarian } }
 		log = "[GetDateText]: [Root.GetName]: Switch away from sub_authoritarian"
+		update_ideological_dogmata_stance = yes
+	}
+	IF = {
+		limit = { has_idea = sub_stratocracy_law NOT = { has_country_leader_ideology = sub_stratocracy } }
+		log = "[GetDateText]: [Root.GetName]: Switch away from sub_stratocracy"
 		update_ideological_dogmata_stance = yes
 	}
 	IF = {
@@ -461,627 +481,627 @@ update_all_dogmata_on_focus_complete = {
 	}
 }
 # Switch Religion
-	switch_religion_harmonainus_religion = {
-		log = "[GetDateText]: [Root.GetName]: switch_religion_harmonainus_religion"
-		set_country_flag = harmonainus_religion
-		clr_country_flag = harmonainus_reformed_religion
-		clr_country_flag = pullus_religion
-		clr_country_flag = ideological_religion
-		clr_country_flag = emperor_personality_religion
-		clr_country_flag = thalassaus_religion
-		clr_country_flag = ager_montis_religion
-		clr_country_flag = animaekin_religion
-		clr_country_flag = yellow_reg_religion
-		clr_country_flag = secular_religion
-		clr_country_flag = nihilism_religion
-		custom_effect_tooltip = switch_religion_harmonainus_religion_tt
-		hidden_effect = { update_religious_stance = yes } # Must be last.
-	}
+switch_religion_harmonainus_religion = {
+	log = "[GetDateText]: [Root.GetName]: switch_religion_harmonainus_religion"
+	set_country_flag = harmonainus_religion
+	clr_country_flag = harmonainus_reformed_religion
+	clr_country_flag = pullus_religion
+	clr_country_flag = ideological_religion
+	clr_country_flag = emperor_personality_religion
+	clr_country_flag = thalassaus_religion
+	clr_country_flag = ager_montis_religion
+	clr_country_flag = animaekin_religion
+	clr_country_flag = yellow_reg_religion
+	clr_country_flag = secular_religion
+	clr_country_flag = nihilism_religion
+	custom_effect_tooltip = switch_religion_harmonainus_religion_tt
+	hidden_effect = { update_religious_stance = yes } # Must be last.
+}
 
-	switch_religion_harmonainus_reformed_religion = {
-		log = "[GetDateText]: [Root.GetName]: switch_religion_harmonainus_reformed_religion"
-		clr_country_flag = harmonainus_religion
-		set_country_flag = harmonainus_reformed_religion
-		clr_country_flag = pullus_religion
-		clr_country_flag = ideological_religion
-		clr_country_flag = emperor_personality_religion
-		clr_country_flag = thalassaus_religion
-		clr_country_flag = ager_montis_religion
-		clr_country_flag = animaekin_religion
-		clr_country_flag = yellow_reg_religion
-		clr_country_flag = secular_religion
-		clr_country_flag = nihilism_religion
-		custom_effect_tooltip = switch_religion_harmonainus_reformed_religion_tt
-		hidden_effect = { update_religious_stance = yes } # Must be last.
-	}
+switch_religion_harmonainus_reformed_religion = {
+	log = "[GetDateText]: [Root.GetName]: switch_religion_harmonainus_reformed_religion"
+	clr_country_flag = harmonainus_religion
+	set_country_flag = harmonainus_reformed_religion
+	clr_country_flag = pullus_religion
+	clr_country_flag = ideological_religion
+	clr_country_flag = emperor_personality_religion
+	clr_country_flag = thalassaus_religion
+	clr_country_flag = ager_montis_religion
+	clr_country_flag = animaekin_religion
+	clr_country_flag = yellow_reg_religion
+	clr_country_flag = secular_religion
+	clr_country_flag = nihilism_religion
+	custom_effect_tooltip = switch_religion_harmonainus_reformed_religion_tt
+	hidden_effect = { update_religious_stance = yes } # Must be last.
+}
 
-	switch_religion_pullus_religion = {
-		log = "[GetDateText]: [Root.GetName]: switch_religion_pullus_religion"
-		clr_country_flag = harmonainus_religion
-		clr_country_flag = harmonainus_reformed_religion
-		set_country_flag = pullus_religion
-		clr_country_flag = ideological_religion
-		clr_country_flag = emperor_personality_religion
-		clr_country_flag = thalassaus_religion
-		clr_country_flag = ager_montis_religion
-		clr_country_flag = animaekin_religion
-		clr_country_flag = yellow_reg_religion
-		clr_country_flag = secular_religion
-		clr_country_flag = nihilism_religion
-		custom_effect_tooltip = switch_religion_pullus_religion_tt
-		hidden_effect = { update_religious_stance = yes } # Must be last.
-	}
+switch_religion_pullus_religion = {
+	log = "[GetDateText]: [Root.GetName]: switch_religion_pullus_religion"
+	clr_country_flag = harmonainus_religion
+	clr_country_flag = harmonainus_reformed_religion
+	set_country_flag = pullus_religion
+	clr_country_flag = ideological_religion
+	clr_country_flag = emperor_personality_religion
+	clr_country_flag = thalassaus_religion
+	clr_country_flag = ager_montis_religion
+	clr_country_flag = animaekin_religion
+	clr_country_flag = yellow_reg_religion
+	clr_country_flag = secular_religion
+	clr_country_flag = nihilism_religion
+	custom_effect_tooltip = switch_religion_pullus_religion_tt
+	hidden_effect = { update_religious_stance = yes } # Must be last.
+}
 
-	switch_religion_emperor_personality_religion = {
-		log = "[GetDateText]: [Root.GetName]: switch_religion_emperor_personality_religion"
-		clr_country_flag = harmonainus_religion
-		clr_country_flag = harmonainus_reformed_religion
-		clr_country_flag = pullus_religion
-		clr_country_flag = ideological_religion
-		set_country_flag = emperor_personality_religion
-		clr_country_flag = thalassaus_religion
-		clr_country_flag = ager_montis_religion
-		clr_country_flag = animaekin_religion
-		clr_country_flag = yellow_reg_religion
-		clr_country_flag = secular_religion
-		clr_country_flag = nihilism_religion
-		custom_effect_tooltip = switch_religion_emperor_personality_religion_tt
-		hidden_effect = { update_religious_stance = yes } # Must be last.
-	}
+switch_religion_emperor_personality_religion = {
+	log = "[GetDateText]: [Root.GetName]: switch_religion_emperor_personality_religion"
+	clr_country_flag = harmonainus_religion
+	clr_country_flag = harmonainus_reformed_religion
+	clr_country_flag = pullus_religion
+	clr_country_flag = ideological_religion
+	set_country_flag = emperor_personality_religion
+	clr_country_flag = thalassaus_religion
+	clr_country_flag = ager_montis_religion
+	clr_country_flag = animaekin_religion
+	clr_country_flag = yellow_reg_religion
+	clr_country_flag = secular_religion
+	clr_country_flag = nihilism_religion
+	custom_effect_tooltip = switch_religion_emperor_personality_religion_tt
+	hidden_effect = { update_religious_stance = yes } # Must be last.
+}
 
-	switch_religion_thalassaus_religion = {
-		log = "[GetDateText]: [Root.GetName]: switch_religion_thalassaus_religion"
-		clr_country_flag = harmonainus_religion
-		clr_country_flag = harmonainus_reformed_religion
-		clr_country_flag = pullus_religion
-		clr_country_flag = ideological_religion
-		clr_country_flag = emperor_personality_religion
-		set_country_flag = thalassaus_religion
-		clr_country_flag = ager_montis_religion
-		clr_country_flag = animaekin_religion
-		clr_country_flag = yellow_reg_religion
-		clr_country_flag = secular_religion
-		clr_country_flag = nihilism_religion
-		custom_effect_tooltip = switch_religion_thalassaus_religion_tt
-		hidden_effect = { update_religious_stance = yes } # Must be last.
-	}
+switch_religion_thalassaus_religion = {
+	log = "[GetDateText]: [Root.GetName]: switch_religion_thalassaus_religion"
+	clr_country_flag = harmonainus_religion
+	clr_country_flag = harmonainus_reformed_religion
+	clr_country_flag = pullus_religion
+	clr_country_flag = ideological_religion
+	clr_country_flag = emperor_personality_religion
+	set_country_flag = thalassaus_religion
+	clr_country_flag = ager_montis_religion
+	clr_country_flag = animaekin_religion
+	clr_country_flag = yellow_reg_religion
+	clr_country_flag = secular_religion
+	clr_country_flag = nihilism_religion
+	custom_effect_tooltip = switch_religion_thalassaus_religion_tt
+	hidden_effect = { update_religious_stance = yes } # Must be last.
+}
 
-	switch_religion_ager_montis_religion = {
-		log = "[GetDateText]: [Root.GetName]: switch_religion_ager_montis_religion"
-		clr_country_flag = harmonainus_religion
-		clr_country_flag = harmonainus_reformed_religion
-		clr_country_flag = pullus_religion
-		clr_country_flag = ideological_religion
-		clr_country_flag = emperor_personality_religion
-		clr_country_flag = thalassaus_religion
-		set_country_flag = ager_montis_religion
-		clr_country_flag = animaekin_religion
-		clr_country_flag = yellow_reg_religion
-		clr_country_flag = secular_religion
-		clr_country_flag = nihilism_religion
-		custom_effect_tooltip = switch_religion_ager_montis_religion_tt
-		hidden_effect = { update_religious_stance = yes } # Must be last.
-	}
+switch_religion_ager_montis_religion = {
+	log = "[GetDateText]: [Root.GetName]: switch_religion_ager_montis_religion"
+	clr_country_flag = harmonainus_religion
+	clr_country_flag = harmonainus_reformed_religion
+	clr_country_flag = pullus_religion
+	clr_country_flag = ideological_religion
+	clr_country_flag = emperor_personality_religion
+	clr_country_flag = thalassaus_religion
+	set_country_flag = ager_montis_religion
+	clr_country_flag = animaekin_religion
+	clr_country_flag = yellow_reg_religion
+	clr_country_flag = secular_religion
+	clr_country_flag = nihilism_religion
+	custom_effect_tooltip = switch_religion_ager_montis_religion_tt
+	hidden_effect = { update_religious_stance = yes } # Must be last.
+}
 
-	switch_religion_animaekin_religion = {
-		log = "[GetDateText]: [Root.GetName]: switch_religion_animaekin_religion"
-		clr_country_flag = harmonainus_religion
-		clr_country_flag = harmonainus_reformed_religion
-		clr_country_flag = pullus_religion
-		clr_country_flag = ideological_religion
-		clr_country_flag = emperor_personality_religion
-		clr_country_flag = thalassaus_religion
-		clr_country_flag = ager_montis_religion
-		set_country_flag = animaekin_religion
-		clr_country_flag = yellow_reg_religion
-		clr_country_flag = secular_religion
-		clr_country_flag = nihilism_religion
-		custom_effect_tooltip = switch_religion_animaekin_religion_tt
-		hidden_effect = { update_religious_stance = yes } # Must be last.
-	}
+switch_religion_animaekin_religion = {
+	log = "[GetDateText]: [Root.GetName]: switch_religion_animaekin_religion"
+	clr_country_flag = harmonainus_religion
+	clr_country_flag = harmonainus_reformed_religion
+	clr_country_flag = pullus_religion
+	clr_country_flag = ideological_religion
+	clr_country_flag = emperor_personality_religion
+	clr_country_flag = thalassaus_religion
+	clr_country_flag = ager_montis_religion
+	set_country_flag = animaekin_religion
+	clr_country_flag = yellow_reg_religion
+	clr_country_flag = secular_religion
+	clr_country_flag = nihilism_religion
+	custom_effect_tooltip = switch_religion_animaekin_religion_tt
+	hidden_effect = { update_religious_stance = yes } # Must be last.
+}
 
-	switch_religion_yellow_reg_religion = {
-		log = "[GetDateText]: [Root.GetName]: switch_religion_yellow_reg_religion"
-		clr_country_flag = harmonainus_religion
-		clr_country_flag = harmonainus_reformed_religion
-		clr_country_flag = pullus_religion
-		clr_country_flag = ideological_religion
-		clr_country_flag = emperor_personality_religion
-		clr_country_flag = thalassaus_religion
-		clr_country_flag = ager_montis_religion
-		clr_country_flag = animaekin_religion
-		set_country_flag = yellow_reg_religion
-		clr_country_flag = secular_religion
-		clr_country_flag = nihilism_religion
-		custom_effect_tooltip = switch_religion_yellow_reg_religion_tt
-		hidden_effect = { update_religious_stance = yes } # Must be last.
-	}
+switch_religion_yellow_reg_religion = {
+	log = "[GetDateText]: [Root.GetName]: switch_religion_yellow_reg_religion"
+	clr_country_flag = harmonainus_religion
+	clr_country_flag = harmonainus_reformed_religion
+	clr_country_flag = pullus_religion
+	clr_country_flag = ideological_religion
+	clr_country_flag = emperor_personality_religion
+	clr_country_flag = thalassaus_religion
+	clr_country_flag = ager_montis_religion
+	clr_country_flag = animaekin_religion
+	set_country_flag = yellow_reg_religion
+	clr_country_flag = secular_religion
+	clr_country_flag = nihilism_religion
+	custom_effect_tooltip = switch_religion_yellow_reg_religion_tt
+	hidden_effect = { update_religious_stance = yes } # Must be last.
+}
 
-	switch_religion_secular_religion = {
-		log = "[GetDateText]: [Root.GetName]: switch_religion_secular_religion"
-		clr_country_flag = harmonainus_religion
-		clr_country_flag = harmonainus_reformed_religion
-		clr_country_flag = pullus_religion
-		clr_country_flag = ideological_religion
-		clr_country_flag = emperor_personality_religion
-		clr_country_flag = thalassaus_religion
-		clr_country_flag = ager_montis_religion
-		clr_country_flag = animaekin_religion
-		clr_country_flag = yellow_reg_religion
-		set_country_flag = secular_religion
-		clr_country_flag = nihilism_religion
-		custom_effect_tooltip = switch_religion_secular_religion_tt
-		hidden_effect = { update_religious_stance = yes } # Must be last.
-	}
+switch_religion_secular_religion = {
+	log = "[GetDateText]: [Root.GetName]: switch_religion_secular_religion"
+	clr_country_flag = harmonainus_religion
+	clr_country_flag = harmonainus_reformed_religion
+	clr_country_flag = pullus_religion
+	clr_country_flag = ideological_religion
+	clr_country_flag = emperor_personality_religion
+	clr_country_flag = thalassaus_religion
+	clr_country_flag = ager_montis_religion
+	clr_country_flag = animaekin_religion
+	clr_country_flag = yellow_reg_religion
+	set_country_flag = secular_religion
+	clr_country_flag = nihilism_religion
+	custom_effect_tooltip = switch_religion_secular_religion_tt
+	hidden_effect = { update_religious_stance = yes } # Must be last.
+}
 
-	switch_religion_nihilism_religion = {
-		log = "[GetDateText]: [Root.GetName]: switch_religion_nihilism_religion"
-		clr_country_flag = harmonainus_religion
-		clr_country_flag = harmonainus_reformed_religion
-		clr_country_flag = pullus_religion
-		clr_country_flag = ideological_religion
-		clr_country_flag = emperor_personality_religion
-		clr_country_flag = thalassaus_religion
-		clr_country_flag = ager_montis_religion
-		clr_country_flag = animaekin_religion
-		clr_country_flag = yellow_reg_religion
-		clr_country_flag = secular_religion
-		set_country_flag = nihilism_religion
-		custom_effect_tooltip = switch_religion_nihilism_religion_tt
-		hidden_effect = { update_religious_stance = yes } # Must be last.
-	}
+switch_religion_nihilism_religion = {
+	log = "[GetDateText]: [Root.GetName]: switch_religion_nihilism_religion"
+	clr_country_flag = harmonainus_religion
+	clr_country_flag = harmonainus_reformed_religion
+	clr_country_flag = pullus_religion
+	clr_country_flag = ideological_religion
+	clr_country_flag = emperor_personality_religion
+	clr_country_flag = thalassaus_religion
+	clr_country_flag = ager_montis_religion
+	clr_country_flag = animaekin_religion
+	clr_country_flag = yellow_reg_religion
+	clr_country_flag = secular_religion
+	set_country_flag = nihilism_religion
+	custom_effect_tooltip = switch_religion_nihilism_religion_tt
+	hidden_effect = { update_religious_stance = yes } # Must be last.
+}
 # Should remove any and all foreign influence.
-	remove_pluralism_spirits_effect = {
-		if = {
-			limit = { has_idea = strong_pluralism_influence }
-			remove_ideas = strong_pluralism_influence
-		}
-		if = {
-			limit = { has_idea = moderate_pluralism_influence }
-			remove_ideas = moderate_pluralism_influence
-		}
-		if = {
-			limit = { has_idea = weak_pluralism_influence }
-			remove_ideas = weak_pluralism_influence
-		}
+remove_pluralism_spirits_effect = {
+	if = {
+		limit = { has_idea = strong_pluralism_influence }
+		remove_ideas = strong_pluralism_influence
 	}
+	if = {
+		limit = { has_idea = moderate_pluralism_influence }
+		remove_ideas = moderate_pluralism_influence
+	}
+	if = {
+		limit = { has_idea = weak_pluralism_influence }
+		remove_ideas = weak_pluralism_influence
+	}
+}
 
-	remove_semidemocracy_spirits_effect = {
-		if = {
-			limit = { has_idea = strong_semidemocracy_influence }
-			remove_ideas = strong_semidemocracy_influence
-		}
-		if = {
-			limit = { has_idea = moderate_semidemocracy_influence }
-			remove_ideas = moderate_semidemocracy_influence
-		}
-		if = {
-			limit = { has_idea = weak_semidemocracy_influence }
-			remove_ideas = weak_semidemocracy_influence
-		}
+remove_semidemocracy_spirits_effect = {
+	if = {
+		limit = { has_idea = strong_semidemocracy_influence }
+		remove_ideas = strong_semidemocracy_influence
 	}
+	if = {
+		limit = { has_idea = moderate_semidemocracy_influence }
+		remove_ideas = moderate_semidemocracy_influence
+	}
+	if = {
+		limit = { has_idea = weak_semidemocracy_influence }
+		remove_ideas = weak_semidemocracy_influence
+	}
+}
 
-	remove_theocratism_spirits_effect = {
-		if = {
-			limit = { has_idea = strong_theocratism_influence }
-			remove_ideas = strong_theocratism_influence
-		}
-		if = {
-			limit = { has_idea = moderate_theocratism_influence }
-			remove_ideas = moderate_theocratism_influence
-		}
-		if = {
-			limit = { has_idea = weak_theocratism_influence }
-			remove_ideas = weak_theocratism_influence
-		}
+remove_theocratism_spirits_effect = {
+	if = {
+		limit = { has_idea = strong_theocratism_influence }
+		remove_ideas = strong_theocratism_influence
 	}
+	if = {
+		limit = { has_idea = moderate_theocratism_influence }
+		remove_ideas = moderate_theocratism_influence
+	}
+	if = {
+		limit = { has_idea = weak_theocratism_influence }
+		remove_ideas = weak_theocratism_influence
+	}
+}
 
-	remove_authoritarianism_spirits_effect = {
-		if = {
-			limit = { has_idea = strong_authoritarianism_influence }
-			remove_ideas = strong_authoritarianism_influence
-		}
-		if = {
-			limit = { has_idea = moderate_authoritarianism_influence }
-			remove_ideas = moderate_authoritarianism_influence
-		}
-		if = {
-			limit = { has_idea = weak_authoritarianism_influence }
-			remove_ideas = weak_authoritarianism_influence
-		}
+remove_authoritarianism_spirits_effect = {
+	if = {
+		limit = { has_idea = strong_authoritarianism_influence }
+		remove_ideas = strong_authoritarianism_influence
 	}
+	if = {
+		limit = { has_idea = moderate_authoritarianism_influence }
+		remove_ideas = moderate_authoritarianism_influence
+	}
+	if = {
+		limit = { has_idea = weak_authoritarianism_influence }
+		remove_ideas = weak_authoritarianism_influence
+	}
+}
 
-	remove_unitism_spirits_effect = {
-		if = {
-			limit = { has_idea = strong_unitism_influence }
-			remove_ideas = strong_unitism_influence
-		}
-		if = {
-			limit = { has_idea = moderate_unitism_influence }
-			remove_ideas = moderate_unitism_influence
-		}
-		if = {
-			limit = { has_idea = weak_unitism_influence }
-			remove_ideas = weak_unitism_influence
-		}
+remove_unitism_spirits_effect = {
+	if = {
+		limit = { has_idea = strong_unitism_influence }
+		remove_ideas = strong_unitism_influence
 	}
+	if = {
+		limit = { has_idea = moderate_unitism_influence }
+		remove_ideas = moderate_unitism_influence
+	}
+	if = {
+		limit = { has_idea = weak_unitism_influence }
+		remove_ideas = weak_unitism_influence
+	}
+}
 # Add/Remove Popularity
-	add_25_current_party_popularity = {
-		if = {
-			limit = { has_government = pluralism }
-			add_popularity = {
-				ideology = pluralism
-				popularity = 0.25
-			}
-		}
-		if = {
-			limit = { has_government = semidemocracy }
-			add_popularity = {
-				ideology = semidemocracy
-				popularity = 0.25
-			}
-		}
-		if = {
-			limit = { has_government = theocratism }
-			add_popularity = {
-				ideology = theocratism
-				popularity = 0.25
-			}
-		}
-		if = {
-			limit = { has_government = authoritarianism }
-			add_popularity = {
-				ideology = authoritarianism
-				popularity = 0.25
-			}
-		}
-		if = {
-			limit = { has_government = unitism }
-			add_popularity = {
-				ideology = unitism
-				popularity = 0.25
-			}
+add_25_current_party_popularity = {
+	if = {
+		limit = { has_government = pluralism }
+		add_popularity = {
+			ideology = pluralism
+			popularity = 0.25
 		}
 	}
+	if = {
+		limit = { has_government = semidemocracy }
+		add_popularity = {
+			ideology = semidemocracy
+			popularity = 0.25
+		}
+	}
+	if = {
+		limit = { has_government = theocratism }
+		add_popularity = {
+			ideology = theocratism
+			popularity = 0.25
+		}
+	}
+	if = {
+		limit = { has_government = authoritarianism }
+		add_popularity = {
+			ideology = authoritarianism
+			popularity = 0.25
+		}
+	}
+	if = {
+		limit = { has_government = unitism }
+		add_popularity = {
+			ideology = unitism
+			popularity = 0.25
+		}
+	}
+}
 
-	add_20_current_party_popularity = {
-		if = {
-			limit = { has_government = pluralism }
-			add_popularity = {
-				ideology = pluralism
-				popularity = 0.20
-			}
-		}
-		if = {
-			limit = { has_government = semidemocracy }
-			add_popularity = {
-				ideology = semidemocracy
-				popularity = 0.20
-			}
-		}
-		if = {
-			limit = { has_government = theocratism }
-			add_popularity = {
-				ideology = theocratism
-				popularity = 0.20
-			}
-		}
-		if = {
-			limit = { has_government = authoritarianism }
-			add_popularity = {
-				ideology = authoritarianism
-				popularity = 0.20
-			}
-		}
-		if = {
-			limit = { has_government = unitism }
-			add_popularity = {
-				ideology = unitism
-				popularity = 0.20
-			}
+add_20_current_party_popularity = {
+	if = {
+		limit = { has_government = pluralism }
+		add_popularity = {
+			ideology = pluralism
+			popularity = 0.20
 		}
 	}
+	if = {
+		limit = { has_government = semidemocracy }
+		add_popularity = {
+			ideology = semidemocracy
+			popularity = 0.20
+		}
+	}
+	if = {
+		limit = { has_government = theocratism }
+		add_popularity = {
+			ideology = theocratism
+			popularity = 0.20
+		}
+	}
+	if = {
+		limit = { has_government = authoritarianism }
+		add_popularity = {
+			ideology = authoritarianism
+			popularity = 0.20
+		}
+	}
+	if = {
+		limit = { has_government = unitism }
+		add_popularity = {
+			ideology = unitism
+			popularity = 0.20
+		}
+	}
+}
 
-	add_15_current_party_popularity = {
-		if = {
-			limit = { has_government = pluralism }
-			add_popularity = {
-				ideology = pluralism
-				popularity = 0.15
-			}
-		}
-		if = {
-			limit = { has_government = semidemocracy }
-			add_popularity = {
-				ideology = semidemocracy
-				popularity = 0.15
-			}
-		}
-		if = {
-			limit = { has_government = theocratism }
-			add_popularity = {
-				ideology = theocratism
-				popularity = 0.15
-			}
-		}
-		if = {
-			limit = { has_government = authoritarianism }
-			add_popularity = {
-				ideology = authoritarianism
-				popularity = 0.15
-			}
-		}
-		if = {
-			limit = { has_government = unitism }
-			add_popularity = {
-				ideology = unitism
-				popularity = 0.15
-			}
+add_15_current_party_popularity = {
+	if = {
+		limit = { has_government = pluralism }
+		add_popularity = {
+			ideology = pluralism
+			popularity = 0.15
 		}
 	}
+	if = {
+		limit = { has_government = semidemocracy }
+		add_popularity = {
+			ideology = semidemocracy
+			popularity = 0.15
+		}
+	}
+	if = {
+		limit = { has_government = theocratism }
+		add_popularity = {
+			ideology = theocratism
+			popularity = 0.15
+		}
+	}
+	if = {
+		limit = { has_government = authoritarianism }
+		add_popularity = {
+			ideology = authoritarianism
+			popularity = 0.15
+		}
+	}
+	if = {
+		limit = { has_government = unitism }
+		add_popularity = {
+			ideology = unitism
+			popularity = 0.15
+		}
+	}
+}
 
-	add_10_current_party_popularity = {
-		if = {
-			limit = { has_government = pluralism }
-			add_popularity = {
-				ideology = pluralism
-				popularity = 0.10
-			}
-		}
-		if = {
-			limit = { has_government = semidemocracy }
-			add_popularity = {
-				ideology = semidemocracy
-				popularity = 0.10
-			}
-		}
-		if = {
-			limit = { has_government = theocratism }
-			add_popularity = {
-				ideology = theocratism
-				popularity = 0.10
-			}
-		}
-		if = {
-			limit = { has_government = authoritarianism }
-			add_popularity = {
-				ideology = authoritarianism
-				popularity = 0.10
-			}
-		}
-		if = {
-			limit = { has_government = unitism }
-			add_popularity = {
-				ideology = unitism
-				popularity = 0.10
-			}
+add_10_current_party_popularity = {
+	if = {
+		limit = { has_government = pluralism }
+		add_popularity = {
+			ideology = pluralism
+			popularity = 0.10
 		}
 	}
+	if = {
+		limit = { has_government = semidemocracy }
+		add_popularity = {
+			ideology = semidemocracy
+			popularity = 0.10
+		}
+	}
+	if = {
+		limit = { has_government = theocratism }
+		add_popularity = {
+			ideology = theocratism
+			popularity = 0.10
+		}
+	}
+	if = {
+		limit = { has_government = authoritarianism }
+		add_popularity = {
+			ideology = authoritarianism
+			popularity = 0.10
+		}
+	}
+	if = {
+		limit = { has_government = unitism }
+		add_popularity = {
+			ideology = unitism
+			popularity = 0.10
+		}
+	}
+}
 
-	add_05_current_party_popularity = {
-		if = {
-			limit = { has_government = pluralism }
-			add_popularity = {
-				ideology = pluralism
-				popularity = 0.05
-			}
-		}
-		if = {
-			limit = { has_government = semidemocracy }
-			add_popularity = {
-				ideology = semidemocracy
-				popularity = 0.05
-			}
-		}
-		if = {
-			limit = { has_government = theocratism }
-			add_popularity = {
-				ideology = theocratism
-				popularity = 0.05
-			}
-		}
-		if = {
-			limit = { has_government = authoritarianism }
-			add_popularity = {
-				ideology = authoritarianism
-				popularity = 0.05
-			}
-		}
-		if = {
-			limit = { has_government = unitism }
-			add_popularity = {
-				ideology = unitism
-				popularity = 0.05
-			}
+add_05_current_party_popularity = {
+	if = {
+		limit = { has_government = pluralism }
+		add_popularity = {
+			ideology = pluralism
+			popularity = 0.05
 		}
 	}
+	if = {
+		limit = { has_government = semidemocracy }
+		add_popularity = {
+			ideology = semidemocracy
+			popularity = 0.05
+		}
+	}
+	if = {
+		limit = { has_government = theocratism }
+		add_popularity = {
+			ideology = theocratism
+			popularity = 0.05
+		}
+	}
+	if = {
+		limit = { has_government = authoritarianism }
+		add_popularity = {
+			ideology = authoritarianism
+			popularity = 0.05
+		}
+	}
+	if = {
+		limit = { has_government = unitism }
+		add_popularity = {
+			ideology = unitism
+			popularity = 0.05
+		}
+	}
+}
 
-	remove_25_current_party_popularity = {
-		if = {
-			limit = { has_government = pluralism }
-			add_popularity = {
-				ideology = pluralism
-				popularity = -0.25
-			}
-		}
-		if = {
-			limit = { has_government = semidemocracy }
-			add_popularity = {
-				ideology = semidemocracy
-				popularity = -0.25
-			}
-		}
-		if = {
-			limit = { has_government = theocratism }
-			add_popularity = {
-				ideology = theocratism
-				popularity = -0.25
-			}
-		}
-		if = {
-			limit = { has_government = authoritarianism }
-			add_popularity = {
-				ideology = authoritarianism
-				popularity = -0.25
-			}
-		}
-		if = {
-			limit = { has_government = unitism }
-			add_popularity = {
-				ideology = unitism
-				popularity = -0.25
-			}
+remove_25_current_party_popularity = {
+	if = {
+		limit = { has_government = pluralism }
+		add_popularity = {
+			ideology = pluralism
+			popularity = -0.25
 		}
 	}
+	if = {
+		limit = { has_government = semidemocracy }
+		add_popularity = {
+			ideology = semidemocracy
+			popularity = -0.25
+		}
+	}
+	if = {
+		limit = { has_government = theocratism }
+		add_popularity = {
+			ideology = theocratism
+			popularity = -0.25
+		}
+	}
+	if = {
+		limit = { has_government = authoritarianism }
+		add_popularity = {
+			ideology = authoritarianism
+			popularity = -0.25
+		}
+	}
+	if = {
+		limit = { has_government = unitism }
+		add_popularity = {
+			ideology = unitism
+			popularity = -0.25
+		}
+	}
+}
 
-	remove_20_current_party_popularity = {
-		if = {
-			limit = { has_government = pluralism }
-			add_popularity = {
-				ideology = pluralism
-				popularity = -0.20
-			}
-		}
-		if = {
-			limit = { has_government = semidemocracy }
-			add_popularity = {
-				ideology = semidemocracy
-				popularity = -0.20
-			}
-		}
-		if = {
-			limit = { has_government = theocratism }
-			add_popularity = {
-				ideology = theocratism
-				popularity = -0.20
-			}
-		}
-		if = {
-			limit = { has_government = authoritarianism }
-			add_popularity = {
-				ideology = authoritarianism
-				popularity = -0.20
-			}
-		}
-		if = {
-			limit = { has_government = unitism }
-			add_popularity = {
-				ideology = unitism
-				popularity = -0.20
-			}
+remove_20_current_party_popularity = {
+	if = {
+		limit = { has_government = pluralism }
+		add_popularity = {
+			ideology = pluralism
+			popularity = -0.20
 		}
 	}
+	if = {
+		limit = { has_government = semidemocracy }
+		add_popularity = {
+			ideology = semidemocracy
+			popularity = -0.20
+		}
+	}
+	if = {
+		limit = { has_government = theocratism }
+		add_popularity = {
+			ideology = theocratism
+			popularity = -0.20
+		}
+	}
+	if = {
+		limit = { has_government = authoritarianism }
+		add_popularity = {
+			ideology = authoritarianism
+			popularity = -0.20
+		}
+	}
+	if = {
+		limit = { has_government = unitism }
+		add_popularity = {
+			ideology = unitism
+			popularity = -0.20
+		}
+	}
+}
 
-	remove_15_current_party_popularity = {
-		if = {
-			limit = { has_government = pluralism }
-			add_popularity = {
-				ideology = pluralism
-				popularity = -0.15
-			}
-		}
-		if = {
-			limit = { has_government = semidemocracy }
-			add_popularity = {
-				ideology = semidemocracy
-				popularity = -0.15
-			}
-		}
-		if = {
-			limit = { has_government = theocratism }
-			add_popularity = {
-				ideology = theocratism
-				popularity = -0.15
-			}
-		}
-		if = {
-			limit = { has_government = authoritarianism }
-			add_popularity = {
-				ideology = authoritarianism
-				popularity = -0.15
-			}
-		}
-		if = {
-			limit = { has_government = unitism }
-			add_popularity = {
-				ideology = unitism
-				popularity = -0.15
-			}
+remove_15_current_party_popularity = {
+	if = {
+		limit = { has_government = pluralism }
+		add_popularity = {
+			ideology = pluralism
+			popularity = -0.15
 		}
 	}
+	if = {
+		limit = { has_government = semidemocracy }
+		add_popularity = {
+			ideology = semidemocracy
+			popularity = -0.15
+		}
+	}
+	if = {
+		limit = { has_government = theocratism }
+		add_popularity = {
+			ideology = theocratism
+			popularity = -0.15
+		}
+	}
+	if = {
+		limit = { has_government = authoritarianism }
+		add_popularity = {
+			ideology = authoritarianism
+			popularity = -0.15
+		}
+	}
+	if = {
+		limit = { has_government = unitism }
+		add_popularity = {
+			ideology = unitism
+			popularity = -0.15
+		}
+	}
+}
 
-	remove_10_current_party_popularity = {
-		if = {
-			limit = { has_government = pluralism }
-			add_popularity = {
-				ideology = pluralism
-				popularity = -0.10
-			}
-		}
-		if = {
-			limit = { has_government = semidemocracy }
-			add_popularity = {
-				ideology = semidemocracy
-				popularity = -0.10
-			}
-		}
-		if = {
-			limit = { has_government = theocratism }
-			add_popularity = {
-				ideology = theocratism
-				popularity = -0.10
-			}
-		}
-		if = {
-			limit = { has_government = authoritarianism }
-			add_popularity = {
-				ideology = authoritarianism
-				popularity = -0.10
-			}
-		}
-		if = {
-			limit = { has_government = unitism }
-			add_popularity = {
-				ideology = unitism
-				popularity = -0.10
-			}
+remove_10_current_party_popularity = {
+	if = {
+		limit = { has_government = pluralism }
+		add_popularity = {
+			ideology = pluralism
+			popularity = -0.10
 		}
 	}
+	if = {
+		limit = { has_government = semidemocracy }
+		add_popularity = {
+			ideology = semidemocracy
+			popularity = -0.10
+		}
+	}
+	if = {
+		limit = { has_government = theocratism }
+		add_popularity = {
+			ideology = theocratism
+			popularity = -0.10
+		}
+	}
+	if = {
+		limit = { has_government = authoritarianism }
+		add_popularity = {
+			ideology = authoritarianism
+			popularity = -0.10
+		}
+	}
+	if = {
+		limit = { has_government = unitism }
+		add_popularity = {
+			ideology = unitism
+			popularity = -0.10
+		}
+	}
+}
 
-	remove_05_current_party_popularity = {
-		if = {
-			limit = { has_government = pluralism }
-			add_popularity = {
-				ideology = pluralism
-				popularity = -0.05
-			}
-		}
-		if = {
-			limit = { has_government = semidemocracy }
-			add_popularity = {
-				ideology = semidemocracy
-				popularity = -0.05
-			}
-		}
-		if = {
-			limit = { has_government = theocratism }
-			add_popularity = {
-				ideology = theocratism
-				popularity = -0.05
-			}
-		}
-		if = {
-			limit = { has_government = authoritarianism }
-			add_popularity = {
-				ideology = authoritarianism
-				popularity = -0.05
-			}
-		}
-		if = {
-			limit = { has_government = unitism }
-			add_popularity = {
-				ideology = unitism
-				popularity = -0.05
-			}
+remove_05_current_party_popularity = {
+	if = {
+		limit = { has_government = pluralism }
+		add_popularity = {
+			ideology = pluralism
+			popularity = -0.05
 		}
 	}
+	if = {
+		limit = { has_government = semidemocracy }
+		add_popularity = {
+			ideology = semidemocracy
+			popularity = -0.05
+		}
+	}
+	if = {
+		limit = { has_government = theocratism }
+		add_popularity = {
+			ideology = theocratism
+			popularity = -0.05
+		}
+	}
+	if = {
+		limit = { has_government = authoritarianism }
+		add_popularity = {
+			ideology = authoritarianism
+			popularity = -0.05
+		}
+	}
+	if = {
+		limit = { has_government = unitism }
+		add_popularity = {
+			ideology = unitism
+			popularity = -0.05
+		}
+	}
+}

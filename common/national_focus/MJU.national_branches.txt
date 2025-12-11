@@ -2659,7 +2659,7 @@ focus_tree = {
 
 		completion_reward = {
 			log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_threat_preparations"
-			
+			add_ideas = deterrence
 		}
 	}
 
@@ -2703,6 +2703,44 @@ focus_tree = {
 				193 = {
 					add_building_construction = { type = trench_line province = 2145 level = 3 instant_build = yes }
 					add_building_construction = { type = trench_line province = 9842 level = 3 instant_build = yes }
+				}
+			}
+		}
+
+		focus = { # Entrech Supply Hubs
+			id = MJU_focus_entrech_supply_hubs
+			icon = GFX_focus_unknown_political
+			#mutually_exclusive = { focus =  }
+			prerequisite = { focus = MJU_focus_threat_preparations }
+			relative_position_id = MJU_focus_threat_preparations
+			x = 0
+			y = 2
+
+			cost = 10
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+
+			available = {
+			}
+			bypass = {
+			}
+
+			ai_will_do = {
+				factor = 5.0
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_entrech_supply_hubs"
+				every_core_state = {
+					add_building_construction = {
+					    type = trench_line
+					    level = 3
+					    instant_build = yes
+					    province = {
+					    	limit_to_supply_node = yes
+					    }
+					}
 				}
 			}
 		}
@@ -3118,7 +3156,7 @@ focus_tree = {
 					promote_leader = yes
 					country_leader = {
 						ideology = sub_authoritarian
-						traits = { dictator }
+						traits = { trait_species_human dictator }
 					}
 				}
 			}
@@ -3191,7 +3229,7 @@ focus_tree = {
 					promote_leader = yes
 					country_leader = {
 						ideology = sub_authoritarian
-						traits = { dictator }
+						traits = { trait_species_human dictator }
 					}
 				}
 			}
@@ -3265,7 +3303,7 @@ focus_tree = {
 					promote_leader = yes
 					country_leader = {
 						ideology = sub_authoritarian
-						traits = { dictator }
+						traits = { trait_species_human dictator }
 					}
 				}
 			}
@@ -3515,7 +3553,7 @@ focus_tree = {
 			}
 		
 			ai_will_do = {
-				factor = 2
+				factor = 3
 			}
 
 			completion_reward = {
@@ -3748,7 +3786,7 @@ focus_tree = {
 			}
 		
 			ai_will_do = {
-				factor = 2
+				factor = 3
 			}
 
 			completion_reward = {
@@ -3818,62 +3856,222 @@ focus_tree = {
 		}
 	}
 
-	focus = { # Libre Bastion
-		id = MJU_focus_libre_bastion
-		icon = GFX_focus_unknown_political
-		#mutually_exclusive = { focus =  }
-		prerequisite = { focus = MJU_focus_el_mariscal_del_pueblo }
-		relative_position_id = MJU_focus_el_mariscal_del_pueblo
-		x = 0
-		y = 3
-	
-		cost = 10
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = no
+		focus = { # Creation of Assemblies
+			id = MJU_focus_create_national_assemblies
+			icon = GFX_focus_AFG_parliamentary_democracy
+			#mutually_exclusive = { focus =  }
+			prerequisite = { focus = MJU_focus_el_mariscal_del_pueblo }
+			relative_position_id = MJU_focus_el_mariscal_del_pueblo
+			x = -2
+			y = 2
+		
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
 
-		allow_branch = {
-		}
-		available = {
-		}
-		bypass = {
-		}
-	
-		ai_will_do = {
-			factor = 2
+			allow_branch = {
+			}
+			available = {
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				factor = 2
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_el_mariscal_del_pueblo"
+				set_party_name = {
+					ideology = pluralism
+					name = MJU_elections_pluralism_party
+					long_name = MJU_elections_pluralism_party_long
+				}
+				custom_effect_tooltip = generic_skip_one_line_tt
+				set_party_name = {
+					ideology = semidemocracy
+					name = MJU_elections_semidemocracy_party
+					long_name = MJU_elections_semidemocracy_party_long
+				}
+				custom_effect_tooltip = generic_skip_one_line_tt
+				set_party_name = {
+					ideology = theocratism
+					name = MJU_elections_theocratism_party
+					long_name = MJU_elections_theocratism_party_long
+				}
+				custom_effect_tooltip = generic_skip_one_line_tt
+				set_party_name = {
+					ideology = authoritarianism
+					name = MJU_elections_authoritarianism_party
+					long_name = MJU_elections_authoritarianism_party_long
+				}
+				custom_effect_tooltip = generic_skip_one_line_tt
+				set_party_name = {
+					ideology = unitism
+					name = MJU_elections_unitism_party
+					long_name = MJU_elections_unitism_party_long
+				}
+			}
 		}
 
-		completion_reward = {
-			log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_libre_bastion"
-			remove_ideas = MJU_idea_reform_initial
-			set_politics = { ruling_party = pluralism elections_allowed = yes }
-			set_party_name = {
-				ideology = pluralism
-				name = MJU_elections_pluralism_party
-				long_name = MJU_elections_pluralism_party_long
+		focus = { # The Military's Future?
+			id = MJU_focus_military_question
+			icon = GFX_focus_unknown_political
+			#mutually_exclusive = { focus =  }
+			prerequisite = { focus = MJU_focus_el_mariscal_del_pueblo }
+			relative_position_id = MJU_focus_el_mariscal_del_pueblo
+			x = -1
+			y = 1
+		
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+
+			allow_branch = {
 			}
-			set_party_name = {
-				ideology = semidemocracy
-				name = MJU_elections_semidemocracy_party
-				long_name = MJU_elections_semidemocracy_party_long
+			available = {
 			}
-			set_party_name = {
-				ideology = theocratism
-				name = MJU_elections_theocratism_party
-				long_name = MJU_elections_theocratism_party_long
+			bypass = {
 			}
-			set_party_name = {
-				ideology = authoritarianism
-				name = MJU_elections_authoritarianism_party
-				long_name = MJU_elections_authoritarianism_party_long
+		
+			ai_will_do = {
+				factor = 2
 			}
-			set_party_name = {
-				ideology = unitism
-				name = MJU_elections_unitism_party
-				long_name = MJU_elections_unitism_party_long
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_military_question"
+				
 			}
 		}
-	}
+
+		focus = { # Secular Amendment
+			id = MJU_focus_secular_amendment
+			icon = GFX_focus_unknown_political
+			#mutually_exclusive = { focus =  }
+			prerequisite = { focus = MJU_focus_el_mariscal_del_pueblo }
+			relative_position_id = MJU_focus_el_mariscal_del_pueblo
+			x = 0
+			y = 2
+		
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+
+			allow_branch = {
+			}
+			available = {
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				factor = 2
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_military_question"
+				switch_religion_secular_religion = yes
+			}
+		}
+
+		focus = { # Laity National Celebrations
+			id = MJU_focus_laity_national_celebrations
+			icon = GFX_focus_unknown_political
+			mutually_exclusive = { focus = MJU_focus_laity_cultural_acceptance }
+			prerequisite = { focus = MJU_focus_el_mariscal_del_pueblo }
+			relative_position_id = MJU_focus_el_mariscal_del_pueblo
+			x = 1
+			y = 1
+		
+			cost = 10
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+
+			allow_branch = {
+			}
+			available = {
+				10 = { controls_or_subject_of = yes }
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				factor = 2
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_laity_cultural_acceptance"
+				add_stability = -0.15
+			}
+		}
+
+		focus = { # Laity Cultural Acceptance
+			id = MJU_focus_laity_cultural_acceptance
+			icon = GFX_focus_unknown_political
+			mutually_exclusive = { focus = MJU_focus_laity_national_celebrations }
+			prerequisite = { focus = MJU_focus_el_mariscal_del_pueblo focus = MJU_focus_nuestra_presidenta }
+			relative_position_id = MJU_focus_el_mariscal_del_pueblo
+			x = 3
+			y = 1
+		
+			cost = 10
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+
+			allow_branch = {
+			}
+			available = {
+				10 = { controls_or_subject_of = yes }
+				NOT = { has_completed_focus = MJU_focus_pueblanura_migration }
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				factor = 3
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_laity_cultural_acceptance"
+				add_stability = 0.05
+			}
+		}
+
+		focus = { # Acculturation Laitean
+			id = MJU_focus_acculturation_laitean
+			icon = GFX_focus_unknown_political
+			#mutually_exclusive = { focus =  }
+			prerequisite = { focus = MJU_focus_laity_national_celebrations focus = MJU_focus_laity_cultural_acceptance }
+			relative_position_id = MJU_focus_el_mariscal_del_pueblo
+			x = 2
+			y = 2
+		
+			cost = 10
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+
+			allow_branch = {
+			}
+			available = {
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				factor = 2
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_el_mariscal_del_pueblo"
+				POL = { every_core_state = { add_core_of = FROM } }
+			}
+		}
 
 	focus = { # Nuestra Presidenta
 		id = MJU_focus_nuestra_presidenta
@@ -3910,37 +4108,296 @@ focus_tree = {
 		}
 	}
 
-	focus = { # Stewardship of the State
-		id = MJU_focus_state_stewardship
-		icon = GFX_focus_unknown_political
-		#mutually_exclusive = { focus =  }
-		prerequisite = { focus = MJU_focus_nuestra_presidenta }
-		relative_position_id = MJU_focus_nuestra_presidenta
-		x = 0
-		y = 3
-	
-		cost = 10
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = no
+		focus = { # Total Defense
+			id = MJU_focus_total_defense
+			icon = GFX_focus_unknown_political
+			#mutually_exclusive = { focus =  }
+			prerequisite = { focus = MJU_focus_el_mariscal_del_pueblo focus = MJU_focus_nuestra_presidenta }
+			relative_position_id = MJU_focus_nuestra_presidenta
+			x = -2
+			y = 1
+		
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
 
-		allow_branch = {
-		}
-		available = {
-		}
-		bypass = {
-		}
-	
-		ai_will_do = {
-			factor = 2
+			allow_branch = {
+			}
+			available = {
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				factor = 2
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_total_defense"
+				add_war_support = 0.05
+			}
 		}
 
-		completion_reward = {
-			log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_state_stewardship"
-			add_political_power = 50
-			remove_ideas = MJU_idea_statusquo_initial
+			focus = { # Whole of Society
+				id = MJU_focus_whole_of_society
+				icon = GFX_focus_unknown_political
+				#mutually_exclusive = { focus =  }
+				prerequisite = { focus = MJU_focus_total_defense }
+				relative_position_id = MJU_focus_total_defense
+				x = -1
+				y = 1
+			
+				cost = 10
+				cancel_if_invalid = yes
+				continue_if_invalid = no
+				available_if_capitulated = no
+
+				allow_branch = {
+				}
+				available = {
+				}
+				bypass = {
+				}
+			
+				ai_will_do = {
+					factor = 2
+				}
+
+				completion_reward = {
+					log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_whole_of_society"
+					add_ideas = MJU_idea_whole_of_society
+				}
+			}
+
+			focus = { # Prepositioning of Equipment Reserves
+				id = MJU_focus_preposition_equipment_reserves
+				icon = GFX_focus_unknown_political
+				#mutually_exclusive = { focus =  }
+				prerequisite = { focus = MJU_focus_whole_of_society }
+				relative_position_id = MJU_focus_total_defense
+				x = 0
+				y = 2
+			
+				cost = 5
+				cancel_if_invalid = yes
+				continue_if_invalid = no
+				available_if_capitulated = no
+
+				allow_branch = {
+				}
+				available = {
+				}
+				bypass = {
+				}
+			
+				ai_will_do = {
+					factor = 2
+				}
+
+				completion_reward = {
+					log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_preposition_equipment_reserves"
+					every_core_state = {
+						add_building_construction = {
+						    type = supply_node
+						    level = 1
+						    instant_build = yes
+						    province = {
+						        all_provinces = yes
+						        limit_to_victory_point > 0
+						        level < 1
+						    }
+						}
+					}
+				}
+			}
+
+		focus = { # Nation Anthem of Pueblanura
+			id = MJU_focus_nation_anthem_of_pueblanura
+			icon = GFX_focus_unknown_political
+			#mutually_exclusive = { focus =  }
+			prerequisite = { focus = MJU_focus_nuestra_presidenta focus = MJU_focus_manifiesto_fascista }
+			relative_position_id = MJU_focus_nuestra_presidenta
+			x = 2
+			y = 1
+		
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+
+			allow_branch = {
+			}
+			available = {
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				factor = 2
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_nation_anthem_of_pueblanura"
+				add_stability = 0.05
+			}
 		}
-	}
+
+			focus = { # Ministry of Propaganda
+				id = MJU_focus_ministry_of_propaganda
+				icon = GFX_focus_unknown_political
+				#mutually_exclusive = { focus =  }
+				prerequisite = { focus = MJU_focus_nation_anthem_of_pueblanura }
+				relative_position_id = MJU_focus_nation_anthem_of_pueblanura
+				x = 1
+				y = 1
+			
+				cost = 10
+				cancel_if_invalid = yes
+				continue_if_invalid = no
+				available_if_capitulated = no
+
+				allow_branch = {
+				}
+				available = {
+				}
+				bypass = {
+				}
+			
+				ai_will_do = {
+					factor = 2
+				}
+
+				completion_reward = {
+					log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_ministry_of_propaganda"
+					add_ideas = MJU_idea_center_of_propaganda
+				}
+			}
+
+			focus = { # Generational State Loyalty
+				id = MJU_focus_generational_loyalty
+				icon = GFX_focus_unknown_political
+				#mutually_exclusive = { focus =  }
+				prerequisite = { focus = MJU_focus_ministry_of_propaganda }
+				relative_position_id = MJU_focus_nation_anthem_of_pueblanura
+				x = 0
+				y = 2
+			
+				cost = 5
+				cancel_if_invalid = yes
+				continue_if_invalid = no
+				available_if_capitulated = no
+
+				allow_branch = {
+				}
+				available = {
+				}
+				bypass = {
+				}
+			
+				ai_will_do = {
+					factor = 2
+				}
+
+				completion_reward = {
+					log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_generational_loyalty"
+					add_stability = 0.05
+					add_war_support = 0.10
+				}
+			}
+
+		focus = { # Loyalty to the President
+			id = MJU_focus_loyal_to_president
+			icon = GFX_focus_unknown_political
+			#mutually_exclusive = { focus =  }
+			prerequisite = { focus = MJU_focus_nuestra_presidenta }
+			relative_position_id = MJU_focus_nuestra_presidenta
+			x = 0
+			y = 1
+		
+			cost = 10
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+
+			allow_branch = {
+			}
+			available = {
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				factor = 2
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_loyal_to_president"
+				add_ideas = political_loyalty_spirit
+			}
+		}
+
+		focus = { # Heroes of our History
+			id = MJU_focus_historical_heroes
+			icon = GFX_focus_unknown_political
+			#mutually_exclusive = { focus =  }
+			prerequisite = { focus = MJU_focus_loyal_to_president }
+			relative_position_id = MJU_focus_nuestra_presidenta
+			x = -1
+			y = 2
+		
+			cost = 10
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+
+			allow_branch = {
+			}
+			available = {
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				factor = 2
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_state_stewardship"
+				add_ideas = MJU_idea_heroes_of_history
+			}
+		}
+
+		focus = { # Solidify our Control
+			id = MJU_focus_solidify_our_control
+			icon = GFX_focus_unknown_political
+			#mutually_exclusive = { focus =  }
+			prerequisite = { focus = MJU_focus_loyal_to_president }
+			relative_position_id = MJU_focus_nuestra_presidenta
+			x = 1
+			y = 2
+		
+			cost = 10
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+
+			allow_branch = {
+			}
+			available = {
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				factor = 2
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_solidify_our_control"
+				add_10_current_party_popularity = yes
+			}
+		}
 
 	focus = { # Manifiesto Fascista
 		id = MJU_focus_manifiesto_fascista
@@ -3978,13 +4435,301 @@ focus_tree = {
 		}
 	}
 
+		focus = { # Pueblanura Migration
+			id = MJU_focus_pueblanura_migration
+			icon = GFX_focus_unknown_political
+			mutually_exclusive = { focus = MJU_focus_laitean_displacement }
+			prerequisite = { focus = MJU_focus_nuestra_presidenta focus = MJU_focus_manifiesto_fascista }
+			relative_position_id = MJU_focus_manifiesto_fascista
+			x = -3
+			y = 1
+		
+			cost = 10
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+
+			allow_branch = {
+			}
+			available = {
+				9 = { controls_or_subject_of = yes }
+				NOT = { has_completed_focus = MJU_focus_laity_cultural_acceptance }
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				factor = 1
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_pueblanura_migration"
+				9 = {
+					add_manpower = 70000
+					remove_core_of = POL
+				}
+				117 = {
+					add_manpower = 45000
+				}
+			}
+		}
+
+		focus = { # Laitean Displacement
+			id = MJU_focus_laitean_displacement
+			icon = GFX_focus_unknown_political
+			mutually_exclusive = { focus = MJU_focus_pueblanura_migration }
+			prerequisite = { focus = MJU_focus_manifiesto_fascista }
+			relative_position_id = MJU_focus_manifiesto_fascista
+			x = -1
+			y = 1
+		
+			cost = 10
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+
+			allow_branch = {
+			}
+			available = {
+				9   = { controls_or_subject_of = yes }
+				192 = { controls_or_subject_of = yes }
+				193 = { controls_or_subject_of = yes }
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				factor = 2
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_laitean_displacement"
+				9 = {
+					add_manpower = -45000
+					remove_core_of = POL
+				}
+				192 = {
+					add_manpower = -10000
+					remove_core_of = POL
+				}
+				193 = {
+					add_manpower = -3500
+					remove_core_of = POL
+				}
+			}
+		}
+
+		focus = { # Population Assimilation
+			id = MJU_focus_population_assimilation
+			icon = GFX_focus_unknown_political
+			#mutually_exclusive = { focus =  }
+			prerequisite = { focus = MJU_focus_pueblanura_migration focus = MJU_focus_laitean_displacement }
+			relative_position_id = MJU_focus_manifiesto_fascista
+			x = -2
+			y = 2
+		
+			cost = 10
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+
+			allow_branch = {
+			}
+			available = {
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				factor = 2
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_population_assimilation"
+				192 = { remove_core_of = POL }
+				193 = { remove_core_of = POL }
+			}
+		}
+
+		focus = { # A Ban of Harmonainus Faiths
+			id = MJU_focus_ban_harmonainism
+			icon = GFX_focus_unknown_political
+			#mutually_exclusive = { focus =  }
+			prerequisite = { focus = MJU_focus_manifiesto_fascista }
+			relative_position_id = MJU_focus_manifiesto_fascista
+			x = 0
+			y = 2
+		
+			cost = 10
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+
+			allow_branch = {
+			}
+			available = {
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				factor = 2
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_ban_harmonainism"
+				activate_decision = ban_theocratism_party
+			}
+		}
+
+		focus = { # Our Revanchism
+			id = MJU_focus_our_revanchism
+			icon = GFX_focus_unknown_political
+			#mutually_exclusive = { focus =  }
+			prerequisite = { focus = MJU_focus_manifiesto_fascista }
+			relative_position_id = MJU_focus_manifiesto_fascista
+			x = 1
+			y = 1
+		
+			cost = 10
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+
+			allow_branch = {
+			}
+			available = {
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				factor = 2
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_our_revanchism"
+				
+			}
+		}
+
+		focus = { # A Vanguard against Faith
+			id = MJU_focus_vanguard_against_faith
+			icon = GFX_focus_unknown_political
+			#mutually_exclusive = { focus =  }
+			prerequisite = { focus = MJU_focus_manifiesto_fascista }
+			relative_position_id = MJU_focus_manifiesto_fascista
+			x = 2
+			y = 2
+		
+			cost = 10
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+
+			allow_branch = {
+			}
+			available = {
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				factor = 2
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_vanguard_against_faith"
+				add_ideas = MJU_idea_vanguard_against_faith
+			}
+		}
+
+	focus = { # Libre Bastion
+		id = MJU_focus_libre_bastion
+		icon = GFX_focus_unknown_political
+		#mutually_exclusive = { focus =  }
+		prerequisite = { focus = MJU_focus_create_national_assemblies }
+		prerequisite = { focus = MJU_focus_military_question }
+		prerequisite = { focus = MJU_focus_secular_amendment }
+		relative_position_id = MJU_focus_el_mariscal_del_pueblo
+		x = -1
+		y = 3
+	
+		cost = 10
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		allow_branch = {
+		}
+		available = {
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			factor = 2
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_libre_bastion"
+			remove_ideas = MJU_idea_reform_initial
+			add_trait = {
+				character = MJU_renuevo_solaris
+				ideology = sub_stratocracy
+				trait = the_gentleman_president
+			}
+			custom_effect_tooltip = generic_skip_one_line_tt
+			country_event = MJU.16
+		}
+	}
+
+	focus = { # Stewardship of the State
+		id = MJU_focus_state_stewardship
+		icon = GFX_focus_unknown_political
+		#mutually_exclusive = { focus =  }
+		prerequisite = { focus = MJU_focus_historical_heroes }
+		prerequisite = { focus = MJU_focus_solidify_our_control }
+		relative_position_id = MJU_focus_nuestra_presidenta
+		x = 0
+		y = 3
+	
+		cost = 10
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		allow_branch = {
+		}
+		available = {
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			factor = 2
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_state_stewardship"
+			add_political_power = 50
+			remove_ideas = MJU_idea_statusquo_initial
+			add_trait = {
+				character = MJU_leal_castanar
+				trait = strongman_of_aquilavara
+			}
+		}
+	}
+
 	focus = { # Neo-Order
 		id = MJU_focus_neo_order
 		icon = GFX_focus_unknown_political
 		#mutually_exclusive = { focus =  }
-		prerequisite = { focus = MJU_focus_manifiesto_fascista }
+		prerequisite = { focus = MJU_focus_ban_harmonainism }
+		prerequisite = { focus = MJU_focus_our_revanchism }
+		prerequisite = { focus = MJU_focus_vanguard_against_faith }
 		relative_position_id = MJU_focus_manifiesto_fascista
-		x = 0
+		x = 1
 		y = 3
 	
 		cost = 10
@@ -4012,13 +4757,13 @@ focus_tree = {
 	focus = { # Republica Militar
 		id = MJU_focus_republica_militar
 		icon = GFX_focus_unknown_political
-		mutually_exclusive = { focus = MJU_focus_la_milicia_es_la_nueva_aristocracia }
 		prerequisite = { focus = MJU_focus_libre_bastion focus = MJU_focus_state_stewardship }
+		mutually_exclusive = { focus = MJU_focus_la_milicia_es_la_nueva_aristocracia }
 		relative_position_id = MJU_focus_opening_the_cities
 		x = -6
 		y = 11
 	
-		cost = 5
+		cost = 10
 		cancel_if_invalid = yes
 		continue_if_invalid = no
 		available_if_capitulated = no
@@ -4037,11 +4782,11 @@ focus_tree = {
 		}
 	
 		ai_will_do = {
-			factor = 2
+			factor = 3.5
 		}
 
 		completion_reward = {
-			log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_scholars_council"
+			log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_republica_militar"
 			swap_ideas = {
 				remove_idea = MJU_idea_old_kingdom_ashes
 				add_idea = MJU_idea_recovering_nation
@@ -4049,16 +4794,156 @@ focus_tree = {
 		}
 	}
 
+		focus = { # Unified Command Corps
+			id = MJU_focus_unified_command_corps
+			icon = GFX_focus_unknown_political
+			prerequisite = { focus = MJU_focus_republica_militar }
+			#mutually_exclusive = { focus =  }
+			relative_position_id = MJU_focus_republica_militar
+			x = -5
+			y = 1
+		
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+
+			allow_branch = {
+			}
+			available = {
+				is_major = yes
+				10 = { controls_or_subject_of = yes }
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				factor = 2
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_unified_command_corps"
+				add_political_power = 50
+				army_experience = 25
+			}
+		}
+
+		focus = { # Military-Doctrine Administration
+			id = MJU_focus_military_doctrine_administration
+			icon = GFX_focus_unknown_political
+			prerequisite = { focus = MJU_focus_republica_militar }
+			#mutually_exclusive = { focus =  }
+			relative_position_id = MJU_focus_republica_militar
+			x = -3
+			y = 1
+		
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+
+			allow_branch = {
+			}
+			available = {
+				is_major = yes
+				10 = { controls_or_subject_of = yes }
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				factor = 2
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_military_doctrine_administration"
+				add_political_power = 50
+				add_stability = 0.05
+			}
+		}
+
+		focus = { # Civilian Officer Recruitment
+			id = MJU_focus_civilian_officer_recruitment
+			icon = GFX_focus_unknown_political
+			prerequisite = { focus = MJU_focus_republica_militar }
+			#mutually_exclusive = { focus =  }
+			relative_position_id = MJU_focus_republica_militar
+			x = -1
+			y = 1
+		
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+
+			allow_branch = {
+			}
+			available = {
+				is_major = yes
+				10 = { controls_or_subject_of = yes }
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				factor = 2
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_civilian_officer_recruitment"
+				add_political_power = 50
+				add_command_power = 25
+			}
+		}
+
+		focus = { # Consolidar la Republica Militar
+			id = MJU_focus_consolidar_la_republica_militar
+			icon = GFX_focus_unknown_political
+			prerequisite = { focus = MJU_focus_unified_command_corps }
+			prerequisite = { focus = MJU_focus_military_doctrine_administration }
+			prerequisite = { focus = MJU_focus_civilian_officer_recruitment }
+			#mutually_exclusive = { focus =  }
+			relative_position_id = MJU_focus_republica_militar
+			x = -3
+			y = 2
+		
+			cost = 10
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+
+			allow_branch = {
+			}
+			available = {
+				is_major = yes
+				10 = { controls_or_subject_of = yes }
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				factor = 5
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_scholars_council"
+				swap_ideas = {
+					remove_idea = MJU_idea_recovering_nation
+					add_idea = MJU_idea_republica_militar
+				}
+			}
+		}
+
 	focus = { # La Milicia Es La Nueva Aristocracia
 		id = MJU_focus_la_milicia_es_la_nueva_aristocracia
 		icon = GFX_focus_unknown_political
-		mutually_exclusive = { focus = MJU_focus_republica_militar }
 		prerequisite = { focus = MJU_focus_state_stewardship focus = MJU_focus_neo_order }
+		mutually_exclusive = { focus = MJU_focus_republica_militar }
 		relative_position_id = MJU_focus_opening_the_cities
 		x = 6
 		y = 11
 	
-		cost = 5
+		cost = 10
 		cancel_if_invalid = yes
 		continue_if_invalid = no
 		available_if_capitulated = no
@@ -4077,17 +4962,158 @@ focus_tree = {
 		}
 	
 		ai_will_do = {
-			factor = 3.5
+			factor = 5
 		}
 
 		completion_reward = {
-			log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_silence_the_salons"
+			log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_la_milicia_es_la_nueva_aristocracia"
 			swap_ideas = {
 				remove_idea = MJU_idea_old_kingdom_ashes
 				add_idea = MJU_idea_recovering_nation
 			}
 		}
 	}
+
+		focus = { # Merit of Steel
+			id = MJU_focus_merit_of_steel
+			icon = GFX_focus_unknown_political
+			prerequisite = { focus = MJU_focus_la_milicia_es_la_nueva_aristocracia }
+			#mutually_exclusive = { focus =  }
+			relative_position_id = MJU_focus_la_milicia_es_la_nueva_aristocracia
+			x = 1
+			y = 1
+		
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+
+			allow_branch = {
+			}
+			available = {
+				is_major = yes
+				10 = { controls_or_subject_of = yes }
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				factor = 2
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_merit_of_steel"
+				add_political_power = 25
+				army_experience = 50
+			}
+		}
+
+		focus = { # Titles Through Service
+			id = MJU_focus_titles_through_service
+			icon = GFX_focus_unknown_political
+			prerequisite = { focus = MJU_focus_la_milicia_es_la_nueva_aristocracia }
+			#mutually_exclusive = { focus =  }
+			relative_position_id = MJU_focus_la_milicia_es_la_nueva_aristocracia
+			x = 3
+			y = 1
+		
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+
+			allow_branch = {
+			}
+			available = {
+				is_major = yes
+				10 = { controls_or_subject_of = yes }
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				factor = 2
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_titles_through_service"
+				add_political_power = 25
+				add_war_support = 0.10
+			}
+		}
+
+		focus = { # Martial Nobility Schools
+			id = MJU_focus_martial_nobility_schools
+			icon = GFX_focus_unknown_political
+			prerequisite = { focus = MJU_focus_la_milicia_es_la_nueva_aristocracia }
+			#mutually_exclusive = { focus =  }
+			relative_position_id = MJU_focus_la_milicia_es_la_nueva_aristocracia
+			x = 5
+			y = 1
+		
+			cost = 5
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+
+			allow_branch = {
+			}
+			available = {
+				is_major = yes
+				10 = { controls_or_subject_of = yes }
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				factor = 2
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_martial_nobility_schools"
+				add_political_power = 25
+				add_stability = 0.05
+				add_war_support = 0.05
+			}
+		}
+
+		focus = { # Forjar la Aristocracia de la Espada
+			id = MJU_focus_forjar_la_aristocracia_de_la_espada
+			icon = GFX_focus_unknown_political
+			prerequisite = { focus = MJU_focus_merit_of_steel }
+			prerequisite = { focus = MJU_focus_titles_through_service }
+			prerequisite = { focus = MJU_focus_martial_nobility_schools }
+			#mutually_exclusive = { focus =  }
+			relative_position_id = MJU_focus_la_milicia_es_la_nueva_aristocracia
+			x = 3
+			y = 2
+		
+			cost = 10
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+
+			allow_branch = {
+			}
+			available = {
+				is_major = yes
+				10 = { controls_or_subject_of = yes }
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				factor = 5
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_silence_the_salons"
+				swap_ideas = {
+					remove_idea = MJU_idea_recovering_nation
+					add_idea = MJU_idea_la_milicia_es_la_nueva_aristocracia
+				}
+			}
+		}
 
 	focus = { # Temerarium-Levav Pack
 		id = MJU_focus_temerarium_levav_pack
@@ -4130,14 +5156,46 @@ focus_tree = {
 		}
 	}
 
-		focus = { # Join the Merchants Coalition of Levav
-			id = MJU_focus_merchants_coalition_of_levav
+		focus = { # Trust Agreement
+			id = MJU_focus_trust_agreement
 			icon = GFX_focus_unknown_political
 			#mutually_exclusive = { focus =  }
 			prerequisite = { focus = MJU_focus_temerarium_levav_pack }
 			relative_position_id = MJU_focus_temerarium_levav_pack
+			x = 1
+			y = 1
+		
+			cost = 10
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+
+			allow_branch = {
+			}
+			available = {
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				factor = 2
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_trust_agreement"
+				
+			}
+		}
+
+		focus = { # Join the Merchants Coalition of Levav
+			id = MJU_focus_merchants_coalition_of_levav
+			icon = GFX_focus_unknown_political
+			#mutually_exclusive = { focus =  }
+			prerequisite = { focus = MJU_focus_trust_agreement }
+			prerequisite = { focus = MJU_focus_temerarium_levav_pack }
+			relative_position_id = MJU_focus_temerarium_levav_pack
 			x = 0
-			y = 4
+			y = 2
 		
 			cost = 10
 			cancel_if_invalid = yes
@@ -4149,7 +5207,11 @@ focus_tree = {
 			available = {
 				country_exists = MRC
 				MRC = { is_subject = no }
-				NOT = { has_war_with = MRC }
+				NOT = {
+					has_war_with = MRC
+					has_idea = MJU_idea_old_kingdom_ashes
+					has_idea = MJU_idea_recovering_nation
+				}
 			}
 			bypass = {
 			}
@@ -4202,14 +5264,14 @@ focus_tree = {
 		}
 	}
 
-		focus = { # Aquilavara Pack
-			id = MJU_focus_aquilavara_pack
+		focus = { # Foreign Outreach
+			id = MJU_focus_foreign_outreach
 			icon = GFX_focus_unknown_political
 			#mutually_exclusive = { focus =  }
 			prerequisite = { focus = MJU_focus_nuestro_propio_camino }
 			relative_position_id = MJU_focus_nuestro_propio_camino
-			x = 0
-			y = 4
+			x = -1
+			y = 1
 		
 			cost = 10
 			cancel_if_invalid = yes
@@ -4219,6 +5281,46 @@ focus_tree = {
 			allow_branch = {
 			}
 			available = {
+				NOT = {
+					has_idea = MJU_idea_old_kingdom_ashes
+					has_idea = MJU_idea_recovering_nation
+				}
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				factor = 2
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MJU_focus_foreign_outreach"
+				
+			}
+		}
+
+		focus = { # Aquilavara Pack
+			id = MJU_focus_aquilavara_pack
+			icon = GFX_focus_unknown_political
+			#mutually_exclusive = { focus =  }
+			prerequisite = { focus = MJU_focus_foreign_outreach }
+			prerequisite = { focus = MJU_focus_nuestro_propio_camino }
+			relative_position_id = MJU_focus_nuestro_propio_camino
+			x = 0
+			y = 2
+		
+			cost = 10
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+
+			allow_branch = {
+			}
+			available = {
+				NOT = {
+					has_idea = MJU_idea_old_kingdom_ashes
+					has_idea = MJU_idea_recovering_nation
+				}
 			}
 			bypass = {
 			}
@@ -4276,6 +5378,7 @@ focus_tree = {
 			id = MJU_focus_temerarium_rad_community
 			icon = GFX_focus_unknown_political
 			#mutually_exclusive = { focus =  }
+			prerequisite = { focus = MJU_focus_trust_agreement }
 			prerequisite = { focus = MJU_focus_two_enclaves_one_foe }
 			relative_position_id = MJU_focus_two_enclaves_one_foe
 			x = -2
@@ -4423,6 +5526,7 @@ focus_tree = {
 			id = MJU_focus_inter_alliance_agreement
 			icon = GFX_focus_unknown_political
 			#mutually_exclusive = { focus =  }
+			prerequisite = { focus = MJU_focus_foreign_outreach }
 			prerequisite = { focus = MJU_focus_two_enclaves_one_foe }
 			relative_position_id = MJU_focus_two_enclaves_one_foe
 			x = 2
@@ -5166,11 +6270,7 @@ shared_focus = { # Novus Pueblanuran Military
 			add_political_power = 25
 			add_manpower = 30000
 			add_war_support = 0.05
-			add_unit_bonus = {
-				infantry = { soft_attack = 0.08 hard_attack = 0.06 }
-				category_tanks = { hard_attack = 0.06 soft_attack = 0.04 }
-				cavalry = { soft_attack = 0.04 }
-			}
+			army_readiness_raise = yes
 		}
 	}
 
