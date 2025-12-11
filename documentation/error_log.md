@@ -1,8 +1,6 @@
 [no_game_date][dlc.cpp:222]: Invalid supported_version in  file: mod/ugc_2204846772.mod line: 7
-[no_game_date][dlc.cpp:222]: Invalid supported_version in  file: mod/ugc_2930916898.mod line: 8
 [no_game_date][dlc.cpp:222]: Invalid supported_version in  file: mod/ugc_3009437701.mod line: 7
 [no_game_date][dlc.cpp:222]: Invalid supported_version in  file: mod/ugc_3139707147.mod line: 8
-[no_game_date][dlc.cpp:222]: Invalid supported_version in  file: mod/ugc_3313579396.mod line: 8
 [no_game_date][pdx_audio_sdl.cpp:954]: Sound with name 'operation_complete' already added
 [no_game_date][assetfactory_audio.cpp:467]: Could not load sound file 'sound/menu/operative_event_close_01.wav' in  file: sound/sound.asset line: 2756
 [no_game_date][texturehandler.cpp:160]: Texture Handler encountered missing texture file: gfx/texticons/unit_super_heavy_armor_icon_small.dds
@@ -48,38 +46,10 @@
 [no_game_date][pdx_entity.cpp:228]: Could not find animation "anti_air_gunner_idle" for state "idle" in entity "choo_gfx_anti_air_crew_gunner_entity"
 [no_game_date][pdx_entity.cpp:324]: Failed to find entity "motorized_vehicle_entity" for attachment in vehicle
 [no_game_date][pdx_entity.cpp:324]: Failed to find entity "motorized_vehicle_entity" for attachment in vehicle
-[no_game_date][persistent.cpp:66]: Error: "Unknown modifier: state_bunker_max_level_terrain_limit, near line: 430" in file: "common/buildings/00_buildings.txt" near line: 430
-[no_game_date][persistent.cpp:66]: Error: "Unknown modifier: state_coastal_bunker_max_level_terrain_limit, near line: 431" in file: "common/buildings/00_buildings.txt" near line: 431
-[no_game_date][persistent.cpp:66]: Error: "Unknown modifier: state_production_speed_bunker_factor, near line: 433" in file: "common/buildings/00_buildings.txt" near line: 433
-[no_game_date][persistent.cpp:66]: Error: "Unknown modifier: state_production_speed_coastal_bunker_factor, near line: 434" in file: "common/buildings/00_buildings.txt" near line: 434
-[no_game_date][doctrine_triggers.cpp:88]: Invalid doctrine token in has_doctrine trigger: screen_support_focus
-[no_game_date][trigger.cpp:568]: Error: "Not a valid value: screen_support_focus, near line: 173" in file: "common/ideas/aNCFO.spirits_of_navy.txt" near line: 174
-[no_game_date][doctrine_triggers.cpp:88]: Invalid doctrine token in has_doctrine trigger: patrol_boats
-[no_game_date][trigger.cpp:568]: Error: "Not a valid value: patrol_boats, near line: 271" in file: "common/ideas/aNCFO.spirits_of_navy.txt" near line: 272
-[no_game_date][doctrine_triggers.cpp:88]: Invalid doctrine token in has_doctrine trigger: screen_support_focus
-[no_game_date][trigger.cpp:568]: Error: "Not a valid value: screen_support_focus, near line: 292" in file: "common/ideas/aNCFO.spirits_of_navy.txt" near line: 293
-[no_game_date][doctrine_triggers.cpp:88]: Invalid doctrine token in has_doctrine trigger: anti_aircraft_cruisers
-[no_game_date][trigger.cpp:568]: Error: "Not a valid value: anti_aircraft_cruisers, near line: 314" in file: "common/ideas/aNCFO.spirits_of_navy.txt" near line: 317
-[no_game_date][doctrine_triggers.cpp:88]: Invalid doctrine token in has_doctrine trigger: massed_carrier_fleet
-[no_game_date][trigger.cpp:568]: Error: "Not a valid value: massed_carrier_fleet, near line: 338" in file: "common/ideas/aNCFO.spirits_of_navy.txt" near line: 340
-[no_game_date][doctrine_triggers.cpp:88]: Invalid doctrine token in has_doctrine trigger: broad_naval_support
-[no_game_date][trigger.cpp:568]: Error: "Not a valid value: broad_naval_support, near line: 361" in file: "common/ideas/aNCFO.spirits_of_navy.txt" near line: 363
-[no_game_date][doctrine_triggers.cpp:88]: Invalid doctrine token in has_doctrine trigger: coastal_minelaying
-[no_game_date][trigger.cpp:568]: Error: "Not a valid value: coastal_minelaying, near line: 508" in file: "common/ideas/aNCFO.spirits_of_navy.txt" near line: 509
-[no_game_date][doctrine_triggers.cpp:88]: Invalid doctrine token in has_doctrine trigger: coastal_minelaying
-[no_game_date][trigger.cpp:568]: Error: "Not a valid value: coastal_minelaying, near line: 527" in file: "common/ideas/aNCFO.spirits_of_navy.txt" near line: 528
-[no_game_date][doctrine_triggers.cpp:88]: Invalid doctrine token in has_doctrine trigger: broad_naval_support
-[no_game_date][trigger.cpp:568]: Error: "Not a valid value: broad_naval_support, near line: 550" in file: "common/ideas/aNCFO.spirits_of_navy.txt" near line: 551
-[no_game_date][doctrine_triggers.cpp:88]: Invalid doctrine token in has_doctrine trigger: patrol_boats
-[no_game_date][trigger.cpp:568]: Error: "Not a valid value: patrol_boats, near line: 573" in file: "common/ideas/aNCFO.spirits_of_navy.txt" near line: 576
-[no_game_date][doctrine_triggers.cpp:88]: Invalid doctrine token in has_doctrine trigger: massed_carrier_fleet
-[no_game_date][trigger.cpp:568]: Error: "Not a valid value: massed_carrier_fleet, near line: 627" in file: "common/ideas/aNCFO.spirits_of_navy.txt" near line: 628
-[no_game_date][doctrine_triggers.cpp:88]: Invalid doctrine token in has_doctrine trigger: line_of_battle
-[no_game_date][trigger.cpp:568]: Error: "Not a valid value: line_of_battle, near line: 638" in file: "common/ideas/aNCFO.spirits_of_navy.txt" near line: 639
-[no_game_date][doctrine_triggers.cpp:88]: Invalid doctrine token in has_doctrine trigger: line_of_battle
-[no_game_date][trigger.cpp:568]: Error: "Not a valid value: line_of_battle, near line: 653" in file: "common/ideas/aNCFO.spirits_of_navy.txt" near line: 656
-[no_game_date][doctrine_triggers.cpp:88]: Invalid doctrine token in has_doctrine trigger: line_of_battle
-[no_game_date][trigger.cpp:568]: Error: "Not a valid value: line_of_battle, near line: 729" in file: "common/ideas/aNCFO.spirits_of_navy.txt" near line: 732
+[no_game_date][persistent.cpp:66]: Error: "Unknown modifier: state_bunker_max_level_terrain_limit, near line: 432" in file: "common/buildings/00_buildings.txt" near line: 432
+[no_game_date][persistent.cpp:66]: Error: "Unknown modifier: state_coastal_bunker_max_level_terrain_limit, near line: 433" in file: "common/buildings/00_buildings.txt" near line: 433
+[no_game_date][persistent.cpp:66]: Error: "Unknown modifier: state_production_speed_bunker_factor, near line: 435" in file: "common/buildings/00_buildings.txt" near line: 435
+[no_game_date][persistent.cpp:66]: Error: "Unknown modifier: state_production_speed_coastal_bunker_factor, near line: 436" in file: "common/buildings/00_buildings.txt" near line: 436
 [no_game_date][pdx_audio.cpp:1369]: Could not find music named 
 [no_game_date][insigniagraphicsdatabase.cpp:262]: Error: Wrong army icon definition
  GFX_naval_equipment_role_icons 92 - defined in army_icons.txt and 84 specified in GFX file
@@ -137,32 +107,4 @@
 [no_game_date][database_scoped_variables.cpp:266]: invalid database object for effect/trigger: carrier_battlegroups. use var:var_name to explicitly use variables in effects/triggers
 [no_game_date][database_scoped_variables.cpp:266]: invalid database object for effect/trigger: improved_medium_heavy_battery. use var:var_name to explicitly use variables in effects/triggers
 [no_game_date][database_scoped_variables.cpp:266]: invalid database object for effect/trigger: gas_turbine. use var:var_name to explicitly use variables in effects/triggers
-[no_game_date][doctrine_triggers.cpp:97]: Invalid doctrine in has_doctrine trigger
-[no_game_date][trigger.cpp:117]: Trigger failed to validate: common/ideas/aNCFO.spirits_of_navy.txt:173: has_doctrine
-[no_game_date][doctrine_triggers.cpp:97]: Invalid doctrine in has_doctrine trigger
-[no_game_date][trigger.cpp:117]: Trigger failed to validate: common/ideas/aNCFO.spirits_of_navy.txt:271: has_doctrine
-[no_game_date][doctrine_triggers.cpp:97]: Invalid doctrine in has_doctrine trigger
-[no_game_date][trigger.cpp:117]: Trigger failed to validate: common/ideas/aNCFO.spirits_of_navy.txt:292: has_doctrine
-[no_game_date][doctrine_triggers.cpp:97]: Invalid doctrine in has_doctrine trigger
-[no_game_date][trigger.cpp:117]: Trigger failed to validate: common/ideas/aNCFO.spirits_of_navy.txt:314: has_doctrine
-[no_game_date][doctrine_triggers.cpp:97]: Invalid doctrine in has_doctrine trigger
-[no_game_date][trigger.cpp:117]: Trigger failed to validate: common/ideas/aNCFO.spirits_of_navy.txt:338: has_doctrine
-[no_game_date][doctrine_triggers.cpp:97]: Invalid doctrine in has_doctrine trigger
-[no_game_date][trigger.cpp:117]: Trigger failed to validate: common/ideas/aNCFO.spirits_of_navy.txt:361: has_doctrine
-[no_game_date][doctrine_triggers.cpp:97]: Invalid doctrine in has_doctrine trigger
-[no_game_date][trigger.cpp:117]: Trigger failed to validate: common/ideas/aNCFO.spirits_of_navy.txt:508: has_doctrine
-[no_game_date][doctrine_triggers.cpp:97]: Invalid doctrine in has_doctrine trigger
-[no_game_date][trigger.cpp:117]: Trigger failed to validate: common/ideas/aNCFO.spirits_of_navy.txt:527: has_doctrine
-[no_game_date][doctrine_triggers.cpp:97]: Invalid doctrine in has_doctrine trigger
-[no_game_date][trigger.cpp:117]: Trigger failed to validate: common/ideas/aNCFO.spirits_of_navy.txt:550: has_doctrine
-[no_game_date][doctrine_triggers.cpp:97]: Invalid doctrine in has_doctrine trigger
-[no_game_date][trigger.cpp:117]: Trigger failed to validate: common/ideas/aNCFO.spirits_of_navy.txt:573: has_doctrine
-[no_game_date][doctrine_triggers.cpp:97]: Invalid doctrine in has_doctrine trigger
-[no_game_date][trigger.cpp:117]: Trigger failed to validate: common/ideas/aNCFO.spirits_of_navy.txt:627: has_doctrine
-[no_game_date][doctrine_triggers.cpp:97]: Invalid doctrine in has_doctrine trigger
-[no_game_date][trigger.cpp:117]: Trigger failed to validate: common/ideas/aNCFO.spirits_of_navy.txt:638: has_doctrine
-[no_game_date][doctrine_triggers.cpp:97]: Invalid doctrine in has_doctrine trigger
-[no_game_date][trigger.cpp:117]: Trigger failed to validate: common/ideas/aNCFO.spirits_of_navy.txt:653: has_doctrine
-[no_game_date][doctrine_triggers.cpp:97]: Invalid doctrine in has_doctrine trigger
-[no_game_date][trigger.cpp:117]: Trigger failed to validate: common/ideas/aNCFO.spirits_of_navy.txt:729: has_doctrine
 [no_game_date][gameapplication.cpp:841]: The game has loc key collisions. Check logs/text.log for more details
