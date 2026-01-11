@@ -1,0 +1,188 @@
+is_erly_game = { # Modify to fight time frame.
+    OR = {
+        AND = { # EaW
+            has_start_date < 1000.01.01
+            has_start_date > 1010.01.01
+            date < 1009.1.1
+        }
+        AND = { # aNCFO
+            has_start_date < 1720.01.01
+            has_start_date > 1730.01.01
+           date < 1427.1.1
+        }
+        AND = { # Vanilla
+            has_start_date < 1930.01.01
+            has_start_date > 1940.01.01
+            date < 1939.1.1
+        }
+    }
+}
+
+is_midd_game = { # Modify to fight time frame.
+    OR = {
+        AND = { # EaW
+            has_start_date < 1000.01.01
+            has_start_date > 1010.01.01
+            date > 1009.1.1
+            date < 1014.1.1
+        }
+        AND = { # aNCFO
+            has_start_date < 1720.01.01
+            has_start_date > 1730.01.01
+            date > 1727.1.1
+            date < 1736.1.1
+        }
+        AND = { # Vanilla
+            has_start_date < 1930.01.01
+            has_start_date > 1940.01.01
+            date > 1939.1.1
+            date < 1945.1.1
+        }
+    }
+}
+
+is_late_game = { # Modify to fight time frame.
+    OR = {
+        AND = { # EaW
+            has_start_date < 1000.01.01
+            has_start_date > 1010.01.01
+            date > 1014.1.1
+        }
+        AND = { # aNCFO
+            has_start_date < 1720.01.01
+            has_start_date > 1730.01.01
+            date > 1736.1.1
+        }
+        AND = { # Vanilla
+            has_start_date < 1930.01.01
+            has_start_date > 1940.01.01
+            date > 1945.1.1
+        }
+    }
+}
+
+do_expand_oil = {
+    OR = {
+        do_expand_oil_aNCFO = yes
+        # Domestic production doesn't cover consumption (imports needed)
+        check_variable = { resource_imported@oil > 0 }
+        
+        # OR: We're exporting while having imports (inefficient trade)
+        AND = {
+            check_variable = { resource_exported@oil > 0 }
+            check_variable = { resource_imported@oil > 0 }
+        }
+        
+        # OR: Direct calculation - check if surplus is negative
+        # (produced + imported - consumed - exported < 0)
+        check_variable = { resource@oil < 0 }
+    }
+}
+
+do_expand_coal = {
+    OR = {
+        do_expand_coal_aNCFO = yes
+        # Domestic production doesn't cover consumption (imports needed)
+        check_variable = { resource_imported@coal > 0 }
+        
+        # OR: We're exporting while having imports (inefficient trade)
+        AND = {
+            check_variable = { resource_exported@coal > 0 }
+            check_variable = { resource_imported@coal > 0 }
+        }
+        
+        # OR: Direct calculation - check if surplus is negative
+        # (produced + imported - consumed - exported < 0)
+        check_variable = { resource@coal < 0 }
+    }
+}
+
+do_expand_aluminium = {
+    OR = {
+        do_expand_aluminium_aNCFO = yes
+        # Domestic production doesn't cover consumption (imports needed)
+        check_variable = { resource_imported@aluminium > 0 }
+        
+        # OR: We're exporting while having imports (inefficient trade)
+        AND = {
+            check_variable = { resource_exported@aluminium > 0 }
+            check_variable = { resource_imported@aluminium > 0 }
+        }
+        
+        # OR: Direct calculation - check if surplus is negative
+        # (produced + imported - consumed - exported < 0)
+        check_variable = { resource@aluminium < 0 }
+    }
+}
+
+do_expand_rubber = {
+    OR = {
+        do_expand_rubber_aNCFO = yes
+        # Domestic production doesn't cover consumption (imports needed)
+        check_variable = { resource_imported@rubber > 0 }
+        
+        # OR: We're exporting while having imports (inefficient trade)
+        AND = {
+            check_variable = { resource_exported@rubber > 0 }
+            check_variable = { resource_imported@rubber > 0 }
+        }
+        
+        # OR: Direct calculation - check if surplus is negative
+        # (produced + imported - consumed - exported < 0)
+        check_variable = { resource@rubber < 0 }
+    }
+}
+
+do_expand_tungsten = {
+    OR = {
+        do_expand_tungsten_aNCFO = yes
+        # Domestic production doesn't cover consumption (imports needed)
+        check_variable = { resource_imported@tungsten > 0 }
+        
+        # OR: We're exporting while having imports (inefficient trade)
+        AND = {
+            check_variable = { resource_exported@tungsten > 0 }
+            check_variable = { resource_imported@tungsten > 0 }
+        }
+        
+        # OR: Direct calculation - check if surplus is negative
+        # (produced + imported - consumed - exported < 0)
+        check_variable = { resource@tungsten < 0 }
+    }
+}
+
+do_expand_steel = {
+    OR = {
+        do_expand_steel_aNCFO = yes
+        # Domestic production doesn't cover consumption (imports needed)
+        check_variable = { resource_imported@steel > 0 }
+        
+        # OR: We're exporting while having imports (inefficient trade)
+        AND = {
+            check_variable = { resource_exported@steel > 0 }
+            check_variable = { resource_imported@steel > 0 }
+        }
+        
+        # OR: Direct calculation - check if surplus is negative
+        # (produced + imported - consumed - exported < 0)
+        check_variable = { resource@steel < 0 }
+    }
+}
+
+do_expand_chromium = {
+    OR = {
+        do_expand_chromium_aNCFO = yes
+        # Domestic production doesn't cover consumption (imports needed)
+        check_variable = { resource_imported@chromium > 0 }
+        
+        # OR: We're exporting while having imports (inefficient trade)
+        AND = {
+            check_variable = { resource_exported@chromium > 0 }
+            check_variable = { resource_imported@chromium > 0 }
+        }
+        
+        # OR: Direct calculation - check if surplus is negative
+        # (produced + imported - consumed - exported < 0)
+        check_variable = { resource@chromium < 0 }
+    }
+}
