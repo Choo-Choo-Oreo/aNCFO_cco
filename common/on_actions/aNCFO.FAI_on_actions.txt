@@ -1,70 +1,6 @@
 on_actions = {
 # General
 	on_startup = { # Trigger the following commands at the first day of a new game, after country selection. Doesn't work with save loading.
-		effect = {
-			set_global_flag = disable_tag_related_strats # For Smarter AI by TheGamingNot
-			IF = {
-				LIMIT = { check_variable = { num_ships > 0 } }
-				IF = {
-					limit = {
-						check_variable = { num_ships < 100 }
-						check_variable = { num_ships > 49 }
-					}
-					log = "[GetDateText]: [Root.GetName]: Navy: Small"
-					set_country_flag = ai_action_navy_small
-					clr_country_flag = ai_action_navy_medium
-					clr_country_flag = ai_action_navy_large
-				}
-				ELSE_IF = {
-					limit = {
-						check_variable = { num_ships < 200 }
-						check_variable = { num_ships > 99 }
-					}
-					log = "[GetDateText]: [Root.GetName]: Navy: Medium"
-					clr_country_flag = ai_action_navy_small
-					set_country_flag = ai_action_navy_medium
-					clr_country_flag = ai_action_navy_large
-				}
-				ELSE_IF = {
-					limit = { check_variable = { num_ships > 200 } }
-					log = "[GetDateText]: [Root.GetName]: Navy: Large"
-					clr_country_flag = ai_action_navy_small
-					clr_country_flag = ai_action_navy_medium
-					set_country_flag = ai_action_navy_large
-				}
-			}
-			IF = {
-				LIMIT = { check_variable = { num_deployed_planes > 0 } }
-				IF = {
-					limit = {
-						check_variable = { num_deployed_planes < 1000 }
-						check_variable = { num_deployed_planes > 499 }
-					}
-					log = "[GetDateText]: [Root.GetName]: Navy: Small"
-					set_country_flag = ai_action_air_small
-					set_country_flag = ai_action_air_medium
-					set_country_flag = ai_action_air_large
-				}
-				ELSE_IF = {
-					limit = {
-						check_variable = { num_deployed_planes < 2000 }
-						check_variable = { num_deployed_planes > 999 }
-					}
-					log = "[GetDateText]: [Root.GetName]: Navy: Medium"
-					set_country_flag = ai_action_air_small
-					set_country_flag = ai_action_air_medium
-					set_country_flag = ai_action_air_large
-				}
-				ELSE_IF = {
-					limit = { check_variable = { num_deployed_planes > 2000 } }
-					log = "[GetDateText]: [Root.GetName]: Navy: Large"
-					set_country_flag = ai_action_air_small
-					set_country_flag = ai_action_air_medium
-					set_country_flag = ai_action_air_large
-				}
-			}
-		}
-
 		effect = { # Starting Construction Queues
 			IF = {
 				LIMIT = { OAK = { is_ai = yes } }
@@ -107,28 +43,11 @@ on_actions = {
 	}
 
 	on_monthly = { # Triggers each month for every country separately
-		effect = { # Micro Checker
-			TAG_has_war_with_TAG = yes
-		}
-
-		effect = { # Army Size Checker
-			# Compute on_monthly_deployed_total = army + navy + airforce
-			set_temp_variable = { on_monthly_deployed_total = deployed_army_manpower_k }
-			add_to_temp_variable = { on_monthly_deployed_total = deployed_navy_manpower_k }
-			add_to_temp_variable = { on_monthly_deployed_total = deployed_airforce_manpower_k }
-			# Compute on_monthly_reserved = manpower_k - on_monthly_deployed_total
-			set_temp_variable = { on_monthly_reserved = manpower_k }
-			subtract_from_temp_variable = { on_monthly_reserved = on_monthly_deployed_total }
-			set_variable = { var = deployed_total value = on_monthly_deployed_total }
-			set_variable = { var = reserved value = on_monthly_reserved }
-			# Used for "check_variable = { var = reserved value = deployed_total compare = greater_than }"
-		}
-
 		effect = { # Building Queuer
 			IF = {
 				LIMIT = {
 					is_ai = yes
-					date > 1726.01.01
+					is_erly_game = no
 				}
 				every_owned_state = { # Oil-Fired Generator Queuing
 					IF = {
@@ -173,93 +92,6 @@ on_actions = {
 							}
 							add_building_construction = { type = construction_complex level = 1 instant_build = no }
 							set_state_flag = { flag = bq_construction_complex days = 365 }
-						}
-					}
-				}
-				IF = { # "Reinforced Electrical Grid"/"High Capacity Electrical Grid" Queuing
-					LIMIT = {
-						num_of_civilian_factories_available_for_projects > 49
-						OR = {
-							check_variable = { var = resource@oil		value = 35 compare = greater_than_or_equals }
-							check_variable = { var = resource@coal		value = 35 compare = greater_than_or_equals }
-							check_variable = { var = resource@aluminium	value = 35 compare = greater_than_or_equals }
-							check_variable = { var = resource@rubber	value = 35 compare = greater_than_or_equals }
-							check_variable = { var = resource@tungsten	value = 35 compare = greater_than_or_equals }
-							check_variable = { var = resource@steel		value = 35 compare = greater_than_or_equals }
-							check_variable = { var = resource@chromium	value = 35 compare = greater_than_or_equals }
-							check_variable = { var = num_of_factories value = 100 compare = greater_than_or_equals }
-						}
-					}
-					every_owned_state = {
-						random_select_amount = 1 # "random_select_amount" prevents "energy_infrastructure"/"industrial_infrastructure" Queue overload
-						IF = { # industrial_infrastructure
-							LIMIT = {
-								free_building_slots = { building = industrial_complex size < 1 }
-								NOT = { has_state_flag = { flag = bq_infrastructure days < 1 } }
-								OR = {
-									check_variable = { var = resource@oil		value = 35 compare = greater_than_or_equals }
-									check_variable = { var = resource@coal		value = 35 compare = greater_than_or_equals }
-									check_variable = { var = resource@aluminium	value = 35 compare = greater_than_or_equals }
-									check_variable = { var = resource@rubber	value = 35 compare = greater_than_or_equals }
-									check_variable = { var = resource@tungsten	value = 35 compare = greater_than_or_equals }
-									check_variable = { var = resource@steel		value = 35 compare = greater_than_or_equals }
-									check_variable = { var = resource@chromium	value = 35 compare = greater_than_or_equals }
-								}
-								check_variable = { var = energy_infrastructure value = 1 compare = less_than }
-								check_variable = { var = industrial_infrastructure value = 1 compare = less_than }
-							}
-							add_building_construction = { type = industrial_infrastructure level = 1 instant_build = no }
-							set_state_flag = { flag = bq_infrastructure days = 365 }
-							ELSE = { # energy_infrastructure
-							    LIMIT = {
-							    	free_building_slots = { building = industrial_complex size < 1 }
-							        NOT = { has_state_flag = { flag = bq_infrastructure days < 1 } }
-								    check_variable = { var = num_of_factories value = 10 compare = greater_than_or_equals }
-									check_variable = { var = energy_infrastructure value = 1 compare = less_than }
-									check_variable = { var = industrial_infrastructure value = 1 compare = less_than }
-							    }
-							    add_building_construction = { type = energy_infrastructure level = 1 instant_build = no }
-								set_state_flag = { flag = bq_infrastructure days = 365 }
-							}
-						}
-					}
-				}
-				IF = { # Commercial Nuclear Reactor Queuing
-					LIMIT = {
-						has_tech = commercial_nuclear_reactor_tech
-					}
-					every_owned_state = {
-						IF = {
-							LIMIT = {
-								free_building_slots = { building = commercial_nuclear_reactor size > 0 }
-								NOT = { has_state_flag = { flag = bq_commercial_nuclear_reactor days < 1 } }
-							}
-							add_building_construction = { type = commercial_nuclear_reactor level = 1 instant_build = no }
-							set_state_flag = { flag = bq_commercial_nuclear_reactor days = 365 }
-						}
-					}
-				}
-				IF = { # Air Base Queuing
-					# num_deployed_planes
-					# num_deployed_planes_with_type@fighter
-					# num_equipment@small_plane_airframe > num_deployed_planes_with_type@fighter
-					LIMIT = {
-						OR = {
-							any_allied_country = { # <- Friend
-								check_variable = { num_equipment@small_plane_airframe > num_deployed_planes_with_type@fighter }
-							}
-							check_variable = { num_equipment@small_plane_airframe > num_deployed_planes_with_type@fighter } # <- Self
-						}
-					}
-					every_owned_state = {
-						random_select_amount = 1
-						IF = {
-							LIMIT = {
-							    check_variable = { var = building_level@air_base value = 1 compare = greater_than_or_equals }
-							    NOT = { has_state_flag = { flag = bq_air_base days < 1 } }
-							}
-							add_building_construction = { type = air_base level = 1 instant_build = no }
-							set_state_flag = { flag = bq_air_base days = 365 }
 						}
 					}
 				}
@@ -310,8 +142,8 @@ on_actions = {
 	}
 
 	on_declare_war = { # FROM is war target. ROOT is for the country who is declaring war
-		effect = { # Micro Checker
-			TAG_has_war_with_TAG = yes
+		effect = {
+
 		}
 	}
 
@@ -328,14 +160,14 @@ on_actions = {
 	}
 
 	on_capitulation = { # ROOT is capitulated country, FROM is winner. Several processes such as the deletion of units and transfer of equipment have already been executed by this point.
-		effect = { # Micro Checker
-			TAG_has_war_with_TAG = yes
+		effect = {
+
 		}
 	}
 
 	on_capitulation_immediate = { # ROOT is capitulated country, FROM is winner.
-		effect = { # Micro Checker
-			TAG_has_war_with_TAG = yes
+		effect = {
+
 		}
 	}
 
@@ -407,7 +239,7 @@ on_actions = {
 
 	on_lend_lease = { # ROOT is the country that sent the lend lease, FROM is the country that accepted.
 		effect = {
-			add_to_array = { aligned_to_help_countries = FROM }
+
 		}
 	}
 
