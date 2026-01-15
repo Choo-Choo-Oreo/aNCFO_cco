@@ -1,0 +1,243 @@
+division_limiter = {
+	enable = {
+		has_reached_maximum_divisions = yes
+		NOT = {
+			has_global_flag = KR_no_unit_limits
+			surrender_progress > 0.05
+		}
+	}
+
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = build_army
+		id = armor_role
+		value = -10000
+	}
+
+	ai_strategy = {
+		type = build_army
+		id = heavy_armor_role
+		value = -10000
+	}
+
+	ai_strategy = {
+		type = build_army
+		id = garrison
+		value = -10000
+	}
+
+	ai_strategy = {
+		type = build_army
+		id = infantry
+		value = -10000
+	}
+
+	ai_strategy = {
+		type = build_army
+		id = marines
+		value = -10000
+	}
+
+	ai_strategy = {
+		type = build_army
+		id = motorized
+		value = -10000
+	}
+
+	ai_strategy = {
+		type = build_army
+		id = mountaineers
+		value = -10000
+	}
+
+	ai_strategy = {
+		type = build_army
+		id = suppression
+		value = -10000
+	}
+}
+
+division_peaceful_nation = {
+	allowed = {
+		NOT = {
+			OR = {
+				is_gaint_of_the_east_possible = yes
+				is_harmonainus_imperious_extras = yes
+				has_major_nationalfocus_tree = yes
+				tag = ANA
+				tag = BHK
+				tag = CPF
+				tag = CPV
+				tag = DOC
+				is_subject_of = EPY
+				is_subject_of = HHE
+				tag = IHS
+				tag = KGK
+				tag = KSA
+				tag = MJU # Should be a major, but in case it is not
+				is_subject_of = MJU
+				is_subject_of = MRC
+				tag = REP
+				tag = RVV
+				tag = SDP # Should be a major, but in case it is not
+				is_subject_of = SDP
+				tag = SMK
+				tag = SPC
+				tag = UFS
+			}
+		}
+	}
+	enable = {
+		has_war = no
+		is_major = no
+		is_in_faction = no
+	}
+
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = ai_wanted_divisions_factor
+		value = -500
+	}
+}
+
+division_early_war_to_late_peace = {
+	allowed = {
+		OR = {
+			TAG = MTR TAG = ROM
+			TAG = TRH TAG = UEK
+		}
+	}
+	enable = {
+		OR = {
+			AND = {
+				OR = { TAG = MTR TAG = ROM }
+				NOT = { AND = { has_full_control_of_state = 434 has_full_control_of_state = 629 } }
+			}
+			AND = {
+				OR = { TAG = TRH TAG = UEK }
+				NOT = { AND = { has_full_control_of_state = 790 has_full_control_of_state = 803 } }
+			}
+		}
+	}
+
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = ai_wanted_divisions_factor
+		value = 550
+	}
+}
+
+beastfolk_military_offset = {
+	enable = { is_species_beastfolk = yes }
+	abort_when_not_enabled = yes
+}
+
+dwarf_military_offset = {
+	enable = { is_species_dwarf = yes }
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = role_ratio
+		id = infantry
+		value = -67
+	}
+
+	ai_strategy = {
+		type = equipment_production_factor
+		id = infantry
+		value = -67
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = armor_role
+		value = 250
+	}
+
+	ai_strategy = {
+		type = equipment_production_factor
+		id = armor
+		value = 250
+	}
+
+	ai_strategy = {
+		type = railway_gun_divisions_ratio
+		value = 120
+	}
+}
+
+elf_military_offset = {
+	enable = { is_species_elf = yes }
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = role_ratio
+		id = infantry
+		value = 40
+	}
+
+	ai_strategy = {
+		type = equipment_production_factor
+		id = infantry
+		value = 10
+	}
+}
+
+rhyniognatha_military_offset = {
+	enable = { is_species_rhyniognatha = yes }
+	abort_when_not_enabled = yes
+}
+
+krohmapsari_military_offset = {
+	enable = { is_species_krohmapsari = yes }
+	abort_when_not_enabled = yes
+}
+
+wants_barracks_for_manpower_minor = {
+	enable = {
+		has_manpower < 10000
+		has_war = yes
+	}
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = building_target
+		id = barracks
+		value = 50
+	}
+}
+
+wants_barracks_for_manpower_major = {
+	enable = {
+		has_manpower < 50000
+		is_major = yes
+		has_war = yes
+	}
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = building_target
+		id = barracks
+		value = 50
+	}
+}
+
+fillerstate_harmless = {
+	enable = { always = yes }
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = prepare_for_war
+		id = ZZZ
+		value = -100
+	}
+
+	ai_strategy = {
+		type = ignore
+		id = ZZZ
+		value = 100
+	}
+}

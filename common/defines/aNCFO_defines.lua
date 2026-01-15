@@ -157,9 +157,6 @@
 
 		NDefines.NAir.MAX_QUICK_WING_SELECTION = 5				-- Max possible selection for airwing quick deploy
 
-		NDefines.NAI.RAIDS_CREATE_FREQUENCY_DAYS = 35.0			-- Default 7
-		NDefines.NAI.RAIDS_COMMAND_POWER_CAP_TO_CREATE = 30.0 	-- Default 60
-		NDefines.NAI.COMMAND_POWER_BEFORE_SPEND_ON_TRAITS = 0.0	-- Default 30
 
 	-- NNavy
 		NDefines.NNavy.MAX_CAPITALS_PER_AUTO_TASK_FORCE = 10
@@ -175,9 +172,6 @@
 	-- NAI
 		-- Days between Updates Start --
 			NDefines.NAI.AI_UPDATE_ROLES_FREQUENCY_HOURS = 168 				-- Default 48
-			NDefines.NAI.AIFC_UPDATE_FREQUENCY_DAYS = 7						-- Default 5
-			NDefines.NAI.DAYS_BETWEEN_AIR_PRIORITIES_UPDATE = 7 			-- Default 4
-			NDefines.NAI.RESEARCH_DAYS_BETWEEN_WEIGHT_UPDATE = 30 			-- Default 7
 			NDefines.NAI.UPDATE_SUPPLY_BOTTLENECKS_FREQUENCY_HOURS = 168 	-- Default 168
 			NDefines.NAI.UPDATE_SUPPLY_MOTORIZATION_FREQUENCY_HOURS = 168 	-- Default 52
 
@@ -189,13 +183,9 @@
 		NDefines.NAI.CONSTRUCTION_PRIO_INFRASTRUCTURE = 0.20
 		NDefines.NAI.CONSTRUCTION_PRIO_CIV_FACTORY = 0.80
 		NDefines.NAI.CONSTRUCTION_PRIO_MIL_FACTORY = 0.70
-		NDefines.NAI.CONSTRUCTION_PRIO_SUPPLY_BUILDING = 1.65			-- Default 1.10
-		NDefines.NAI.CONSTRUCTION_PRIO_RAILWAY = 4.00
 		NDefines.NAI.CONSTRUCTION_PRIO_RAILWAY_GUN_REPAIR = 15.00
 		NDefines.NAI.CONSTRUCTION_PRIO_UNSPECIFIED = 0.50
 		NDefines.NAI.CONSTRUCTION_PRIO_FACTOR_OCCUPIED_TERRITORY = 0.50
-		NDefines.NAI.CONSTRUCTION_PRIO_FACTOR_OWNED_NONCORE = 0.75		-- Default 1.50
-		NDefines.NAI.CONSTRUCTION_PRIO_FACTOR_OWNED_CORE = 4.00			-- Default 2.00
 		NDefines.NAI.CONSTRUCTION_PRIO_FACTOR_REPAIRING = 0.60			-- Default 0.30
 
 		NDefines.NAI.AREA_DEFENSE_SETTING_VP = false
@@ -218,45 +208,23 @@
 		---------------------------
 			--------- AIFC PLANS ---------
 				NDefines.NAI.AIFC_FRESHNESS_BASE_VALUE = 50.0					-- Default 45
-				NDefines.NAI.AIFC_REFRESH_NEED_PER_DAY = 2.0					-- Default 1
-				NDefines.NAI.AIFC_REFRESH_NEED_SUPPLY_FACTOR_PER_DAY = 4.0		-- Default 0.8
-				NDefines.NAI.AIFC_FRESHNESS_ADD_ON_PROGRESS = 18.0				-- Default 25
 				NDefines.NAI.AIFC_MAX_NR_FRONTS = 4								-- Default 4
-				NDefines.NAI.AIFC_CA_DIVISIONS_PER_PROVINCE = 2					-- Default 3
-				NDefines.NAI.AIFC_ACTIVATE_AVG_ORG_RATIO_THRESHOLD = 0.3		-- Default 0.2
-				NDefines.NAI.AIFC_ACTIVATE_IN_POSITION_RATIO_THRESHOLD = 0.4	-- Default 0.3
 				NDefines.NAI.AIFC_OFFENSIVE_DEACTIVATION_DAYS_THRESHOLD = 5		-- Default 5
-				NDefines.NAI.AIFC_UNIT_NUDGE_FREQUENCY_DAYS = 15				-- Default 15
 
 				NDefines.NAI.AIFC_UNIT_OFFENSIVE_SCORE_FACTOR_BREAKTHROUGH = -10.0	-- Default 11.0
-				NDefines.NAI.AIFC_UNIT_OFFENSIVE_SCORE_FACTOR_SOFT_ATTACK = -10.0	-- Default 6.0
-				NDefines.NAI.AIFC_UNIT_OFFENSIVE_SCORE_FACTOR_HARD_ATTACK = -10.0	-- Default 8.0
-				NDefines.NAI.AIFC_UNIT_OFFENSIVE_SCORE_FACTOR_ARMOR = 800.0			-- Default 30.0
 				NDefines.NAI.AIFC_UNIT_OFFENSIVE_SCORE_FACTOR_PIERCING = -10.0		-- Default 4.0
-				NDefines.NAI.AIFC_UNIT_OFFENSIVE_SCORE_FACTOR_HARDNESS = 40.0		-- Default 300.0
 				NDefines.NAI.AIFC_UNIT_OFFENSIVE_SCORE_FACTOR_SPEED = 5.0			-- Default 15.0
 				NDefines.NAI.AIFC_UNIT_OFFENSIVE_SCORE_FACTOR_INITIATIVE = -10.0	-- Default 5.0
 				NDefines.NAI.AIFC_UNIT_OFFENSIVE_SCORE_FACTOR_ORGANISATION = -10.0	-- Default 0.3
 				NDefines.NAI.AIFC_UNIT_OFFENSIVE_SCORE_FACTOR_HITPOINTS = -10.0		-- Default 0.3
-				NDefines.NAI.AIFC_UNIT_OFFENSIVE_SCORE_FACTOR_EXPERIENCE = 1.0		-- Default 300.0
 
-				NDefines.NAI.AIFC_TARGET_SUPPLY_HUB_BASE_SCORE = 52.5		-- Default 20.0
-				NDefines.NAI.AIFC_TARGET_NAVAL_BASE_BASE_SCORE = 57.5		-- Default 10.0
-				NDefines.NAI.AIFC_TARGET_NAVAL_BASE_SCORE_PER_LEVEL = 16.0	-- Default 1.0
 				NDefines.NAI.AIFC_TARGET_VP_SCORE_FACTOR = 20.0				-- Default 1.0
 				NDefines.NAI.AIFC_TARGET_CAPITAL_SCORE_EXTRA = 70.0			-- Default 5.0
-				NDefines.NAI.AIFC_TARGET_SHORT_PATH_PENALTY_FACTOR = 1.0	-- Default 0.1
 				NDefines.NAI.AIFC_TARGET_PERSISTED_FACTOR = 5.0				-- Default 30.0
 
 				NDefines.NAI.AIFC_PATH_COST_ADJ_STRAIT = 10.0			-- Default 4.0
-				NDefines.NAI.AIFC_PATH_COST_ADJ_RIVER = 10.0			-- Default 2.0
-				NDefines.NAI.AIFC_PATH_COST_ADJ_RIVER_LARGE = 10.0		-- Default 3.0
-				NDefines.NAI.AIFC_PATH_COST_TRN_MOUNTAINS = 6.5			-- Default 2.0
 				NDefines.NAI.AIFC_PATH_COST_TRN_JUNGLE = 6.0			-- Default 3.0
-				NDefines.NAI.AIFC_PATH_COST_TRN_URBAN = 2.0				-- Default 1.0
-				NDefines.NAI.AIFC_PATH_COST_TRN_MARSH = 4.5				-- Default 3.0
 				NDefines.NAI.AIFC_PATH_COST_PER_FORT_LEVEL = 60.0		-- Default 0.3
-				NDefines.NAI.AIFC_PATH_COST_HAS_SUPPLY_HUB = 0.1		-- Default 0.5
 				NDefines.NAI.AIFC_PATH_COST_HAS_NAVAL_BASE = 0.1		-- Default 0.5
 			--------- AIFC END ---------
 
@@ -264,40 +232,22 @@
 				-- The AI "desires" to spend XP on doctrines, templates, and equipment.
 				-- The desire is built up over time and when XP is available it spends it on the action that has the highest accumulated desire. After spending XP the desire is reset, in effect balancing the desires.
 				-- Below is the daily desire gain for each action.
-				NDefines.NAI.DESIRE_USE_XP_TO_UNLOCK_LAND_DOCTRINE = 5.25
-				NDefines.NAI.DESIRE_USE_XP_TO_UNLOCK_NAVAL_DOCTRINE = 0.5
-				NDefines.NAI.DESIRE_USE_XP_TO_UNLOCK_AIR_DOCTRINE = 0.5
 				--EAI: make sure land template desire is always at the top, if the doctrine desire is high but the mod blocks it, AI wont create templates
-				NDefines.NAI.DESIRE_USE_XP_TO_UPDATE_LAND_TEMPLATE = 62.5		-- Default
 
-				NDefines.NAI.DESIRE_USE_XP_TO_UPGRADE_LAND_EQUIPMENT = 5.0		-- Default
-				NDefines.NAI.DESIRE_USE_XP_TO_UPGRADE_NAVAL_EQUIPMENT = 1.0		-- Default
-				NDefines.NAI.DESIRE_USE_XP_TO_UPGRADE_AIR_EQUIPMENT = 62.5		-- Default
 
-				NDefines.NAI.DESIRE_USE_XP_TO_UNLOCK_ARMY_SPIRIT = 0.4			-- Default
 				NDefines.NAI.DESIRE_USE_XP_TO_UNLOCK_NAVY_SPIRIT = 0.4			-- Default
 				NDefines.NAI.DESIRE_USE_XP_TO_UNLOCK_AIR_SPIRIT = 0.4			-- Default
 
 				NDefines.NAI.DAYS_BETWEEN_CHECK_BEST_DOCTRINE = 7				-- Default
-				NDefines.NAI.DAYS_BETWEEN_CHECK_BEST_TEMPLATE = 7				-- Default
-				NDefines.NAI.DAYS_BETWEEN_CHECK_BEST_EQUIPMENT = 7				-- Default
 
 				NDefines.NAI.GARRISON_TEMPLATE_SCORE_IC_FACTOR = 1.0			-- Default
 				NDefines.NAI.GARRISON_TEMPLATE_SCORE_MANPOWER_FACTOR = 0.05		-- Default
 
 
 
-				NDefines.NAI.DEFAULT_MODULE_VARIANT_CREATION_XP_CUTOFF_LAND = 37.5		-- Army XP needed before attempting to create a variant of a type that uses the tank designer (the tank designer DLC feature must be active).
-				NDefines.NAI.DEFAULT_MODULE_VARIANT_CREATION_XP_CUTOFF_NAVY = 20		-- Same as above but for the ship designer.
-				NDefines.NAI.DEFAULT_MODULE_VARIANT_CREATION_XP_CUTOFF_AIR = 13			-- Same as above but for the ship designer.
 				-- Land/air handled by EAI
-				NDefines.NAI.DEFAULT_LEGACY_VARIANT_CREATION_XP_CUTOFF_LAND = 212.5		-- Army XP needed before attempting to create a variant of a type that uses the legacy upgrades system. ai_strategy supports land_xp_spend_priority upgrade_xp_cutoff. If none is set this define is used instead.
 				NDefines.NAI.DEFAULT_LEGACY_VARIANT_CREATION_XP_CUTOFF_NAVY = 212.5		-- Same as above but for navy XP and navy_xp_spend_priority.
-				NDefines.NAI.DEFAULT_LEGACY_VARIANT_CREATION_XP_CUTOFF_AIR  = 212.5		-- Same as above but for air XP and air_xp_spend_priority.
 
-				NDefines.NAI.VARIANT_CREATION_XP_RESERVE_LAND = 40						-- If the AI lacks army XP to create a variant it will reserve this much XP for variant creation so that it will eventually be able to create a variant.
-				NDefines.NAI.VARIANT_CREATION_XP_RESERVE_NAVY = 40						-- Same as above but for navy XP.
-				NDefines.NAI.VARIANT_CREATION_XP_RESERVE_AIR = 40						-- Same as above but for air XP.
 
 				-- The AI uses the below values when selecting which design to make among the types that use the tank designer
 				-- (the tank designer DLC feature must be active). For each role, the highest priority AI design that can be
@@ -333,8 +283,6 @@
 				NDefines.NAI.DIVISION_DESIGN_STOCKPILE_WEIGHT = 0.02 --0.01
 				NDefines.NAI.DIVISION_DESIGN_COMBAT_WIDTH_TARGET_WEIGHT = -10000 -- -200	    -- This score is reduced the farther the width is from the target width (if set)
 
-				NDefines.NAI.UPGRADE_PERCENTAGE_OF_FORCES = 0.55   --0.35 --0.1
-				NDefines.NAI.UPGRADES_DEFICIT_LIMIT_DAYS = 60 --180                           	-- Ai will avoid upgrading units in the field to new templates if it takes longer than this to fullfill their equipment need
 
 				NDefines.NAI.DEPLOYED_UNIT_MANPOWER_RATIO_TO_BUFFER_WARTIME = 0.2 				-- deployment will try to buffer a ratio of deployed manpower (for reinforcements) during war time
 				NDefines.NAI.DEPLOYED_UNIT_MANPOWER_RATIO_TO_BUFFER_PEACETIME = 0.1     		-- deployment will try to buffer a ratio of deployed manpower (for reinforcements) during peace time
@@ -342,55 +290,35 @@
 					-- Calculating wanted nr of divisions
 				NDefines.NAI.WANTED_UNITS_INDUSTRY_FACTOR = 100                 -- How many units a country wants is partially based on how much military industry that is available
 
-				NDefines.NAI.MIN_FIELD_STRENGTH_TO_BUILD_UNITS = 0.625 --0.7	-- Cancel unit production if below this to get resources out to units in the field
 				NDefines.NAI.MIN_MANPOWER_TO_BUILD_UNITS = 0.313 --0.7			-- Cancel unit production if below this to get resources out to units in the field
 
-				NDefines.NAI.DEPLOY_MIN_TRAINING_SURRENDER_FACTOR = 0.55		-- Required percentage of training (1.0 = 100%) for AI to deploy unit in wartime while surrender progress is higher than 0
-				NDefines.NAI.DEPLOY_MIN_EQUIPMENT_SURRENDER_FACTOR = 0.8		-- Required percentage of equipment (1.0 = 100%) for AI to deploy unit in wartime while surrender progress is higher than 0
-				NDefines.NAI.DEPLOY_MIN_TRAINING_PEACE_FACTOR = 0.55        	-- Required percentage of training (1.0 = 100%) for AI to deploy unit in peacetime
-				NDefines.NAI.DEPLOY_MIN_EQUIPMENT_PEACE_FACTOR = 0.5			-- Required percentage of equipment (1.0 = 100%) for AI to deploy unit in peacetime
-				NDefines.NAI.DEPLOY_MIN_TRAINING_WAR_FACTOR = 0.55 				-- Required percentage of training (1.0 = 100%) for AI to deploy unit in wartime
-				NDefines.NAI.DEPLOY_MIN_EQUIPMENT_WAR_FACTOR = 0.85				-- Required percentage of equipment (1.0 = 100%) for AI to deploy unit in wartime
-				NDefines.NAI.DEPLOY_MIN_EQUIPMENT_CAP_DEPLOY_FACTOR = 0.475		-- If training is capped by equipment deficit and we have reached that cap, deploy unit anyway if percentage is above this (reinforce in field instead).
 
-				NDefines.NAI.UPGRADE_DIVISION_RELUCTANCE = 2.0 -- aggressively trying to get the AI to upgrade divisions to newer templates, may work, may not, but it doesn't break anything. vanilla is 14, .0042 is just over 1 hour, where I believe the vanilla value at 14 = 14 days. So it should be checking to upgrade ONE division every single hour.
 
-				NDefines.NAI.PRODUCTION_EQUIPMENT_SURPLUS_FACTOR = 0.3
 
 					-- AI Training for Divisions
 				NDefines.NAI.START_TRAINING_EQUIPMENT_LEVEL = 0.40				-- ai will not start to train if equipment drops below this level
 				NDefines.NAI.STOP_TRAINING_EQUIPMENT_LEVEL = 0.30				-- ai will not train if equipment drops below this level
 				NDefines.NAI.START_TRAINING_SUPPLY_LEVEL = 0.40					-- ai will not start to train if supply ratio drops below this level
 				NDefines.NAI.STOP_TRAINING_SUPPLY_LEVEL = 0.30					-- ai will not train if supply ratio drops below this level
-				NDefines.NAI.STOP_TRAINING_FULLY_TRAINED_FACTOR = 1.0			-- ai will not train if at least this ratio of divisions in the army are fully trained
 			--------- DIVISION END ---------
 
 			--------- NAVAL PLANS ---------
-				-- VNR -- NDefines.NAI.CARRIER_TASKFORCE_MAX_CARRIER_COUNT = 8 		-- optimum carrier count for carrier taskforces
-				NDefines.NAI.CAPITAL_TASKFORCE_MAX_CAPITAL_COUNT = 60 				-- optimum capital count for capital taskforces
-				NDefines.NAI.SCREEN_TASKFORCE_MAX_SHIP_COUNT = 10.0					-- optimum screen count for screen taskforces
 				NDefines.NAI.SUB_TASKFORCE_MAX_SHIP_COUNT = 10.0 					-- optimum sub count for sub taskforces
 
-				NDefines.NAI.NAVAL_STRIKE_PLANES_PER_SHIP = 50
 				NDefines.NAI.NAVAL_SHIP_AIR_IMPORTANCE = 5
 				NDefines.NAI.NAVAL_PATROL_PLANES_PER_SHIP_RAIDING = 30.0
 				-- VNR -- NDefines.NAI.DOCKYARDS_PER_NAVAL_DESIRE_EFFECT = -50.0
 
-				NDefines.NAI.MIN_CAPITALS_FOR_CARRIER_TASKFORCE = 8.0				-- carrier fleets will at least have this amount of capitals
 				NDefines.NAI.CAPITALS_TO_CARRIER_RATIO = 3.0						-- capital to carrier count in carrier taskfoces
-				-- VNR -- NDefines.NAI.SCREENS_TO_CAPITAL_RATIO = 5.0				-- screens to capital/carrier count in carrier & capital taskforces
 
 				NDefines.NAI.MAX_PATROL_TO_STRIKE_FORCE_RATIO = 17.0	-- maximum patrol/strike force ratio
 				NDefines.NAI.MAX_PATROL_TO_STRIKE_FORCE_RATIO = 4.0
-				NDefines.NAI.NAVAL_PATROL_PLANES_PER_SHIP_ESCORTING = 50
 				NDefines.NAI.NAVAL_PATROL_PLANES_PER_SHIP_PATROLLING = 50
 
-				NDefines.NAI.NAVAL_MISSION_DISTANCE_BASE = 50000				-- Base value when AI is evaluating distance score to places
 
 				NDefines.NAI.REFIT_SHIP_RELUCTANCE = 14							-- Default 28
 				NDefines.NAI.REFIT_SHIP_PERCENTAGE_OF_FORCES = 0.3				-- Default 0.1
 
-				NDefines.NAI.MIN_MAIN_SHIP_RATIO = 0.3                      -- if main ship ratio is below this steal other ships.
 				NDefines.NAI.MIN_SUPPORT_SHIP_RATIO = 0.7                   -- if support ship ratio is below this steal other ships.
 				NDefines.NAI.MIN_MAIN_SHIP_RATIO_TO_REINFORCE = 0.5         -- the main ships will be tried to reinforce this level.
 				NDefines.NAI.MIN_SUPPORT_SHIP_RATIO_TO_REINFORCE = 0.9      -- the support ships will be tried to reinforce this level.
@@ -398,7 +326,6 @@
 				NDefines.NAI.MIN_SUPPORT_SHIP_TO_SPARE = 1.0                -- can only steal ships from a task force if their support ship ratio is above this.
 				NDefines.NAI.MIN_MAIN_SHIP_RATIO_TO_MERGE = 0.7             -- try merge task force if main ship ratio is lower than this.
 				NDefines.NAI.MAX_MAIN_SHIP_RATIO_TO_MERGE = 1.001           -- if resulting main ship ratio would be at most this allow merging into this task force.
-				NDefines.NAI.MAIN_SHIP_RATIO_TO_SPLIT = 1.8                 -- if main ship ratio in a task force is larger than this split it. (If a carrier TF wants 4 carriers (see defines above) but it has more than [this * 4] carriers then we try to split the TF.)
 
 
 				NDefines.NAI.MISSION_FLEET_ICONS = {
@@ -414,59 +341,15 @@
 					9, -- NAVAL INVASION SUPPORT
 				}
 
-				-- VNR -- NDefines.NAI.MIN_NAVAL_MISSION_PRIO_TO_ASSIGN = {  -- priorities for regions to get assigned to a mission
-				-- VNR -- 	0, -- HOLD (consumes fuel HOLD_MISSION_MOVEMENT_COST fuel while moving)
-				-- VNR -- 	150, -- PATROL
-				-- VNR -- 	125, -- STRIKE FORCE
-				-- VNR -- 	200, -- CONVOY RAIDING
-				-- VNR -- 	150, -- CONVOY ESCORT
-				-- VNR -- 	200, -- MINES PLANTING
-				-- VNR -- 	100, -- MINES SWEEPING
-				-- VNR -- 	0, -- TRAIN
-				-- VNR -- 	0, -- RESERVE_FLEET
-				-- VNR -- 	100, -- NAVAL INVASION SUPPORT
-				-- VNR -- }
-
-				-- VNR -- NDefines.NAI.HIGH_PRIO_NAVAL_MISSION_SCORES = {  -- priorities for regions to get assigned to a mission
-				-- VNR -- 	0, -- HOLD (consumes fuel HOLD_MISSION_MOVEMENT_COST fuel while moving)
-				-- VNR -- 	100, -- PATROL
-				-- VNR -- 	250, -- STRIKE FORCE
-				-- VNR -- 	225, -- CONVOY RAIDING
-				-- VNR -- 	150, -- CONVOY ESCORT
-				-- VNR -- 	-1, -- MINES PLANTING
-				-- VNR -- 	10, -- MINES SWEEPING
-				-- VNR -- 	-0.5, -- TRAIN
-				-- VNR -- 	-0.5, -- RESERVE_FLEET
-				-- VNR -- 	100, -- NAVAL INVASION SUPPORT
-				-- VNR -- }
-
-				-- VNR -- NDefines.NAI.MAX_MISSION_PER_TASKFORCE = {  -- max mission region/taskforce ratio
-				-- VNR -- 	0, -- HOLD (consumes fuel HOLD_MISSION_MOVEMENT_COST fuel while moving)
-				-- VNR -- 	1.5, -- PATROL
-				-- VNR -- 	6, -- STRIKE FORCE
-				-- VNR -- 	1.5, -- CONVOY RAIDING
-				-- VNR -- 	4, -- CONVOY ESCORT
-				-- VNR -- 	2, -- MINES PLANTING
-				-- VNR -- 	2, -- MINES SWEEPING
-				-- VNR -- 	0, -- TRAIN
-				-- VNR -- 	0, -- RESERVE_FLEET
-				-- VNR -- 	10, -- NAVAL INVASION SUPPORT
-				-- VNR -- }
-
 					-- all-screen taskforces will be shared between convoy defense, mine missions and patrols (in this prio)
 					-- and these ratios limits the maximum ratio of these taskforces to allocate on type
-				NDefines.NAI.MAX_SCREEN_TASKFORCES_FOR_CONVOY_DEFENSE_MIN = 0.20 -- maximum ratio of all screen-ships forces to be used in convoy defense (increases up to max as AI loses convoys).
-				NDefines.NAI.MAX_SCREEN_TASKFORCES_FOR_CONVOY_DEFENSE_MAX = 0.70 -- maximum ratio of all screen-ships forces to be used in convoy defense (increases up to max as AI loses convoys).
 				NDefines.NAI.MAX_SCREEN_TASKFORCES_FOR_CONVOY_DEFENSE_MIN_CONVOY_THREAT = 100 -- AI will increase screen assignment for escort missions as threate increases
 				NDefines.NAI.MAX_SCREEN_TASKFORCES_FOR_CONVOY_DEFENSE_MAX_CONVOY_THREAT = 1500-- AI will increase screen assignment for escort missions as threate increases
 
 
 				NDefines.NAI.MAX_SCREEN_TASKFORCES_FOR_MINE_SWEEPING = 0.01 -- maximum ratio of screens forces to be used in mine sweeping
-				NDefines.NAI.MAX_SCREEN_TASKFORCES_FOR_MINE_SWEEPING_PRIO = 0.1 -- if you have mines near your owned states you will start priotize mine missions and will assign this ratio of screens
-				NDefines.NAI.MAX_SCREEN_TASKFORCES_FOR_MINE_SWEEPING_PRIO_MIN_MINES = 900 -- lowest mine for prioing mine missions
 				NDefines.NAI.MAX_SCREEN_TASKFORCES_FOR_MINE_SWEEPING_PRIO_MAX_MINES = 1000 -- highest mines for highest prio for mine missions
 
-				NDefines.NAI.MAX_SCREEN_TASKFORCES_FOR_MINE_LAYING = 0.01 -- maximum ratio of screens forces to be used in mine laying
 				NDefines.NAI.MAX_SCREEN_FORCES_FOR_INVASION_SUPPORT = 1.0 -- max ratio of screens forces to be used in naval invasion missions
 				NDefines.NAI.MAX_CAPITAL_FORCES_FOR_INVASION_SUPPORT = 1.0 -- max ratio of capital forces to be used in naval invasion missions
 			--------- NAVAL END ---------
@@ -482,16 +365,12 @@
 			--------- AIR END ---------
 
 			--------- RESEARCH PLANS ---------
-				NDefines.NAI.RESEARCH_AHEAD_BONUS_FACTOR = 50.0
-				NDefines.NAI.RESEARCH_AHEAD_OF_TIME_FACTOR = 1.5
 				NDefines.NAI.RESEARCH_BONUS_FACTOR = 50 						-- To which extent AI should care about bonuses to research
-				NDefines.NAI.RESEARCH_YEARS_BEHIND_FACTOR = 0.175				-- (was 0.2) --To which extent AI should care about not falling behind (i.e. increase weight for old tech)
 				NDefines.NAI.RESEARCH_WITH_XP_AI_WEIGHT_MULT = 1.5 				-- AI will bump score of a research with this mult if it can use XP
 				NDefines.NAI.RESEARCH_NAVAL_DOCTRINE_NEED_GAIN_FACTOR = 0.075	-- Multiplies value based on relative naval industry size / country size.
 				NDefines.NAI.RESEARCH_NEW_WEIGHT_FACTOR = 0.2 					-- Impact of previously unexplored tech weights. Higher means more random exploration.
 				NDefines.NAI.RESEARCH_BASE_DAYS = 60							-- AI adds a base number of days when weighting completion time for techs to ensure it doesn't only research quick techs
 
-				NDefines.NAI.MAX_AHEAD_RESEARCH_PENALTY = 4.5
 				NDefines.NAI.XP_RATIO_REQUIRED_TO_RESEARCH_WITH_XP = 3.0		-- AI will at least need this amount of xp compared to cost of a tech to reserch it with XP
 			--------- RESEARCH END ---------
 
@@ -499,7 +378,6 @@
 				NDefines.NAI.CANCEL_COMBAT_DISADVANTAGE_RATIO = 10             -- If the enemy's advantage ratio over us during (normal) combat is more than <value>, allow canceling the attack
 				NDefines.NAI.CANCEL_COMBAT_MIN_DURATION_HOURS = 480              -- Only allow cancelling (normal) combat if at least <value> hours have passed
 
-				-- VNR -- NDefines.NAI.NAVY_PREFERED_MAX_SIZE = 300										-- AI will generally attempt to merge fleets into this size but as a soft limit.
 
 				NDefines.NAI.EQUIPMENT_MARKET_MAX_CIVS_FOR_PURCHASES_RATIO = 0.2            -- Ratio of available civilian factories to max use for equipment purchases (0.2 = 20 %, so 50 available civs would mean max ca 10 civs to spend on purchases at any one time). Gets modified by equipment_market_spend_factories AI strategy.
 				NDefines.NAI.EQUIPMENT_MARKET_NR_DELIVERIES_SOFT_MAX = 7                   -- AI tries to adjust assigned factories and amount of equipment to keep nr deliveries at max this
@@ -510,26 +388,17 @@
 
 				NDefines.NAI.GARRISON_FRACTION = 0					-- How large part of a front should always be holding the line rather than advancing at the enemy
 
-				NDefines.NAI.UPGRADE_PERCENTAGE_OF_FORCES = 0.10
-				NDefines.NAI.MAIN_ENEMY_FRONT_IMPORTANCE = 4
 				NDefines.NAI.DIPLOMACY_SEND_MAX_FACTION = 0.0
-				NDefines.NAI.MAX_SUPPLY_DIVISOR = 1.875
 				NDefines.NAI.FALLBACK_LOSING_FACTOR = 0.0
-				NDefines.NAI.DIVISION_SUPPLY_RATIO_TO_MOTORIZE = 1
-				NDefines.NAI.ENTRENCHMENT_WEIGHT = 4.0
 
 				NDefines.NAI.MIN_AI_UNITS_PER_TILE_FOR_STANDARD_COHESION = 2.0
 				NDefines.NAI.MIN_FRONT_SIZE_TO_CONSIDER_STANDARD_COHESION = 2000
 
-				NDefines.NAI.ATTACK_HEAVILY_DEFENDED_LIMIT = 0.5
 
-				NDefines.NAI.MAX_MICRO_ATTACKS_PER_ORDER = 48
-				NDefines.NAI.MICRO_POCKET_SIZE = 3
 
 				NDefines.NAI.FRONT_CUTOFF_MIN_EDGE_PROXIMITY = 1
 
 				NDefines.NAI.PLAN_ACTIVATION_MAJOR_WEIGHT_FACTOR = 1
-				NDefines.NAI.PLAN_ACTIVATION_PLAYER_WEIGHT_FACTOR = 1 	
 
 				NDefines.NAI.ASSIGN_TANKS_TO_WAR_FRONT = 20.0	                          -- Scoring factor for assigning tank divisions to active war fronts
 
@@ -551,32 +420,14 @@
 				NDefines.NAI.ASSIGN_DEFENSE_TERRAIN_DEFENSE_FACTOR = 4.0               -- Importance of unit's terrain adjusted defense stat when assigning to an area defense order
 				NDefines.NAI.ASSIGN_DEFENSE_TERRAIN_MOVEMENT_FACTOR = 0.5               -- Importance of unit's terrain adjusted movement stat when assigning to an area defense order
 				NDefines.NAI.ASSIGN_MOUNTAINEERS_TO_MOUNTAINS = 10.0                    -- factor for assigning mountaineer divisions to fronts with mountains (proportional to how much of that terrain type)
-				NDefines.NAI.ASSIGN_TANKS_TO_MOUNTAINS = -7.5                           -- factor for assigning tank divisions to fronts with mountains (proportional to how much of that terrain type)
-				NDefines.NAI.ASSIGN_TANKS_TO_JUNGLE = -10.0                              -- factor for assigning tank divisions to fronts with jungle (proportional to how much of that terrain type)
-				NDefines.NAI.UNIT_ASSIGNMENT_TERRAIN_IMPORTANCE = 10.0                  -- Terrain score for units are multiplied by this when the AI is deciding which front they should be assigned to
 
 				NDefines.NAI.WANTED_UNITS_THREAT_BASE = 0.7 
 				NDefines.NAI.WANTED_UNITS_THREAT_MAX = 25.0
 				NDefines.NAI.PLAN_STEP_COST_LIMIT = 1
 				NDefines.NAI.AREA_DEFENSE_BASE_IMPORTANCE = 30
-				NDefines.NAI.STATE_CONTROL_FOR_AREA_DEFENSE = 1.00
-				NDefines.NAI.VP_LEVEL_IMPORTANCE_MEDIUM = 1
-				NDefines.NAI.VP_LEVEL_IMPORTANCE_LOW = 1 --keep high at 30
-				NDefines.NAI.PLAN_MIN_SIZE_FOR_FALLBACK = 2000
-				NDefines.NAI.MIN_PLAN_VALUE_TO_MICRO_INACTIVE = 0.15
-				NDefines.NAI.FRONT_UNITS_CAP_FACTOR = 10.0
-				NDefines.NAI.PLAN_VALUE_TO_EXECUTE = -0.61
-				NDefines.NAI.FRONT_EVAL_UNIT_AIR_SUP_IMPACT = 2.0
-				NDefines.NAI.AI_FRONT_MOVEMENT_FACTOR_FOR_READY = 0.10
-				NDefines.NAI.RAILWAY_GUN_PRODUCTION_BASE_DIVISIONS_RATIO_PERCENT = 5
-				NDefines.NAI.RAILWAY_GUN_PRODUCTION_MIN_DIVISONS = 100
-				NDefines.NAI.RAILWAY_GUN_PRODUCTION_MIN_FACTORIES = 50
 				NDefines.NAI.AGGRESSIVENESS_CHECK_BASE = 2.0
 				NDefines.NAI.AGGRESSIVENESS_CHECK_EASY_TARGET = -0.5
 				NDefines.NAI.AGGRESSIVENESS_CHECK_CAREFUL = 1.0	
-				NDefines.NAI.ASSIGN_TANKS_TO_MOUNTAINS = -15
-				NDefines.NAI.ASSIGN_TANKS_TO_JUNGLE = -20
-				NDefines.NAI.RESERVE_TO_COMMITTED_BALANCE = 0.3
 				NDefines.NAI.SEA_PATH_LENGTH_SCORE_BASE = 0
 
 				NDefines.NAI.ENEMY_FORTIFICATION_FACTOR_FOR_FRONT_REQUESTS = 1.0		-- front unit request factor at max enemy fortification
@@ -589,7 +440,6 @@
 
 				NDefines.NAI.NAVAL_INVADED_AREA_PRIO_DURATION = 90								-- after successful invasion, AI will prio the enemy area for this number of days
 				NDefines.NAI.NAVAL_INVADED_AREA_PRIO_MULT = 6									-- fronts that belongs to recent invasions gets more prio
-				NDefines.NAI.MIN_NUM_CONQUERED_PROVINCES_TO_DEPRIO_NAVAL_INVADED_FRONTS = 10	-- if you conquer this amount of provinces after a naval invasion, it will lose its prio status and will act as a regular front
 
 				NDefines.NAI.FAILED_INVASION_AVOID_DURATION = 300
 
@@ -624,31 +474,10 @@
 
 				NDefines.NAir.AI_ALLOWED_PLANES_KEPT_IN_RESERVE = 0.0
 				NDefines.NAI.LAND_DEFENSE_INTERCEPTORS_PER_BOMBERS = 1.4
-				NDefines.NAI.LAND_COMBAT_OUR_COMBATS_AIR_IMPORTANCE = 192
 				NDefines.NAI.AI_FRACTION_OF_FIGHTERS_RESERVED_FOR_INTERCEPTION = 0
-				NDefines.NAI.WANTED_MAX_FUEL_BUFFER_IN_DAYS_FOR_AIR_MAX_CONSUMPTION  = 15
-				NDefines.NAI.MAX_FUEL_CONSUMPTION_RATIO_FOR_AIR_TRAINING = 3.00
-				NDefines.NAI.BUILDING_TARGETS_BUILDING_PRIORITIES = {
-					'air_base',
-					'infrastructure',
-					'nuclear_reactor',
-					'nuclear_reactor_heavy_water',
-					'synthetic_refinery',
-					'dockyard',
-					'industrial_complex',
-				}
 
-				NDefines.NAI.INDUSTRIAL_ORG_TRAIT_UNLOCK_RANDOMNESS = 1.0
-				NDefines.NAI.INDUSTRIAL_ORG_RESEARCH_ASSIGN_RANDOMNESS = 1.0
-				NDefines.NAI.INDUSTRIAL_ORG_PRODUCTION_ASSIGN_RANDOMNESS = 1.0
-				NDefines.NAI.CONSTRUCTION_PRIO_SUPPLY_BUILDING = 2.50
-				-- NDefines.NAI.RAIDS_CREATE_FREQUENCY_DAYS = 20.0
-				-- NDefines.NAI.RAIDS_COMMAND_POWER_CAP_TO_CREATE = 150.0 
-				-- NDefines.NAI.COMMAND_POWER_BEFORE_SPEND_ON_TRAITS = 0.0
-				NDefines.NAI.ARMY_LEADER_ASSIGN_NR_TRAITS = 0
 				NDefines.NAI.MAX_VOLUNTEER_ARMY_FRACTION = 0.50
 				NDefines.NAI.DIPLOMACY_ACCEPT_VOLUNTEERS_BASE = 150
-				NDefines.NAI.LOCATION_BALANCE_TO_ADVANCE = 0.05
 			--------- UNORGANIZED END ---------
 
 			--------- NON-NAI PLANS ---------
@@ -698,7 +527,6 @@
 				NDefines.NNavy.BEST_CAPITALS_TO_SCREENS_RATIO = 0.20
 
 				NDefines.NAITheatre.AI_THEATRE_DISTRIBUTION_MAX_PERCENT_UNMET_DEMAND_PER_FRONT = 0.1	-- Percentage of how much fronts should request from other lower priority fronts, 0 means once a front gets hold of a unit it stays there forever until its demand is reduced, controlls shuffling of units.
-				NDefines.NAITheatre.AI_THEATRE_SUPPLY_CRISIS_LIMIT = 0.425								-- If a unit is standing in an area with this supply ratio it will try to escape
 
 				-- ARR -- NDefines.NSupply.NODE_INITIAL_SUPPLY_FLOW = 3.05
 				-- ARR -- NDefines.NSupply.NODE_STARTING_PENALTY_PER_PROVINCE = 0.50
@@ -745,7 +573,6 @@
 				NDefines.NDiplomacy.EMBARGO_NEIGHBOUR_AI_WEIGHT = -50
 				NDefines.NDiplomacy.EMBARGO_THREAT_THRESHOLD = 80
 
-				NDefines.NSupply.AI_FRONT_DIVISIONS_PER_SUPPLY_POINT = 0.85
 
 				NDefines.NTrade.DISTANCE_TRADE_FACTOR = 0
 				NDefines.NTrade.RELATION_TRADE_FACTOR = 1.2
@@ -821,40 +648,7 @@
 		NDefines.NRaids.NUCLEAR_BOMB_MAX_DAMAGE_PERCENT = 0.6		  -- Default 0.9
 
 -- VNR Naval Defines
-	NDefines.NAI.SHIPS_PRODUCTION_BASE_COST = 25000;
-	NDefines.NAI.NAVY_PREFERED_MAX_SIZE = 65;
-	NDefines.NAI.NAVAL_DOCKYARDS_SHIP_FACTOR = 2.5;
-	NDefines.NAI.PRODUCTION_MAX_PROGRESS_TO_SWITCH_NAVAL = 0;
-	NDefines.NAI.PRODUCTION_WAIT_TO_FINISH_IF_EXPENSIVE = 0.02;
-	NDefines.NAI.CARRIER_TASKFORCE_MAX_CARRIER_COUNT = 6;
-	NDefines.NAI.CAPITAL_TASKFORCE_MAX_CAPITAL_COUNT = 6;
-	NDefines.NAI.SCREEN_TASKFORCE_MAX_SHIP_COUNT = 5;
-	NDefines.NAI.SCREENS_TO_CAPITAL_RATIO = 3;
-	NDefines.NAI.MIN_CAPITALS_FOR_CARRIER_TASKFORCE = 8;
-	NDefines.NAI.REPAIR_TASKFORCE_SIZE = 5;
-	NDefines.NAI.WANTED_CARRIER_PLANES_PER_CARRIER_CAPACITY_FACTOR = 2;
-	NDefines.NAI.WANTED_CARRIER_PLANES_PER_CARRIER_CAPACITY_IN_PRODUCTION_FACTOR = 1.5;
-	NDefines.NAI.AI_WANTED_CARRIER_BASED_PLANES_FACTOR = 1.5;
-	NDefines.NAI.CONVOY_ESCORT_SCORE_FROM_CONVOYS = 25;
-	NDefines.NAI.MAIN_SHIP_RATIO_TO_SPLIT = 1.6;
-	NDefines.NAI.MIN_MAIN_SHIP_RATIO = 0.6;
-	NDefines.NAI.DESIRE_USE_XP_TO_UNLOCK_NAVAL_DOCTRINE = 1.25;
-	NDefines.NAI.DESIRE_USE_XP_TO_UPGRADE_NAVAL_EQUIPMENT = 1;
-	NDefines.NAI.DEFAULT_MODULE_VARIANT_CREATION_XP_CUTOFF_NAVY = 30;
-	NDefines.NAI.VARIANT_CREATION_XP_RESERVE_NAVY = 30;
-	NDefines.NAI.DEFAULT_MODULE_VARIANT_CREATION_XP_CUTOFF_AIR = 15;
-	NDefines.NAI.VARIANT_CREATION_XP_RESERVE_AIR = 30;
-	NDefines.NAI.MAX_SCREEN_TASKFORCES_FOR_CONVOY_DEFENSE_MIN = 0.00;
-	NDefines.NAI.MAX_SCREEN_TASKFORCES_FOR_CONVOY_DEFENSE_MAX = 0.25;
-	NDefines.NAI.MAX_SCREEN_TASKFORCES_FOR_MINE_LAYING = 0.0;
-	NDefines.NAI.MAX_SCREEN_TASKFORCES_FOR_MINE_SWEEPING_PRIO = 0.20;
-	NDefines.NAI.MAX_SCREEN_TASKFORCES_FOR_MINE_SWEEPING_PRIO_MIN_MINES = 250;
 	NDefines.NAI.MAX_SCREEN_FORCES_FOR_INVASION_SUPPORT = 0.1;
-	NDefines.NAI.NAVAL_BASE_RATIO_ALLOCATED_FOR_REPAIRS = 0.1;
-	NDefines.NAI.NAVAL_BASE_RATIO_ALLOCATED_FOR_REPAIRS_IN_WAR_TIME = 0.5;
-	NDefines.NAI.SHIP_STR_RATIO_PUT_ON_REPAIRS = 0.6;
-	NDefines.NAI.MAX_ALLOWED_NAVAL_DANGER = 500;
-	NDefines.NAI.REGION_CONVOY_DANGER_DAILY_DECAY = 10;
 
 	NDefines.NNavy.HIT_PROFILE_SPEED_FACTOR = 0.3;
 	NDefines.NNavy.COMBAT_BASE_HIT_CHANCE = 0.08;
@@ -936,13 +730,6 @@
 	NDefines.NNavy.NAVY_VISIBILITY_BONUS_ON_RETURN_FOR_REPAIR = 0.6;
 	NDefines.NNavy.SCREEN_RATIO_FOR_FULL_SCREENING_FOR_CONVOYS = 0.25;
 	NDefines.NNavy.CAPITAL_RATIO_FOR_FULL_SCREENING_FOR_CONVOYS = 0.1;
-	NDefines.NNavy.AGGRESSION_SETTINGS_VALUES = {
-			0,		-- do not engage
-			1.0,	-- low
-			1.4,	-- medium
-			2.2,	-- high
-			10000,	-- I am death incarnate!
-	};
 	NDefines.NNavy.GUN_HIT_PROFILES = { -- hit profiles for guns, if target ih profile is lower the gun will have lower accuracy
 			75.0,	-- big guns
 			105.0,	-- torpedoes
@@ -959,43 +746,6 @@
 			0.0, -- TRAIN
 			0.0, -- RESERVE_FLEET
 			0.85, -- NAVAL_INVASION_SUPPORT
-	}
-	NDefines.NAI.MIN_NAVAL_MISSION_PRIO_TO_ASSIGN = {
-			0, -- HOLD (consumes fuel HOLD_MISSION_MOVEMENT_COST fuel while moving)
-			200, -- PATROL
-			200, -- STRIKE FORCE
-			100, -- CONVOY RAIDING
-			100, -- CONVOY ESCORT
-			100, -- MINES PLANTING
-			100, -- MINES SWEEPING
-			0, -- TRAIN
-			0, -- RESERVE_FLEET
-			100, -- NAVAL INVASION SUPPORT
-	};
-
-	NDefines.NAI.HIGH_PRIO_NAVAL_MISSION_SCORES = {
-			0, -- HOLD (consumes fuel HOLD_MISSION_MOVEMENT_COST fuel while moving)
-			10000, -- PATROL
-			8000, -- STRIKE FORCE
-			4000, -- CONVOY RAIDING
-			1500, -- CONVOY ESCORT
-			-1, -- MINES PLANTING
-			300, -- MINES SWEEPING
-			0, -- TRAIN
-			0, -- RESERVE_FLEET
-			3000, -- NAVAL INVASION SUPPORT
-	};
-	NDefines.NAI.MAX_MISSION_PER_TASKFORCE = {
-			0, -- HOLD (consumes fuel HOLD_MISSION_MOVEMENT_COST fuel while moving)
-			2, -- PATROL
-			4, -- STRIKE FORCE
-			3, -- CONVOY RAIDING
-			4, -- CONVOY ESCORT
-			2, -- MINES PLANTING
-			2, -- MINES SWEEPING
-			0, -- TRAIN
-			0, -- RESERVE_FLEET
-			6, -- NAVAL INVASION SUPPORT
 	}
 
 	NDefines.NAir.COMBAT_DAMAGE_SCALE_CARRIER = 40;
@@ -1167,14 +917,6 @@
 	-- VNR -- NDefines.NNavy.ANTI_AIR_MULT_ON_INCOMING_AIR_DAMAGE	= 0.15
 	-- VNR -- NDefines.NNavy.MAX_ANTI_AIR_REDUCTION_EFFECT_ON_INCOMING_AIR_DAMAGE = 0.75	-- damage reduction for incoming air attacks is clamped to this value at maximum.
 
-	NDefines.NNavy.AGGRESSION_SETTINGS_VALUES = { -- ships will use this values while deciding to attack enemies
-			0,		-- do not engage
-			1.0,	-- low
-			1.5,	-- medium
-			2.5,	-- high
-			10000,	-- I am death incarnate!
-		}
-		
 	-- VNR -- NDefines.NNavy.WAR_SCORE_GAIN_FOR_SUNK_SHIP_MANPOWER_FACTOR = 0.002			-- war score gained for every manpower killed when sinking a ship
 	-- VNR -- NDefines.NNavy.WAR_SCORE_GAIN_FOR_SUNK_SHIP_PRODUCTION_COST_FACTOR = 0.01		-- war score gained for every IC of the sunk ship
 	-- VNR -- NDefines.NNavy.EXPERIENCE_FACTOR_CARRIER_GAIN = 0.04							-- Xp gain by carrier ships in the combat
@@ -1409,7 +1151,6 @@
 	NDefines.NSupply.RAILWAY_DISTANCE_FACTOR_FOR_REINFORCEMENT_SPEED = 0.65
 	NDefines.NSupply.TRUCK_DISTANCE_FACTOR_FOR_REINFORCEMENT_SPEED = 0.01
 	NDefines.NSupply.NAVAL_DISTANCE_FACTOR_FOR_REINFORCEMENT_SPEED = 0.06
-	NDefines.NAI.DEPLOY_MIN_EQUIPMENT_SURRENDER_FACTOR = 0.8 
 
 	NDefines.NSupply.RAILWAY_CONVERSION_COOLDOWN = 12
 	NDefines.NSupply.RAILWAY_CONVERSION_COOLDOWN_CORE = 8

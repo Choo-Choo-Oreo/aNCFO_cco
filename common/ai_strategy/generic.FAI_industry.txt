@@ -1,0 +1,870 @@
+FAI_industry_minor_equipment_production = {
+	enable = { is_major = no }
+	abort_when_not_enabled = yes
+	# Land equipment factors
+		ai_strategy = {
+			type = role_ratio
+			id = garrison
+			value = 4
+		}
+		ai_strategy = {
+			type = role_ratio
+			id = paratroopers
+			value = 0
+		}
+		ai_strategy = {
+			type = role_ratio
+			id = mountaineers
+			value = 10
+		}
+		ai_strategy = {
+			type = role_ratio
+			id = marines
+			value = 10
+		}
+		ai_strategy = {
+			type = role_ratio
+			id = cavalry
+			value = -100
+		}
+		ai_strategy = {
+			type = role_ratio
+			id = infantry
+			value = 90
+		}
+		ai_strategy = {
+			type = equipment_variant_production_factor
+			id = support_equipment
+			value = 15
+		}
+	# Arty equipment factors
+		ai_strategy = {
+			type = equipment_production_factor
+			id = artillery
+			value = 80
+		}
+		ai_strategy = {
+			type = equipment_production_factor
+			id = anti_air
+			value = 23
+		}
+		ai_strategy = {
+			type = equipment_production_factor
+			id = anti_tank
+			value = 15
+		}
+	# Tank equipment factors
+		ai_strategy = {
+			type = role_ratio
+			id = motorized
+			value = 2
+		}
+		ai_strategy = {
+			type = equipment_production_factor
+			id = motorized
+			value = 12
+		}
+		ai_strategy = {
+			type = role_ratio
+			id = mechanized
+			value = 7
+		}
+		ai_strategy = {
+			type = role_ratio
+			id = armor
+			value = 3
+		}
+		ai_strategy = {
+			type = equipment_production_factor
+			id = armor
+			value = 12
+		}
+	# Special equipment factors
+		ai_strategy = { # Added to railway gun define (Set to 0 by default, increased in default strategies)
+			type = railway_gun_divisions_ratio
+			value = 10
+		}
+}
+
+FAI_industry_major_equipment_production = {
+	enable = { is_major = yes }
+	abort_when_not_enabled = yes
+	# Land equipment factors
+		ai_strategy = {
+			type = role_ratio
+			id = garrison
+			value = 4
+		}
+		ai_strategy = {
+			type = role_ratio
+			id = paratroopers
+			value = 0
+		}
+		ai_strategy = {
+			type = role_ratio
+			id = mountaineers
+			value = 20
+		}
+		ai_strategy = {
+			type = role_ratio
+			id = marines
+			value = 20
+		}
+		ai_strategy = {
+			type = role_ratio
+			id = cavalry
+			value = -100
+		}
+		ai_strategy = {
+			type = role_ratio
+			id = infantry
+			value = 70
+		}
+		ai_strategy = {
+			type = equipment_variant_production_factor
+			id = support_equipment
+			value = 30
+		}
+	# Arty equipment factors
+		ai_strategy = {
+			type = equipment_production_factor
+			id = artillery
+			value = 60
+		}
+		ai_strategy = {
+			type = equipment_production_factor
+			id = anti_air
+			value = 35
+		}
+		ai_strategy = {
+			type = equipment_production_factor
+			id = anti_tank
+			value = 40
+		}
+		ai_strategy = { # Build these up over time, don't stall
+			type = equipment_production_min_factories
+			id = anti_air
+			value = 1
+		}
+		ai_strategy = { # Build these up over time, don't stall
+			type = equipment_production_min_factories
+			id = anti_tank
+			value = 1
+		}
+	# Tank equipment factors
+		ai_strategy = {
+			type = role_ratio
+			id = motorized
+			value = 3
+		}
+		ai_strategy = {
+			type = equipment_production_factor
+			id = motorized
+			value = 8
+		}
+		ai_strategy = {
+			type = role_ratio
+			id = mechanized
+			value = 12
+		}
+		ai_strategy = {
+			type = role_ratio
+			id = armor
+			value = 6
+		}
+		ai_strategy = {
+			type = equipment_production_factor
+			id = armor
+			value = 16
+		}
+}
+# Armored Transition & Armor Production Offsets
+FAI_industry_early_armored_production = {
+	enable = {
+		is_erly_game = no
+		ai_wants_divisions > 7 #Decreasing the amount of tanks the AI wants
+	}
+	abort = { ai_wants_divisions < 7 } #Decreasing the amount of tanks the AI wants
+
+	ai_strategy = {
+		type = role_ratio
+		id = armor
+		value = 4
+	}
+}
+
+FAI_industry_late_armored_production = {
+	enable = {
+		is_late_game = yes
+		ai_wants_divisions > 14 #Decreasing the amount of tanks the AI wants
+	}
+	abort = { ai_wants_divisions < 14 } #Decreasing the amount of tanks the AI wants
+
+	ai_strategy = {
+		type = role_ratio
+		id = armor
+		value = 8
+	}
+}
+
+FAI_industry_early_halt_light_armor_production_in_transitioning = {
+	enable = {
+		has_template_majority_unit = medium_armor
+		OR = {
+			has_equipment = { light_tank_chassis > 600 }
+			is_erly_game = no
+		}
+	}
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = equipment_variant_production_factor
+		id = light_tank_chassis
+		value = -50
+	}
+	
+	ai_strategy = {
+		type = equipment_variant_production_factor
+		id = medium_tank_chassis
+		value = 67
+	}
+	
+	ai_strategy = {
+		type = equipment_production_factor
+		id = artillery
+		value = -20
+	}
+}
+
+FAI_industry_late_halt_light_armor_production_in_transitioning = {
+	enable = {
+		has_template_majority_unit = medium_armor
+		OR = {
+			is_late_game = yes
+			has_equipment = { light_tank_chassis > 600 }
+		}
+	}
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = equipment_variant_production_factor
+		id = light_tank_chassis
+		value = -50
+	}
+	
+	ai_strategy = {
+		type = equipment_variant_production_factor
+		id = medium_tank_chassis
+		value = 67
+	}
+}
+# Anti-Tank
+FAI_industry_default_anti_armor = {
+	enable = {
+		any_enemy_country = {
+			ROOT = {
+				estimated_intel_max_armor = {
+					tag = PREV
+					value > 25
+				}
+			}
+		}
+	}
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = role_ratio
+		id = anti_tank
+		value = 8
+	}
+}
+# Resource-Based Production Adjustments
+FIA_industry_synth_oil_experiments_desire = {
+	enable = {
+		NOT = { has_tech = synth_oil_experiments }
+		OR = {
+			do_expand_oil = yes
+			do_expand_rubber = yes
+		}
+	}
+	abort_when_not_enabled = yes
+	ai_strategy = {
+	    type = research_weight_factor
+	    id = synth_oil_experiments
+	    value = 1500
+	}
+}
+
+FIA_industry_more_synth_rubber_low = {
+	enable = {
+		check_variable = { resource_consumed@rubber > 40 }
+		do_expand_rubber = yes
+	}
+	abort_when_not_enabled = yes
+	ai_strategy = {
+		type = building_target
+		id = synthetic_refinery
+		value = 10
+	}
+}
+
+FIA_industry_more_synth_rubber_medium = {
+	enable = {
+		is_erly_game = no
+		check_variable = { resource_consumed@rubber > 70 }
+		do_expand_rubber = yes
+	}
+	abort_when_not_enabled = yes
+	ai_strategy = {
+		type = building_target
+		id = synthetic_refinery
+		value = 15
+	}
+}
+
+FIA_industry_more_synth_rubber_high = {
+	enable = {
+		is_erly_game = no
+		check_variable = { resource_consumed@rubber > 115 }
+		do_expand_rubber = yes
+	}
+	abort_when_not_enabled = yes
+	ai_strategy = {
+		type = building_target
+		id = synthetic_refinery
+		value = 25
+	}
+}
+
+FIA_industry_more_synth_rubber_extreme = {
+	enable = {
+		is_erly_game = no
+		check_variable = { resource_consumed@rubber > 190 }
+		do_expand_rubber = yes
+	}
+	abort_when_not_enabled = yes
+	ai_strategy = {
+		type = building_target
+		id = synthetic_refinery
+		value = 50
+	}
+}
+
+FIA_industry_more_synth_oil_low = {
+	enable = {
+		num_of_military_factories > 30
+		do_expand_oil = yes
+		fuel_ratio < 0.4
+	}
+	abort_when_not_enabled = yes
+	ai_strategy = {
+		type = building_target
+		id = synthetic_refinery
+		value = 10
+	}
+}
+
+FIA_industry_more_synth_oil_medium = {
+	enable = {
+		is_erly_game = no
+		num_of_military_factories > 65
+		do_expand_oil = yes
+		fuel_ratio < 0.2
+	}
+	abort_when_not_enabled = yes
+	ai_strategy = {
+		type = building_target
+		id = synthetic_refinery
+		value = 15
+	}
+}
+
+FIA_industry_more_synth_oil_high = {
+	enable = {
+		is_erly_game = no
+		num_of_military_factories > 110
+		do_expand_oil = yes
+		fuel_ratio < 0.1
+	}
+	abort_when_not_enabled = yes
+	ai_strategy = {
+		type = building_target
+		id = synthetic_refinery
+		value = 25
+	}
+}
+# Stockpile & Market Management
+default_surplus_management = { # Vanilla Override
+	enable = { always = yes } # For now, applies to everyone
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = equipment_production_surplus_management
+		id = infantry_equipment
+		value = 20
+	}
+
+	ai_strategy = {
+		type = equipment_production_surplus_management
+		id = support_equipment
+		value = 10
+	}
+
+	ai_strategy = {
+		type = equipment_production_surplus_management
+		id = artillery_equipment
+		value = 10
+	}
+
+	ai_strategy = {  # Potentially move into a "specialization" strategy
+		type = equipment_production_surplus_management
+		id = anti_air_equipment
+		value = 3
+	}
+
+	ai_strategy = {  # Potentially move into a "specialization" strategy
+		type = equipment_production_surplus_management
+		id = anti_tank_equipment
+		value = 2
+	}
+
+	ai_strategy = {
+		type = equipment_production_surplus_management
+		id = convoy
+		value = 5
+	}
+}
+
+default_stockpile_management = { # Vanilla Override
+	enable = {
+		num_divisions > 150
+	}
+	abort = {
+		num_divisions < 130
+	}
+
+	ai_strategy = {
+		type = equipment_stockpile_surplus_ratio
+		value = 35 # add this to default PRODUCTION_EQUIPMENT_SURPLUS_FACTOR
+	}
+}
+
+default_market_stockpile_management = { # Vanilla Override
+	enable = {
+		always = yes
+		# NOT = { original_tag = GER } # commented until actually needs override
+	}
+	abort_when_not_enabled = yes
+	# Hold your trains there, partner
+	ai_strategy = {
+		type = equipment_market_for_sale_threshold
+		id = train
+		value = 20  # only start considering selling trains if surplus more than 20
+	}
+
+	ai_strategy = {
+		type = equipment_market_min_for_sale
+		id = train
+		value = 5  # only put up for sale in chunks of 5
+	}
+
+	ai_strategy = {
+		type = equipment_market_for_sale_factor
+		id = train
+		value = -50  # put fewer trains up for sale
+	}
+	# Better not put all your boats up for sail
+	ai_strategy = {
+		type = equipment_market_for_sale_threshold
+		id = convoy
+		value = 100  # only start considering selling convoys if surplus more than 100
+	}
+
+	ai_strategy = {
+		type = equipment_market_min_for_sale
+		id = convoy
+		value = 30  # only put up for sale in chunks of 5
+	}
+	# Don't let all your planes just fly out the window. Only sell planes if we have more than one airwing in surplus.
+	ai_strategy = {
+		type = equipment_market_for_sale_threshold
+		id = fighter
+		value = 100
+	}
+
+	ai_strategy = {
+		type = equipment_market_for_sale_threshold
+		id = cas
+		value = 100
+	}
+
+	ai_strategy = {
+		type = equipment_market_for_sale_threshold
+		id = cv_fighter
+		value = 100
+	}
+
+	ai_strategy = {
+		type = equipment_market_for_sale_threshold
+		id = cv_cas
+		value = 100
+	}
+
+	ai_strategy = {
+		type = equipment_market_for_sale_threshold
+		id = tactical_bomber
+		value = 100
+	}
+
+	ai_strategy = {
+		type = equipment_market_for_sale_threshold
+		id = strategic_bomber
+		value = 100
+	}
+}
+
+default_market_stockpile_management_if_at_war = { # Vanilla Override
+	enable = {
+		has_war = yes
+		# something something preparing for war?
+		# NOT = { original_tag = GER } # commented until actually needs override
+	}
+	abort_when_not_enabled = yes
+	# Don't sell stuff that we need for the war
+	ai_strategy = {
+		type = equipment_market_for_sale_threshold
+		id = infantry
+		value = 20000
+	}
+
+	ai_strategy = {
+		type = equipment_market_for_sale_threshold
+		id = support
+		value = 6000
+	}
+
+	ai_strategy = {
+		type = equipment_market_for_sale_threshold
+		id = artillery
+		value = 1000
+	}
+
+	ai_strategy = {
+		type = equipment_market_for_sale_threshold
+		id = fighter
+		value = 200
+	}
+
+	ai_strategy = {
+		type = equipment_market_for_sale_threshold
+		id = motorized
+		value = 1000
+	}
+
+	ai_strategy = {
+		type = equipment_market_for_sale_threshold
+		id = train
+		value = 50
+	}
+
+	ai_strategy = {
+		type = equipment_market_for_sale_threshold
+		id = convoy
+		value = 50
+	}
+}
+
+default_market_convoy_purchases = { # Vanilla Override
+	enable = { any_owned_state = { is_coastal = yes } } # not land-locked
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = equipment_market_buying_threshold
+		id = convoy
+		value = 30 # Consider buying if we have too few (less than 30) convoys
+	}
+}
+# Standard Facility Logic
+default_build_a_nl_facility = { # Vanilla Override
+	enable = {
+		is_major = yes
+		has_tech = atomic_research
+		num_of_civilian_factories > 25
+		num_of_military_factories > 25 # Even if we have the base tech, let's wait until we have some kind of capacity
+		nuclear_facility < 1 
+	}
+	abort_when_not_enabled = yes
+	ai_strategy = {
+		type = build_building
+		id = nuclear_facility
+		value = 100
+	}
+}
+
+default_build_a_nav_facility = { # Vanilla Override
+	enable = {
+		num_of_naval_factories > 25 # Only Naval Powers should bother with these unless specifically told to do otherwise
+		naval_facility < 1
+	}
+	abort_when_not_enabled = yes
+	ai_strategy = {
+		type = build_building
+		id = naval_facility
+		value = 100
+	}
+}
+
+default_build_a_lw_facility = { # Vanilla Override
+	enable = {
+		num_of_civilian_factories > 40
+		num_of_military_factories > 40
+		OR = { # Don't start until we can build decent tanks of some kind
+			has_tech = improved_light_tank_chassis
+			has_tech = basic_medium_tank_chassis
+			has_tech = improved_heavy_tank_chassis
+		}
+		land_facility < 1
+	}
+	abort_when_not_enabled = yes
+	ai_strategy = {
+		type = build_building
+		id = land_facility
+		value = 100
+	}
+}
+
+default_build_an_air_facility = { # Vanilla Override
+	enable = {
+		is_major = yes # Minors don't bother until strong enough to be considered major
+		num_of_military_factories > 40 # We should first build up our military industry 
+		
+		OR = { # Don't start until we can build decent aircraft
+			has_tech = basic_small_airframe
+			has_tech = basic_medium_airframe
+			has_tech = basic_large_airframe
+		}
+		air_facility < 1
+	}
+	abort_when_not_enabled = yes
+	ai_strategy = {
+		type = build_building
+		id = air_facility
+		value = 100
+	}
+}
+# Dominant Power (Major) Facility Logic
+FAI_industry_dominant_build_a_nl_facility = {
+	enable = {
+		is_major = yes
+		is_erly_game = no
+		has_tech = atomic_research
+		num_of_civilian_factories > 50
+		num_of_military_factories > 50 # Even if we have the base tech, let's wait until we have some kind of capacity
+		nuclear_facility < 2 
+	}
+	abort_when_not_enabled = yes
+	ai_strategy = {
+		type = build_building
+		id = nuclear_facility
+		value = 100
+	}
+}
+
+FAI_industry_dominant_build_a_nav_facility = {
+	enable = {
+		is_major = yes
+		is_erly_game = no
+		num_of_naval_factories > 50 # Only Naval Powers should bother with these unless specifically told to do otherwise
+		naval_facility < 2
+	}
+	abort_when_not_enabled = yes
+	ai_strategy = {
+		type = build_building
+		id = naval_facility
+		value = 100
+	}
+}
+
+FAI_industry_dominant_build_a_lw_facility = {
+	enable = {
+		is_major = yes
+		is_erly_game = no
+		num_of_civilian_factories > 80
+		num_of_military_factories > 80
+		OR = { # Don't start until we can build decent tanks of some kind
+			has_tech = improved_light_tank_chassis
+			has_tech = basic_medium_tank_chassis
+			has_tech = improved_heavy_tank_chassis
+		}
+		land_facility < 2
+	}
+	abort_when_not_enabled = yes
+	ai_strategy = {
+		type = build_building
+		id = land_facility
+		value = 100
+	}
+}
+
+FAI_industry_dominant_build_an_air_facility = {
+	enable = {
+		is_major = yes # Minors don't bother until strong enough to be considered major
+		is_erly_game = no
+		num_of_military_factories > 80 # We should first build up our military industry 
+		OR = { # Don't start until we can build decent aircraft
+			has_tech = basic_small_airframe
+			has_tech = basic_medium_airframe
+			has_tech = basic_large_airframe
+		}
+		air_facility < 2
+	}
+	abort_when_not_enabled = yes
+	ai_strategy = {
+		type = build_building
+		id = air_facility
+		value = 100
+	}
+}
+# Special Projects
+default_build_a_gun_emplacement = { # Vanilla Override
+    allowed = { always = no }
+    enable = { always = no }
+    abort_when_not_enabled = yes
+
+    # Voided, Useless for the AI to build
+}
+
+default_produce_floating_harbors = { # Vanilla Override
+	enable = {
+		has_war = yes
+		num_of_naval_factories > 25
+		num_of_military_factories > 40
+	}
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = unit_ratio
+		id = floating_harbor
+		value = 20
+	}
+}
+# Nuclear Strategy
+FAI_industry_nuclear_we_must_know = {
+	enable = {
+		is_major = yes
+		num_of_civilian_factories > 70
+		NOT = { 
+			OR = {
+				surrender_progress > 0.2
+				nuclear_facility > 1
+			}
+		}
+	}
+
+	abort_when_not_enabled = yes
+
+	
+	ai_strategy = {
+		type = build_building
+		id = nuclear_facility
+		value = 999
+	}
+}
+
+FAI_industry_nuclear_powers_arise = {
+	enable = {
+		num_of_available_civilian_factories > 44
+		has_tech = atomic_research
+		NOT = {
+			has_tech = commercial_nuclear_reactor_tech
+			OR = {
+				surrender_progress > 0.2
+				nuclear_reactor_heavy_water > 1
+				nuclear_reactor > 1
+			}
+		}
+	}
+
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = build_building
+		id = nuclear_reactor
+		value = 999
+	}
+	ai_strategy = {
+		type = build_building
+		id = nuclear_reactor_heavy_water
+		value = 999
+	}
+}
+
+FAI_industry_nuclear_commercial_reactors = {
+	enable = {
+		num_of_available_civilian_factories > 44
+		has_tech = atomic_research
+		has_tech = commercial_nuclear_reactor_tech
+		NOT = { 
+			OR = {
+				surrender_progress > 0.2
+				commercial_nuclear_reactor > 1
+			}
+		}
+	}
+
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = building_target
+		id = commercial_nuclear_reactor
+		value = 999
+	}
+}
+# Scientist Recruitment
+default_recruit_land_scientist = { # Vanilla Override
+	enable = {
+		land_facility > 0
+	}
+	abort_when_not_enabled = yes
+	ai_strategy = {
+		type = recruit_scientist
+		id = specialization_land
+		value = 100
+	}
+}
+
+default_recruit_nuclear_scientist = { # Vanilla Override
+	enable = {
+		nuclear_facility > 0
+	}
+	abort_when_not_enabled = yes
+	ai_strategy = {
+		type = recruit_scientist
+		id = specialization_nuclear
+		value = 100
+	}
+}
+
+default_recruit_naval_scientist = { # Vanilla Override
+	enable = {
+		naval_facility > 0
+	}
+	abort_when_not_enabled = yes
+	ai_strategy = {
+		type = recruit_scientist
+		id = specialization_naval
+		value = 100
+	}
+}
+
+default_recruit_air_scientist = { # Vanilla Override
+	enable = {
+		air_facility > 0
+	}
+	abort_when_not_enabled = yes
+	ai_strategy = {
+		type = recruit_scientist
+		id = specialization_air
+		value = 100
+	}
+}

@@ -1,0 +1,619 @@
+default_unit_production = { # Vanilla Override
+	enable = {
+		always = yes
+	}
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = role_ratio
+		id = paratroopers
+		value = 0
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = mountaineers
+		value = 4
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = marines
+		value = 0
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = armor
+		value = 2
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = infantry
+		value = 80
+	}
+
+	ai_strategy = {
+		type = equipment_production_factor
+		id = infantry
+		value = 40
+	}
+
+	ai_strategy = {
+		type = equipment_production_factor
+		id = artillery
+		value = 25
+	}
+}
+
+bba_support_boosts = { # Vanilla Override
+	enable = {
+		is_historical_focus_on = yes
+		is_erly_game = yes
+	}
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = equipment_variant_production_factor
+		id = support_equipment
+		value = 15
+	}
+}
+
+FAI_army_get_that_xp = {
+	enable = {
+		always = yes
+	}
+
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = send_volunteers_desire
+		value = 200
+	}
+}
+# Standard Infantry & Garrison
+default_garrison_production = { # Vanilla Override
+	enable = {
+		ai_wants_divisions > 12 #Massively decreasing the amount of garrison and suppression the AI wants
+		is_major = yes
+	}
+	abort = {
+		ai_wants_divisions < 13 #Massively decreasing the amount of garrison and suppression the AI wants
+		is_major = no
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = garrison
+		value = 10
+	}
+}
+
+FAI_army_doesnt_want_garrisons = {
+	enable = {
+		any_neighbor_country = {
+			NOT = { has_war_with = ROOT }
+		}
+	}
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = role_ratio
+		id = garrison
+		value = -100
+	}
+	ai_strategy = {
+		type = garrison_reinforcement_priority
+		value = -100
+	}
+}
+# Special Forces
+default_paratroopers_production = { # Vanilla Override
+    allowed = { always = no }
+    enable = { always = no }
+    abort_when_not_enabled = yes
+
+    # Voided, AI clueless on using paratroopers.
+}
+
+default_major_SF_para = { # Vanilla Override
+    allowed = { always = no }
+    enable = { always = no }
+    abort_when_not_enabled = yes
+
+    # Voided, AI clueless on using paratroopers.
+}
+
+default_marines_production = { # Vanilla Override
+	enable = {
+		NOT = { original_tag = GER }
+		ai_wants_divisions > 49
+	}
+	abort = {
+		ai_wants_divisions < 50
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = marines
+		value = 0
+	}
+
+	#ai_strategy = {
+	#	type = role_ratio
+	#	id = infantry
+	#	value = 0
+	#}
+}
+
+default_major_SF_marines = { # Vanilla Override
+	enable = {
+		is_major = yes
+		has_tech = special_forces_marines
+	}
+	abort_when_not_enabled = yes
+	ai_strategy = {
+		type = role_ratio
+		id = marines
+		value = 2
+	}
+}
+
+default_mountaineers_production = { # Vanilla Override
+	enable = {
+		NOT = { original_tag = GER }
+		ai_wants_divisions > 11 #Decreasing the amount of mountaineers the AI wants
+	}
+	abort = {
+		ai_wants_divisions < 12 #Decreasing the amount of mountaineers the AI wants
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = mountaineers
+		value = 3
+	}
+}
+# Mobile & Armored Units
+default_mobile_production = { # Vanilla Override
+	enable = {
+		NOT = { original_tag = GER }
+		ai_wants_divisions > 11
+		has_tech = motorised_infantry
+	}
+	abort = {
+		ai_wants_divisions < 12
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = mobile
+		value = 2
+	}
+}
+
+default_armored_production = { # Vanilla Override
+	enable = {
+		NOT = {
+			OR = {
+				original_tag = GER
+				original_tag = CZE
+				original_tag = SOV
+			}
+		}
+		ai_wants_divisions > 49
+	}
+	abort = {
+		ai_wants_divisions < 50
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = armor
+		value = 2
+	}
+}
+
+highered_armored_production = { # Vanilla Override
+	enable = {
+		NOT = { original_tag = GER }
+		num_of_military_factories > 69
+	}
+	abort = {
+		num_of_military_factories < 70
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = armor
+		value = 5
+	}
+}
+
+default_unit_production_super_heavies = { # Vanilla Override
+	enable = {
+		is_major = yes
+		num_of_military_factories > 150 # nly if we have loads of factories
+		is_late_game = yes
+		NOT = { has_tech = main_battle_tank_chassis } # Abandon Super heavy projects if we start doing modern tanks instead
+		has_elections = no # Let the authoritarian regimes spend money on this 
+	}
+	abort_when_not_enabled = yes
+	ai_strategy = {
+		type = role_ratio
+		id = super_heavy_breakthrough_role
+		value = 1
+	}
+}
+
+default_unit_production_land_cruiser = { # Vanilla Override
+	enable = {
+		is_special_project_completed = sp:sp_land_land_cruiser
+	}
+	abort_when_not_enabled = yes
+	ai_strategy = {
+		type = role_ratio
+		id = mega_heavy_breakthrough_role
+		value = 2
+	}
+}
+# Armor Role Ratios
+FAI_army_small_armor_army_offset = {
+	enable = { arms_factory > 15 }
+	abort_when_not_enabled = yes
+	
+    ai_strategy = {
+        type = role_ratio
+        id = armor_role
+        value = 50
+    }
+}
+
+FAI_army_medium_armor_army_offset = {
+	enable = { arms_factory > 30 }
+	abort_when_not_enabled = yes
+	
+    ai_strategy = {
+        type = role_ratio
+        id = armor_role
+        value = 50
+    }
+}
+
+FAI_army_large_armor_army_offset = {
+	enable = { arms_factory > 45 }
+	abort_when_not_enabled = yes
+	
+    ai_strategy = {
+        type = role_ratio
+        id = armor_role
+        value = 50
+    }
+}
+
+FAI_army_create_armor_when_used_offset = { # Create Armor
+	enable = {
+		OR = {
+			estimated_intel_max_armor = { tag = ROOT value > 10 }
+			#division_has_battalion_in_template = light_armor
+			#division_has_battalion_in_template = medium_armor
+			#division_has_battalion_in_template = heavy_armor
+			#division_has_battalion_in_template = modern_armor
+		}
+	}
+	abort_when_not_enabled = yes
+	ai_strategy = {
+		type = equipment_production_factor
+		id = armor
+		value = 10
+	}
+}
+# Surplus Equipment Logic
+FAI_army_use_surplus_equipment_for_infantry = {
+	enable = {
+		#has_reached_maximum_divisions = no
+		check_variable = { var = reserved value = deployed_total compare = greater_than }
+		check_variable = { num_equipment@anti_air_equipment > num_equipment_in_armies@anti_air_equipment }
+		check_variable = { num_equipment@anti_tank_equipment > num_equipment_in_armies@anti_tank_equipment }
+		check_variable = { num_equipment@infantry_equipment > num_equipment_in_armies@infantry_equipment }
+		check_variable = { num_equipment@motorized_equipment > num_equipment_in_armies@motorized_equipment }
+		check_variable = { num_equipment@support_equipment > num_equipment_in_armies@support_equipment }
+	}
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = role_ratio
+		id = infantry
+		value = 200
+	}
+
+	ai_strategy = {
+		type = build_army
+		id = infantry
+		value = 200
+	}
+}
+
+FAI_army_use_surplus_equipment_for_tanks = {
+	enable = {
+		#has_reached_maximum_divisions = no
+		check_variable = { var = reserved value = deployed_total compare = greater_than }
+		check_variable = { num_equipment@anti_air_equipment > num_equipment_in_armies@anti_air_equipment }
+		check_variable = { num_equipment@infantry_equipment > num_equipment_in_armies@infantry_equipment }
+		check_variable = { num_equipment@mechanized_equipment > num_equipment_in_armies@mechanized_equipment }
+		check_variable = { num_equipment@motorized_equipment > num_equipment_in_armies@motorized_equipment }
+		check_variable = { num_equipment@armored_support_vehicle > num_equipment_in_armies@armored_support_vehicle }
+		check_variable = { num_equipment@support_equipment > num_equipment_in_armies@support_equipment }
+		check_variable = { num_equipment@medium_tank_chassis > num_equipment_in_armies@medium_tank_chassis }
+	}
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = role_ratio
+		id = armor_role
+		value = 650
+	}
+
+	ai_strategy = {
+		type = build_army
+		id = armor_role
+		value = 650
+	}
+}
+
+FAI_army_use_surplus_equipment_for_marines = {
+	enable = {
+		#has_reached_maximum_divisions = no
+		check_variable = { var = reserved value = deployed_total compare = greater_than }
+		check_variable = { num_equipment@anti_air_equipment > num_equipment_in_armies@anti_air_equipment }
+		check_variable = { num_equipment@anti_tank_equipment > num_equipment_in_armies@anti_tank_equipment }
+		check_variable = { num_equipment@infantry_equipment > num_equipment_in_armies@infantry_equipment }
+		check_variable = { num_equipment@motorized_equipment > num_equipment_in_armies@motorized_equipment }
+		check_variable = { num_equipment@support_equipment > num_equipment_in_armies@support_equipment }
+		check_variable = { num_armies_with_type@marine < num_armies_with_type@infantry }
+	}
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = role_ratio
+		id = infantry
+		value = -100
+	}
+
+	ai_strategy = {
+		type = build_army
+		id = infantry
+		value = -100
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = marines
+		value = 350
+	}
+
+	ai_strategy = {
+		type = build_army
+		id = marines
+		value = 350
+	}
+}
+
+FAI_army_use_surplus_equipment_for_mountaineers = {
+	enable = {
+		#has_reached_maximum_divisions = no
+		check_variable = { var = reserved value = deployed_total compare = greater_than }
+		check_variable = { num_equipment@anti_air_equipment > num_equipment_in_armies@anti_air_equipment }
+		check_variable = { num_equipment@anti_tank_equipment > num_equipment_in_armies@anti_tank_equipment }
+		check_variable = { num_equipment@infantry_equipment > num_equipment_in_armies@infantry_equipment }
+		check_variable = { num_equipment@motorized_equipment > num_equipment_in_armies@motorized_equipment }
+		check_variable = { num_equipment@support_equipment > num_equipment_in_armies@support_equipment }
+		check_variable = { num_armies_with_type@mountaineers < num_armies_with_type@infantry }
+	}
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = role_ratio
+		id = infantry
+		value = -100
+	}
+
+	ai_strategy = {
+		type = build_army
+		id = infantry
+		value = -100
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = mountaineers
+		value = 350
+	}
+
+	ai_strategy = {
+		type = build_army
+		id = mountaineers
+		value = 350
+	}
+}
+# Logistics & Special Management
+FAI_army_motorized_supplies = {
+	enable = {
+		is_major = yes
+		has_equipment = { motorized_equipment < 1000 }
+	}
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = equipment_production_factor
+		id = motorized
+		value = 100
+	}
+}
+
+FAI_army_motorized_surplus = {
+	enable = {
+		is_major = yes
+		has_equipment = { motorized_equipment > 2000 }
+	}
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = equipment_production_factor
+		id = motorized
+		value = -50
+	}
+}
+
+FAI_army_train_supplies = {
+	enable = {
+		is_major = yes
+		has_equipment = { train_equipment < 100 }
+	}
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = equipment_production_factor
+		id = train
+		value = 100
+	}
+}
+
+default_railway_gun_management = { # Vanilla Override
+	enable = {
+		num_divisions > 180
+		is_major = yes
+		has_dlc = "No Step Back"
+	}
+	abort = {
+		num_divisions < 120
+	}
+
+	ai_strategy = {
+		type = railway_gun_divisions_ratio
+		value = 10
+	}
+}
+
+FAI_army_ask_foreign_manpower_as_major = {
+	enable = {
+		is_major = yes
+		garrison_manpower_need > 200000
+	}
+	abort = {
+		garrison_manpower_need < 100000
+	}
+
+	ai_strategy = {
+		type = asking_foreign_garrison
+		value = 100
+	}
+}
+# Template Prioritization
+DEFAULT_early_template_design = { # Vanilla Override
+	enable = {
+		is_late_game = no
+	}
+	abort = {
+		is_late_game = yes
+	}
+
+	ai_strategy = {
+		type = template_prio
+		id = motorized
+		value = 10
+	}
+
+	ai_strategy = {
+		type = template_prio
+		id = cavalry
+		value = -100
+	}
+
+	ai_strategy = {
+		type = template_prio
+		id = light_armor
+		value = 50
+	}
+
+	ai_strategy = {
+		type = template_prio
+		id = medium_armor
+		value = -10
+	}
+
+	ai_strategy = {
+		type = template_prio
+		id = heavy_armor
+		value = -50
+	}
+
+	ai_strategy = {
+		type = template_prio
+		id = paratroopers
+		value = -50
+	}
+
+	ai_strategy = {
+		type = template_prio
+		id = infantry
+		value = 60
+	}
+}
+
+DEFAULT_midlate_template_design = { # Vanilla Override
+	enable = {
+		is_late_game = yes
+	}
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = template_prio
+		id = mechanized
+		value = 10
+	}
+
+	ai_strategy = {
+		type = template_prio
+		id = cavalry
+		value = -100
+	}
+
+	ai_strategy = {
+		type = template_prio
+		id = light_armor
+		value = 10
+	}
+
+	ai_strategy = {
+		type = template_prio
+		id = medium_armor
+		value = 20
+	}
+
+	ai_strategy = {
+		type = template_prio
+		id = modern_armor
+		value = 50
+	}
+
+	ai_strategy = {
+		type = template_prio
+		id = heavy_armor
+		value = 10
+	}
+
+	ai_strategy = {
+		type = template_prio
+		id = paratroopers
+		value = -50
+	}
+
+	ai_strategy = {
+		type = template_prio
+		id = infantry
+		value = 10
+	}
+}

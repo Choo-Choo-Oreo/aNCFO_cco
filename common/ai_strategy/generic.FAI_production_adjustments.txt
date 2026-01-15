@@ -1,0 +1,576 @@
+default_pp_spend_amount = { # Vanilla Override
+	enable = { always = yes }
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = pp_spend_amount
+		id = idea
+		value = 50
+	}
+
+	ai_strategy = {
+		type = pp_spend_amount
+		id = decision
+		value = 70
+	}
+
+	ai_strategy = {
+	    type = pp_spend_priority
+	    id = relation
+	    value = -70
+	}
+}
+
+do_not_waste_pp_if_saving_for_manpower_laws = { # Vanilla Override
+	enable = {
+		manpower_per_military_factory < 500
+		has_war = yes
+	}
+	abort = {
+		OR = {
+			manpower_per_military_factory > 500
+			has_war = no
+		}
+	}
+
+	ai_strategy = {
+		type = pp_spend_priority
+		id = relation
+		value = -9999
+	}
+
+	ai_strategy = {
+		type = pp_spend_priority
+		id = guarantee
+		value = -9999
+	}
+}
+# Do Not Build
+FAI_adjustment_do_not_build = {
+	enable = {
+		always = yes
+	}
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = equipment_production_min_factories
+		id = scout_plane
+		value = -100
+	}
+
+	ai_strategy = { 
+		type = equipment_production_min_factories 
+		id = naval_bomber
+		value = -100 
+	}
+
+	ai_strategy = { 
+		type = equipment_production_min_factories 
+		id = heavy_fighter
+		value = -100 
+	}
+
+	ai_strategy = {
+		type = equipment_production_min_factories
+		id = tactical_bomber
+		value = -100
+	}
+
+	ai_strategy = { 
+		type = equipment_production_min_factories 
+		id = maritime_patrol_plane
+		value = -100 
+	}
+
+	ai_strategy = { 
+		type = equipment_variant_production_factor 
+		id = mothership_equipment
+		value = -100 
+	}
+}
+
+FAI_adjustment_no_tanky_for_you = {
+	enable = { 
+		NOT = {
+			num_divisions < 120
+			num_of_military_factories < 50
+			OR = {
+				has_tech = basic_medium_tank
+				has_tech = basic_medium_tank_chassis
+			}
+		}
+	}
+
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = role_ratio
+		id = armor_role
+		value = -300
+	}
+	
+	ai_strategy = {
+		type = equipment_production_factor
+		id = armor
+		value = -500
+	}
+
+	ai_strategy = {
+		type = equipment_production_min_factories
+		id = armor
+		value = -100
+	}
+}
+# Reactive Resource & Stockpile Adjustments
+FAI_adjustment_rubber_is_ok = {
+	enable = {
+		any_allied_country = {
+			rubber > 100
+		}
+	}
+	
+	abort_when_not_enabled = yes
+
+    ai_strategy = {
+		type = equipment_production_factor
+		id = fighter
+		value = 80
+	}
+
+	ai_strategy = {
+		type = equipment_production_factor
+		id = infantry
+		value = -15
+	}
+	
+	ai_strategy = {
+		type = equipment_production_factor
+		id = armor
+		value = -15
+	}
+}
+
+FAI_adjustment_no_oil_big_l = {
+	enable = {
+		oil < 100
+		num_divisions > 300
+		num_of_military_factories > 150
+		fuel_ratio < 0.1
+	}
+	
+	abort_when_not_enabled = yes
+
+    ai_strategy = {
+		type = role_ratio
+		id = armor
+		value = -300
+	}
+	
+	ai_strategy = {
+		type = role_ratio
+		id = infantry
+		value = 300
+	}
+	
+	ai_strategy = {
+		type = equipment_production_factor
+		id = armor
+		value = -1000
+	}
+	ai_strategy = {
+		type = equipment_production_min_factories_archetype
+		id = medium_tank_chassis
+		value = -300
+	}
+	ai_strategy = {
+		type = equipment_production_min_factories_archetype
+		id = modern_tank_chassis
+		value = -300
+	}
+	
+	ai_strategy = {
+		type = equipment_production_factor
+		id = cas
+		value = -1000
+	}
+	
+	ai_strategy = {
+		type = equipment_production_min_factories
+		id = fighter
+		value = -300
+	}
+	
+	ai_strategy = {
+		type = equipment_production_min_factories
+		id = cas
+		value = -300
+	}
+}
+
+FAI_adjustment_no_more_inf_needed = {
+	enable = {
+		num_divisions > 300
+		OR = {
+			has_tech = basic_medium_tank
+			has_tech = basic_medium_tank_chassis
+		}
+		NOT = {
+			surrender_progress > 0.35
+			has_army_size = {
+				size > 50
+				type = armor
+			}
+		}
+		
+	}
+	abort_when_not_enabled = yes
+
+    ai_strategy = {
+		type = role_ratio
+		id = infantry
+		value = -500
+	}
+}
+
+FAI_adjustment_no_more_tank_needed = {
+	enable = {
+		has_army_size = {
+			size > 50
+			type = armor
+		}
+		
+	}
+	abort_when_not_enabled = yes
+
+    ai_strategy = {
+		type = role_ratio
+		id = armor
+		value = -200
+	}
+}
+
+FAI_adjustment_dumb_production_fix = {
+	enable = {
+		num_of_military_factories > 20
+	}
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = equipment_production_min_factories_archetype
+		id = motorized_equipment
+		value = 1
+	}
+
+	ai_strategy = {
+		type = equipment_production_min_factories_archetype
+		id = anti_air_equipment
+		value = 1
+	}
+
+	ai_strategy = {
+		type = equipment_production_min_factories_archetype
+		id = artillery_equipment
+		value = 1 
+	}
+
+	ai_strategy = {
+		type = equipment_production_min_factories
+		id = infantry
+		value = 1
+	}
+
+	ai_strategy = {
+		type = equipment_production_min_factories
+		id = train
+		value = 1
+	}
+	
+	ai_strategy = {
+		type = equipment_production_min_factories
+		id = convoy
+		value = 3
+	}
+}
+# Reactive Threat & Survival Management
+FAI_adjustment_we_are_at_deaths_door = {
+	enable = {
+		surrender_progress > 0.35
+	}
+	
+	abort_when_not_enabled = yes
+
+    ai_strategy = {
+		type = role_ratio
+		id = armor
+		value = -300
+	}
+	
+	ai_strategy = {
+		type = equipment_production_factor
+		id = armor
+		value = -1000
+	}
+	ai_strategy = {
+		type = equipment_production_min_factories_archetype
+		id = medium_tank_chassis
+		value = -300
+	}
+	ai_strategy = {
+		type = equipment_production_min_factories_archetype
+		id = modern_tank_chassis
+		value = -300
+	}
+	
+	ai_strategy = {
+		type = equipment_production_factor
+		id = fighter
+		value = -1000
+	}
+	
+	ai_strategy = {
+		type = equipment_production_factor
+		id = cas
+		value = -1000
+	}
+	
+	ai_strategy = {
+		type = equipment_production_min_factories
+		id = fighter
+		value = -300
+	}
+	
+	ai_strategy = {
+		type = equipment_production_min_factories
+		id = cas
+		value = -300
+	}
+}
+
+FAI_adjustment_we_like_planes_alot = {
+	enable = {
+		num_of_military_factories > 50
+		num_divisions > 120
+		NOT = { surrender_progress > 0.35 }
+		is_major = yes
+	}
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = equipment_production_min_factories
+		id = fighter
+		value = 10
+	}
+	
+	ai_strategy = {
+		type = equipment_production_min_factories
+		id = cas
+		value = 3
+	}
+}
+
+ill_show_you_mine = { # Vanilla Override
+	enable = {
+		has_dlc = "Man the Guns"
+		mine_threat > 0.2
+	}
+	abort = {
+		mine_threat < 0.2
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = naval_mine_sweeper
+		value = 20
+	}
+}
+
+ill_show_you_mine_2 = { # Vanilla Override
+	enable = {
+		has_dlc = "Man the Guns"
+		mine_threat > 0.5
+	}
+	abort = {
+		mine_threat < 0.5
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = naval_mine_sweeper
+		value = 30
+	}
+}
+# Armor Production Pushes
+FAI_adjustment_large_armor_production_offset = { # Army Size
+	enable = {
+		num_divisions > 56
+		has_army_size = { size > 56 type = infantry }
+	}
+	abort_when_not_enabled = yes
+
+	ai_strategy = { type = role_ratio id = infantry 	value = -5 }
+	ai_strategy = { type = role_ratio id = armor_role 	value = 35 }
+
+	ai_strategy = { type = equipment_production_factor id = infantry 	value = -2 }
+	ai_strategy = { type = equipment_production_factor id = armor 		value = 25 }
+	#ai_strategy = { type = equipment_production_factor id = motorized 	value = 35 }
+	ai_strategy = { type = equipment_production_factor id = anti_tank 	value = 10 }
+}
+
+FAI_adjustment_massive_armor_production_offset = { # Army Size
+	enable = {
+		num_divisions > 112
+		has_army_size = { size > 112 type = infantry }
+	}
+	abort_when_not_enabled = yes
+
+	ai_strategy = { type = role_ratio id = infantry value = -10 }
+	ai_strategy = { type = role_ratio id = armor_role value = 40 }
+
+	ai_strategy = { type = equipment_production_factor id = infantry 	value = -3 }
+	ai_strategy = { type = equipment_production_factor id = armor 		value = 30 }
+	#ai_strategy = { type = equipment_production_factor id = motorized 	value = 45 }
+	ai_strategy = { type = equipment_production_factor id = mechanized 	value = 20 }
+	ai_strategy = { type = equipment_production_factor id = anti_tank 	value = 15 }
+}
+
+FAI_adjustment_gigantic_armor_production_offset = { # Army Size
+	enable = {
+		num_divisions > 168
+		has_army_size = { size > 168 type = infantry }
+	}
+	abort_when_not_enabled = yes
+
+	ai_strategy = { type = role_ratio id = infantry value = -15 }
+	ai_strategy = { type = role_ratio id = armor_role value = 45 }
+
+	ai_strategy = { type = equipment_production_factor id = infantry 	value = -5 }
+	ai_strategy = { type = equipment_production_factor id = armor 		value = 35 }
+	#ai_strategy = { type = equipment_production_factor id = motorized 	value = 10 }
+	ai_strategy = { type = equipment_production_factor id = mechanized 	value = 30 }
+	ai_strategy = { type = equipment_production_factor id = anti_tank 	value = 20 }
+}
+# High-Tech Industrial Pushes
+FAI_adjustment_tanky_for_you = {
+	enable = {
+		num_of_military_factories > 50
+		num_divisions > 120
+		OR = {
+			has_tech = basic_medium_tank
+			has_tech = basic_medium_tank_chassis
+		}
+		NOT = { 
+			OR = {
+				has_tech = main_battle_tank
+				has_tech = main_battle_tank_chassis
+				surrender_progress > 0.35
+			}
+		}
+	}
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = role_ratio
+		id = armor_role
+		value = 300
+	}
+
+	ai_strategy = {
+		type = equipment_production_min_factories_archetype
+		id = medium_tank_chassis
+		value = 30
+	}
+}
+
+FAI_adjustment_modern_tanky_for_you = {
+	enable = {
+		num_of_military_factories > 50
+		num_divisions > 120
+		OR = {
+			has_tech = main_battle_tank
+			has_tech = main_battle_tank_chassis
+		}
+		NOT = { 
+			surrender_progress > 0.35
+		}
+	}
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = role_ratio
+		id = armor
+		value = 300
+	}
+
+	ai_strategy = {
+		type = equipment_production_min_factories_archetype
+		id = modern_tank_chassis
+		value = 30
+	}
+}
+
+if_we_can_build_v1_rockets_we_want_rockets = { # Vanilla Override
+	enable = {
+		is_special_project_completed = sp:sp_rockets_flying_bomb
+	}
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = equipment_production_min_factories_archetype
+		id = guided_missile_equipment
+		value = 1
+	}
+}
+
+if_we_can_build_v2_rockets_we_want_v2_rockets = { # Vanilla Override
+	enable = {
+		is_special_project_completed = sp:sp_rockets_ballistic_missile
+	}
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = equipment_production_min_factories_archetype
+		id = ballistic_missile_equipment
+		value = 1
+	}
+}
+
+if_we_can_build_sams_we_want_sams = { # Vanilla Override
+	enable = {
+		is_special_project_completed = sp:sp_rockets_ground_to_air_missile
+	}
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = equipment_production_min_factories_archetype
+		id = sam_missile_equipment
+		value = 1
+	}
+}
+
+if_we_can_build_nuclear_missiles_we_want_nuclear_missiles = { # Vanilla Override
+	enable = {
+		is_special_project_completed = sp:sp_nuclear_warheads
+	}
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = equipment_production_min_factories_archetype
+		id = nuclear_missile_equipment
+		value = 1
+	}
+}
+# Logistical Buffers
+default_produce_some_trucks_for_buffer = { # Vanilla Override
+	enable = {
+		num_of_military_factories > 12
+		has_tech = tech_trucks
+		has_equipment = { motorized_equipment < 3000 }
+	}
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = equipment_production_min_factories_archetype
+		id = motorized_equipment
+		value = 1
+	}
+}
