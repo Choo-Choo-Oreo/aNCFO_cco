@@ -12,7 +12,7 @@ Only the Steam account **[Choo_Choo_Oreo](https://steamcommunity.com/id/Choo_Cho
 
 ---
 
-## Imported Contributions
+## External Contributions Formats
 
 Contributions are tracked in one of the following formats:
 
@@ -30,7 +30,7 @@ Contributions are tracked in one of the following formats:
 
 ---
 
-### Contributions
+### External Contributions
 
 - **BiometricNuke - Baltona** - *Models Integrated*
   [Warno - Baltona](https://steamcommunity.com/sharedfiles/filedetails/?id=3352254046)
