@@ -97,4 +97,4 @@ Contributions are tracked in one of the following formats:
 
 ---
 
-*This document is for internal tracking of imported code and assets. The legal license terms are maintained in the main LICENSE.md file.*
+*This document is for internal tracking of imported code and assets. The legal license terms are maintained in the main [LICENSE.md](./LICENSE.md).*

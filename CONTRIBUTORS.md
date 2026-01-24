@@ -1,6 +1,6 @@
 # {aNCFO} Project Contributors
 
-This document tracks the Direct Team members who assist in the development of the **World of Fyjuh**. As per Section 3.1 of the `LICENSE.md`, these individuals retain ownership of their specific contributions.
+This document tracks the Direct Team members who assist in the development of the **World of Fyjuh**. As per Section 3.1 of the [LICENSE.md](./LICENSE.md), these individuals retain ownership of their specific contributions.
 
 ---
 
