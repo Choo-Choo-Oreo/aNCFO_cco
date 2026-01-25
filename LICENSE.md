@@ -11,9 +11,8 @@ This license governs the use of assets contributed to the [aNCFO] repository. By
 ## 1. Definitions
 
 1.1 **Contributor**:
-Contributor A “Contributor” is any individual whose notable code contributions (i.e., modifications, enhancements, or additions of code) are accepted into the repository.
-- 1.1.1 **Asset Creator**:
-	An "Asset Creator" is any individual who provides Graphical Assets, Localization Works, or specific data files to the project. This includes Artists and Collaborators.
+A “Contributor” is any individual whose notable code contributions (i.e., modifications, enhancements, or additions of code) are accepted into the repository.
+- 1.1.1 **Asset Creator**: An "Asset Creator" is any individual who provides Graphical Assets, Localization Works, or specific data files to the project. This includes Artists and Collaborators.
 
 1.2 **Graphical Assets**:
 “Graphical Assets” are assets provided in a graphical format. For the purposes of this license, these include files with the extensions “.PNG” “.DDS” “.DMP” “.GFX” “.GUI” or any other graphical format.
@@ -25,7 +24,7 @@ Contributor A “Contributor” is any individual whose notable code contributio
 “Localization Works” refer to contributions that consist of localization files (with a “.YML” extension) and are not recognized as notable code contributions or graphical assets.
 
 1.5 **Paradox Interactive EULA Priority**:
-"This License is intended to supplement, not supersede, the Paradox Interactive End User License Agreement (EULA). To the extent that any provision of this License conflicts with the rights granted to Paradox Interactive AB under their EULA regarding User Generated Content (UGC), the Paradox EULA shall prevail. Paradox Interactive AB and its affiliates are exempted from the restrictions in Section 4.1 solely regarding the assets as they appear within the distributed mod files."
+This License is intended to supplement, not supersede, the Paradox Interactive End User License Agreement (EULA). To the extent that any provision of this License conflicts with the rights granted to Paradox Interactive AB under their EULA regarding User Generated Content (UGC), the Paradox EULA shall prevail. Paradox Interactive AB and its affiliates are exempted from the restrictions in Section 4.1 solely regarding the assets as they appear within the distributed mod files.
 
 1.6 **Project Source Material vs. Distributed Content**:
 "Project Source Material" refers to any assets related to the [aNCFO] IP that are not included in the public distribution, including but not limited to: high-resolution source maps, raw design layers (e.g., .PSD .KRA or .PDN files), internal lore documentation, and world-building manuscripts.
@@ -33,7 +32,7 @@ Contributor A “Contributor” is any individual whose notable code contributio
 "Distributed Content" refers to the specific files, code, and assets included in the publicly released version of the mod on platforms like the Steam Workshop.
 
 1.7 **The Property**:
-"The Property" refers to the collective intellectual property, fictional universe, lore, characters, and world-building elements created by the Author. This Property is known variously as abbrevations [aNCFO] or [aNCAE], or names [A New Chapter], [A New Chapter - Fantasy Overhaul], [A New Chapter - Archaiga's End], [World of Fyjuh], [The World of Fyjuh], or [Fyjuh]. Any reference to one of these titles in this document or associated project files shall be construed as a reference to The Property in its entirety.
+"The Property" refers to the collective intellectual property, fictional universe, lore, characters, and world-building elements created by the Author. This Property is known variously as abbreviations [aNCFO] or [aNCAE], or names [A New Chapter], [A New Chapter - Fantasy Overhaul], [A New Chapter - Archaiga's End], [World of Fyjuh], [The World of Fyjuh], or [Fyjuh]. Any reference to one of these titles in this document or associated project files shall be construed as a reference to The Property in its entirety.
 
 1.8 **External Contributors (Imported Mods)**:
 Individuals or teams whose pre-existing work is integrated into this project with permission. These assets are used under the terms provided by the original authors and are credited in the [README.md](./README.md).
@@ -62,7 +61,7 @@ Contributors and Direct Collaborators retain full and exclusive ownership of the
 3.2 **License to the Project**:
 By contributing assets, the creator grants the [aNCFO] project a **perpetual, irrevocable, worldwide, royalty-free license** to use, modify, and distribute those assets within the scope of the mod. This does not prevent the creator from using their own work in other projects.
 
-3.3 **Revocation Process**:
+3.3 **Reservation of Rights and Source Material**:
 The Author retains exclusive ownership of all Project Source Material. No license, express or implied, is granted to any party (including Paradox Interactive or third-party users) to access, use, or redistribute Project Source Material not contained within the official public repository or distributed mod files.
 
 3.4 **Scripting and Code**:
