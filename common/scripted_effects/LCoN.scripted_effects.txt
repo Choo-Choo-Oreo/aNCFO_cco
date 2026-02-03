@@ -22,7 +22,6 @@ calculate_naval_capacity_logistics_cubic = {
 	
 	add_to_temp_variable = { var = calculated_naval_cap value = temp_mil_factories }
 	add_to_temp_variable = { var = calculated_naval_cap value = temp_civ_factories }
-	round_variable = calculated_naval_cap
 
 	# --- STEP 2: CALCULATE DISTANCE FROM CAP ---
 	set_temp_variable = { var = capacity_diff value = calculated_naval_cap }
@@ -101,11 +100,14 @@ calculate_naval_capacity_logistics_formula = {
 		clamp_temp_variable = { var = econ_efficiency_factor min = 0.0 max = 1.0 }
 
 		# Apply the Economic Efficiency to the final Modifier
+		multiply_variable = { var = calculated_naval_cap value = econ_efficiency_factor }
 		multiply_variable = { var = LCoN_icd_ncd_value value = econ_efficiency_factor }
 		# Tooltip breakdown variables
 		set_variable = { var = current_cg_total value = current_cg_total }
 		set_variable = { var = econ_efficiency_factor value = econ_efficiency_factor }
 	}
+
+	round_variable = calculated_naval_cap
 
 	IF = { # Players Might not like the massive punishment, MIN CLAMP to prevent a complete stop of naval production due to being over capacity.
 		LIMIT = { has_game_rule = { rule = LCoN_safety_clamp_rule option = CLAMP_ON } }
