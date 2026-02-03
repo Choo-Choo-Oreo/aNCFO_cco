@@ -1,0 +1,95 @@
+# Determines how much each naval dockyard contributes to the total capacity.
+@dockyard_weight = 10
+# Determines the logistics contribution provided by military factories.
+@mil_weight = 1
+# Determines the logistics contribution provided by civilian factories.
+@civ_weight = 1
+# Controls the steepness of the curve; a higher value makes the penalty/bonus ramp up more slowly.
+@scaling_divisor = 2000
+# Sets the maximum percentage of bonus or penalty a country can receive per dockyard owned (Specific to the Sigmoid formula).
+@max_modifier_per_dockyard = 1
+
+calculate_naval_capacity_logistics_cubic = {
+	# --- STEP 1: CALCULATE THE NAVAL CAP ---
+	set_temp_variable = { var = calculated_naval_cap value = num_of_naval_factories }
+	multiply_temp_variable = { var = calculated_naval_cap value = @dockyard_weight }
+	
+	set_temp_variable = { var = temp_mil_factories value = num_of_military_factories }
+	multiply_temp_variable = { var = temp_mil_factories value = @mil_weight }
+
+	set_temp_variable = { var = temp_civ_factories value = num_of_civilian_factories }
+	multiply_temp_variable = { var = temp_civ_factories value = @civ_weight }
+	
+	add_to_temp_variable = { var = calculated_naval_cap value = temp_mil_factories }
+	add_to_temp_variable = { var = calculated_naval_cap value = temp_civ_factories }
+
+	# --- STEP 2: CALCULATE DISTANCE FROM CAP ---
+	set_temp_variable = { var = capacity_diff value = calculated_naval_cap }
+	subtract_from_temp_variable = { var = capacity_diff value = num_ships }
+
+	# --- STEP 3: CREATE THE CURVE ---
+	set_temp_variable = { var = curve_value value = capacity_diff }
+	multiply_temp_variable = { var = curve_value value = capacity_diff }
+	
+	# --- STEP 4: SCALING ---
+	divide_temp_variable = { var = curve_value value = @scaling_divisor }
+
+	# --- STEP 5: RESTORE DIRECTION ---
+	# If ships > cap (Over Cap), capacity_diff is negative.
+	# We flip the curve_value to negative to apply the penalty.
+	if = {
+		limit = { check_variable = { var = capacity_diff value = 0 compare = less_than } }
+		multiply_temp_variable = { var = curve_value value = -1 }
+	}
+	
+	# --- STEP 6: PROMOTE TO PERSISTENT VARIABLES ---
+	set_variable = { var = LCoN_icd_ncd_value value = curve_value }
+	set_variable = { var = calculated_naval_cap value = calculated_naval_cap }
+
+	# Tooltip breakdown variables
+	set_variable = { var = dockyard_weighted_value value = num_of_naval_factories }
+	multiply_variable = { var = dockyard_weighted_value value = @dockyard_weight }
+}
+
+calculate_naval_capacity_logistics_sigmoid = {
+	calculate_naval_capacity_logistics_cubic = yes
+
+	# --- STEP 7: SIGMOID CLAMP ---
+    set_temp_variable = { var = logic_cap value = num_of_naval_factories }
+    multiply_temp_variable = { var = logic_cap value = @max_modifier_per_dockyard }
+    
+    if = {
+        limit = { check_variable = { var = curve_value value = logic_cap compare = greater_than } }
+        set_temp_variable = { var = curve_value value = logic_cap }
+    }
+
+    set_temp_variable = { var = logic_floor value = logic_cap }
+    multiply_temp_variable = { var = logic_floor value = -1 }
+    if = {
+        limit = { check_variable = { var = curve_value value = logic_floor compare = less_than } }
+        set_temp_variable = { var = curve_value value = logic_floor }
+    }
+
+    # CRITICAL: Re-save the clamped value so the modifier actually uses it!
+    set_variable = { var = LCoN_icd_ncd_value value = curve_value }
+}
+
+calculate_naval_capacity_logistics_formula = {
+	IF = {
+		LIMIT = { has_game_rule = { rule = LCoN_formula_selection option = SIGMOID } }
+		calculate_naval_capacity_logistics_sigmoid = yes
+		ELSE = { 
+			calculate_naval_capacity_logistics_cubic = yes
+		}
+	}
+	# Create display variables for the tooltip
+	set_variable = { var = dockyard_weighted_value value = num_of_naval_factories }
+	multiply_variable = { var = dockyard_weighted_value value = @dockyard_weight }
+	set_variable = { var = total_other_factories_display value = num_of_military_factories }
+	add_to_variable = { var = total_other_factories_display value = num_of_civilian_factories }
+	set_variable = { var = doc_weight_value value = @dockyard_weight }
+	set_variable = { var = mil_weight_value value = @mil_weight }
+	set_variable = { var = civ_weight_value value = @civ_weight }
+
+    log = "[Root.GetTag] Naval Cap: [?calculated_naval_cap] | Ships: [?num_ships] | Mod: [?LCoN_icd_ncd_value]"
+}

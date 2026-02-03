@@ -1,0 +1,34 @@
+on_actions = {
+	on_startup = {
+		effect = {
+			every_possible_country = {
+				IF = {
+					LIMIT = {
+						NOT = { has_dynamic_modifier = { modifier = LCoN_naval_capacity_dynamic_modifier } }
+					}
+					add_dynamic_modifier = { modifier = LCoN_naval_capacity_dynamic_modifier }
+				}
+				calculate_naval_capacity_logistics_formula = yes
+			}
+		}
+	}
+
+	on_monthly = {
+		effect = {
+			IF = {
+				LIMIT = {
+					NOT = { has_dynamic_modifier = { modifier = LCoN_naval_capacity_dynamic_modifier } }
+				}
+				add_dynamic_modifier = { modifier = LCoN_naval_capacity_dynamic_modifier }
+			}
+			calculate_naval_capacity_logistics_formula = yes
+		}
+	}
+
+	on_peace = {
+		effect = {
+			log = "[GetDateText]: [Root.GetName]: on_peace"
+			THIS = { calculate_naval_capacity_logistics_formula = yes }
+		}
+	}
+}

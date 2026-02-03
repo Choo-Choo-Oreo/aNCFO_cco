@@ -1,0 +1,48 @@
+scripted_gui = {
+    LCoN_naval_limits_deployment = { # 1. Production line View Container
+        context_type = player_context
+        # Matches the name in your .gui file
+        window_name = "LCoN_naval_count_loc_countryproductionlineview" 
+        parent_window_name = countryproductionlineview
+
+        # Always show this (or add triggers if you want to hide it)
+        visible = {
+            always = yes
+        }
+
+        effects = {
+        	background_click = {
+				calculate_naval_capacity_logistics_formula = yes
+        	}
+        }
+    }
+    
+    LCoN_naval_limits_army_view = { # 2. Army View Container
+        context_type = player_context
+        # Matches the name in your .gui file
+        window_name = "LCoN_naval_count_loc_countrynavyview"
+        parent_window_name = countryarmyview
+
+        visible = {
+            always = no
+        }
+
+        effects = {
+        	background_click = {
+				calculate_naval_capacity_logistics_formula = yes
+        	}
+        }
+    }
+    
+    LCoN_naval_limits_alert = { # 3. Top Bar Alert (!)
+        context_type = player_context
+        # Matches the name in your .gui file
+        window_name = "LCoN_naval_count_loc_alert_container"
+        parent_window_token = top_bar
+
+        visible = {
+            # Only show if ships > cap (The Red Zone)
+            check_variable = { num_ships > calculated_naval_cap }
+        }
+    }
+}
