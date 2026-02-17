@@ -1,0 +1,46 @@
+demobilization_military = {
+	demobilization_military = {
+		icon = generic_civil_support
+
+		fire_only_once = yes
+
+		available = {
+			check_variable = { OCfA_current_battalion_load > OCfA_calculated_battalion_capacity }
+		}
+
+		cost = 0
+		ai_will_do = {
+			factor = 0
+		}
+
+		complete_effect = {
+			for_loop_effect = {
+				limit = {
+					check_variable = { OCfA_current_battalion_load > OCfA_calculated_battalion_capacity }
+				}
+				random_state = {
+					delete_unit = { disband = yes }
+				}
+				OCfA_calculate_battalion_capacity_formula = yes
+			}
+		}
+	}
+
+	demobilization_military_mission = {
+		icon = generic_civil_support
+
+		days_mission_timeout = 90
+		fire_only_once = yes
+
+		available = {
+		}
+
+		activation = {
+			check_variable = { OCfA_current_battalion_load > OCfA_calculated_battalion_capacity }
+			has_war = no
+		}
+
+		timeout_effect = {
+		}
+	}
+}

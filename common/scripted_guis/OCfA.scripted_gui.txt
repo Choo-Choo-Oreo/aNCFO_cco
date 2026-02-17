@@ -1,0 +1,45 @@
+scripted_gui = {
+	OCfA_battalion_limits_deployment = {
+		context_type = player_context
+		window_name = "OCfA_battalion_count_countryproductionlineview"
+		parent_window_token = deployment_tab
+
+        visible = {
+            always = yes
+        }
+
+        effects = {
+        	background_click = {
+        		OCfA_calculate_battalion_capacity_formula = yes
+        	}
+        }
+	}
+
+	OCfA_battalion_limits_alert = {
+		context_type = player_context
+		window_name = "OCfA_battalion_count_alert_container"
+		parent_window_token = top_bar
+
+		visible = {
+			has_dlc = "La Resistance"
+			check_variable = { num_battalions > OCfA_calculated_battalion_capacity }
+		}
+	}
+
+	OCfA_battalion_limits_alert_non_LaR = {
+		context_type = player_context
+		window_name = "OCfA_battalion_count_alert_container"
+		parent_window_token = top_bar
+
+		visible = {
+			NOT = { has_dlc = "La Resistance" }
+			check_variable = { num_battalions > OCfA_calculated_battalion_capacity }
+		}
+
+		properties = {
+			unit_limit_alert = {
+				x = -55
+			}
+		}
+	}
+}

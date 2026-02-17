@@ -1,0 +1,39 @@
+on_actions = {
+	on_startup = {
+		effect = { # Scripted Triggers Initialization
+			set_global_flag = is_LCfN_enabled
+		}
+
+		effect = {
+			every_possible_country = {
+				IF = {
+					LIMIT = {
+						NOT = { has_dynamic_modifier = { modifier = LCfN_naval_capacity_dynamic_modifier } }
+					}
+					add_dynamic_modifier = { modifier = LCfN_naval_capacity_dynamic_modifier }
+				}
+				LCfN_calculate_naval_capacity_logistics_formula = yes
+			}
+		}
+	}
+
+	on_monthly = {
+		effect = {
+			IF = {
+				LIMIT = {
+					NOT = { has_dynamic_modifier = { modifier = LCfN_naval_capacity_dynamic_modifier } }
+				}
+				add_dynamic_modifier = { modifier = LCfN_naval_capacity_dynamic_modifier }
+			}
+			LCfN_calculate_naval_capacity_logistics_formula = yes
+			LCfN_monthly_convoy_simulation = yes
+		}
+	}
+
+	on_peace = {
+		effect = {
+			log = "[GetDateText]: [Root.GetName]: on_peace"
+			THIS = { LCfN_calculate_naval_capacity_logistics_formula = yes }
+		}
+	}
+}

@@ -1,0 +1,420 @@
+# --- GLOBAL WEIGHTS ---
+# Determines the logistics contribution provided by different types of industry.
+@LCfN_dockyard_weight = 10
+@LCfN_mil_weight = 0.5
+@LCfN_civ_weight = 0.5
+
+# --- SHIP WEIGHTS ---
+@LCfN_weight_ss = 1.0
+@LCfN_weight_dd = 1.0
+@LCfN_weight_cl = 2.0
+@LCfN_weight_ca = 3.0
+@LCfN_weight_bc = 5.0
+@LCfN_weight_bb = 6.0
+@LCfN_weight_cv = 8.0
+
+# --- UPKEEP SETTINGS ---
+# 0.5% penalty per dockyard owned
+@upkeep_per_dockyard = 0.005
+
+# --- QUADRATIC & SIGMOID SETTINGS ---
+# Controls the steepness of the curve; higher values result in a gentler ramp.
+@scaling_divisor = 5000
+# Max % bonus/penalty per dockyard (Specific to Sigmoid).
+@max_modifier_per_dockyard = 0.2
+
+# --- LINEAR SETTINGS ---
+# Controls the steepness of linear scaling (1.0 / Divisor).
+@linear_divisor = 100
+
+# --- LOGARITHMIC SETTINGS ---
+# The maximum possible penalty/bonus (asymptote).
+@log_max_limit = 5.0 
+# Higher values make the curve flatten faster.
+@log_flattening = 100
+
+# --- STEP SETTINGS ---
+# Thresholds for "Break-it" steps (Distance from Cap).
+@step_threshold_1 = -1
+@step_threshold_2 = -50
+@step_threshold_3 = -100
+# Fixed penalties for each threshold.
+@step_penalty_1 = -0.25
+@step_penalty_2 = -0.50
+@step_penalty_3 = -1.0
+
+# --- HYPERBOLIC SETTINGS ---
+# Buffer before penalty becomes extreme/infinite.
+@hyper_buffer = 100 
+# Scaling factor for engine readability.
+@hyper_scaler = 1
+
+LCfN_calculate_naval_capacity_logistics_linear = {
+	# --- LINEAR SCALING ---
+	set_temp_variable = { var = LCfN_curve_value value = capacity_diff }
+	divide_temp_variable = { var = LCfN_curve_value value = @linear_divisor } 
+
+	# --- RESTORE DIRECTION ---
+	IF = {
+		LIMIT = { 
+			check_variable = { var = capacity_diff value = 0 compare = less_than } 
+			check_variable = { var = LCfN_curve_value value = 0 compare = greater_than } 
+		}
+		multiply_temp_variable = { var = LCfN_curve_value value = -1 }
+	}
+}
+
+LCfN_calculate_naval_capacity_logistics_quadratic = {
+	# --- CREATE THE CURVE ---
+	set_temp_variable = { var = LCfN_curve_value value = capacity_diff }
+	multiply_temp_variable = { var = LCfN_curve_value value = capacity_diff }
+	
+	# --- SCALING ---
+	divide_temp_variable = { var = LCfN_curve_value value = @scaling_divisor }
+
+	# --- RESTORE DIRECTION ---
+	IF = {
+		LIMIT = { check_variable = { var = capacity_diff value = 0 compare = less_than } }
+		multiply_temp_variable = { var = LCfN_curve_value value = -1 }
+	}
+}
+
+LCfN_calculate_naval_capacity_logistics_sigmoid = {
+	LCfN_calculate_naval_capacity_logistics_quadratic = yes
+
+	# --- SIGMOID CLAMP ---
+	set_temp_variable = { var = logic_cap value = num_of_naval_factories }
+	multiply_temp_variable = { var = logic_cap value = @max_modifier_per_dockyard }
+	
+	IF = {
+		LIMIT = { check_variable = { var = LCfN_curve_value value = logic_cap compare = greater_than } }
+		set_temp_variable = { var = LCfN_curve_value value = logic_cap }
+	}
+
+	set_temp_variable = { var = logic_floor value = logic_cap }
+	multiply_temp_variable = { var = logic_floor value = -1 }
+
+	IF = {
+		LIMIT = { check_variable = { var = LCfN_curve_value value = logic_floor compare = less_than } }
+		set_temp_variable = { var = LCfN_curve_value value = logic_floor }
+	}
+}
+
+LCfN_calculate_naval_capacity_logistics_logarithmic = {
+	# --- DIMINISHING RETURNS CURVE (Michaelis-Menten) ---
+	set_temp_variable = { var = is_negative value = 0 }
+	IF = {
+		LIMIT = { check_variable = { var = capacity_diff value = 0 compare = less_than } }
+		multiply_temp_variable = { var = capacity_diff value = -1 }
+		set_temp_variable = { var = is_negative value = 1 }
+	}
+
+	set_temp_variable = { var = denominator value = capacity_diff }
+	add_to_temp_variable = { var = denominator value = @log_flattening }
+	
+	set_temp_variable = { var = LCfN_curve_value value = @log_max_limit }
+	multiply_temp_variable = { var = LCfN_curve_value value = capacity_diff }
+	divide_temp_variable = { var = LCfN_curve_value value = denominator }
+
+	# Restore Direction
+	IF = {
+		LIMIT = { check_variable = { var = is_negative value = 1 } }
+		multiply_temp_variable = { var = LCfN_curve_value value = -1 }
+	}
+}
+
+LCfN_calculate_naval_capacity_logistics_step = {
+	set_temp_variable = { var = LCfN_curve_value value = 0.1 } # Base bonus
+
+	IF = {
+		LIMIT = { check_variable = { var = capacity_diff value = @step_threshold_1 compare = less_than_or_equals } }
+		set_temp_variable = { var = LCfN_curve_value value = @step_penalty_1 }
+	}
+	IF = {
+		LIMIT = { check_variable = { var = capacity_diff value = @step_threshold_2 compare = less_than_or_equals } }
+		set_temp_variable = { var = LCfN_curve_value value = @step_penalty_2 }
+	}
+	IF = {
+		LIMIT = { check_variable = { var = capacity_diff value = @step_threshold_3 compare = less_than_or_equals } }
+		set_temp_variable = { var = LCfN_curve_value value = @step_penalty_3 }
+	}
+}
+
+LCfN_calculate_naval_capacity_logistics_hyperbolic = {
+	IF = {
+		LIMIT = { check_variable = { var = capacity_diff value = 0 compare = greater_than_or_equals } }
+		set_temp_variable = { var = LCfN_curve_value value = capacity_diff }
+		divide_temp_variable = { var = LCfN_curve_value value = @linear_divisor }
+	}
+	ELSE = {
+		set_temp_variable = { var = over_amount value = capacity_diff }
+		multiply_temp_variable = { var = over_amount value = -1 }
+		
+		set_temp_variable = { var = den value = @hyper_buffer }
+		subtract_from_temp_variable = { var = den value = over_amount }
+		
+		# Safety: Hit the wall (Denominator zero)
+		IF = {
+			LIMIT = { check_variable = { var = den value = 0.1 compare = less_than } }
+			set_temp_variable = { var = LCfN_curve_value value = -10.0 }
+		}
+		ELSE = {
+			set_temp_variable = { var = LCfN_curve_value value = @hyper_scaler }
+			divide_temp_variable = { var = LCfN_curve_value value = den }
+			multiply_temp_variable = { var = LCfN_curve_value value = -1 }
+		}
+	}
+}
+
+LCfN_calculate_naval_capacity_logistics_debug = {
+	# Promote weight constants for tooltips
+	set_variable = { var = LCfN_num_battle_cruiser	value = num_ships_with_type@battle_cruiser }
+	set_variable = { var = LCfN_num_battleship		value = num_ships_with_type@battleship }
+	set_variable = { var = LCfN_num_carrier			value = num_ships_with_type@carrier }
+	set_variable = { var = LCfN_num_destroyer		value = num_ships_with_type@destroyer }
+	set_variable = { var = LCfN_num_heavy_cruiser	value = num_ships_with_type@heavy_cruiser }
+	set_variable = { var = LCfN_num_light_cruiser	value = num_ships_with_type@light_cruiser }
+	set_variable = { var = LCfN_num_submarine		value = num_ships_with_type@submarine }
+	set_variable = { var = LCfN_num_support_ship		value = num_ships_with_type@support_ship }
+
+	log = "[Root.GetTag] Naval Cap: [?LCfN_calculated_naval_cap] | Ships: [?num_ships] | Mod: [?LCfN_icd_ncd_value]"
+	log = "    Consumer Goods: [?LCfN_current_cg_total|%Y] | Log Efficiency: [?LCfN_econ_efficiency_factor|%G]"
+	log = "    BC: [?LCfN_num_battle_cruiser] | BB: [?LCfN_num_battleship] | CV: [?LCfN_num_carrier] | DD: [?LCfN_num_destroyer]"
+	log = "    CA: [?LCfN_num_heavy_cruiser] | CL: [?LCfN_num_light_cruiser] | SS: [?LCfN_num_submarine] | Support: [?LCfN_num_support_ship]"
+}
+
+LCfN_calculate_naval_capacity_logistics_formula = {
+	# --- STEP 1: INITIAL RAW CAPACITY ---
+	set_variable = { var = LCfN_calculated_naval_cap value = 0 }
+	
+	set_variable = { var = LCfN_nav_dockyards value = num_of_naval_factories }
+	multiply_variable = { var = LCfN_nav_dockyards value = @LCfN_dockyard_weight }
+	add_to_variable = { var = LCfN_calculated_naval_cap value = LCfN_nav_dockyards }
+
+	set_variable = { var = LCfN_mil_factories value = num_of_military_factories }
+	multiply_variable = { var = LCfN_mil_factories value = @LCfN_mil_weight }
+	add_to_variable = { var = LCfN_calculated_naval_cap value = LCfN_mil_factories }
+
+	set_variable = { var = LCfN_civ_factories value = num_of_civilian_factories }
+	multiply_variable = { var = LCfN_civ_factories value = @LCfN_civ_weight }
+	add_to_variable = { var = LCfN_calculated_naval_cap value = LCfN_civ_factories }
+
+	round_variable = LCfN_calculated_naval_cap
+
+	# --- STEP 2: ECONOMIC MOBILIZATION SCALING ---
+	IF = {
+		LIMIT = {
+			OR = {
+				NOT = { has_global_flag = is_OCfA_enabled }
+				AND = {
+					has_global_flag = is_OCfA_enabled
+					NOT = { has_global_flag = is_OCfA_mobilization_scaling_rule_enabled }
+				}
+			}
+		}
+		set_variable = { var = LCfN_econ_efficiency_factor value = 1.0 }
+	}
+	ELSE_IF = {
+		LIMIT = {
+			has_global_flag = is_OCfA_enabled
+			has_global_flag = is_OCfA_mobilization_scaling_rule_enabled
+		}
+		set_variable = { var = LCfN_econ_efficiency_factor value = OCfA_econ_efficiency_factor }
+	}
+
+	IF = {
+		LIMIT = {
+			OR = {
+				NOT = { has_global_flag = is_OCfA_enabled }
+				AND = {
+					has_global_flag = is_OCfA_enabled
+					NOT = { has_global_flag = is_OCfA_mobilization_scaling_rule_enabled }
+				}
+			}
+			has_game_rule = { rule = LCfN_mobilization_scaling_rule option = MOB_ON }
+		}
+		set_variable = { var = LCfN_current_cg_total value = modifier@consumer_goods_expected_value }
+		set_temp_variable = { var = LCfN_cg_multiplier value = 1.0 }
+		add_to_temp_variable = { var = LCfN_cg_multiplier value = modifier@consumer_goods_factor }
+		multiply_variable = { var = LCfN_current_cg_total value = LCfN_cg_multiplier }
+		subtract_from_variable = { var = LCfN_econ_efficiency_factor value = LCfN_current_cg_total }
+		clamp_variable = { var = LCfN_econ_efficiency_factor min = 0.0 max = 1.0 }
+		multiply_variable = { var = LCfN_calculated_naval_cap value = LCfN_econ_efficiency_factor }
+	}
+	ELSE_IF = {
+		LIMIT = {
+			has_global_flag = is_OCfA_enabled
+			has_global_flag = is_OCfA_mobilization_scaling_rule_enabled
+			has_game_rule = { rule = LCfN_mobilization_scaling_rule option = MOB_ON }
+		}
+		set_variable = { var = LCfN_current_cg_total value = OCfA_current_cg_total }
+		multiply_variable = { var = LCfN_calculated_naval_cap value = OCfA_econ_efficiency_factor }
+	}
+
+	# --- STEP 3: CALCULATE SHIP LOAD ---
+	IF = {
+		LIMIT = { has_game_rule = { rule = LCfN_weight_rule option = WEIGHT_ON } }
+		set_temp_variable = { var = LCfN_current_ship_load value = 0 }
+		
+		set_variable = { var = LCfN_nav_bc value = num_ships_with_type@battle_cruiser }
+		multiply_variable = { var = LCfN_nav_bc value = @LCfN_weight_bc }
+		add_to_temp_variable = { var = LCfN_current_ship_load value = LCfN_nav_bc }
+
+		set_variable = { var = LCfN_nav_bb value = num_ships_with_type@battleship }
+		multiply_variable = { var = LCfN_nav_bb value = @LCfN_weight_bb }
+		add_to_temp_variable = { var = LCfN_current_ship_load value = LCfN_nav_bb }
+
+		set_variable = { var = LCfN_nav_cv value = num_ships_with_type@carrier }
+		multiply_variable = { var = LCfN_nav_cv value = @LCfN_weight_cv }
+		add_to_temp_variable = { var = LCfN_current_ship_load value = LCfN_nav_cv }
+
+		set_variable = { var = LCfN_nav_dd value = num_ships_with_type@destroyer }
+		multiply_variable = { var = LCfN_nav_dd value = @LCfN_weight_dd }
+		add_to_temp_variable = { var = LCfN_current_ship_load value = LCfN_nav_dd }
+
+		set_variable = { var = LCfN_nav_ca value = num_ships_with_type@heavy_cruiser }
+		multiply_variable = { var = LCfN_nav_ca value = @LCfN_weight_ca }
+		add_to_temp_variable = { var = LCfN_current_ship_load value = LCfN_nav_ca }
+
+		set_variable = { var = LCfN_nav_cl value = num_ships_with_type@light_cruiser }
+		multiply_variable = { var = LCfN_nav_cl value = @LCfN_weight_cl }
+		add_to_temp_variable = { var = LCfN_current_ship_load value = LCfN_nav_cl }
+
+		set_variable = { var = LCfN_nav_ss value = num_ships_with_type@submarine }
+		multiply_variable = { var = LCfN_nav_ss value = @LCfN_weight_ss }
+		add_to_temp_variable = { var = LCfN_current_ship_load value = LCfN_nav_ss }
+
+		# --- MISCELLANEOUS SHIPS ---
+		set_temp_variable = { var = LCfN_total_known_ships value = num_ships_with_type@battle_cruiser }
+		add_to_temp_variable = { var = LCfN_total_known_ships value = num_ships_with_type@battleship }
+		add_to_temp_variable = { var = LCfN_total_known_ships value = num_ships_with_type@carrier }
+		add_to_temp_variable = { var = LCfN_total_known_ships value = num_ships_with_type@destroyer }
+		add_to_temp_variable = { var = LCfN_total_known_ships value = num_ships_with_type@heavy_cruiser }
+		add_to_temp_variable = { var = LCfN_total_known_ships value = num_ships_with_type@light_cruiser }
+		add_to_temp_variable = { var = LCfN_total_known_ships value = num_ships_with_type@submarine }
+
+		set_variable = { var = LCfN_nav_misc value = num_ships }
+		subtract_from_variable = { var = LCfN_nav_misc value = LCfN_total_known_ships }
+		add_to_temp_variable = { var = LCfN_current_ship_load value = LCfN_nav_misc }
+
+		multiply_variable = { var = LCfN_calculated_naval_cap value = 2 }
+		round_variable = LCfN_calculated_naval_cap
+
+		set_variable = { var = LCfN_current_ship_load value = LCfN_current_ship_load }
+	}
+	ELSE_IF = {
+		set_variable = { var = LCfN_current_ship_load value = num_ships }
+	}
+
+	# --- STEP 4: RUN CHOSEN CURVE ---
+	set_temp_variable = { var = capacity_diff value = LCfN_calculated_naval_cap }
+	subtract_from_temp_variable = { var = capacity_diff value = LCfN_current_ship_load }
+
+	IF = {
+		LIMIT = { has_game_rule = { rule = LCfN_scaling_logic_rule option = LOGIC_PERCENT } }
+		divide_temp_variable = { var = capacity_diff value = LCfN_calculated_naval_cap }
+		multiply_temp_variable = { var = capacity_diff value = 100 }
+	}
+
+	IF = {
+		LIMIT = { has_game_rule = { rule = LCfN_formula_selection option = LINEAR } }
+		LCfN_calculate_naval_capacity_logistics_linear = yes
+	}
+	ELSE_IF = { 
+		LIMIT = { has_game_rule = { rule = LCfN_formula_selection option = QUADRATIC } }
+		LCfN_calculate_naval_capacity_logistics_quadratic = yes
+	}
+	ELSE_IF = {
+		LIMIT = { has_game_rule = { rule = LCfN_formula_selection option = SIGMOID } }
+		LCfN_calculate_naval_capacity_logistics_sigmoid = yes
+	}
+	ELSE_IF = {
+		LIMIT = { has_game_rule = { rule = LCfN_formula_selection option = LOGARITHMIC } }
+		LCfN_calculate_naval_capacity_logistics_logarithmic = yes
+	}
+	ELSE_IF = {
+		LIMIT = { has_game_rule = { rule = LCfN_formula_selection option = STEP } }
+		LCfN_calculate_naval_capacity_logistics_step = yes
+	}
+	ELSE_IF = {
+		LIMIT = { has_game_rule = { rule = LCfN_formula_selection option = HYPERBOLIC } }
+		LCfN_calculate_naval_capacity_logistics_hyperbolic = yes
+	}
+
+	# --- STEP 5: FINAL MODIFIER PROCESSING ---
+	set_variable = { var = LCfN_icd_ncd_value value = LCfN_curve_value }
+
+	# Infrastructure Strain Multiplier
+	IF = {
+		LIMIT = { has_game_rule = { rule = LCfN_strain_rule option = STRAIN_ON } }
+		set_variable = { var = LCfN_infra_strain value = num_of_naval_factories }
+		multiply_variable = { var = LCfN_infra_strain value = LCfN_econ_efficiency_factor }
+		multiply_variable = { var = LCfN_infra_strain value = @upkeep_per_dockyard }
+		set_temp_variable = { var = LCfN_infra_divisor value = 1.0 }
+
+		IF = {
+			LIMIT = { check_variable = { var = LCfN_infra_strain value = 0 compare = less_than } }
+			set_variable = { var = LCfN_infra_strain value = 0 }
+		}
+		add_to_temp_variable = { var = LCfN_infra_divisor value = LCfN_infra_strain }
+
+		IF = {
+			LIMIT = {
+				check_variable = { var = LCfN_icd_ncd_value value = 0 compare = greater_than }
+			}
+			divide_variable = { var = LCfN_icd_ncd_value value = LCfN_infra_divisor }
+		}
+	}
+	ELSE = {
+		set_variable = { var = LCfN_infra_strain value = 0 }
+	}
+
+	# --- STEP 6: SAFETY CLAMPS ---
+	IF = {
+		LIMIT = { has_game_rule = { rule = LCfN_safety_clamp_rule option = CLAMP_ON } }
+		clamp_variable = { var = LCfN_icd_ncd_value min = -1.0 }
+	}
+	ELSE_IF = {
+		LIMIT = { has_game_rule = { rule = LCfN_safety_clamp_rule option = UNCLAMPED_PENALTY } }
+		IF = {
+			LIMIT = { check_variable = { var = LCfN_icd_ncd_value value = 0 compare = greater_than } }
+			set_variable = { var = LCfN_icd_ncd_value value = 0 }
+		}
+	}
+
+	# --- STEP 7: UI PROMOTION ---
+	set_variable = { var = LCfN_ss_weight_value value = @LCfN_weight_ss }
+	set_variable = { var = LCfN_dd_weight_value value = @LCfN_weight_dd }
+	set_variable = { var = LCfN_cl_weight_value value = @LCfN_weight_cl }
+	set_variable = { var = LCfN_ca_weight_value value = @LCfN_weight_ca }
+	set_variable = { var = LCfN_bc_weight_value value = @LCfN_weight_bc }
+	set_variable = { var = LCfN_bb_weight_value value = @LCfN_weight_bb }
+	set_variable = { var = LCfN_cv_weight_value value = @LCfN_weight_cv }
+
+	set_variable = { var = LCfN_doc_weight_value value = @LCfN_dockyard_weight }
+	set_variable = { var = LCfN_mil_weight_value value = @LCfN_mil_weight }
+	set_variable = { var = LCfN_civ_weight_value value = @LCfN_civ_weight }
+
+	IF = {
+		LIMIT = { is_debug = yes }
+		LCfN_calculate_naval_capacity_logistics_debug = yes
+	}
+}
+
+LCfN_monthly_convoy_simulation = {
+	IF = {
+		LIMIT = { 
+			not = { has_game_rule = { rule = LCfN_safety_clamp_rule option = CLAMP_ON } }
+			check_variable = { var = LCfN_icd_ncd_value value = 0 compare = less_than }
+		}
+		# Simulate monthly IC: (Dockyards * 2.5 IC/day * 30 Days) / 70 IC per convoy.
+		set_temp_variable = { var = monthly_convoy_income value = num_of_naval_factories }
+		multiply_temp_variable = { var = monthly_convoy_income value = 75 }
+		divide_temp_variable = { var = monthly_convoy_income value = 70 }
+		
+		add_equipment_to_stockpile = {
+			type = convoy
+			amount = var:monthly_convoy_income
+		}
+	}
+}

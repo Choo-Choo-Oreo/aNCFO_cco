@@ -1,0 +1,45 @@
+scripted_gui = {
+    LCfN_naval_limits_deployment = {
+        context_type = player_context
+        window_name = "LCfN_naval_count_countryproductionlineview" 
+        parent_window_name = countryproductionlineview
+
+        visible = {
+            always = yes
+        }
+
+        effects = {
+        	background_click = {
+				LCfN_calculate_naval_capacity_logistics_formula = yes
+        	}
+        }
+    }
+
+    LCfN_naval_limits_alert = {
+        context_type = player_context
+        window_name = "LCfN_naval_count_alert_container"
+        parent_window_token = top_bar
+
+        visible = {
+            has_dlc = "La Resistance"
+            check_variable = { LCfN_current_ship_load > LCfN_calculated_naval_cap }
+        }
+    }
+
+    LCfN_naval_limits_alert_non_LaR = {
+        context_type = player_context
+        window_name = "LCfN_naval_count_alert_container"
+        parent_window_token = top_bar
+
+        visible = {
+            NOT = { has_dlc = "La Resistance" }
+            check_variable = { LCfN_current_ship_load > LCfN_calculated_naval_cap }
+        }
+
+        properties = {
+            unit_limit_alert = {
+                x = -55
+            }
+        }
+    }
+}
