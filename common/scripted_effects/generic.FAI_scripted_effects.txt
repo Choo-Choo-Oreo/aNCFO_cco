@@ -1,3 +1,541 @@
+FAI_update_colonial_empire = {
+	set_temp_variable = { non_connected_states_count = 0 }
+	# Iterate through every state owned by the country
+	every_owned_state = {
+		limit = {
+			# Only count states not connected to the capital by land
+			NOt = { is_in_home_area = yes impassable = yes }
+		}
+		# Increment the country's temp variable for each found state
+		add_to_temp_variable = { ROOT.non_connected_states_count = 1 }
+	}
+	# If the count exceeds 6, mark them as a colonial empire
+	IF = {
+		limit = { check_variable = { non_connected_states_count > 6 } }
+		set_variable = { is_colonial_empire = non_connected_states_count }
+		log = "[GetDateText]: [THIS.GetName]: Non-Connected States Count [?is_colonial_empire] - is_colonial_empire = yes"
+	}
+}
+
+FAI_update_primarily_coastal = {
+	set_temp_variable = { FAI_state_coastal_counting = 0 }
+	every_owned_state = {
+		limit = {
+			is_core_of = ROOT
+			is_coastal = yes
+		}
+		# Increment the temporary counter for every state that fails the check
+		add_to_temp_variable = { ROOT.FAI_state_coastal_counting = 1 }
+	}
+	IF = { LIMIT = { is_debug = yes } log = "[GetDateText]: [THIS.GetName]: Coastal States Count [?FAI_state_coastal_counting]" }
+	set_variable = { FAI_state_coastal_count = FAI_state_coastal_counting }
+
+	set_temp_variable = { FAI_state_non_coastal_counting = 0 }
+	every_owned_state = {
+		limit = {
+			is_core_of = ROOT
+			NOT = { is_coastal = yes }
+		}
+		# Increment the temporary counter for every state that fails the check
+		add_to_temp_variable = { ROOT.FAI_state_non_coastal_counting = 1 }
+	}
+	IF = { LIMIT = { is_debug = yes } log = "[GetDateText]: [THIS.GetName]: Non-Coastal States Count [?FAI_state_non_coastal_counting]" }
+	set_variable = { FAI_state_non_coastal_count = FAI_state_non_coastal_counting }
+}
+
+FAI_update_no_connected_neighbors = {
+	# Default to 1 (Assuming we have no neighbors)
+	set_variable = { FAI_no_connected_neighbors = 1 }
+
+	# Check if we DO have a neighbor connected to the capital
+	IF = {
+		limit = {
+			# Returns true if the country has NO land neighbors connected to the capital
+			NOT = {
+				any_owned_state = {
+					is_in_home_area = yes
+					any_neighbor_state = {
+						NOT = { is_owned_by = ROOT }
+					}
+				}
+			}
+		}
+		IF = { LIMIT = { is_debug = yes } log = "[GetDateText]: [THIS.GetName]: has_no_connected_neighbors = yes" }
+		set_variable = { FAI_no_connected_neighbors = 1 }
+	}
+}
+
+FAI_calculate_oil_status = {
+	# 1. Grab base values
+	set_temp_variable = { t_net_balance = resource@oil }
+	set_temp_variable = { t_imports = resource_imported@oil }
+
+	# 2. Calculate Domestic Balance (Net minus Imports)
+	set_temp_variable = { t_domestic_balance = t_net_balance }
+	subtract_from_temp_variable = { t_domestic_balance = t_imports }
+
+	# 3. Determine the 3 States
+	IF = {
+		# STATE 1: Deficit (Net balance is below 0)
+		LIMIT = { 
+			check_variable = { t_net_balance < 0 } 
+		}
+		set_variable = { oil_deficit = t_net_balance }
+		multiply_variable = { oil_deficit = -1 } # Make it a positive number for your records
+		set_variable = { oil_surplus = 0 }
+		set_variable = { oil_status = 1 } # Flag 1 = Deficit
+		
+		log = "  Oil Status: DEFICIT of [?oil_deficit]"
+	}
+	ELSE_IF = {
+		# STATE 2: Surplus w/o Trade (Domestic balance is 0 or higher)
+		LIMIT = { 
+			check_variable = { var = t_domestic_balance value = 0 compare = greater_than_or_equals } 
+		}
+		set_variable = { oil_surplus = t_net_balance }
+		set_variable = { oil_deficit = 0 }
+		set_variable = { oil_status = 2 } # Flag 2 = Self-Sufficient Surplus
+		
+		log = "  Oil Status: SURPLUS W/O TRADE of [?oil_surplus]"
+	}
+	ELSE = {
+		# STATE 3: Surplus w/ Trade (Net is >= 0, but you rely on imports to achieve it)
+		set_variable = { oil_surplus = t_net_balance }
+		set_variable = { oil_deficit = 0 }
+		set_variable = { oil_status = 3 } # Flag 3 = Trade-Reliant Surplus
+		
+		log = "  Oil Status: SURPLUS W/ TRADE of [?oil_surplus]"
+	}
+}
+
+FAI_calculate_coal_status = {
+	# 1. Grab base values
+	set_temp_variable = { t_net_balance = resource@coal }
+	set_temp_variable = { t_imports = resource_imported@coal }
+
+	# 2. Calculate Domestic Balance (Net minus Imports)
+	set_temp_variable = { t_domestic_balance = t_net_balance }
+	subtract_from_temp_variable = { t_domestic_balance = t_imports }
+
+	# 3. Determine the 3 States
+	IF = {
+		# STATE 1: Deficit (Net balance is below 0)
+		LIMIT = { 
+			check_variable = { t_net_balance < 0 } 
+		}
+		set_variable = { coal_deficit = t_net_balance }
+		multiply_variable = { coal_deficit = -1 } # Make it a positive number for your records
+		set_variable = { coal_surplus = 0 }
+		set_variable = { coal_status = 1 } # Flag 1 = Deficit
+		
+		log = "  Coal Status: DEFICIT of [?coal_deficit]"
+	}
+	ELSE_IF = {
+		# STATE 2: Surplus w/o Trade (Domestic balance is 0 or higher)
+		LIMIT = { 
+			check_variable = { var = t_domestic_balance value = 0 compare = greater_than_or_equals } 
+		}
+		set_variable = { coal_surplus = t_net_balance }
+		set_variable = { coal_deficit = 0 }
+		set_variable = { coal_status = 2 } # Flag 2 = Self-Sufficient Surplus
+		
+		log = "  Coal Status: SURPLUS W/O TRADE of [?coal_surplus]"
+	}
+	ELSE = {
+		# STATE 3: Surplus w/ Trade (Net is >= 0, but you rely on imports to achieve it)
+		set_variable = { coal_surplus = t_net_balance }
+		set_variable = { coal_deficit = 0 }
+		set_variable = { coal_status = 3 } # Flag 3 = Trade-Reliant Surplus
+		
+		log = "  Coal Status: SURPLUS W/ TRADE of [?coal_surplus]"
+	}
+}
+
+FAI_calculate_aluminium_status = {# Get the raw balance (Available - Needed)
+	# 1. Grab base values
+	set_temp_variable = { t_net_balance = resource@aluminium }
+	set_temp_variable = { t_imports = resource_imported@aluminium }
+
+	# 2. Calculate Domestic Balance (Net minus Imports)
+	set_temp_variable = { t_domestic_balance = t_net_balance }
+	subtract_from_temp_variable = { t_domestic_balance = t_imports }
+
+	# 3. Determine the 3 States
+	IF = {
+		# STATE 1: Deficit (Net balance is below 0)
+		LIMIT = { 
+			check_variable = { t_net_balance < 0 } 
+		}
+		set_variable = { aluminium_deficit = t_net_balance }
+		multiply_variable = { aluminium_deficit = -1 } # Make it a positive number for your records
+		set_variable = { aluminium_surplus = 0 }
+		set_variable = { aluminium_status = 1 } # Flag 1 = Deficit
+		
+		log = "  Aluminium Status: DEFICIT of [?aluminium_deficit]"
+	}
+	ELSE_IF = {
+		# STATE 2: Surplus w/o Trade (Domestic balance is 0 or higher)
+		LIMIT = { 
+			check_variable = { var = t_domestic_balance value = 0 compare = greater_than_or_equals } 
+		}
+		set_variable = { aluminium_surplus = t_net_balance }
+		set_variable = { aluminium_deficit = 0 }
+		set_variable = { aluminium_status = 2 } # Flag 2 = Self-Sufficient Surplus
+		
+		log = "  Aluminium Status: SURPLUS W/O TRADE of [?aluminium_surplus]"
+	}
+	ELSE = {
+		# STATE 3: Surplus w/ Trade (Net is >= 0, but you rely on imports to achieve it)
+		set_variable = { aluminium_surplus = t_net_balance }
+		set_variable = { aluminium_deficit = 0 }
+		set_variable = { aluminium_status = 3 } # Flag 3 = Trade-Reliant Surplus
+		
+		log = "  Aluminium Status: SURPLUS W/ TRADE of [?aluminium_surplus]"
+	}
+}
+
+FAI_calculate_rubber_status = {
+	# 1. Grab base values
+	set_temp_variable = { t_net_balance = resource@rubber }
+	set_temp_variable = { t_imports = resource_imported@rubber }
+
+	# 2. Calculate Domestic Balance (Net minus Imports)
+	set_temp_variable = { t_domestic_balance = t_net_balance }
+	subtract_from_temp_variable = { t_domestic_balance = t_imports }
+
+	# 3. Determine the 3 States
+	IF = {
+		# STATE 1: Deficit (Net balance is below 0)
+		LIMIT = { 
+			check_variable = { t_net_balance < 0 } 
+		}
+		set_variable = { rubber_deficit = t_net_balance }
+		multiply_variable = { rubber_deficit = -1 } # Make it a positive number for your records
+		set_variable = { rubber_surplus = 0 }
+		set_variable = { rubber_status = 1 } # Flag 1 = Deficit
+		
+		log = "  Rubber Status: DEFICIT of [?rubber_deficit]"
+	}
+	ELSE_IF = {
+		# STATE 2: Surplus w/o Trade (Domestic balance is 0 or higher)
+		LIMIT = { 
+			check_variable = { var = t_domestic_balance value = 0 compare = greater_than_or_equals } 
+		}
+		set_variable = { rubber_surplus = t_net_balance }
+		set_variable = { rubber_deficit = 0 }
+		set_variable = { rubber_status = 2 } # Flag 2 = Self-Sufficient Surplus
+		
+		log = "  Rubber Status: SURPLUS W/O TRADE of [?rubber_surplus]"
+	}
+	ELSE = {
+		# STATE 3: Surplus w/ Trade (Net is >= 0, but you rely on imports to achieve it)
+		set_variable = { rubber_surplus = t_net_balance }
+		set_variable = { rubber_deficit = 0 }
+		set_variable = { rubber_status = 3 } # Flag 3 = Trade-Reliant Surplus
+		
+		log = "  Rubber Status: SURPLUS W/ TRADE of [?rubber_surplus]"
+	}
+}
+
+FAI_calculate_tungsten_status = {
+	# 1. Grab base values
+	set_temp_variable = { t_net_balance = resource@tungsten }
+	set_temp_variable = { t_imports = resource_imported@tungsten }
+
+	# 2. Calculate Domestic Balance (Net minus Imports)
+	set_temp_variable = { t_domestic_balance = t_net_balance }
+	subtract_from_temp_variable = { t_domestic_balance = t_imports }
+
+	# 3. Determine the 3 States
+	IF = {
+		# STATE 1: Deficit (Net balance is below 0)
+		LIMIT = { 
+			check_variable = { t_net_balance < 0 } 
+		}
+		set_variable = { tungsten_deficit = t_net_balance }
+		multiply_variable = { tungsten_deficit = -1 } # Make it a positive number for your records
+		set_variable = { tungsten_surplus = 0 }
+		set_variable = { tungsten_status = 1 } # Flag 1 = Deficit
+		
+		log = "  Tungsten Status: DEFICIT of [?tungsten_deficit]"
+	}
+	ELSE_IF = {
+		# STATE 2: Surplus w/o Trade (Domestic balance is 0 or higher)
+		LIMIT = { 
+			check_variable = { var = t_domestic_balance value = 0 compare = greater_than_or_equals } 
+		}
+		set_variable = { tungsten_surplus = t_net_balance }
+		set_variable = { tungsten_deficit = 0 }
+		set_variable = { tungsten_status = 2 } # Flag 2 = Self-Sufficient Surplus
+		
+		log = "  Tungsten Status: SURPLUS W/O TRADE of [?tungsten_surplus]"
+	}
+	ELSE = {
+		# STATE 3: Surplus w/ Trade (Net is >= 0, but you rely on imports to achieve it)
+		set_variable = { tungsten_surplus = t_net_balance }
+		set_variable = { tungsten_deficit = 0 }
+		set_variable = { tungsten_status = 3 } # Flag 3 = Trade-Reliant Surplus
+		
+		log = "  Tungsten Status: SURPLUS W/ TRADE of [?tungsten_surplus]"
+	}
+}
+
+FAI_calculate_steel_status = {
+	# 1. Grab base values
+	set_temp_variable = { t_net_balance = resource@steel }
+	set_temp_variable = { t_imports = resource_imported@steel }
+
+	# 2. Calculate Domestic Balance (Net minus Imports)
+	set_temp_variable = { t_domestic_balance = t_net_balance }
+	subtract_from_temp_variable = { t_domestic_balance = t_imports }
+
+	# 3. Determine the 3 States
+	IF = {
+		# STATE 1: Deficit (Net balance is below 0)
+		LIMIT = { 
+			check_variable = { t_net_balance < 0 } 
+		}
+		set_variable = { steel_deficit = t_net_balance }
+		multiply_variable = { steel_deficit = -1 } # Make it a positive number for your records
+		set_variable = { steel_surplus = 0 }
+		set_variable = { steel_status = 1 } # Flag 1 = Deficit
+		
+		log = "  Steel Status: DEFICIT of [?steel_deficit]"
+	}
+	ELSE_IF = {
+		# STATE 2: Surplus w/o Trade (Domestic balance is 0 or higher)
+		LIMIT = { 
+			check_variable = { var = t_domestic_balance value = 0 compare = greater_than_or_equals } 
+		}
+		set_variable = { steel_surplus = t_net_balance }
+		set_variable = { steel_deficit = 0 }
+		set_variable = { steel_status = 2 } # Flag 2 = Self-Sufficient Surplus
+		
+		log = "  Steel Status: SURPLUS W/O TRADE of [?steel_surplus]"
+	}
+	ELSE = {
+		# STATE 3: Surplus w/ Trade (Net is >= 0, but you rely on imports to achieve it)
+		set_variable = { steel_surplus = t_net_balance }
+		set_variable = { steel_deficit = 0 }
+		set_variable = { steel_status = 3 } # Flag 3 = Trade-Reliant Surplus
+		
+		log = "  Steel Status: SURPLUS W/ TRADE of [?steel_surplus]"
+	}
+}
+
+FAI_calculate_chromium_status = {
+	# 1. Grab base values
+	set_temp_variable = { t_net_balance = resource@chromium }
+	set_temp_variable = { t_imports = resource_imported@chromium }
+
+	# 2. Calculate Domestic Balance (Net minus Imports)
+	set_temp_variable = { t_domestic_balance = t_net_balance }
+	subtract_from_temp_variable = { t_domestic_balance = t_imports }
+
+	# 3. Determine the 3 States
+	IF = {
+		# STATE 1: Deficit (Net balance is below 0)
+		LIMIT = { 
+			check_variable = { t_net_balance < 0 } 
+		}
+		set_variable = { chromium_deficit = t_net_balance }
+		multiply_variable = { chromium_deficit = -1 } # Make it a positive number for your records
+		set_variable = { chromium_surplus = 0 }
+		set_variable = { chromium_status = 1 } # Flag 1 = Deficit
+		
+		log = "  Chromium Status: DEFICIT of [?chromium_deficit]"
+	}
+	ELSE_IF = {
+		# STATE 2: Surplus w/o Trade (Domestic balance is 0 or higher)
+		LIMIT = { 
+			check_variable = { var = t_domestic_balance value = 0 compare = greater_than_or_equals } 
+		}
+		set_variable = { chromium_surplus = t_net_balance }
+		set_variable = { chromium_deficit = 0 }
+		set_variable = { chromium_status = 2 } # Flag 2 = Self-Sufficient Surplus
+		
+		log = "  Chromium Status: SURPLUS W/O TRADE of [?chromium_surplus]"
+	}
+	ELSE = {
+		# STATE 3: Surplus w/ Trade (Net is >= 0, but you rely on imports to achieve it)
+		set_variable = { chromium_surplus = t_net_balance }
+		set_variable = { chromium_deficit = 0 }
+		set_variable = { chromium_status = 3 } # Flag 3 = Trade-Reliant Surplus
+		
+		log = "  Chromium Status: SURPLUS W/ TRADE of [?chromium_surplus]"
+	}
+}
+
+FAI_calculate_resource_status = {
+	log = "[THIS.GetName]:"
+	FAI_calculate_oil_status = yes
+	FAI_calculate_coal_status = yes
+	FAI_calculate_aluminium_status = yes
+	FAI_calculate_rubber_status = yes
+	FAI_calculate_tungsten_status = yes
+	FAI_calculate_steel_status = yes
+	FAI_calculate_chromium_status = yes
+}
+
+FAI_deployed_total = {
+	# Compute on_monthly_deployed_total = army + navy + airforce
+	set_temp_variable = { on_monthly_deployed_total = deployed_army_manpower_k }
+	add_to_temp_variable = { on_monthly_deployed_total = deployed_navy_manpower_k }
+	add_to_temp_variable = { on_monthly_deployed_total = deployed_airforce_manpower_k }
+	# Compute on_monthly_reserved = manpower_k - on_monthly_deployed_total
+	set_temp_variable = { on_monthly_reserved = manpower_k }
+	subtract_from_temp_variable = { on_monthly_reserved = on_monthly_deployed_total }
+	set_variable = { var = deployed_total value = on_monthly_deployed_total }
+	set_variable = { var = reserved value = on_monthly_reserved }
+	# Used for "check_variable = { var = reserved value = deployed_total compare = greater_than }"
+	log = "Deployed Total: [?deployed_total] | Reserved Manpower: [?reserved]"
+
+	# Store deployed fighters in temp variable first
+	set_temp_variable = { deployed_fighters = num_deployed_planes_with_type@fighter }
+	set_temp_variable = { stockpile_planes = num_equipment@small_plane_airframe }
+	log = "Deployed Fighters: [?deployed_fighters] | Stockpile Planes: [?stockpile_planes]"
+}
+
+FAI_convoy_targeter = {
+	set_variable = { var = FAI_convoy_target value = deployed_total }
+	#multiply_variable = { var = FAI_convoy_target value = 1 }
+	IF = { # Always have 1k convoys as major
+		limit = {
+			#ROOT = { is_major = yes }
+			check_variable = { var = FAI_convoy_target value = 1000 compare = less_than }
+		}
+		set_variable = { var = FAI_convoy_target value = 1000 }
+	}
+	# Compute the Overflow Limit
+	set_variable = { var = FAI_convoy_of1_limit value = FAI_convoy_target }
+	set_variable = { var = FAI_convoy_of2_limit value = FAI_convoy_target }
+	multiply_variable = { var = FAI_convoy_of1_limit value = 0.8 }
+	multiply_variable = { var = FAI_convoy_of2_limit value = 1.2 }
+	log = "Convoy Target: [?FAI_convoy_target] | OF1: [?FAI_convoy_of1_limit] | OF2: [?FAI_convoy_of2_limit]"
+}
+
+FAI_calc_queue_batch_size = {
+	set_temp_variable = { FAI_batch_limit = num_of_civilian_factories }
+	divide_temp_variable = { FAI_batch_limit = 30 }
+	multiply_temp_variable = { FAI_batch_limit = FAI_queue_base }
+	clamp_temp_variable = { var = FAI_batch_limit min = 1 }
+	round_temp_variable = FAI_batch_limit
+}
+
+FAI_electrical_grid_queuing = {
+	set_temp_variable = { FAI_queue_base = 1 }
+	FAI_calc_queue_batch_size = yes
+	IF = {
+		LIMIT = { NOT = { has_country_flag = cbq_infrastructure } }
+		meta_effect = {
+			text = {
+				every_owned_state = { # "Reinforced Electrical Grid"/"High Capacity Electrical Grid" Queuing
+					random_select_amount = [BATCH_SIZE] # "random_select_amount" prevents "energy_infrastructure"/"industrial_infrastructure" Queue overload
+					LIMIT = {
+						check_variable = { var = building_level@industrial_infrastructure value = 1 compare = less_than }
+						check_variable = { var = building_level@energy_infrastructure	  value = 1 compare = less_than }
+					}
+					set_temp_variable = { state_factory_count = building_level@industrial_complex }
+					add_to_temp_variable = { state_factory_count = building_level@arms_factory }
+					add_to_temp_variable = { state_factory_count = building_level@dockyard }
+					IF = { # industrial_infrastructure
+						LIMIT = {
+							free_building_slots = { building = industrial_infrastructure size > 0 }
+							OR = {
+								check_variable = { var = resource@oil		value = 20 compare = greater_than_or_equals }
+								check_variable = { var = resource@coal		value = 20 compare = greater_than_or_equals }
+								check_variable = { var = resource@aluminium	value = 20 compare = greater_than_or_equals }
+								check_variable = { var = resource@rubber	value = 20 compare = greater_than_or_equals }
+								check_variable = { var = resource@tungsten	value = 20 compare = greater_than_or_equals }
+								check_variable = { var = resource@steel		value = 20 compare = greater_than_or_equals }
+								check_variable = { var = resource@chromium	value = 20 compare = greater_than_or_equals }
+							}
+						}
+						add_building_construction = { type = industrial_infrastructure level = 1 instant_build = no }
+						log = "[ROOT_GNAME]: SUCCESS - Queued industrial_infrastructure in [This.GetName]. Setting Flag."
+						owner = { set_country_flag = { flag = cbq_infrastructure days = 180 } }
+					}
+					ELSE_IF = { # energy_infrastructure
+						LIMIT = {
+							free_building_slots = { building = energy_infrastructure size > 0 }
+							OR = {
+								AND = {
+									owner = { check_variable = { var = num_of_factories value = 100 compare = greater_than_or_equals } }
+									check_variable = { var = num_of_factories value = 2 compare = greater_than_or_equals }
+								}
+								AND = {
+									owner = { check_variable = { var = num_of_factories value = 100 compare = less_than_or_equals } }
+									check_variable = { var = num_of_factories value = 9 compare = greater_than_or_equals }
+								}
+							}
+						}
+						add_building_construction = { type = energy_infrastructure level = 1 instant_build = no }
+						log = "[ROOT_GNAME]: SUCCESS - Queued energy_infrastructure in [This.GetName]. Setting Flag."
+						owner = { set_country_flag = { flag = cbq_infrastructure days = 180 } }
+					}
+				}
+				log = "[ROOT_GNAME]: Electrical Grid Queuing Batch Size: [BATCH_SIZE]"
+			}
+			ROOT_GNAME = "[ROOT.GetName]"
+			BATCH_SIZE = "[?FAI_batch_limit|.0]"
+		}
+	}
+	ELSE = {
+		log = "[ROOT.GetName]: Electrical Grid Cooldown Active - Script Skipped."
+	}
+}
+
+FAI_commercial_nuclear_reactor_queuing = {
+	IF = {
+		LIMIT = {
+			has_tech = commercial_nuclear_reactor_tech
+		}
+		set_temp_variable = { FAI_queue_base = 1 }
+		FAI_calc_queue_batch_size = yes
+		meta_effect = {
+			text = {
+				every_owned_state = { # Commercial Nuclear Reactor Queuing
+					random_select_amount = [BATCH_SIZE]
+					LIMIT = {
+						free_building_slots = { building = commercial_nuclear_reactor size > 0 }
+					}
+					add_building_construction = { type = commercial_nuclear_reactor level = 1 instant_build = no }
+				}
+				log = "[ROOT_GNAME]: Commercial Nuclear Reactor Queuing Batch Size: [BATCH_SIZE]"
+			}
+			ROOT_GNAME = "[ROOT.GetName]"
+			BATCH_SIZE = "[?FAI_batch_limit]"
+		}
+	}
+}
+
+FAI_air_base_queuing = {
+	IF = {
+		LIMIT = {
+			check_variable = { var = stockpile_planes value = deployed_fighters compare = greater_than }
+			check_variable = { var = num_equipment@small_plane_airframe value = 2000 compare = greater_than }
+		}
+		set_temp_variable = { FAI_queue_base = 3 }
+		FAI_calc_queue_batch_size = yes
+		meta_effect = {
+			text = {
+				every_controlled_state = { # Air Base Queuing
+					random_select_amount = [BATCH_SIZE]
+					LIMIT = {
+						check_variable = { var = building_level@air_base value = 1 compare = greater_than_or_equals }
+						check_variable = { var = building_level@air_base value = 10 compare = less_than }
+						free_building_slots = { building = air_base size > 0 }
+					}
+					add_building_construction = { type = air_base level = 1 instant_build = no }
+				}
+				log = "[ROOT_GNAME]: Air Base Queuing Batch Size: [BATCH_SIZE]"
+			}
+			ROOT_GNAME = "[ROOT.GetName]"
+			BATCH_SIZE = "[?FAI_batch_limit]"
+		}
+	}
+}
+
 AI_has_war_with_player = {
 	IF = {
 		LIMIT = {
@@ -25,6 +563,6 @@ AI_has_war_with_player = {
 }
 
 TAG_has_war_with_TAG = {
-	IMPORT_has_war_with_IMPORT = yes
+	#IMPORT_has_war_with_IMPORT = yes
 	AI_has_war_with_player = yes
 }

@@ -1,0 +1,92 @@
+FAI_blue_water_strategy_plan = {
+	name = "Blue Water Strategy Plan"
+	desc = "Prioritizes the construction and research of a balanced battlefleet capable of projecting power across the globe, with a focus on carrier operations and capital ship screens."
+
+	allowed = { always = yes }
+	enable = {
+		OR = {
+			is_colonial_empire = yes
+			is_primarily_coastal = yes
+		}
+	}
+	abort = { has_war = no }
+
+	research = {
+		naval_equipment = 10.0
+		naval_doctrine = 150.0
+		marine_tech = 15.0
+		dd_tech = 5.0
+		ca_tech = 5.0
+		bc_tech = 5.0
+		bb_tech = 5.0
+		tp_tech = 5.0
+		cv_tech = 8.0
+	}
+	ai_strategy = { type = invade value = 50 }
+
+	weight = {
+		factor = 1.0
+		modifier = {
+			factor = 2.0
+			check_variable = { num_of_naval_factories > 19 }
+		}
+	}
+}
+
+FAI_asymmetric_strategy_plan = {
+	name = "Asymmetric Strategy Plan"
+	desc = "A defensive naval posture focused on submarine warfare and coastal denial to offset the numerical superiority of a colonial adversary."
+
+	allowed = { always = yes }
+	enable = {
+		NOT = { is_colonial_empire = yes }
+		any_enemy_country = { is_colonial_empire = yes }
+	}
+	abort = { has_war = no }
+
+	research = {
+		naval_equipment = 5.0
+		naval_doctrine = 120.0
+		ss_tech = 15.0
+	}
+	ai_strategy = { type = invade value = -50 }
+	ai_strategy = { type = garrison value = 20 }
+
+	weight = {
+		factor = 1.0
+		modifier = {
+			factor = 2.0
+			any_enemy_country = { is_colonial_empire = yes }
+		}
+	}
+}
+
+FAI_air_superiority_strategy_plan = {
+	name = "Air Superiority Strategy Plan"
+	desc = "Prioritizes advanced aviation research and strategic bombing once a significant airfleet has been established."
+
+	allowed = { always = yes }
+	enable = {
+		check_variable = { num_deployed_planes > 2000 }
+	}
+	abort = {
+		check_variable = { num_deployed_planes < 1500 }
+	}
+
+	research = {
+		air_doctrine = 100.0
+		light_air = 35.0
+		medium_air = 20.0
+		heavy_air = 15.0
+		air_equipment = 10.0
+	}
+	ai_strategy = { type = strategic_air_importance value = 1000  }
+
+	weight = {
+		factor = 1.0
+		modifier = {
+			factor = 2.0
+			has_war = yes
+		}
+	}
+}

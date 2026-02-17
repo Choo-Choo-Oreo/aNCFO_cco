@@ -64,220 +64,61 @@ FAI_decision_diplomacy = { # Fantasy AI Diplomacy
 		}
 
 		ai_will_do = {
-			base = 0
-			
-			### EXPERIENCE GAIN FACTORS ###
-			
-			# High value: Major wars with lots of divisions
+			base = 10 # Base desire to start evaluation
+
+			### PEACE-TIME GREED: WAR SUPPORT FOCUS ###
 			modifier = {
-				add = 250
+				add = 500
+				has_war = no
+				check_variable = { var = has_war_support value = 0.5 compare = less_than }
+			}
+
+			modifier = {
+				add = 300
+				has_idea = civilian_economy
+				check_variable = { var = has_war_support value = 0.25 compare = less_than }
+			}
+
+			### EXPERIENCE EFFICIENCY ###
+			modifier = {
+				add = 150
 				FROM = {
-					# Check if FROM is in a large-scale war
 					any_enemy_country = {
 						check_variable = { var = num_divisions value = 50 compare = greater_than }
 					}
-					# FROM itself has substantial forces
-					check_variable = { var = num_divisions value = 40 compare = greater_than }
 				}
 			}
-			
-			# Medium value: Moderate conflicts
-			modifier = {
-				add = 75
-				FROM = {
-					any_enemy_country = {
-						check_variable = { var = num_divisions value = 20 compare = greater_than }
-						check_variable = { var = num_divisions value = 50 compare = less_than }
-					}
-					check_variable = { var = num_divisions value = 20 compare = greater_than }
-				}
-			}
-			
-			# Bonus for wars that have been going on (won't end quickly)
-			modifier = {
-				add = 50
-				FROM = {
-					any_enemy_country = {
-						war_length_with = { tag = FROM months > 3 }
-					}
-				}
-			}
-			
-			# Bonus if we need specific XP types
-			modifier = {
-				add = 60
-				check_variable = { var = army_experience value = 100 compare = less_than_or_equals }
-			}
-			
-			modifier = {
-				add = 80
-				check_variable = { var = air_experience value = 100 compare = less_than_or_equals }
-				FROM = {
-					check_variable = { var = num_deployed_planes value = 500 compare = greater_than }
-				}
-			}
-			
-			modifier = {
-				add = 80
-				check_variable = { var = navy_experience value = 100 compare = less_than_or_equals }
-				FROM = {
-					check_variable = { var = num_ships value = 30 compare = greater_than }
-					any_enemy_country = {
-						check_variable = { var = num_ships value = 30 compare = greater_than }
-					}
-				}
-			}
-			
-			### WAR SUPPORT FACTORS ###
-			
-			# Critical: Need War Support to change economy laws
-			modifier = {
-				add = 300
-				check_variable = { var = has_war_support value = 25 compare = less_than_or_equals }
-				has_idea = civilian_economy
-			}
-			
-			modifier = {
-				add = 150
-				check_variable = { var = has_war_support value = 35 compare = less_than_or_equals }
-				OR = {
-					has_idea = civilian_economy
-					has_idea = low_economic_mobilisation
-				}
-			}
-			
-			# Moderate priority if approaching useful thresholds
-			modifier = {
-				add = 40
-				check_variable = { var = has_war_support value = 10 compare = greater_than_or_equals }
-				check_variable = { var = has_war_support value = 20 compare = less_than_or_equals }
-			}
-			
-			modifier = {
-				add = 20
-				check_variable = { var = has_war_support value = 20 compare = greater_than_or_equals }
-				check_variable = { var = has_war_support value = 30 compare = less_than_or_equals }
-			}
-			
-			### INTELLIGENCE FACTORS ###
-			
-			# High value: Major powers or key regional players
-			modifier = {
-				add = 80
-				FROM = { is_major = yes }
-			}
-			
-			# Strategic neighbors we want to monitor
-			modifier = {
-				add = 60
-				FROM = {
-					is_neighbor_of = ROOT
-					num_of_military_factories > 20
-				}
-			}
-			
-			# Faction members we want full intel on
-			modifier = {
-				add = 50
-				is_in_faction_with = FROM
-			}
-			
-			### NEGATIVE MODIFIERS ###
-			
-			# Don't spam attachés if we're at war ourselves
-			modifier = {
-				factor = 0.3
-				has_war = yes
-				# Unless we desperately need war support
-				has_war_support > 0.40
-			}
-			
-			# Reduce if we're low on command power
+
 			modifier = {
 				factor = 0.5
-				command_power < 20
+				has_army_experience > 250
+				has_air_experience > 250
 			}
-			
-			# Don't send if their war is nearly over
-			modifier = {
-				factor = 0.1
-				FROM = {
-					surrender_progress > 0.7
-				}
-			}
-			
-			# Reduce if we already sent recently
-			modifier = {
-				factor = 0.2
-				has_country_flag = sent_attache_to_@FROM
-			}
-			
-			# Don't oversaturate with attachés
-			modifier = {
-				factor = 0.5
-				any_other_country = {
-					count > 2
-					has_attache_from = ROOT
-				}
-			}
-			
-			# ROOT has sent volunteers to FROM
-			modifier = {
-				factor = 0.1
-				FROM = {
-					any_enemy_country = {
-						has_volunteers_amount_from = { tag = PREV.ROOT count > 0 }
-					}
-				}
-			}
-			
-			# Prefer our faction/allies over others
-			modifier = {
-				factor = 1.5
-				is_in_faction_with = FROM
-			}
-			
-			modifier = {
-				factor = 1.3
-				has_guaranteed = FROM
-			}
-			
-			# ROOT has sent volunteers to FROM
+
+			### STRATEGIC ALIGNMENT ###
 			modifier = {
 				factor = 10.0
 				FROM = {
 					has_volunteers_amount_from = { tag = PREV.ROOT count > 0 }
 				}
 			}
-			
-			# Special: Sino-Japanese War (historical XP farm)
+
 			modifier = {
 				add = 120
-				OR = {
-					FROM = { tag = CHI }
-					FROM = { tag = JAP }
-				}
+				OR = { FROM = { tag = CHI } FROM = { tag = JAP } }
 				CHI = { has_war_with = JAP }
-				is_erly_game =  no
 			}
-			
-			# Special: Spanish Civil War
+
+			### RESOURCE CONSTRAINTS ###
 			modifier = {
-				add = 80
+				factor = 0
 				OR = {
-					FROM = {
-						original_tag = SPR
-						is_enemy_ideology = no
+					command_power < 10
+					AND = {
+						has_war = yes
+						command_power < 50
 					}
 				}
-				has_global_flag = spanish_civil_war
-				is_erly_game =  yes
-			}
-			
-			# Base desire if conditions are met
-			modifier = {
-				factor = -1
-				FROM = { has_war = no }
 			}
 		}
 	}
@@ -313,34 +154,41 @@ FAI_decision_diplomacy = { # Fantasy AI Diplomacy
 		
 		ai_will_do = {
 			base = 0
-			
-			# Recall if they're no longer at war
+
 			modifier = {
 				add = 1000
-				FROM = { has_war = no }
+				OR = {
+					FROM = { has_war = no }
+					FROM = { has_capitulated = yes }
+				}
 			}
-			
-			# Recall if they capitulated
+
+			# If at peace but WS is maxed, and CP is needed for impending justification
 			modifier = {
-				add = 1000
-				FROM = { has_capitulated = yes }
-			}
-			
-			# Recall if war is ending soon
-			modifier = {
-				add = 500
-				FROM = {
-					any_enemy_country = {
-						surrender_progress > 0.9
+				add = 200
+				has_war = no
+				check_variable = { var = has_war_support value = 0.9 compare = greater_than }
+				any_neighbor_country = {
+					OR = {
+						is_justifying_wargoal_against = ROOT
+						has_wargoal_against = ROOT
 					}
 				}
 			}
-			
-			# Recall if we desperately need command power
+
 			modifier = {
-				add = 200
-				command_power < 50
+				add = 500
+				FROM = {
+					surrender_progress > 0.8
+				}
+			}
+
+			modifier = {
+				add = 300
 				has_war = yes
+				command_power < 40
+				# Only recall if the attaché isn't the primary source of our current WS needs
+				check_variable = { var = has_war_support value = 0.5 compare = greater_than }
 			}
 		}
 	}

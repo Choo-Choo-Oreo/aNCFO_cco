@@ -1,1 +1,60 @@
-# To do
+# Revised Military Access Request Strategy
+FAI_diplomacy_military_access_request_strategy = {
+	enable = {
+		has_war = yes
+	}
+	abort_when_not_enabled = yes
+	reversed = yes
+	
+	enable_reverse = {
+		# The neighbor must not be at war with ROOT
+		NOT = { has_war_with = ROOT }
+		# The neighbor must border an enemy of ROOT
+		any_neighbor_country = {
+			any_enemy_country = { tag = ROOT }
+		}
+	}
+
+	# Increases desire for the neighbor to WANT to give us access
+	ai_strategy = {
+		type = diplo_action_desire 
+		target = military_access 
+		value = 200 
+	}
+
+	# Increases likelihood the neighbor will ACCEPT if we ask
+	ai_strategy = {
+		type = diplo_action_acceptance 
+		target = military_access 
+		value = 200 
+	}
+}
+# Revised Military Access Acceptance Strategy
+FAI_diplomacy_military_access_acceptance_strategy = {
+	enable = {
+		has_war = yes
+	}
+	abort_when_not_enabled = yes
+	reversed = yes
+
+	enable_reverse = {
+		# Condition: We only accept if we border the requester's enemy
+		any_neighbor_country = {
+			any_enemy_country = { tag = ROOT }
+		}
+	}
+
+	# Makes the neighbor want to proactively offer access to ROOT
+	ai_strategy = {
+		type = diplo_action_desire 
+		target = offer_military_access 
+		value = 200 
+	}
+
+	# Makes ROOT willing to accept the offer from the neighbor
+	ai_strategy = {
+		type = diplo_action_acceptance
+		target = offer_military_access 
+		value = 200 
+	}
+}
