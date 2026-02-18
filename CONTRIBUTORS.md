@@ -12,6 +12,12 @@ This document tracks the Direct Team members who assist in the development of th
 | **[Name/Alias]** | Artist | Graphical Assets | Custom Flags for [Nation X], UI Icons. |
 | **[Name/Alias]** | Collaborator 1 | Localization & Data | Character descriptions, focus tree text. |
 | **[Name/Alias]** | Collaborator 2 | Joint Systems | Naval rework logic, 3D Unit Models. |
+|
+| **[dw104c]** | Collaborator | Localization & Data | Sinicize the region of Linsong. |
+| **[dw104c]** | Artist | Graphical Assets | Custom Flags for [QGW], and [XIF]. |
+| **[ajtak_cz8]** | Artist | Graphical Assets | Custom Flags for [ATL], [ATL_authoritarianism], [ATL_semidemocracy], [ATL_unitism], [BHK], [BHK_authoritarianism], [ATL_pluralism], and [NLL]. |
+| **[CameraCraft]** | Artist | Graphical Assets | Custom Flags for [LPR]. |
+| **[swordfish3790]** | Artist | Graphical Assets | Custom Flags for [OAK_unitism]. |
 
 ---
 

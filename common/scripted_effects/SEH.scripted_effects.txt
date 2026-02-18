@@ -1,0 +1,214 @@
+# ==========================================
+# 1. INITIALIZATION
+# Run this on every country at game start
+# ==========================================
+SEH_initialize_country_acceptance = {
+	# Initialize Species Arrays
+	add_to_array = { array = SEH_accepted_species_full value = 0 } # Default 0 is accepted
+	
+	# Initialize Ethnos Arrays
+	add_to_array = { array = SEH_accepted_ethnos_full value = 0 }
+	
+	# Initialize Heritage Arrays
+	add_to_array = { array = SEH_accepted_heritage_full value = 0 }
+}
+
+# ==========================================
+# 2. STATE UPDATE LOGIC
+# Scope: State
+# Checks: Controller (ROOT/PREV context dependent)
+# ==========================================
+SEH_update_state_acceptance_modifiers = {
+	
+	# ---------------- SPECIES CHECK ----------------
+	IF = {
+		LIMIT = { has_dynamic_modifier = { modifier = SEH_species_nona_dynamic_modifier } }
+		remove_dynamic_modifier = { modifier = SEH_species_nona_dynamic_modifier }
+	}
+	IF = {
+		LIMIT = { has_dynamic_modifier = { modifier = SEH_species_para_dynamic_modifier } }
+		remove_dynamic_modifier = { modifier = SEH_species_para_dynamic_modifier }
+	}
+	IF = {
+		LIMIT = { has_dynamic_modifier = { modifier = SEH_species_fula_dynamic_modifier } }
+		remove_dynamic_modifier = { modifier = SEH_species_fula_dynamic_modifier }
+	}
+
+	if = {
+		limit = {
+			CONTROLLER = { is_in_array = { array = SEH_accepted_species_full value = PREV.SEH_species } }
+		}
+		add_dynamic_modifier = { modifier = SEH_species_fula_dynamic_modifier }
+	}
+	else_if = {
+		limit = {
+			CONTROLLER = { is_in_array = { array = SEH_accepted_species_partial value = PREV.SEH_species } }
+		}
+		add_dynamic_modifier = { modifier = SEH_species_para_dynamic_modifier }
+	}
+	else = {
+		# Default to Non-Accepted if not in Full or Partial arrays
+		add_dynamic_modifier = { modifier = SEH_species_nona_dynamic_modifier }
+	}
+
+	# ---------------- ETHNOS CHECK ----------------
+	IF = {
+		LIMIT = { has_dynamic_modifier = { modifier = SEH_ethnos_nona_dynamic_modifier } }
+		remove_dynamic_modifier = { modifier = SEH_ethnos_nona_dynamic_modifier }
+	}
+	IF = {
+		LIMIT = { has_dynamic_modifier = { modifier = SEH_ethnos_para_dynamic_modifier } }
+		remove_dynamic_modifier = { modifier = SEH_ethnos_para_dynamic_modifier }
+	}
+	IF = {
+		LIMIT = { has_dynamic_modifier = { modifier = SEH_ethnos_fula_dynamic_modifier } }
+		remove_dynamic_modifier = { modifier = SEH_ethnos_fula_dynamic_modifier }
+	}
+
+	if = {
+		limit = {
+			CONTROLLER = { is_in_array = { array = SEH_accepted_ethnos_full value = PREV.SEH_ethnos } }
+		}
+		add_dynamic_modifier = { modifier = SEH_ethnos_fula_dynamic_modifier }
+	}
+	else_if = {
+		limit = {
+			CONTROLLER = { is_in_array = { array = SEH_accepted_ethnos_partial value = PREV.SEH_ethnos } }
+		}
+		add_dynamic_modifier = { modifier = SEH_ethnos_para_dynamic_modifier }
+	}
+	else = {
+		add_dynamic_modifier = { modifier = SEH_ethnos_nona_dynamic_modifier }
+	}
+
+	# ---------------- HERITAGE CHECK ----------------
+	IF = {
+		LIMIT = { has_dynamic_modifier = { modifier = SEH_heritage_nona_dynamic_modifier } }
+		remove_dynamic_modifier = { modifier = SEH_heritage_nona_dynamic_modifier }
+	}
+	IF = {
+		LIMIT = { has_dynamic_modifier = { modifier = SEH_heritage_para_dynamic_modifier } }
+		remove_dynamic_modifier = { modifier = SEH_heritage_para_dynamic_modifier }
+	}
+	IF = {
+		LIMIT = { has_dynamic_modifier = { modifier = SEH_heritage_fula_dynamic_modifier } }
+		remove_dynamic_modifier = { modifier = SEH_heritage_fula_dynamic_modifier }
+	}
+
+	if = {
+		limit = {
+			CONTROLLER = { is_in_array = { array = SEH_accepted_heritage_full value = PREV.SEH_heritage } }
+		}
+		add_dynamic_modifier = { modifier = SEH_heritage_fula_dynamic_modifier }
+	}
+	else_if = {
+		limit = {
+			CONTROLLER = { is_in_array = { array = SEH_accepted_heritage_partial value = PREV.SEH_heritage } }
+		}
+		add_dynamic_modifier = { modifier = SEH_heritage_para_dynamic_modifier }
+	}
+	else = {
+		add_dynamic_modifier = { modifier = SEH_heritage_nona_dynamic_modifier }
+	}
+}
+
+# ==========================================
+# 3. MANIPULATION EFFECTS (Gameplay)
+# Use these in Focuses/Events/History
+# Scope: Country
+# ==========================================
+SEH_refresh_all_owned_states = {
+	# Helper to refresh all states for the country
+	every_owned_state = {
+		SEH_update_state_acceptance_modifiers = yes
+	}
+}
+
+SEH_copy_acceptance_arrays_from_prev = {
+	# This clones the arrays from PREV (the original country) 
+	# to ROOT (the new civil war/government side)
+
+	# Clear existing data first to prevent "ghost" data from recycled tags
+	clear_variable = SEH_accepted_species_full
+	clear_variable = SEH_accepted_species_partial
+	clear_variable = SEH_accepted_ethnos_full
+	clear_variable = SEH_accepted_ethnos_partial
+	clear_variable = SEH_accepted_heritage_full
+	clear_variable = SEH_accepted_heritage_partial
+
+	# Clone the new data
+	set_variable = { SEH_accepted_species_full = PREV.SEH_accepted_species_full }
+	set_variable = { SEH_accepted_species_partial = PREV.SEH_accepted_species_partial }
+	
+	set_variable = { SEH_accepted_ethnos_full = PREV.SEH_accepted_ethnos_full }
+	set_variable = { SEH_accepted_ethnos_partial = PREV.SEH_accepted_ethnos_partial }
+	
+	set_variable = { SEH_accepted_heritage_full = PREV.SEH_accepted_heritage_full }
+	set_variable = { SEH_accepted_heritage_partial = PREV.SEH_accepted_heritage_partial }
+	
+	# Important: Refresh the map for the new side
+	SEH_refresh_all_owned_states = yes
+}
+
+# --- SPECIES ---
+SEH_add_accepted_species_full = {
+	# This script should fire after another effect set the "SEH_temp_species" var
+	add_to_array = { array = SEH_accepted_species_full value = SEH_temp_species }
+	remove_from_array = { array = SEH_accepted_species_partial value = SEH_temp_species } # Remove from partial if promoting
+	SEH_refresh_all_owned_states = yes # Updates map/modifiers immediately
+}
+
+SEH_add_accepted_species_partial = {
+	add_to_array = { array = SEH_accepted_species_partial value = SEH_temp_species }
+	remove_from_array = { array = SEH_accepted_species_full value = SEH_temp_species } # Demote check
+	SEH_refresh_all_owned_states = yes
+}
+
+SEH_remove_accepted_species = {
+	# Assumes SEH_temp_species is set to the target ID before calling
+	remove_from_array = { array = SEH_accepted_species_full value = SEH_temp_species } 
+	remove_from_array = { array = SEH_accepted_species_partial value = SEH_temp_species } 
+	SEH_refresh_all_owned_states = yes
+}
+
+# --- ETHNOS ---
+SEH_add_accepted_ethnos_full = {
+	# This script should fire after another effect set the "SEH_temp_ethnos" var
+	add_to_array = { array = SEH_accepted_ethnos_full value = SEH_temp_ethnos }
+	remove_from_array = { array = SEH_accepted_ethnos_partial value = SEH_temp_ethnos }
+	SEH_refresh_all_owned_states = yes
+}
+
+SEH_add_accepted_ethnos_partial = {
+	add_to_array = { array = SEH_accepted_ethnos_partial value = SEH_temp_ethnos }
+	remove_from_array = { array = SEH_accepted_ethnos_full value = SEH_temp_ethnos }
+	SEH_refresh_all_owned_states = yes
+}
+
+SEH_remove_accepted_ethnos = {
+	# Assumes SEH_temp_ethnos is set to the target ID before calling
+	remove_from_array = { array = SEH_accepted_ethnos_full value = SEH_temp_ethnos } 
+	remove_from_array = { array = SEH_accepted_ethnos_partial value = SEH_temp_ethnos } 
+	SEH_refresh_all_owned_states = yes
+}
+
+# --- HERITAGE ---
+SEH_add_accepted_heritage_full = {
+	# This script should fire after another effect set the "SEH_temp_heritage" var
+	add_to_array = { array = SEH_accepted_heritage_full value = SEH_temp_heritage }
+	remove_from_array = { array = SEH_accepted_heritage_partial value = SEH_temp_heritage }
+	SEH_refresh_all_owned_states = yes
+}
+
+SEH_add_accepted_heritage_partial = {
+	add_to_array = { array = SEH_accepted_heritage_partial value = SEH_temp_heritage }
+	remove_from_array = { array = SEH_accepted_heritage_full value = SEH_temp_heritage }
+	SEH_refresh_all_owned_states = yes
+}
+
+SEH_remove_accepted_heritage = {
+	# Assumes SEH_temp_heritage is set to the target ID before calling
+	remove_from_array = { array = SEH_accepted_heritage_full value = SEH_temp_heritage } 
+	remove_from_array = { array = SEH_accepted_heritage_partial value = SEH_temp_heritage } 
+	SEH_refresh_all_owned_states = yes
+}
