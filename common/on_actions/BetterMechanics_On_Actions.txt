@@ -805,54 +805,6 @@ on_actions = {
 				}
 			}
 		}
-
-		effect = {
-			# Division Limits
-			if = {
-				limit = {
-					has_game_rule = {
-						rule = unit_limit_options
-						option = AI_ONLY
-					}
-				}
-				set_global_flag = KR_unit_limits_ai_only
-			}
-			else_if = {
-				limit = {
-					has_game_rule = {
-						rule = unit_limit_options
-						option = NONE
-					}
-				}
-				set_global_flag = KR_no_unit_limits
-			}
-			# Demobilization
-			if = {
-				limit = {
-					has_game_rule = {
-						rule = demobilization_options
-						option = AI_ONLY
-					}
-				}
-				set_global_flag = KR_demob_ai_only
-			}
-			else_if = {
-				limit = {
-					has_game_rule = {
-						rule = demobilization_options
-						option = NONE
-					}
-				}
-				set_global_flag = KR_no_demob
-			}
-		}
-
-		effect = {
-			every_country = {
-				#Unit Limits Setup
-				country_event = kr.political.119
-			}
-		}
 	}
 
 	on_weekly = {
@@ -874,52 +826,6 @@ on_actions = {
 					}
 					set_variable = { operative_slot_var = global.global_setup_maximum_operative }
 				}
-			}
-		}
-
-		effect = {
-			# unit limit calculations
-			country_event = kr.political.119
-		}
-	}
-
-	on_monthly = {
-		effect = {
-
-			# maintain list of guarantors
-			if = {
-				limit = {
-					has_global_flag = KR_Economy_Logging
-					is_debug = yes
-				}
-
-				#unit limits logging
-				log = "KR_Unit_Limit_Metrics;[GetDateText];[Root.GetTag];[?num_actual_divisions];[?max_divisions]"
-			}
-		}
-	}
-
-	on_peace = {
-		effect = {
-			log = "[GetDateText]: [Root.GetName]: on_peace"
-			#Demobilization check for the AI
-			if = {
-				limit = {
-					is_ai = yes
-					NOT = { has_country_flag = has_demobilization_check }
-				}
-				set_country_flag = { flag = has_demobilization_check days = 6 value = 1 }
-				country_event = { id = kr.political.120 days = 6 }
-			}
-
-			#Reduce units check for the AI
-			if = {
-				limit = {
-					is_ai = yes
-					NOT = { has_country_flag = has_reduce_units_check }
-				}
-				set_country_flag = has_reduce_units_check
-				country_event = { id = kr.political.121 days = 7 random = 72 }
 			}
 		}
 	}
