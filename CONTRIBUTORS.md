@@ -17,7 +17,7 @@ This document tracks the Direct Team members who assist in the development of th
 | **[dw104c]** | Artist | Graphical Assets | Custom Flags for [QGW], and [XIF]. |
 | **[ajtak_cz8]** | Artist | Graphical Assets | Custom Flags for [ATL], [ATL_authoritarianism], [ATL_semidemocracy], [ATL_unitism], [BHK], [BHK_authoritarianism], [ATL_pluralism], and [NLL]. |
 | **[CameraCraft]** | Artist | Graphical Assets | Custom Flags for [LPR]. |
-| **[swordfish3790]** | Artist | Graphical Assets | Custom Flags for [ABL], [ATL_pluralism], [TRI], and [OAK_unitism]. |
+| **[swordfish3790]** | Artist | Graphical Assets | Custom Flags for [ABL], [ATL_pluralism], [CUL_authoritarianism], [TRI], and [OAK_unitism]. |
 
 ---
 
