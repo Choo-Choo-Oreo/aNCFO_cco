@@ -14,37 +14,25 @@ When launching the game please use `-debug -crash_data_log` to use the full deve
 ## Mapping
 
 # **Land Province Map Size Guidelines**
+
 - Forest: Fightable 90~ Pixels
-
 - Hills: Fightable 90~ Pixels
-
 - Mountain: Fightable 100~ Pixels
-
 - Plains: Fightable 80~ Pixels
-
 - Farmlands: Fightable 70~ Pixels
-
 - Urban: Minors 60-45~ Pixels
-
 - Urban: Majors 30-20~ Pixels
-
 - Jungle: Fightable 100~ Pixels
-
 - Marsh: Fightable 90~ Pixels
-
 - Desert: Fightable 120~ Pixels
-
 - All Impassable provinces are double of what the terrain is. Example for plains is 160~ Pixels
 
 # **Naval Province Map Size Guidlines**
 Using Pdn I Gaussian blur'ed then erased 10x to get the distance from land starting from the land/sea map. Gaussian blur'ing direct 10, near 20, and deep 40. I start at the end of each layer. For Near I Median Blur 1x, well for Deep I median Blur 3x.
 
 - Naval: Direct 1000-1500~ Pixels (Covers Coastal/Land)
-
 - Naval: Near 2000-3000~ Pixels   (Covers 2-3~ Direct)
-
 - Naval: Deep 4000-6000~ Pixels   (Covers 3-5~ Near)
-
 - Naval: Waste(Remaining) 10000-16000~ Pixels
 
 ## State Flags
