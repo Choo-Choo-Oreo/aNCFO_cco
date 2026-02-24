@@ -124,8 +124,8 @@
 		NDefines.NBuildings.MAX_SHARED_SLOTS = 66
 		NDefines.NBuildings.DESTRUCTION_COOLDOWN_IN_WAR = 90		-- Default 30
 
-		NDefines.NBuildings.INFRASTRUCTURE_RESOURCE_BONUS = 0.30	-- Was 0.20, we increase this to improve industrialization.
-		NDefines.NBuildings.SUPPLY_ROUTE_RESOURCE_BONUS = 0.30		-- Was 0.20, we increase this to improve industrialization.
+		NDefines.NBuildings.INFRASTRUCTURE_RESOURCE_BONUS = 0.12	-- Was 0.15, we increase this to improve industrialization.
+		NDefines.NBuildings.SUPPLY_ROUTE_RESOURCE_BONUS = 0.20		-- Was 0.20, we increase this to improve industrialization.
 
 	-- NDeployment
 

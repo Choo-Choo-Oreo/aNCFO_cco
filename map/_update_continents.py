@@ -4,7 +4,7 @@ update_continents.py
 Bulk-update HoI4 map/definition.csv continent IDs using Strategic Regions.
 
 USAGE COMMAND:
-py update_continents.py -d definition.csv -s strategicregions -c config.json --verbose
+py _update_continents.py -d definition.csv -s strategicregions -c config.json --verbose
 """
 
 import argparse
