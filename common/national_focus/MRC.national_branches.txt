@@ -15,7 +15,34 @@ focus_tree = { # Merchant-Republicism
 	shared_focus = MRC_focus_military_nearing_speed_sound # Addional Air Force
 	shared_focus = MRC_focus_military_far_reaching_range  # Addional Air Force
 	shared_focus = MRC_focus_military_insulae_maritime_defense_force # Modifers
+	shortcut = {
+		name = MRC_political_lobbying_shortcut
+		target = MRC_political_lobbying
+		scroll_wheel_factor = 1.0
+		trigger = {  }
+	}
 
+	shortcut = {
+		name = MRC_focus_military_insulae_ground_defense_force_shortcut
+		target = MRC_focus_military_insulae_ground_defense_force
+		scroll_wheel_factor = 1.0
+		trigger = {  }
+	}
+
+	shortcut = {
+		name = MRC_focus_military_insulae_airspace_defense_force_shortcut
+		target = MRC_focus_military_insulae_airspace_defense_force
+		scroll_wheel_factor = 1.0
+		trigger = {  }
+	}
+
+	shortcut = {
+		name = MRC_focus_military_insulae_maritime_defense_force_shortcut
+		target = MRC_focus_military_insulae_maritime_defense_force
+		scroll_wheel_factor = 1.0
+		trigger = {  }
+	}
+	# MJU Starting
 	focus = { # Party Elections Branch: Political Lobbying
 		id = MRC_political_lobbying
 		icon = GFX_focus_unknown_political
@@ -47,278 +74,278 @@ focus_tree = { # Merchant-Republicism
 		}
 	}
 
-		focus = { # Hamper the Progressive Movement
-			id = MRC_hamper_progressive_movement
-			icon = GFX_focus_unknown_political
-			mutually_exclusive = { focus = MRC_support_progressive_movement }
-			prerequisite = { focus = MRC_political_lobbying }
-			relative_position_id = MRC_political_lobbying
-			x = -3
-			y = 1
-		
-			cost = 1
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = no
+	focus = { # Hamper the Progressive Movement
+		id = MRC_hamper_progressive_movement
+		icon = GFX_focus_unknown_political
+		mutually_exclusive = { focus = MRC_support_progressive_movement }
+		prerequisite = { focus = MRC_political_lobbying }
+		relative_position_id = MRC_political_lobbying
+		x = -3
+		y = 1
+	
+		cost = 1
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
 
-			available = {
-			}
-			bypass = {
-			}
-		
-			ai_will_do = {
-				factor = 2
-				modifier = { factor = 0.67 }
-			}
+		available = {
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			factor = 2
+			modifier = { factor = 0.67 }
+		}
 
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_hamper_progressive_movement"
-				country_event = MRC_election.0
-				add_power_balance_value = { id = power_balance_MRC_political_balance value = -0.025 }
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_hamper_progressive_movement"
+			country_event = MRC_election.0
+			add_power_balance_value = { id = power_balance_MRC_political_balance value = -0.025 }
+		}
+	}
+
+	focus = { # Support the Progressive Movement
+		id = MRC_support_progressive_movement
+		icon = GFX_focus_unknown_political
+		mutually_exclusive = { focus = MRC_hamper_progressive_movement }
+		prerequisite = { focus = MRC_political_lobbying }
+		relative_position_id = MRC_political_lobbying
+		x = -1
+		y = 1
+	
+		cost = 1
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		available = {
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			factor = 2
+			modifier = { factor = 1.34 }
+			modifier = {
+				add = 0.10
+				factor = 1.10
+				is_historical_focus_on = yes
 			}
 		}
 
-		focus = { # Support the Progressive Movement
-			id = MRC_support_progressive_movement
-			icon = GFX_focus_unknown_political
-			mutually_exclusive = { focus = MRC_hamper_progressive_movement }
-			prerequisite = { focus = MRC_political_lobbying }
-			relative_position_id = MRC_political_lobbying
-			x = -1
-			y = 1
-		
-			cost = 1
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = no
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_progressive_movement"
+			country_event = MRC_election.1
+			add_power_balance_value = { id = power_balance_MRC_political_balance value = 0.05 }
+		}
+	}
 
-			available = {
-			}
-			bypass = {
-			}
-		
-			ai_will_do = {
-				factor = 2
-				modifier = { factor = 1.34 }
-				modifier = {
-					add = 0.10
-					factor = 1.10
-					is_historical_focus_on = yes
-				}
-			}
+	focus = { # Priority of Federal Government
+		id = MRC_federal_governance
+		icon = GFX_focus_unknown_political
+		mutually_exclusive = { focus = MRC_local_governance }
+		prerequisite = { focus = MRC_political_lobbying }
+		relative_position_id = MRC_political_lobbying
+		x = 1
+		y = 1
+	
+		cost = 1
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
 
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_progressive_movement"
-				country_event = MRC_election.1
-				add_power_balance_value = { id = power_balance_MRC_political_balance value = 0.05 }
+		available = {
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			factor = 2
+			modifier = { factor = 1.34 }
+			modifier = {
+				add = 0.10
+				factor = 1.10
+				is_historical_focus_on = yes
 			}
 		}
 
-		focus = { # Priority of Federal Government
-			id = MRC_federal_governance
-			icon = GFX_focus_unknown_political
-			mutually_exclusive = { focus = MRC_local_governance }
-			prerequisite = { focus = MRC_political_lobbying }
-			relative_position_id = MRC_political_lobbying
-			x = 1
-			y = 1
-		
-			cost = 1
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = no
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_federal_governance"
+			country_event = MRC_election.2
+			add_power_balance_value = { id = power_balance_MRC_political_balance value = -0.025 }
+		}
+	}
 
-			available = {
-			}
-			bypass = {
-			}
-		
-			ai_will_do = {
-				factor = 2
-				modifier = { factor = 1.34 }
-				modifier = {
-					add = 0.10
-					factor = 1.10
-					is_historical_focus_on = yes
-				}
-			}
+	focus = { # Priority of Local Governments
+		id = MRC_local_governance
+		icon = GFX_focus_unknown_political
+		mutually_exclusive = { focus = MRC_federal_governance }
+		prerequisite = { focus = MRC_political_lobbying }
+		relative_position_id = MRC_political_lobbying
+		x = 3
+		y = 1
+	
+		cost = 1
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
 
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_federal_governance"
-				country_event = MRC_election.2
-				add_power_balance_value = { id = power_balance_MRC_political_balance value = -0.025 }
+		available = {
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			factor = 2
+			modifier = { factor = 0.67 }
+			modifier = {
+				add = 0.10
+				factor = 1.10
+				is_historical_focus_on = yes
 			}
 		}
 
-		focus = { # Priority of Local Governments
-			id = MRC_local_governance
-			icon = GFX_focus_unknown_political
-			mutually_exclusive = { focus = MRC_federal_governance }
-			prerequisite = { focus = MRC_political_lobbying }
-			relative_position_id = MRC_political_lobbying
-			x = 3
-			y = 1
-		
-			cost = 1
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = no
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_local_governance"
+			country_event = MRC_election.3
+			add_power_balance_value = { id = power_balance_MRC_political_balance value = 0.05 }
+		}
+	}
 
-			available = {
-			}
-			bypass = {
-			}
-		
-			ai_will_do = {
-				factor = 2
-				modifier = { factor = 0.67 }
-				modifier = {
-					add = 0.10
-					factor = 1.10
-					is_historical_focus_on = yes
-				}
-			}
+	focus = { # Empower the Mercanaries
+		id = MRC_empower_mercenaries
+		icon = GFX_focus_unknown_political
+		mutually_exclusive = { focus = MRC_regulate_mercenaries }
+		prerequisite = { focus = MRC_support_progressive_movement focus = MRC_hamper_progressive_movement focus = MRC_local_governance focus = MRC_federal_governance }
+		relative_position_id = MRC_political_lobbying
+		x = -3
+		y = 2
+	
+		cost = 1
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
 
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_local_governance"
-				country_event = MRC_election.3
-				add_power_balance_value = { id = power_balance_MRC_political_balance value = 0.05 }
+		available = {
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			factor = 2
+			modifier = { factor = 0.67 }
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_empower_mercenaries"
+			country_event = MRC_election.4
+			add_power_balance_value = { id = power_balance_MRC_political_balance value = -0.025 }
+		}
+	}
+
+	focus = { # Regulate the Mercanaries
+		id = MRC_regulate_mercenaries
+		icon = GFX_focus_unknown_political
+		mutually_exclusive = { focus = MRC_empower_mercenaries }
+		prerequisite = { focus = MRC_support_progressive_movement focus = MRC_hamper_progressive_movement focus = MRC_local_governance focus = MRC_federal_governance }
+		relative_position_id = MRC_political_lobbying
+		x = -1
+		y = 2
+	
+		cost = 1
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		available = {
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			factor = 2
+			modifier = { factor = 1.34 }
+			modifier = {
+				add = 0.10
+				factor = 1.10
+				is_historical_focus_on = yes
 			}
 		}
 
-		focus = { # Empower the Mercanaries
-			id = MRC_empower_mercenaries
-			icon = GFX_focus_unknown_political
-			mutually_exclusive = { focus = MRC_regulate_mercenaries }
-			prerequisite = { focus = MRC_support_progressive_movement focus = MRC_hamper_progressive_movement focus = MRC_local_governance focus = MRC_federal_governance }
-			relative_position_id = MRC_political_lobbying
-			x = -3
-			y = 2
-		
-			cost = 1
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = no
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_regulate_mercenaries"
+			country_event = MRC_election.5
+			add_power_balance_value = { id = power_balance_MRC_political_balance value = 0.05 }
+		}
+	}
 
-			available = {
-			}
-			bypass = {
-			}
-		
-			ai_will_do = {
-				factor = 2
-				modifier = { factor = 0.67 }
-			}
+	focus = { # Empower the Important Guilds
+		id = MRC_side_with_guilds
+		icon = GFX_focus_unknown_political
+		mutually_exclusive = { focus = MRC_against_the_guilds }
+		prerequisite = { focus = MRC_support_progressive_movement focus = MRC_hamper_progressive_movement focus = MRC_local_governance focus = MRC_federal_governance }
+		relative_position_id = MRC_political_lobbying
+		x = 1
+		y = 2
+	
+		cost = 1
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
 
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_empower_mercenaries"
-				country_event = MRC_election.4
-				add_power_balance_value = { id = power_balance_MRC_political_balance value = -0.025 }
+		available = {
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			factor = 2
+			modifier = { factor = 1.34 }
+			modifier = {
+				add = 0.10
+				factor = 1.10
+				is_historical_focus_on = yes
 			}
 		}
 
-		focus = { # Regulate the Mercanaries
-			id = MRC_regulate_mercenaries
-			icon = GFX_focus_unknown_political
-			mutually_exclusive = { focus = MRC_empower_mercenaries }
-			prerequisite = { focus = MRC_support_progressive_movement focus = MRC_hamper_progressive_movement focus = MRC_local_governance focus = MRC_federal_governance }
-			relative_position_id = MRC_political_lobbying
-			x = -1
-			y = 2
-		
-			cost = 1
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = no
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_side_with_guilds"
+			country_event = MRC_election.6
+			add_power_balance_value = { id = power_balance_MRC_political_balance value = -0.025 }
+		}
+	}
 
-			available = {
-			}
-			bypass = {
-			}
-		
-			ai_will_do = {
-				factor = 2
-				modifier = { factor = 1.34 }
-				modifier = {
-					add = 0.10
-					factor = 1.10
-					is_historical_focus_on = yes
-				}
-			}
+	focus = { # Crackdown on Corrupt Guilds
+		id = MRC_against_the_guilds
+		icon = GFX_focus_unknown_political
+		mutually_exclusive = { focus = MRC_side_with_guilds }
+		prerequisite = { focus = MRC_support_progressive_movement focus = MRC_hamper_progressive_movement focus = MRC_local_governance focus = MRC_federal_governance }
+		relative_position_id = MRC_political_lobbying
+		x = 3
+		y = 2
+	
+		cost = 1
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
 
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_regulate_mercenaries"
-				country_event = MRC_election.5
-				add_power_balance_value = { id = power_balance_MRC_political_balance value = 0.05 }
-			}
+		available = {
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			factor = 2
+			modifier = { factor = 0.67 }
 		}
 
-		focus = { # Empower the Important Guilds
-			id = MRC_side_with_guilds
-			icon = GFX_focus_unknown_political
-			mutually_exclusive = { focus = MRC_against_the_guilds }
-			prerequisite = { focus = MRC_support_progressive_movement focus = MRC_hamper_progressive_movement focus = MRC_local_governance focus = MRC_federal_governance }
-			relative_position_id = MRC_political_lobbying
-			x = 1
-			y = 2
-		
-			cost = 1
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = no
-
-			available = {
-			}
-			bypass = {
-			}
-		
-			ai_will_do = {
-				factor = 2
-				modifier = { factor = 1.34 }
-				modifier = {
-					add = 0.10
-					factor = 1.10
-					is_historical_focus_on = yes
-				}
-			}
-
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_side_with_guilds"
-				country_event = MRC_election.6
-				add_power_balance_value = { id = power_balance_MRC_political_balance value = -0.025 }
-			}
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_against_the_guilds"
+			country_event = MRC_election.7
+			add_power_balance_value = { id = power_balance_MRC_political_balance value = 0.05 }
 		}
-
-		focus = { # Crackdown on Corrupt Guilds
-			id = MRC_against_the_guilds
-			icon = GFX_focus_unknown_political
-			mutually_exclusive = { focus = MRC_side_with_guilds }
-			prerequisite = { focus = MRC_support_progressive_movement focus = MRC_hamper_progressive_movement focus = MRC_local_governance focus = MRC_federal_governance }
-			relative_position_id = MRC_political_lobbying
-			x = 3
-			y = 2
-		
-			cost = 1
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = no
-
-			available = {
-			}
-			bypass = {
-			}
-		
-			ai_will_do = {
-				factor = 2
-				modifier = { factor = 0.67 }
-			}
-
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_against_the_guilds"
-				country_event = MRC_election.7
-				add_power_balance_value = { id = power_balance_MRC_political_balance value = 0.05 }
-			}
-		}
+	}
 
 	focus = { # Foreign Intervention Branch: Intervention Focus Foreign Policy
 		id = MRC_foreign_intervention_focus
@@ -360,84 +387,86 @@ focus_tree = { # Merchant-Republicism
 		}
 	}
 
-		focus = { # Peninsula Annexation
-			id = MRC_peninsula_annexation
-			icon = GFX_focus_unknown_political
-			prerequisite = { focus = MRC_foreign_intervention_focus }
-			relative_position_id = MRC_foreign_intervention_focus
-			x = -4
-			y = 1
+	focus = { # Peninsula Annexation
+		id = MRC_peninsula_annexation
+		icon = GFX_focus_unknown_political
+		prerequisite = { focus = MRC_foreign_intervention_focus }
+		relative_position_id = MRC_foreign_intervention_focus
+		x = -4
+		y = 1
 
-			cost = 8
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = no
+		cost = 8
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
 
-			allow_branch = {
-				NOT = { OR = {
-					has_completed_focus = MRC_internal_balanced_focus
-					has_completed_focus = MRC_foreign_neutrality_focus
-				} }
-			}
-			available = {
-				count_triggers = {
-				    amount = 2
-				    12 = { resistance < 5 }
-					74 = { resistance < 5 }
-					76 = { resistance < 5 }
-				}
-			}
-			bypass = {
-			}
-
-			ai_will_do = {
-				factor = 2
-			}
-
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_loosen_protectionist_tariffs"
-				12 = { add_core_of = ROOT }
-				74 = { add_core_of = ROOT }
-				76 = { add_core_of = ROOT }
+		allow_branch = {
+			NOT = { OR = {
+				has_completed_focus = MRC_internal_balanced_focus
+				has_completed_focus = MRC_foreign_neutrality_focus
+			} }
+		}
+		available = {
+			count_triggers = {
+			    amount = 2
+			    12 = { resistance < 5 }
+				74 = { resistance < 5 }
+				76 = { resistance < 5 }
 			}
 		}
-
-		focus = { # Southern Financial Assistance
-			id = MRC_southern_financial_help
-			icon = GFX_
-			prerequisite = { focus = MRC_foreign_intervention_focus }
-			relative_position_id = MRC_foreign_intervention_focus
-			x = -9
-			y = 1
-		
-			cost = 10
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = no
-
-			allow_branch = {
-				NOT = { OR = {
-					has_completed_focus = MRC_internal_balanced_focus
-					has_completed_focus = MRC_foreign_neutrality_focus
-				} }
-			}
-			available = {
-				has_dynamic_modifier = { modifier = MRC_idea_most_serene_republic_of_insulae_modifier }
-			}
-			bypass = {
-			}
-		
-			ai_will_do = {
-				factor = 2
-			}
-
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_southern_financial_help"
-				swap_ideas = { remove_idea = MRC_idea_balanced_guilds add_idea = MRC_idea_economic_guilds }
-				add_war_support = 0.05
-				add_political_power = -50
-			}
+		bypass = {
 		}
+
+		ai_will_do = {
+			factor = 2
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_loosen_protectionist_tariffs"
+			12 = { add_core_of = ROOT }
+			74 = { add_core_of = ROOT }
+			76 = { add_core_of = ROOT }
+			set_temp_variable = { var = SEH_temp_heritage value = 47 tooltip = SEH_add_accepted_heritage_partial_tt }
+			SEH_add_accepted_heritage_partial = yes
+		}
+	}
+
+	focus = { # Southern Financial Assistance
+		id = MRC_southern_financial_help
+		icon = GFX_
+		prerequisite = { focus = MRC_foreign_intervention_focus }
+		relative_position_id = MRC_foreign_intervention_focus
+		x = -9
+		y = 1
+	
+		cost = 10
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		allow_branch = {
+			NOT = { OR = {
+				has_completed_focus = MRC_internal_balanced_focus
+				has_completed_focus = MRC_foreign_neutrality_focus
+			} }
+		}
+		available = {
+			has_dynamic_modifier = { modifier = MRC_idea_most_serene_republic_of_insulae_modifier }
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			factor = 2
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_southern_financial_help"
+			swap_ideas = { remove_idea = MRC_idea_balanced_guilds add_idea = MRC_idea_economic_guilds }
+			add_war_support = 0.05
+			add_political_power = -50
+		}
+	}
 
 	focus = { # Progressive Neutrality Branch: Neutrality Focus Foreign Diplomacy
 		id = MRC_foreign_neutrality_focus
@@ -479,87 +508,89 @@ focus_tree = { # Merchant-Republicism
 		}
 	}
 
-		focus = { # Peninsula Assimilation
-			id = MRC_peninsula_assimilation
-			icon = GFX_focus_unknown_political
-			prerequisite = { focus = MRC_foreign_neutrality_focus }
-			relative_position_id = MRC_foreign_neutrality_focus
-			x = 4
-			y = 1
+	focus = { # Peninsula Assimilation
+		id = MRC_peninsula_assimilation
+		icon = GFX_focus_unknown_political
+		prerequisite = { focus = MRC_foreign_neutrality_focus }
+		relative_position_id = MRC_foreign_neutrality_focus
+		x = 4
+		y = 1
 
-			cost = 10
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = no
+		cost = 10
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
 
-			allow_branch = {
-				NOT = { OR = {
-					has_completed_focus = MRC_foreign_intervention_focus
-					has_completed_focus = MRC_internal_balanced_focus
-				} }
-			}
-			available = {
-				count_triggers = {
-				    amount = 2
-				    12 = { compliance > 40 }
-					74 = { compliance > 40 }
-					76 = { compliance > 40 }
-				}
-			}
-			bypass = {
-			}
-
-			ai_will_do = {
-				factor = 2
-			}
-
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_loosen_protectionist_tariffs"
-				12 = { add_core_of = ROOT }
-				74 = { add_core_of = ROOT }
-				76 = { add_core_of = ROOT }
+		allow_branch = {
+			NOT = { OR = {
+				has_completed_focus = MRC_foreign_intervention_focus
+				has_completed_focus = MRC_internal_balanced_focus
+			} }
+		}
+		available = {
+			count_triggers = {
+			    amount = 2
+			    12 = { compliance > 40 }
+				74 = { compliance > 40 }
+				76 = { compliance > 40 }
 			}
 		}
-
-		focus = { # Southern Military Withdrawal
-			id = MRC_southern_retreat
-			icon = GFX_
-			prerequisite = { focus = MRC_foreign_neutrality_focus }
-			relative_position_id = MRC_foreign_neutrality_focus
-			x = 9
-			y = 1
-		
-			cost = 10
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = no
-
-			allow_branch = {
-				NOT = { OR = {
-					has_completed_focus = MRC_foreign_intervention_focus
-					has_completed_focus = MRC_internal_balanced_focus
-				} }
-			}
-			available = {
-				has_dynamic_modifier = { modifier = MRC_idea_most_serene_republic_of_insulae_modifier }
-			}
-			bypass = {
-			}
-		
-			ai_will_do = {
-				factor = 2
-			}
-
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_southern_retreat"
-				swap_ideas = { remove_idea = MRC_idea_balanced_guilds add_idea = MRC_idea_workers_guilds }
-				add_war_support = -0.05
-				add_stability = 0.10
-				132 = { owner = { transfer_state = 250 } }
-				133 = { owner = { transfer_state = 249 } }
-				173 = { owner = { transfer_state = 252 } }
-			}
+		bypass = {
 		}
+
+		ai_will_do = {
+			factor = 2
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_loosen_protectionist_tariffs"
+			12 = { add_core_of = ROOT }
+			74 = { add_core_of = ROOT }
+			76 = { add_core_of = ROOT }
+			set_temp_variable = { var = SEH_temp_heritage value = 47 tooltip = SEH_add_accepted_heritage_full_tt }
+			SEH_add_accepted_heritage_full = yes
+		}
+	}
+
+	focus = { # Southern Military Withdrawal
+		id = MRC_southern_retreat
+		icon = GFX_
+		prerequisite = { focus = MRC_foreign_neutrality_focus }
+		relative_position_id = MRC_foreign_neutrality_focus
+		x = 9
+		y = 1
+	
+		cost = 10
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		allow_branch = {
+			NOT = { OR = {
+				has_completed_focus = MRC_foreign_intervention_focus
+				has_completed_focus = MRC_internal_balanced_focus
+			} }
+		}
+		available = {
+			has_dynamic_modifier = { modifier = MRC_idea_most_serene_republic_of_insulae_modifier }
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			factor = 2
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_southern_retreat"
+			swap_ideas = { remove_idea = MRC_idea_balanced_guilds add_idea = MRC_idea_workers_guilds }
+			add_war_support = -0.05
+			add_stability = 0.10
+			132 = { owner = { transfer_state = 250 } }
+			133 = { owner = { transfer_state = 249 } }
+			173 = { owner = { transfer_state = 252 } }
+		}
+	}
 
 	focus = { # Balanced Focus Internal Policy
 		id = MRC_internal_balanced_focus
@@ -608,194 +639,194 @@ focus_tree = { # Merchant-Republicism
 		}
 	}
 
-		focus = { # Home Isles Buildup
-			id = MRC_home_islands_buildup
-			icon = GFX_focus_unknown_industry
-			prerequisite = { focus = MRC_foreign_intervention_focus focus = MRC_internal_balanced_focus focus = MRC_foreign_neutrality_focus }
-			x = 0
-			y = 4
-		
-			cost = 10
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = no
-		
-			available = {
-			}
-			bypass = {
-			}
-		
-			ai_will_do = {
-				factor = 2
-			}
+	focus = { # Home Isles Buildup
+		id = MRC_home_islands_buildup
+		icon = GFX_focus_unknown_industry
+		prerequisite = { focus = MRC_foreign_intervention_focus focus = MRC_internal_balanced_focus focus = MRC_foreign_neutrality_focus }
+		x = 0
+		y = 4
+	
+		cost = 10
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+	
+		available = {
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			factor = 2
+		}
 
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_home_islands_buildup"
-				add_timed_idea = {
-					idea = MRC_idea_homeland_buildup
-					days = 360
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_home_islands_buildup"
+			add_timed_idea = {
+				idea = MRC_idea_homeland_buildup
+				days = 360
+			}
+			13={
+				add_extra_state_shared_building_slots = 3
+				add_building_construction = {
+					type = steel_complex
+					level = 1
+					instant_build = yes
 				}
-				13={
-					add_extra_state_shared_building_slots = 3
-					add_building_construction = {
-						type = steel_complex
-						level = 1
-						instant_build = yes
-					}
+			}
+			14={
+				add_extra_state_shared_building_slots = 3
+				add_building_construction = {
+					type = steel_complex
+					level = 1
+					instant_build = yes
 				}
-				14={
-					add_extra_state_shared_building_slots = 3
-					add_building_construction = {
-						type = steel_complex
-						level = 1
-						instant_build = yes
-					}
+			}
+			15={
+				add_extra_state_shared_building_slots = 3
+				add_building_construction = {
+					type = steel_complex
+					level = 1
+					instant_build = yes
 				}
-				15={
-					add_extra_state_shared_building_slots = 3
-					add_building_construction = {
-						type = steel_complex
-						level = 1
-						instant_build = yes
-					}
+			}
+			71={
+				add_extra_state_shared_building_slots = 3
+				add_building_construction = {
+					type = steel_complex
+					level = 1
+					instant_build = yes
 				}
-				71={
-					add_extra_state_shared_building_slots = 3
-					add_building_construction = {
-						type = steel_complex
-						level = 1
-						instant_build = yes
-					}
-				}
-				72={
-					add_extra_state_shared_building_slots = 3
-					add_building_construction = {
-						type = steel_complex
-						level = 1
-						instant_build = yes
-					}
+			}
+			72={
+				add_extra_state_shared_building_slots = 3
+				add_building_construction = {
+					type = steel_complex
+					level = 1
+					instant_build = yes
 				}
 			}
 		}
+	}
 
-		focus = { # Most Serene Republic of Insulae
-			id = MRC_focus_most_serene_republic_of_insulae
-			icon = GFX_focus_unknown_political
-			prerequisite = { focus = MRC_home_islands_buildup }
-			relative_position_id = MRC_home_islands_buildup
-			x = 0
-			y = 1
-		
-			cost = 5
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = no
-		
-			available = {
-			}
-			bypass = {
-			}
-		
-			ai_will_do = {
-				factor = 2
-			}
+	focus = { # Most Serene Republic of Insulae
+		id = MRC_focus_most_serene_republic_of_insulae
+		icon = GFX_focus_unknown_political
+		prerequisite = { focus = MRC_home_islands_buildup }
+		relative_position_id = MRC_home_islands_buildup
+		x = 0
+		y = 1
+	
+		cost = 5
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+	
+		available = {
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			factor = 2
+		}
 
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_most_serene_republic_of_insulae"
-				unlock_decision_tooltip = industry_dynamic_MRC
-				add_dynamic_modifier = { modifier = MRC_idea_most_serene_republic_of_insulae_modifier }
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_most_serene_republic_of_insulae"
+			unlock_decision_tooltip = industry_dynamic_MRC
+			add_dynamic_modifier = { modifier = MRC_idea_most_serene_republic_of_insulae_modifier }
+		}
+	}
+
+	focus = { # Interventionist Policy
+		id = MRC_intervention_policy
+		icon = GFX_focus_unknown_military
+		mutually_exclusive = { focus = MRC_neutrality_policy }
+		prerequisite = { focus = MRC_focus_most_serene_republic_of_insulae }
+		relative_position_id = MRC_focus_most_serene_republic_of_insulae
+		x = -1
+		y = 1
+	
+		cost = 5
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+	
+		available = {
+			is_historical_railroading_on = yes
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			factor = 5
+			modifier = {
+				add = 0.10
+				factor = 1.10
+				KGK = { is_ai = no }
+			}
+			modifier = {
+				add = 0.10
+				factor = 1.10
+				REP = { is_ai = no }
+			}
+			modifier = {
+				add = 0.10
+				factor = 1.10
+				RVV = { is_ai = no }
+			}
+			modifier = {
+				add = 0.10
+				factor = 1.10
+				UFS = { is_ai = no }
 			}
 		}
 
-		focus = { # Interventionist Policy
-			id = MRC_intervention_policy
-			icon = GFX_focus_unknown_military
-			mutually_exclusive = { focus = MRC_neutrality_policy }
-			prerequisite = { focus = MRC_focus_most_serene_republic_of_insulae }
-			relative_position_id = MRC_focus_most_serene_republic_of_insulae
-			x = -1
-			y = 1
-		
-			cost = 5
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = no
-		
-			available = {
-				is_historical_railroading_on = yes
-			}
-			bypass = {
-			}
-		
-			ai_will_do = {
-				factor = 5
-				modifier = {
-					add = 0.10
-					factor = 1.10
-					KGK = { is_ai = no }
-				}
-				modifier = {
-					add = 0.10
-					factor = 1.10
-					REP = { is_ai = no }
-				}
-				modifier = {
-					add = 0.10
-					factor = 1.10
-					RVV = { is_ai = no }
-				}
-				modifier = {
-					add = 0.10
-					factor = 1.10
-					UFS = { is_ai = no }
-				}
-			}
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_intervention_policy"
+			custom_effect_tooltip = unlocks_focus_tt
+			country_event = MRC.0
+			add_power_balance_value = { id = power_balance_MRC_political_balance value = -0.025 }
+			add_war_support = 0.05
+		}
+	}
 
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_intervention_policy"
-				custom_effect_tooltip = unlocks_focus_tt
-				country_event = MRC.0
-				add_power_balance_value = { id = power_balance_MRC_political_balance value = -0.025 }
-				add_war_support = 0.05
+	focus = { # Neutrality Policy
+		id = MRC_neutrality_policy
+		icon = GFX_focus_unknown_military
+		mutually_exclusive = { focus = MRC_intervention_policy }
+		prerequisite = { focus = MRC_focus_most_serene_republic_of_insulae }
+		relative_position_id = MRC_focus_most_serene_republic_of_insulae
+		x = 1
+		y = 1
+	
+		cost = 5
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+	
+		available = {
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			factor = 5
+			modifier = {
+				add = 0.10
+				factor = 1.10
+				is_historical_focus_on = yes
 			}
 		}
 
-		focus = { # Neutrality Policy
-			id = MRC_neutrality_policy
-			icon = GFX_focus_unknown_military
-			mutually_exclusive = { focus = MRC_intervention_policy }
-			prerequisite = { focus = MRC_focus_most_serene_republic_of_insulae }
-			relative_position_id = MRC_focus_most_serene_republic_of_insulae
-			x = 1
-			y = 1
-		
-			cost = 5
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = no
-		
-			available = {
-			}
-			bypass = {
-			}
-		
-			ai_will_do = {
-				factor = 5
-				modifier = {
-					add = 0.10
-					factor = 1.10
-					is_historical_focus_on = yes
-				}
-			}
-
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_neutrality_policy"
-				custom_effect_tooltip = unlocks_focus_tt
-				country_event = MRC.0
-				add_power_balance_value = { id = power_balance_MRC_political_balance value = 0.035 }
-				add_war_support = -0.05
-			}
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_neutrality_policy"
+			custom_effect_tooltip = unlocks_focus_tt
+			country_event = MRC.0
+			add_power_balance_value = { id = power_balance_MRC_political_balance value = 0.035 }
+			add_war_support = -0.05
 		}
+	}
 
 	focus = { # Trade Outpost Buildup
 		id = MRC_merchents_outpost
@@ -847,36 +878,36 @@ focus_tree = { # Merchant-Republicism
 		}
 	}
 
-		focus = { # Grand Canal trade Deal
-			id = MRC_canal_trade_deal
-			icon = GFX_focus_unknown_political
-			prerequisite = { focus = MRC_merchents_outpost }
-			prerequisite = { focus = MRC_foreign_intervention_focus focus = MRC_internal_balanced_focus }
-			relative_position_id = MRC_foreign_intervention_focus
-			x = 0
-			y = 3
-		
-			cost = 5
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = no
-		
-			available = {
-				has_dynamic_modifier = { modifier = MRC_idea_most_serene_republic_of_insulae_modifier }
-			}
-			bypass = {
-			}
-		
-			ai_will_do = {
-				factor = 2
-			}
-
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_canal_trade_deal"
-				custom_effect_tooltip = NEGOTIATE_GRAND_CANAL
-				set_country_flag = MRC_negotiate_grand_canal
-			}
+	focus = { # Grand Canal trade Deal
+		id = MRC_canal_trade_deal
+		icon = GFX_focus_unknown_political
+		prerequisite = { focus = MRC_merchents_outpost }
+		prerequisite = { focus = MRC_foreign_intervention_focus focus = MRC_internal_balanced_focus }
+		relative_position_id = MRC_foreign_intervention_focus
+		x = 0
+		y = 3
+	
+		cost = 5
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+	
+		available = {
+			has_dynamic_modifier = { modifier = MRC_idea_most_serene_republic_of_insulae_modifier }
 		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			factor = 2
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_canal_trade_deal"
+			custom_effect_tooltip = NEGOTIATE_GRAND_CANAL
+			set_country_flag = MRC_negotiate_grand_canal
+		}
+	}
 
 	focus = { # Secondary Isle Buildup
 		id = MRC_secondary_islands_buildup
@@ -948,43 +979,43 @@ focus_tree = { # Merchant-Republicism
 		}
 	}
 
-		focus = { # Foreign Trade Policies
-			id = MRC_foreign_trade
-			icon = GFX_focus_unknown_political
-			prerequisite = { focus = MRC_secondary_islands_buildup }
-			prerequisite = { focus = MRC_foreign_neutrality_focus focus = MRC_internal_balanced_focus }
-			relative_position_id = MRC_foreign_neutrality_focus
-			x = 0
-			y = 3
-		
-			cost = 5
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = no
-		
-			available = {
-				has_dynamic_modifier = { modifier = MRC_idea_most_serene_republic_of_insulae_modifier }
-			}
-			bypass = {
-			}
-		
-			ai_will_do = {
-				factor = 2
-			}
+	focus = { # Foreign Trade Policies
+		id = MRC_foreign_trade
+		icon = GFX_focus_unknown_political
+		prerequisite = { focus = MRC_secondary_islands_buildup }
+		prerequisite = { focus = MRC_foreign_neutrality_focus focus = MRC_internal_balanced_focus }
+		relative_position_id = MRC_foreign_neutrality_focus
+		x = 0
+		y = 3
+	
+		cost = 5
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+	
+		available = {
+			has_dynamic_modifier = { modifier = MRC_idea_most_serene_republic_of_insulae_modifier }
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			factor = 2
+		}
 
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_foreign_trade"
-				custom_effect_tooltip = modify_MRC_country_most_serene_republic_modifier_tt
-				add_to_variable = {
-					MRC.MRC_trade_opinion_factor_modifier = 1.00
-					tooltip = trade_opinion_factor_tt
-				}
-				add_to_variable = {
-					MRC.MRC_resource_trade_cost_bonus_per_factory_modifier = 1.00
-					tooltip = resource_trade_cost_bonus_per_factory_tt
-				}
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_foreign_trade"
+			custom_effect_tooltip = modify_MRC_country_most_serene_republic_modifier_tt
+			add_to_variable = {
+				MRC.MRC_trade_opinion_factor_modifier = 1.00
+				tooltip = trade_opinion_factor_tt
+			}
+			add_to_variable = {
+				MRC.MRC_resource_trade_cost_bonus_per_factory_modifier = 1.00
+				tooltip = resource_trade_cost_bonus_per_factory_tt
 			}
 		}
+	}
 	# Mercantilism Branch
 	focus = { # Economic Status-Quo
 		id = MRC_economic_status_quo
@@ -1039,63 +1070,63 @@ focus_tree = { # Merchant-Republicism
 		}
 	}
 
-		focus = { # Development Tariffs
-			id = MRC_development_tariffs
-			icon = GFX_focus_unknown_industry
-			prerequisite = { focus = MRC_economic_status_quo }
-			relative_position_id = MRC_economic_status_quo
-			x = -1
-			y = 1
-		
-			cost = 10
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = no
-		
-			available = {
-			}
-			bypass = {
-			}
-		
-			ai_will_do = {
-				factor = 2
-			}
-
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_development_tariffs"
-				add_power_balance_value = { id = power_balance_MRC_political_balance value = -0.025 }
-				trade_lower = yes
-			}
+	focus = { # Development Tariffs
+		id = MRC_development_tariffs
+		icon = GFX_focus_unknown_industry
+		prerequisite = { focus = MRC_economic_status_quo }
+		relative_position_id = MRC_economic_status_quo
+		x = -1
+		y = 1
+	
+		cost = 10
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+	
+		available = {
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			factor = 2
 		}
 
-		focus = { # Guilds Empower
-			id = MRC_guilds_empower_focus
-			icon = GFX_focus_unknown_industry
-			mutually_exclusive = { focus = MRC_guilds_workers_focus }
-			prerequisite = { focus = MRC_economic_status_quo }
-			relative_position_id = MRC_economic_status_quo
-			x = 0
-			y = 2
-		
-			cost = 10
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = no
-		
-			available = {
-			}
-			bypass = {
-			}
-		
-			ai_will_do = {
-				factor = 2
-			}
-
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_guilds_empower_focus"
-				swap_ideas = { remove_idea = MRC_idea_balanced_guilds add_idea = MRC_idea_economic_guilds }
-			}
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_development_tariffs"
+			add_power_balance_value = { id = power_balance_MRC_political_balance value = -0.025 }
+			trade_lower = yes
 		}
+	}
+
+	focus = { # Guilds Empower
+		id = MRC_guilds_empower_focus
+		icon = GFX_focus_unknown_industry
+		mutually_exclusive = { focus = MRC_guilds_workers_focus }
+		prerequisite = { focus = MRC_economic_status_quo }
+		relative_position_id = MRC_economic_status_quo
+		x = 0
+		y = 2
+	
+		cost = 10
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+	
+		available = {
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			factor = 2
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_guilds_empower_focus"
+			swap_ideas = { remove_idea = MRC_idea_balanced_guilds add_idea = MRC_idea_economic_guilds }
+		}
+	}
 
 	focus = { # Economic Reform
 		id = MRC_economic_reform
@@ -1145,67 +1176,67 @@ focus_tree = { # Merchant-Republicism
 		}
 	}
 
-		focus = { # Loosen Protectionist Tariffs
-			id = MRC_loosen_protectionist_tariffs
-			icon = GFX_focus_unknown_industry
-			prerequisite = { focus = MRC_economic_reform }
-			relative_position_id = MRC_economic_reform
-			x = 1
-			y = 1
-		
-			cost = 10
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = no
-		
-			available = {
-			}
-			bypass = {
-			}
-		
-			ai_will_do = {
-				factor = 2
-			}
+	focus = { # Loosen Protectionist Tariffs
+		id = MRC_loosen_protectionist_tariffs
+		icon = GFX_focus_unknown_industry
+		prerequisite = { focus = MRC_economic_reform }
+		relative_position_id = MRC_economic_reform
+		x = 1
+		y = 1
+	
+		cost = 10
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+	
+		available = {
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			factor = 2
+		}
 
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_loosen_protectionist_tariffs"
-				add_power_balance_value = { id = power_balance_MRC_political_balance value = 0.025 }
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_loosen_protectionist_tariffs"
+			add_power_balance_value = { id = power_balance_MRC_political_balance value = 0.025 }
+		}
+	}
+
+	focus = { # Guilds Workers
+		id = MRC_guilds_workers_focus
+		icon = GFX_focus_unknown_industry
+		mutually_exclusive = { focus = MRC_guilds_empower_focus }
+		prerequisite = { focus = MRC_economic_reform }
+		relative_position_id = MRC_economic_reform
+		x = 0
+		y = 2
+	
+		cost = 10
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+	
+		available = {
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			factor = 2
+			modifier = {
+				add = 0.10
+				factor = 1.10
+				is_historical_focus_on = yes
 			}
 		}
 
-		focus = { # Guilds Workers
-			id = MRC_guilds_workers_focus
-			icon = GFX_focus_unknown_industry
-			mutually_exclusive = { focus = MRC_guilds_empower_focus }
-			prerequisite = { focus = MRC_economic_reform }
-			relative_position_id = MRC_economic_reform
-			x = 0
-			y = 2
-		
-			cost = 10
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = no
-		
-			available = {
-			}
-			bypass = {
-			}
-		
-			ai_will_do = {
-				factor = 2
-				modifier = {
-					add = 0.10
-					factor = 1.10
-					is_historical_focus_on = yes
-				}
-			}
-
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_guilds_workers_focus"
-				swap_ideas = { remove_idea = MRC_idea_balanced_guilds add_idea = MRC_idea_workers_guilds }
-			}
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_guilds_workers_focus"
+			swap_ideas = { remove_idea = MRC_idea_balanced_guilds add_idea = MRC_idea_workers_guilds }
 		}
+	}
 
 	focus = { # Strengthen Currency
 		id = MRC_strengthen_currency
@@ -1279,101 +1310,101 @@ focus_tree = { # Merchant-Republicism
 		}
 	}
 
-		focus = { # End Temporary Military Women Law
-			id = MRC_end_temporary_military_women
-			icon = GFX_focus_unknown_political
-			mutually_exclusive = { focus = MRC_codification_of_military_women }
-			prerequisite = { focus = MRC_steady_couse focus = MRC_change_couse }
-			relative_position_id = MRC_steady_couse
-			x = -3
-			y = 1
-		
-			cost = 10
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = no
-		
-			available = {
-				NOT = { OR = {
-					has_completed_focus = MRC_support_progressive_movement
-					has_completed_focus = MRC_local_governance
-				} }
-			}
-			bypass = {
-			}
-		
-			ai_will_do = {
-				factor = 2
-			}
+	focus = { # End Temporary Military Women Law
+		id = MRC_end_temporary_military_women
+		icon = GFX_focus_unknown_political
+		mutually_exclusive = { focus = MRC_codification_of_military_women }
+		prerequisite = { focus = MRC_steady_couse focus = MRC_change_couse }
+		relative_position_id = MRC_steady_couse
+		x = -3
+		y = 1
+	
+		cost = 10
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+	
+		available = {
+			NOT = { OR = {
+				has_completed_focus = MRC_support_progressive_movement
+				has_completed_focus = MRC_local_governance
+			} }
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			factor = 2
+		}
 
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_end_temporary_military_women"
-				swap_ideas = { remove_idea = women_in_the_army add_idea = limited_women_in_the_workforce }
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_end_temporary_military_women"
+			swap_ideas = { remove_idea = women_in_the_army add_idea = limited_women_in_the_workforce }
+		}
+	}
+
+	focus = { # Codification of Military Women Law
+		id = MRC_codification_of_military_women
+		icon = GFX_focus_unknown_political
+		mutually_exclusive = { focus = MRC_end_temporary_military_women }
+		prerequisite = { focus = MRC_steady_couse focus = MRC_change_couse }
+		relative_position_id = MRC_steady_couse
+		x = -1
+		y = 1
+	
+		cost = 10
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+	
+		available = {
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			factor = 2
+			modifier = {
+				add = 0.10
+				factor = 1.10
+				is_historical_focus_on = yes
 			}
 		}
 
-		focus = { # Codification of Military Women Law
-			id = MRC_codification_of_military_women
-			icon = GFX_focus_unknown_political
-			mutually_exclusive = { focus = MRC_end_temporary_military_women }
-			prerequisite = { focus = MRC_steady_couse focus = MRC_change_couse }
-			relative_position_id = MRC_steady_couse
-			x = -1
-			y = 1
-		
-			cost = 10
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = no
-		
-			available = {
-			}
-			bypass = {
-			}
-		
-			ai_will_do = {
-				factor = 2
-				modifier = {
-					add = 0.10
-					factor = 1.10
-					is_historical_focus_on = yes
-				}
-			}
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_codification_of_military_women"
+			swap_ideas = { remove_idea = women_in_the_army add_idea = MRC_women_volunteer_service }
+		}
+	}
 
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_codification_of_military_women"
-				swap_ideas = { remove_idea = women_in_the_army add_idea = MRC_women_volunteer_service }
-			}
+	focus = { # Internal Harmonainus Negotiations
+		id = MRC_focus_harmonainus_church
+		icon = GFX_focus_unknown_political
+		prerequisite = { focus = MRC_loosen_protectionist_tariffs }
+		prerequisite = { focus = MRC_end_temporary_military_women }
+		relative_position_id = MRC_end_temporary_military_women
+		x = -1
+		y = 1
+	
+		cost = 5
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+	
+		available = {
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			factor = 2
 		}
 
-		focus = { # Internal Harmonainus Negotiations
-			id = MRC_focus_harmonainus_church
-			icon = GFX_focus_unknown_political
-			prerequisite = { focus = MRC_loosen_protectionist_tariffs }
-			prerequisite = { focus = MRC_end_temporary_military_women }
-			relative_position_id = MRC_end_temporary_military_women
-			x = -1
-			y = 1
-		
-			cost = 5
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = no
-		
-			available = {
-			}
-			bypass = {
-			}
-		
-			ai_will_do = {
-				factor = 2
-			}
-
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_harmonainus_church"
-				swap_ideas = { remove_idea = MRC_idea_harmonainus_pushback add_idea = MRC_idea_harmonainus_compliants }
-			}
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_harmonainus_church"
+			swap_ideas = { remove_idea = MRC_idea_harmonainus_pushback add_idea = MRC_idea_harmonainus_compliants }
 		}
+	}
 
 	focus = { # Women Right to Attune
 		id = MRC_women_attuners
@@ -1448,82 +1479,82 @@ focus_tree = { # Merchant-Republicism
 		}
 	}
 
-		focus = { # Rule from Aborroas
-			id = MRC_rule_from_aborroas
-			icon = GFX_focus_unknown_expansion
-			mutually_exclusive = { focus = MRC_island_governors }
-			prerequisite = { focus = MRC_steady_couse focus = MRC_change_couse}
-			relative_position_id = MRC_change_couse
-			x = -1
-			y = 1
-		
-			cost = 10
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = no
-		
-			available = {
-			}
-			bypass = {
-			}
-		
-			ai_will_do = {
-				factor = 2
-				modifier = {
-					add = 0.10
-					factor = 1.10
-					is_historical_focus_on = yes
-				}
-			}
-
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_rule_from_aborroas"
-				add_political_power = 100
+	focus = { # Rule from Aborroas
+		id = MRC_rule_from_aborroas
+		icon = GFX_focus_unknown_expansion
+		mutually_exclusive = { focus = MRC_island_governors }
+		prerequisite = { focus = MRC_steady_couse focus = MRC_change_couse}
+		relative_position_id = MRC_change_couse
+		x = -1
+		y = 1
+	
+		cost = 10
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+	
+		available = {
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			factor = 2
+			modifier = {
+				add = 0.10
+				factor = 1.10
+				is_historical_focus_on = yes
 			}
 		}
 
-		focus = { # Strengthen Island Governors
-			id = MRC_island_governors
-			icon = GFX_focus_unknown_expansion
-			mutually_exclusive = { focus = MRC_rule_from_aborroas }
-			prerequisite = { focus = MRC_change_couse }
-			relative_position_id = MRC_change_couse
-			x = 1
-			y = 1
-		
-			cost = 7
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = no
-		
-			available = {
-			}
-			bypass = {
-			}
-		
-			ai_will_do = {
-				factor = 2
-			}
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_rule_from_aborroas"
+			add_political_power = 100
+		}
+	}
 
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_island_governors"
-				add_power_balance_value = { id = power_balance_MRC_political_balance value = 0.025 }
-				custom_effect_tooltip = MRC_create_MAI_subject_tt
-				custom_effect_tooltip = MRC_create_MOI_subject_tt
-				custom_effect_tooltip = MRC_create_MPI_subject_tt
-				custom_effect_tooltip = MRC_create_MTI_subject_tt
-				hidden_effect = { # Create Puppet
-					release_autonomy = { target = MAI autonomy_state = autonomy_integrated_puppet freedom_level = 0.34 }
-					release_autonomy = { target = MOI autonomy_state = autonomy_integrated_puppet freedom_level = 0.34 }
-					release_autonomy = { target = MPI autonomy_state = autonomy_integrated_puppet freedom_level = 0.34 }
-					release_autonomy = { target = MTI autonomy_state = autonomy_integrated_puppet freedom_level = 0.34 }
-					MRC = { MAI = { transfer_technology_all = yes } }
-					MRC = { MOI = { transfer_technology_all = yes } }
-					MRC = { MPI = { transfer_technology_all = yes } }
-					MRC = { MTI = { transfer_technology_all = yes } }
-				}
+	focus = { # Strengthen Island Governors
+		id = MRC_island_governors
+		icon = GFX_focus_unknown_expansion
+		mutually_exclusive = { focus = MRC_rule_from_aborroas }
+		prerequisite = { focus = MRC_change_couse }
+		relative_position_id = MRC_change_couse
+		x = 1
+		y = 1
+	
+		cost = 7
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+	
+		available = {
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			factor = 2
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_island_governors"
+			add_power_balance_value = { id = power_balance_MRC_political_balance value = 0.025 }
+			custom_effect_tooltip = MRC_create_MAI_subject_tt
+			custom_effect_tooltip = MRC_create_MOI_subject_tt
+			custom_effect_tooltip = MRC_create_MPI_subject_tt
+			custom_effect_tooltip = MRC_create_MTI_subject_tt
+			hidden_effect = { # Create Puppet
+				release_autonomy = { target = MAI autonomy_state = autonomy_integrated_puppet freedom_level = 0.34 }
+				release_autonomy = { target = MOI autonomy_state = autonomy_integrated_puppet freedom_level = 0.34 }
+				release_autonomy = { target = MPI autonomy_state = autonomy_integrated_puppet freedom_level = 0.34 }
+				release_autonomy = { target = MTI autonomy_state = autonomy_integrated_puppet freedom_level = 0.34 }
+				MRC = { MAI = { transfer_technology_all = yes } }
+				MRC = { MOI = { transfer_technology_all = yes } }
+				MRC = { MPI = { transfer_technology_all = yes } }
+				MRC = { MTI = { transfer_technology_all = yes } }
 			}
 		}
+	}
 
 	focus = { # Peninsula Integration
 		id = MRC_peninsula_integration
@@ -1559,6 +1590,8 @@ focus_tree = { # Merchant-Republicism
 			12 = { add_core_of = ROOT }
 			74 = { add_core_of = ROOT }
 			76 = { add_core_of = ROOT }
+			set_temp_variable = { var = SEH_temp_heritage value = 47 tooltip = SEH_add_accepted_heritage_partial_tt }
+			SEH_add_accepted_heritage_partial = yes
 		}
 	}
 
@@ -1819,63 +1852,63 @@ focus_tree = { # Merchant-Republicism
 		}
 	}
 
-		focus = { # Mercanaries Government Rights
-			id = MRC_mercanaries_government_rights
-			icon = GFX_focus_unknown_industry
-			mutually_exclusive = { focus = MRC_mercanaries_regulations }
-			prerequisite = { focus = MRC_dealing_with_independent_factionalism_focus }
-			relative_position_id = MRC_dealing_with_independent_factionalism_focus
-			x = -1
-			y = 1
-		
-			cost = 10
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = no
-		
-			available = {
-			}
-			bypass = {
-			}
-		
-			ai_will_do = {
-				factor = 2
-			}
-
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_mercanaries_government_rights"
-				swap_ideas = { remove_idea = MRC_idea_mercenaries_notable add_idea = MRC_idea_mercenaries_powerful }
-			}
+	focus = { # Mercanaries Government Rights
+		id = MRC_mercanaries_government_rights
+		icon = GFX_focus_unknown_industry
+		mutually_exclusive = { focus = MRC_mercanaries_regulations }
+		prerequisite = { focus = MRC_dealing_with_independent_factionalism_focus }
+		relative_position_id = MRC_dealing_with_independent_factionalism_focus
+		x = -1
+		y = 1
+	
+		cost = 10
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+	
+		available = {
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			factor = 2
 		}
 
-		focus = { # Mercanaries Regulations
-			id = MRC_mercanaries_regulations
-			icon = GFX_focus_unknown_industry
-			mutually_exclusive = { focus = MRC_mercanaries_government_rights }
-			prerequisite = { focus = MRC_dealing_with_independent_factionalism_focus }
-			relative_position_id = MRC_dealing_with_independent_factionalism_focus
-			x = 1
-			y = 1
-		
-			cost = 10
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = no
-		
-			available = {
-			}
-			bypass = {
-			}
-		
-			ai_will_do = {
-				factor = 2
-			}
-
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_mercanaries_regulations"
-				swap_ideas = { remove_idea = MRC_idea_mercenaries_notable add_idea = MRC_idea_mercenaries_weak }
-			}
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_mercanaries_government_rights"
+			swap_ideas = { remove_idea = MRC_idea_mercenaries_notable add_idea = MRC_idea_mercenaries_powerful }
 		}
+	}
+
+	focus = { # Mercanaries Regulations
+		id = MRC_mercanaries_regulations
+		icon = GFX_focus_unknown_industry
+		mutually_exclusive = { focus = MRC_mercanaries_government_rights }
+		prerequisite = { focus = MRC_dealing_with_independent_factionalism_focus }
+		relative_position_id = MRC_dealing_with_independent_factionalism_focus
+		x = 1
+		y = 1
+	
+		cost = 10
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+	
+		available = {
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			factor = 2
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_mercanaries_regulations"
+			swap_ideas = { remove_idea = MRC_idea_mercenaries_notable add_idea = MRC_idea_mercenaries_weak }
+		}
+	}
 
 	focus = { # Nation of Progress
 		id = MRC_focus_nation_of_progress
@@ -1913,221 +1946,188 @@ focus_tree = { # Merchant-Republicism
 		}
 	}
 
-		focus = { # Left
-			id = MRC_focus_left
-			icon = GFX_focus_unknown_political
-			prerequisite = { focus = MRC_focus_nation_of_progress }
-			relative_position_id = MRC_focus_nation_of_progress
-			x = -1
-			y = 1
-		
-			cost = 5
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = no
-		
-			available = {
-			}
-			bypass = {
-			}
-		
-			ai_will_do = {
-				factor = 2
-			}
-
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_left"
-			}
+	focus = { # Left
+		id = MRC_focus_left
+		icon = GFX_focus_unknown_political
+		prerequisite = { focus = MRC_focus_nation_of_progress }
+		relative_position_id = MRC_focus_nation_of_progress
+		x = -1
+		y = 1
+	
+		cost = 5
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+	
+		available = {
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			factor = 2
 		}
 
-		focus = { # Left 2
-			id = MRC_focus_left_2
-			icon = GFX_focus_unknown_political
-			prerequisite = { focus = MRC_focus_left }
-			relative_position_id = MRC_focus_left
-			x = -1
-			y = 1
-		
-			cost = 5
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = no
-		
-			available = {
-			}
-			bypass = {
-			}
-		
-			ai_will_do = {
-				factor = 2
-			}
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_left"
+		}
+	}
 
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_left_2"
-			}
+	focus = { # Left 2
+		id = MRC_focus_left_2
+		icon = GFX_focus_unknown_political
+		prerequisite = { focus = MRC_focus_left }
+		relative_position_id = MRC_focus_left
+		x = -1
+		y = 1
+	
+		cost = 5
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+	
+		available = {
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			factor = 2
 		}
 
-		focus = { # Right
-			id = MRC_focus_right
-			icon = GFX_focus_unknown_political
-			prerequisite = { focus = MRC_focus_nation_of_progress }
-			relative_position_id = MRC_focus_nation_of_progress
-			x = 1
-			y = 1
-		
-			cost = 5
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = no
-		
-			available = {
-			}
-			bypass = {
-			}
-		
-			ai_will_do = {
-				factor = 2
-			}
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_left_2"
+		}
+	}
 
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_right"
-			}
+	focus = { # Right
+		id = MRC_focus_right
+		icon = GFX_focus_unknown_political
+		prerequisite = { focus = MRC_focus_nation_of_progress }
+		relative_position_id = MRC_focus_nation_of_progress
+		x = 1
+		y = 1
+	
+		cost = 5
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+	
+		available = {
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			factor = 2
 		}
 
-		focus = { # Right 2
-			id = MRC_focus_right_2
-			icon = GFX_focus_unknown_political
-			prerequisite = { focus = MRC_focus_right }
-			relative_position_id = MRC_focus_right
-			x = 1
-			y = 1
-		
-			cost = 5
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = no
-		
-			available = {
-			}
-			bypass = {
-			}
-		
-			ai_will_do = {
-				factor = 2
-			}
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_right"
+		}
+	}
 
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_right_2"
-			}
+	focus = { # Right 2
+		id = MRC_focus_right_2
+		icon = GFX_focus_unknown_political
+		prerequisite = { focus = MRC_focus_right }
+		relative_position_id = MRC_focus_right
+		x = 1
+		y = 1
+	
+		cost = 5
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+	
+		available = {
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			factor = 2
 		}
 
-		focus = { # Deal with the Harmonainus Church
-			id = MRC_focus_deal_with_theocrats
-			icon = GFX_focus_unknown_political
-			prerequisite = { focus = MRC_focus_nation_of_progress }
-			relative_position_id = MRC_focus_nation_of_progress
-			x = 0
-			y = 2
-		
-			cost = 10
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = no
-		
-			available = {
-			}
-			bypass = {
-			}
-		
-			ai_will_do = {
-				factor = 3.5
-			}
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_right_2"
+		}
+	}
 
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_deal_with_theocrats"
-				custom_effect_tooltip = modify_MRC_country_most_serene_republic_modifier_tt
-				add_to_variable = {
-					MRC.MRC_defensive_war_stability_factor_modifier = 0.075
-					tooltip = defensive_war_stability_factor_tt
-				}
-				add_to_variable = {
-					MRC.MRC_drift_defence_factor_modifier = 0.075
-					tooltip = drift_defence_factor_tt
-				}
-			}
+	focus = { # Deal with the Harmonainus Church
+		id = MRC_focus_deal_with_theocrats
+		icon = GFX_focus_unknown_political
+		prerequisite = { focus = MRC_focus_nation_of_progress }
+		relative_position_id = MRC_focus_nation_of_progress
+		x = 0
+		y = 2
+	
+		cost = 10
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+	
+		available = {
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			factor = 3.5
 		}
 
-			focus = { # Compromise with the Harmonainus Church
-				id = MRC_focus_compromise_theocrats
-				icon = GFX_focus_unknown_political
-				mutually_exclusive = { focus = MRC_focus_crackdown_theocrats }
-				prerequisite = { focus = MRC_focus_deal_with_theocrats }
-				relative_position_id = MRC_focus_deal_with_theocrats
-				x = -1
-				y = 1
-			
-				cost = 10
-				cancel_if_invalid = yes
-				continue_if_invalid = no
-				available_if_capitulated = no
-			
-				available = {
-					has_idea = MRC_idea_harmonainus_compliants
-				}
-				bypass = {
-				}
-			
-				ai_will_do = {
-					factor = 3.5
-				}
-
-				completion_reward = {
-					log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_compromise_theocrats"
-					swap_ideas = { remove_idea = MRC_idea_harmonainus_compliants add_idea = MRC_idea_harmonainus_compromise }
-				}
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_deal_with_theocrats"
+			custom_effect_tooltip = modify_MRC_country_most_serene_republic_modifier_tt
+			add_to_variable = {
+				MRC.MRC_defensive_war_stability_factor_modifier = 0.075
+				tooltip = defensive_war_stability_factor_tt
 			}
-
-			focus = { # Crackdown the Harmonainus Church
-				id = MRC_focus_crackdown_theocrats
-				icon = GFX_focus_unknown_political
-				mutually_exclusive = { focus = MRC_focus_compromise_theocrats }
-				prerequisite = { focus = MRC_focus_deal_with_theocrats }
-				relative_position_id = MRC_focus_deal_with_theocrats
-				x = 1
-				y = 1
-			
-				cost = 10
-				cancel_if_invalid = yes
-				continue_if_invalid = no
-				available_if_capitulated = no
-			
-				available = {
-				}
-				bypass = {
-				}
-			
-				ai_will_do = {
-					factor = 3.5
-				}
-
-				completion_reward = {
-					log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_crackdown_theocrats"
-					remove_ideas = {
-						MRC_idea_harmonainus_negotiations
-						MRC_idea_harmonainus_pushback
-						MRC_idea_harmonainus_compliants
-					}
-				}
+			add_to_variable = {
+				MRC.MRC_drift_defence_factor_modifier = 0.075
+				tooltip = drift_defence_factor_tt
 			}
+		}
+	}
 
-		focus = { # Separation of Church and State
-			id = MRC_focus_separation_of_church_and_state
+		focus = { # Compromise with the Harmonainus Church
+			id = MRC_focus_compromise_theocrats
 			icon = GFX_focus_unknown_political
-			#mutually_exclusive = { focus =  }
-			prerequisite = { focus = MRC_focus_compromise_theocrats focus = MRC_focus_crackdown_theocrats }
+			mutually_exclusive = { focus = MRC_focus_crackdown_theocrats }
+			prerequisite = { focus = MRC_focus_deal_with_theocrats }
 			relative_position_id = MRC_focus_deal_with_theocrats
-			x = 0
-			y = 2
+			x = -1
+			y = 1
+		
+			cost = 10
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+		
+			available = {
+				has_idea = MRC_idea_harmonainus_compliants
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				factor = 3.5
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_compromise_theocrats"
+				swap_ideas = { remove_idea = MRC_idea_harmonainus_compliants add_idea = MRC_idea_harmonainus_compromise }
+			}
+		}
+
+		focus = { # Crackdown the Harmonainus Church
+			id = MRC_focus_crackdown_theocrats
+			icon = GFX_focus_unknown_political
+			mutually_exclusive = { focus = MRC_focus_compromise_theocrats }
+			prerequisite = { focus = MRC_focus_deal_with_theocrats }
+			relative_position_id = MRC_focus_deal_with_theocrats
+			x = 1
+			y = 1
 		
 			cost = 10
 			cancel_if_invalid = yes
@@ -2144,10 +2144,43 @@ focus_tree = { # Merchant-Republicism
 			}
 
 			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_separation_of_church_and_state"
-				add_research_slot = 1
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_crackdown_theocrats"
+				remove_ideas = {
+					MRC_idea_harmonainus_negotiations
+					MRC_idea_harmonainus_pushback
+					MRC_idea_harmonainus_compliants
+				}
 			}
 		}
+
+	focus = { # Separation of Church and State
+		id = MRC_focus_separation_of_church_and_state
+		icon = GFX_focus_unknown_political
+		#mutually_exclusive = { focus =  }
+		prerequisite = { focus = MRC_focus_compromise_theocrats focus = MRC_focus_crackdown_theocrats }
+		relative_position_id = MRC_focus_deal_with_theocrats
+		x = 0
+		y = 2
+	
+		cost = 10
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+	
+		available = {
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			factor = 3.5
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_focus_separation_of_church_and_state"
+			add_research_slot = 1
+		}
+	}
 
 	focus = { # Constitution Amendments
 		id = MRC_constitution_amendments
@@ -2185,66 +2218,110 @@ focus_tree = { # Merchant-Republicism
 		}
 	}
 
-		focus = { # Wartime Taxes
-			id = MRC_wartime_taxes_focus
-			icon = GFX_focus_unknown_political
-			prerequisite = { focus = MRC_constitution_amendments }
-			relative_position_id = MRC_constitution_amendments
-			x = -1
-			y = 1
-		
-			cost = 5
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = no
-		
-			available = {
-			}
-			bypass = {
-			}
-		
-			ai_will_do = {
-				factor = 2
-			}
-
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_wartime_taxes_focus"
-			}
+	focus = { # Wartime Taxes
+		id = MRC_wartime_taxes_focus
+		icon = GFX_focus_unknown_political
+		prerequisite = { focus = MRC_constitution_amendments }
+		relative_position_id = MRC_constitution_amendments
+		x = -1
+		y = 1
+	
+		cost = 5
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+	
+		available = {
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			factor = 2
 		}
 
-		focus = { # Wartime Contingencies
-			id = MRC_wartime_contingencies_focus
-			icon = GFX_focus_unknown_political
-			prerequisite = { focus = MRC_constitution_amendments }
-			relative_position_id = MRC_constitution_amendments
-			x = 1
-			y = 1
-		
-			cost = 5
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = no
-		
-			available = {
-			}
-			bypass = {
-			}
-		
-			ai_will_do = {
-				factor = 2
-			}
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_wartime_taxes_focus"
+		}
+	}
 
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_wartime_contingencies_focus"
-			}
+	focus = { # Wartime Contingencies
+		id = MRC_wartime_contingencies_focus
+		icon = GFX_focus_unknown_political
+		prerequisite = { focus = MRC_constitution_amendments }
+		relative_position_id = MRC_constitution_amendments
+		x = 1
+		y = 1
+	
+		cost = 5
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+	
+		available = {
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			factor = 2
 		}
 
-		focus = { # Doge Wartime Powers
-			id = MRC_doge_wartime_powers
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_wartime_contingencies_focus"
+		}
+	}
+
+	focus = { # Doge Wartime Powers
+		id = MRC_doge_wartime_powers
+		icon = GFX_focus_unknown_political
+		prerequisite = { focus = MRC_wartime_contingencies_focus }
+		relative_position_id = MRC_wartime_contingencies_focus
+		x = -1
+		y = 1
+	
+		cost = 5
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+	
+		available = {
+			OR = {
+				has_war = yes
+				AND = {
+					has_war_support > 0.99
+					threat > 0.49
+				}
+				AND = {
+					has_war_support > 0.74
+					threat > 0.74
+				}
+				AND = {
+					has_war_support > 0.49
+					threat > 0.99
+				}
+			}
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			factor = 2
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_doge_wartime_powers"
+			conscripts_age_raise = yes
+			conscripts_foreign_raise = yes
+		}
+	}
+
+		focus = { # Wartime Readiness
+			id = MRC_wartime_readiness
 			icon = GFX_focus_unknown_political
-			prerequisite = { focus = MRC_wartime_contingencies_focus }
-			relative_position_id = MRC_wartime_contingencies_focus
-			x = -1
+			prerequisite = { focus = MRC_doge_wartime_powers }
+			relative_position_id = MRC_doge_wartime_powers
+			x = 0
 			y = 1
 		
 			cost = 5
@@ -2257,14 +2334,10 @@ focus_tree = { # Merchant-Republicism
 					has_war = yes
 					AND = {
 						has_war_support > 0.99
-						threat > 0.49
-					}
-					AND = {
-						has_war_support > 0.74
 						threat > 0.74
 					}
 					AND = {
-						has_war_support > 0.49
+						has_war_support > 0.74
 						threat > 0.99
 					}
 				}
@@ -2277,57 +2350,59 @@ focus_tree = { # Merchant-Republicism
 			}
 
 			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_doge_wartime_powers"
-				conscripts_age_raise = yes
-				conscripts_foreign_raise = yes
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_wartime_readiness"
+				army_readiness_raise = yes
 			}
 		}
 
-			focus = { # Wartime Readiness
-				id = MRC_wartime_readiness
-				icon = GFX_focus_unknown_political
-				prerequisite = { focus = MRC_doge_wartime_powers }
-				relative_position_id = MRC_doge_wartime_powers
-				x = 0
-				y = 1
-			
-				cost = 5
-				cancel_if_invalid = yes
-				continue_if_invalid = no
-				available_if_capitulated = no
-			
-				available = {
-					OR = {
-						has_war = yes
-						AND = {
-							has_war_support > 0.99
-							threat > 0.74
-						}
-						AND = {
-							has_war_support > 0.74
-							threat > 0.99
-						}
-					}
-				}
-				bypass = {
-				}
-			
-				ai_will_do = {
-					factor = 2
-				}
+	focus = { # Wartime Government
+		id = MRC_wartime_government_forcus
+		icon = GFX_focus_unknown_political
+		prerequisite = { focus = MRC_wartime_contingencies_focus }
+		relative_position_id = MRC_wartime_contingencies_focus
+		x = 1
+		y = 1
+	
+		cost = 5
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+	
+		available = {
+			has_war = yes
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			factor = 2
+		}
 
-				completion_reward = {
-					log = "[GetDateText]: [Root.GetName]: Focus MRC_wartime_readiness"
-					army_readiness_raise = yes
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_wartime_government_forcus"
+			every_country = {
+				limit = { is_subject_of = MRC }
+				every_state = {
+					limit = { is_core_of = PREV }
+					add_core_of = MRC
 				}
+				MRC = { transfer_navy = { target = PREV } }
+				MRC = { annex_country = { target = PREV transfer_troops = yes } }
 			}
+			IF = {
+				LIMIT = { has_completed_focus = MRC_setup_collaboration }
+			}
+			set_temp_variable = { var = SEH_temp_heritage value = 47 tooltip = SEH_add_accepted_heritage_full_tt }
+			SEH_add_accepted_heritage_full = yes
+		}
+	}
 
-		focus = { # Wartime Government
-			id = MRC_wartime_government_forcus
-			icon = GFX_focus_unknown_political
-			prerequisite = { focus = MRC_wartime_contingencies_focus }
-			relative_position_id = MRC_wartime_contingencies_focus
-			x = 1
+		focus = { # Spirit Killer
+			id = MRC_spirit_killer_focus
+			icon = GFX_focus_MRC_nuclear
+			prerequisite = { focus = MRC_wartime_government_forcus }
+			relative_position_id = MRC_wartime_government_forcus
+			x = 0
 			y = 1
 		
 			cost = 5
@@ -2336,115 +2411,78 @@ focus_tree = { # Merchant-Republicism
 			available_if_capitulated = no
 		
 			available = {
-				has_war = yes
 			}
 			bypass = {
 			}
 		
 			ai_will_do = {
-				factor = 2
+				factor = 0
+				modifier = { factor = 0.67
+					has_tech = atomic_research }
 			}
 
 			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_wartime_government_forcus"
-				every_country = {
-					limit = { is_subject_of = MRC }
-					every_state = {
-						limit = { is_core_of = PREV }
-						add_core_of = MRC
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_spirit_killer_focus"
+				IF = {
+					limit = {
+						NOT = { has_tech = atomic_research }
 					}
-					MRC = { transfer_navy = { target = PREV } }
-					MRC = { annex_country = { target = PREV transfer_troops = yes } }
-				}
-			}
-		}
-
-			focus = { # Spirit Killer
-				id = MRC_spirit_killer_focus
-				icon = GFX_focus_MRC_nuclear
-				prerequisite = { focus = MRC_wartime_government_forcus }
-				relative_position_id = MRC_wartime_government_forcus
-				x = 0
-				y = 1
-			
-				cost = 5
-				cancel_if_invalid = yes
-				continue_if_invalid = no
-				available_if_capitulated = no
-			
-				available = {
-				}
-				bypass = {
-				}
-			
-				ai_will_do = {
-					factor = 0
-					modifier = { factor = 0.67
-						has_tech = atomic_research }
-				}
-
-				completion_reward = {
-					log = "[GetDateText]: [Root.GetName]: Focus MRC_spirit_killer_focus"
-					IF = {
-						limit = {
-							NOT = { has_tech = atomic_research }
-						}
-						add_tech_bonus = {
-							name = MRC_perditio_project
-							bonus = 0.5
-							uses = 1
-							category = nuclear
-						}
-						add_breakthrough_progress = {
-							specialization = specialization_nuclear
-							value = 0.5
-						}
-						add_ideas = MRC_perditio_project_0
+					add_tech_bonus = {
+						name = MRC_perditio_project
+						bonus = 0.5
+						uses = 1
+						category = nuclear
 					}
-					ELSE = {
-						add_breakthrough_progress = {
-							specialization = specialization_nuclear
-							value = 1
-						}
-						add_ideas = MRC_perditio_project_0
+					add_breakthrough_progress = {
+						specialization = specialization_nuclear
+						value = 0.5
 					}
+					add_ideas = MRC_perditio_project_0
 				}
-			}
-
-			focus = { # Power Beyond their God
-				id = MRC_power_beyond_their_god_focus
-				icon = GFX_focus_MRC_nuclear
-				prerequisite = { focus = MRC_spirit_killer_focus }
-				relative_position_id = MRC_spirit_killer_focus
-				x = 0
-				y = 1
-			
-				cost = 10
-				cancel_if_invalid = yes
-				continue_if_invalid = no
-				available_if_capitulated = no
-			
-				available = {
-					has_tech = atomic_research
-				}
-				bypass = {
-				}
-			
-				ai_will_do = {
-					factor = 0
-					modifier = { factor = 0.67
-						has_tech = atomic_research }
-				}
-
-				completion_reward = {
-					log = "[GetDateText]: [Root.GetName]: Focus MRC_power_beyond_their_god_focus"
+				ELSE = {
 					add_breakthrough_progress = {
 						specialization = specialization_nuclear
 						value = 1
 					}
-					swap_ideas = { remove_idea = MRC_perditio_project_0 add_idea = MRC_perditio_project_1 }
+					add_ideas = MRC_perditio_project_0
 				}
 			}
+		}
+
+		focus = { # Power Beyond their God
+			id = MRC_power_beyond_their_god_focus
+			icon = GFX_focus_MRC_nuclear
+			prerequisite = { focus = MRC_spirit_killer_focus }
+			relative_position_id = MRC_spirit_killer_focus
+			x = 0
+			y = 1
+		
+			cost = 10
+			cancel_if_invalid = yes
+			continue_if_invalid = no
+			available_if_capitulated = no
+		
+			available = {
+				has_tech = atomic_research
+			}
+			bypass = {
+			}
+		
+			ai_will_do = {
+				factor = 0
+				modifier = { factor = 0.67
+					has_tech = atomic_research }
+			}
+
+			completion_reward = {
+				log = "[GetDateText]: [Root.GetName]: Focus MRC_power_beyond_their_god_focus"
+				add_breakthrough_progress = {
+					specialization = specialization_nuclear
+					value = 1
+				}
+				swap_ideas = { remove_idea = MRC_perditio_project_0 add_idea = MRC_perditio_project_1 }
+			}
+		}
 	# Republicanism + Reactionary Branch
 	focus = { # Heavy Industry Construction
 		id = MRC_heavy_industry_construction
@@ -2484,137 +2522,137 @@ focus_tree = { # Merchant-Republicism
 		}
 	}
 
-		focus = { # Military Districts
-			id = MRC_military_districts
-			icon = GFX_focus_unknown_industry
-			prerequisite = { focus = MRC_heavy_industry_construction }
-			relative_position_id = MRC_heavy_industry_construction
-			x = -1
-			y = 1
-		
-			cost = 5
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = no
-		
-			available = {
-			}
-			bypass = {
-			}
-		
-			ai_will_do = {
-				factor = 2
-			}
-
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_military_districts"
-				13 = {
-					add_extra_state_shared_building_slots = 1
-					add_building_construction = { type = construction_complex level = 1 instant_build = yes }
-					add_building_construction = { type = arms_factory level = 1 instant_build = yes }
-				}
-
-				14 = {
-					add_extra_state_shared_building_slots = 1
-					add_building_construction = { type = construction_complex level = 1 instant_build = yes }
-					add_building_construction = { type = arms_factory level = 1 instant_build = yes }
-				}
-
-				71 = {
-					add_extra_state_shared_building_slots = 1
-					add_building_construction = { type = construction_complex level = 1 instant_build = yes }
-					add_building_construction = { type = arms_factory level = 1 instant_build = yes }
-				}
-
-				72 = {
-					add_extra_state_shared_building_slots = 1
-					add_building_construction = { type = construction_complex level = 1 instant_build = yes }
-					add_building_construction = { type = arms_factory level = 1 instant_build = yes }
-				}
-			}
+	focus = { # Military Districts
+		id = MRC_military_districts
+		icon = GFX_focus_unknown_industry
+		prerequisite = { focus = MRC_heavy_industry_construction }
+		relative_position_id = MRC_heavy_industry_construction
+		x = -1
+		y = 1
+	
+		cost = 5
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+	
+		available = {
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			factor = 2
 		}
 
-		focus = { # Military Complex
-			id = MRC_military_complex
-			icon = GFX_focus_unknown_industry
-			prerequisite = { focus = MRC_military_districts }
-			relative_position_id = MRC_military_districts
-			x = 0
-			y = 1
-		
-			cost = 5
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = no
-		
-			available = {
-			}
-			bypass = {
-			}
-		
-			ai_will_do = {
-				factor = 2
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_military_districts"
+			13 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = { type = construction_complex level = 1 instant_build = yes }
+				add_building_construction = { type = arms_factory level = 1 instant_build = yes }
 			}
 
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_military_complex"
-				14 = {
-					add_extra_state_shared_building_slots = 1
-					add_building_construction = { type = construction_complex level = 1 instant_build = yes }
-					add_building_construction = { type = arms_factory level = 1 instant_build = yes }
-				}
+			14 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = { type = construction_complex level = 1 instant_build = yes }
+				add_building_construction = { type = arms_factory level = 1 instant_build = yes }
+			}
 
-				71 = {
-					add_extra_state_shared_building_slots = 1
-					add_building_construction = { type = construction_complex level = 1 instant_build = yes }
-					add_building_construction = { type = arms_factory level = 1 instant_build = yes }
-				}
+			71 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = { type = construction_complex level = 1 instant_build = yes }
+				add_building_construction = { type = arms_factory level = 1 instant_build = yes }
+			}
 
-				72 = {
-					add_extra_state_shared_building_slots = 1
-					add_building_construction = { type = construction_complex level = 1 instant_build = yes }
-					add_building_construction = { type = arms_factory level = 1 instant_build = yes }
-				}
+			72 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = { type = construction_complex level = 1 instant_build = yes }
+				add_building_construction = { type = arms_factory level = 1 instant_build = yes }
 			}
 		}
+	}
 
-		focus = { # International Supply Chain
-			id = MRC_international_supply_chain
-			icon = GFX_focus_unknown_industry
-			prerequisite = { focus = MRC_military_complex }
-			relative_position_id = MRC_military_complex
-			x = 0
-			y = 1
-		
-			cost = 5
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = no
-		
-			available = {
-			}
-			bypass = {
-			}
-		
-			ai_will_do = {
-				factor = 2
+	focus = { # Military Complex
+		id = MRC_military_complex
+		icon = GFX_focus_unknown_industry
+		prerequisite = { focus = MRC_military_districts }
+		relative_position_id = MRC_military_districts
+		x = 0
+		y = 1
+	
+		cost = 5
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+	
+		available = {
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			factor = 2
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_military_complex"
+			14 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = { type = construction_complex level = 1 instant_build = yes }
+				add_building_construction = { type = arms_factory level = 1 instant_build = yes }
 			}
 
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_international_supply_chain"
-				add_offsite_building = { type = arms_factory level = 6 }
-				custom_effect_tooltip = modify_MRC_country_most_serene_republic_modifier_tt
-				add_to_variable = {
-					MRC.MRC_trade_opinion_factor_modifier = -0.50
-					tooltip = trade_opinion_factor_negative_tt
-				}
-				add_to_variable = {
-					MRC.MRC_resource_trade_cost_bonus_per_factory_modifier = -1.00
-					tooltip = resource_trade_cost_bonus_per_factory_tt
-				}
-				add_ideas = MRC_idea_international_supply_chains
+			71 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = { type = construction_complex level = 1 instant_build = yes }
+				add_building_construction = { type = arms_factory level = 1 instant_build = yes }
+			}
+
+			72 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = { type = construction_complex level = 1 instant_build = yes }
+				add_building_construction = { type = arms_factory level = 1 instant_build = yes }
 			}
 		}
+	}
+
+	focus = { # International Supply Chain
+		id = MRC_international_supply_chain
+		icon = GFX_focus_unknown_industry
+		prerequisite = { focus = MRC_military_complex }
+		relative_position_id = MRC_military_complex
+		x = 0
+		y = 1
+	
+		cost = 5
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+	
+		available = {
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			factor = 2
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_international_supply_chain"
+			add_offsite_building = { type = arms_factory level = 6 }
+			custom_effect_tooltip = modify_MRC_country_most_serene_republic_modifier_tt
+			add_to_variable = {
+				MRC.MRC_trade_opinion_factor_modifier = -0.50
+				tooltip = trade_opinion_factor_negative_tt
+			}
+			add_to_variable = {
+				MRC.MRC_resource_trade_cost_bonus_per_factory_modifier = -1.00
+				tooltip = resource_trade_cost_bonus_per_factory_tt
+			}
+			add_ideas = MRC_idea_international_supply_chains
+		}
+	}
 
 	focus = { # Light Industry Construction
 		id = MRC_light_industry_construction
@@ -2654,124 +2692,124 @@ focus_tree = { # Merchant-Republicism
 		}
 	}
 
-		focus = { # Civilian Districts
-			id = MRC_civilian_districts
-			icon = GFX_focus_unknown_industry
-			prerequisite = { focus = MRC_light_industry_construction }
-			relative_position_id = MRC_light_industry_construction
-			x = 1
-			y = 1
-		
-			cost = 5
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = no
-		
-			available = {
-			}
-			bypass = {
-			}
-		
-			ai_will_do = {
-				factor = 2
-			}
-
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_civilian_districts"
-				13 = {
-					add_extra_state_shared_building_slots = 1
-					add_building_construction = { type = construction_complex level = 1 instant_build = yes }
-					add_building_construction = { type = industrial_complex level = 1 instant_build = yes }
-				}
-
-				14 = {
-					add_extra_state_shared_building_slots = 1
-					add_building_construction = { type = construction_complex level = 1 instant_build = yes }
-					add_building_construction = { type = industrial_complex level = 1 instant_build = yes }
-				}
-
-				71 = {
-					add_extra_state_shared_building_slots = 1
-					add_building_construction = { type = construction_complex level = 1 instant_build = yes }
-					add_building_construction = { type = industrial_complex level = 1 instant_build = yes }
-				}
-
-				72 = {
-					add_extra_state_shared_building_slots = 1
-					add_building_construction = { type = construction_complex level = 1 instant_build = yes }
-					add_building_construction = { type = industrial_complex level = 1 instant_build = yes }
-				}
-			}
+	focus = { # Civilian Districts
+		id = MRC_civilian_districts
+		icon = GFX_focus_unknown_industry
+		prerequisite = { focus = MRC_light_industry_construction }
+		relative_position_id = MRC_light_industry_construction
+		x = 1
+		y = 1
+	
+		cost = 5
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+	
+		available = {
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			factor = 2
 		}
 
-		focus = { # Construction Efforts
-			id = MRC_construction_efforts
-			icon = GFX_focus_unknown_industry
-			prerequisite = { focus = MRC_civilian_districts }
-			relative_position_id = MRC_civilian_districts
-			x = 0
-			y = 1
-		
-			cost = 5
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = no
-		
-			available = {
-			}
-			bypass = {
-			}
-		
-			ai_will_do = {
-				factor = 2
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_civilian_districts"
+			13 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = { type = construction_complex level = 1 instant_build = yes }
+				add_building_construction = { type = industrial_complex level = 1 instant_build = yes }
 			}
 
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_construction_efforts"
-				add_tech_bonus = {
-					name = GER_four_year_plan
-					bonus = 1.0
-					uses = 2
-					category = industry
-				}
+			14 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = { type = construction_complex level = 1 instant_build = yes }
+				add_building_construction = { type = industrial_complex level = 1 instant_build = yes }
+			}
+
+			71 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = { type = construction_complex level = 1 instant_build = yes }
+				add_building_construction = { type = industrial_complex level = 1 instant_build = yes }
+			}
+
+			72 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = { type = construction_complex level = 1 instant_build = yes }
+				add_building_construction = { type = industrial_complex level = 1 instant_build = yes }
 			}
 		}
+	}
 
-		focus = { # Power of Global Trade
-			id = MRC_power_global_trade
-			icon = GFX_focus_unknown_industry
-			prerequisite = { focus = MRC_construction_efforts }
-			relative_position_id = MRC_construction_efforts
-			x = 0
-			y = 1
-		
-			cost = 5
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = no
-		
-			available = {
-			}
-			bypass = {
-			}
-		
-			ai_will_do = {
-				factor = 2
-			}
+	focus = { # Construction Efforts
+		id = MRC_construction_efforts
+		icon = GFX_focus_unknown_industry
+		prerequisite = { focus = MRC_civilian_districts }
+		relative_position_id = MRC_civilian_districts
+		x = 0
+		y = 1
+	
+		cost = 5
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+	
+		available = {
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			factor = 2
+		}
 
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_power_global_trade"
-				custom_effect_tooltip = modify_MRC_country_most_serene_republic_modifier_tt
-				add_to_variable = {
-					MRC.MRC_trade_opinion_factor_modifier = 1.00
-					tooltip = trade_opinion_factor_tt
-				}
-				add_to_variable = {
-					MRC.MRC_resource_trade_cost_bonus_per_factory_modifier = 1.00
-					tooltip = resource_trade_cost_bonus_per_factory_tt
-				}
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_construction_efforts"
+			add_tech_bonus = {
+				name = GER_four_year_plan
+				bonus = 1.0
+				uses = 2
+				category = industry
 			}
 		}
+	}
+
+	focus = { # Power of Global Trade
+		id = MRC_power_global_trade
+		icon = GFX_focus_unknown_industry
+		prerequisite = { focus = MRC_construction_efforts }
+		relative_position_id = MRC_construction_efforts
+		x = 0
+		y = 1
+	
+		cost = 5
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+	
+		available = {
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			factor = 2
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_power_global_trade"
+			custom_effect_tooltip = modify_MRC_country_most_serene_republic_modifier_tt
+			add_to_variable = {
+				MRC.MRC_trade_opinion_factor_modifier = 1.00
+				tooltip = trade_opinion_factor_tt
+			}
+			add_to_variable = {
+				MRC.MRC_resource_trade_cost_bonus_per_factory_modifier = 1.00
+				tooltip = resource_trade_cost_bonus_per_factory_tt
+			}
+		}
+	}
 
 	focus = { # Industrial Age Research
 		id = MRC_industrial_research
@@ -2801,100 +2839,100 @@ focus_tree = { # Merchant-Republicism
 		}
 	}
 
-		focus = { # Corporate Guilds 
-			id = MRC_guilds_corporate_focus
-			icon = GFX_focus_unknown_industry
-			mutually_exclusive = { focus = MRC_guilds_balance_focus focus = MRC_guilds_union_focus }
-			prerequisite = { focus = MRC_industrial_research }
-			prerequisite = { focus = MRC_international_supply_chain }
-			relative_position_id = MRC_industrial_research
-			x = -2
-			y = 1
-		
-			cost = 10
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = no
-		
-			available = {
-			}
-			bypass = {
-			}
-		
-			ai_will_do = {
-				factor = 2
-			}
+	focus = { # Corporate Guilds 
+		id = MRC_guilds_corporate_focus
+		icon = GFX_focus_unknown_industry
+		mutually_exclusive = { focus = MRC_guilds_balance_focus focus = MRC_guilds_union_focus }
+		prerequisite = { focus = MRC_industrial_research }
+		prerequisite = { focus = MRC_international_supply_chain }
+		relative_position_id = MRC_industrial_research
+		x = -2
+		y = 1
+	
+		cost = 10
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+	
+		available = {
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			factor = 2
+		}
 
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_guilds_corporate_focus"
-				swap_ideas = { remove_idea = MRC_idea_economic_guilds add_idea = MRC_idea_corporate_guilds }
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_guilds_corporate_focus"
+			swap_ideas = { remove_idea = MRC_idea_economic_guilds add_idea = MRC_idea_corporate_guilds }
+		}
+	}
+
+	focus = { # Guilds Balance
+		id = MRC_guilds_balance_focus
+		icon = GFX_focus_unknown_industry
+		mutually_exclusive = { focus = MRC_guilds_corporate_focus focus = MRC_guilds_union_focus }
+		prerequisite = { focus = MRC_industrial_research }
+		prerequisite = { focus = MRC_power_global_trade focus = MRC_international_supply_chain }
+		relative_position_id = MRC_industrial_research
+		x = 0
+		y = 1
+	
+		cost = 10
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+	
+		available = {
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			factor = 1
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_guilds_balance_focus"
+			add_political_power = 100
+		}
+	}
+
+	focus = { # Union Guilds
+		id = MRC_guilds_union_focus
+		icon = GFX_focus_unknown_industry
+		mutually_exclusive = { focus = MRC_guilds_corporate_focus focus = MRC_guilds_balance_focus }
+		prerequisite = { focus = MRC_industrial_research }
+		prerequisite = { focus = MRC_power_global_trade }
+		relative_position_id = MRC_industrial_research
+		x = 2
+		y = 1
+	
+		cost = 10
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+	
+		available = {
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			factor = 2
+			modifier = {
+				add = 0.10
+				factor = 1.10
+				is_historical_focus_on = yes
 			}
 		}
 
-		focus = { # Guilds Balance
-			id = MRC_guilds_balance_focus
-			icon = GFX_focus_unknown_industry
-			mutually_exclusive = { focus = MRC_guilds_corporate_focus focus = MRC_guilds_union_focus }
-			prerequisite = { focus = MRC_industrial_research }
-			prerequisite = { focus = MRC_power_global_trade focus = MRC_international_supply_chain }
-			relative_position_id = MRC_industrial_research
-			x = 0
-			y = 1
-		
-			cost = 10
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = no
-		
-			available = {
-			}
-			bypass = {
-			}
-		
-			ai_will_do = {
-				factor = 1
-			}
-
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_guilds_balance_focus"
-				add_political_power = 100
-			}
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_guilds_union_focus"
+			swap_ideas = { remove_idea = MRC_idea_workers_guilds add_idea = MRC_idea_union_guilds }
 		}
-
-		focus = { # Union Guilds
-			id = MRC_guilds_union_focus
-			icon = GFX_focus_unknown_industry
-			mutually_exclusive = { focus = MRC_guilds_corporate_focus focus = MRC_guilds_balance_focus }
-			prerequisite = { focus = MRC_industrial_research }
-			prerequisite = { focus = MRC_power_global_trade }
-			relative_position_id = MRC_industrial_research
-			x = 2
-			y = 1
-		
-			cost = 10
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = no
-		
-			available = {
-			}
-			bypass = {
-			}
-		
-			ai_will_do = {
-				factor = 2
-				modifier = {
-					add = 0.10
-					factor = 1.10
-					is_historical_focus_on = yes
-				}
-			}
-
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_guilds_union_focus"
-				swap_ideas = { remove_idea = MRC_idea_workers_guilds add_idea = MRC_idea_union_guilds }
-			}
-		}
+	}
 	# Republicanism + Progressive Branch
 	focus = { # Enshrine Civil Rights
 		id = MRC_enshrine_civil_rights
@@ -2928,32 +2966,32 @@ focus_tree = { # Merchant-Republicism
 		}
 	}
 
-		focus = { # votes for Businesses and Women
-			id = MRC_votes_businesses_women
-			icon = GFX_focus_unknown_political
-			prerequisite = { focus = MRC_enshrine_civil_rights }
-			relative_position_id = MRC_enshrine_civil_rights
-			x = -1
-			y = 1
-		
-			cost = 5
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = no
-		
-			available = {
-			}
-			bypass = {
-			}
-		
-			ai_will_do = {
-				factor = 2
-			}
-
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_votes_businesses_women"
-			}
+	focus = { # votes for Businesses and Women
+		id = MRC_votes_businesses_women
+		icon = GFX_focus_unknown_political
+		prerequisite = { focus = MRC_enshrine_civil_rights }
+		relative_position_id = MRC_enshrine_civil_rights
+		x = -1
+		y = 1
+	
+		cost = 5
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+	
+		available = {
 		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			factor = 2
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_votes_businesses_women"
+		}
+	}
 
 	focus = { # Doge Gracia Constitutional Reforms
 		id = MRC_doge_gracia_constitutional_reforms
@@ -2992,32 +3030,32 @@ focus_tree = { # Merchant-Republicism
 		}
 	}
 
-		focus = { # votes for Women
-			id = MRC_votes_women
-			icon = GFX_focus_unknown_political
-			prerequisite = { focus = MRC_doge_gracia_constitutional_reforms }
-			relative_position_id = MRC_doge_gracia_constitutional_reforms
-			x = 1
-			y = 1
-		
-			cost = 5
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = no
-		
-			available = {
-			}
-			bypass = {
-			}
-		
-			ai_will_do = {
-				factor = 2
-			}
-
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_votes_women"
-			}
+	focus = { # votes for Women
+		id = MRC_votes_women
+		icon = GFX_focus_unknown_political
+		prerequisite = { focus = MRC_doge_gracia_constitutional_reforms }
+		relative_position_id = MRC_doge_gracia_constitutional_reforms
+		x = 1
+		y = 1
+	
+		cost = 5
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+	
+		available = {
 		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			factor = 2
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_votes_women"
+		}
+	}
 
 	focus = { # Proper Education
 		id = MRC_proper_education
@@ -3047,61 +3085,61 @@ focus_tree = { # Merchant-Republicism
 		}
 	}
 
-		focus = { # Subsidized Education
-			id = MRC_subsidized_education
-			icon = GFX_focus_unknown_political
-			prerequisite = { focus = MRC_proper_education }
-			relative_position_id = MRC_proper_education
-			x = 0
-			y = 1
-		
-			cost = 5
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = no
-		
-			available = {
-			}
-			bypass = {
-			}
-		
-			ai_will_do = {
-				factor = 2
-			}
-
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_subsidized_education"
-				swap_ideas = { remove_idea = MRC_idea_center_of_knowledge_0 add_idea = MRC_idea_center_of_knowledge_1 }
-			}
+	focus = { # Subsidized Education
+		id = MRC_subsidized_education
+		icon = GFX_focus_unknown_political
+		prerequisite = { focus = MRC_proper_education }
+		relative_position_id = MRC_proper_education
+		x = 0
+		y = 1
+	
+		cost = 5
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+	
+		available = {
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			factor = 2
 		}
 
-		focus = { # Proper Education
-			id = MRC_center_of_continent_education
-			icon = GFX_focus_unknown_political
-			prerequisite = { focus = MRC_subsidized_education }
-			relative_position_id = MRC_subsidized_education
-			x = 0
-			y = 1
-		
-			cost = 5
-			cancel_if_invalid = yes
-			continue_if_invalid = no
-			available_if_capitulated = no
-		
-			available = {
-			}
-			bypass = {
-			}
-		
-			ai_will_do = {
-				factor = 2
-			}
-
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus MRC_center_of_continent_education"
-				add_research_slot = 1
-			}
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_subsidized_education"
+			swap_ideas = { remove_idea = MRC_idea_center_of_knowledge_0 add_idea = MRC_idea_center_of_knowledge_1 }
 		}
+	}
+
+	focus = { # Proper Education
+		id = MRC_center_of_continent_education
+		icon = GFX_focus_unknown_political
+		prerequisite = { focus = MRC_subsidized_education }
+		relative_position_id = MRC_subsidized_education
+		x = 0
+		y = 1
+	
+		cost = 5
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+	
+		available = {
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			factor = 2
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus MRC_center_of_continent_education"
+			add_research_slot = 1
+		}
+	}
 	# Left Chapter 3:   Foreign Intervention Branch
 	# Right Chapter 3:  Progressive Neutrality Branch
 	# Middle Chapter 3: Merchant-Republicism Equilibrium Branch
