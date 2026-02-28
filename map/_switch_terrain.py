@@ -10,11 +10,11 @@ from pathlib import Path
 DEFINITION_FILE = "definition.csv"
 
 # The new terrain type to apply (e.g., "forest", "mountain", "plains", "urban", "desert")
-NEW_TERRAIN = "farmland"
+NEW_TERRAIN = "desert"
 
 # List of province IDs you want to change to the NEW_TERRAIN
 TARGET_PROVINCES = [
-	3724, 4991, 5280, 14111, 4000, 4022, 4452, 4660, 13140, 14359, 14374, 14414, 14478, 14645
+	10, 2801, 3305, 4809, 5160, 13987, 14015, 14057, 14070, 14463, 18370
 ]
 
 # -------------------------------------------------------------
