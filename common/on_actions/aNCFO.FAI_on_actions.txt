@@ -37,57 +37,81 @@ on_actions = {
 	}
 
 	on_monthly = { # Triggers each month for every country separately
-		effect = { # Building Queuer
+		effect = { # Building Queuer for Oil-Fired Generator
 			IF = {
 				LIMIT = {
 					is_ai = yes
 					is_erly_game = no
 				}
-				every_owned_state = { # Oil-Fired Generator Queuing
-					IF = {
-						LIMIT = {
-							check_variable = { var = num_of_factories value = 10 compare = greater_than_or_equals }
-						}
-						IF = {
-							LIMIT = {
-							    check_variable = { var = infrastructure_level value = 3 compare = less_than }
-							    NOT = { has_state_flag = { flag = bq_oil_fired_generator days < 1 } }
+				IF = {
+					LIMIT = {
+						check_variable = { var = num_of_factories value = 10 compare = greater_than_or_equals }
+					}
+					set_temp_variable = { FAI_queue_base = 1 }
+					FAI_calc_queue_batch_size = yes
+					meta_effect = {
+						text = {
+							every_owned_state = { # Oil-Fired Generator Queuing
+								random_select_amount = [BATCH_SIZE] # "random_select_amount" prevents "oil_fired_generator" Queue overload
+								LIMIT = {
+									set_temp_variable = { state_total_factories = building_level@arms_factory }
+									add_to_temp_variable = { state_total_factories = building_level@dockyard }
+									add_to_temp_variable = { state_total_factories = building_level@industrial_complex }
+									check_variable = { var = state_total_factories value = 10 compare = greater_than_or_equals }
+									NOT = { has_state_flag = bq_oil_fired_generator }
+								}
+								IF = {
+									LIMIT = {
+										check_variable = { var = infrastructure_level value = 3 compare = less_than }
+									}
+									add_building_construction = { type = infrastructure level = 1 instant_build = no }
+									set_state_flag = { flag = bq_oil_fired_generator days = 365 }
+									ELSE = {
+										LIMIT = {
+											check_variable = { var = infrastructure_level value = 3 compare = greater_than_or_equals }
+										}
+										add_building_construction = { type = oil_fired_generator level = 1 instant_build = no }
+										set_state_flag = { flag = bq_oil_fired_generator days = 365 }
+									}
+								}
 							}
-							add_building_construction = { type = infrastructure level = 1 instant_build = no }
-							set_state_flag = { flag = bq_oil_fired_generator days = 365 }
-							ELSE = {
-							    LIMIT = {
-							        check_variable = { var = infrastructure_level value = 3 compare = greater_than_or_equals }
-							        NOT = { has_state_flag = { flag = bq_oil_fired_generator days < 1 } }
-							    }
-							    add_building_construction = { type = oil_fired_generator level = 1 instant_build = no }
-								set_state_flag = { flag = bq_oil_fired_generator days = 365 }
-							}
+							log = "[ROOT_GNAME]: Construction Sector Queuing Batch Size: [BATCH_SIZE]"
 						}
+						ROOT_GNAME = "[ROOT.GetName]"
+						BATCH_SIZE = "[?FAI_batch_limit]"
 					}
 				}
-				IF = { # Construction Sector Queuing
-					LIMIT = { num_of_civilian_factories_available_for_projects > 49 }
-					every_owned_state = {
-						random_select_amount = 3 # "random_select_amount" prevents "construction_complex" Queue overload
-						LIMIT = {
-							free_building_slots = { building = industrial_complex size < 1 }
-							NOT = { has_state_flag = { flag = bq_construction_complex days < 1 } }
-						}
-						add_building_construction = { type = construction_complex level = 1 instant_build = no }
-						set_state_flag = { flag = bq_construction_complex days = 365 }
-					}
-					ELSE = {
-						every_owned_state = {
-							random_select_amount = 1 # "random_select_amount" prevents "construction_complex" Queue overload
+			}
+		}
+
+		effect = { # Building Queuer for Construction Sector
+			IF = {
+				LIMIT = {
+					is_ai = yes
+					is_erly_game = no
+				}
+				set_temp_variable = { FAI_queue_base = 0.5 }
+				FAI_calc_queue_batch_size = yes
+				meta_effect = {
+					text = {
+						every_owned_state = { # Construction Sector Queuing
+							random_select_amount = [BATCH_SIZE] # "random_select_amount" prevents "construction_complex" Queue overload
 							LIMIT = {
 								free_building_slots = { building = industrial_complex size < 1 }
-								NOT = { has_state_flag = { flag = bq_construction_complex days < 1 } }
+								NOT = {
+									has_state_flag = bq_construction_complex
+									has_state_category = enclave
+									has_state_category = tiny_island
+									has_state_category = wasteland
+								}
 							}
 							add_building_construction = { type = construction_complex level = 1 instant_build = no }
 							set_state_flag = { flag = bq_construction_complex days = 365 }
 						}
+						log = "[ROOT_GNAME]: Construction Sector Queuing Batch Size: [BATCH_SIZE]"
 					}
+					ROOT_GNAME = "[ROOT.GetName]"
+					BATCH_SIZE = "[?FAI_batch_limit]"
 				}
 			}
 		}

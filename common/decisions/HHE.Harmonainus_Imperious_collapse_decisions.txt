@@ -3,31 +3,19 @@ crisis_HHE_collapse = {
 		icon = generic_civil_support
 
 		fire_only_once = yes
+		cost = 50
 
 		available = {
 			has_stability > 0.45
 			has_country_flag = HHE_collapse_of_the_nation_country_no_more_fixed
-			NOT = {
-				OR = {
-					has_country_flag = HHE_collapse_of_the_nation_nobility_failed
-					has_country_flag = HHE_collapse_of_the_nation_nobility_fixed
-				}
-			}
-		}
-
-		cost = 50
-		ai_will_do = {
-			factor = 1000
 		}
 
 		visible = {
 			has_global_flag = HHE_warmonger_civil_war_first
 			NOT = {
 				has_global_flag = HHE_warmonger_civil_war_final
-				or = {
-					has_country_flag = HHE_collapse_of_the_nation_nobility_failed
-					has_country_flag = HHE_collapse_of_the_nation_nobility_fixed
-				}
+				has_country_flag = HHE_collapse_of_the_nation_nobility_failed
+				has_country_flag = HHE_collapse_of_the_nation_nobility_fixed
 			}
 		}
 
@@ -35,40 +23,29 @@ crisis_HHE_collapse = {
 			set_country_flag = HHE_collapse_of_the_nation_nobility_fixed
 			HHE_suppressed_rebellion_HNO = yes
 		}
+
+		ai_will_do = {
+			factor = 1000
+		}
 	}
 
 	mission_HHE_collapse_of_the_nation_nobility = {
 		icon = generic_civil_support
 
-		days_mission_timeout = 15
 		fire_only_once = yes
+		days_mission_timeout = 15
 
 		available = {
-			hidden_trigger = {
-				has_global_flag = HHE_warmonger_civil_war_first
-				NOT = { has_global_flag = HHE_warmonger_civil_war_final }
-			}
 			has_stability > 0.45
 			has_country_flag = HHE_collapse_of_the_nation_nobility_fixed
 		}
 
 		activation = {
 			has_global_flag = HHE_warmonger_civil_war_first
-			NOT = { has_global_flag = HHE_warmonger_civil_war_final }
-			NOT = {
-				or = {
-					has_country_flag = HHE_collapse_of_the_nation_nobility_failed
-					has_country_flag = HHE_collapse_of_the_nation_nobility_fixed
-				}
-			}
-		}
-
-		visible = {
-			NOT = {
-				or = {
-					has_country_flag = HHE_collapse_of_the_nation_nobility_failed
-					has_country_flag = HHE_collapse_of_the_nation_nobility_fixed
-				}
+			NOT = { 
+				has_global_flag = HHE_warmonger_civil_war_final 
+				has_country_flag = HHE_collapse_of_the_nation_nobility_failed
+				has_country_flag = HHE_collapse_of_the_nation_nobility_fixed
 			}
 		}
 
@@ -82,88 +59,54 @@ crisis_HHE_collapse = {
 		icon = generic_civil_support
 
 		fire_only_once = yes
+		cost = 50
 
 		available = {
-			AND = {
-				has_stability > 0.33
-				has_country_flag = HHE_collapse_of_the_nation_country_no_more_fixed
-				NOT = {
-					OR = {
-						has_country_flag = HHE_collapse_of_the_nation_fire_river_failed
-						has_country_flag = HHE_collapse_of_the_nation_fire_river_fixed
-					}
-				}
-			}
+			has_stability > 0.33
+			has_country_flag = HHE_collapse_of_the_nation_country_no_more_fixed
 			NOT = { has_completed_focus = HHE_warmonger_HHE_arresting_officers }
-		}
-
-		cost = 50
-		ai_will_do = {
-			factor = 1000
 		}
 
 		visible = {
-			AND = {
-				has_global_flag = HHE_warmonger_civil_war_first
-				NOT = {
-					has_global_flag = HHE_warmonger_civil_war_final
-					OR = {
-						has_country_flag = HHE_collapse_of_the_nation_fire_river_failed
-						has_country_flag = HHE_collapse_of_the_nation_fire_river_fixed
-					}
-				}
+			has_global_flag = HHE_warmonger_civil_war_first
+			NOT = {
+				has_global_flag = HHE_warmonger_civil_war_final
+				has_country_flag = HHE_collapse_of_the_nation_fire_river_failed
+				has_country_flag = HHE_collapse_of_the_nation_fire_river_fixed
+				has_completed_focus = HHE_warmonger_HHE_arresting_officers
 			}
-			NOT = { has_completed_focus = HHE_warmonger_HHE_arresting_officers }
 		}
 
 		complete_effect = {
 			set_country_flag = HHE_collapse_of_the_nation_fire_river_fixed
 			HHE_suppressed_rebellion_HFR = yes
 		}
+
+		ai_will_do = {
+			factor = 1000
+		}
 	}
 
 	mission_HHE_collapse_of_the_nation_fire_river = {
 		icon = generic_civil_support
 
-		days_mission_timeout = 30
 		fire_only_once = yes
+		days_mission_timeout = 30
 
 		available = {
-			AND = {
-				hidden_trigger = {
-					has_global_flag = HHE_warmonger_civil_war_first
-					NOT = { has_global_flag = HHE_warmonger_civil_war_final }
-				}
-				has_stability > 0.33
-				has_country_flag = HHE_collapse_of_the_nation_fire_river_fixed
-			}
+			has_stability > 0.33
+			has_country_flag = HHE_collapse_of_the_nation_fire_river_fixed
 			NOT = { has_completed_focus = HHE_warmonger_HHE_arresting_officers }
 		}
 
 		activation = {
-			AND = {
-				has_global_flag = HHE_warmonger_civil_war_first
-				NOT = { has_global_flag = HHE_warmonger_civil_war_final }
-				NOT = {
-					OR = {
-						has_country_flag = HHE_collapse_of_the_nation_fire_river_failed
-						has_country_flag = HHE_collapse_of_the_nation_fire_river_fixed
-					}
-				}
+			has_global_flag = HHE_warmonger_civil_war_first
+			NOT = { 
+				has_global_flag = HHE_warmonger_civil_war_final 
+				has_country_flag = HHE_collapse_of_the_nation_fire_river_failed
+				has_country_flag = HHE_collapse_of_the_nation_fire_river_fixed
+				has_completed_focus = HHE_warmonger_HHE_arresting_officers
 			}
-			NOT = { has_completed_focus = HHE_warmonger_HHE_arresting_officers }
-		}
-
-		visible = {
-			AND = {
-				NOT = {
-					OR = {
-						has_country_flag = HHE_collapse_of_the_nation_fire_river_failed
-						has_country_flag = HHE_collapse_of_the_nation_fire_river_fixed
-					}
-				}
-			}
-			NOT = { has_completed_focus = HHE_warmonger_HHE_arresting_officers }
 		}
 
 		timeout_effect = {
@@ -176,31 +119,19 @@ crisis_HHE_collapse = {
 		icon = generic_civil_support
 
 		fire_only_once = yes
+		cost = 50
 
 		available = {
 			has_stability > 0.25
 			has_country_flag = HHE_collapse_of_the_nation_country_no_more_fixed
-			NOT = {
-				or = {
-					has_country_flag = HHE_collapse_of_the_nation_freedom_front_failed
-					has_country_flag = HHE_collapse_of_the_nation_freedom_front_fixed
-				}
-			}
-		}
-
-		cost = 50
-		ai_will_do = {
-			factor = 1000
 		}
 
 		visible = {
 			has_global_flag = HHE_warmonger_civil_war_first
 			NOT = {
 				has_global_flag = HHE_warmonger_civil_war_final
-				or = {
-					has_country_flag = HHE_collapse_of_the_nation_freedom_front_failed
-					has_country_flag = HHE_collapse_of_the_nation_freedom_front_fixed
-				}
+				has_country_flag = HHE_collapse_of_the_nation_freedom_front_failed
+				has_country_flag = HHE_collapse_of_the_nation_freedom_front_fixed
 			}
 		}
 
@@ -208,40 +139,29 @@ crisis_HHE_collapse = {
 			set_country_flag = HHE_collapse_of_the_nation_freedom_front_fixed
 			HHE_suppressed_rebellion_HFF = yes
 		}
+
+		ai_will_do = {
+			factor = 1000
+		}
 	}
 
 	mission_HHE_collapse_of_the_nation_freedom_front = {
 		icon = generic_civil_support
 
-		days_mission_timeout = 55
 		fire_only_once = yes
+		days_mission_timeout = 55
 
 		available = {
-			hidden_trigger = {
-				has_global_flag = HHE_warmonger_civil_war_first
-				NOT = { has_global_flag = HHE_warmonger_civil_war_final }
-			}
 			has_stability > 0.25
 			has_country_flag = HHE_collapse_of_the_nation_freedom_front_fixed
 		}
 
 		activation = {
 			has_global_flag = HHE_warmonger_civil_war_first
-			NOT = { has_global_flag = HHE_warmonger_civil_war_final }
-			NOT = {
-				or = {
-					has_country_flag = HHE_collapse_of_the_nation_freedom_front_failed
-					has_country_flag = HHE_collapse_of_the_nation_freedom_front_fixed
-				}
-			}
-		}
-
-		visible = {
-			NOT = {
-				or = {
-					has_country_flag = HHE_collapse_of_the_nation_freedom_front_failed
-					has_country_flag = HHE_collapse_of_the_nation_freedom_front_fixed
-				}
+			NOT = { 
+				has_global_flag = HHE_warmonger_civil_war_final 
+				has_country_flag = HHE_collapse_of_the_nation_freedom_front_failed
+				has_country_flag = HHE_collapse_of_the_nation_freedom_front_fixed
 			}
 		}
 
@@ -255,31 +175,19 @@ crisis_HHE_collapse = {
 		icon = generic_civil_support
 
 		fire_only_once = yes
+		cost = 50
 
 		available = {
 			has_stability > 0.20
 			has_country_flag = HHE_collapse_of_the_nation_country_no_more_fixed
-			NOT = {
-				or = {
-					has_country_flag = HHE_collapse_of_the_nation_peoples_government_failed
-					has_country_flag = HHE_collapse_of_the_nation_peoples_government_fixed
-				}
-			}
-		}
-
-		cost = 50
-		ai_will_do = {
-			factor = 1000
 		}
 
 		visible = {
 			has_global_flag = HHE_warmonger_civil_war_first
 			NOT = {
 				has_global_flag = HHE_warmonger_civil_war_final
-				or = {
-					has_country_flag = HHE_collapse_of_the_nation_peoples_government_failed
-					has_country_flag = HHE_collapse_of_the_nation_peoples_government_fixed
-				}
+				has_country_flag = HHE_collapse_of_the_nation_peoples_government_failed
+				has_country_flag = HHE_collapse_of_the_nation_peoples_government_fixed
 			}
 		}
 
@@ -288,40 +196,29 @@ crisis_HHE_collapse = {
 			add_popularity = { ideology = unitism popularity = -0.10 }
 			HHE_suppressed_rebellion_HPG = yes
 		}
+
+		ai_will_do = {
+			factor = 1000
+		}
 	}
 
 	mission_HHE_collapse_of_the_nation_peoples_government = {
 		icon = generic_civil_support
 
-		days_mission_timeout = 65
 		fire_only_once = yes
+		days_mission_timeout = 65
 
 		available = {
-			hidden_trigger = {
-				has_global_flag = HHE_warmonger_civil_war_first
-				NOT = { has_global_flag = HHE_warmonger_civil_war_final }
-			}
 			has_stability > 0.20
 			has_country_flag = HHE_collapse_of_the_nation_peoples_government_fixed
 		}
 
 		activation = {
 			has_global_flag = HHE_warmonger_civil_war_first
-			NOT = { has_global_flag = HHE_warmonger_civil_war_final }
-			NOT = {
-				or = {
-					has_country_flag = HHE_collapse_of_the_nation_peoples_government_failed
-					has_country_flag = HHE_collapse_of_the_nation_peoples_government_fixed
-				}
-			}
-		}
-
-		visible = {
-			NOT = {
-				or = {
-					has_country_flag = HHE_collapse_of_the_nation_peoples_government_failed
-					has_country_flag = HHE_collapse_of_the_nation_peoples_government_fixed
-				}
+			NOT = { 
+				has_global_flag = HHE_warmonger_civil_war_final 
+				has_country_flag = HHE_collapse_of_the_nation_peoples_government_failed
+				has_country_flag = HHE_collapse_of_the_nation_peoples_government_fixed
 			}
 		}
 
@@ -336,82 +233,64 @@ crisis_HHE_collapse = {
 		icon = generic_civil_support
 
 		fire_only_once = yes
+		cost = 50
 
 		available = {
 			has_stability > 0.17
-			NOT = {
-				or = {
-					has_country_flag = HHE_collapse_of_the_nation_country_no_more_failed
-					has_country_flag = HHE_collapse_of_the_nation_country_no_more_fixed
-				}
-			}
-		}
-
-		cost = 50
-		ai_will_do = {
-			factor = 10000
 		}
 
 		visible = {
 			has_global_flag = HHE_warmonger_civil_war_first
 			NOT = {
 				has_global_flag = HHE_warmonger_civil_war_final
-				or = {
-					has_country_flag = HHE_collapse_of_the_nation_country_no_more_failed
-					has_country_flag = HHE_collapse_of_the_nation_country_no_more_fixed
-				}
+				has_country_flag = HHE_collapse_of_the_nation_country_no_more_failed
+				has_country_flag = HHE_collapse_of_the_nation_country_no_more_fixed
 			}
 		}
 
 		complete_effect = {
 			set_country_flag = HHE_collapse_of_the_nation_country_no_more_fixed
 		}
+
+		ai_will_do = {
+			factor = 10000
+		}
 	}
 
 	mission_HHE_collapse_of_the_nation_country_no_more = {
 		icon = generic_civil_support
 
-		days_mission_timeout = 80
 		fire_only_once = yes
+		days_mission_timeout = 80
 
 		available = {
-			hidden_trigger = {
-				has_global_flag = HHE_warmonger_civil_war_first
-				NOT = { has_global_flag = HHE_warmonger_civil_war_final }
-			}
 			has_stability > 0.17
 			has_country_flag = HHE_collapse_of_the_nation_country_no_more_fixed
 		}
 
 		activation = {
 			has_global_flag = HHE_warmonger_civil_war_first
-			NOT = { has_global_flag = HHE_warmonger_civil_war_final }
-			NOT = {
-				or = {
-					has_country_flag = HHE_collapse_of_the_nation_country_no_more_failed
-					has_country_flag = HHE_collapse_of_the_nation_country_no_more_fixed
-				}
-			}
-		}
-
-		visible = {
-			NOT = {
-				or = {
-					has_country_flag = HHE_collapse_of_the_nation_country_no_more_failed
-					has_country_flag = HHE_collapse_of_the_nation_country_no_more_fixed
-				}
+			NOT = { 
+				has_global_flag = HHE_warmonger_civil_war_final 
+				has_country_flag = HHE_collapse_of_the_nation_country_no_more_failed
+				has_country_flag = HHE_collapse_of_the_nation_country_no_more_fixed
 			}
 		}
 
 		timeout_effect = {
-			1 = { add_core_of = HHE }
-			HHE = { transfer_state = 1 }
 			set_country_flag = HHE_collapse_of_the_nation_country_no_more_failed
-			5 = { add_core_of = HPG }
-			#239 = { add_core_of = HPG }
-			#HPG = { transfer_state = 5 transfer_state = 239 }
-			237 = { add_core_of = HNO }
-			HNO = { transfer_state = 237 }
+			1 = {
+				add_core_of = HHE
+				transfer_state_to = HNO
+			}
+			5 = {
+				add_core_of = HPG
+				transfer_state_to = HNO
+			}
+			237 = {
+				add_core_of = HNO
+				transfer_state_to = HNO
+			}
 		}
 	}
 }
@@ -421,30 +300,18 @@ crisis_HBB_collapse = {
 		icon = generic_civil_support
 
 		fire_only_once = yes
+		cost = 50
 
 		available = {
 			has_stability > 0.75
-			NOT = {
-				or = {
-					has_country_flag = HBB_collapse_of_the_nation_unity_front_failed
-					has_country_flag = HBB_collapse_of_the_nation_unity_front_fixed
-				}
-			}
-		}
-
-		cost = 50
-		ai_will_do = {
-			factor = 1000
 		}
 
 		visible = {
 			has_global_flag = HHE_warmonger_civil_war_first
 			NOT = {
 				has_global_flag = HHE_warmonger_civil_war_final
-				or = {
-					has_country_flag = HBB_collapse_of_the_nation_unity_front_failed
-					has_country_flag = HBB_collapse_of_the_nation_unity_front_fixed
-				}
+				has_country_flag = HBB_collapse_of_the_nation_unity_front_failed
+				has_country_flag = HBB_collapse_of_the_nation_unity_front_fixed
 			}
 		}
 
@@ -452,40 +319,29 @@ crisis_HBB_collapse = {
 			set_country_flag = HBB_collapse_of_the_nation_unity_front_fixed
 			HBB_suppressed_rebellion_HUF = yes
 		}
+
+		ai_will_do = {
+			factor = 1000
+		}
 	}
 
 	mission_HBB_collapse_of_the_nation_unity_front = {
 		icon = generic_civil_support
 
-		days_mission_timeout = 30
 		fire_only_once = yes
+		days_mission_timeout = 30
 
 		available = {
-			hidden_trigger = {
-				has_global_flag = HHE_warmonger_civil_war_first
-				NOT = { has_global_flag = HHE_warmonger_civil_war_final }
-			}
 			has_stability > 0.45
 			has_country_flag = HBB_collapse_of_the_nation_unity_front_fixed
 		}
 
 		activation = {
 			has_global_flag = HHE_warmonger_civil_war_first
-			NOT = { has_global_flag = HHE_warmonger_civil_war_final }
 			NOT = {
-				or = {
-					has_country_flag = HBB_collapse_of_the_nation_unity_front_failed
-					has_country_flag = HBB_collapse_of_the_nation_unity_front_fixed
-				}
-			}
-		}
-
-		visible = {
-			NOT = {
-				or = {
-					has_country_flag = HBB_collapse_of_the_nation_unity_front_failed
-					has_country_flag = HBB_collapse_of_the_nation_unity_front_fixed
-				}
+				has_global_flag = HHE_warmonger_civil_war_final
+				has_country_flag = HBB_collapse_of_the_nation_unity_front_failed
+				has_country_flag = HBB_collapse_of_the_nation_unity_front_fixed
 			}
 		}
 
@@ -501,30 +357,18 @@ crisis_HCR_collapse = {
 		icon = generic_civil_support
 
 		fire_only_once = yes
+		cost = 50
 
 		available = {
 			has_stability > 0.75
-			NOT = {
-				or = {
-					has_country_flag = HCR_collapse_of_the_nation_western_anarchist_failed
-					has_country_flag = HCR_collapse_of_the_nation_western_anarchist_fixed
-				}
-			}
-		}
-
-		cost = 50
-		ai_will_do = {
-			factor = 1000
 		}
 
 		visible = {
 			has_global_flag = HHE_warmonger_civil_war_first
 			NOT = {
 				has_global_flag = HHE_warmonger_civil_war_final
-				or = {
-					has_country_flag = HCR_collapse_of_the_nation_western_anarchist_failed
-					has_country_flag = HCR_collapse_of_the_nation_western_anarchist_fixed
-				}
+				has_country_flag = HCR_collapse_of_the_nation_western_anarchist_failed
+				has_country_flag = HCR_collapse_of_the_nation_western_anarchist_fixed
 			}
 		}
 
@@ -532,40 +376,29 @@ crisis_HCR_collapse = {
 			set_country_flag = HCR_collapse_of_the_nation_western_anarchist_fixed
 			HCR_suppressed_rebellion_HAW = yes
 		}
+
+		ai_will_do = {
+			factor = 1000
+		}
 	}
 
 	mission_HCR_collapse_of_the_nation_western_anarchist = {
 		icon = generic_civil_support
 
-		days_mission_timeout = 15
 		fire_only_once = yes
+		days_mission_timeout = 15
 
 		available = {
-			hidden_trigger = {
-				has_global_flag = HHE_warmonger_civil_war_first
-				NOT = { has_global_flag = HHE_warmonger_civil_war_final }
-			}
 			has_stability > 0.75
 			has_country_flag = HCR_collapse_of_the_nation_western_anarchist_fixed
 		}
 
 		activation = {
 			has_global_flag = HHE_warmonger_civil_war_first
-			NOT = { has_global_flag = HHE_warmonger_civil_war_final }
-			NOT = {
-				or = {
-					has_country_flag = HCR_collapse_of_the_nation_western_anarchist_failed
-					has_country_flag = HCR_collapse_of_the_nation_western_anarchist_fixed
-				}
-			}
-		}
-
-		visible = {
-			NOT = {
-				or = {
-					has_country_flag = HCR_collapse_of_the_nation_western_anarchist_failed
-					has_country_flag = HCR_collapse_of_the_nation_western_anarchist_fixed
-				}
+			NOT = { 
+				has_global_flag = HHE_warmonger_civil_war_final 
+				has_country_flag = HCR_collapse_of_the_nation_western_anarchist_failed
+				has_country_flag = HCR_collapse_of_the_nation_western_anarchist_fixed
 			}
 		}
 
@@ -584,30 +417,18 @@ crisis_HET_collapse = {
 		icon = generic_civil_support
 
 		fire_only_once = yes
+		cost = 50
 
 		available = {
 			has_stability > 0.90
-			NOT = {
-				or = {
-					has_country_flag = ETF_collapse_of_the_nation_elven_tribes_failed
-					has_country_flag = ETF_collapse_of_the_nation_elven_tribes_fixed
-				}
-			}
-		}
-
-		cost = 50
-		ai_will_do = {
-			factor = 1000
 		}
 
 		visible = {
 			has_global_flag = HHE_warmonger_civil_war_first
 			NOT = {
 				has_global_flag = HHE_warmonger_civil_war_final
-				or = {
-					has_country_flag = ETF_collapse_of_the_nation_elven_tribes_failed
-					has_country_flag = ETF_collapse_of_the_nation_elven_tribes_fixed
-				}
+				has_country_flag = ETF_collapse_of_the_nation_elven_tribes_failed
+				has_country_flag = ETF_collapse_of_the_nation_elven_tribes_fixed
 			}
 		}
 
@@ -615,40 +436,29 @@ crisis_HET_collapse = {
 			set_country_flag = ETF_collapse_of_the_nation_elven_tribes_fixed
 			HET_suppressed_rebellion_ETF = yes
 		}
+
+		ai_will_do = {
+			factor = 1000
+		}
 	}
 
 	mission_ETF_collapse_of_the_nation_elven_tribes = {
 		icon = generic_civil_support
 
-		days_mission_timeout = 30
 		fire_only_once = yes
+		days_mission_timeout = 30
 
 		available = {
-			hidden_trigger = {
-				has_global_flag = HHE_warmonger_civil_war_first
-				NOT = { has_global_flag = HHE_warmonger_civil_war_final }
-			}
 			has_stability > 0.75
 			has_country_flag = ETF_collapse_of_the_nation_elven_tribes_fixed
 		}
 
 		activation = {
 			has_global_flag = HHE_warmonger_civil_war_first
-			NOT = { has_global_flag = HHE_warmonger_civil_war_final }
-			NOT = {
-				or = {
-					has_country_flag = ETF_collapse_of_the_nation_elven_tribes_failed
-					has_country_flag = ETF_collapse_of_the_nation_elven_tribes_fixed
-				}
-			}
-		}
-
-		visible = {
-			NOT = {
-				or = {
-					has_country_flag = ETF_collapse_of_the_nation_elven_tribes_failed
-					has_country_flag = ETF_collapse_of_the_nation_elven_tribes_fixed
-				}
+			NOT = { 
+				has_global_flag = HHE_warmonger_civil_war_final 
+				has_country_flag = ETF_collapse_of_the_nation_elven_tribes_failed
+				has_country_flag = ETF_collapse_of_the_nation_elven_tribes_fixed
 			}
 		}
 
@@ -664,14 +474,10 @@ crisis_ETF_collapse = {
 		icon = generic_civil_support
 
 		fire_only_once = yes
+		cost = 50
 
 		available = {
 			always = yes
-		}
-
-		cost = 50
-		ai_will_do = {
-			factor = 10000
 		}
 
 		visible = {
@@ -679,8 +485,26 @@ crisis_ETF_collapse = {
 		}
 
 		complete_effect = {
-			ETF = { transfer_state = 19 transfer_state = 163 transfer_state = 270 transfer_state = 408 }
-			HNO = {  }
+			19 = {
+				add_core_of = ETF
+				transfer_state_to = ETF
+			}
+			163 = {
+				add_core_of = ETF
+				transfer_state_to = ETF
+			}
+			270 = {
+				add_core_of = ETF
+				transfer_state_to = ETF
+			}
+			408 = {
+				add_core_of = ETF
+				transfer_state_to = ETF
+			}
+		}
+
+		ai_will_do = {
+			factor = 10000
 		}
 	}
 }
@@ -690,30 +514,18 @@ crisis_HLF_collapse = {
 		icon = generic_civil_support
 
 		fire_only_once = yes
+		cost = 50
 
 		available = {
 			has_stability > 0.55
-			NOT = {
-				or = {
-					has_country_flag = HLF_collapse_of_the_nation_confederacy_failed
-					has_country_flag = HLF_collapse_of_the_nation_confederacy_fixed
-				}
-			}
-		}
-
-		cost = 50
-		ai_will_do = {
-			factor = 1000
 		}
 
 		visible = {
 			has_global_flag = HHE_warmonger_civil_war_first
 			NOT = {
 				has_global_flag = HHE_warmonger_civil_war_final
-				or = {
-					has_country_flag = HLF_collapse_of_the_nation_confederacy_failed
-					has_country_flag = HLF_collapse_of_the_nation_confederacy_fixed
-				}
+				has_country_flag = HLF_collapse_of_the_nation_confederacy_failed
+				has_country_flag = HLF_collapse_of_the_nation_confederacy_fixed
 			}
 		}
 
@@ -721,40 +533,29 @@ crisis_HLF_collapse = {
 			set_country_flag = HLF_collapse_of_the_nation_confederacy_fixed
 			HLF_suppressed_rebellion_HCO = yes
 		}
+
+		ai_will_do = {
+			factor = 1000
+		}
 	}
 
 	mission_HLF_collapse_of_the_nation_confederacy = {
 		icon = generic_civil_support
 
-		days_mission_timeout = 20
 		fire_only_once = yes
+		days_mission_timeout = 20
 
 		available = {
-			hidden_trigger = {
-				has_global_flag = HHE_warmonger_civil_war_first
-				NOT = { has_global_flag = HHE_warmonger_civil_war_final }
-			}
 			has_stability > 0.75
 			has_country_flag = HLF_collapse_of_the_nation_confederacy_fixed
 		}
 
 		activation = {
 			has_global_flag = HHE_warmonger_civil_war_first
-			NOT = { has_global_flag = HHE_warmonger_civil_war_final }
-			NOT = {
-				or = {
-					has_country_flag = HLF_collapse_of_the_nation_confederacy_failed
-					has_country_flag = HLF_collapse_of_the_nation_confederacy_fixed
-				}
-			}
-		}
-
-		visible = {
-			NOT = {
-				or = {
-					has_country_flag = HLF_collapse_of_the_nation_confederacy_failed
-					has_country_flag = HLF_collapse_of_the_nation_confederacy_fixed
-				}
+			NOT = { 
+				has_global_flag = HHE_warmonger_civil_war_final 
+				has_country_flag = HLF_collapse_of_the_nation_confederacy_failed
+				has_country_flag = HLF_collapse_of_the_nation_confederacy_fixed
 			}
 		}
 
@@ -768,30 +569,18 @@ crisis_HLF_collapse = {
 		icon = generic_civil_support
 
 		fire_only_once = yes
+		cost = 50
 
 		available = {
 			has_stability > 0.60
-			NOT = {
-				or = {
-					has_country_flag = HLF_collapse_of_the_nation_junta_failed
-					has_country_flag = HLF_collapse_of_the_nation_junta_fixed
-				}
-			}
-		}
-
-		cost = 50
-		ai_will_do = {
-			factor = 1000
 		}
 
 		visible = {
 			has_global_flag = HHE_warmonger_civil_war_first
 			NOT = {
 				has_global_flag = HHE_warmonger_civil_war_final
-				or = {
-					has_country_flag = HLF_collapse_of_the_nation_junta_failed
-					has_country_flag = HLF_collapse_of_the_nation_junta_fixed
-				}
+				has_country_flag = HLF_collapse_of_the_nation_junta_failed
+				has_country_flag = HLF_collapse_of_the_nation_junta_fixed
 			}
 		}
 
@@ -799,40 +588,29 @@ crisis_HLF_collapse = {
 			set_country_flag = HLF_collapse_of_the_nation_junta_fixed
 			HLF_suppressed_rebellion_MJU = yes
 		}
+
+		ai_will_do = {
+			factor = 1000
+		}
 	}
 
 	mission_HLF_collapse_of_the_nation_junta = {
 		icon = generic_civil_support
 
-		days_mission_timeout = 40
 		fire_only_once = yes
+		days_mission_timeout = 40
 
 		available = {
-			hidden_trigger = {
-				has_global_flag = HHE_warmonger_civil_war_first
-				NOT = { has_global_flag = HHE_warmonger_civil_war_final }
-			}
 			has_stability > 0.55
 			has_country_flag = HLF_collapse_of_the_nation_junta_fixed
 		}
 
 		activation = {
 			has_global_flag = HHE_warmonger_civil_war_first
-			NOT = { has_global_flag = HHE_warmonger_civil_war_final }
-			NOT = {
-				or = {
-					has_country_flag = HLF_collapse_of_the_nation_junta_failed
-					has_country_flag = HLF_collapse_of_the_nation_junta_fixed
-				}
-			}
-		}
-
-		visible = {
-			NOT = {
-				or = {
-					has_country_flag = HLF_collapse_of_the_nation_junta_failed
-					has_country_flag = HLF_collapse_of_the_nation_junta_fixed
-				}
+			NOT = { 
+				has_global_flag = HHE_warmonger_civil_war_final 
+				has_country_flag = HLF_collapse_of_the_nation_junta_failed
+				has_country_flag = HLF_collapse_of_the_nation_junta_fixed
 			}
 		}
 
@@ -866,30 +644,18 @@ crisis_HST_collapse = {
 		icon = generic_civil_support
 
 		fire_only_once = yes
+		cost = 50
 
 		available = {
 			has_stability > 0.70
-			NOT = {
-				or = {
-					has_country_flag = HST_collapse_of_the_nation_archaigan_people_failed
-					has_country_flag = HST_collapse_of_the_nation_archaigan_people_fixed
-				}
-			}
-		}
-
-		cost = 50
-		ai_will_do = {
-			factor = 1000
 		}
 
 		visible = {
 			has_global_flag = HHE_warmonger_civil_war_first
 			NOT = {
 				has_global_flag = HHE_warmonger_civil_war_final
-				or = {
-					has_country_flag = HST_collapse_of_the_nation_archaigan_people_failed
-					has_country_flag = HST_collapse_of_the_nation_archaigan_people_fixed
-				}
+				has_country_flag = HST_collapse_of_the_nation_archaigan_people_failed
+				has_country_flag = HST_collapse_of_the_nation_archaigan_people_fixed
 			}
 		}
 
@@ -897,40 +663,29 @@ crisis_HST_collapse = {
 			set_country_flag = HST_collapse_of_the_nation_archaigan_people_fixed
 			HST_suppressed_rebellion_HAW = yes
 		}
+
+		ai_will_do = {
+			factor = 1000
+		}
 	}
 
 	mission_HST_collapse_of_the_nation_archaigan_people = {
 		icon = generic_civil_support
 
-		days_mission_timeout = 33
 		fire_only_once = yes
+		days_mission_timeout = 33
 
 		available = {
-			hidden_trigger = {
-				has_global_flag = HHE_warmonger_civil_war_first
-				NOT = { has_global_flag = HHE_warmonger_civil_war_final }
-			}
 			has_stability > 0.70
 			has_country_flag = HST_collapse_of_the_nation_archaigan_people_fixed
 		}
 
 		activation = {
 			has_global_flag = HHE_warmonger_civil_war_first
-			NOT = { has_global_flag = HHE_warmonger_civil_war_final }
-			NOT = {
-				or = {
-					has_country_flag = HST_collapse_of_the_nation_archaigan_people_failed
-					has_country_flag = HST_collapse_of_the_nation_archaigan_people_fixed
-				}
-			}
-		}
-
-		visible = {
-			NOT = {
-				or = {
-					has_country_flag = HST_collapse_of_the_nation_archaigan_people_failed
-					has_country_flag = HST_collapse_of_the_nation_archaigan_people_fixed
-				}
+			NOT = { 
+				has_global_flag = HHE_warmonger_civil_war_final 
+				has_country_flag = HST_collapse_of_the_nation_archaigan_people_failed
+				has_country_flag = HST_collapse_of_the_nation_archaigan_people_fixed
 			}
 		}
 
@@ -946,30 +701,18 @@ crisis_HTP_collapse = {
 		icon = generic_civil_support
 
 		fire_only_once = yes
+		cost = 50
 
 		available = {
 			has_stability > 0.67
-			NOT = {
-				or = {
-					has_country_flag = HTP_collapse_of_the_nation_free_sailors_failed
-					has_country_flag = HTP_collapse_of_the_nation_free_sailors_fixed
-				}
-			}
-		}
-
-		cost = 50
-		ai_will_do = {
-			factor = 1000
 		}
 
 		visible = {
 			has_global_flag = HHE_warmonger_civil_war_first
 			NOT = {
 				has_global_flag = HHE_warmonger_civil_war_final
-				or = {
-					has_country_flag = HTP_collapse_of_the_nation_free_sailors_failed
-					has_country_flag = HTP_collapse_of_the_nation_free_sailors_fixed
-				}
+				has_country_flag = HTP_collapse_of_the_nation_free_sailors_failed
+				has_country_flag = HTP_collapse_of_the_nation_free_sailors_fixed
 			}
 		}
 
@@ -977,40 +720,29 @@ crisis_HTP_collapse = {
 			set_country_flag = HTP_collapse_of_the_nation_free_sailors_fixed
 			HTP_suppressed_rebellion_HFS = yes
 		}
+
+		ai_will_do = {
+			factor = 1000
+		}
 	}
 
 	mission_HTP_collapse_of_the_nation_free_sailors = {
 		icon = generic_civil_support
 
-		days_mission_timeout = 10
 		fire_only_once = yes
+		days_mission_timeout = 10
 
 		available = {
-			hidden_trigger = {
-				has_global_flag = HHE_warmonger_civil_war_first
-				NOT = { has_global_flag = HHE_warmonger_civil_war_final }
-			}
 			has_stability > 0.67
 			has_country_flag = HTP_collapse_of_the_nation_free_sailors_fixed
 		}
 
 		activation = {
 			has_global_flag = HHE_warmonger_civil_war_first
-			NOT = { has_global_flag = HHE_warmonger_civil_war_final }
-			NOT = {
-				or = {
-					has_country_flag = HTP_collapse_of_the_nation_free_sailors_failed
-					has_country_flag = HTP_collapse_of_the_nation_free_sailors_fixed
-				}
-			}
-		}
-
-		visible = {
-			NOT = {
-				or = {
-					has_country_flag = HTP_collapse_of_the_nation_free_sailors_failed
-					has_country_flag = HTP_collapse_of_the_nation_free_sailors_fixed
-				}
+			NOT = { 
+				has_global_flag = HHE_warmonger_civil_war_final 
+				has_country_flag = HTP_collapse_of_the_nation_free_sailors_failed
+				has_country_flag = HTP_collapse_of_the_nation_free_sailors_fixed
 			}
 		}
 
@@ -1026,30 +758,18 @@ crisis_HUM_collapse = {
 		icon = generic_civil_support
 
 		fire_only_once = yes
+		cost = 50
 
 		available = {
 			has_stability > 0.75
-			NOT = {
-				or = {
-					has_country_flag = HUM_collapse_of_the_nation_dwarves_failed
-					has_country_flag = HUM_collapse_of_the_nation_dwarves_fixed
-				}
-			}
-		}
-
-		cost = 50
-		ai_will_do = {
-			factor = 1000
 		}
 
 		visible = {
 			has_global_flag = HHE_warmonger_civil_war_first
 			NOT = {
 				has_global_flag = HHE_warmonger_civil_war_final
-				or = {
-					has_country_flag = HUM_collapse_of_the_nation_dwarves_failed
-					has_country_flag = HUM_collapse_of_the_nation_dwarves_fixed
-				}
+				has_country_flag = HUM_collapse_of_the_nation_dwarves_failed
+				has_country_flag = HUM_collapse_of_the_nation_dwarves_fixed
 			}
 		}
 
@@ -1057,40 +777,29 @@ crisis_HUM_collapse = {
 			set_country_flag = HUM_collapse_of_the_nation_dwarves_fixed
 			HUM_suppressed_rebellion_HDW = yes
 		}
+
+		ai_will_do = {
+			factor = 1000
+		}
 	}
 
 	mission_HUM_collapse_of_the_nation_dwarves = {
 		icon = generic_civil_support
 
-		days_mission_timeout = 15
 		fire_only_once = yes
+		days_mission_timeout = 15
 
 		available = {
-			hidden_trigger = {
-				has_global_flag = HHE_warmonger_civil_war_first
-				NOT = { has_global_flag = HHE_warmonger_civil_war_final }
-			}
 			has_stability > 0.75
 			has_country_flag = HUM_collapse_of_the_nation_dwarves_fixed
 		}
 
 		activation = {
 			has_global_flag = HHE_warmonger_civil_war_first
-			NOT = { has_global_flag = HHE_warmonger_civil_war_final }
-			NOT = {
-				or = {
-					has_country_flag = HUM_collapse_of_the_nation_dwarves_failed
-					has_country_flag = HUM_collapse_of_the_nation_dwarves_fixed
-				}
-			}
-		}
-
-		visible = {
-			NOT = {
-				or = {
-					has_country_flag = HUM_collapse_of_the_nation_dwarves_failed
-					has_country_flag = HUM_collapse_of_the_nation_dwarves_fixed
-				}
+			NOT = { 
+				has_global_flag = HHE_warmonger_civil_war_final 
+				has_country_flag = HUM_collapse_of_the_nation_dwarves_failed
+				has_country_flag = HUM_collapse_of_the_nation_dwarves_fixed
 			}
 		}
 
@@ -1110,1114 +819,1114 @@ crisis_HWA_collapse = {
 crisis_UFS_collapse = {
 }
 # Civil-War Decisions
-	crisis_collapse_of_the_nation = {
-		mission_HHE_collapse_of_the_nation_civil_war = { ### Unignited -> LOCAL IGNITION
-			icon = generic_civil_support
+crisis_collapse_of_the_nation = {
+	mission_HHE_collapse_of_the_nation_civil_war = { ### Unignited -> LOCAL IGNITION
+		icon = generic_civil_support
 
-			days_mission_timeout = 7 # We give a week extra.
-			fire_only_once = yes
+		days_mission_timeout = 7 # We give a week extra.
+		fire_only_once = yes
 
-			available = {
-				hidden_trigger = { NOT = { HHE_civil_war_blocked_after_victor = yes } }
+		available = {
+			hidden_trigger = { NOT = { HHE_civil_war_blocked_after_victor = yes } }
+		}
+
+		activation = {
+			is_harmonainus_imperious_extras = yes
+			has_global_flag = HHE_warmonger_civil_war_first
+			has_global_flag = HHE_warmonger_civil_war_final
+			NOT = { has_country_flag = collapse_of_the_nation_civil_war_local } # The reason for it to be a NOT is to perma disactivated once it fails.
+		}
+
+		visible = {
+			is_harmonainus_imperious_extras = yes
+			NOT = { has_country_flag = collapse_of_the_nation_civil_war_local }
+		}
+
+		timeout_effect = {
+			set_country_flag = collapse_of_the_nation_civil_war_local
+			IF = { LIMIT = {
+					OR = {
+						is_subject_of = HHE
+						is_subject = no
+					}
+				}
+				HHE_civil_war_local = yes
 			}
+		}
+	}
 
-			activation = {
-				is_harmonainus_imperious_extras = yes
+	crisis_HHE_collapse_of_the_nation_civil_war_regional = {
+		icon = generic_civil_support
+
+		fire_only_once = yes
+
+		available = {
+			has_country_flag = collapse_of_the_nation_civil_war_local
+			NOT = { has_country_flag = collapse_of_the_nation_civil_war_regional }
+			has_war = no
+		}
+
+		cost = 50
+		ai_will_do = {
+			factor = 2
+			modifier = { add = 10.0 tag = HHE }
+			modifier = { factor = 7.5 is_major = yes }
+			modifier = { factor = 3.5 has_army_manpower = { size > 499999 } }
+			modifier = { factor = 7.5 has_army_manpower = { size > 749999 } }
+			modifier = { factor = 7.5 has_army_manpower = { size > 999999 } }
+		}
+
+		visible = {
+			NOT = { has_country_flag = collapse_of_the_nation_civil_war_regional }
+		}
+
+		complete_effect = {
+			set_country_flag = collapse_of_the_nation_civil_war_regional
+			IF = { LIMIT = {
+					OR = {
+						is_subject_of = HHE
+						is_subject = no
+					}
+				}
+				HHE_civil_war_regional = yes
+			}
+		}
+	}
+
+	mission_HHE_collapse_of_the_nation_civil_war_regional = { ### LOCAL IGNITION -> REGIONAL IGNITION
+		icon = generic_civil_support
+
+		days_mission_timeout = 187
+		fire_only_once = yes
+
+		available = {
+			hidden_trigger = { NOT = { HHE_civil_war_blocked_after_victor = yes } }
+		}
+
+		activation = {
+			is_harmonainus_imperious_extras = yes
+			has_global_flag = HHE_warmonger_civil_war_first
+			has_global_flag = HHE_warmonger_civil_war_final
+			NOT = { has_country_flag = collapse_of_the_nation_civil_war_regional } # The reason for it to be a NOT is to perma disactivated once it fails.
+		}
+
+		visible = {
+			is_harmonainus_imperious_extras = yes
+			NOT = { has_country_flag = collapse_of_the_nation_civil_war_regional }
+		}
+
+		timeout_effect = {
+			set_country_flag = collapse_of_the_nation_civil_war_regional
+			IF = { LIMIT = {
+					OR = {
+						is_subject_of = HHE
+						is_subject = no
+					}
+				}
+				HHE_civil_war_regional = yes
+			}
+		}
+	}
+
+	crisis_HHE_collapse_of_the_nation_civil_war_full = {
+		icon = generic_civil_support
+
+		fire_only_once = yes
+
+		available = {
+			has_country_flag = collapse_of_the_nation_civil_war_regional
+			NOT = { has_country_flag = collapse_of_the_nation_civil_war_ignited }
+			has_war = no
+		}
+
+		cost = 50
+		ai_will_do = {
+			factor = 2
+			#modifier = { add = 10.0 tag = HHE } # Best to wait.
+			modifier = { factor = 7.5 is_major = yes }
+			modifier = { factor = 3.5 has_army_manpower = { size > 499999 } }
+			modifier = { factor = 7.5 has_army_manpower = { size > 749999 } }
+			modifier = { factor = 7.5 has_army_manpower = { size > 999999 } }
+		}
+
+		visible = {
+			NOT = { has_country_flag = collapse_of_the_nation_civil_war_ignited }
+		}
+
+		complete_effect = {
+			set_country_flag = collapse_of_the_nation_civil_war_ignited
+			IF = { LIMIT = {
+					OR = {
+						is_subject_of = HHE
+						is_subject = no
+					}
+				}
+				HHE_civil_war_ignited = yes
+			}
+		}
+	}
+
+	mission_HHE_collapse_of_the_nation_civil_war_full = { ### REGIONAL IGNITION -> FULL IGNITION
+		icon = generic_civil_support
+
+		days_mission_timeout = 457
+		fire_only_once = yes
+
+		available = {
+			hidden_trigger = { NOT = { HHE_civil_war_blocked_after_victor = yes } }
+		}
+
+		activation = {
+			is_harmonainus_imperious_extras = yes
+			has_global_flag = HHE_warmonger_civil_war_first
+			has_global_flag = HHE_warmonger_civil_war_final
+			NOT = { has_country_flag = collapse_of_the_nation_civil_war_ignited } # The reason for it to be a NOT is to perma disactivated once it fails.
+		}
+
+		visible = {
+			is_harmonainus_imperious_extras = yes
+			NOT = { has_country_flag = collapse_of_the_nation_civil_war_ignited }
+		}
+
+		timeout_effect = {
+			set_country_flag = collapse_of_the_nation_civil_war_ignited
+			IF = { LIMIT = {
+					OR = {
+						is_subject_of = HHE
+						is_subject = no
+					}
+				}
+				HHE_civil_war_ignited = yes
+			}
+		}
+	}
+}
+
+crisis_troop_deployer_collapse = {
+	crisis_HHE_troop_deployer_within_state = {
+		icon = generic_military
+		state_target = yes
+		on_map_mode = map_only
+		target_array = controlled_states
+
+		#highlight_states = { highlight_state_targets = { state = id } }
+
+		target_trigger = {
+			FROM = { NOT = { has_state_flag = HHE_civilwar_recruited_militias } }
+			hidden_trigger = {
+				FROM = {
+					NOT = {
+						OR = {
+							impassable = yes
+							has_state_category = enclave
+							has_state_category = tiny_island
+							has_state_category = wasteland
+							has_state_category = pastoral
+							has_state_category = small_island
+						}
+					}
+				}
+			}
+		}
+		available = {
+			OR = {
+				has_country_flag = form_harmonainus_imperious_flag
+				has_country_flag = form_harmonainus_imperious_center_flag
+				has_country_flag = form_harmonainus_imperious_west_flag
+			}
+			FROM = { NOT = { has_state_flag = HHE_civilwar_recruited_militias } }
+			hidden_trigger = {
 				has_global_flag = HHE_warmonger_civil_war_first
-				has_global_flag = HHE_warmonger_civil_war_final
-				NOT = { has_country_flag = collapse_of_the_nation_civil_war_local } # The reason for it to be a NOT is to perma disactivated once it fails.
-			}
-
-			visible = {
-				is_harmonainus_imperious_extras = yes
-				NOT = { has_country_flag = collapse_of_the_nation_civil_war_local }
-			}
-
-			timeout_effect = {
-				set_country_flag = collapse_of_the_nation_civil_war_local
-				IF = { LIMIT = {
-						OR = {
-							is_subject_of = HHE
-							is_subject = no
-						}
-					}
-					HHE_civil_war_local = yes
-				}
 			}
 		}
+		visible = { FROM = { NOT = { has_state_flag = HHE_civilwar_recruited_militias } } }
 
-		crisis_HHE_collapse_of_the_nation_civil_war_regional = {
-			icon = generic_civil_support
-
-			fire_only_once = yes
-
-			available = {
-				has_country_flag = collapse_of_the_nation_civil_war_local
-				NOT = { has_country_flag = collapse_of_the_nation_civil_war_regional }
-				has_war = no
-			}
-
-			cost = 50
-			ai_will_do = {
-				factor = 2
-				modifier = { add = 10.0 tag = HHE }
-				modifier = { factor = 7.5 is_major = yes }
-				modifier = { factor = 3.5 has_army_manpower = { size > 499999 } }
-				modifier = { factor = 7.5 has_army_manpower = { size > 749999 } }
-				modifier = { factor = 7.5 has_army_manpower = { size > 999999 } }
-			}
-
-			visible = {
-				NOT = { has_country_flag = collapse_of_the_nation_civil_war_regional }
-			}
-
-			complete_effect = {
-				set_country_flag = collapse_of_the_nation_civil_war_regional
-				IF = { LIMIT = {
-						OR = {
-							is_subject_of = HHE
-							is_subject = no
-						}
-					}
-					HHE_civil_war_regional = yes
-				}
-			}
+		fire_only_once = yes
+		custom_cost_trigger = {
+			command_power > 14
 		}
+		custom_cost_text = decision_cost_CP_15
 
-		mission_HHE_collapse_of_the_nation_civil_war_regional = { ### LOCAL IGNITION -> REGIONAL IGNITION
-			icon = generic_civil_support
-
-			days_mission_timeout = 187
-			fire_only_once = yes
-
-			available = {
-				hidden_trigger = { NOT = { HHE_civil_war_blocked_after_victor = yes } }
-			}
-
-			activation = {
-				is_harmonainus_imperious_extras = yes
+		days_remove = 35
+		remove_trigger = {
+			hidden_trigger = {
 				has_global_flag = HHE_warmonger_civil_war_first
-				has_global_flag = HHE_warmonger_civil_war_final
-				NOT = { has_country_flag = collapse_of_the_nation_civil_war_regional } # The reason for it to be a NOT is to perma disactivated once it fails.
-			}
-
-			visible = {
-				is_harmonainus_imperious_extras = yes
-				NOT = { has_country_flag = collapse_of_the_nation_civil_war_regional }
-			}
-
-			timeout_effect = {
-				set_country_flag = collapse_of_the_nation_civil_war_regional
-				IF = { LIMIT = {
-						OR = {
-							is_subject_of = HHE
-							is_subject = no
-						}
-					}
-					HHE_civil_war_regional = yes
-				}
 			}
 		}
 
-		crisis_HHE_collapse_of_the_nation_civil_war_full = {
-			icon = generic_civil_support
-
-			fire_only_once = yes
-
-			available = {
-				has_country_flag = collapse_of_the_nation_civil_war_regional
-				NOT = { has_country_flag = collapse_of_the_nation_civil_war_ignited }
-				has_war = no
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision crisis_HHE_troop_deployed_id"
+			hidden_effect = { add_command_power = -15 }
+		}
+		remove_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision remove crisis_HHE_troop_deployed_id"
+			# Deployer
+			FROM = { HHE_civilwar_spawn_militia_divisions = yes }
+		}
+		ai_will_do = { factor = 10
+			modifier = { add = 2.5
+				FROM = { has_state_category = city }
 			}
-
-			cost = 50
-			ai_will_do = {
-				factor = 2
-				#modifier = { add = 10.0 tag = HHE } # Best to wait.
-				modifier = { factor = 7.5 is_major = yes }
-				modifier = { factor = 3.5 has_army_manpower = { size > 499999 } }
-				modifier = { factor = 7.5 has_army_manpower = { size > 749999 } }
-				modifier = { factor = 7.5 has_army_manpower = { size > 999999 } }
+			modifier = { add = 5
+				FROM = { has_state_category = large_city }
 			}
-
-			visible = {
-				NOT = { has_country_flag = collapse_of_the_nation_civil_war_ignited }
+			modifier = { add = 7.5
+				FROM = { has_state_category = metropolis }
 			}
-
-			complete_effect = {
-				set_country_flag = collapse_of_the_nation_civil_war_ignited
-				IF = { LIMIT = {
-						OR = {
-							is_subject_of = HHE
-							is_subject = no
-						}
-					}
-					HHE_civil_war_ignited = yes
-				}
+			modifier = { add = 10
+				FROM = { has_state_category = megalopolis }
+			}
+			modifier = { factor = 10
+				command_power > 30
 			}
 		}
+	}
+}
 
-		mission_HHE_collapse_of_the_nation_civil_war_full = { ### REGIONAL IGNITION -> FULL IGNITION
-			icon = generic_civil_support
+crisis_entrench_state_collapse = {
+	crisis_HHE_entrench_state_id = {
+		icon = generic_fortification
 
-			days_mission_timeout = 457
-			fire_only_once = yes
+		#highlight_states = { highlight_provinces = { prov } }
 
-			available = {
-				hidden_trigger = { NOT = { HHE_civil_war_blocked_after_victor = yes } }
+		available = {
+			#id = { is_controlled_by = ROOT hidden_trigger = { NOT = { has_state_flag = crisis_HHE_entrench_line_built } } }
+			#ROOT = {
+			#	controls_province = prov
+			#	controls_province = prov
+			#	controls_province = prov
+			#}
+		}
+		visible = { AND = { is_debug = yes is_ai = no } }
+
+		fire_only_once = yes
+		cost = 10
+
+		days_remove = 35
+		remove_trigger = { NOT = {
+			#id = { is_controlled_by = ROOT }
+			#ROOT = {
+			#	controls_province = prov
+			#	controls_province = prov
+			#	controls_province = prov
+			#}
+		} }
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision crisis_HHE_entrench_state_id"
+		}
+		remove_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision remove crisis_HHE_entrench_state_id"
+			#id = {
+			#	set_state_flag = crisis_HHE_entrench_line_built
+			#	add_building_construction = { type = trench_line province = prov level = 3 instant_build = yes }
+			#	add_building_construction = { type = trench_line province = prov level = 3 instant_build = yes }
+			#	add_building_construction = { type = trench_line province = prov level = 3 instant_build = yes }
+			#}
+		}
+		ai_will_do = {
+			factor = 0
+			#modifier = {
+			#	add = 1
+			#	factor = 1
+			#	id = {
+			#		is_controlled_by = ROOT
+			#		any_neighbor_state = { is_controlled_by_ROOT_or_ally = no }
+			#	}
+			#}
+		}
+	}
+
+	crisis_HHE_entrench_state_1 = {
+		icon = generic_fortification
+
+		highlight_states = { highlight_provinces = { 9481 9543 9582 } }
+
+		available = {
+			1 = { is_controlled_by = ROOT hidden_trigger = { NOT = { has_state_flag = crisis_HHE_entrench_line_built } } }
+			ROOT = {
+				controls_province = 9481
+				controls_province = 9543
+				controls_province = 9582
 			}
+		}
+		visible = { 1 = { NOT = { has_state_flag = crisis_HHE_entrench_line_built } } }
 
-			activation = {
-				is_harmonainus_imperious_extras = yes
-				has_global_flag = HHE_warmonger_civil_war_first
-				has_global_flag = HHE_warmonger_civil_war_final
-				NOT = { has_country_flag = collapse_of_the_nation_civil_war_ignited } # The reason for it to be a NOT is to perma disactivated once it fails.
+		fire_only_once = yes
+		cost = 10
+
+		days_remove = 35
+		remove_trigger = { NOT = {
+			1 = { is_controlled_by = ROOT }
+			ROOT = {
+				controls_province = 9481
+				controls_province = 9543
+				controls_province = 9582
 			}
+		} }
 
-			visible = {
-				is_harmonainus_imperious_extras = yes
-				NOT = { has_country_flag = collapse_of_the_nation_civil_war_ignited }
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision crisis_HHE_entrench_state_1"
+		}
+		remove_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision remove crisis_HHE_entrench_state_1"
+			1 = {
+				set_state_flag = crisis_HHE_entrench_line_built
+				add_building_construction = { type = trench_line province = 9481 level = 3 instant_build = yes }
+				add_building_construction = { type = trench_line province = 9543 level = 3 instant_build = yes }
+				add_building_construction = { type = trench_line province = 9582 level = 3 instant_build = yes }
 			}
-
-			timeout_effect = {
-				set_country_flag = collapse_of_the_nation_civil_war_ignited
-				IF = { LIMIT = {
-						OR = {
-							is_subject_of = HHE
-							is_subject = no
-						}
-					}
-					HHE_civil_war_ignited = yes
+		}
+		ai_will_do = {
+			factor = 0
+			modifier = {
+				add = 1
+				factor = 1
+				1 = {
+					is_controlled_by = ROOT
+					any_neighbor_state = { is_controlled_by_ROOT_or_ally = no }
 				}
 			}
 		}
 	}
 
-	crisis_troop_deployer_collapse = {
-		crisis_HHE_troop_deployer_within_state = {
-	        icon = generic_military
-			state_target = yes
-			on_map_mode = map_only
-			target_array = controlled_states
+	crisis_HHE_entrench_state_2 = {
+		icon = generic_fortification
 
-			#highlight_states = { highlight_state_targets = { state = id } }
+		highlight_states = { highlight_provinces = { 9399 } }
 
-			target_trigger = {
-				FROM = { NOT = { has_state_flag = HHE_civilwar_recruited_militias } }
-	        	hidden_trigger = {
-					FROM = {
-						NOT = {
-							OR = {
-								impassable = yes
-								has_state_category = enclave
-								has_state_category = tiny_island
-								has_state_category = wasteland
-								has_state_category = pastoral
-								has_state_category = small_island
-							}
+		available = {
+			2 = { is_controlled_by = ROOT hidden_trigger = { NOT = { has_state_flag = crisis_HHE_entrench_line_built } } }
+			ROOT = {
+				controls_province = 9399
+			}
+		}
+		visible = { 2 = { NOT = { has_state_flag = crisis_HHE_entrench_line_built } } }
+
+		fire_only_once = yes
+		cost = 10
+
+		days_remove = 35
+		remove_trigger = { NOT = {
+			2 = { is_controlled_by = ROOT }
+			ROOT = {
+				controls_province = 9399
+			}
+		} }
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision crisis_HHE_entrench_state_2"
+		}
+		remove_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision remove crisis_HHE_entrench_state_2"
+			2 = {
+				set_state_flag = crisis_HHE_entrench_line_built
+				add_building_construction = { type = trench_line province = 9399 level = 3 instant_build = yes }
+				add_building_construction = { type = bunker province = 9399 level = 1 instant_build = yes }
+			}
+		}
+		ai_will_do = {
+			factor = 0
+			modifier = {
+				add = 1
+				factor = 1
+				2 = {
+					is_controlled_by = ROOT
+					any_neighbor_state = { is_controlled_by_ROOT_or_ally = no }
+				}
+			}
+		}
+	}
+
+	crisis_HHE_entrench_state_6 = {
+		icon = generic_fortification
+
+		highlight_states = { highlight_provinces = { 1168 9212 9249 9312 } }
+
+		available = {
+			6 = { is_controlled_by = ROOT hidden_trigger = { NOT = { has_state_flag = crisis_HHE_entrench_line_built } } }
+			ROOT = {
+				controls_province = 1168
+				controls_province = 9212
+				controls_province = 9249
+				controls_province = 9312
+			}
+		}
+		visible = { 6 = { NOT = { has_state_flag = crisis_HHE_entrench_line_built } } }
+
+		fire_only_once = yes
+		cost = 10
+
+		days_remove = 35
+		remove_trigger = { NOT = {
+			6 = { is_controlled_by = ROOT }
+			ROOT = {
+				controls_province = 1168
+				controls_province = 9212
+				controls_province = 9249
+				controls_province = 9312
+			}
+		} }
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision crisis_HHE_entrench_state_6"
+		}
+		remove_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision remove crisis_HHE_entrench_state_6"
+			6 = {
+				set_state_flag = crisis_HHE_entrench_line_built
+				add_building_construction = { type = trench_line province = 1168 level = 3 instant_build = yes }
+				add_building_construction = { type = trench_line province = 9212 level = 3 instant_build = yes }
+				add_building_construction = { type = trench_line province = 9249 level = 3 instant_build = yes }
+				add_building_construction = { type = trench_line province = 9312 level = 3 instant_build = yes }
+			}
+		}
+		ai_will_do = {
+			factor = 0
+			modifier = {
+				add = 1
+				factor = 1
+				6 = {
+					is_controlled_by = ROOT
+					any_neighbor_state = { is_controlled_by_ROOT_or_ally = no }
+				}
+			}
+		}
+	}
+
+	crisis_HHE_entrench_state_7 = {
+		icon = generic_fortification
+
+		highlight_states = { highlight_provinces = { 4941 8102 10076 10525 } }
+
+		available = {
+			7 = { is_controlled_by = ROOT hidden_trigger = { NOT = { has_state_flag = crisis_HHE_entrench_line_built } } }
+			ROOT = {
+				controls_province = 4941
+				controls_province = 8102
+				controls_province = 10076
+				controls_province = 10525
+			}
+		}
+		visible = { 7 = { NOT = { has_state_flag = crisis_HHE_entrench_line_built } } }
+
+		fire_only_once = yes
+		cost = 10
+
+		days_remove = 35
+		remove_trigger = { NOT = {
+			7 = { is_controlled_by = ROOT }
+			ROOT = {
+				controls_province = 4941
+				controls_province = 8102
+				controls_province = 10076
+				controls_province = 10525
+			}
+		} }
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision crisis_HHE_entrench_state_7"
+		}
+		remove_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision remove crisis_HHE_entrench_state_7"
+			7 = {
+				set_state_flag = crisis_HHE_entrench_line_built
+				add_building_construction = { type = trench_line province = 4941 level = 3 instant_build = yes }
+				add_building_construction = { type = trench_line province = 8102 level = 3 instant_build = yes }
+				add_building_construction = { type = trench_line province = 10076 level = 3 instant_build = yes }
+				add_building_construction = { type = trench_line province = 10525 level = 3 instant_build = yes }
+			}
+		}
+		ai_will_do = {
+			factor = 0
+			modifier = {
+				add = 1
+				factor = 1
+				7 = {
+					is_controlled_by = ROOT
+					any_neighbor_state = { is_controlled_by_ROOT_or_ally = no }
+				}
+			}
+		}
+	}
+
+	crisis_HHE_entrench_state_11 = {
+		icon = generic_fortification
+
+		highlight_states = { highlight_provinces = { 4271 9193 18899 } }
+
+		available = {
+			11 = { is_controlled_by = ROOT hidden_trigger = { NOT = { has_state_flag = crisis_HHE_entrench_line_built } } }
+			448 = { is_controlled_by = ROOT }
+			ROOT = {
+				controls_province = 4271
+				controls_province = 9193
+				controls_province = 18899
+			}
+		}
+		visible = { 11 = { NOT = { has_state_flag = crisis_HHE_entrench_line_built } } }
+
+		fire_only_once = yes
+		cost = 10
+
+		days_remove = 35
+		remove_trigger = { NOT = {
+			11 = { is_controlled_by = ROOT }
+			448 = { is_controlled_by = ROOT }
+			ROOT = {
+				controls_province = 4271
+				controls_province = 9193
+				controls_province = 18899
+			}
+		} }
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision crisis_HHE_entrench_state_11"
+		}
+		remove_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision remove crisis_HHE_entrench_state_11"
+			448 = {
+				add_building_construction = { type = trench_line province = 4271 level = 3 instant_build = yes }
+			} 11 = {
+				set_state_flag = crisis_HHE_entrench_line_built
+				add_building_construction = { type = trench_line province = 9193 level = 3 instant_build = yes }
+				add_building_construction = { type = trench_line province = 18899 level = 3 instant_build = yes }
+			}
+		}
+		ai_will_do = {
+			factor = 0
+			modifier = {
+				add = 1
+				factor = 1
+				11 = {
+					is_controlled_by = ROOT
+					any_neighbor_state = { is_controlled_by_ROOT_or_ally = no }
+				}
+			}
+		}
+	}
+
+	crisis_HHE_entrench_state_77 = {
+		icon = generic_fortification
+
+		highlight_states = { highlight_provinces = { 4733 7730 8175 8862 8925 8960 8995 } }
+
+		available = {
+			77 = { is_controlled_by = ROOT hidden_trigger = { NOT = { has_state_flag = crisis_HHE_entrench_line_built } } }
+			ROOT = {
+				controls_province = 4733
+				controls_province = 7730
+				controls_province = 8175
+				controls_province = 8862
+				controls_province = 8925
+				controls_province = 8960
+				controls_province = 8995
+			}
+		}
+		visible = { 77 = { NOT = { has_state_flag = crisis_HHE_entrench_line_built } } }
+
+		fire_only_once = yes
+		cost = 10
+
+		days_remove = 35
+		remove_trigger = { NOT = {
+			77 = { is_controlled_by = ROOT }
+			ROOT = {
+				controls_province = 4733
+				controls_province = 7730
+				controls_province = 8175
+				controls_province = 8862
+				controls_province = 8925
+				controls_province = 8960
+				controls_province = 8995
+			}
+		} }
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision crisis_HHE_entrench_state_77"
+		}
+		remove_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision remove crisis_HHE_entrench_state_77"
+			77 = {
+				set_state_flag = crisis_HHE_entrench_line_built
+				add_building_construction = { type = trench_line province = 4733 level = 3 instant_build = yes }
+				add_building_construction = { type = trench_line province = 7730 level = 3 instant_build = yes }
+				add_building_construction = { type = trench_line province = 8175 level = 3 instant_build = yes }
+				add_building_construction = { type = trench_line province = 8862 level = 3 instant_build = yes }
+				add_building_construction = { type = trench_line province = 8925 level = 3 instant_build = yes }
+				add_building_construction = { type = trench_line province = 8960 level = 3 instant_build = yes }
+				add_building_construction = { type = trench_line province = 8995 level = 3 instant_build = yes }
+			}
+		}
+		ai_will_do = {
+			factor = 0
+			modifier = {
+				add = 1
+				factor = 1
+				77 = {
+					is_controlled_by = ROOT
+					any_neighbor_state = { is_controlled_by_ROOT_or_ally = no }
+				}
+			}
+		}
+	}
+
+	crisis_HHE_entrench_state_78 = {
+		icon = generic_fortification
+
+		highlight_states = { highlight_provinces = { 9491 } }
+
+		available = {
+			78 = { is_controlled_by = ROOT hidden_trigger = { NOT = { has_state_flag = crisis_HHE_entrench_line_built } } }
+			ROOT = {
+				controls_province = 9491
+			}
+		}
+		visible = { 78 = { NOT = { has_state_flag = crisis_HHE_entrench_line_built } } }
+
+		fire_only_once = yes
+		cost = 10
+
+		days_remove = 35
+		remove_trigger = { NOT = {
+			78 = { is_controlled_by = ROOT }
+			ROOT = {
+				controls_province = 9491
+			}
+		} }
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision crisis_HHE_entrench_state_78"
+		}
+		remove_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision remove crisis_HHE_entrench_state_78"
+			78 = {
+				set_state_flag = crisis_HHE_entrench_line_built
+				add_building_construction = { type = trench_line province = 9491 level = 3 instant_build = yes }
+				add_building_construction = { type = bunker province = 9491 level = 1 instant_build = yes }
+			}
+		}
+		ai_will_do = {
+			factor = 0
+			modifier = {
+				add = 1
+				factor = 1
+				78 = {
+					is_controlled_by = ROOT
+					any_neighbor_state = { is_controlled_by_ROOT_or_ally = no }
+				}
+			}
+		}
+	}
+
+	crisis_HHE_entrench_state_79 = {
+		icon = generic_fortification
+
+		highlight_states = { highlight_provinces = { 4460 9105 9106 } }
+
+		available = {
+			79 = { is_controlled_by = ROOT hidden_trigger = { NOT = { has_state_flag = crisis_HHE_entrench_line_built } } }
+			ROOT = {
+				controls_province = 9105
+				controls_province = 9106
+			}
+		}
+		visible = { 79 = { NOT = { has_state_flag = crisis_HHE_entrench_line_built } } }
+
+		fire_only_once = yes
+		cost = 10
+
+		days_remove = 35
+		remove_trigger = { NOT = {
+			79 = { is_controlled_by = ROOT }
+			ROOT = {
+				controls_province = 9105
+				controls_province = 9106
+			}
+		} }
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision crisis_HHE_entrench_state_79"
+		}
+		remove_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision remove crisis_HHE_entrench_state_79"
+			79 = {
+				set_state_flag = crisis_HHE_entrench_line_built
+				add_building_construction = { type = trench_line province = 4460 level = 3 instant_build = yes }
+				add_building_construction = { type = trench_line province = 9105 level = 3 instant_build = yes }
+				add_building_construction = { type = bunker province = 9105 level = 1 instant_build = yes }
+				add_building_construction = { type = trench_line province = 9106 level = 3 instant_build = yes }
+			}
+		}
+		ai_will_do = {
+			factor = 0
+			modifier = {
+				add = 1
+				factor = 1
+				79 = {
+					is_controlled_by = ROOT
+					any_neighbor_state = { is_controlled_by_ROOT_or_ally = no }
+				}
+			}
+		}
+	}
+
+	crisis_HHE_entrench_state_80 = {
+		icon = generic_fortification
+
+		highlight_states = { highlight_provinces = { 5765 8821 8861 8943 } }
+
+		available = {
+			80 = { is_controlled_by = ROOT hidden_trigger = { NOT = { has_state_flag = crisis_HHE_entrench_line_built } } }
+			ROOT = {
+				controls_province = 5765
+				controls_province = 8821
+				controls_province = 8861
+				controls_province = 8905
+				controls_province = 8943
+			}
+		}
+		visible = { 80 = { NOT = { has_state_flag = crisis_HHE_entrench_line_built } } }
+
+		fire_only_once = yes
+		cost = 10
+
+		days_remove = 35
+		remove_trigger = { NOT = {
+			80 = { is_controlled_by = ROOT }
+			ROOT = {
+				controls_province = 5765
+				controls_province = 8821
+				controls_province = 8861
+				controls_province = 8905
+				controls_province = 8943
+			}
+		} }
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision crisis_HHE_entrench_state_80"
+		}
+		remove_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision remove crisis_HHE_entrench_state_80"
+			80 = {
+				set_state_flag = crisis_HHE_entrench_line_built
+				add_building_construction = { type = trench_line province = 5765 level = 3 instant_build = yes }
+				add_building_construction = { type = trench_line province = 8861 level = 3 instant_build = yes }
+				add_building_construction = { type = bunker province = 8861 level = 1 instant_build = yes }
+				add_building_construction = { type = trench_line province = 8943 level = 3 instant_build = yes }
+			}
+			83 = {
+				add_building_construction = { type = trench_line province = 8821 level = 2 instant_build = yes }
+				add_building_construction = { type = trench_line province = 8905 level = 2 instant_build = yes }
+			}
+		}
+		ai_will_do = {
+			factor = 0
+			modifier = {
+				add = 1
+				factor = 1
+				80 = {
+					is_controlled_by = ROOT
+					any_neighbor_state = { is_controlled_by_ROOT_or_ally = no }
+				}
+			}
+		}
+	}
+
+	crisis_HHE_entrench_state_85 = {
+		icon = generic_fortification
+
+		highlight_states = { highlight_provinces = { 433 8554 8606 } }
+
+		available = {
+			85 = { is_controlled_by = ROOT hidden_trigger = { NOT = { has_state_flag = crisis_HHE_entrench_line_built } } }
+			ROOT = {
+				controls_province = 433
+				controls_province = 8554
+				controls_province = 8606
+			}
+		}
+		visible = { 85 = { NOT = { has_state_flag = crisis_HHE_entrench_line_built } } }
+
+		fire_only_once = yes
+		cost = 10
+
+		days_remove = 35
+		remove_trigger = { NOT = {
+			85 = { is_controlled_by = ROOT }
+			ROOT = {
+				controls_province = 433
+				controls_province = 8554
+				controls_province = 8606
+			}
+		} }
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision crisis_HHE_entrench_state_85"
+		}
+		remove_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision remove crisis_HHE_entrench_state_85"
+			85 = {
+				set_state_flag = crisis_HHE_entrench_line_built
+				add_building_construction = { type = trench_line province = 433 level = 3 instant_build = yes }
+				add_building_construction = { type = trench_line province = 8554 level = 3 instant_build = yes }
+				add_building_construction = { type = trench_line province = 8606 level = 3 instant_build = yes }
+				add_building_construction = { type = bunker province = 8606 level = 1 instant_build = yes }
+			}
+		}
+		ai_will_do = {
+			factor = 0
+			modifier = {
+				add = 1
+				factor = 1
+				85 = {
+					is_controlled_by = ROOT
+					any_neighbor_state = { is_controlled_by_ROOT_or_ally = no }
+				}
+			}
+		}
+	}
+
+	crisis_HHE_entrench_state_105 = {
+		icon = generic_fortification
+
+		highlight_states = { highlight_provinces = { 1395 } }
+
+		available = {
+			105 = { is_controlled_by = ROOT hidden_trigger = { NOT = { has_state_flag = crisis_HHE_entrench_line_built } } }
+			ROOT = {
+				controls_province = 1395
+			}
+		}
+		visible = { 105 = { NOT = { has_state_flag = crisis_HHE_entrench_line_built } } }
+
+		fire_only_once = yes
+		cost = 10
+
+		days_remove = 35
+		remove_trigger = { NOT = {
+			105 = { is_controlled_by = ROOT }
+			ROOT = {
+				controls_province = 1395
+			}
+		} }
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision crisis_HHE_entrench_state_105"
+		}
+		remove_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision remove crisis_HHE_entrench_state_105"
+			105 = {
+				set_state_flag = crisis_HHE_entrench_line_built
+				add_building_construction = { type = trench_line province = 1395 level = 3 instant_build = yes }
+				add_building_construction = { type = bunker province = 1395 level = 1 instant_build = yes }
+			}
+		}
+		ai_will_do = {
+			factor = 0
+			modifier = {
+				add = 1
+				factor = 1
+				105 = {
+					is_controlled_by = ROOT
+					any_neighbor_state = { is_controlled_by_ROOT_or_ally = no }
+				}
+			}
+		}
+	}
+
+	crisis_HHE_entrench_state_140 = {
+		icon = generic_fortification
+
+		highlight_states = { highlight_provinces = { 1050 3116 3836 } }
+
+		available = {
+			140 = { is_controlled_by = ROOT hidden_trigger = { NOT = { has_state_flag = crisis_HHE_entrench_line_built } } }
+			ROOT = {
+				controls_province = 1050
+				controls_province = 3116
+				controls_province = 3836
+			}
+		}
+		visible = { 140 = { NOT = { has_state_flag = crisis_HHE_entrench_line_built } } }
+
+		fire_only_once = yes
+		cost = 10
+
+		days_remove = 35
+		remove_trigger = { NOT = {
+			140 = { is_controlled_by = ROOT }
+			ROOT = {
+				controls_province = 1050
+				controls_province = 3116
+				controls_province = 3836
+			}
+		} }
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision crisis_HHE_entrench_state_140"
+		}
+		remove_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision remove crisis_HHE_entrench_state_140"
+			140 = {
+				set_state_flag = crisis_HHE_entrench_line_built
+				add_building_construction = { type = trench_line province = 1050 level = 3 instant_build = yes }
+				add_building_construction = { type = trench_line province = 3116 level = 3 instant_build = yes }
+				add_building_construction = { type = bunker province = 3116 level = 1 instant_build = yes }
+				add_building_construction = { type = trench_line province = 3836 level = 3 instant_build = yes }
+			}
+		}
+		ai_will_do = {
+			factor = 0
+			modifier = {
+				add = 1
+				factor = 1
+				140 = {
+					is_controlled_by = ROOT
+					any_neighbor_state = { is_controlled_by_ROOT_or_ally = no }
+				}
+			}
+		}
+	}
+
+	crisis_HHE_entrench_state_159 = {
+		icon = generic_fortification
+
+		highlight_states = { highlight_provinces = { 2939 7820 9003 } }
+
+		available = {
+			159 = { is_controlled_by = ROOT hidden_trigger = { NOT = { has_state_flag = crisis_HHE_entrench_line_built } } }
+			ROOT = {
+				controls_province = 2939
+				controls_province = 7820
+				controls_province = 9003
+			}
+		}
+		visible = { 159 = { NOT = { has_state_flag = crisis_HHE_entrench_line_built } } }
+
+		fire_only_once = yes
+		cost = 10
+
+		days_remove = 35
+		remove_trigger = { NOT = {
+			159 = { is_controlled_by = ROOT }
+			ROOT = {
+				controls_province = 2939
+				controls_province = 7820
+				controls_province = 9003
+			}
+		} }
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision crisis_HHE_entrench_state_159"
+		}
+		remove_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision remove crisis_HHE_entrench_state_159"
+			159 = {
+				set_state_flag = crisis_HHE_entrench_line_built
+				add_building_construction = { type = trench_line province = 2939 level = 1 instant_build = yes }
+				add_building_construction = { type = trench_line province = 7820 level = 1 instant_build = yes }
+				add_building_construction = { type = trench_line province = 9003 level = 3 instant_build = yes }
+				add_building_construction = { type = bunker province = 9003 level = 1 instant_build = yes }
+			}
+		}
+		ai_will_do = {
+			factor = 0
+			modifier = {
+				add = 1
+				factor = 1
+				159 = {
+					is_controlled_by = ROOT
+					any_neighbor_state = { is_controlled_by_ROOT_or_ally = no }
+				}
+			}
+		}
+	}
+}
+
+crisis_pillage_state_collapse = {
+	crisis_HHE_pillage_and_loot_state = {
+		icon = SWI_consolidate_council_power
+		state_target = yes
+		on_map_mode = map_only
+		target_array = controlled_states
+
+		#highlight_states = { highlight_state_targets = { state = FROM } }
+
+		target_trigger = {
+			FROM = { NOT = { has_state_flag = HHE_civilwar_pillage_and_loot } }
+			hidden_trigger = {
+				FROM = {
+					NOT = {
+						OR = {
+							impassable = yes
+							has_state_category = city
+							has_state_category = large_city
+							has_state_category = metropolis
+							has_state_category = megalopolis
 						}
 					}
 				}
 			}
-	        available = {
-	        	OR = {
+		}
+		available = {
+			NOT = {
+				OR = {
 					has_country_flag = form_harmonainus_imperious_flag
 					has_country_flag = form_harmonainus_imperious_center_flag
 					has_country_flag = form_harmonainus_imperious_west_flag
-	        	}
-	        	FROM = { NOT = { has_state_flag = HHE_civilwar_recruited_militias } }
-				hidden_trigger = {
-					has_global_flag = HHE_warmonger_civil_war_first
 				}
-	        }
-	        visible = { FROM = { NOT = { has_state_flag = HHE_civilwar_recruited_militias } } }
-
-	        fire_only_once = yes
-	        custom_cost_trigger = {
-			    command_power > 14
 			}
-			custom_cost_text = decision_cost_CP_15
-
-	        days_remove = 35
-	        remove_trigger = {
-				hidden_trigger = {
-					has_global_flag = HHE_warmonger_civil_war_first
-				}
-	        }
-
-	        complete_effect = {
-	            log = "[GetDateText]: [Root.GetName]: Decision crisis_HHE_troop_deployed_id"
-	            hidden_effect = { add_command_power = -15 }
-	        }
-	        remove_effect = {
-	            log = "[GetDateText]: [Root.GetName]: Decision remove crisis_HHE_troop_deployed_id"
-				# Deployer
-				FROM = { HHE_civilwar_spawn_militia_divisions = yes }
-	        }
-	        ai_will_do = { factor = 10
-				modifier = { add = 2.5
-					FROM = { has_state_category = city }
-				}
-				modifier = { add = 5
-					FROM = { has_state_category = large_city }
-				}
-				modifier = { add = 7.5
-					FROM = { has_state_category = metropolis }
-				}
-				modifier = { add = 10
-					FROM = { has_state_category = megalopolis }
-				}
-				modifier = { factor = 10
-					command_power > 30
-				}
-	        }
-		}
-	}
-
-	crisis_entrench_state_collapse = {
-		crisis_HHE_entrench_state_id = {
-	        icon = generic_fortification
-
-			#highlight_states = { highlight_provinces = { prov } }
-
-	        available = {
-	        	#id = { is_controlled_by = ROOT hidden_trigger = { NOT = { has_state_flag = crisis_HHE_entrench_line_built } } }
-	        	#ROOT = {
-	        	#	controls_province = prov
-	        	#	controls_province = prov
-	        	#	controls_province = prov
-	        	#}
-	        }
-	        visible = { AND = { is_debug = yes is_ai = no } }
-
-	        fire_only_once = yes
-	        cost = 10
-
-	        days_remove = 35
-	        remove_trigger = { NOT = {
-	        	#id = { is_controlled_by = ROOT }
-	        	#ROOT = {
-	        	#	controls_province = prov
-	        	#	controls_province = prov
-	        	#	controls_province = prov
-	        	#}
-	        } }
-
-	        complete_effect = {
-	            log = "[GetDateText]: [Root.GetName]: Decision crisis_HHE_entrench_state_id"
-	        }
-	        remove_effect = {
-	            log = "[GetDateText]: [Root.GetName]: Decision remove crisis_HHE_entrench_state_id"
-	            #id = {
-	            #	set_state_flag = crisis_HHE_entrench_line_built
-				#	add_building_construction = { type = trench_line province = prov level = 3 instant_build = yes }
-				#	add_building_construction = { type = trench_line province = prov level = 3 instant_build = yes }
-				#	add_building_construction = { type = trench_line province = prov level = 3 instant_build = yes }
-	            #}
-	        }
-	        ai_will_do = {
-	            factor = 0
-	            #modifier = {
-	            #	add = 1
-	            #	factor = 1
-				#	id = {
-				#		is_controlled_by = ROOT
-				#		any_neighbor_state = { is_controlled_by_ROOT_or_ally = no }
-				#	}
-	            #}
-	        }
-		}
-
-		crisis_HHE_entrench_state_1 = {
-	        icon = generic_fortification
-
-			highlight_states = { highlight_provinces = { 9481 9543 9582 } }
-
-	        available = {
-	        	1 = { is_controlled_by = ROOT hidden_trigger = { NOT = { has_state_flag = crisis_HHE_entrench_line_built } } }
-	        	ROOT = {
-	        		controls_province = 9481
-	        		controls_province = 9543
-	        		controls_province = 9582
-	        	}
-	        }
-	        visible = { 1 = { NOT = { has_state_flag = crisis_HHE_entrench_line_built } } }
-
-	        fire_only_once = yes
-	        cost = 10
-
-	        days_remove = 35
-	        remove_trigger = { NOT = {
-	        	1 = { is_controlled_by = ROOT }
-	        	ROOT = {
-	        		controls_province = 9481
-	        		controls_province = 9543
-	        		controls_province = 9582
-	        	}
-	        } }
-
-	        complete_effect = {
-	            log = "[GetDateText]: [Root.GetName]: Decision crisis_HHE_entrench_state_1"
-	        }
-	        remove_effect = {
-	            log = "[GetDateText]: [Root.GetName]: Decision remove crisis_HHE_entrench_state_1"
-	            1 = {
-	            	set_state_flag = crisis_HHE_entrench_line_built
-					add_building_construction = { type = trench_line province = 9481 level = 3 instant_build = yes }
-					add_building_construction = { type = trench_line province = 9543 level = 3 instant_build = yes }
-					add_building_construction = { type = trench_line province = 9582 level = 3 instant_build = yes }
-	            }
-	        }
-	        ai_will_do = {
-	            factor = 0
-	            modifier = {
-	            	add = 1
-	            	factor = 1
-					1 = {
-						is_controlled_by = ROOT
-						any_neighbor_state = { is_controlled_by_ROOT_or_ally = no }
-					}
-	            }
-	        }
-		}
-
-		crisis_HHE_entrench_state_2 = {
-	        icon = generic_fortification
-
-			highlight_states = { highlight_provinces = { 9399 } }
-
-	        available = {
-	        	2 = { is_controlled_by = ROOT hidden_trigger = { NOT = { has_state_flag = crisis_HHE_entrench_line_built } } }
-	        	ROOT = {
-	        		controls_province = 9399
-	        	}
-	        }
-	        visible = { 2 = { NOT = { has_state_flag = crisis_HHE_entrench_line_built } } }
-
-	        fire_only_once = yes
-	        cost = 10
-
-	        days_remove = 35
-	        remove_trigger = { NOT = {
-	        	2 = { is_controlled_by = ROOT }
-	        	ROOT = {
-	        		controls_province = 9399
-	        	}
-	        } }
-
-	        complete_effect = {
-	            log = "[GetDateText]: [Root.GetName]: Decision crisis_HHE_entrench_state_2"
-	        }
-	        remove_effect = {
-	            log = "[GetDateText]: [Root.GetName]: Decision remove crisis_HHE_entrench_state_2"
-	            2 = {
-	            	set_state_flag = crisis_HHE_entrench_line_built
-					add_building_construction = { type = trench_line province = 9399 level = 3 instant_build = yes }
-					add_building_construction = { type = bunker province = 9399 level = 1 instant_build = yes }
-	            }
-	        }
-	        ai_will_do = {
-	            factor = 0
-	            modifier = {
-	            	add = 1
-	            	factor = 1
-					2 = {
-						is_controlled_by = ROOT
-						any_neighbor_state = { is_controlled_by_ROOT_or_ally = no }
-					}
-	            }
-	        }
-		}
-
-		crisis_HHE_entrench_state_6 = {
-	        icon = generic_fortification
-
-			highlight_states = { highlight_provinces = { 1168 9212 9249 9312 } }
-
-	        available = {
-	        	6 = { is_controlled_by = ROOT hidden_trigger = { NOT = { has_state_flag = crisis_HHE_entrench_line_built } } }
-	        	ROOT = {
-	        		controls_province = 1168
-	        		controls_province = 9212
-	        		controls_province = 9249
-	        		controls_province = 9312
-	        	}
-	        }
-	        visible = { 6 = { NOT = { has_state_flag = crisis_HHE_entrench_line_built } } }
-
-	        fire_only_once = yes
-	        cost = 10
-
-	        days_remove = 35
-	        remove_trigger = { NOT = {
-	        	6 = { is_controlled_by = ROOT }
-	        	ROOT = {
-	        		controls_province = 1168
-	        		controls_province = 9212
-	        		controls_province = 9249
-	        		controls_province = 9312
-	        	}
-	        } }
-
-	        complete_effect = {
-	            log = "[GetDateText]: [Root.GetName]: Decision crisis_HHE_entrench_state_6"
-	        }
-	        remove_effect = {
-	            log = "[GetDateText]: [Root.GetName]: Decision remove crisis_HHE_entrench_state_6"
-	            6 = {
-	            	set_state_flag = crisis_HHE_entrench_line_built
-					add_building_construction = { type = trench_line province = 1168 level = 3 instant_build = yes }
-					add_building_construction = { type = trench_line province = 9212 level = 3 instant_build = yes }
-					add_building_construction = { type = trench_line province = 9249 level = 3 instant_build = yes }
-					add_building_construction = { type = trench_line province = 9312 level = 3 instant_build = yes }
-	            }
-	        }
-	        ai_will_do = {
-	            factor = 0
-	            modifier = {
-	            	add = 1
-	            	factor = 1
-					6 = {
-						is_controlled_by = ROOT
-						any_neighbor_state = { is_controlled_by_ROOT_or_ally = no }
-					}
-	            }
-	        }
-		}
-
-		crisis_HHE_entrench_state_7 = {
-	        icon = generic_fortification
-
-			highlight_states = { highlight_provinces = { 4941 8102 10076 10525 } }
-
-	        available = {
-	        	7 = { is_controlled_by = ROOT hidden_trigger = { NOT = { has_state_flag = crisis_HHE_entrench_line_built } } }
-	        	ROOT = {
-	        		controls_province = 4941
-	        		controls_province = 8102
-	        		controls_province = 10076
-	        		controls_province = 10525
-	        	}
-	        }
-	        visible = { 7 = { NOT = { has_state_flag = crisis_HHE_entrench_line_built } } }
-
-	        fire_only_once = yes
-	        cost = 10
-
-	        days_remove = 35
-	        remove_trigger = { NOT = {
-	        	7 = { is_controlled_by = ROOT }
-	        	ROOT = {
-	        		controls_province = 4941
-	        		controls_province = 8102
-	        		controls_province = 10076
-	        		controls_province = 10525
-	        	}
-	        } }
-
-	        complete_effect = {
-	            log = "[GetDateText]: [Root.GetName]: Decision crisis_HHE_entrench_state_7"
-	        }
-	        remove_effect = {
-	            log = "[GetDateText]: [Root.GetName]: Decision remove crisis_HHE_entrench_state_7"
-	            7 = {
-	            	set_state_flag = crisis_HHE_entrench_line_built
-					add_building_construction = { type = trench_line province = 4941 level = 3 instant_build = yes }
-					add_building_construction = { type = trench_line province = 8102 level = 3 instant_build = yes }
-					add_building_construction = { type = trench_line province = 10076 level = 3 instant_build = yes }
-					add_building_construction = { type = trench_line province = 10525 level = 3 instant_build = yes }
-	            }
-	        }
-	        ai_will_do = {
-	            factor = 0
-	            modifier = {
-	            	add = 1
-	            	factor = 1
-					7 = {
-						is_controlled_by = ROOT
-						any_neighbor_state = { is_controlled_by_ROOT_or_ally = no }
-					}
-	            }
-	        }
-		}
-
-		crisis_HHE_entrench_state_11 = {
-	        icon = generic_fortification
-
-			highlight_states = { highlight_provinces = { 4271 9193 18899 } }
-
-	        available = {
-	        	11 = { is_controlled_by = ROOT hidden_trigger = { NOT = { has_state_flag = crisis_HHE_entrench_line_built } } }
-	        	448 = { is_controlled_by = ROOT }
-	        	ROOT = {
-	        		controls_province = 4271
-	        		controls_province = 9193
-	        		controls_province = 18899
-	        	}
-	        }
-	        visible = { 11 = { NOT = { has_state_flag = crisis_HHE_entrench_line_built } } }
-
-	        fire_only_once = yes
-	        cost = 10
-
-	        days_remove = 35
-	        remove_trigger = { NOT = {
-	        	11 = { is_controlled_by = ROOT }
-	        	448 = { is_controlled_by = ROOT }
-	        	ROOT = {
-	        		controls_province = 4271
-	        		controls_province = 9193
-	        		controls_province = 18899
-	        	}
-	        } }
-
-	        complete_effect = {
-	            log = "[GetDateText]: [Root.GetName]: Decision crisis_HHE_entrench_state_11"
-	        }
-	        remove_effect = {
-	            log = "[GetDateText]: [Root.GetName]: Decision remove crisis_HHE_entrench_state_11"
-	            448 = {
-					add_building_construction = { type = trench_line province = 4271 level = 3 instant_build = yes }
-				} 11 = {
-					set_state_flag = crisis_HHE_entrench_line_built
-					add_building_construction = { type = trench_line province = 9193 level = 3 instant_build = yes }
-					add_building_construction = { type = trench_line province = 18899 level = 3 instant_build = yes }
-	            }
-	        }
-	        ai_will_do = {
-	            factor = 0
-	            modifier = {
-	            	add = 1
-	            	factor = 1
-					11 = {
-						is_controlled_by = ROOT
-						any_neighbor_state = { is_controlled_by_ROOT_or_ally = no }
-					}
-	            }
-	        }
-		}
-
-		crisis_HHE_entrench_state_77 = {
-	        icon = generic_fortification
-
-			highlight_states = { highlight_provinces = { 4733 7730 8175 8862 8925 8960 8995 } }
-
-	        available = {
-	        	77 = { is_controlled_by = ROOT hidden_trigger = { NOT = { has_state_flag = crisis_HHE_entrench_line_built } } }
-	        	ROOT = {
-	        		controls_province = 4733
-	        		controls_province = 7730
-	        		controls_province = 8175
-	        		controls_province = 8862
-	        		controls_province = 8925
-	        		controls_province = 8960
-	        		controls_province = 8995
-	        	}
-	        }
-	        visible = { 77 = { NOT = { has_state_flag = crisis_HHE_entrench_line_built } } }
-
-	        fire_only_once = yes
-	        cost = 10
-
-	        days_remove = 35
-	        remove_trigger = { NOT = {
-	        	77 = { is_controlled_by = ROOT }
-	        	ROOT = {
-	        		controls_province = 4733
-	        		controls_province = 7730
-	        		controls_province = 8175
-	        		controls_province = 8862
-	        		controls_province = 8925
-	        		controls_province = 8960
-	        		controls_province = 8995
-	        	}
-	        } }
-
-	        complete_effect = {
-	            log = "[GetDateText]: [Root.GetName]: Decision crisis_HHE_entrench_state_77"
-	        }
-	        remove_effect = {
-	            log = "[GetDateText]: [Root.GetName]: Decision remove crisis_HHE_entrench_state_77"
-	            77 = {
-	            	set_state_flag = crisis_HHE_entrench_line_built
-					add_building_construction = { type = trench_line province = 4733 level = 3 instant_build = yes }
-					add_building_construction = { type = trench_line province = 7730 level = 3 instant_build = yes }
-					add_building_construction = { type = trench_line province = 8175 level = 3 instant_build = yes }
-					add_building_construction = { type = trench_line province = 8862 level = 3 instant_build = yes }
-					add_building_construction = { type = trench_line province = 8925 level = 3 instant_build = yes }
-					add_building_construction = { type = trench_line province = 8960 level = 3 instant_build = yes }
-					add_building_construction = { type = trench_line province = 8995 level = 3 instant_build = yes }
-	            }
-	        }
-	        ai_will_do = {
-	            factor = 0
-	            modifier = {
-	            	add = 1
-	            	factor = 1
-					77 = {
-						is_controlled_by = ROOT
-						any_neighbor_state = { is_controlled_by_ROOT_or_ally = no }
-					}
-	            }
-	        }
-		}
-
-		crisis_HHE_entrench_state_78 = {
-	        icon = generic_fortification
-
-			highlight_states = { highlight_provinces = { 9491 } }
-
-	        available = {
-	        	78 = { is_controlled_by = ROOT hidden_trigger = { NOT = { has_state_flag = crisis_HHE_entrench_line_built } } }
-	        	ROOT = {
-	        		controls_province = 9491
-	        	}
-	        }
-	        visible = { 78 = { NOT = { has_state_flag = crisis_HHE_entrench_line_built } } }
-
-	        fire_only_once = yes
-	        cost = 10
-
-	        days_remove = 35
-	        remove_trigger = { NOT = {
-	        	78 = { is_controlled_by = ROOT }
-	        	ROOT = {
-	        		controls_province = 9491
-	        	}
-	        } }
-
-	        complete_effect = {
-	            log = "[GetDateText]: [Root.GetName]: Decision crisis_HHE_entrench_state_78"
-	        }
-	        remove_effect = {
-	            log = "[GetDateText]: [Root.GetName]: Decision remove crisis_HHE_entrench_state_78"
-	            78 = {
-	            	set_state_flag = crisis_HHE_entrench_line_built
-					add_building_construction = { type = trench_line province = 9491 level = 3 instant_build = yes }
-					add_building_construction = { type = bunker province = 9491 level = 1 instant_build = yes }
-	            }
-	        }
-	        ai_will_do = {
-	            factor = 0
-	            modifier = {
-	            	add = 1
-	            	factor = 1
-					78 = {
-						is_controlled_by = ROOT
-						any_neighbor_state = { is_controlled_by_ROOT_or_ally = no }
-					}
-	            }
-	        }
-		}
-
-		crisis_HHE_entrench_state_79 = {
-	        icon = generic_fortification
-
-			highlight_states = { highlight_provinces = { 4460 9105 9106 } }
-
-	        available = {
-	        	79 = { is_controlled_by = ROOT hidden_trigger = { NOT = { has_state_flag = crisis_HHE_entrench_line_built } } }
-	        	ROOT = {
-	        		controls_province = 9105
-	        		controls_province = 9106
-	        	}
-	        }
-	        visible = { 79 = { NOT = { has_state_flag = crisis_HHE_entrench_line_built } } }
-
-	        fire_only_once = yes
-	        cost = 10
-
-	        days_remove = 35
-	        remove_trigger = { NOT = {
-	        	79 = { is_controlled_by = ROOT }
-	        	ROOT = {
-	        		controls_province = 9105
-	        		controls_province = 9106
-	        	}
-	        } }
-
-	        complete_effect = {
-	            log = "[GetDateText]: [Root.GetName]: Decision crisis_HHE_entrench_state_79"
-	        }
-	        remove_effect = {
-	            log = "[GetDateText]: [Root.GetName]: Decision remove crisis_HHE_entrench_state_79"
-	            79 = {
-	            	set_state_flag = crisis_HHE_entrench_line_built
-					add_building_construction = { type = trench_line province = 4460 level = 3 instant_build = yes }
-					add_building_construction = { type = trench_line province = 9105 level = 3 instant_build = yes }
-					add_building_construction = { type = bunker province = 9105 level = 1 instant_build = yes }
-					add_building_construction = { type = trench_line province = 9106 level = 3 instant_build = yes }
-	            }
-	        }
-	        ai_will_do = {
-	            factor = 0
-	            modifier = {
-	            	add = 1
-	            	factor = 1
-					79 = {
-						is_controlled_by = ROOT
-						any_neighbor_state = { is_controlled_by_ROOT_or_ally = no }
-					}
-	            }
-	        }
-		}
-
-		crisis_HHE_entrench_state_80 = {
-	        icon = generic_fortification
-
-			highlight_states = { highlight_provinces = { 5765 8821 8861 8943 } }
-
-	        available = {
-	        	80 = { is_controlled_by = ROOT hidden_trigger = { NOT = { has_state_flag = crisis_HHE_entrench_line_built } } }
-	        	ROOT = {
-	        		controls_province = 5765
-	        		controls_province = 8821
-	        		controls_province = 8861
-	        		controls_province = 8905
-	        		controls_province = 8943
-	        	}
-	        }
-	        visible = { 80 = { NOT = { has_state_flag = crisis_HHE_entrench_line_built } } }
-
-	        fire_only_once = yes
-	        cost = 10
-
-	        days_remove = 35
-	        remove_trigger = { NOT = {
-	        	80 = { is_controlled_by = ROOT }
-	        	ROOT = {
-	        		controls_province = 5765
-	        		controls_province = 8821
-	        		controls_province = 8861
-	        		controls_province = 8905
-	        		controls_province = 8943
-	        	}
-	        } }
-
-	        complete_effect = {
-	            log = "[GetDateText]: [Root.GetName]: Decision crisis_HHE_entrench_state_80"
-	        }
-	        remove_effect = {
-	            log = "[GetDateText]: [Root.GetName]: Decision remove crisis_HHE_entrench_state_80"
-	            80 = {
-	            	set_state_flag = crisis_HHE_entrench_line_built
-					add_building_construction = { type = trench_line province = 5765 level = 3 instant_build = yes }
-					add_building_construction = { type = trench_line province = 8861 level = 3 instant_build = yes }
-					add_building_construction = { type = bunker province = 8861 level = 1 instant_build = yes }
-					add_building_construction = { type = trench_line province = 8943 level = 3 instant_build = yes }
-	            }
-	            83 = {
-					add_building_construction = { type = trench_line province = 8821 level = 2 instant_build = yes }
-					add_building_construction = { type = trench_line province = 8905 level = 2 instant_build = yes }
-	            }
-	        }
-	        ai_will_do = {
-	            factor = 0
-	            modifier = {
-	            	add = 1
-	            	factor = 1
-					80 = {
-						is_controlled_by = ROOT
-						any_neighbor_state = { is_controlled_by_ROOT_or_ally = no }
-					}
-	            }
-	        }
-		}
-
-		crisis_HHE_entrench_state_85 = {
-	        icon = generic_fortification
-
-			highlight_states = { highlight_provinces = { 433 8554 8606 } }
-
-	        available = {
-	        	85 = { is_controlled_by = ROOT hidden_trigger = { NOT = { has_state_flag = crisis_HHE_entrench_line_built } } }
-	        	ROOT = {
-	        		controls_province = 433
-	        		controls_province = 8554
-	        		controls_province = 8606
-	        	}
-	        }
-	        visible = { 85 = { NOT = { has_state_flag = crisis_HHE_entrench_line_built } } }
-
-	        fire_only_once = yes
-	        cost = 10
-
-	        days_remove = 35
-	        remove_trigger = { NOT = {
-	        	85 = { is_controlled_by = ROOT }
-	        	ROOT = {
-	        		controls_province = 433
-	        		controls_province = 8554
-	        		controls_province = 8606
-	        	}
-	        } }
-
-	        complete_effect = {
-	            log = "[GetDateText]: [Root.GetName]: Decision crisis_HHE_entrench_state_85"
-	        }
-	        remove_effect = {
-	            log = "[GetDateText]: [Root.GetName]: Decision remove crisis_HHE_entrench_state_85"
-	            85 = {
-	            	set_state_flag = crisis_HHE_entrench_line_built
-					add_building_construction = { type = trench_line province = 433 level = 3 instant_build = yes }
-					add_building_construction = { type = trench_line province = 8554 level = 3 instant_build = yes }
-					add_building_construction = { type = trench_line province = 8606 level = 3 instant_build = yes }
-					add_building_construction = { type = bunker province = 8606 level = 1 instant_build = yes }
-	            }
-	        }
-	        ai_will_do = {
-	            factor = 0
-	            modifier = {
-	            	add = 1
-	            	factor = 1
-					85 = {
-						is_controlled_by = ROOT
-						any_neighbor_state = { is_controlled_by_ROOT_or_ally = no }
-					}
-	            }
-	        }
-		}
-
-		crisis_HHE_entrench_state_105 = {
-	        icon = generic_fortification
-
-			highlight_states = { highlight_provinces = { 1395 } }
-
-	        available = {
-	        	105 = { is_controlled_by = ROOT hidden_trigger = { NOT = { has_state_flag = crisis_HHE_entrench_line_built } } }
-	        	ROOT = {
-	        		controls_province = 1395
-	        	}
-	        }
-	        visible = { 105 = { NOT = { has_state_flag = crisis_HHE_entrench_line_built } } }
-
-	        fire_only_once = yes
-	        cost = 10
-
-	        days_remove = 35
-	        remove_trigger = { NOT = {
-	        	105 = { is_controlled_by = ROOT }
-	        	ROOT = {
-	        		controls_province = 1395
-	        	}
-	        } }
-
-	        complete_effect = {
-	            log = "[GetDateText]: [Root.GetName]: Decision crisis_HHE_entrench_state_105"
-	        }
-	        remove_effect = {
-	            log = "[GetDateText]: [Root.GetName]: Decision remove crisis_HHE_entrench_state_105"
-	            105 = {
-	            	set_state_flag = crisis_HHE_entrench_line_built
-					add_building_construction = { type = trench_line province = 1395 level = 3 instant_build = yes }
-					add_building_construction = { type = bunker province = 1395 level = 1 instant_build = yes }
-				}
-	        }
-	        ai_will_do = {
-	            factor = 0
-	            modifier = {
-	            	add = 1
-	            	factor = 1
-					105 = {
-						is_controlled_by = ROOT
-						any_neighbor_state = { is_controlled_by_ROOT_or_ally = no }
-					}
-	            }
-	        }
-		}
-
-		crisis_HHE_entrench_state_140 = {
-	        icon = generic_fortification
-
-			highlight_states = { highlight_provinces = { 1050 3116 3836 } }
-
-	        available = {
-	        	140 = { is_controlled_by = ROOT hidden_trigger = { NOT = { has_state_flag = crisis_HHE_entrench_line_built } } }
-	        	ROOT = {
-	        		controls_province = 1050
-	        		controls_province = 3116
-	        		controls_province = 3836
-	        	}
-	        }
-	        visible = { 140 = { NOT = { has_state_flag = crisis_HHE_entrench_line_built } } }
-
-	        fire_only_once = yes
-	        cost = 10
-
-	        days_remove = 35
-	        remove_trigger = { NOT = {
-	        	140 = { is_controlled_by = ROOT }
-	        	ROOT = {
-	        		controls_province = 1050
-	        		controls_province = 3116
-	        		controls_province = 3836
-	        	}
-	        } }
-
-	        complete_effect = {
-	            log = "[GetDateText]: [Root.GetName]: Decision crisis_HHE_entrench_state_140"
-	        }
-	        remove_effect = {
-	            log = "[GetDateText]: [Root.GetName]: Decision remove crisis_HHE_entrench_state_140"
-	            140 = {
-	            	set_state_flag = crisis_HHE_entrench_line_built
-					add_building_construction = { type = trench_line province = 1050 level = 3 instant_build = yes }
-					add_building_construction = { type = trench_line province = 3116 level = 3 instant_build = yes }
-					add_building_construction = { type = bunker province = 3116 level = 1 instant_build = yes }
-					add_building_construction = { type = trench_line province = 3836 level = 3 instant_build = yes }
-				}
-	        }
-	        ai_will_do = {
-	            factor = 0
-	            modifier = {
-	            	add = 1
-	            	factor = 1
-					140 = {
-						is_controlled_by = ROOT
-						any_neighbor_state = { is_controlled_by_ROOT_or_ally = no }
-					}
-	            }
-	        }
-		}
-
-		crisis_HHE_entrench_state_159 = {
-	        icon = generic_fortification
-
-			highlight_states = { highlight_provinces = { 2939 7820 9003 } }
-
-	        available = {
-	        	159 = { is_controlled_by = ROOT hidden_trigger = { NOT = { has_state_flag = crisis_HHE_entrench_line_built } } }
-	        	ROOT = {
-	        		controls_province = 2939
-	        		controls_province = 7820
-	        		controls_province = 9003
-	        	}
-	        }
-	        visible = { 159 = { NOT = { has_state_flag = crisis_HHE_entrench_line_built } } }
-
-	        fire_only_once = yes
-	        cost = 10
-
-	        days_remove = 35
-	        remove_trigger = { NOT = {
-	        	159 = { is_controlled_by = ROOT }
-	        	ROOT = {
-	        		controls_province = 2939
-	        		controls_province = 7820
-	        		controls_province = 9003
-	        	}
-	        } }
-
-	        complete_effect = {
-	            log = "[GetDateText]: [Root.GetName]: Decision crisis_HHE_entrench_state_159"
-	        }
-	        remove_effect = {
-	            log = "[GetDateText]: [Root.GetName]: Decision remove crisis_HHE_entrench_state_159"
-	            159 = {
-	            	set_state_flag = crisis_HHE_entrench_line_built
-					add_building_construction = { type = trench_line province = 2939 level = 1 instant_build = yes }
-					add_building_construction = { type = trench_line province = 7820 level = 1 instant_build = yes }
-					add_building_construction = { type = trench_line province = 9003 level = 3 instant_build = yes }
-					add_building_construction = { type = bunker province = 9003 level = 1 instant_build = yes }
-				}
-	        }
-	        ai_will_do = {
-	            factor = 0
-	            modifier = {
-	            	add = 1
-	            	factor = 1
-					159 = {
-						is_controlled_by = ROOT
-						any_neighbor_state = { is_controlled_by_ROOT_or_ally = no }
-					}
-	            }
-	        }
-		}
-	}
-
-	crisis_pillage_state_collapse = {
-		crisis_HHE_pillage_and_loot_state = {
-	        icon = SWI_consolidate_council_power
-			state_target = yes
-			on_map_mode = map_only
-			target_array = controlled_states
-
-			#highlight_states = { highlight_state_targets = { state = FROM } }
-
-			target_trigger = {
-				FROM = { NOT = { has_state_flag = HHE_civilwar_pillage_and_loot } }
-	        	hidden_trigger = {
-					FROM = {
-						NOT = {
-							OR = {
-								impassable = yes
-								has_state_category = city
-								has_state_category = large_city
-								has_state_category = metropolis
-								has_state_category = megalopolis
-							}
+			FROM = { NOT = { has_state_flag = HHE_civilwar_pillage_and_loot } }
+			hidden_trigger = {
+				FROM = {
+					NOT = {
+						OR = {
+							has_state_category = city
+							has_state_category = large_city
+							has_state_category = metropolis
+							has_state_category = megalopolis
 						}
 					}
 				}
+				has_global_flag = HHE_warmonger_civil_war_first
 			}
-	        available = {
-	        	NOT = {
-		        	OR = {
-						has_country_flag = form_harmonainus_imperious_flag
-						has_country_flag = form_harmonainus_imperious_center_flag
-						has_country_flag = form_harmonainus_imperious_west_flag
-		        	}
-	        	}
-	        	FROM = { NOT = { has_state_flag = HHE_civilwar_pillage_and_loot } }
-	        	hidden_trigger = {
-					FROM = {
-						NOT = {
-							OR = {
-								has_state_category = city
-								has_state_category = large_city
-								has_state_category = metropolis
-								has_state_category = megalopolis
-							}
-						}
-					}
-					has_global_flag = HHE_warmonger_civil_war_first
-	        	}
-	        }
-	        visible = { FROM = { NOT = { has_state_flag = HHE_civilwar_pillage_and_loot } } }
+		}
+		visible = { FROM = { NOT = { has_state_flag = HHE_civilwar_pillage_and_loot } } }
 
-	        fire_only_once = yes
-	        cost = 30
+		fire_only_once = yes
+		cost = 30
 
-	        days_remove = 35
-	        remove_trigger = {
-				hidden_trigger = {
-					has_global_flag = HHE_warmonger_civil_war_first
-				}
-	        }
+		days_remove = 35
+		remove_trigger = {
+			hidden_trigger = {
+				has_global_flag = HHE_warmonger_civil_war_first
+			}
+		}
 
-	        complete_effect = {
-	            log = "[GetDateText]: [Root.GetName]: Decision crisis_HHE_pillage_state_id"
-	        }
-	        remove_effect = {
-	            log = "[GetDateText]: [Root.GetName]: Decision remove crisis_HHE_pillage_state_id"
-	            # Pillage
-				add_equipment_to_stockpile = {
-				    type = infantry_equipment
-				    amount = 1000
-				}
-				add_stability = -0.025
-				add_war_support = -0.05
-				hidden_effect = {
-					FROM = { set_state_flag = HHE_civilwar_pillage_and_loot }
-				}
-	        }
-	        ai_will_do = { factor = 1
-	            #modifier = { factor = 1
-				#	FROM = {
-				#		is_controlled_by = ROOT
-				#		any_neighbor_state = { is_controlled_by_ROOT_or_ally = no }
-				#	}
-	            #}
-	        }
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision crisis_HHE_pillage_state_id"
+		}
+		remove_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision remove crisis_HHE_pillage_state_id"
+			# Pillage
+			add_equipment_to_stockpile = {
+				type = infantry_equipment
+				amount = 1000
+			}
+			add_stability = -0.025
+			add_war_support = -0.05
+			hidden_effect = {
+				FROM = { set_state_flag = HHE_civilwar_pillage_and_loot }
+			}
+		}
+		ai_will_do = { factor = 1
+			#modifier = { factor = 1
+			#	FROM = {
+			#		is_controlled_by = ROOT
+			#		any_neighbor_state = { is_controlled_by_ROOT_or_ally = no }
+			#	}
+			#}
 		}
 	}
+}
