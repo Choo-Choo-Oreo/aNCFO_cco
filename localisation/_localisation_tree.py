@@ -1,8 +1,9 @@
 import os
 
-def generate_localisation_map():
-    # Identify the directory where this script is stored
+def generate_dynamic_map():
     current_dir = os.path.dirname(os.path.abspath(__file__))
+    parent_folder_name = os.path.basename(current_dir)
+    
     output_filename = "_found_tree.txt"
     script_filename = os.path.basename(__file__)
     
@@ -10,27 +11,25 @@ def generate_localisation_map():
     dir_count = 0
     
     with open(output_filename, "w", encoding="utf-8") as output_file:
-        output_file.write("Structure for: localisation\n\n")
+        output_file.write(f"Structure for: {parent_folder_name}\n\n")
         
         for root, dirs, files in os.walk(current_dir):
-            # Calculate depth relative to the 'localisation' folder
             relative_path = os.path.relpath(root, current_dir)
             
             if relative_path == ".":
                 level = 0
-                display_name = "localisation"
+                display_name = parent_folder_name
             else:
                 level = relative_path.count(os.sep) + 1
                 display_name = os.path.basename(root)
             
-            # Apply indentation based on folder depth
             indent = ' ' * 4 * level
             output_file.write(f"{indent}[{display_name}/]\n")
             
             sub_indent = ' ' * 4 * (level + 1)
             
             for file in files:
-                # Exclude the script and the log file from the tree and counts
+                # Ignore the script itself and the output text file
                 if file == script_filename or file == output_filename:
                     continue
                 
@@ -45,4 +44,4 @@ def generate_localisation_map():
         output_file.write("="*30 + "\n")
 
 if __name__ == "__main__":
-    generate_localisation_map()
+    generate_dynamic_map()
