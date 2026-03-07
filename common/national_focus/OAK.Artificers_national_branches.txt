@@ -21,7 +21,37 @@ focus_tree = {
 		trigger = {  }
 	}
 	# Reconstruction Politics
+	focus = { # Reconstruction Politics
+		id = OAK_focus_reconstruction_politics
+		icon = GFX_focus_unknown_political
+		#prerequisite = { focus =  }
+		#mutually_exclusive = { focus =  }
+		#relative_position_id = 
+		x = -8
+		y = 0
+		cost = 10
 
+		allow_branch = {
+		}
+		available = {
+			has_completed_focus = aritifcers_focus_reconstruction
+		}
+		bypass = {
+		}
+
+		ai_will_do = { factor = 2.0 }
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus OAK_focus_reconstruction_politics"
+			custom_effect_tooltip = modify_OAK_state_heart_of_iron_modifier_tt
+			add_to_variable = {
+				global.OAK_heartofiron_local_factories = 0.10
+				tooltip = local_factories_tt
+			}
+		}
+	}
 	# A Heart of Iron
 
 	continuous_focus_position = { x = 50 y = 950 }
@@ -50,7 +80,71 @@ focus_tree = {
 		trigger = {  }
 	}
 	# Reconstruction Politics
+	focus = { # Reconstruction Politics
+		id = COA_focus_reconstruction_politics
+		icon = GFX_focus_unknown_political
+		#prerequisite = { focus =  }
+		#mutually_exclusive = { focus =  }
+		#relative_position_id = 
+		x = -8
+		y = 0
+		cost = 10
 
+		allow_branch = {
+		}
+		available = {
+			has_completed_focus = aritifcers_focus_reconstruction
+		}
+		bypass = {
+		}
+
+		ai_will_do = { factor = 2.0 }
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus COA_focus_reconstruction_politics"
+			custom_effect_tooltip = modify_OAK_state_heart_of_iron_modifier_tt
+			add_to_variable = {
+				global.OAK_heartofiron_local_factories = 0.10
+				tooltip = local_factories_tt
+			}
+		}
+	}
+
+	focus = { # End the Wum Wars
+		id = COA_focus_end_wum_wars
+		icon = GFX_focus_unknown_political
+		prerequisite = { focus = COA_focus_reconstruction_politics }
+		#mutually_exclusive = { focus =  }
+		relative_position_id = COA_focus_reconstruction_politics
+		x = 0
+		y = 1
+		cost = 10
+
+		allow_branch = {
+		}
+		available = {
+			has_completed_focus = aritifcers_focus_reconstruction
+		}
+		bypass = {
+		}
+
+		ai_will_do = { factor = 2.0 }
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus COA_focus_end_wum_wars"
+			create_wargoal = { type = puppet_wargoal_focus target = DOO expire = 1095 }
+			create_wargoal = { type = puppet_wargoal_focus target = TRH expire = 1095 }
+			create_wargoal = { type = puppet_wargoal_focus target = UEK expire = 1095 }
+			add_ai_strategy = { type = declare_war id = DOO value = 200 }
+			add_ai_strategy = { type = declare_war id = TRH value = 200 }
+			add_ai_strategy = { type = declare_war id = UEK value = 200 }
+			add_ai_strategy = { type = declare_war id = HNT value = 200 }
+		}
+	}
 	# A Heart of Iron
 
 	continuous_focus_position = { x = 50 y = 950 }
@@ -129,11 +223,11 @@ shared_focus = { # Reconstruction Industrial Programs
 		log = "[GetDateText]: [Root.GetName]: Focus aritifcers_focus_new_year_new_state"
 		unlock_decision_tooltip = industry_dynamic_OAK
 		custom_effect_tooltip = modify_OAK_state_heart_of_iron_modifier_tt
-		add_to_variable = { 
+		add_to_variable = {
 			global.OAK_heartofiron_local_resources = 0.10
 			tooltip = LOCAL_RESOURCES_tt
 		}
-		add_to_variable = { 
+		add_to_variable = {
 			global.OAK_heartofiron_state_production_speed_buildings_factor = 0.10
 			tooltip = MODIFIER_STATE_PRODUCTION_SPEED_BUILDINGS_FACTOR_tt
 		}
@@ -143,229 +237,229 @@ shared_focus = { # Reconstruction Industrial Programs
 
 	#completion_reward_joint_member = { add_political_power = 1 }
 }
+# OAK
+shared_focus = { # Reclaim Commune Lands
+	id = OAK_focus_reclaim_commune
+	icon = GFX_focus_unknown_political
+	dynamic = yes
+	prerequisite = { focus = aritifcers_focus_reconstruction_industry }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = aritifcers_focus_reconstruction_industry
+	x = -1
+	y = 1
+	cost = 10
 
-	shared_focus = { # Reclaim Commune Lands
-		id = OAK_focus_reclaim_commune
-		icon = GFX_focus_unknown_political
-		dynamic = yes
-		prerequisite = { focus = aritifcers_focus_reconstruction_industry }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = aritifcers_focus_reconstruction_industry
-		x = -1
-		y = 1
-		cost = 10
+	allow_branch = {
+		TAG = OAK
+	}
+	available = {
+	}
+	bypass = {
+	}
 
-		allow_branch = {
-			TAG = OAK
-		}
-		available = {
-		}
-		bypass = {
-		}
-
-		ai_will_do = { factor = 2
-			modifier = { factor = 5
-				OR = {
-					COA = { is_ai = no }
-					OAK = { is_ai = no }
-				}
-			}
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-			log = "[GetDateText]: [Root.GetName]: Focus aritifcers_focus_new_year_new_state"
-			custom_effect_tooltip = modify_OAK_state_heart_of_iron_modifier_tt
-			add_to_variable = { 
-				global.OAK_heartofiron_local_resources = 0.05
-				tooltip = LOCAL_RESOURCES_tt
-			}
-			add_to_variable = { 
-				global.OAK_heartofiron_state_production_speed_buildings_factor = 0.05
-				tooltip = MODIFIER_STATE_PRODUCTION_SPEED_BUILDINGS_FACTOR_tt
-			}
-			488 = {
-				add_extra_state_shared_building_slots = 3
-				add_building_construction = { type = industrial_complex level = 3 instant_build = yes }
-			}
-			495 = {
-				add_extra_state_shared_building_slots = 3
-				add_building_construction = { type = industrial_complex level = 3 instant_build = yes }
-			}
-			496 = {
-				add_extra_state_shared_building_slots = 3
-				add_building_construction = { type = industrial_complex level = 3 instant_build = yes }
+	ai_will_do = { factor = 2
+		modifier = { factor = 5
+			OR = {
+				COA = { is_ai = no }
+				OAK = { is_ai = no }
 			}
 		}
 	}
 
-	shared_focus = { # Demilitarization
-		id = OAK_focus_demilitarization
-		icon = GFX_focus_unknown_political
-		dynamic = yes
-		prerequisite = { focus = aritifcers_focus_reconstruction_industry }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = aritifcers_focus_reconstruction_industry
-		x = 1
-		y = 1
-		cost = 10
+	available_if_capitulated = yes
 
-		allow_branch = {
-			TAG = OAK
+	completion_reward = {
+		log = "[GetDateText]: [Root.GetName]: Focus aritifcers_focus_new_year_new_state"
+		custom_effect_tooltip = modify_OAK_state_heart_of_iron_modifier_tt
+		add_to_variable = {
+			global.OAK_heartofiron_local_resources = 0.05
+			tooltip = LOCAL_RESOURCES_tt
 		}
-		available = {
+		add_to_variable = {
+			global.OAK_heartofiron_state_production_speed_buildings_factor = 0.05
+			tooltip = MODIFIER_STATE_PRODUCTION_SPEED_BUILDINGS_FACTOR_tt
 		}
-		bypass = {
+		488 = {
+			add_extra_state_shared_building_slots = 3
+			add_building_construction = { type = industrial_complex level = 3 instant_build = yes }
 		}
+		495 = {
+			add_extra_state_shared_building_slots = 3
+			add_building_construction = { type = industrial_complex level = 3 instant_build = yes }
+		}
+		496 = {
+			add_extra_state_shared_building_slots = 3
+			add_building_construction = { type = industrial_complex level = 3 instant_build = yes }
+		}
+	}
+}
 
-		ai_will_do = { factor = 2
-			modifier = { factor = 5
-				OR = {
-					COA = { is_ai = no }
-					OAK = { is_ai = no }
-				}
-			}
-		}
+shared_focus = { # Demilitarization
+	id = OAK_focus_demilitarization
+	icon = GFX_focus_unknown_political
+	dynamic = yes
+	prerequisite = { focus = aritifcers_focus_reconstruction_industry }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = aritifcers_focus_reconstruction_industry
+	x = 1
+	y = 1
+	cost = 10
 
-		available_if_capitulated = yes
+	allow_branch = {
+		TAG = OAK
+	}
+	available = {
+	}
+	bypass = {
+	}
 
-		completion_reward = {
-			log = "[GetDateText]: [Root.GetName]: Focus aritifcers_focus_new_year_new_state"
-			custom_effect_tooltip = modify_OAK_state_heart_of_iron_modifier_tt
-			add_to_variable = { 
-				global.OAK_heartofiron_local_resources = 0.05
-				tooltip = LOCAL_RESOURCES_tt
-			}
-			add_to_variable = { 
-				global.OAK_heartofiron_state_production_speed_buildings_factor = 0.05
-				tooltip = MODIFIER_STATE_PRODUCTION_SPEED_BUILDINGS_FACTOR_tt
-			}
-			every_owned_state = {
-				LIMIT = { arms_factory > 0 }
-				remove_building = { type = arms_factory level = 1 }
-				add_building_construction = { type = industrial_complex level = 1 instant_build = yes }
+	ai_will_do = { factor = 2
+		modifier = { factor = 5
+			OR = {
+				COA = { is_ai = no }
+				OAK = { is_ai = no }
 			}
 		}
 	}
 
-	shared_focus = { # Reclaim Workers Workshops
-		id = COA_focus_reclaim_workshops
-		icon = GFX_focus_unknown_political
-		dynamic = yes
-		prerequisite = { focus = aritifcers_focus_reconstruction_industry }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = aritifcers_focus_reconstruction_industry
-		x = -1
-		y = 1
-		cost = 10
+	available_if_capitulated = yes
 
-		allow_branch = {
-			TAG = COA
+	completion_reward = {
+		log = "[GetDateText]: [Root.GetName]: Focus aritifcers_focus_new_year_new_state"
+		custom_effect_tooltip = modify_OAK_state_heart_of_iron_modifier_tt
+		add_to_variable = {
+			global.OAK_heartofiron_local_resources = 0.05
+			tooltip = LOCAL_RESOURCES_tt
 		}
-		available = {
+		add_to_variable = {
+			global.OAK_heartofiron_state_production_speed_buildings_factor = 0.05
+			tooltip = MODIFIER_STATE_PRODUCTION_SPEED_BUILDINGS_FACTOR_tt
 		}
-		bypass = {
+		every_owned_state = {
+			LIMIT = { arms_factory > 0 }
+			remove_building = { type = arms_factory level = 1 }
+			add_building_construction = { type = industrial_complex level = 1 instant_build = yes }
 		}
+	}
+}
+# COA
+shared_focus = { # Reclaim Workers Workshops
+	id = COA_focus_reclaim_workshops
+	icon = GFX_focus_unknown_political
+	dynamic = yes
+	prerequisite = { focus = aritifcers_focus_reconstruction_industry }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = aritifcers_focus_reconstruction_industry
+	x = -1
+	y = 1
+	cost = 10
 
-		ai_will_do = { factor = 2
-			modifier = { factor = 5
-				OR = {
-					COA = { is_ai = no }
-					OAK = { is_ai = no }
-				}
-			}
-		}
+	allow_branch = {
+		TAG = COA
+	}
+	available = {
+	}
+	bypass = {
+	}
 
-		available_if_capitulated = yes
-
-		completion_reward = {
-			log = "[GetDateText]: [Root.GetName]: Focus aritifcers_focus_new_year_new_state"
-			custom_effect_tooltip = modify_OAK_state_heart_of_iron_modifier_tt
-			add_to_variable = { 
-				global.OAK_heartofiron_local_resources = 0.05
-				tooltip = LOCAL_RESOURCES_tt
-			}
-			add_to_variable = { 
-				global.OAK_heartofiron_state_production_speed_buildings_factor = 0.05
-				tooltip = MODIFIER_STATE_PRODUCTION_SPEED_BUILDINGS_FACTOR_tt
-			}
-			467 = {
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = { type = industrial_complex level = 2 instant_build = yes }
-			}
-			483 = {
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = { type = industrial_complex level = 2 instant_build = yes }
-			}
-			484 = {
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = { type = industrial_complex level = 2 instant_build = yes }
-			}
-			479 = {
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = { type = industrial_complex level = 1 instant_build = yes }
-			}
-			603 = {
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = { type = industrial_complex level = 1 instant_build = yes }
-			}
-			604 = {
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = { type = industrial_complex level = 1 instant_build = yes }
+	ai_will_do = { factor = 2
+		modifier = { factor = 5
+			OR = {
+				COA = { is_ai = no }
+				OAK = { is_ai = no }
 			}
 		}
 	}
 
-	shared_focus = { # Militarization
-		id = COA_focus_Militarization
-		icon = GFX_focus_unknown_political
-		dynamic = yes
-		prerequisite = { focus = aritifcers_focus_reconstruction_industry }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = aritifcers_focus_reconstruction_industry
-		x = 1
-		y = 1
-		cost = 10
+	available_if_capitulated = yes
 
-		allow_branch = {
-			TAG = COA
+	completion_reward = {
+		log = "[GetDateText]: [Root.GetName]: Focus aritifcers_focus_new_year_new_state"
+		custom_effect_tooltip = modify_OAK_state_heart_of_iron_modifier_tt
+		add_to_variable = {
+			global.OAK_heartofiron_local_resources = 0.05
+			tooltip = LOCAL_RESOURCES_tt
 		}
-		available = {
+		add_to_variable = {
+			global.OAK_heartofiron_state_production_speed_buildings_factor = 0.05
+			tooltip = MODIFIER_STATE_PRODUCTION_SPEED_BUILDINGS_FACTOR_tt
 		}
-		bypass = {
+		467 = {
+			add_extra_state_shared_building_slots = 2
+			add_building_construction = { type = industrial_complex level = 2 instant_build = yes }
 		}
+		483 = {
+			add_extra_state_shared_building_slots = 2
+			add_building_construction = { type = industrial_complex level = 2 instant_build = yes }
+		}
+		484 = {
+			add_extra_state_shared_building_slots = 2
+			add_building_construction = { type = industrial_complex level = 2 instant_build = yes }
+		}
+		479 = {
+			add_extra_state_shared_building_slots = 1
+			add_building_construction = { type = industrial_complex level = 1 instant_build = yes }
+		}
+		603 = {
+			add_extra_state_shared_building_slots = 1
+			add_building_construction = { type = industrial_complex level = 1 instant_build = yes }
+		}
+		604 = {
+			add_extra_state_shared_building_slots = 1
+			add_building_construction = { type = industrial_complex level = 1 instant_build = yes }
+		}
+	}
+}
 
-		ai_will_do = { factor = 2
-			modifier = { factor = 5
-				OR = {
-					COA = { is_ai = no }
-					OAK = { is_ai = no }
-				}
-			}
-		}
+shared_focus = { # Militarization
+	id = COA_focus_Militarization
+	icon = GFX_focus_unknown_political
+	dynamic = yes
+	prerequisite = { focus = aritifcers_focus_reconstruction_industry }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = aritifcers_focus_reconstruction_industry
+	x = 1
+	y = 1
+	cost = 10
 
-		available_if_capitulated = yes
+	allow_branch = {
+		TAG = COA
+	}
+	available = {
+	}
+	bypass = {
+	}
 
-		completion_reward = {
-			log = "[GetDateText]: [Root.GetName]: Focus aritifcers_focus_new_year_new_state"
-			custom_effect_tooltip = modify_OAK_state_heart_of_iron_modifier_tt
-			add_to_variable = { 
-				global.OAK_heartofiron_local_resources = 0.05
-				tooltip = LOCAL_RESOURCES_tt
-			}
-			add_to_variable = { 
-				global.OAK_heartofiron_state_production_speed_buildings_factor = 0.05
-				tooltip = MODIFIER_STATE_PRODUCTION_SPEED_BUILDINGS_FACTOR_tt
-			}
-			every_owned_state = {
-				LIMIT = { industrial_complex > 0 }
-				remove_building = { type = industrial_complex level = 1 }
-				add_building_construction = { type = arms_factory level = 1 instant_build = yes }
+	ai_will_do = { factor = 2
+		modifier = { factor = 5
+			OR = {
+				COA = { is_ai = no }
+				OAK = { is_ai = no }
 			}
 		}
 	}
 
+	available_if_capitulated = yes
+
+	completion_reward = {
+		log = "[GetDateText]: [Root.GetName]: Focus aritifcers_focus_new_year_new_state"
+		custom_effect_tooltip = modify_OAK_state_heart_of_iron_modifier_tt
+		add_to_variable = {
+			global.OAK_heartofiron_local_resources = 0.05
+			tooltip = LOCAL_RESOURCES_tt
+		}
+		add_to_variable = {
+			global.OAK_heartofiron_state_production_speed_buildings_factor = 0.05
+			tooltip = MODIFIER_STATE_PRODUCTION_SPEED_BUILDINGS_FACTOR_tt
+		}
+		every_owned_state = {
+			LIMIT = { industrial_complex > 0 }
+			remove_building = { type = industrial_complex level = 1 }
+			add_building_construction = { type = arms_factory level = 1 instant_build = yes }
+		}
+	}
+}
+# Shared Political Path
 shared_focus = { # Lobby for Faction Support
 	id = aritifcers_focus_lobby_faction_support
 	icon = GFX_focus_unknown_political
@@ -404,200 +498,200 @@ shared_focus = { # Lobby for Faction Support
 	#completion_reward_joint_member = { add_political_power = 1 }
 }
 
-	shared_focus = { # Faction Populus
-		id = aritifcers_focus_populus
-		icon = GFX_focus_unknown_political
-		dynamic = yes
-		prerequisite = { focus = aritifcers_focus_lobby_faction_support }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = aritifcers_focus_lobby_faction_support
-		x = -4
-		y = 1
-		cost = 3
+shared_focus = { # Faction Populus
+	id = aritifcers_focus_populus
+	icon = GFX_focus_unknown_political
+	dynamic = yes
+	prerequisite = { focus = aritifcers_focus_lobby_faction_support }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = aritifcers_focus_lobby_faction_support
+	x = -4
+	y = 1
+	cost = 3
 
-		allow_branch = {
-		}
-		available = {
-		}
-		bypass = {
-		}
-
-		ai_will_do = { factor = 2
-			modifier = { factor = 5
-				OR = {
-					COA = { is_ai = no }
-					OAK = { is_ai = no }
-				}
-			}
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-			log = "[GetDateText]: [Root.GetName]: Focus aritifcers_focus_populus"
-			ROOT = { country_event = Artificers.3 }
-		}
-
-		#completion_reward_joint_originator = { add_political_power = 2 }
-
-		#completion_reward_joint_member = { add_political_power = 1 }
+	allow_branch = {
+	}
+	available = {
+	}
+	bypass = {
 	}
 
-	shared_focus = { # Faction Academia
-		id = aritifcers_focus_academia
-		icon = GFX_focus_unknown_political
-		dynamic = yes
-		prerequisite = { focus = aritifcers_focus_lobby_faction_support }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = aritifcers_focus_lobby_faction_support
-		x = 0
-		y = 1
-		cost = 3
-
-		allow_branch = {
-		}
-		available = {
-		}
-		bypass = {
-		}
-
-		ai_will_do = { factor = 2
-			modifier = { factor = 5
-				OR = {
-					COA = { is_ai = no }
-					OAK = { is_ai = no }
-				}
+	ai_will_do = { factor = 2
+		modifier = { factor = 5
+			OR = {
+				COA = { is_ai = no }
+				OAK = { is_ai = no }
 			}
 		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-			log = "[GetDateText]: [Root.GetName]: Focus aritifcers_focus_academia"
-			ROOT = { country_event = Artificers.4 }
-		}
-
-		#completion_reward_joint_originator = { add_political_power = 2 }
-
-		#completion_reward_joint_member = { add_political_power = 1 }
 	}
 
-	shared_focus = { # Faction Industrialist
-		id = aritifcers_focus_industrialist
-		icon = GFX_focus_unknown_political
-		dynamic = yes
-		prerequisite = { focus = aritifcers_focus_lobby_faction_support }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = aritifcers_focus_lobby_faction_support
-		x = 4
-		y = 1
-		cost = 3
+	available_if_capitulated = yes
 
-		allow_branch = {
-		}
-		available = {
-		}
-		bypass = {
-		}
+	completion_reward = {
+		log = "[GetDateText]: [Root.GetName]: Focus aritifcers_focus_populus"
+		ROOT = { country_event = Artificers.3 }
+	}
 
-		ai_will_do = { factor = 2
-			modifier = { factor = 5
-				OR = {
-					COA = { is_ai = no }
-					OAK = { is_ai = no }
-				}
+	#completion_reward_joint_originator = { add_political_power = 2 }
+
+	#completion_reward_joint_member = { add_political_power = 1 }
+}
+
+shared_focus = { # Faction Academia
+	id = aritifcers_focus_academia
+	icon = GFX_focus_unknown_political
+	dynamic = yes
+	prerequisite = { focus = aritifcers_focus_lobby_faction_support }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = aritifcers_focus_lobby_faction_support
+	x = 0
+	y = 1
+	cost = 3
+
+	allow_branch = {
+	}
+	available = {
+	}
+	bypass = {
+	}
+
+	ai_will_do = { factor = 2
+		modifier = { factor = 5
+			OR = {
+				COA = { is_ai = no }
+				OAK = { is_ai = no }
 			}
 		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-			log = "[GetDateText]: [Root.GetName]: Focus aritifcers_focus_industrialist"
-			ROOT = { country_event = Artificers.5 }
-		}
-
-		#completion_reward_joint_originator = { add_political_power = 2 }
-
-		#completion_reward_joint_member = { add_political_power = 1 }
 	}
 
-	shared_focus = { # Faction Military
-		id = aritifcers_focus_military
-		icon = GFX_focus_unknown_political
-		dynamic = yes
-		prerequisite = { focus = aritifcers_focus_lobby_faction_support }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = aritifcers_focus_lobby_faction_support
-		x = -2
-		y = 2
-		cost = 3
+	available_if_capitulated = yes
 
-		allow_branch = {
-		}
-		available = {
-		}
-		bypass = {
-		}
+	completion_reward = {
+		log = "[GetDateText]: [Root.GetName]: Focus aritifcers_focus_academia"
+		ROOT = { country_event = Artificers.4 }
+	}
 
-		ai_will_do = { factor = 2
-			modifier = { factor = 5
-				OR = {
-					COA = { is_ai = no }
-					OAK = { is_ai = no }
-				}
+	#completion_reward_joint_originator = { add_political_power = 2 }
+
+	#completion_reward_joint_member = { add_political_power = 1 }
+}
+
+shared_focus = { # Faction Industrialist
+	id = aritifcers_focus_industrialist
+	icon = GFX_focus_unknown_political
+	dynamic = yes
+	prerequisite = { focus = aritifcers_focus_lobby_faction_support }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = aritifcers_focus_lobby_faction_support
+	x = 4
+	y = 1
+	cost = 3
+
+	allow_branch = {
+	}
+	available = {
+	}
+	bypass = {
+	}
+
+	ai_will_do = { factor = 2
+		modifier = { factor = 5
+			OR = {
+				COA = { is_ai = no }
+				OAK = { is_ai = no }
 			}
 		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-			log = "[GetDateText]: [Root.GetName]: Focus aritifcers_focus_military"
-			ROOT = { country_event = Artificers.6 }
-		}
-
-		#completion_reward_joint_originator = { add_political_power = 2 }
-
-		#completion_reward_joint_member = { add_political_power = 1 }
 	}
 
-	shared_focus = { # Faction Bureaucrats
-		id = aritifcers_focus_bureaucrats
-		icon = GFX_focus_unknown_political
-		dynamic = yes
-		prerequisite = { focus = aritifcers_focus_lobby_faction_support }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = aritifcers_focus_lobby_faction_support
-		x = 2
-		y = 2
-		cost = 3
+	available_if_capitulated = yes
 
-		allow_branch = {
-		}
-		available = {
-		}
-		bypass = {
-		}
+	completion_reward = {
+		log = "[GetDateText]: [Root.GetName]: Focus aritifcers_focus_industrialist"
+		ROOT = { country_event = Artificers.5 }
+	}
 
-		ai_will_do = { factor = 2
-			modifier = { factor = 5
-				OR = {
-					COA = { is_ai = no }
-					OAK = { is_ai = no }
-				}
+	#completion_reward_joint_originator = { add_political_power = 2 }
+
+	#completion_reward_joint_member = { add_political_power = 1 }
+}
+
+shared_focus = { # Faction Military
+	id = aritifcers_focus_military
+	icon = GFX_focus_unknown_political
+	dynamic = yes
+	prerequisite = { focus = aritifcers_focus_lobby_faction_support }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = aritifcers_focus_lobby_faction_support
+	x = -2
+	y = 2
+	cost = 3
+
+	allow_branch = {
+	}
+	available = {
+	}
+	bypass = {
+	}
+
+	ai_will_do = { factor = 2
+		modifier = { factor = 5
+			OR = {
+				COA = { is_ai = no }
+				OAK = { is_ai = no }
 			}
 		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-			log = "[GetDateText]: [Root.GetName]: Focus aritifcers_focus_bureaucrats"
-			ROOT = { country_event = Artificers.7 }
-		}
-
-		#completion_reward_joint_originator = { add_political_power = 2 }
-
-		#completion_reward_joint_member = { add_political_power = 1 }
 	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		log = "[GetDateText]: [Root.GetName]: Focus aritifcers_focus_military"
+		ROOT = { country_event = Artificers.6 }
+	}
+
+	#completion_reward_joint_originator = { add_political_power = 2 }
+
+	#completion_reward_joint_member = { add_political_power = 1 }
+}
+
+shared_focus = { # Faction Bureaucrats
+	id = aritifcers_focus_bureaucrats
+	icon = GFX_focus_unknown_political
+	dynamic = yes
+	prerequisite = { focus = aritifcers_focus_lobby_faction_support }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = aritifcers_focus_lobby_faction_support
+	x = 2
+	y = 2
+	cost = 3
+
+	allow_branch = {
+	}
+	available = {
+	}
+	bypass = {
+	}
+
+	ai_will_do = { factor = 2
+		modifier = { factor = 5
+			OR = {
+				COA = { is_ai = no }
+				OAK = { is_ai = no }
+			}
+		}
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		log = "[GetDateText]: [Root.GetName]: Focus aritifcers_focus_bureaucrats"
+		ROOT = { country_event = Artificers.7 }
+	}
+
+	#completion_reward_joint_originator = { add_political_power = 2 }
+
+	#completion_reward_joint_member = { add_political_power = 1 }
+}
 
 joint_focus = { # Defence
 	id = aritifcers_focus_defence
@@ -667,9 +761,9 @@ joint_focus = { # Defence
 	}
 }
 
-	# Inner Stable, Out Choas
+# Inner Stable, Out Choas
 
-	# Gorilla Warfare
+# Gorilla Warfare
 
 joint_focus = { # Attacker
 	id = aritifcers_focus_attack
@@ -735,9 +829,9 @@ joint_focus = { # Attacker
 	}
 }
 
-	# Industrial Damage
+# Industrial Damage
 
-	# High Firepower
+# High Firepower
 
 shared_focus = { # Reconstruction Era
 	id = aritifcers_focus_reconstruction
@@ -881,41 +975,41 @@ shared_focus = { # Heartland Reconstruction
 	}
 }
 
-	shared_focus = { # Artificer Cooperative
-		id = aritifcers_focus_artificer_cooperative
-		icon = GFX_focus_unknown_political
-		dynamic = yes
-		prerequisite = { focus = aritifcers_focus_heartland_reconstruction }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = aritifcers_focus_heartland_reconstruction
-		x = 0
-		y = 1
-		cost = 10
+shared_focus = { # Artificer Cooperative
+	id = aritifcers_focus_artificer_cooperative
+	icon = GFX_focus_unknown_political
+	dynamic = yes
+	prerequisite = { focus = aritifcers_focus_heartland_reconstruction }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = aritifcers_focus_heartland_reconstruction
+	x = 0
+	y = 1
+	cost = 10
 
-		allow_branch = {
-		}
-		available = {
-			date > 1732.1.1
-		}
-		bypass = {
-		}
+	allow_branch = {
+	}
+	available = {
+		date > 1732.1.1
+	}
+	bypass = {
+	}
 
-		ai_will_do = { factor = 2
-			modifier = { factor = 5
-				OR = {
-					COA = { is_ai = no }
-					OAK = { is_ai = no }
-				}
+	ai_will_do = { factor = 2
+		modifier = { factor = 5
+			OR = {
+				COA = { is_ai = no }
+				OAK = { is_ai = no }
 			}
 		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-			log = "[GetDateText]: [Root.GetName]: Focus aritifcers_focus_artificer_cooperative"
-			create_faction_from_template = faction_template_OAK_artificer_cooperative
-		}
 	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		log = "[GetDateText]: [Root.GetName]: Focus aritifcers_focus_artificer_cooperative"
+		create_faction_from_template = faction_template_OAK_artificer_cooperative
+	}
+}
 
 shared_focus = { # Gnome Reconstruction
 	id = aritifcers_focus_gnome_reconstruction

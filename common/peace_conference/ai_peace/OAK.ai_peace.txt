@@ -1,0 +1,70 @@
+peace_ai_desires = { # COA
+	COA_take_core_claim = {
+		peace_action_type = take_states
+		enable = {
+			original_tag = COA
+			FROM.FROM.FROM = {
+				OR = {
+					is_core_of = COA
+					is_claimed_by = COA
+				}
+			}
+		}
+		ai_desire = 100
+	}
+	
+	COA_respect_allies_subjects_cores = {
+		peace_action_type = take_states
+		enable = {
+			original_tag = COA
+			FROM.FROM.FROM = {
+				any_country_with_core = {
+					is_ally_with = ROOT
+				}
+			}
+		}
+		ai_desire = -1000
+	}
+	
+	COA_subjugate_priority = {
+		peace_action_type = puppet
+		enable = {
+			original_tag = COA
+			FROM.FROM.FROM = { NOT = { is_core_of = COA } }
+		}
+		ai_desire = 200
+	}
+}
+
+peace_ai_desires = { # OAK
+	OAK_take_own_cores = {
+		peace_action_type = take_states
+		enable = {
+			original_tag = OAK
+			FROM.FROM.FROM = { is_core_of = OAK }
+		}
+		ai_desire = 100
+	}
+
+	OAK_anti_annex = {
+		peace_action_type = take_states
+		enable = {
+			original_tag = OAK
+			FROM.FROM.FROM = {
+				NOT = { is_core_of = OAK }
+			}
+		}
+		ai_desire = -200
+	}
+	
+	OAK_pro_subjugation = {
+		peace_action_type = { puppet force_government }
+		enable = {
+			original_tag = OAK
+			FROM.FROM.FROM = {
+				NOT = { is_core_of = OAK }
+			}
+		}
+		ai_desire = 100
+	}
+}

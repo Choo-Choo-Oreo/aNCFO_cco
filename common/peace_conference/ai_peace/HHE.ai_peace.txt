@@ -1,0 +1,134 @@
+peace_ai_desires = {
+	# Luke Deed
+	HHE_luke_deed_take_own_cores = {
+		peace_action_type = { take_states }
+		enable = {
+			ROOT = { has_character = HHE_luke_deed }
+			FROM.FROM.FROM = { is_core_of = ROOT }
+		}
+		ai_desire = 100
+	}
+	
+	HHE_luke_deed_no_non_cores = {
+		peace_action_type = { take_states }
+		enable = {
+			ROOT = { has_character = HHE_luke_deed }
+			FROM.FROM.FROM = { NOT = { is_core_of = ROOT } }
+		}
+		ai_desire = -1000
+	}
+	
+	HHE_luke_deed_subjugate_priority = {
+		peace_action_type = { puppet }
+		enable = {
+			ROOT = { has_character = HHE_luke_deed }
+			FROM.FROM.FROM = { NOT = { is_core_of = ROOT } }
+		}
+		ai_desire = 200
+	}
+	# Gabriel Strongheart
+	HHE_gabriel_strongheart_take_core_claim = {
+		peace_action_type = { take_states }
+		enable = {
+			ROOT = { has_character = HHE_gabriel_strongheart }
+			FROM.FROM.FROM = {
+				OR = {
+					is_core_of = ROOT
+					is_claimed_by = ROOT
+				}
+			}
+		}
+		ai_desire = 100
+	}
+	
+	HHE_gabriel_strongheart_respect_allies_subjects = {
+		peace_action_type = { take_states }
+		enable = {
+			ROOT = { has_character = HHE_gabriel_strongheart }
+			FROM.FROM.FROM = {
+				any_country_with_core = {
+					is_ally_with = ROOT
+				}
+			}
+		}
+		ai_desire = -1000
+	}
+	# Isabella Delfina
+	HHE_isabella_delfina_anti_annex = {
+		peace_action_type = { take_states }
+		enable = {
+			ROOT = { has_character = HHE_isabella_delfina }
+			FROM.FROM.FROM = {
+				NOT = { is_core_of = ROOT }
+			}
+		}
+		ai_desire = -200
+	}
+	
+	HHE_isabella_delfina_pro_subjugation = {
+		peace_action_type = { puppet force_government }
+		enable = {
+			ROOT = { has_character = HHE_isabella_delfina }
+			FROM.FROM.FROM = {
+				NOT = { is_core_of = ROOT }
+			}
+		}
+		ai_desire = 100
+	}
+	# Gaius Divitiis
+	HHE_gaius_divitiis_take_core_claim = {
+		peace_action_type = { take_states }
+		enable = {
+			ROOT = { has_character = HHE_gaius_divitiis }
+			FROM.FROM.FROM = {
+				OR = {
+					is_core_of = ROOT
+					is_claimed_by = ROOT
+				}
+			}
+		}
+		ai_desire = 100
+	}
+	
+	HHE_gaius_divitiis_respect_allies_subjects_cores = {
+		peace_action_type = { take_states }
+		enable = {
+			ROOT = { has_character = HHE_gaius_divitiis }
+			FROM.FROM.FROM = {
+				any_country_with_core = {
+					is_ally_with = ROOT
+				}
+			}
+		}
+		ai_desire = -1000
+	}
+	# Archard Vladaros
+	HHE_archard_vladaros_pro_annex = {
+		peace_action_type = { take_states }
+		enable = {
+			ROOT = { has_character = HHE_archard_vladaros }
+			FROM.FROM.FROM = {
+				OR = {
+					is_core_of = ROOT
+					is_claimed_by = ROOT
+				}
+			}
+		}
+		take_states_randomness = 200
+		ai_desire = 200
+		annex = { factor = 100 }
+	}
+	
+	HHE_archard_vladaros_respect_subjects_cores = {
+		peace_action_type = { take_states }
+		enable = {
+			ROOT = { has_character = HHE_archard_vladaros }
+			FROM.FROM.FROM = {
+				any_country_with_core = {
+					is_subject_of = ROOT
+				}
+			}
+		}
+		ai_desire = -1000
+	}
+#}

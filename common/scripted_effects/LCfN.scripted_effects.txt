@@ -311,12 +311,6 @@ LCfN_calculate_naval_capacity_logistics_formula = {
 	subtract_from_temp_variable = { var = capacity_diff value = LCfN_current_ship_load }
 
 	IF = {
-		LIMIT = { has_game_rule = { rule = LCfN_scaling_logic_rule option = LOGIC_PERCENT } }
-		divide_temp_variable = { var = capacity_diff value = LCfN_calculated_naval_cap }
-		multiply_temp_variable = { var = capacity_diff value = 100 }
-	}
-
-	IF = {
 		LIMIT = { has_game_rule = { rule = LCfN_formula_selection option = LINEAR } }
 		LCfN_calculate_naval_capacity_logistics_linear = yes
 	}
@@ -342,6 +336,13 @@ LCfN_calculate_naval_capacity_logistics_formula = {
 	}
 
 	# --- STEP 5: FINAL MODIFIER PROCESSING ---
+	IF = {
+		LIMIT = { has_game_rule = { rule = LCfN_scaling_logic_rule option = LOGIC_PERCENT } }
+		set_temp_variable = { var = percentage_curve_value value = capacity_diff }
+		divide_temp_variable = { var = percentage_curve_value value = LCfN_calculated_naval_cap }
+		multiply_temp_variable = { var = LCfN_curve_value value = percentage_curve_value }
+	}
+
 	set_variable = { var = LCfN_icd_ncd_value value = LCfN_curve_value }
 
 	# Infrastructure Strain Multiplier

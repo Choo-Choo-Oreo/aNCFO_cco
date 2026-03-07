@@ -4,24 +4,10 @@ HHE_earlygame_industrializion = {
 		date < 1727.01.01 # Three year of civ build up.
 		NOT = { has_global_flag = Artificers.GlobalIronShortage }
 	}
-
 	abort_when_not_enabled = yes
 
-	ai_strategy = {
-		type = building_target
-		id = industrial_complex
-		value = 34
-	}
-	ai_strategy = {
-		type = building_target
-		id = rail_way
-		value = -34
-	}
-	ai_strategy = {
-		type = building_target
-		id = naval_base
-		value = -34
-	}
+	ai_strategy = { type = building_target id = rail_way value = -100 }
+	ai_strategy = { type = building_target id = naval_base value = -100 }
 }
 
 HHE_railway_industrializion = {
@@ -30,58 +16,21 @@ HHE_railway_industrializion = {
 		has_country_leader = { character = HHE_archard_vladaros ruling_only = yes }
 		NOT = { has_completed_focus = HHE_warmonger_revisit_rttf }
 	}
-
 	abort_when_not_enabled = yes
 
-	ai_strategy = {
-		type = building_target
-		id = industrial_complex
-		value = 34
-	}
-	ai_strategy = {
-		type = building_target
-		id = rail_way
-		value = -34
-	}
-	ai_strategy = {
-		type = building_target
-		id = naval_base
-		value = -34
-	}
+	ai_strategy = { type = building_target id = rail_way value = -100 }
+	ai_strategy = { type = building_target id = naval_base value = -100 }
 }
 
 HHE_the_national_economy = {
     allowed = { original_tag = HHE }
 	enable = {
-		set_temp_variable = { total_industry = building_level@arms_factory }
-		add_to_temp_variable = { total_industry = building_level@dockyard }
-		check_variable = { var = total_industry value = industrial_complex_level compare = less_than }
+		check_variable = { var = building_level@arms_factory value = building_level@industrial_complex compare = less_than }
 	}
 
 	abort_when_not_enabled = yes
 
-	ai_strategy = {
-		type = building_target
-		id = arms_factory
-		value = 100
-	}
-}
-
-HHE_peacetime_industrializion = {
-    allowed = { original_tag = HHE }
-	enable = {
-		has_country_leader = { character = HHE_archard_vladaros ruling_only = yes }
-		has_war = no
-		NOT = { has_global_flag = Artificers.GlobalIronShortage }
-	}
-
-	abort_when_not_enabled = yes
-
-	ai_strategy = {
-		type = building_target
-		id = industrial_complex
-		value = 34
-	}
+	ai_strategy = { type = building_target id = arms_factory value = 200 }
 }
 
 HHE_wartime_industrializion = {
@@ -90,6 +39,7 @@ HHE_wartime_industrializion = {
 		has_country_leader = { character = HHE_archard_vladaros ruling_only = yes }
 		OR = {
 			has_war_with_major = yes
+			has_active_mission = HHE_mission_archard_vladaros_wartime_economy
 			AND = {
 				has_war = yes
 				has_idea = HHE_piller_economic0
@@ -98,37 +48,9 @@ HHE_wartime_industrializion = {
 		}
 		NOT = { has_global_flag = Artificers.GlobalIronShortage }
 	}
-
 	abort_when_not_enabled = yes
 
-	ai_strategy = {
-		type = building_target
-		id = arms_factory
-		value = 17
-	}
-}
-
-HHE_wartime_industrializion_bonus = {
-    allowed = { original_tag = HHE }
-	enable = {
-		has_country_leader = { character = HHE_archard_vladaros ruling_only = yes }
-		has_war = yes
-		has_idea = HHE_piller_economic0
-		has_completed_focus = HHE_warmonger_revisit_rttf
-	}
-
-	abort_when_not_enabled = yes
-
-	ai_strategy = {
-		type = building_target
-		id = rail_way
-		value = 17
-	}
-	ai_strategy = {
-		type = building_target
-		id = naval_base
-		value = 17
-	}
+	ai_strategy = { type = building_target id = arms_factory value = 100 }
 }
 
 HHE_rich_boy = {
@@ -242,7 +164,7 @@ HHE_singular_economy_steel = {
 	ai_strategy = {
 		type = build_building
 		id = steel_complex
-		value = 100
+		value = 20
 	}
 }
 
@@ -271,21 +193,7 @@ HHE_singular_economy_aluminium = {
 	ai_strategy = {
 		type = build_building
 		id = aluminium_complex
-		value = 100
-	}
-}
-
-HHE_wartime_economy = {
-	allowed = { original_tag = HHE }
-	enable = {
-		has_active_mission = HHE_mission_archard_vladaros_wartime_economy
-	}
-
-	abort_when_not_enabled = yes	
-
-	ai_strategy = {
-		type = added_military_to_civilian_factory_ratio
-		value = 100
+		value = 50
 	}
 }
 

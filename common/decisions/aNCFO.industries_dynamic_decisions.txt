@@ -26,19 +26,17 @@ industries_dynamic_category = {
 		modifier = { civilian_factory_use = 10 }
 
 		target_trigger = {
-			IF = { # Check before checking every state.
-				LIMIT = {
-					NOT = { has_country_flag = urbanization_hidden }
-					has_completed_focus = aritifcers_focus_reconstruction_industry
-				}
-				FROM = {
-					NOT = { has_dynamic_modifier = { modifier = OAK_state_heart_of_iron_modifier } }
-					impassable = no
-					OWNER = { FROM = { is_core_of = PREV } }
-					OR = {
-						controls_or_subject_of = yes
-						CONTROLLER = { has_country_flag = OAK_HoI_collaboration }
-						#CONTROLLER = { OVERLORD = { has_country_flag = OAK_HoI_collaboration } } # Seemingly cause error spamming
+			FROM = {
+				NOT = { has_dynamic_modifier = { modifier = OAK_state_heart_of_iron_modifier } }
+				impassable = no
+				OWNER = { FROM = { is_core_of = PREV } }
+				OR = {
+					controls_or_subject_of = yes
+					CONTROLLER = {
+						OR = {
+							is_ally_with = ROOT
+							has_country_flag = OAK_HoI_collaboration
+						}
 					}
 				}
 			}
@@ -48,162 +46,156 @@ industries_dynamic_category = {
 			has_completed_focus = aritifcers_focus_reconstruction_industry
 		}
 		available = {
-			IF = { # Check before checking every state.
-				LIMIT = {
-					NOT = { has_country_flag = urbanization_hidden }
-					has_completed_focus = aritifcers_focus_reconstruction_industry
+			FROM = {
+				OR = {
+					CONTROLLER = { has_war = no }
+					CONTROLLER = { is_major = yes }
 				}
-				FROM = {
-					OR = {
-						CONTROLLER = { has_war = no }
-						CONTROLLER = { is_major = yes }
-					}
-					OR = {
-						is_coastal = yes
-						any_neighbor_state = {
-							has_dynamic_modifier = {
-								modifier = OAK_state_heart_of_iron_modifier
-							}
+				OR = {
+					is_coastal = yes
+					any_neighbor_state = {
+						has_dynamic_modifier = {
+							modifier = OAK_state_heart_of_iron_modifier
 						}
 					}
-
-					IF = { # Rural
-						limit = { has_state_category = enclave
-							NOT = { has_dynamic_modifier = { modifier = OAK_state_heart_of_iron_modifier } }
-						}
-						set_temp_variable = { urbanize_ppcost = 10 }
-						set_temp_variable = { urbanize_statepop = 10 }
-						set_temp_variable = { urbanize_roadlvl = 1 }
-					}
-
-						ELSE_IF = {
-							limit = { has_state_category = wasteland
-								NOT = { has_dynamic_modifier = { modifier = OAK_state_heart_of_iron_modifier } }
-							}
-							set_temp_variable = { urbanize_ppcost = 10 }
-							set_temp_variable = { urbanize_statepop = 10 }
-							set_temp_variable = { urbanize_roadlvl = 1 }
-						}
-
-						ELSE_IF = {
-							limit = { has_state_category = tiny_island
-								NOT = { has_dynamic_modifier = { modifier = OAK_state_heart_of_iron_modifier } }
-							}
-							set_temp_variable = { urbanize_ppcost = 10 }
-							set_temp_variable = { urbanize_statepop = 10 }
-							set_temp_variable = { urbanize_roadlvl = 1 }
-						}
-
-						ELSE_IF = {
-							limit = { has_state_category = pastoral
-								NOT = { has_dynamic_modifier = { modifier = OAK_state_heart_of_iron_modifier } }
-							}
-							set_temp_variable = { urbanize_ppcost = 10 }
-							set_temp_variable = { urbanize_statepop = 20 }
-							set_temp_variable = { urbanize_roadlvl = 1 }
-						}
-
-						ELSE_IF = {
-							limit = { has_state_category = small_island
-								NOT = { has_dynamic_modifier = { modifier = OAK_state_heart_of_iron_modifier } }
-							}
-							set_temp_variable = { urbanize_ppcost = 20 }
-							set_temp_variable = { urbanize_statepop = 45 }
-							set_temp_variable = { urbanize_roadlvl = 1 }
-						}
-
-						ELSE_IF = {
-							limit = { has_state_category = rural
-								NOT = { has_dynamic_modifier = { modifier = OAK_state_heart_of_iron_modifier } }
-							}
-							set_temp_variable = { urbanize_ppcost = 30 }
-							set_temp_variable = { urbanize_statepop = 70 }
-							set_temp_variable = { urbanize_roadlvl = 1 }
-						}
-
-						ELSE_IF = {
-							limit = { has_state_category = large_rural
-								NOT = { has_dynamic_modifier = { modifier = OAK_state_heart_of_iron_modifier } }
-							}
-							set_temp_variable = { urbanize_ppcost = 40 }
-							set_temp_variable = { urbanize_statepop = 145 }
-							set_temp_variable = { urbanize_roadlvl = 2 }
-						}
-
-					IF = { # Suburban
-						limit = { has_state_category = town
-							NOT = { has_dynamic_modifier = { modifier = OAK_state_heart_of_iron_modifier } }
-						}
-						set_temp_variable = { urbanize_ppcost = 50 }
-						set_temp_variable = { urbanize_statepop = 250 }
-						set_temp_variable = { urbanize_roadlvl = 2 }
-					}
-
-						ELSE_IF = {
-							limit = { has_state_category = large_town
-								NOT = { has_dynamic_modifier = { modifier = OAK_state_heart_of_iron_modifier } }
-							}
-							set_temp_variable = { urbanize_ppcost = 60 }
-							set_temp_variable = { urbanize_statepop = 390 }
-							set_temp_variable = { urbanize_roadlvl = 3 }
-						}
-
-					IF = { # Urban
-						limit = { has_state_category = city
-							NOT = { has_dynamic_modifier = { modifier = OAK_state_heart_of_iron_modifier } }
-						}
-						set_temp_variable = { urbanize_ppcost = 70 }
-						set_temp_variable = { urbanize_statepop = 430 }
-						set_temp_variable = { urbanize_roadlvl = 3 }
-					}
-
-						ELSE_IF = {
-							limit = { has_state_category = large_city
-								NOT = { has_dynamic_modifier = { modifier = OAK_state_heart_of_iron_modifier } }
-							}
-							set_temp_variable = { urbanize_ppcost = 80 }
-							set_temp_variable = { urbanize_statepop = 900 }
-							set_temp_variable = { urbanize_roadlvl = 4 }
-						}
-
-						ELSE_IF = {
-							limit = { has_state_category = metropolis
-								NOT = { has_dynamic_modifier = { modifier = OAK_state_heart_of_iron_modifier } }
-							}
-							set_temp_variable = { urbanize_ppcost = 90 }
-							set_temp_variable = { urbanize_statepop = 1300 }
-							set_temp_variable = { urbanize_roadlvl = 4 }
-						}
-
-						ELSE_IF = {
-							limit = { has_state_category = megalopolis
-								NOT = { has_dynamic_modifier = { modifier = OAK_state_heart_of_iron_modifier } }
-							}
-							set_temp_variable = { urbanize_ppcost = 100 }
-							set_temp_variable = { urbanize_statepop = 1800 }
-							set_temp_variable = { urbanize_roadlvl = 5 }
-						} # Max var: 2147483
-
-					hidden_trigger = {
-						OR = {
-							has_state_category = enclave
-							has_state_category = wasteland
-							has_state_category = tiny_island
-							has_state_category = pastoral
-							has_state_category = small_island
-							has_state_category = rural
-							has_state_category = large_rural
-							has_state_category = town
-							has_state_category = large_town
-							has_state_category = city
-							has_state_category = large_city
-							has_state_category = metropolis
-							has_state_category = megalopolis
-						}
-					}
-					#state_population_k > urbanize_statepop
-					#infrastructure > urbanize_roadlvl
 				}
+
+				IF = { # Rural
+					limit = { has_state_category = enclave
+						NOT = { has_dynamic_modifier = { modifier = OAK_state_heart_of_iron_modifier } }
+					}
+					set_temp_variable = { urbanize_ppcost = 10 }
+					set_temp_variable = { urbanize_statepop = 10 }
+					set_temp_variable = { urbanize_roadlvl = 1 }
+				}
+
+				ELSE_IF = {
+					limit = { has_state_category = wasteland
+						NOT = { has_dynamic_modifier = { modifier = OAK_state_heart_of_iron_modifier } }
+					}
+					set_temp_variable = { urbanize_ppcost = 10 }
+					set_temp_variable = { urbanize_statepop = 10 }
+					set_temp_variable = { urbanize_roadlvl = 1 }
+				}
+
+				ELSE_IF = {
+					limit = { has_state_category = tiny_island
+						NOT = { has_dynamic_modifier = { modifier = OAK_state_heart_of_iron_modifier } }
+					}
+					set_temp_variable = { urbanize_ppcost = 10 }
+					set_temp_variable = { urbanize_statepop = 10 }
+					set_temp_variable = { urbanize_roadlvl = 1 }
+				}
+
+				ELSE_IF = {
+					limit = { has_state_category = pastoral
+						NOT = { has_dynamic_modifier = { modifier = OAK_state_heart_of_iron_modifier } }
+					}
+					set_temp_variable = { urbanize_ppcost = 10 }
+					set_temp_variable = { urbanize_statepop = 20 }
+					set_temp_variable = { urbanize_roadlvl = 1 }
+				}
+
+				ELSE_IF = {
+					limit = { has_state_category = small_island
+						NOT = { has_dynamic_modifier = { modifier = OAK_state_heart_of_iron_modifier } }
+					}
+					set_temp_variable = { urbanize_ppcost = 20 }
+					set_temp_variable = { urbanize_statepop = 45 }
+					set_temp_variable = { urbanize_roadlvl = 1 }
+				}
+
+				ELSE_IF = {
+					limit = { has_state_category = rural
+						NOT = { has_dynamic_modifier = { modifier = OAK_state_heart_of_iron_modifier } }
+					}
+					set_temp_variable = { urbanize_ppcost = 30 }
+					set_temp_variable = { urbanize_statepop = 70 }
+					set_temp_variable = { urbanize_roadlvl = 1 }
+				}
+
+				ELSE_IF = {
+					limit = { has_state_category = large_rural
+						NOT = { has_dynamic_modifier = { modifier = OAK_state_heart_of_iron_modifier } }
+					}
+					set_temp_variable = { urbanize_ppcost = 40 }
+					set_temp_variable = { urbanize_statepop = 145 }
+					set_temp_variable = { urbanize_roadlvl = 2 }
+				}
+
+				IF = { # Suburban
+					limit = { has_state_category = town
+						NOT = { has_dynamic_modifier = { modifier = OAK_state_heart_of_iron_modifier } }
+					}
+					set_temp_variable = { urbanize_ppcost = 50 }
+					set_temp_variable = { urbanize_statepop = 250 }
+					set_temp_variable = { urbanize_roadlvl = 2 }
+				}
+
+				ELSE_IF = {
+					limit = { has_state_category = large_town
+						NOT = { has_dynamic_modifier = { modifier = OAK_state_heart_of_iron_modifier } }
+					}
+					set_temp_variable = { urbanize_ppcost = 60 }
+					set_temp_variable = { urbanize_statepop = 390 }
+					set_temp_variable = { urbanize_roadlvl = 3 }
+				}
+
+				IF = { # Urban
+					limit = { has_state_category = city
+						NOT = { has_dynamic_modifier = { modifier = OAK_state_heart_of_iron_modifier } }
+					}
+					set_temp_variable = { urbanize_ppcost = 70 }
+					set_temp_variable = { urbanize_statepop = 430 }
+					set_temp_variable = { urbanize_roadlvl = 3 }
+				}
+
+				ELSE_IF = {
+					limit = { has_state_category = large_city
+						NOT = { has_dynamic_modifier = { modifier = OAK_state_heart_of_iron_modifier } }
+					}
+					set_temp_variable = { urbanize_ppcost = 80 }
+					set_temp_variable = { urbanize_statepop = 900 }
+					set_temp_variable = { urbanize_roadlvl = 4 }
+				}
+
+				ELSE_IF = {
+					limit = { has_state_category = metropolis
+						NOT = { has_dynamic_modifier = { modifier = OAK_state_heart_of_iron_modifier } }
+					}
+					set_temp_variable = { urbanize_ppcost = 90 }
+					set_temp_variable = { urbanize_statepop = 1300 }
+					set_temp_variable = { urbanize_roadlvl = 4 }
+				}
+
+				ELSE_IF = {
+					limit = { has_state_category = megalopolis
+						NOT = { has_dynamic_modifier = { modifier = OAK_state_heart_of_iron_modifier } }
+					}
+					set_temp_variable = { urbanize_ppcost = 100 }
+					set_temp_variable = { urbanize_statepop = 1800 }
+					set_temp_variable = { urbanize_roadlvl = 5 }
+				} # Max var: 2147483
+
+				hidden_trigger = {
+					OR = {
+						has_state_category = enclave
+						has_state_category = wasteland
+						has_state_category = tiny_island
+						has_state_category = pastoral
+						has_state_category = small_island
+						has_state_category = rural
+						has_state_category = large_rural
+						has_state_category = town
+						has_state_category = large_town
+						has_state_category = city
+						has_state_category = large_city
+						has_state_category = metropolis
+						has_state_category = megalopolis
+					}
+				}
+				#state_population_k > urbanize_statepop
+				#infrastructure > urbanize_roadlvl
 			}
 			num_of_civilian_factories_available_for_projects > 9
 			has_war = no
@@ -273,24 +265,22 @@ industries_dynamic_category = {
 		modifier = { civilian_factory_use = 20 }
 
 		target_trigger = {
-			IF = { # Check before checking every state.
-				LIMIT = {
-					NOT = { has_country_flag = urbanization_hidden }
-					has_completed_focus = aritifcers_focus_reconstruction_industry
+			FROM = {
+				has_dynamic_modifier = { modifier = OAK_state_heart_of_iron_modifier }
+				OR = {
+					has_dynamic_modifier = { modifier = resource_state_axiomatic_metal_modifier }
+					has_dynamic_modifier = { modifier = resource_state_sacred_metal_modifier }
+					has_dynamic_modifier = { modifier = resource_state_energetic_metal_modifier }
+					has_dynamic_modifier = { modifier = resource_state_kinetic_metal_modifier }
 				}
-				FROM = {
-					has_dynamic_modifier = { modifier = OAK_state_heart_of_iron_modifier }
-					OR = {
-						has_dynamic_modifier = { modifier = resource_state_axiomatic_metal_modifier }
-						has_dynamic_modifier = { modifier = resource_state_sacred_metal_modifier }
-						has_dynamic_modifier = { modifier = resource_state_energetic_metal_modifier }
-						has_dynamic_modifier = { modifier = resource_state_kinetic_metal_modifier }
-					}
-					OWNER = { FROM = { is_core_of = PREV } }
-					OR = {
-						controls_or_subject_of = yes
-						CONTROLLER = { has_country_flag = OAK_HoI_collaboration }
-						#CONTROLLER = { OVERLORD = { has_country_flag = OAK_HoI_collaboration } } # Seemingly cause error spamming
+				OWNER = { FROM = { is_core_of = PREV } }
+				OR = {
+					controls_or_subject_of = yes
+					CONTROLLER = {
+						OR = {
+							is_ally_with = ROOT
+							has_country_flag = OAK_HoI_collaboration
+						}
 					}
 				}
 			}
@@ -300,20 +290,24 @@ industries_dynamic_category = {
 			has_completed_focus = aritifcers_focus_reconstruction_industry
 		}
 		available = {
-			IF = { # Check before checking every state.
-				LIMIT = {
-					NOT = { has_country_flag = urbanization_hidden }
-					has_completed_focus = aritifcers_focus_reconstruction_industry
+			FROM = {
+				OR = {
+					CONTROLLER = { has_war = no }
+					CONTROLLER = { is_major = yes }
 				}
-				FROM = {
-					OR = {
-						CONTROLLER = { has_war = no }
-						CONTROLLER = { is_major = yes }
-					}
-					has_dynamic_modifier = { modifier = OAK_state_heart_of_iron_modifier }
+				has_dynamic_modifier = { modifier = OAK_state_heart_of_iron_modifier }
 
-					IF = { # Rural
-						limit = { has_state_category = enclave
+				IF = { # Rural
+					limit = { has_state_category = enclave
+						NOT = { has_dynamic_modifier = { modifier = OAK_state_heart_of_iron_modifier } }
+					}
+					set_temp_variable = { urbanize_ppcost = 10 }
+					set_temp_variable = { urbanize_statepop = 10 }
+					set_temp_variable = { urbanize_roadlvl = 1 }
+				}
+
+					ELSE_IF = {
+						limit = { has_state_category = wasteland
 							NOT = { has_dynamic_modifier = { modifier = OAK_state_heart_of_iron_modifier } }
 						}
 						set_temp_variable = { urbanize_ppcost = 10 }
@@ -321,134 +315,124 @@ industries_dynamic_category = {
 						set_temp_variable = { urbanize_roadlvl = 1 }
 					}
 
-						ELSE_IF = {
-							limit = { has_state_category = wasteland
-								NOT = { has_dynamic_modifier = { modifier = OAK_state_heart_of_iron_modifier } }
-							}
-							set_temp_variable = { urbanize_ppcost = 10 }
-							set_temp_variable = { urbanize_statepop = 10 }
-							set_temp_variable = { urbanize_roadlvl = 1 }
-						}
-
-						ELSE_IF = {
-							limit = { has_state_category = tiny_island
-								NOT = { has_dynamic_modifier = { modifier = OAK_state_heart_of_iron_modifier } }
-							}
-							set_temp_variable = { urbanize_ppcost = 10 }
-							set_temp_variable = { urbanize_statepop = 10 }
-							set_temp_variable = { urbanize_roadlvl = 1 }
-						}
-
-						ELSE_IF = {
-							limit = { has_state_category = pastoral
-								NOT = { has_dynamic_modifier = { modifier = OAK_state_heart_of_iron_modifier } }
-							}
-							set_temp_variable = { urbanize_ppcost = 10 }
-							set_temp_variable = { urbanize_statepop = 20 }
-							set_temp_variable = { urbanize_roadlvl = 1 }
-						}
-
-						ELSE_IF = {
-							limit = { has_state_category = small_island
-								NOT = { has_dynamic_modifier = { modifier = OAK_state_heart_of_iron_modifier } }
-							}
-							set_temp_variable = { urbanize_ppcost = 20 }
-							set_temp_variable = { urbanize_statepop = 45 }
-							set_temp_variable = { urbanize_roadlvl = 1 }
-						}
-
-						ELSE_IF = {
-							limit = { has_state_category = rural
-								NOT = { has_dynamic_modifier = { modifier = OAK_state_heart_of_iron_modifier } }
-							}
-							set_temp_variable = { urbanize_ppcost = 30 }
-							set_temp_variable = { urbanize_statepop = 70 }
-							set_temp_variable = { urbanize_roadlvl = 1 }
-						}
-
-						ELSE_IF = {
-							limit = { has_state_category = large_rural
-								NOT = { has_dynamic_modifier = { modifier = OAK_state_heart_of_iron_modifier } }
-							}
-							set_temp_variable = { urbanize_ppcost = 40 }
-							set_temp_variable = { urbanize_statepop = 145 }
-							set_temp_variable = { urbanize_roadlvl = 2 }
-						}
-
-					IF = { # Suburban
-						limit = { has_state_category = town
+					ELSE_IF = {
+						limit = { has_state_category = tiny_island
 							NOT = { has_dynamic_modifier = { modifier = OAK_state_heart_of_iron_modifier } }
 						}
-						set_temp_variable = { urbanize_ppcost = 50 }
-						set_temp_variable = { urbanize_statepop = 250 }
+						set_temp_variable = { urbanize_ppcost = 10 }
+						set_temp_variable = { urbanize_statepop = 10 }
+						set_temp_variable = { urbanize_roadlvl = 1 }
+					}
+
+					ELSE_IF = {
+						limit = { has_state_category = pastoral
+							NOT = { has_dynamic_modifier = { modifier = OAK_state_heart_of_iron_modifier } }
+						}
+						set_temp_variable = { urbanize_ppcost = 10 }
+						set_temp_variable = { urbanize_statepop = 20 }
+						set_temp_variable = { urbanize_roadlvl = 1 }
+					}
+
+					ELSE_IF = {
+						limit = { has_state_category = small_island
+							NOT = { has_dynamic_modifier = { modifier = OAK_state_heart_of_iron_modifier } }
+						}
+						set_temp_variable = { urbanize_ppcost = 20 }
+						set_temp_variable = { urbanize_statepop = 45 }
+						set_temp_variable = { urbanize_roadlvl = 1 }
+					}
+
+					ELSE_IF = {
+						limit = { has_state_category = rural
+							NOT = { has_dynamic_modifier = { modifier = OAK_state_heart_of_iron_modifier } }
+						}
+						set_temp_variable = { urbanize_ppcost = 30 }
+						set_temp_variable = { urbanize_statepop = 70 }
+						set_temp_variable = { urbanize_roadlvl = 1 }
+					}
+
+					ELSE_IF = {
+						limit = { has_state_category = large_rural
+							NOT = { has_dynamic_modifier = { modifier = OAK_state_heart_of_iron_modifier } }
+						}
+						set_temp_variable = { urbanize_ppcost = 40 }
+						set_temp_variable = { urbanize_statepop = 145 }
 						set_temp_variable = { urbanize_roadlvl = 2 }
 					}
 
-						ELSE_IF = {
-							limit = { has_state_category = large_town
-								NOT = { has_dynamic_modifier = { modifier = OAK_state_heart_of_iron_modifier } }
-							}
-							set_temp_variable = { urbanize_ppcost = 60 }
-							set_temp_variable = { urbanize_statepop = 390 }
-							set_temp_variable = { urbanize_roadlvl = 3 }
-						}
+				IF = { # Suburban
+					limit = { has_state_category = town
+						NOT = { has_dynamic_modifier = { modifier = OAK_state_heart_of_iron_modifier } }
+					}
+					set_temp_variable = { urbanize_ppcost = 50 }
+					set_temp_variable = { urbanize_statepop = 250 }
+					set_temp_variable = { urbanize_roadlvl = 2 }
+				}
 
-					IF = { # Urban
-						limit = { has_state_category = city
+					ELSE_IF = {
+						limit = { has_state_category = large_town
 							NOT = { has_dynamic_modifier = { modifier = OAK_state_heart_of_iron_modifier } }
 						}
-						set_temp_variable = { urbanize_ppcost = 70 }
-						set_temp_variable = { urbanize_statepop = 430 }
+						set_temp_variable = { urbanize_ppcost = 60 }
+						set_temp_variable = { urbanize_statepop = 390 }
 						set_temp_variable = { urbanize_roadlvl = 3 }
 					}
 
-						ELSE_IF = {
-							limit = { has_state_category = large_city
-								NOT = { has_dynamic_modifier = { modifier = OAK_state_heart_of_iron_modifier } }
-							}
-							set_temp_variable = { urbanize_ppcost = 80 }
-							set_temp_variable = { urbanize_statepop = 900 }
-							set_temp_variable = { urbanize_roadlvl = 4 }
-						}
-
-						ELSE_IF = {
-							limit = { has_state_category = metropolis
-								NOT = { has_dynamic_modifier = { modifier = OAK_state_heart_of_iron_modifier } }
-							}
-							set_temp_variable = { urbanize_ppcost = 90 }
-							set_temp_variable = { urbanize_statepop = 1300 }
-							set_temp_variable = { urbanize_roadlvl = 4 }
-						}
-
-						ELSE_IF = {
-							limit = { has_state_category = megalopolis
-								NOT = { has_dynamic_modifier = { modifier = OAK_state_heart_of_iron_modifier } }
-							}
-							set_temp_variable = { urbanize_ppcost = 100 }
-							set_temp_variable = { urbanize_statepop = 1800 }
-							set_temp_variable = { urbanize_roadlvl = 5 }
-						} # Max var: 2147483
-
-					hidden_trigger = {
-						OR = {
-							has_state_category = enclave
-							has_state_category = wasteland
-							has_state_category = tiny_island
-							has_state_category = pastoral
-							has_state_category = small_island
-							has_state_category = rural
-							has_state_category = large_rural
-							has_state_category = town
-							has_state_category = large_town
-							has_state_category = city
-							has_state_category = large_city
-							has_state_category = metropolis
-							has_state_category = megalopolis
-						}
+				IF = { # Urban
+					limit = { has_state_category = city
+						NOT = { has_dynamic_modifier = { modifier = OAK_state_heart_of_iron_modifier } }
 					}
-					#state_population_k > urbanize_statepop
-					#infrastructure > urbanize_roadlvl
+					set_temp_variable = { urbanize_ppcost = 70 }
+					set_temp_variable = { urbanize_statepop = 430 }
+					set_temp_variable = { urbanize_roadlvl = 3 }
 				}
+
+					ELSE_IF = {
+						limit = { has_state_category = large_city
+							NOT = { has_dynamic_modifier = { modifier = OAK_state_heart_of_iron_modifier } }
+						}
+						set_temp_variable = { urbanize_ppcost = 80 }
+						set_temp_variable = { urbanize_statepop = 900 }
+						set_temp_variable = { urbanize_roadlvl = 4 }
+					}
+
+					ELSE_IF = {
+						limit = { has_state_category = metropolis
+							NOT = { has_dynamic_modifier = { modifier = OAK_state_heart_of_iron_modifier } }
+						}
+						set_temp_variable = { urbanize_ppcost = 90 }
+						set_temp_variable = { urbanize_statepop = 1300 }
+						set_temp_variable = { urbanize_roadlvl = 4 }
+					}
+
+					ELSE_IF = {
+						limit = { has_state_category = megalopolis
+							NOT = { has_dynamic_modifier = { modifier = OAK_state_heart_of_iron_modifier } }
+						}
+						set_temp_variable = { urbanize_ppcost = 100 }
+						set_temp_variable = { urbanize_statepop = 1800 }
+						set_temp_variable = { urbanize_roadlvl = 5 }
+					} # Max var: 2147483
+
+				hidden_trigger = {
+					OR = {
+						has_state_category = enclave
+						has_state_category = wasteland
+						has_state_category = tiny_island
+						has_state_category = pastoral
+						has_state_category = small_island
+						has_state_category = rural
+						has_state_category = large_rural
+						has_state_category = town
+						has_state_category = large_town
+						has_state_category = city
+						has_state_category = large_city
+						has_state_category = metropolis
+						has_state_category = megalopolis
+					}
+				}
+				#state_population_k > urbanize_statepop
+				#infrastructure > urbanize_roadlvl
 			}
 			num_of_civilian_factories_available_for_projects > 19
 		}
@@ -571,23 +555,17 @@ industries_dynamic_category = {
 		modifier = { civilian_factory_use = 5 }
 
 		target_trigger = {
-			IF = { # Check before checking every state.
-				LIMIT = {
-					NOT = { has_country_flag = urbanization_hidden }
-					has_completed_focus = MRC_focus_most_serene_republic_of_insulae
+			FROM = {
+				AND = {
+					NOT = { has_dynamic_modifier = { modifier = MRC_state_most_serene_republic_of_insulae_modifier } }
+					NOT = { has_state_flag = urbanized_state_2 }
 				}
-				FROM = {
-					AND = {
-						NOT = { has_dynamic_modifier = { modifier = MRC_state_most_serene_republic_of_insulae_modifier } }
-						NOT = { has_state_flag = urbanized_state_2 }
-					}
-					impassable = no
-					OWNER = { FROM = { is_core_of = PREV } }
-					OR = {
-						controls_or_subject_of = yes
-						CONTROLLER = { has_country_flag = MRC_MSR_collaboration }
-						#CONTROLLER = { OVERLORD = { has_country_flag = MRC_MSR_collaboration } } # Seemingly cause error spamming
-					}
+				impassable = no
+				OWNER = { FROM = { is_core_of = PREV } }
+				OR = {
+					controls_or_subject_of = yes
+					CONTROLLER = { has_country_flag = MRC_MSR_collaboration }
+					#CONTROLLER = { OVERLORD = { has_country_flag = MRC_MSR_collaboration } } # Seemingly cause error spamming
 				}
 			}
 		}
@@ -596,159 +574,153 @@ industries_dynamic_category = {
 			has_completed_focus = MRC_focus_most_serene_republic_of_insulae
 		}
 		available = {
-			IF = { # Check before checking every state.
-				LIMIT = {
-					NOT = { has_country_flag = urbanization_hidden }
-					has_completed_focus = MRC_focus_most_serene_republic_of_insulae
+			FROM = {
+				CONTROLLER = { has_war = no }
+				OR = {
+					is_coastal = yes
+					any_neighbor_state = {
+						has_dynamic_modifier = {
+							modifier = MRC_state_most_serene_republic_of_insulae_modifier
+						}
+					}
 				}
-				FROM = {
-					CONTROLLER = { has_war = no }
+
+				IF = { # Rural
+					limit = { has_state_category = enclave
+						NOT = { has_dynamic_modifier = { modifier = MRC_state_most_serene_republic_of_insulae_modifier } }
+					}
+					set_temp_variable = { urbanize_ppcost = 10 }
+					set_temp_variable = { urbanize_statepop = 10 }
+					set_temp_variable = { urbanize_roadlvl = 1 }
+				}
+
+				ELSE_IF = {
+					limit = { has_state_category = wasteland
+						NOT = { has_dynamic_modifier = { modifier = MRC_state_most_serene_republic_of_insulae_modifier } }
+					}
+					set_temp_variable = { urbanize_ppcost = 10 }
+					set_temp_variable = { urbanize_statepop = 10 }
+					set_temp_variable = { urbanize_roadlvl = 1 }
+				}
+
+				ELSE_IF = {
+					limit = { has_state_category = tiny_island
+						NOT = { has_dynamic_modifier = { modifier = MRC_state_most_serene_republic_of_insulae_modifier } }
+					}
+					set_temp_variable = { urbanize_ppcost = 10 }
+					set_temp_variable = { urbanize_statepop = 10 }
+					set_temp_variable = { urbanize_roadlvl = 1 }
+				}
+
+				ELSE_IF = {
+					limit = { has_state_category = pastoral
+						NOT = { has_dynamic_modifier = { modifier = MRC_state_most_serene_republic_of_insulae_modifier } }
+					}
+					set_temp_variable = { urbanize_ppcost = 10 }
+					set_temp_variable = { urbanize_statepop = 20 }
+					set_temp_variable = { urbanize_roadlvl = 1 }
+				}
+
+				ELSE_IF = {
+					limit = { has_state_category = small_island
+						NOT = { has_dynamic_modifier = { modifier = MRC_state_most_serene_republic_of_insulae_modifier } }
+					}
+					set_temp_variable = { urbanize_ppcost = 20 }
+					set_temp_variable = { urbanize_statepop = 45 }
+					set_temp_variable = { urbanize_roadlvl = 1 }
+				}
+
+				ELSE_IF = {
+					limit = { has_state_category = rural
+						NOT = { has_dynamic_modifier = { modifier = MRC_state_most_serene_republic_of_insulae_modifier } }
+					}
+					set_temp_variable = { urbanize_ppcost = 30 }
+					set_temp_variable = { urbanize_statepop = 70 }
+					set_temp_variable = { urbanize_roadlvl = 1 }
+				}
+
+				ELSE_IF = {
+					limit = { has_state_category = large_rural
+						NOT = { has_dynamic_modifier = { modifier = MRC_state_most_serene_republic_of_insulae_modifier } }
+					}
+					set_temp_variable = { urbanize_ppcost = 40 }
+					set_temp_variable = { urbanize_statepop = 145 }
+					set_temp_variable = { urbanize_roadlvl = 2 }
+				}
+
+				IF = { # Suburban
+					limit = { has_state_category = town
+						NOT = { has_dynamic_modifier = { modifier = MRC_state_most_serene_republic_of_insulae_modifier } }
+					}
+					set_temp_variable = { urbanize_ppcost = 50 }
+					set_temp_variable = { urbanize_statepop = 250 }
+					set_temp_variable = { urbanize_roadlvl = 2 }
+				}
+
+				ELSE_IF = {
+					limit = { has_state_category = large_town
+						NOT = { has_dynamic_modifier = { modifier = MRC_state_most_serene_republic_of_insulae_modifier } }
+					}
+					set_temp_variable = { urbanize_ppcost = 60 }
+					set_temp_variable = { urbanize_statepop = 390 }
+					set_temp_variable = { urbanize_roadlvl = 3 }
+				}
+
+				IF = { # Urban
+					limit = { has_state_category = city
+						NOT = { has_dynamic_modifier = { modifier = MRC_state_most_serene_republic_of_insulae_modifier } }
+					}
+					set_temp_variable = { urbanize_ppcost = 70 }
+					set_temp_variable = { urbanize_statepop = 430 }
+					set_temp_variable = { urbanize_roadlvl = 3 }
+				}
+
+				ELSE_IF = {
+					limit = { has_state_category = large_city
+						NOT = { has_dynamic_modifier = { modifier = MRC_state_most_serene_republic_of_insulae_modifier } }
+					}
+					set_temp_variable = { urbanize_ppcost = 80 }
+					set_temp_variable = { urbanize_statepop = 900 }
+					set_temp_variable = { urbanize_roadlvl = 4 }
+				}
+
+				ELSE_IF = {
+					limit = { has_state_category = metropolis
+						NOT = { has_dynamic_modifier = { modifier = MRC_state_most_serene_republic_of_insulae_modifier } }
+					}
+					set_temp_variable = { urbanize_ppcost = 90 }
+					set_temp_variable = { urbanize_statepop = 1300 }
+					set_temp_variable = { urbanize_roadlvl = 4 }
+				}
+
+				ELSE_IF = {
+					limit = { has_state_category = megalopolis
+						NOT = { has_dynamic_modifier = { modifier = MRC_state_most_serene_republic_of_insulae_modifier } }
+					}
+					set_temp_variable = { urbanize_ppcost = 100 }
+					set_temp_variable = { urbanize_statepop = 1800 }
+					set_temp_variable = { urbanize_roadlvl = 5 }
+				} # Max var: 2147483
+
+				hidden_trigger = {
 					OR = {
-						is_coastal = yes
-						any_neighbor_state = {
-							has_dynamic_modifier = {
-								modifier = MRC_state_most_serene_republic_of_insulae_modifier
-							}
-						}
+						has_state_category = enclave
+						has_state_category = wasteland
+						has_state_category = tiny_island
+						has_state_category = pastoral
+						has_state_category = small_island
+						has_state_category = rural
+						has_state_category = large_rural
+						has_state_category = town
+						has_state_category = large_town
+						has_state_category = city
+						has_state_category = large_city
+						has_state_category = metropolis
+						has_state_category = megalopolis
 					}
-
-					IF = { # Rural
-						limit = { has_state_category = enclave
-							NOT = { has_dynamic_modifier = { modifier = MRC_state_most_serene_republic_of_insulae_modifier } }
-						}
-						set_temp_variable = { urbanize_ppcost = 10 }
-						set_temp_variable = { urbanize_statepop = 10 }
-						set_temp_variable = { urbanize_roadlvl = 1 }
-					}
-
-						ELSE_IF = {
-							limit = { has_state_category = wasteland
-								NOT = { has_dynamic_modifier = { modifier = MRC_state_most_serene_republic_of_insulae_modifier } }
-							}
-							set_temp_variable = { urbanize_ppcost = 10 }
-							set_temp_variable = { urbanize_statepop = 10 }
-							set_temp_variable = { urbanize_roadlvl = 1 }
-						}
-
-						ELSE_IF = {
-							limit = { has_state_category = tiny_island
-								NOT = { has_dynamic_modifier = { modifier = MRC_state_most_serene_republic_of_insulae_modifier } }
-							}
-							set_temp_variable = { urbanize_ppcost = 10 }
-							set_temp_variable = { urbanize_statepop = 10 }
-							set_temp_variable = { urbanize_roadlvl = 1 }
-						}
-
-						ELSE_IF = {
-							limit = { has_state_category = pastoral
-								NOT = { has_dynamic_modifier = { modifier = MRC_state_most_serene_republic_of_insulae_modifier } }
-							}
-							set_temp_variable = { urbanize_ppcost = 10 }
-							set_temp_variable = { urbanize_statepop = 20 }
-							set_temp_variable = { urbanize_roadlvl = 1 }
-						}
-
-						ELSE_IF = {
-							limit = { has_state_category = small_island
-								NOT = { has_dynamic_modifier = { modifier = MRC_state_most_serene_republic_of_insulae_modifier } }
-							}
-							set_temp_variable = { urbanize_ppcost = 20 }
-							set_temp_variable = { urbanize_statepop = 45 }
-							set_temp_variable = { urbanize_roadlvl = 1 }
-						}
-
-						ELSE_IF = {
-							limit = { has_state_category = rural
-								NOT = { has_dynamic_modifier = { modifier = MRC_state_most_serene_republic_of_insulae_modifier } }
-							}
-							set_temp_variable = { urbanize_ppcost = 30 }
-							set_temp_variable = { urbanize_statepop = 70 }
-							set_temp_variable = { urbanize_roadlvl = 1 }
-						}
-
-						ELSE_IF = {
-							limit = { has_state_category = large_rural
-								NOT = { has_dynamic_modifier = { modifier = MRC_state_most_serene_republic_of_insulae_modifier } }
-							}
-							set_temp_variable = { urbanize_ppcost = 40 }
-							set_temp_variable = { urbanize_statepop = 145 }
-							set_temp_variable = { urbanize_roadlvl = 2 }
-						}
-
-					IF = { # Suburban
-						limit = { has_state_category = town
-							NOT = { has_dynamic_modifier = { modifier = MRC_state_most_serene_republic_of_insulae_modifier } }
-						}
-						set_temp_variable = { urbanize_ppcost = 50 }
-						set_temp_variable = { urbanize_statepop = 250 }
-						set_temp_variable = { urbanize_roadlvl = 2 }
-					}
-
-						ELSE_IF = {
-							limit = { has_state_category = large_town
-								NOT = { has_dynamic_modifier = { modifier = MRC_state_most_serene_republic_of_insulae_modifier } }
-							}
-							set_temp_variable = { urbanize_ppcost = 60 }
-							set_temp_variable = { urbanize_statepop = 390 }
-							set_temp_variable = { urbanize_roadlvl = 3 }
-						}
-
-					IF = { # Urban
-						limit = { has_state_category = city
-							NOT = { has_dynamic_modifier = { modifier = MRC_state_most_serene_republic_of_insulae_modifier } }
-						}
-						set_temp_variable = { urbanize_ppcost = 70 }
-						set_temp_variable = { urbanize_statepop = 430 }
-						set_temp_variable = { urbanize_roadlvl = 3 }
-					}
-
-						ELSE_IF = {
-							limit = { has_state_category = large_city
-								NOT = { has_dynamic_modifier = { modifier = MRC_state_most_serene_republic_of_insulae_modifier } }
-							}
-							set_temp_variable = { urbanize_ppcost = 80 }
-							set_temp_variable = { urbanize_statepop = 900 }
-							set_temp_variable = { urbanize_roadlvl = 4 }
-						}
-
-						ELSE_IF = {
-							limit = { has_state_category = metropolis
-								NOT = { has_dynamic_modifier = { modifier = MRC_state_most_serene_republic_of_insulae_modifier } }
-							}
-							set_temp_variable = { urbanize_ppcost = 90 }
-							set_temp_variable = { urbanize_statepop = 1300 }
-							set_temp_variable = { urbanize_roadlvl = 4 }
-						}
-
-						ELSE_IF = {
-							limit = { has_state_category = megalopolis
-								NOT = { has_dynamic_modifier = { modifier = MRC_state_most_serene_republic_of_insulae_modifier } }
-							}
-							set_temp_variable = { urbanize_ppcost = 100 }
-							set_temp_variable = { urbanize_statepop = 1800 }
-							set_temp_variable = { urbanize_roadlvl = 5 }
-						} # Max var: 2147483
-
-					hidden_trigger = {
-						OR = {
-							has_state_category = enclave
-							has_state_category = wasteland
-							has_state_category = tiny_island
-							has_state_category = pastoral
-							has_state_category = small_island
-							has_state_category = rural
-							has_state_category = large_rural
-							has_state_category = town
-							has_state_category = large_town
-							has_state_category = city
-							has_state_category = large_city
-							has_state_category = metropolis
-							has_state_category = megalopolis
-						}
-					}
-					state_population_k > urbanize_statepop
-					#infrastructure > urbanize_roadlvl
 				}
+				state_population_k > urbanize_statepop
+				#infrastructure > urbanize_roadlvl
 			}
 			num_of_civilian_factories_available_for_projects > 4
 		}
