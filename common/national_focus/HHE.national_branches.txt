@@ -4857,7 +4857,10 @@ focus_tree = { # Warmonger - Text.
 			remove_ideas = HHE_choas0
 			HHE_civil_war_ends = yes
 			hidden_effect = {
-			
+				every_state = {
+					limit = { formable_country_ach_listed_states = yes }
+					add_claim_by = ROOT
+				}
 			}
 		}
 	}
@@ -5364,36 +5367,14 @@ focus_tree = { # Warmonger - Text.
 
 		ai_will_do = {
 			factor = 1
-			modifier = { factor = -10.0
+			modifier = {
+				factor = -10.0
 				NOT = { has_completed_focus = HHE_warmonger_trilateral_crusade }
 			}
-			modifier = { factor = 10
+			modifier = {
+				factor = 10
 				has_completed_focus = HHE_warmonger_trilateral_crusade
 			}
-			modifier = { # Calm down on BoP
-				factor = -3
-				has_war_support > 0.50
-				power_balance_value = { id = power_balance_HHE_archard_vladaros value > 0.75 }
-			}
-			modifier = { # Focus on down on BoP
-				factor = 3
-				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
-			}
-            modifier = {
-                factor = 6
-                has_war_support < 0.50
-				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
-            }
-            modifier = {
-                factor = 6
-                has_war_support < 0.25
-				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
-            }
-            modifier = {
-                factor = 6
-                has_war_support < 0.01
-				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
-            }
 		}
 
 		available_if_capitulated = yes
@@ -5424,36 +5405,14 @@ focus_tree = { # Warmonger - Text.
 
 		ai_will_do = {
 			factor = 1
-			modifier = { factor = -10.0
+			modifier = {
+				factor = -10.0
 				NOT = { has_completed_focus = HHE_warmonger_trilateral_crusade }
 			}
-			modifier = { factor = 10
+			modifier = {
+				factor = 10
 				has_completed_focus = HHE_warmonger_trilateral_crusade
 			}
-			modifier = { # Calm down on BoP
-				factor = -3
-				has_war_support > 0.50
-				power_balance_value = { id = power_balance_HHE_archard_vladaros value > 0.75 }
-			}
-			modifier = { # Focus on down on BoP
-				factor = 3
-				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
-			}
-            modifier = {
-                factor = 6
-                has_war_support < 0.50
-				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
-            }
-            modifier = {
-                factor = 6
-                has_war_support < 0.25
-				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
-            }
-            modifier = {
-                factor = 6
-                has_war_support < 0.01
-				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
-            }
 		}
 
 		available_if_capitulated = yes
@@ -6356,20 +6315,19 @@ focus_tree = { # Warmonger - Text.
 		}
 
 		ai_will_do = {
-			factor = 1
+			factor = 10
 			modifier = { # Do during War
 				add = 200
 				has_war = yes
 			}
-	        modifier = { factor = 10
-	            has_war_support < 0.50
-	        }
-	        modifier = { factor = 15
-	            has_war_support < 0.25
-	        }
-	        modifier = { factor = 25
-	            has_war_support < 0.01
-	        }
+			modifier = {
+				factor = -10.0
+				NOT = { has_completed_focus = HHE_warmonger_trilateral_crusade }
+			}
+			modifier = {
+				factor = 10
+				has_completed_focus = HHE_warmonger_trilateral_crusade
+			}
 		}
 
 		available_if_capitulated = yes
@@ -10375,6 +10333,10 @@ focus_tree = { # Warmonger - Text.
 			add_command_power = 50
 			hidden_effect = {
 				HHE_high_spirits_efforts_remove = yes
+				every_state = {
+					limit = { formable_country_ach_listed_states = yes }
+					add_claim_by = ROOT
+				}
 			}
 		}
 	}

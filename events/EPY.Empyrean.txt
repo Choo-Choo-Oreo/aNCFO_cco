@@ -1,0 +1,149 @@
+﻿add_namespace = EPY
+	country_event = { # Surrender to Linsongese Nations
+		id = EPY.0
+		title = EPY.0.t
+		desc = EPY.0.d
+		picture = GFX_report_event_japanese_chinese_surrender
+		is_triggered_only = yes
+
+		immediate = { log = "[GetDateText]: [Root.GetName]: Event EPY.0" }
+
+		option = { # Declined
+			name = EPY.0.OptA
+			ai_chance = { factor = 0.0 }
+			FROM = { country_event = EPY.1 }
+		}
+		option = { # Accept
+			name = EPY.0.OptB
+			ai_chance = { factor = 2.0 }
+			FROM = { country_event = EPY.2 }
+			effect_tooltip = {
+			
+			}
+		}
+	}
+
+	country_event = { # Declined
+		id = EPY.1
+		title = EPY.1.t
+		desc = EPY.1.d
+		picture = GFX_report_event_japanese_chinese_surrender
+		is_triggered_only = yes
+
+		immediate = { log = "[GetDateText]: [Root.GetName]: Event EPY.1" }
+
+		option = {
+			name = EPY.1.OptA
+			ai_chance = { factor = 1.0 }
+		}
+	}
+
+	country_event = { # Accept
+		id = EPY.2
+		title = EPY.2.t
+		desc = EPY.2.d
+		picture = GFX_report_event_japanese_chinese_surrender
+		is_triggered_only = yes
+
+		immediate = { log = "[GetDateText]: [Root.GetName]: Event EPY.2" }
+
+		option = {
+			name = EPY.2.OptA
+			ai_chance = { factor = 1.0 }
+
+		}
+	}
+
+	country_event = { # Surrender for a Greater Tommorow
+		id = EPY.3
+		title = EPY.3.t
+		desc = EPY.3.d
+		picture = GFX_report_event_japanese_chinese_surrender
+		is_triggered_only = yes
+
+		immediate = { log = "[GetDateText]: [Root.GetName]: Event EPY.0" }
+
+		option = { # Declined
+			name = EPY.3.OptA
+			ai_chance = { factor = 0.0 }
+			FROM = { country_event = EPY.4 }
+		}
+		option = { # Accept
+			name = EPY.3.OptB
+			ai_chance = { factor = 2.0 }
+			FROM = { country_event = EPY.5 }
+			effect_tooltip = {
+				IF = {
+					LIMIT = { ROOT = { is_in_faction_with = EPC } }
+					EPC = {
+						leave_faction = yes
+						every_other_country = {
+							LIMIT = { is_in_faction_with = ROOT }
+							white_peace = EPC
+							hidden_effect = { set_truce = { target = EPC days = 1095 } }
+						}
+					}
+				}
+				EPY = {
+					leave_faction = yes
+					every_other_country = {
+						LIMIT = { is_in_faction_with = ROOT }
+						white_peace = EPY
+						hidden_effect = { set_truce = { target = EPY days = 1095 } }
+					}
+					hidden_effect = { set_country_flag = EPY_prevent_HHE_victory_over_MRC_block }
+				}
+			}
+		}
+	}
+
+	country_event = { # Declined
+		id = EPY.4
+		title = EPY.4.t
+		desc = EPY.4.d
+		picture = GFX_report_event_japanese_chinese_surrender
+		is_triggered_only = yes
+
+		immediate = { log = "[GetDateText]: [Root.GetName]: Event EPY.4" }
+
+		option = {
+			name = EPY.4.OptA
+			ai_chance = { factor = 1.0 }
+		}
+	}
+
+	country_event = { # Accept
+		id = EPY.5
+		title = EPY.5.t
+		desc = EPY.5.d
+		picture = GFX_report_event_japanese_chinese_surrender
+		is_triggered_only = yes
+
+		immediate = { log = "[GetDateText]: [Root.GetName]: Event EPY.5" }
+
+		option = {
+			name = EPY.5.OptA
+			ai_chance = { factor = 1.0 }
+			hidden_effect = { MRC = { set_faction_leader = yes } }
+			IF = {
+				LIMIT = { is_in_faction_with = EPC }
+				EPC = {
+					leave_faction = yes
+					every_other_country = {
+						LIMIT = { is_in_faction_with = FROM }
+						white_peace = EPC
+						hidden_effect = { set_truce = { target = EPC days = 1095 } }
+					}
+				}
+			}
+			EPY = {
+				leave_faction = yes
+				every_other_country = {
+					LIMIT = { is_in_faction_with = FROM }
+					white_peace = EPY
+					hidden_effect = { set_truce = { target = EPY days = 1095 } }
+				}
+				hidden_effect = { set_country_flag = EPY_prevent_HHE_victory_over_MRC_block }
+			}
+		}
+	}
