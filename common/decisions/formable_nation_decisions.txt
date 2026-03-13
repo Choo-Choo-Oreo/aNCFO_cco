@@ -1,7 +1,31 @@
 form_harmonainus_imperious_category = {
 	form_new_harmonainus_imperious = { # Core Region
 		icon = generic_form_nation
-		allowed = { always = yes }
+		visible = {
+			OR = {
+				AND = {
+					OR = {
+						original_tag = HER
+						original_tag = HHE
+						#original_tag = HRF # They are Northern folks.
+						original_tag = HSP
+						original_tag = HTP
+						#original_tag = HUP # They are Northern folks. 
+						has_country_flag = ALLOWED_FORMATION_OF_HARMONAINUS_IMPERIOUS # For added countries though Mods.
+					}
+					has_government = theocratism
+				}
+				AND = {
+					original_tag = HHE
+					has_global_flag = elected_warmonger
+				}
+				OR = {
+					has_country_flag = form_harmonainus_imperious_center_flag
+					has_country_flag = form_harmonainus_imperious_west_flag
+				}
+			}
+			NOT = { has_country_flag = form_harmonainus_imperious_flag }
+		}
 		available = {
 			controls_state = 5
 			OR = {
@@ -48,37 +72,11 @@ form_harmonainus_imperious_category = {
 				}
 			}
 		}
-		visible = {
-			OR = {
-				AND = {
-					OR = {
-						original_tag = HER
-						original_tag = HHE
-						#original_tag = HRF # They are Northern folks.
-						original_tag = HSP
-						original_tag = HTP
-						#original_tag = HUP # They are Northern folks. 
-						has_country_flag = ALLOWED_FORMATION_OF_HARMONAINUS_IMPERIOUS # For added countries though Mods.
-					}
-					has_government = theocratism
-				}
-				AND = {
-					original_tag = HHE
-					has_global_flag = elected_warmonger
-				}
-				OR = {
-					has_country_flag = form_harmonainus_imperious_center_flag
-					has_country_flag = form_harmonainus_imperious_west_flag
-				}
-			}
-			NOT = { has_country_flag = form_harmonainus_imperious_flag }
-		}
-
 		complete_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision form_new_harmonainus_imperious"
 			custom_effect_tooltip = form_country_core_territories_tt
+			set_country_flag = form_harmonainus_imperious_flag
 			add_research_slot = 1
-
 			if = {
 				limit = {
 					original_tag = HHE
@@ -95,9 +93,9 @@ form_harmonainus_imperious_category = {
 				reset_province_name = 15115
 			}
 			set_capital = { state = 5 }
-
 			custom_effect_tooltip = form_country_integrate_states_tt
 			hidden_effect = {
+				ROOT = { sound_effect = complete_focus }
 				1 = { add_core_of = ROOT }
 				5 = { add_core_of = ROOT }
 				77 = { add_core_of = ROOT }
@@ -108,10 +106,9 @@ form_harmonainus_imperious_category = {
 				236 = { add_core_of = ROOT }
 				447 = { add_core_of = ROOT }
 			}
-			set_country_flag = form_harmonainus_imperious_flag
 		}
 		ai_will_do = {
-			base = 5
+			factor = 10
 			modifier = {
 				factor = 10
 				is_historical_focus_on = yes
@@ -121,7 +118,25 @@ form_harmonainus_imperious_category = {
 
 	harmonainus_imperious_triumph_for_center_lands = { # Center Region
 		icon = generic_form_nation
-		allowed = { always = yes }
+		visible = {
+			OR = {
+				AND = {
+					OR = {
+						original_tag = HBB
+						original_tag = HLF
+						original_tag = HNO
+						original_tag = HUM
+						has_country_flag = ALLOWED_FORMATION_OF_HARMONAINUS_IMPERIOUS # For added countries though Mods.
+					}
+					has_government = theocratism
+				}
+				OR = {
+					has_country_flag = form_harmonainus_imperious_flag
+					has_country_flag = form_harmonainus_imperious_west_flag
+				}
+			}
+			NOT = { has_country_flag = form_harmonainus_imperious_center_flag }
+		}
 		available = {
 			OR = {
 				AND = {
@@ -162,38 +177,18 @@ form_harmonainus_imperious_category = {
 				}
 			}
 		}
-		visible = {
-			OR = {
-				AND = {
-					OR = {
-						original_tag = HBB
-						original_tag = HLF
-						original_tag = HNO
-						original_tag = HUM
-						has_country_flag = ALLOWED_FORMATION_OF_HARMONAINUS_IMPERIOUS # For added countries though Mods.
-					}
-					has_government = theocratism
-				}
-				OR = {
-					has_country_flag = form_harmonainus_imperious_flag
-					has_country_flag = form_harmonainus_imperious_west_flag
-				}
-			}
-			NOT = { has_country_flag = form_harmonainus_imperious_center_flag }
-		}
-
 		complete_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision harmonainus_imperious_triumph_for_center_lands"
+			set_country_flag = form_harmonainus_imperious_center_flag
 			custom_effect_tooltip = form_country_core_territories_tt
 			add_research_slot = 1
-			
 			if = { # Blocker for customization
 				limit = { OR = { has_country_flag = form_harmonainus_imperious_flag has_country_flag = form_harmonainus_imperious_west_flag } }
 			}
 			else = { set_cosmetic_tag = HARMONAINUS_IMPERIOUS_UNIFIED_CENTER set_capital = { state = 159 } }
-			
 			custom_effect_tooltip = form_country_integrate_states_tt
 			hidden_effect = {
+				ROOT = { sound_effect = complete_focus }
 				18 = { add_core_of = ROOT }
 				20 = { add_core_of = ROOT }
 				79 = { add_core_of = ROOT }
@@ -204,10 +199,9 @@ form_harmonainus_imperious_category = {
 				407 = { add_core_of = ROOT }
 				410 = { add_core_of = ROOT }
 			}
-			set_country_flag = form_harmonainus_imperious_center_flag
 		}
 		ai_will_do = {
-			base = 5
+			factor = 10
 			modifier = {
 				factor = 10
 				is_historical_focus_on = yes
@@ -217,7 +211,26 @@ form_harmonainus_imperious_category = {
 
 	harmonainus_imperious_triumph_for_western_lands = { # Western Region
 		icon = generic_form_nation
-		allowed = { always = yes }
+		visible = {
+			OR = {
+				AND = {
+					OR = {
+						original_tag = HCR
+						original_tag = HET
+						original_tag = HPP
+						original_tag = HST
+						original_tag = HWA
+						has_country_flag = ALLOWED_FORMATION_OF_HARMONAINUS_IMPERIOUS # For added countries though Mods.
+					}
+					has_government = theocratism
+				}
+				OR = {
+					has_country_flag = form_harmonainus_imperious_center_flag
+					has_country_flag = form_harmonainus_imperious_flag
+				}
+			}
+			NOT = { has_country_flag = form_harmonainus_imperious_west_flag }
+		}
 		available = {
 			OR = {
 				AND = {
@@ -259,39 +272,18 @@ form_harmonainus_imperious_category = {
 				}
 			}
 		}
-		visible = {
-			OR = {
-				AND = {
-					OR = {
-						original_tag = HCR
-						original_tag = HET
-						original_tag = HPP
-						original_tag = HST
-						original_tag = HWA
-						has_country_flag = ALLOWED_FORMATION_OF_HARMONAINUS_IMPERIOUS # For added countries though Mods.
-					}
-					has_government = theocratism
-				}
-				OR = {
-					has_country_flag = form_harmonainus_imperious_center_flag
-					has_country_flag = form_harmonainus_imperious_flag
-				}
-			}
-			NOT = { has_country_flag = form_harmonainus_imperious_west_flag }
-		}
-
 		complete_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision harmonainus_imperious_triumph_for_western_lands"
+			set_country_flag = form_harmonainus_imperious_west_flag
 			custom_effect_tooltip = form_country_core_territories_tt
 			add_research_slot = 1
-			
 			if = { # Blocker for customization
 				limit = { OR = { has_country_flag = form_harmonainus_imperious_flag has_country_flag = form_harmonainus_imperious_center_flag } }
 			}
 			else = { set_cosmetic_tag = HARMONAINUS_IMPERIOUS_UNIFIED_WEST set_capital = { state = 7 } }
-			
 			custom_effect_tooltip = form_country_integrate_states_tt
 			hidden_effect = {
+				ROOT = { sound_effect = complete_focus }
 				7 = { add_core_of = ROOT }
 				91 = { add_core_of = ROOT }
 				134 = { add_core_of = ROOT }
@@ -303,10 +295,9 @@ form_harmonainus_imperious_category = {
 				162 = { add_core_of = ROOT }
 				271 = { add_core_of = ROOT }
 			}
-			set_country_flag = form_harmonainus_imperious_west_flag
 		}
 		ai_will_do = {
-			base = 5
+			factor = 10
 			modifier = {
 				factor = 10
 				is_historical_focus_on = yes
@@ -318,6 +309,9 @@ form_harmonainus_imperious_category = {
 		icon = generic_form_nation
 		fire_only_once = yes
 		allowed = { always = yes }
+		visible = {
+			has_country_flag = form_harmonainus_imperious_flag
+		}
 		available = {
 			is_subject = no
 			formable_country_hhe_required_states = yes
@@ -342,20 +336,17 @@ form_harmonainus_imperious_category = {
 				}
 			}
 		}
-		visible = {
-			has_country_flag = form_harmonainus_imperious_flag
-		}
+		cost = 50
 		days_remove = 31
 		remove_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision harmonainus_imperious_hhe_integration"
 			formable_country_hhe_coring_states = yes
 		}
-		cost = 50
 		ai_will_do = {
 			factor = 10
 			modifier = { factor = 10 always = yes }
 			modifier = { # Imrpove Economy
-				factor = 5
+				factor = 10
 				has_idea = HHE_piller_economic0
 			}
 			modifier = {
@@ -376,6 +367,10 @@ form_harmonainus_imperious_category = {
 		icon = generic_form_nation
 		fire_only_once = yes
 		allowed = { always = yes }
+		visible = {
+			has_country_flag = form_harmonainus_imperious_west_flag
+			NOT = { original_tag = HST }
+		}
 		available = {
 			is_subject = no
 			formable_country_hst_required_states = yes
@@ -400,21 +395,17 @@ form_harmonainus_imperious_category = {
 				}
 			}
 		}
-		visible = {
-			has_country_flag = form_harmonainus_imperious_west_flag
-			NOT = { original_tag = HST }
-		}
+		cost = 50
 		days_remove = 31
 		remove_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision harmonainus_imperious_hst_integration"
 			formable_country_hst_coring_states = yes
 		}
-		cost = 50
 		ai_will_do = {
 			factor = 10
 			modifier = { factor = 10 always = yes }
 			modifier = { # Imrpove Economy
-				factor = 5
+				factor = 10
 				has_idea = HHE_piller_economic0
 			}
 			modifier = {
@@ -435,6 +426,10 @@ form_harmonainus_imperious_category = {
 		icon = generic_form_nation
 		fire_only_once = yes
 		allowed = { always = yes }
+		visible = {
+			has_country_flag = form_harmonainus_imperious_west_flag
+			NOT = { original_tag = HPP }
+		}
 		available = {
 			is_subject = no
 			formable_country_hpp_required_states = yes
@@ -459,21 +454,17 @@ form_harmonainus_imperious_category = {
 				}
 			}
 		}
-		visible = {
-			has_country_flag = form_harmonainus_imperious_west_flag
-			NOT = { original_tag = HPP }
-		}
+		cost = 50
 		days_remove = 31
 		remove_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision harmonainus_imperious_hpp_integration"
 			formable_country_hpp_coring_states = yes
 		}
-		cost = 50
 		ai_will_do = {
 			factor = 10
 			modifier = { factor = 10 always = yes }
 			modifier = { # Imrpove Economy
-				factor = 5
+				factor = 10
 				has_idea = HHE_piller_economic0
 			}
 			modifier = {
@@ -494,6 +485,10 @@ form_harmonainus_imperious_category = {
 		icon = generic_form_nation
 		fire_only_once = yes
 		allowed = { always = yes }
+		visible = {
+			has_country_flag = form_harmonainus_imperious_west_flag
+			NOT = { original_tag = HCR }
+		}
 		available = {
 			is_subject = no
 			formable_country_hcr_required_states = yes
@@ -518,21 +513,17 @@ form_harmonainus_imperious_category = {
 				}
 			}
 		}
-		visible = {
-			has_country_flag = form_harmonainus_imperious_west_flag
-			NOT = { original_tag = HCR }
-		}
+		cost = 50
 		days_remove = 31
 		remove_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision harmonainus_imperious_hcr_integration"
 			formable_country_hcr_coring_states = yes
 		}
-		cost = 50
 		ai_will_do = {
 			factor = 10
 			modifier = { factor = 10 always = yes }
 			modifier = { # Imrpove Economy
-				factor = 5
+				factor = 10
 				has_idea = HHE_piller_economic0
 			}
 			modifier = {
@@ -553,6 +544,13 @@ form_harmonainus_imperious_category = {
 		icon = generic_form_nation
 		fire_only_once = yes
 		allowed = { always = yes }
+		visible = {
+			OR = {
+				has_country_flag = form_harmonainus_imperious_center_flag
+				has_country_flag = form_harmonainus_imperious_west_flag
+			}
+			NOT = { original_tag = HET }
+		}
 		available = {
 			is_subject = no
 			formable_country_het_required_states = yes
@@ -578,24 +576,17 @@ form_harmonainus_imperious_category = {
 				}
 			}
 		}
-		visible = {
-			OR = {
-				has_country_flag = form_harmonainus_imperious_center_flag
-				has_country_flag = form_harmonainus_imperious_west_flag
-			}
-			NOT = { original_tag = HET }
-		}
+		cost = 50
 		days_remove = 31
 		remove_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision harmonainus_imperious_het_integration"
 			formable_country_het_coring_states = yes
 		}
-		cost = 50
 		ai_will_do = {
 			factor = 10
 			modifier = { factor = 10 always = yes }
 			modifier = { # Imrpove Economy
-				factor = 5
+				factor = 10
 				has_idea = HHE_piller_economic0
 			}
 			modifier = {
@@ -616,6 +607,11 @@ form_harmonainus_imperious_category = {
 		icon = generic_form_nation
 		fire_only_once = yes
 		allowed = { always = yes }
+		visible = {
+			has_country_flag = form_harmonainus_imperious_center_flag
+			has_country_flag = form_harmonainus_imperious_west_flag
+			NOT = { original_tag = HUM }
+		}
 		available = {
 			is_subject = no
 			formable_country_hum_required_states = yes
@@ -640,22 +636,17 @@ form_harmonainus_imperious_category = {
 				}
 			}
 		}
-		visible = {
-			has_country_flag = form_harmonainus_imperious_center_flag
-			has_country_flag = form_harmonainus_imperious_west_flag
-			NOT = { original_tag = HUM }
-		}
+		cost = 50
 		days_remove = 31
 		remove_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision harmonainus_imperious_hum_integration"
 			formable_country_hum_coring_states = yes
 		}
-		cost = 50
 		ai_will_do = {
 			factor = 10
 			modifier = { factor = 10 always = yes }
 			modifier = { # Imrpove Economy
-				factor = 5
+				factor = 10
 				has_idea = HHE_piller_economic0
 			}
 			modifier = {
@@ -676,6 +667,11 @@ form_harmonainus_imperious_category = {
 		icon = generic_form_nation
 		fire_only_once = yes
 		allowed = { always = yes }
+		visible = {
+			has_country_flag = form_harmonainus_imperious_center_flag
+			NOT = { has_country_flag = form_harmonainus_imperious_west_flag }
+			NOT = { original_tag = HUM }
+		}
 		available = {
 			is_subject = no
 			formable_country_hum1_required_states = yes
@@ -700,22 +696,17 @@ form_harmonainus_imperious_category = {
 				}
 			}
 		}
-		visible = {
-			has_country_flag = form_harmonainus_imperious_center_flag
-			NOT = { has_country_flag = form_harmonainus_imperious_west_flag }
-			NOT = { original_tag = HUM }
-		}
+		cost = 25
 		days_remove = 31
 		remove_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision harmonainus_imperious_hum1_integration"
 			formable_country_hum1_coring_states = yes
 		}
-		cost = 25
 		ai_will_do = {
 			factor = 10
 			modifier = { factor = 10 always = yes }
 			modifier = { # Imrpove Economy
-				factor = 5
+				factor = 10
 				has_idea = HHE_piller_economic0
 			}
 			modifier = {
@@ -736,6 +727,11 @@ form_harmonainus_imperious_category = {
 		icon = generic_form_nation
 		fire_only_once = yes
 		allowed = { always = yes }
+		visible = {
+			NOT = { has_country_flag = form_harmonainus_imperious_center_flag }
+			has_country_flag = form_harmonainus_imperious_west_flag
+			NOT = { original_tag = HUM }
+		}
 		available = {
 			is_subject = no
 			formable_country_hum2_required_states = yes
@@ -760,22 +756,17 @@ form_harmonainus_imperious_category = {
 				}
 			}
 		}
-		visible = {
-			NOT = { has_country_flag = form_harmonainus_imperious_center_flag }
-			has_country_flag = form_harmonainus_imperious_west_flag
-			NOT = { original_tag = HUM }
-		}
+		cost = 25
 		days_remove = 31
 		remove_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision harmonainus_imperious_hum2_integration"
 			formable_country_hum2_coring_states = yes
 		}
-		cost = 25
 		ai_will_do = {
 			factor = 10
 			modifier = { factor = 10 always = yes }
 			modifier = { # Imrpove Economy
-				factor = 5
+				factor = 10
 				has_idea = HHE_piller_economic0
 			}
 			modifier = {
@@ -834,7 +825,7 @@ form_harmonainus_imperious_category = {
 			factor = 10
 			modifier = { factor = 10 always = yes }
 			modifier = { # Imrpove Economy
-				factor = 5
+				factor = 10
 				has_idea = HHE_piller_economic0
 			}
 			modifier = {
@@ -855,6 +846,10 @@ form_harmonainus_imperious_category = {
 		icon = generic_form_nation
 		fire_only_once = yes
 		allowed = { always = yes }
+		visible = {
+			has_country_flag = form_harmonainus_imperious_center_flag
+			NOT = { original_tag = HLF }
+		}
 		available = {
 			is_subject = no
 			formable_country_hlf_required_states = yes
@@ -879,21 +874,17 @@ form_harmonainus_imperious_category = {
 				}
 			}
 		}
-		visible = {
-			has_country_flag = form_harmonainus_imperious_center_flag
-			NOT = { original_tag = HLF }
-		}
+		cost = 50
 		days_remove = 31
 		remove_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision harmonainus_imperious_hlf_integration"
 			formable_country_hlf_coring_states = yes
 		}
-		cost = 50
 		ai_will_do = {
 			factor = 10
 			modifier = { factor = 10 always = yes }
 			modifier = { # Imrpove Economy
-				factor = 5
+				factor = 10
 				has_idea = HHE_piller_economic0
 			}
 			modifier = {
@@ -914,6 +905,10 @@ form_harmonainus_imperious_category = {
 		icon = generic_form_nation
 		fire_only_once = yes
 		allowed = { always = yes }
+		visible = {
+			has_country_flag = form_harmonainus_imperious_flag
+			NOT = { original_tag = HTP }
+		}
 		available = {
 			is_subject = no
 			formable_country_htp_required_states = yes
@@ -938,21 +933,17 @@ form_harmonainus_imperious_category = {
 				}
 			}
 		}
-		visible = {
-			has_country_flag = form_harmonainus_imperious_flag
-			NOT = { original_tag = HTP }
-		}
+		cost = 50
 		days_remove = 31
 		remove_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision harmonainus_imperious_htp_integration"
 			formable_country_htp_coring_states = yes
 		}
-		cost = 50
 		ai_will_do = {
 			factor = 10
 			modifier = { factor = 10 always = yes }
 			modifier = { # Imrpove Economy
-				factor = 5
+				factor = 10
 				has_idea = HHE_piller_economic0
 			}
 			modifier = {
@@ -973,6 +964,12 @@ form_harmonainus_imperious_category = {
 		icon = generic_form_nation
 		fire_only_once = yes
 		allowed = { always = yes }
+		visible = {
+			has_country_flag = form_harmonainus_imperious_flag
+			has_country_flag = form_harmonainus_imperious_center_flag
+			has_country_flag = form_harmonainus_imperious_west_flag
+			NOT = { original_tag = HBB }
+		}
 		available = {
 			is_subject = no
 			formable_country_hbb_required_states = yes
@@ -997,23 +994,17 @@ form_harmonainus_imperious_category = {
 				}
 			}
 		}
-		visible = {
-			has_country_flag = form_harmonainus_imperious_flag
-			has_country_flag = form_harmonainus_imperious_center_flag
-			has_country_flag = form_harmonainus_imperious_west_flag
-			NOT = { original_tag = HBB }
-		}
+		cost = 50
 		days_remove = 31
 		remove_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision harmonainus_imperious_hbb_integration"
 			formable_country_hbb_coring_states = yes
 		}
-		cost = 50
 		ai_will_do = {
 			factor = 10
 			modifier = { factor = 10 always = yes }
 			modifier = { # Imrpove Economy
-				factor = 5
+				factor = 10
 				has_idea = HHE_piller_economic0
 			}
 			modifier = {
@@ -1034,6 +1025,12 @@ form_harmonainus_imperious_category = {
 		icon = generic_form_nation
 		fire_only_once = yes
 		allowed = { always = yes }
+		visible = {
+			has_country_flag = form_harmonainus_imperious_flag
+			has_country_flag = form_harmonainus_imperious_center_flag
+			has_country_flag = form_harmonainus_imperious_west_flag
+			NOT = { original_tag = HER }
+		}
 		available = {
 			is_subject = no
 			formable_country_her_required_states = yes
@@ -1058,23 +1055,17 @@ form_harmonainus_imperious_category = {
 				}
 			}
 		}
-		visible = {
-			has_country_flag = form_harmonainus_imperious_flag
-			has_country_flag = form_harmonainus_imperious_center_flag
-			has_country_flag = form_harmonainus_imperious_west_flag
-			NOT = { original_tag = HER }
-		}
+		cost = 50
 		days_remove = 31
 		remove_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision harmonainus_imperious_her_integration"
 			formable_country_her_coring_states = yes
 		}
-		cost = 50
 		ai_will_do = {
 			factor = 10
 			modifier = { factor = 10 always = yes }
 			modifier = { # Imrpove Economy
-				factor = 5
+				factor = 10
 				has_idea = HHE_piller_economic0
 			}
 			modifier = {
@@ -1095,6 +1086,10 @@ form_harmonainus_imperious_category = {
 		icon = generic_form_nation
 		fire_only_once = yes
 		allowed = { always = yes }
+		visible = {
+			has_country_flag = form_harmonainus_imperious_center_flag
+			NOT = { original_tag = HNO }
+		}
 		available = {
 			is_subject = no
 			formable_country_hno_required_states = yes
@@ -1119,21 +1114,17 @@ form_harmonainus_imperious_category = {
 				}
 			}
 		}
-		visible = {
-			has_country_flag = form_harmonainus_imperious_center_flag
-			NOT = { original_tag = HNO }
-		}
+		cost = 50
 		days_remove = 31
 		remove_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision harmonainus_imperious_hno_integration"
 			formable_country_hno_coring_states = yes
 		}
-		cost = 50
 		ai_will_do = {
 			factor = 10
 			modifier = { factor = 10 always = yes }
 			modifier = { # Imrpove Economy
-				factor = 5
+				factor = 10
 				has_idea = HHE_piller_economic0
 			}
 			modifier = {
@@ -1154,6 +1145,10 @@ form_harmonainus_imperious_category = {
 		icon = generic_form_nation
 		fire_only_once = yes
 		allowed = { always = yes }
+		visible = {
+			has_country_flag = form_harmonainus_imperious_flag
+			NOT = { original_tag = HSP }
+		}
 		available = {
 			is_subject = no
 			formable_country_hsp_required_states = yes
@@ -1178,21 +1173,17 @@ form_harmonainus_imperious_category = {
 				}
 			}
 		}
-		visible = {
-			has_country_flag = form_harmonainus_imperious_flag
-			NOT = { original_tag = HSP }
-		}
+		cost = 50
 		days_remove = 31
 		remove_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision harmonainus_imperious_hsp_integration"
 			formable_country_hsp_coring_states = yes
 		}
-		cost = 50
 		ai_will_do = {
 			factor = 10
 			modifier = { factor = 10 always = yes }
 			modifier = { # Imrpove Economy
-				factor = 5
+				factor = 10
 				has_idea = HHE_piller_economic0
 			}
 			modifier = {
@@ -1218,491 +1209,487 @@ form_archaiga_imperious_category = {
 			is_subject = no
 			count_triggers = {
 				amount = 380
-				controls_state = 1
-				controls_state = 2
-				controls_state = 3
-				controls_state = 4
-				controls_state = 5
-				controls_state = 6
-				controls_state = 7
-				controls_state = 8
-				controls_state = 9
-				controls_state = 10
-				controls_state = 11
-				controls_state = 12
-				controls_state = 13
-				controls_state = 14
-				controls_state = 15
-				controls_state = 16
-				controls_state = 17
-				controls_state = 18
-				controls_state = 19
-				controls_state = 20
-				controls_state = 22
-				controls_state = 23
-				controls_state = 24
-				controls_state = 25
-				controls_state = 29
-				controls_state = 70
-				controls_state = 71
-				controls_state = 72
-				controls_state = 73
-				controls_state = 74
-				controls_state = 75
-				controls_state = 76
-				controls_state = 77
-				controls_state = 78
-				controls_state = 79
-				controls_state = 80
-				controls_state = 81
-				controls_state = 82
-				controls_state = 83
-				controls_state = 84
-				controls_state = 85
-				controls_state = 86
-				controls_state = 87
-				controls_state = 88
-				controls_state = 89
-				controls_state = 90
-				controls_state = 91
-				controls_state = 92
-				controls_state = 93
-				controls_state = 94
-				controls_state = 95
-				controls_state = 96
-				controls_state = 97
-				controls_state = 98
-				controls_state = 99
-				controls_state = 100
-				controls_state = 101
-				controls_state = 102
-				controls_state = 103
-				controls_state = 104
-				controls_state = 105
-				controls_state = 106
-				controls_state = 107
-				controls_state = 108
-				controls_state = 109
-				controls_state = 110
-				controls_state = 111
-				controls_state = 112
-				controls_state = 113
-				controls_state = 114
-				controls_state = 115
-				controls_state = 116
-				controls_state = 117
-				controls_state = 118
-				controls_state = 119
-				controls_state = 120
-				controls_state = 121
-				controls_state = 122
-				controls_state = 123
-				controls_state = 124
-				controls_state = 125
-				controls_state = 126
-				controls_state = 127
-				controls_state = 128
-				controls_state = 129
-				controls_state = 130
-				controls_state = 132
-				controls_state = 133
-				controls_state = 134
-				controls_state = 135
-				controls_state = 136
-				controls_state = 137
-				controls_state = 138
-				controls_state = 139
-				controls_state = 140
-				controls_state = 141
-				controls_state = 142
-				controls_state = 143
-				controls_state = 144
-				controls_state = 145
-				controls_state = 146
-				controls_state = 147
-				controls_state = 148
-				controls_state = 149
-				controls_state = 150
-				controls_state = 151
-				controls_state = 152
-				controls_state = 153
-				controls_state = 154
-				controls_state = 155
-				controls_state = 156
-				controls_state = 157
-				controls_state = 158
-				controls_state = 159
-				controls_state = 160
-				controls_state = 161
-				controls_state = 162
-				controls_state = 163
-				controls_state = 164
-				controls_state = 165
-				controls_state = 166
-				controls_state = 167
-				controls_state = 168
-				controls_state = 169
-				controls_state = 170
-				controls_state = 171
-				controls_state = 172
-				controls_state = 173
-				controls_state = 179
-				controls_state = 180
-				controls_state = 182
-				controls_state = 183
-				controls_state = 184
-				controls_state = 185
-				controls_state = 186
-				controls_state = 187
-				controls_state = 188
-				controls_state = 189
-				controls_state = 190
-				controls_state = 191
-				controls_state = 192
-				controls_state = 193
-				controls_state = 194
-				controls_state = 195
-				controls_state = 196
-				controls_state = 197
-				controls_state = 198
-				controls_state = 199
-				controls_state = 200
-				controls_state = 201
-				controls_state = 202
-				controls_state = 203
-				controls_state = 204
-				controls_state = 205
-				controls_state = 206
-				controls_state = 207
-				controls_state = 208
-				controls_state = 209
-				controls_state = 210
-				controls_state = 211
-				controls_state = 212
-				controls_state = 213
-				controls_state = 214
-				controls_state = 215
-				controls_state = 216
-				controls_state = 217
-				controls_state = 218
-				controls_state = 219
-				controls_state = 220
-				controls_state = 221
-				controls_state = 224
-				controls_state = 225
-				controls_state = 226
-				controls_state = 227
-				controls_state = 228
-				controls_state = 229
-				controls_state = 230
-				controls_state = 231
-				controls_state = 232
-				controls_state = 233
-				controls_state = 234
-				controls_state = 235
-				controls_state = 236
-				controls_state = 237
-				controls_state = 238
-				controls_state = 240
-				controls_state = 241
-				controls_state = 242
-				controls_state = 243
-				controls_state = 244
-				controls_state = 245
-				controls_state = 246
-				controls_state = 247
-				controls_state = 248
-				controls_state = 249
-				controls_state = 250
-				controls_state = 251
-				controls_state = 252
-				controls_state = 253
-				controls_state = 254
-				controls_state = 255
-				controls_state = 256
-				controls_state = 257
-				controls_state = 258
-				controls_state = 259
-				controls_state = 260
-				controls_state = 261
-				controls_state = 262
-				controls_state = 263
-				controls_state = 264
-				controls_state = 265
-				controls_state = 266
-				controls_state = 267
-				controls_state = 268
-				controls_state = 269
-				controls_state = 270
-				controls_state = 271
-				controls_state = 273
-				controls_state = 274
-				controls_state = 275
-				controls_state = 276
-				controls_state = 277
-				controls_state = 278
-				controls_state = 279
-				controls_state = 280
-				controls_state = 281
-				controls_state = 282
-				controls_state = 283
-				controls_state = 284
-				controls_state = 285
-				controls_state = 286
-				controls_state = 287
-				controls_state = 305
-				controls_state = 307
-				controls_state = 310
-				controls_state = 311
-				controls_state = 312
-				controls_state = 330
-				controls_state = 331
-				controls_state = 332
-				controls_state = 333
-				controls_state = 334
-				controls_state = 335
-				controls_state = 336
-				controls_state = 337
-				controls_state = 338
-				controls_state = 339
-				controls_state = 340
-				controls_state = 341
-				controls_state = 342
-				controls_state = 343
-				controls_state = 344
-				controls_state = 345
-				controls_state = 388
-				controls_state = 389
-				controls_state = 390
-				controls_state = 391
-				controls_state = 392
-				controls_state = 393
-				controls_state = 394
-				controls_state = 395
-				controls_state = 396
-				controls_state = 397
-				controls_state = 398
-				controls_state = 399
-				controls_state = 400
-				controls_state = 401
-				controls_state = 402
-				controls_state = 403
-				controls_state = 404
-				controls_state = 405
-				controls_state = 406
-				controls_state = 407
-				controls_state = 408
-				controls_state = 409
-				controls_state = 410
-				controls_state = 411
-				controls_state = 412
-				controls_state = 413
-				controls_state = 414
-				controls_state = 415
-				controls_state = 416
-				controls_state = 417
-				controls_state = 418
-				controls_state = 419
-				controls_state = 421
-				controls_state = 422
-				controls_state = 423
-				controls_state = 424
-				controls_state = 425
-				controls_state = 434
-				controls_state = 435
-				controls_state = 436
-				controls_state = 437
-				controls_state = 438
-				controls_state = 439
-				controls_state = 440
-				controls_state = 441
-				controls_state = 442
-				controls_state = 443
-				controls_state = 444
-				controls_state = 445
-				controls_state = 446
-				controls_state = 447
-				controls_state = 448
-				controls_state = 449
-				controls_state = 450
-				controls_state = 451
-				controls_state = 452
-				controls_state = 456
-				controls_state = 457
-				controls_state = 458
-				controls_state = 459
-				controls_state = 461
-				controls_state = 464
-				controls_state = 468
-				controls_state = 469
-				controls_state = 498
-				controls_state = 500
-				controls_state = 535
-				controls_state = 536
-				controls_state = 538
-				controls_state = 539
-				controls_state = 551
-				controls_state = 552
-				controls_state = 558
-				controls_state = 566
-				controls_state = 567
-				controls_state = 568
-				controls_state = 569
-				controls_state = 570
-				controls_state = 571
-				controls_state = 572
-				controls_state = 573
-				controls_state = 574
-				controls_state = 575
-				controls_state = 588
-				controls_state = 593
-				controls_state = 596
-				controls_state = 597
-				controls_state = 598
-				controls_state = 599
-				controls_state = 611
-				controls_state = 612
-				controls_state = 613
-				controls_state = 614
-				controls_state = 615
-				controls_state = 624
-				controls_state = 625
-				controls_state = 626
-				controls_state = 627
-				controls_state = 628
-				controls_state = 629
-				controls_state = 630
-				controls_state = 631
-				controls_state = 632
-				controls_state = 633
-				controls_state = 634
-				controls_state = 635
-				controls_state = 636
-				controls_state = 637
-				controls_state = 638
-				controls_state = 639
-				controls_state = 640
-				controls_state = 653
-				controls_state = 654
-				controls_state = 655
-				controls_state = 659
-				controls_state = 660
-				controls_state = 661
-				controls_state = 662
-				controls_state = 664
-				controls_state = 665
-				controls_state = 666
-				controls_state = 667
-				controls_state = 668
-				controls_state = 669
-				controls_state = 670
-				controls_state = 671
-				controls_state = 672
-				controls_state = 673
-				controls_state = 681
-				controls_state = 682
-				controls_state = 683
-				controls_state = 684
-				controls_state = 685
-				controls_state = 686
-				controls_state = 687
-				controls_state = 688
-				controls_state = 689
-				controls_state = 690
-				controls_state = 692
-				controls_state = 693
-				controls_state = 694
-				controls_state = 695
-				controls_state = 696
-				controls_state = 697
-				controls_state = 698
-				controls_state = 699
-				controls_state = 702
-				controls_state = 707
-				controls_state = 708
-				controls_state = 709
-				controls_state = 710
-				controls_state = 711
-				controls_state = 712
-				controls_state = 713
-				controls_state = 714
-				controls_state = 715
-				controls_state = 716
-				controls_state = 717
-				controls_state = 718
-				controls_state = 719
-				controls_state = 720
-				controls_state = 721
-				controls_state = 722
-				controls_state = 723
-				controls_state = 724
-				controls_state = 725
-				controls_state = 726
-				controls_state = 727
-				controls_state = 728
-				controls_state = 729
-				controls_state = 730
-				controls_state = 731
-				controls_state = 732
-				controls_state = 733
-				controls_state = 734
-				controls_state = 735
-				controls_state = 736
-				controls_state = 737
-				controls_state = 748
-				controls_state = 752
-				controls_state = 753
-				controls_state = 754
-				controls_state = 755
-				controls_state = 756
-				controls_state = 757
-				controls_state = 758
-				controls_state = 759
-				controls_state = 788
-				controls_state = 789
-				controls_state = 790
-				controls_state = 797
-				controls_state = 798
-				controls_state = 799
-				controls_state = 800
-				controls_state = 801
-				controls_state = 802
-				controls_state = 803
-				controls_state = 804
-				controls_state = 805
-				controls_state = 824
-				controls_state = 831
-				controls_state = 832
-				controls_state = 833
-				controls_state = 834
-				controls_state = 835
-				controls_state = 836
-				controls_state = 837
-				controls_state = 838
-				controls_state = 839
-				controls_state = 840
-				controls_state = 841
-				controls_state = 842
-				controls_state = 843
-				controls_state = 844
-				controls_state = 845
-				controls_state = 846
-				controls_state = 859
-				controls_state = 860
-				controls_state = 861
-				controls_state = 862
-				controls_state = 863
-				controls_state = 864
-			}
-		}
-		visible = {
-			OR = {
-				has_country_leader = { character = HHE_archard_vladaros }
+				1 = { is_controlled_by = ROOT }
+				2 = { is_controlled_by = ROOT }
+				3 = { is_controlled_by = ROOT }
+				4 = { is_controlled_by = ROOT }
+				5 = { is_controlled_by = ROOT }
+				6 = { is_controlled_by = ROOT }
+				7 = { is_controlled_by = ROOT }
+				8 = { is_controlled_by = ROOT }
+				9 = { is_controlled_by = ROOT }
+				10 = { is_controlled_by = ROOT }
+				11 = { is_controlled_by = ROOT }
+				12 = { is_controlled_by = ROOT }
+				13 = { is_controlled_by = ROOT }
+				14 = { is_controlled_by = ROOT }
+				15 = { is_controlled_by = ROOT }
+				16 = { is_controlled_by = ROOT }
+				17 = { is_controlled_by = ROOT }
+				18 = { is_controlled_by = ROOT }
+				19 = { is_controlled_by = ROOT }
+				20 = { is_controlled_by = ROOT }
+				22 = { is_controlled_by = ROOT }
+				23 = { is_controlled_by = ROOT }
+				24 = { is_controlled_by = ROOT }
+				25 = { is_controlled_by = ROOT }
+				29 = { is_controlled_by = ROOT }
+				70 = { is_controlled_by = ROOT }
+				71 = { is_controlled_by = ROOT }
+				72 = { is_controlled_by = ROOT }
+				73 = { is_controlled_by = ROOT }
+				74 = { is_controlled_by = ROOT }
+				75 = { is_controlled_by = ROOT }
+				76 = { is_controlled_by = ROOT }
+				77 = { is_controlled_by = ROOT }
+				78 = { is_controlled_by = ROOT }
+				79 = { is_controlled_by = ROOT }
+				80 = { is_controlled_by = ROOT }
+				81 = { is_controlled_by = ROOT }
+				82 = { is_controlled_by = ROOT }
+				83 = { is_controlled_by = ROOT }
+				84 = { is_controlled_by = ROOT }
+				85 = { is_controlled_by = ROOT }
+				86 = { is_controlled_by = ROOT }
+				87 = { is_controlled_by = ROOT }
+				88 = { is_controlled_by = ROOT }
+				89 = { is_controlled_by = ROOT }
+				90 = { is_controlled_by = ROOT }
+				91 = { is_controlled_by = ROOT }
+				92 = { is_controlled_by = ROOT }
+				93 = { is_controlled_by = ROOT }
+				94 = { is_controlled_by = ROOT }
+				95 = { is_controlled_by = ROOT }
+				96 = { is_controlled_by = ROOT }
+				97 = { is_controlled_by = ROOT }
+				98 = { is_controlled_by = ROOT }
+				99 = { is_controlled_by = ROOT }
+				100 = { is_controlled_by = ROOT }
+				101 = { is_controlled_by = ROOT }
+				102 = { is_controlled_by = ROOT }
+				103 = { is_controlled_by = ROOT }
+				104 = { is_controlled_by = ROOT }
+				105 = { is_controlled_by = ROOT }
+				106 = { is_controlled_by = ROOT }
+				107 = { is_controlled_by = ROOT }
+				108 = { is_controlled_by = ROOT }
+				109 = { is_controlled_by = ROOT }
+				110 = { is_controlled_by = ROOT }
+				111 = { is_controlled_by = ROOT }
+				112 = { is_controlled_by = ROOT }
+				113 = { is_controlled_by = ROOT }
+				114 = { is_controlled_by = ROOT }
+				115 = { is_controlled_by = ROOT }
+				116 = { is_controlled_by = ROOT }
+				117 = { is_controlled_by = ROOT }
+				118 = { is_controlled_by = ROOT }
+				119 = { is_controlled_by = ROOT }
+				120 = { is_controlled_by = ROOT }
+				121 = { is_controlled_by = ROOT }
+				122 = { is_controlled_by = ROOT }
+				123 = { is_controlled_by = ROOT }
+				124 = { is_controlled_by = ROOT }
+				125 = { is_controlled_by = ROOT }
+				126 = { is_controlled_by = ROOT }
+				127 = { is_controlled_by = ROOT }
+				128 = { is_controlled_by = ROOT }
+				129 = { is_controlled_by = ROOT }
+				130 = { is_controlled_by = ROOT }
+				132 = { is_controlled_by = ROOT }
+				133 = { is_controlled_by = ROOT }
+				134 = { is_controlled_by = ROOT }
+				135 = { is_controlled_by = ROOT }
+				136 = { is_controlled_by = ROOT }
+				137 = { is_controlled_by = ROOT }
+				138 = { is_controlled_by = ROOT }
+				139 = { is_controlled_by = ROOT }
+				140 = { is_controlled_by = ROOT }
+				141 = { is_controlled_by = ROOT }
+				142 = { is_controlled_by = ROOT }
+				143 = { is_controlled_by = ROOT }
+				144 = { is_controlled_by = ROOT }
+				145 = { is_controlled_by = ROOT }
+				146 = { is_controlled_by = ROOT }
+				147 = { is_controlled_by = ROOT }
+				148 = { is_controlled_by = ROOT }
+				149 = { is_controlled_by = ROOT }
+				150 = { is_controlled_by = ROOT }
+				151 = { is_controlled_by = ROOT }
+				152 = { is_controlled_by = ROOT }
+				153 = { is_controlled_by = ROOT }
+				154 = { is_controlled_by = ROOT }
+				155 = { is_controlled_by = ROOT }
+				156 = { is_controlled_by = ROOT }
+				157 = { is_controlled_by = ROOT }
+				158 = { is_controlled_by = ROOT }
+				159 = { is_controlled_by = ROOT }
+				160 = { is_controlled_by = ROOT }
+				161 = { is_controlled_by = ROOT }
+				162 = { is_controlled_by = ROOT }
+				163 = { is_controlled_by = ROOT }
+				164 = { is_controlled_by = ROOT }
+				165 = { is_controlled_by = ROOT }
+				166 = { is_controlled_by = ROOT }
+				167 = { is_controlled_by = ROOT }
+				168 = { is_controlled_by = ROOT }
+				169 = { is_controlled_by = ROOT }
+				170 = { is_controlled_by = ROOT }
+				171 = { is_controlled_by = ROOT }
+				172 = { is_controlled_by = ROOT }
+				173 = { is_controlled_by = ROOT }
+				179 = { is_controlled_by = ROOT }
+				180 = { is_controlled_by = ROOT }
+				182 = { is_controlled_by = ROOT }
+				183 = { is_controlled_by = ROOT }
+				184 = { is_controlled_by = ROOT }
+				185 = { is_controlled_by = ROOT }
+				186 = { is_controlled_by = ROOT }
+				187 = { is_controlled_by = ROOT }
+				188 = { is_controlled_by = ROOT }
+				189 = { is_controlled_by = ROOT }
+				190 = { is_controlled_by = ROOT }
+				191 = { is_controlled_by = ROOT }
+				192 = { is_controlled_by = ROOT }
+				193 = { is_controlled_by = ROOT }
+				194 = { is_controlled_by = ROOT }
+				195 = { is_controlled_by = ROOT }
+				196 = { is_controlled_by = ROOT }
+				197 = { is_controlled_by = ROOT }
+				198 = { is_controlled_by = ROOT }
+				199 = { is_controlled_by = ROOT }
+				200 = { is_controlled_by = ROOT }
+				201 = { is_controlled_by = ROOT }
+				202 = { is_controlled_by = ROOT }
+				203 = { is_controlled_by = ROOT }
+				204 = { is_controlled_by = ROOT }
+				205 = { is_controlled_by = ROOT }
+				206 = { is_controlled_by = ROOT }
+				207 = { is_controlled_by = ROOT }
+				208 = { is_controlled_by = ROOT }
+				209 = { is_controlled_by = ROOT }
+				210 = { is_controlled_by = ROOT }
+				211 = { is_controlled_by = ROOT }
+				212 = { is_controlled_by = ROOT }
+				213 = { is_controlled_by = ROOT }
+				214 = { is_controlled_by = ROOT }
+				215 = { is_controlled_by = ROOT }
+				216 = { is_controlled_by = ROOT }
+				217 = { is_controlled_by = ROOT }
+				218 = { is_controlled_by = ROOT }
+				219 = { is_controlled_by = ROOT }
+				220 = { is_controlled_by = ROOT }
+				221 = { is_controlled_by = ROOT }
+				224 = { is_controlled_by = ROOT }
+				225 = { is_controlled_by = ROOT }
+				226 = { is_controlled_by = ROOT }
+				227 = { is_controlled_by = ROOT }
+				228 = { is_controlled_by = ROOT }
+				229 = { is_controlled_by = ROOT }
+				230 = { is_controlled_by = ROOT }
+				231 = { is_controlled_by = ROOT }
+				232 = { is_controlled_by = ROOT }
+				233 = { is_controlled_by = ROOT }
+				234 = { is_controlled_by = ROOT }
+				235 = { is_controlled_by = ROOT }
+				236 = { is_controlled_by = ROOT }
+				237 = { is_controlled_by = ROOT }
+				238 = { is_controlled_by = ROOT }
+				240 = { is_controlled_by = ROOT }
+				241 = { is_controlled_by = ROOT }
+				242 = { is_controlled_by = ROOT }
+				243 = { is_controlled_by = ROOT }
+				244 = { is_controlled_by = ROOT }
+				245 = { is_controlled_by = ROOT }
+				246 = { is_controlled_by = ROOT }
+				247 = { is_controlled_by = ROOT }
+				248 = { is_controlled_by = ROOT }
+				249 = { is_controlled_by = ROOT }
+				250 = { is_controlled_by = ROOT }
+				251 = { is_controlled_by = ROOT }
+				252 = { is_controlled_by = ROOT }
+				253 = { is_controlled_by = ROOT }
+				254 = { is_controlled_by = ROOT }
+				255 = { is_controlled_by = ROOT }
+				256 = { is_controlled_by = ROOT }
+				257 = { is_controlled_by = ROOT }
+				258 = { is_controlled_by = ROOT }
+				259 = { is_controlled_by = ROOT }
+				260 = { is_controlled_by = ROOT }
+				261 = { is_controlled_by = ROOT }
+				262 = { is_controlled_by = ROOT }
+				263 = { is_controlled_by = ROOT }
+				264 = { is_controlled_by = ROOT }
+				265 = { is_controlled_by = ROOT }
+				266 = { is_controlled_by = ROOT }
+				267 = { is_controlled_by = ROOT }
+				268 = { is_controlled_by = ROOT }
+				269 = { is_controlled_by = ROOT }
+				270 = { is_controlled_by = ROOT }
+				271 = { is_controlled_by = ROOT }
+				273 = { is_controlled_by = ROOT }
+				274 = { is_controlled_by = ROOT }
+				275 = { is_controlled_by = ROOT }
+				276 = { is_controlled_by = ROOT }
+				277 = { is_controlled_by = ROOT }
+				278 = { is_controlled_by = ROOT }
+				279 = { is_controlled_by = ROOT }
+				280 = { is_controlled_by = ROOT }
+				281 = { is_controlled_by = ROOT }
+				282 = { is_controlled_by = ROOT }
+				283 = { is_controlled_by = ROOT }
+				284 = { is_controlled_by = ROOT }
+				285 = { is_controlled_by = ROOT }
+				286 = { is_controlled_by = ROOT }
+				287 = { is_controlled_by = ROOT }
+				305 = { is_controlled_by = ROOT }
+				307 = { is_controlled_by = ROOT }
+				310 = { is_controlled_by = ROOT }
+				311 = { is_controlled_by = ROOT }
+				312 = { is_controlled_by = ROOT }
+				330 = { is_controlled_by = ROOT }
+				331 = { is_controlled_by = ROOT }
+				332 = { is_controlled_by = ROOT }
+				333 = { is_controlled_by = ROOT }
+				334 = { is_controlled_by = ROOT }
+				335 = { is_controlled_by = ROOT }
+				336 = { is_controlled_by = ROOT }
+				337 = { is_controlled_by = ROOT }
+				338 = { is_controlled_by = ROOT }
+				339 = { is_controlled_by = ROOT }
+				340 = { is_controlled_by = ROOT }
+				341 = { is_controlled_by = ROOT }
+				342 = { is_controlled_by = ROOT }
+				343 = { is_controlled_by = ROOT }
+				344 = { is_controlled_by = ROOT }
+				345 = { is_controlled_by = ROOT }
+				388 = { is_controlled_by = ROOT }
+				389 = { is_controlled_by = ROOT }
+				390 = { is_controlled_by = ROOT }
+				391 = { is_controlled_by = ROOT }
+				392 = { is_controlled_by = ROOT }
+				393 = { is_controlled_by = ROOT }
+				394 = { is_controlled_by = ROOT }
+				395 = { is_controlled_by = ROOT }
+				396 = { is_controlled_by = ROOT }
+				397 = { is_controlled_by = ROOT }
+				398 = { is_controlled_by = ROOT }
+				399 = { is_controlled_by = ROOT }
+				400 = { is_controlled_by = ROOT }
+				401 = { is_controlled_by = ROOT }
+				402 = { is_controlled_by = ROOT }
+				403 = { is_controlled_by = ROOT }
+				404 = { is_controlled_by = ROOT }
+				405 = { is_controlled_by = ROOT }
+				406 = { is_controlled_by = ROOT }
+				407 = { is_controlled_by = ROOT }
+				408 = { is_controlled_by = ROOT }
+				409 = { is_controlled_by = ROOT }
+				410 = { is_controlled_by = ROOT }
+				411 = { is_controlled_by = ROOT }
+				412 = { is_controlled_by = ROOT }
+				413 = { is_controlled_by = ROOT }
+				414 = { is_controlled_by = ROOT }
+				415 = { is_controlled_by = ROOT }
+				416 = { is_controlled_by = ROOT }
+				417 = { is_controlled_by = ROOT }
+				418 = { is_controlled_by = ROOT }
+				419 = { is_controlled_by = ROOT }
+				421 = { is_controlled_by = ROOT }
+				422 = { is_controlled_by = ROOT }
+				423 = { is_controlled_by = ROOT }
+				424 = { is_controlled_by = ROOT }
+				425 = { is_controlled_by = ROOT }
+				434 = { is_controlled_by = ROOT }
+				435 = { is_controlled_by = ROOT }
+				436 = { is_controlled_by = ROOT }
+				437 = { is_controlled_by = ROOT }
+				438 = { is_controlled_by = ROOT }
+				439 = { is_controlled_by = ROOT }
+				440 = { is_controlled_by = ROOT }
+				441 = { is_controlled_by = ROOT }
+				442 = { is_controlled_by = ROOT }
+				443 = { is_controlled_by = ROOT }
+				444 = { is_controlled_by = ROOT }
+				445 = { is_controlled_by = ROOT }
+				446 = { is_controlled_by = ROOT }
+				447 = { is_controlled_by = ROOT }
+				448 = { is_controlled_by = ROOT }
+				449 = { is_controlled_by = ROOT }
+				450 = { is_controlled_by = ROOT }
+				451 = { is_controlled_by = ROOT }
+				452 = { is_controlled_by = ROOT }
+				456 = { is_controlled_by = ROOT }
+				457 = { is_controlled_by = ROOT }
+				458 = { is_controlled_by = ROOT }
+				459 = { is_controlled_by = ROOT }
+				461 = { is_controlled_by = ROOT }
+				464 = { is_controlled_by = ROOT }
+				468 = { is_controlled_by = ROOT }
+				469 = { is_controlled_by = ROOT }
+				498 = { is_controlled_by = ROOT }
+				500 = { is_controlled_by = ROOT }
+				535 = { is_controlled_by = ROOT }
+				536 = { is_controlled_by = ROOT }
+				538 = { is_controlled_by = ROOT }
+				539 = { is_controlled_by = ROOT }
+				551 = { is_controlled_by = ROOT }
+				552 = { is_controlled_by = ROOT }
+				558 = { is_controlled_by = ROOT }
+				566 = { is_controlled_by = ROOT }
+				567 = { is_controlled_by = ROOT }
+				568 = { is_controlled_by = ROOT }
+				569 = { is_controlled_by = ROOT }
+				570 = { is_controlled_by = ROOT }
+				571 = { is_controlled_by = ROOT }
+				572 = { is_controlled_by = ROOT }
+				573 = { is_controlled_by = ROOT }
+				574 = { is_controlled_by = ROOT }
+				575 = { is_controlled_by = ROOT }
+				588 = { is_controlled_by = ROOT }
+				593 = { is_controlled_by = ROOT }
+				596 = { is_controlled_by = ROOT }
+				597 = { is_controlled_by = ROOT }
+				598 = { is_controlled_by = ROOT }
+				599 = { is_controlled_by = ROOT }
+				611 = { is_controlled_by = ROOT }
+				612 = { is_controlled_by = ROOT }
+				613 = { is_controlled_by = ROOT }
+				614 = { is_controlled_by = ROOT }
+				615 = { is_controlled_by = ROOT }
+				624 = { is_controlled_by = ROOT }
+				625 = { is_controlled_by = ROOT }
+				626 = { is_controlled_by = ROOT }
+				627 = { is_controlled_by = ROOT }
+				628 = { is_controlled_by = ROOT }
+				629 = { is_controlled_by = ROOT }
+				630 = { is_controlled_by = ROOT }
+				631 = { is_controlled_by = ROOT }
+				632 = { is_controlled_by = ROOT }
+				633 = { is_controlled_by = ROOT }
+				634 = { is_controlled_by = ROOT }
+				635 = { is_controlled_by = ROOT }
+				636 = { is_controlled_by = ROOT }
+				637 = { is_controlled_by = ROOT }
+				638 = { is_controlled_by = ROOT }
+				639 = { is_controlled_by = ROOT }
+				640 = { is_controlled_by = ROOT }
+				653 = { is_controlled_by = ROOT }
+				654 = { is_controlled_by = ROOT }
+				655 = { is_controlled_by = ROOT }
+				659 = { is_controlled_by = ROOT }
+				660 = { is_controlled_by = ROOT }
+				661 = { is_controlled_by = ROOT }
+				662 = { is_controlled_by = ROOT }
+				664 = { is_controlled_by = ROOT }
+				665 = { is_controlled_by = ROOT }
+				666 = { is_controlled_by = ROOT }
+				667 = { is_controlled_by = ROOT }
+				668 = { is_controlled_by = ROOT }
+				669 = { is_controlled_by = ROOT }
+				670 = { is_controlled_by = ROOT }
+				671 = { is_controlled_by = ROOT }
+				672 = { is_controlled_by = ROOT }
+				673 = { is_controlled_by = ROOT }
+				681 = { is_controlled_by = ROOT }
+				682 = { is_controlled_by = ROOT }
+				683 = { is_controlled_by = ROOT }
+				684 = { is_controlled_by = ROOT }
+				685 = { is_controlled_by = ROOT }
+				686 = { is_controlled_by = ROOT }
+				687 = { is_controlled_by = ROOT }
+				688 = { is_controlled_by = ROOT }
+				689 = { is_controlled_by = ROOT }
+				690 = { is_controlled_by = ROOT }
+				692 = { is_controlled_by = ROOT }
+				693 = { is_controlled_by = ROOT }
+				694 = { is_controlled_by = ROOT }
+				695 = { is_controlled_by = ROOT }
+				696 = { is_controlled_by = ROOT }
+				697 = { is_controlled_by = ROOT }
+				698 = { is_controlled_by = ROOT }
+				699 = { is_controlled_by = ROOT }
+				702 = { is_controlled_by = ROOT }
+				707 = { is_controlled_by = ROOT }
+				708 = { is_controlled_by = ROOT }
+				709 = { is_controlled_by = ROOT }
+				710 = { is_controlled_by = ROOT }
+				711 = { is_controlled_by = ROOT }
+				712 = { is_controlled_by = ROOT }
+				713 = { is_controlled_by = ROOT }
+				714 = { is_controlled_by = ROOT }
+				715 = { is_controlled_by = ROOT }
+				716 = { is_controlled_by = ROOT }
+				717 = { is_controlled_by = ROOT }
+				718 = { is_controlled_by = ROOT }
+				719 = { is_controlled_by = ROOT }
+				720 = { is_controlled_by = ROOT }
+				721 = { is_controlled_by = ROOT }
+				722 = { is_controlled_by = ROOT }
+				723 = { is_controlled_by = ROOT }
+				724 = { is_controlled_by = ROOT }
+				725 = { is_controlled_by = ROOT }
+				726 = { is_controlled_by = ROOT }
+				727 = { is_controlled_by = ROOT }
+				728 = { is_controlled_by = ROOT }
+				729 = { is_controlled_by = ROOT }
+				730 = { is_controlled_by = ROOT }
+				731 = { is_controlled_by = ROOT }
+				732 = { is_controlled_by = ROOT }
+				733 = { is_controlled_by = ROOT }
+				734 = { is_controlled_by = ROOT }
+				735 = { is_controlled_by = ROOT }
+				736 = { is_controlled_by = ROOT }
+				737 = { is_controlled_by = ROOT }
+				748 = { is_controlled_by = ROOT }
+				752 = { is_controlled_by = ROOT }
+				753 = { is_controlled_by = ROOT }
+				754 = { is_controlled_by = ROOT }
+				755 = { is_controlled_by = ROOT }
+				756 = { is_controlled_by = ROOT }
+				757 = { is_controlled_by = ROOT }
+				758 = { is_controlled_by = ROOT }
+				759 = { is_controlled_by = ROOT }
+				788 = { is_controlled_by = ROOT }
+				789 = { is_controlled_by = ROOT }
+				790 = { is_controlled_by = ROOT }
+				797 = { is_controlled_by = ROOT }
+				798 = { is_controlled_by = ROOT }
+				799 = { is_controlled_by = ROOT }
+				800 = { is_controlled_by = ROOT }
+				801 = { is_controlled_by = ROOT }
+				802 = { is_controlled_by = ROOT }
+				803 = { is_controlled_by = ROOT }
+				804 = { is_controlled_by = ROOT }
+				805 = { is_controlled_by = ROOT }
+				824 = { is_controlled_by = ROOT }
+				831 = { is_controlled_by = ROOT }
+				832 = { is_controlled_by = ROOT }
+				833 = { is_controlled_by = ROOT }
+				834 = { is_controlled_by = ROOT }
+				835 = { is_controlled_by = ROOT }
+				836 = { is_controlled_by = ROOT }
+				837 = { is_controlled_by = ROOT }
+				838 = { is_controlled_by = ROOT }
+				839 = { is_controlled_by = ROOT }
+				840 = { is_controlled_by = ROOT }
+				841 = { is_controlled_by = ROOT }
+				842 = { is_controlled_by = ROOT }
+				843 = { is_controlled_by = ROOT }
+				844 = { is_controlled_by = ROOT }
+				845 = { is_controlled_by = ROOT }
+				846 = { is_controlled_by = ROOT }
+				859 = { is_controlled_by = ROOT }
+				860 = { is_controlled_by = ROOT }
+				861 = { is_controlled_by = ROOT }
+				862 = { is_controlled_by = ROOT }
+				863 = { is_controlled_by = ROOT }
+				864 = { is_controlled_by = ROOT }
 			}
 		}
 		complete_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision reform_archaiga_imperious"
 			custom_effect_tooltip = form_country_core_territories_tt
+			set_capital = { state = 5 }
 			if = {
 				limit = {
 					OR = {
@@ -1710,16 +1697,10 @@ form_archaiga_imperious_category = {
 					}
 				}
 				set_cosmetic_tag = ARCHAIGA_IMPERIOUS_REUNIFIED
-				#5 = { set_state_name = "Vladopolis City" }
-				#set_province_name = { id = 15115 name = "Vladopolis" }
 			}
-			else = {
-				set_cosmetic_tag = ARCHAIGA_CONTINENT_UNIFIED
-				#5 = { set_state_name = "Harmony City" }
-				#set_province_name = { id = 15115 name = "Concordia" }
-			}
-			set_capital = { state = 5 }
+			else = { set_cosmetic_tag = ARCHAIGA_CONTINENT_UNIFIED }
 			hidden_effect = {
+				ROOT = { sound_effect = complete_focus }
 				1 = { add_core_of = ROOT }
 				2 = { add_core_of = ROOT }
 				3 = { add_core_of = ROOT }
@@ -2198,7 +2179,7 @@ form_archaiga_imperious_category = {
 			}
 		}
 		ai_will_do = {
-			base = 5
+			factor = 10
 			modifier = {
 				factor = 10
 				is_historical_focus_on = yes
@@ -2206,13 +2187,13 @@ form_archaiga_imperious_category = {
 		}
 	}
 
-	reform_archaiga_imperious_debug_transfer = {
+	debugform_reform_archaiga_imperious_transfer = {
 		icon = generic_form_nation
 		allowed = { always = yes }
-		available = {
+		visible = {
 			AND = { is_debug = yes is_ai = no }
 		}
-		visible = {
+		available = {
 			AND = { is_debug = yes is_ai = no }
 		}
 		complete_effect = {
@@ -2699,13 +2680,13 @@ form_archaiga_imperious_category = {
 		}
 	}
 
-	reform_archaiga_imperious_debug_reunified = {
+	debugform_reform_archaiga_imperious_reunified = {
 		icon = generic_form_nation
 		allowed = { always = yes }
-		available = {
+		visible = {
 			AND = { is_debug = yes is_ai = no }
 		}
-		visible = {
+		available = {
 			AND = { is_debug = yes is_ai = no }
 		}
 		complete_effect = {
@@ -2715,13 +2696,13 @@ form_archaiga_imperious_category = {
 		}
 	}
 
-	reform_archaiga_imperious_debug_unified = {
+	debugform_reform_archaiga_imperious_unified = {
 		icon = generic_form_nation
 		allowed = { always = yes }
-		available = {
+		visible = {
 			AND = { is_debug = yes is_ai = no }
 		}
-		visible = {
+		available = {
 			AND = { is_debug = yes is_ai = no }
 		}
 		complete_effect = {
@@ -2731,7 +2712,462 @@ form_archaiga_imperious_category = {
 		}
 	}
 }
+# Formable Continents
+form_harmoneema_category = { # europe
+	form_harmoneema_continent = {
+		icon = generic_form_nation
+		on_map_mode = decision_view_only
+		highlight_states = {
+			highlight_states_trigger = {
+				is_on_continent = europe
+			}
+		}
+		available = {
+			is_subject = no
+			custom_trigger_tooltip = {
+				tooltip = artemum_requirement_tooltip
+				all_state = {
+					OR = {
+						NOT = { is_on_continent = europe }
+						is_controlled_by_ROOT_or_subject = yes
+					}
+				}
+			}
+		}
+		complete_effect = {
+			set_cosmetic_tag = FORM_HARMONEEMA
+			set_capital = { state = 122 remember_old_capital = yes }
+			hidden_effect = {
+				ROOT = { sound_effect = complete_focus }
+				every_state = {
+					limit = {
+						is_on_continent = europe
+						NOT = { is_core_of = ROOT }
+					}
+					add_core_of = ROOT
+				}
+			}
+		}
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 10
+				is_historical_focus_on = yes
+			}
+		}
+	}
 
+    debugform_harmoneema_continent_transfer = {
+		icon = generic_form_nation
+		visible = { AND = { is_debug = yes is_ai = no } }
+		available = { is_debug = yes }
+        complete_effect = {
+            every_other_country = {
+                limit = { capital_scope = { is_on_continent = europe } }
+                ROOT = { annex_country = { target = PREV transfer_troops = yes } }
+            }
+            every_state = {
+                limit = {
+                    is_on_continent = europe
+                    NOT = { is_owned_by = ROOT }
+                    owner = { capital_scope = { NOT = { is_on_continent = europe } } }
+                }
+                transfer_state_to = ROOT 
+            }
+        }
+    }
+}
+
+form_bita_category = { # north_america
+	form_bita_continent = {
+		icon = generic_form_nation
+		on_map_mode = decision_view_only
+		highlight_states = {
+			highlight_states_trigger = {
+				is_on_continent = north_america
+			}
+		}
+		available = {
+			is_subject = no
+			custom_trigger_tooltip = {
+				tooltip = artemum_requirement_tooltip
+				all_state = {
+					OR = {
+						NOT = { is_on_continent = north_america }
+						is_controlled_by_ROOT_or_subject = yes
+					}
+				}
+			}
+		}
+		complete_effect = {
+			set_cosmetic_tag = FORM_BITA
+			set_capital = { state = 27 remember_old_capital = yes }
+			hidden_effect = {
+				ROOT = { sound_effect = complete_focus }
+				every_state = {
+					limit = {
+						is_on_continent = north_america
+						NOT = { is_core_of = ROOT }
+					}
+					add_core_of = ROOT
+				}
+			}
+		}
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 10
+				is_historical_focus_on = yes
+			}
+		}
+	}
+
+    debugform_bita_continent_transfer = {
+		icon = generic_form_nation
+		visible = { AND = { is_debug = yes is_ai = no } }
+		available = { is_debug = yes }
+        complete_effect = {
+            every_other_country = {
+                limit = { capital_scope = { is_on_continent = north_america } }
+                ROOT = { annex_country = { target = PREV transfer_troops = yes } }
+            }
+            every_state = {
+                limit = {
+                    is_on_continent = north_america
+                    NOT = { is_owned_by = ROOT }
+                    owner = { capital_scope = { NOT = { is_on_continent = north_america } } }
+                }
+                transfer_state_to = ROOT 
+            }
+        }
+    }
+}
+
+form_artemum_category = { # south_america
+	form_artemum_continent = {
+		icon = generic_form_nation
+		on_map_mode = decision_view_only
+		highlight_states = {
+			highlight_states_trigger = {
+				is_on_continent = south_america
+			}
+		}
+		available = {
+			is_subject = no
+			custom_trigger_tooltip = {
+				tooltip = artemum_requirement_tooltip
+				all_state = {
+					OR = {
+						NOT = { is_on_continent = south_america }
+						is_controlled_by_ROOT_or_subject = yes
+					}
+				}
+			}
+		}
+		complete_effect = {
+			set_cosmetic_tag = FORM_ARTEMUM
+			set_capital = { state = 467 remember_old_capital = yes }
+			hidden_effect = {
+				ROOT = { sound_effect = complete_focus }
+				every_state = {
+					limit = {
+						is_on_continent = south_america
+						NOT = { is_core_of = ROOT }
+					}
+					add_core_of = ROOT
+				}
+			}
+		}
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 10
+				is_historical_focus_on = yes
+			}
+		}
+	}
+
+    debugform_artemum_continent_transfer = {
+		icon = generic_form_nation
+		visible = { AND = { is_debug = yes is_ai = no } }
+		available = { is_debug = yes }
+        complete_effect = {
+            every_other_country = {
+                limit = { capital_scope = { is_on_continent = south_america } }
+                ROOT = { annex_country = { target = PREV transfer_troops = yes } }
+            }
+            every_state = {
+                limit = {
+                    is_on_continent = south_america
+                    NOT = { is_owned_by = ROOT }
+                    owner = { capital_scope = { NOT = { is_on_continent = south_america } } }
+                }
+                transfer_state_to = ROOT 
+            }
+        }
+    }
+}
+
+form_tyenren_category = { # australia
+	form_tyenren_continent = {
+		icon = generic_form_nation
+		on_map_mode = decision_view_only
+		highlight_states = {
+			highlight_states_trigger = {
+				is_on_continent = australia
+			}
+		}
+		available = {
+			is_subject = no
+			custom_trigger_tooltip = {
+				tooltip = tyenren_requirement_tooltip
+				all_state = {
+					OR = {
+						NOT = { is_on_continent = australia }
+						is_controlled_by_ROOT_or_subject = yes
+					}
+				}
+			}
+		}
+		complete_effect = {
+			set_cosmetic_tag = FORM_TYENREN
+			set_capital = { state = 290 remember_old_capital = yes }
+			hidden_effect = {
+				ROOT = { sound_effect = complete_focus }
+				every_state = {
+					limit = {
+						is_on_continent = australia
+						NOT = { is_core_of = ROOT }
+					}
+					add_core_of = ROOT
+				}
+			}
+		}
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 10
+				is_historical_focus_on = yes
+			}
+		}
+	}
+
+    debugform_tyenren_continent_transfer = {
+		icon = generic_form_nation
+		visible = { AND = { is_debug = yes is_ai = no } }
+		available = { is_debug = yes }
+        complete_effect = {
+            every_other_country = {
+                limit = { capital_scope = { is_on_continent = australia } }
+                ROOT = { annex_country = { target = PREV transfer_troops = yes } }
+            }
+            every_state = {
+                limit = {
+                    is_on_continent = australia
+                    NOT = { is_owned_by = ROOT }
+                    owner = { capital_scope = { NOT = { is_on_continent = australia } } }
+                }
+                transfer_state_to = ROOT 
+            }
+        }
+    }
+}
+
+form_foundlands_category = { # africa
+	form_foundlands_continent = {
+		icon = generic_form_nation
+		on_map_mode = decision_view_only
+		highlight_states = {
+			highlight_states_trigger = {
+				is_on_continent = africa
+			}
+		}
+		available = {
+			is_subject = no
+			custom_trigger_tooltip = {
+				tooltip = foundlands_requirement_tooltip
+				all_state = {
+					OR = {
+						NOT = { is_on_continent = africa }
+						is_controlled_by_ROOT_or_subject = yes
+					}
+				}
+			}
+		}
+		complete_effect = {
+			set_cosmetic_tag = FORM_FOUNDLANDS
+			set_capital = { state = 827 remember_old_capital = yes }
+			hidden_effect = {
+				ROOT = { sound_effect = complete_focus }
+				every_state = {
+					limit = {
+						is_on_continent = africa
+						NOT = { is_core_of = ROOT }
+					}
+					add_core_of = ROOT
+				}
+			}
+		}
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 10
+				is_historical_focus_on = yes
+			}
+		}
+	}
+
+    debugform_foundlands_continent_transfer = {
+		icon = generic_form_nation
+		visible = { AND = { is_debug = yes is_ai = no } }
+		available = { is_debug = yes }
+        complete_effect = {
+            every_other_country = {
+                limit = { capital_scope = { is_on_continent = africa } }
+                ROOT = { annex_country = { target = PREV transfer_troops = yes } }
+            }
+            every_state = {
+                limit = {
+                    is_on_continent = africa
+                    NOT = { is_owned_by = ROOT }
+                    owner = { capital_scope = { NOT = { is_on_continent = africa } } }
+                }
+                transfer_state_to = ROOT 
+            }
+        }
+    }
+}
+
+form_heartlands_category = { # asia
+	form_heartlands_continent = {
+		icon = generic_form_nation
+		on_map_mode = decision_view_only
+		highlight_states = {
+			highlight_states_trigger = {
+				is_on_continent = asia
+			}
+		}
+		available = {
+			is_subject = no
+			custom_trigger_tooltip = {
+				tooltip = heartlands_requirement_tooltip
+				all_state = {
+					OR = {
+						NOT = { is_on_continent = asia }
+						is_controlled_by_ROOT_or_subject = yes
+					}
+				}
+			}
+		}
+		complete_effect = {
+			set_cosmetic_tag = FORM_HEARTLANDS
+			set_capital = { state = 69 remember_old_capital = yes }
+			hidden_effect = {
+				ROOT = { sound_effect = complete_focus }
+				every_state = {
+					limit = {
+						is_on_continent = asia
+						NOT = { is_core_of = ROOT }
+					}
+					add_core_of = ROOT
+				}
+			}
+		}
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 10
+				is_historical_focus_on = yes
+			}
+		}
+	}
+
+    debugform_heartlands_continent_transfer = {
+		icon = generic_form_nation
+		visible = { AND = { is_debug = yes is_ai = no } }
+		available = { is_debug = yes }
+        complete_effect = {
+            every_other_country = {
+                limit = { capital_scope = { is_on_continent = asia } }
+                ROOT = { annex_country = { target = PREV transfer_troops = yes } }
+            }
+            every_state = {
+                limit = {
+                    is_on_continent = asia
+                    NOT = { is_owned_by = ROOT }
+                    owner = { capital_scope = { NOT = { is_on_continent = asia } } }
+                }
+                transfer_state_to = ROOT 
+            }
+        }
+    }
+}
+
+form_novusaiga_category = { # middle_east
+	form_novusaiga_continent = {
+		icon = generic_form_nation
+		on_map_mode = decision_view_only
+		highlight_states = {
+			highlight_states_trigger = {
+				is_on_continent = middle_east
+			}
+		}
+		available = {
+			is_subject = no
+			custom_trigger_tooltip = {
+				tooltip = novusaiga_requirement_tooltip
+				all_state = {
+					OR = {
+						NOT = { is_on_continent = middle_east }
+						is_controlled_by_ROOT_or_subject = yes
+					}
+				}
+			}
+		}
+		complete_effect = {
+			set_cosmetic_tag = FORM_NOVUSAIGA
+			set_capital = { state = 454 remember_old_capital = yes }
+			hidden_effect = {
+				ROOT = { sound_effect = complete_focus }
+				every_state = {
+					limit = {
+						is_on_continent = middle_east
+						NOT = { is_core_of = ROOT }
+					}
+					add_core_of = ROOT
+				}
+			}
+		}
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 10
+				is_historical_focus_on = yes
+			}
+		}
+	}
+
+    debugform_novusaiga_continent_transfer = {
+		icon = generic_form_nation
+		visible = { AND = { is_debug = yes is_ai = no } }
+		available = { is_debug = yes }
+        complete_effect = {
+            every_other_country = {
+                limit = { capital_scope = { is_on_continent = middle_east } }
+                ROOT = { annex_country = { target = PREV transfer_troops = yes } }
+            }
+            every_state = {
+                limit = {
+                    is_on_continent = middle_east
+                    NOT = { is_owned_by = ROOT }
+                    owner = { capital_scope = { NOT = { is_on_continent = middle_east } } }
+                }
+                transfer_state_to = ROOT 
+            }
+        }
+    }
+}
+# Formable Nations
 form_united_vally_category = {
 	form_united_vally_conquest = {
 		icon = generic_form_nation
@@ -2741,20 +3177,20 @@ form_united_vally_category = {
 				original_tag = RVV
 			}
 		}
+		visible = {
+			NOT = { has_global_flag = form_united_vally_conquest_flag }
+		}
 		available = {
 			is_subject = no
 			OR = { NOT = { country_exists = CPV }
 			NOT = { country_exists = RVV } }
 		}
-		visible = {
-			NOT = { has_global_flag = form_united_vally_conquest_flag }
-		}
 		complete_effect = {
 			set_country_flag = ravens_valley_unified_conquest
-			hidden_effect = { set_global_flag = form_united_vally_conquest_flag }
+			set_global_flag = form_united_vally_conquest_flag
 		}
 		ai_will_do = {
-			factor = 5
+			factor = 1
 			modifier = {
 				factor = 10
 				is_historical_focus_on = yes
@@ -2769,6 +3205,9 @@ form_united_vally_category = {
 				original_tag = RVV
 				original_tag = CPV
 			}
+		}
+		visible = {
+			NOT = { has_global_flag = form_united_vally1_flag }
 		}
 		available = {
 			is_subject = no
@@ -2794,11 +3233,10 @@ form_united_vally_category = {
 				original_tag = CPV
 			}
 		}
-		visible = {
-			NOT = { has_global_flag = form_united_vally1_flag }
-		}
 		complete_effect = {
+			set_global_flag = form_united_vally1_flag
 			hidden_effect = {
+				ROOT = { sound_effect = complete_focus }
 				100 = { add_core_of = ROOT }
 				217 = { add_core_of = ROOT }
 				218 = { add_core_of = ROOT }
@@ -2816,10 +3254,9 @@ form_united_vally_category = {
 				682 = { add_core_of = ROOT }
 				824 = { add_core_of = ROOT }
 			}
-			hidden_effect = { set_global_flag = form_united_vally1_flag }
 		}
 		ai_will_do = {
-			factor = 5
+			factor = 1
 			modifier = {
 				factor = 10
 				is_historical_focus_on = yes
@@ -2835,6 +3272,10 @@ form_united_vally_category = {
 				original_tag = CPV
 			}
 		}
+		visible = {
+			has_global_flag = form_united_vally1_flag
+			NOT = { has_global_flag = form_united_vally2_flag }
+		}
 		available = {
 			is_subject = no
 			98  = { is_controlled_by = ROOT }
@@ -2842,22 +3283,19 @@ form_united_vally_category = {
 			135 = { is_controlled_by = ROOT }
 			406 = { is_controlled_by = ROOT }
 		}
-		visible = {
-			has_global_flag = form_united_vally1_flag
-			NOT = { has_global_flag = form_united_vally2_flag }
-		}
 		complete_effect = {
+			set_global_flag = form_united_vally2_flag
 			hidden_effect = {
+				ROOT = { sound_effect = complete_focus }
 				98  = { add_core_of = ROOT }
 				134 = { add_core_of = ROOT }
 				135 = { add_core_of = ROOT }
 				138 = { add_core_of = ROOT }
 				406 = { add_core_of = ROOT }
 			}
-			hidden_effect = { set_global_flag = form_united_vally2_flag }
 		}
 		ai_will_do = {
-			factor = 5
+			factor = 1
 			modifier = {
 				factor = 10
 				is_historical_focus_on = yes
@@ -2873,21 +3311,21 @@ form_united_vally_category = {
 				original_tag = CPV
 			}
 		}
+		visible = {
+			has_global_flag = form_united_vally2_flag
+			NOT = { 138 = { is_controlled_by = ROOT } }
+		}
 		available = {
 			is_subject = no
 			135  = { is_controlled_by = ROOT }
 			NOT = { 138  = { is_controlled_by = ROOT } }
 			has_war = no
 		}
-		visible = {
-			has_global_flag = form_united_vally2_flag
-			NOT = { 138 = { is_controlled_by = ROOT } }
-		}
 		complete_effect = {
 			transfer_state = 138
 		}
 		ai_will_do = {
-			factor = 5
+			factor = 1
 			modifier = {
 				factor = 10
 				is_historical_focus_on = yes
@@ -2903,6 +3341,10 @@ form_united_vally_category = {
 				original_tag = CPV
 			}
 		}
+		visible = {
+			has_global_flag = form_united_vally1_flag
+			NOT = { has_global_flag = form_united_vally3_flag }
+		}
 		available = {
 			is_subject = no
 			423  = { is_controlled_by = ROOT }
@@ -2910,22 +3352,18 @@ form_united_vally_category = {
 			459  = { is_controlled_by = ROOT }
 			333  = { is_controlled_by = ROOT }
 		}
-		visible = {
-			has_global_flag = form_united_vally1_flag
-			NOT = { has_global_flag = form_united_vally3_flag }
-		}
 		complete_effect = {
+			set_global_flag = form_united_vally3_flag
 			hidden_effect = {
+				ROOT = { sound_effect = complete_focus }
 				423  = { add_core_of = ROOT }
 				424  = { add_core_of = ROOT }
 				459  = { add_core_of = ROOT }
 				333  = { add_core_of = ROOT }
-					### Tunnels ###
 			}
-			hidden_effect = { set_global_flag = form_united_vally3_flag }
 		}
 		ai_will_do = {
-			factor = 5
+			factor = 1
 			modifier = {
 				factor = 10
 				is_historical_focus_on = yes
@@ -2941,6 +3379,10 @@ form_united_vally_category = {
 				original_tag = CPV
 			}
 		}
+		visible = {
+			has_global_flag = form_united_vally1_flag
+			NOT = { has_global_flag = form_united_vally4_flag }
+		}
 		available = {
 			is_subject = no
 			234 = { is_controlled_by = ROOT }
@@ -2954,12 +3396,10 @@ form_united_vally_category = {
 			393 = { is_controlled_by = ROOT }
 			394 = { is_controlled_by = ROOT }
 		}
-		visible = {
-			has_global_flag = form_united_vally1_flag
-			NOT = { has_global_flag = form_united_vally4_flag }
-		}
 		complete_effect = {
+			set_global_flag = form_united_vally4_flag
 			hidden_effect = {
+				ROOT = { sound_effect = complete_focus }
 				234 = { add_core_of = ROOT }
 				331 = { add_core_of = ROOT }
 				332 = { add_core_of = ROOT }
@@ -2971,10 +3411,9 @@ form_united_vally_category = {
 				393 = { add_core_of = ROOT }
 				394 = { add_core_of = ROOT }
 			}
-			hidden_effect = { set_global_flag = form_united_vally4_flag }
 		}
 		ai_will_do = {
-			factor = 5
+			factor = 1
 			modifier = {
 				factor = 10
 				is_historical_focus_on = yes
@@ -2991,6 +3430,10 @@ form_united_vally_category = {
 				original_tag = CPV
 			}
 		}
+		visible = {
+			has_global_flag = form_united_vally1_flag
+			NOT = { has_country_flag = form_united_vally_dwarf_forges_flag }
+		}
 		available = {
 			is_subject = no
 			has_idea = species_open_law
@@ -2998,22 +3441,19 @@ form_united_vally_category = {
 			232 = { is_controlled_by = ROOT }
 			660 = { is_controlled_by = ROOT }
 		}
-		visible = {
-			has_global_flag = form_united_vally1_flag
-			NOT = { has_country_flag = form_united_vally_dwarf_forges_flag }
-		}
 		complete_effect = {
+			set_country_flag = form_united_vally_dwarf_forges_flag
 			hidden_effect = {
+				ROOT = { sound_effect = complete_focus }
 				231 = { add_core_of = ROOT }
 				232 = { add_core_of = ROOT }
 				660 = { add_core_of = ROOT }
 			}
-			hidden_effect = { set_country_flag = form_united_vally_dwarf_forges_flag }
 		}
 		ai_will_do = {
 			factor = 2
 			modifier = {
-				factor = 2
+				factor = 10
 				is_historical_focus_on = yes
 			}
 		}
@@ -3029,6 +3469,9 @@ form_pearlin_duan_marian_federation_category = {
 				original_tag = SMP
 				original_tag = SPP
 			}
+		}
+		visible = {
+			NOT = { has_country_flag = form_pearlin_duan_marian_federation_flag }
 		}
 		available = {
 			is_subject = no
@@ -3051,14 +3494,13 @@ form_pearlin_duan_marian_federation_category = {
 				598 = { is_controlled_by = ROOT }
 			}
 		}
-		visible = {
-			NOT = { has_country_flag = form_pearlin_duan_marian_federation_flag }
-		}
 		complete_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision form_pearlin_duan_marian_federation"
+			set_country_flag = form_pearlin_duan_marian_federation_flag
 			set_cosmetic_tag = UNIFIED_UotPDMPF
 			set_capital = { state = 21 }
 			hidden_effect = {
+				ROOT = { sound_effect = complete_focus }
 				21  = { add_core_of = ROOT }
 				22  = { add_core_of = ROOT }
 				47  = { add_core_of = ROOT }
@@ -3079,10 +3521,9 @@ form_pearlin_duan_marian_federation_category = {
 					add_core_of = ROOT
 				}
 			}
-			hidden_effect = { set_country_flag = form_pearlin_duan_marian_federation_flag }
 		}
 		ai_will_do = {
-			factor = 5
+			factor = 1
 		}
 	}
 }
@@ -3090,7 +3531,23 @@ form_pearlin_duan_marian_federation_category = {
 political_actions = {
 	UotPDMPF_federate_with_UFS = {
 		icon = generic_form_nation
-		allowed = { always = yes }
+		allowed = {
+			OR = {
+				original_tag = UFS
+				original_tag = SDP
+				original_tag = SMP
+				original_tag = SPP
+			}
+		}
+		visible = {
+			original_tag = UFS
+			OR = {
+				SDP = { has_country_flag = form_pearlin_duan_marian_federation_flag }
+				SMP = { has_country_flag = form_pearlin_duan_marian_federation_flag }
+				SPP = { has_country_flag = form_pearlin_duan_marian_federation_flag }
+			}
+			NOT = { has_global_flag = form_UotPDMPF_federate_with_UFS_flag }
+		}
 		available = {
 			is_subject = no
 			OR = {
@@ -3109,17 +3566,9 @@ political_actions = {
 			}
 			has_capitulated = yes
 		}
-		visible = {
-			TAG = UFS
-			OR = {
-				SDP = { has_country_flag = form_pearlin_duan_marian_federation_flag }
-				SMP = { has_country_flag = form_pearlin_duan_marian_federation_flag }
-				SPP = { has_country_flag = form_pearlin_duan_marian_federation_flag }
-			}
-			NOT = { has_global_flag = form_UotPDMPF_federate_with_UFS_flag }
-		}
 		complete_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision UotPDMPF_federate_with_UFS"
+			set_global_flag = form_UotPDMPF_federate_with_UFS_flag
 			IF = {
 				LIMIT = { SDP = { has_cosmetic_tag = UNIFIED_UotPDMPF } }
 				transfer_navy = { target = SDP }
@@ -3168,13 +3617,15 @@ political_actions = {
 					}
 				}
 			}
-			hidden_effect = { set_global_flag = form_UotPDMPF_federate_with_UFS_flag }
+			hidden_effect = {
+				ROOT = { sound_effect = complete_focus }
+			}
 		}
 		cost = 50
 		ai_will_do = {
 			factor = 10
 			modifier = {
-				factor = 5
+				factor = 10
 				is_historical_focus_on = yes
 			}
 		}
@@ -3190,10 +3641,13 @@ form_artemum_oberflehkhuh_category = {
 				original_tag = BIU
 			}
 		}
+		visible = {
+			NOT = { has_global_flag = form_artemum_oberflehkhuh_flag }
+		}
 		available = {
 			is_subject = no
 			count_triggers = {
-			    amount = 7
+				amount = 7
 				# Main Core
 				268 = { is_controlled_by = ROOT }
 				269 = { is_controlled_by = ROOT }
@@ -3238,14 +3692,13 @@ form_artemum_oberflehkhuh_category = {
 			#758 = { is_controlled_by = ROOT }
 			#759 = { is_controlled_by = ROOT }
 		}
-		visible = {
-			NOT = { has_global_flag = form_artemum_oberflehkhuh_flag }
-		}
 		complete_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision form_artemum_oberflehkhuh"
+			set_global_flag = form_artemum_oberflehkhuh_flag
 			set_cosmetic_tag = ARTEMUM_OBERFLENKHUH
 			set_capital = { state = 269 }
 			hidden_effect = {
+				ROOT = { sound_effect = complete_focus }
 				# Main Core
 				268 = { add_core_of = ROOT }
 				269 = { add_core_of = ROOT }
@@ -3289,10 +3742,9 @@ form_artemum_oberflehkhuh_category = {
 				758 = { add_core_of = ROOT }
 				759 = { add_core_of = ROOT }
 			}
-			hidden_effect = { set_global_flag = form_artemum_oberflehkhuh_flag }
 		}
 		ai_will_do = {
-			factor = 5
+			factor = 1
 			modifier = {
 				factor = 10
 				is_historical_focus_on = yes
@@ -3309,16 +3761,14 @@ form_artemum_oberflehkhuh_category = {
 				original_tag = BIU
 			}
 		}
+		visible = {  }
 		available = {
 			is_subject = no
 			684 = { is_controlled_by = ROOT }
 			685 = { is_controlled_by = ROOT }
 		}
-
-		fire_only_once = yes
 		cost = 50
-
-		visible = {  }
+		fire_only_once = yes
 		complete_effect = {
 			PCS = {
 				declare_war_on = {
@@ -3346,6 +3796,9 @@ form_kunstfertiger_artificers_category = {
 				original_tag = OAK
 				original_tag = BHK
 			}
+		}
+		visible = {
+			NOT = { has_global_flag = form_kunstfertiger_artificers_flag }
 		}
 		available = {
 			is_subject = no
@@ -3400,11 +3853,9 @@ form_kunstfertiger_artificers_category = {
 				966 = { is_controlled_by = ROOT }
 			}
 		}
-		visible = {
-			NOT = { has_global_flag = form_kunstfertiger_artificers_flag }
-		}
 		complete_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision form_kunstfertiger_artificers"
+			set_global_flag = form_kunstfertiger_artificers_flag
 			set_cosmetic_tag = KUNSTFERTIGER_ARTIFICERS
 			set_capital = { state = 467 }
 			set_temp_variable = { var = SEH_temp_species value = 3 tooltip = SEH_add_accepted_species_partial_tt }
@@ -3422,7 +3873,7 @@ form_kunstfertiger_artificers_category = {
 			set_temp_variable = { var = SEH_temp_heritage value = 23 tooltip = SEH_add_accepted_heritage_full_tt }
 			SEH_add_accepted_heritage_full = yes
 			hidden_effect = {
-				set_global_flag = form_kunstfertiger_artificers_flag
+				ROOT = { sound_effect = complete_focus }
 				# Main Core
 				463 = { add_core_of = ROOT }
 				466 = { add_core_of = ROOT }
@@ -3494,7 +3945,7 @@ form_kunstfertiger_artificers_category = {
 			}
 		}
 		ai_will_do = {
-			factor = 5
+			factor = 1
 			modifier = {
 				factor = 10
 				is_historical_focus_on = yes
@@ -3513,6 +3964,9 @@ form_sanguis_river_category = {
 				original_tag = IHS
 				original_tag = REP
 			}
+		}
+		visible = {
+			NOT = { has_country_flag = form_sanguis_river_flag }
 		}
 		available = {
 			is_subject = no
@@ -3567,11 +4021,9 @@ form_sanguis_river_category = {
 				688 = { is_controlled_by = ROOT }
 			}
 		}
-		visible = {
-			NOT = { has_country_flag = form_sanguis_river_flag }
-		}
 		complete_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision form_unification_sanguis_river"
+			set_country_flag = form_sanguis_river_flag
 			if = {
 				limit = {
 					NOT = { original_tag = DOC }
@@ -3603,6 +4055,7 @@ form_sanguis_river_category = {
 				set_cosmetic_tag = UNIFIED_SANGUIS_RIVER_THEOCRATIC
 			}
 			hidden_effect = {
+				ROOT = { sound_effect = complete_focus }
 				101 = { add_core_of = ROOT }
 				129 = { add_core_of = ROOT }
 				199 = { add_core_of = ROOT }
@@ -3630,10 +4083,9 @@ form_sanguis_river_category = {
 				736 = { add_claim_by = ROOT }
 				737 = { add_claim_by = ROOT }
 			}
-			hidden_effect = { set_country_flag = form_sanguis_river_flag }
 		}
 		ai_will_do = {
-			factor = 5
+			factor = 1
 		}
 	}
 }
@@ -3646,6 +4098,9 @@ form_kahnkermoy_category = {
 				original_tag = NRP
 				original_tag = FIK
 			}
+		}
+		visible = {
+			NOT = { has_country_flag = form_kahnkermoy_kingdom_flag }
 		}
 		available = {
 			is_subject = no
@@ -3673,14 +4128,13 @@ form_kahnkermoy_category = {
 				698 = { is_controlled_by = ROOT }
 			}
 		}
-		visible = {
-			NOT = { has_country_flag = form_kahnkermoy_kingdom_flag }
-		}
 		complete_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision form_kahnkermoy_kingdom"
+			set_country_flag = form_kahnkermoy_kingdom_flag
 			set_cosmetic_tag = UNIFIED_KAHNKERMOY
 			set_capital = { state = 23 }
 			hidden_effect = {
+				ROOT = { sound_effect = complete_focus }
 				23  = { add_core_of = ROOT }
 				206 = { add_core_of = ROOT }
 				209 = { add_core_of = ROOT }
@@ -3702,10 +4156,9 @@ form_kahnkermoy_category = {
 				697 = { add_core_of = ROOT }
 				698 = { add_core_of = ROOT }
 			}
-			hidden_effect = { set_country_flag = form_kahnkermoy_kingdom_flag }
 		}
 		ai_will_do = {
-			factor = 5
+			factor = 1
 		}
 	}
 
@@ -3718,6 +4171,10 @@ form_kahnkermoy_category = {
 				original_tag = FIK
 			}
 		}
+		visible = {
+			has_country_flag = form_kahnkermoy_kingdom_flag
+			NOT = { has_country_flag = form_kahnkermoy_kingdom_dwarf_forges_flag }
+		}
 		available = {
 			is_subject = no
 			has_idea = species_open_law
@@ -3725,22 +4182,19 @@ form_kahnkermoy_category = {
 			232 = { is_controlled_by = ROOT }
 			660 = { is_controlled_by = ROOT }
 		}
-		visible = {
-			has_country_flag = form_kahnkermoy_kingdom_flag
-			NOT = { has_country_flag = form_kahnkermoy_kingdom_dwarf_forges_flag }
-		}
 		complete_effect = {
+			set_country_flag = form_kahnkermoy_kingdom_dwarf_forges_flag
 			hidden_effect = {
+				ROOT = { sound_effect = complete_focus }
 				231 = { add_core_of = ROOT }
 				232 = { add_core_of = ROOT }
 				660 = { add_core_of = ROOT }
 			}
-			hidden_effect = { set_country_flag = form_kahnkermoy_kingdom_dwarf_forges_flag }
 		}
 		ai_will_do = {
 			factor = 2
 			modifier = {
-				factor = 2
+				factor = 10
 				is_historical_focus_on = yes
 			}
 		}
@@ -3750,8 +4204,9 @@ form_kahnkermoy_category = {
 form_new_mandate_over_empyrean_category = {
 	form_new_mandate_over_empyrean = {
 		icon = generic_form_nation
-		allowed = {
-			always = yes
+		allowed = { always = yes }
+		visible = {
+			NOT = { has_country_flag = form_new_mandate_over_empyrean_flag }
 		}
 		available = {
 			is_subject = no
@@ -3792,15 +4247,13 @@ form_new_mandate_over_empyrean_category = {
 				385 = { is_controlled_by = ROOT }
 			}
 		}
-		visible = {
-			is_gaint_of_the_east_possible = yes
-			NOT = { has_country_flag = form_new_mandate_over_empyrean_flag }
-		}
 		complete_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision form_new_mandate_over_empyrean"
+			set_country_flag = form_new_mandate_over_empyrean_flag
 			set_cosmetic_tag = NEW_MANDATE_OVER_EMPYREAN
 			set_capital = { state = 28 }
 			hidden_effect = {
+				ROOT = { sound_effect = complete_focus }
 				32  = { add_core_of = ROOT }
 				33  = { add_core_of = ROOT }
 				35  = { add_core_of = ROOT }
@@ -3835,10 +4288,9 @@ form_new_mandate_over_empyrean_category = {
 				382  = { add_core_of = ROOT }
 				385  = { add_core_of = ROOT }
 			}
-			hidden_effect = { set_country_flag = form_new_mandate_over_empyrean_flag }
 		}
 		ai_will_do = {
-			factor = 5
+			factor = 1
 		}
 	}
 }
@@ -3850,6 +4302,9 @@ form_elven_wum_high_kingdom = {
 			OR = {
 				original_tag = UEK
 			}
+		}
+		visible = {
+			NOT = { has_global_flag = form_wum_high_kingdom_flag }
 		}
 		available = {
 			is_subject = no
@@ -3877,11 +4332,9 @@ form_elven_wum_high_kingdom = {
 			804 = { is_controlled_by = ROOT }
 			805 = { is_controlled_by = ROOT }
 		}
-		visible = {
-			NOT = { has_global_flag = form_wum_high_kingdom_flag }
-		}
 		complete_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision form_elven_wum_high_kingdom"
+			set_global_flag = form_wum_high_kingdom_flag
 			IF = {
 				LIMIT = {
 					OR = {
@@ -3896,6 +4349,7 @@ form_elven_wum_high_kingdom = {
 			}
 			set_capital = { state = 636 }
 			hidden_effect = {
+				ROOT = { sound_effect = complete_focus }
 				# Main Core
 				552 = { add_core_of = ROOT }
 				569 = { add_core_of = ROOT }
@@ -3936,10 +4390,9 @@ form_elven_wum_high_kingdom = {
 				833 = { add_core_of = ROOT }
 				839 = { add_core_of = ROOT }
 			}
-			hidden_effect = { set_global_flag = form_wum_high_kingdom_flag }
 		}
 		ai_will_do = {
-			factor = 5
+			factor = 1
 			modifier = {
 				factor = 10
 				is_historical_focus_on = yes
@@ -3954,28 +4407,29 @@ form_elven_wum_high_kingdom = {
 				original_tag = UEK
 			}
 		}
+		visible = {
+			has_global_flag = form_wum_high_kingdom_flag
+			NOT = { has_global_flag = form_wum_high_kingdom_collab_flag }
+		}
 		available = {
 			is_subject = no
 			25  = { is_controlled_by = ROOT }
 			788 = { is_controlled_by = ROOT }
 			789 = { is_controlled_by = ROOT }
 		}
-		visible = {
-			has_global_flag = form_wum_high_kingdom_flag
-			NOT = { has_global_flag = form_wum_high_kingdom_collab_flag }
-		}
 		complete_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision form_wum_dwarf_collab"
-			#set_temp_variable = { country_to_initiate = FROM }
-			#TRH = { instantiate_collaboration_government = yes }
+			set_global_flag = form_wum_high_kingdom_collab_flag
 			25  = { transfer_state_to = TRH }
 			788 = { transfer_state_to = TRH }
 			789 = { transfer_state_to = TRH }
 			set_autonomy = { target = TRH autonomous_state = autonomy_integrated_puppet }
-			hidden_effect = { set_global_flag = form_wum_high_kingdom_collab_flag }
+			hidden_effect = {
+				ROOT = { sound_effect = complete_focus }
+			}
 		}
 		ai_will_do = {
-			factor = 5
+			factor = 1
 			modifier = {
 				factor = 10
 				is_historical_focus_on = yes
@@ -3993,6 +4447,9 @@ form_electrum_federation_category = {
 				original_tag = SSD
 			}
 		}
+		visible = {
+			NOT = { has_global_flag = form_electrum_federation_flag }
+		}
 		available = {
 			is_subject = no
 			# Gold
@@ -4008,11 +4465,9 @@ form_electrum_federation_category = {
 			659 = { is_controlled_by = ROOT }
 			660 = { is_controlled_by = ROOT }
 		}
-		visible = {
-			NOT = { has_global_flag = form_electrum_federation_flag }
-		}
 		complete_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision form_electrum_federation"
+			set_global_flag = form_electrum_federation_flag
 			set_cosmetic_tag = ELECTRUM_FEDERATION
 			IF = {
 				limit = { original_tag = GSD }
@@ -4033,6 +4488,7 @@ form_electrum_federation_category = {
 				}
 			}
 			hidden_effect = {
+				ROOT = { sound_effect = complete_focus }
 				231 = { add_core_of = ROOT }
 				232 = { add_core_of = ROOT }
 				331 = { add_core_of = ROOT }
@@ -4050,10 +4506,9 @@ form_electrum_federation_category = {
 				659 = { add_core_of = ROOT }
 				660 = { add_core_of = ROOT }
 			}
-			hidden_effect = { set_global_flag = form_electrum_federation_flag }
 		}
 		ai_will_do = {
-			factor = 5
+			factor = 1
 		}
 	}
 
@@ -4064,6 +4519,9 @@ form_electrum_federation_category = {
 				original_tag = GSD
 				original_tag = SSD
 			}
+		}
+		visible = {
+			NOT = { has_global_flag = form_electrum_federation_flag }
 		}
 		available = {
 			is_subject = no
@@ -4090,11 +4548,10 @@ form_electrum_federation_category = {
 				}
 			}
 		}
-		visible = {
-			NOT = { has_global_flag = form_electrum_federation_flag }
-		}
+		cost = 50
 		complete_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision form_electrum_federation"
+			set_global_flag = form_electrum_federation_flag
 			set_cosmetic_tag = ELECTRUM_FEDERATION
 			IF = {
 				limit = { original_tag = GSD }
@@ -4117,6 +4574,7 @@ form_electrum_federation_category = {
 				}
 			}
 			hidden_effect = {
+				ROOT = { sound_effect = complete_focus }
 				231 = { add_core_of = ROOT }
 				232 = { add_core_of = ROOT }
 				331 = { add_core_of = ROOT }
@@ -4134,11 +4592,9 @@ form_electrum_federation_category = {
 				659 = { add_core_of = ROOT }
 				660 = { add_core_of = ROOT }
 			}
-			hidden_effect = { set_global_flag = form_electrum_federation_flag }
 		}
-		cost = 50
 		ai_will_do = {
-			factor = 5
+			factor = 1
 			modifier = {
 				factor = 10
 				is_historical_focus_on = yes
@@ -4150,52 +4606,51 @@ form_electrum_federation_category = {
 political_actions = {
 	federate_the_electrum_subjects = {
 		icon = generic_form_nation
-		allowed = { always = yes }
-		available = {
-			is_subject = no
-			OR = {
-				SSD = { is_subject_of = ROOT }
-				GSD = { is_subject_of = ROOT }
-			}
-		}
+		allowed = {  }
 		visible = {
 			NOT = { has_global_flag = form_electrum_federation_flag }
+			SSD = { is_subject_of = ROOT }
+			GSD = { is_subject_of = ROOT }
 		}
+		available = {
+			is_subject = no
+			SSD = { is_subject_of = ROOT }
+			GSD = { is_subject_of = ROOT }
+		}
+		cost = 50
 		complete_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision federate_the_electrum_subjects"
+			set_global_flag = form_electrum_federation_flag
 			SSD = {
 				set_cosmetic_tag = ELECTRUM_FEDERATION
 				annex_country = { target = GSD transfer_troops = yes }
 				hidden_effect = {
-					every_state = {
-						LIMIT = { is_core_of = GSD }
-						remove_core_of = GSD
-					}
-					231 = { add_core_of = ROOT }
-					232 = { add_core_of = ROOT }
-					331 = { add_core_of = ROOT }
-					332 = { add_core_of = ROOT }
-					333 = { add_core_of = ROOT }
-					343 = { add_core_of = ROOT }
-					388 = { add_core_of = ROOT }
-					389 = { add_core_of = ROOT }
-					422 = { add_core_of = ROOT }
-					423 = { add_core_of = ROOT }
-					424 = { add_core_of = ROOT }
-					435 = { add_core_of = ROOT }
-					436 = { add_core_of = ROOT }
-					459 = { add_core_of = ROOT }
-					659 = { add_core_of = ROOT }
-					660 = { add_core_of = ROOT }
+					231 = { add_core_of = ROOT remove_core_of = GSD}
+					232 = { add_core_of = ROOT remove_core_of = GSD}
+					331 = { add_core_of = ROOT remove_core_of = GSD}
+					332 = { add_core_of = ROOT remove_core_of = GSD}
+					333 = { add_core_of = ROOT remove_core_of = GSD}
+					343 = { add_core_of = ROOT remove_core_of = GSD}
+					388 = { add_core_of = ROOT remove_core_of = GSD}
+					389 = { add_core_of = ROOT remove_core_of = GSD}
+					422 = { add_core_of = ROOT remove_core_of = GSD}
+					423 = { add_core_of = ROOT remove_core_of = GSD}
+					424 = { add_core_of = ROOT remove_core_of = GSD}
+					435 = { add_core_of = ROOT remove_core_of = GSD}
+					436 = { add_core_of = ROOT remove_core_of = GSD}
+					459 = { add_core_of = ROOT remove_core_of = GSD}
+					659 = { add_core_of = ROOT remove_core_of = GSD}
+					660 = { add_core_of = ROOT remove_core_of = GSD}
 				}
 			}
-			hidden_effect = { set_global_flag = form_electrum_federation_flag }
+			hidden_effect = {
+				ROOT = { sound_effect = complete_focus }
+			}
 		}
-		cost = 50
 		ai_will_do = {
 			factor = 10
 			modifier = {
-				factor = 5
+				factor = 10
 				is_historical_focus_on = yes
 			}
 		}
@@ -4209,6 +4664,9 @@ form_dwarven_wum_smithahaufast_category = {
 			OR = {
 				original_tag = TRH
 			}
+		}
+		visible = {
+			NOT = { has_global_flag = form_wum_smithahaufast_flag }
 		}
 		available = {
 			is_subject = no
@@ -4230,14 +4688,13 @@ form_dwarven_wum_smithahaufast_category = {
 				805 = { is_controlled_by = ROOT }
 			}
 		}
-		visible = {
-			NOT = { has_global_flag = form_wum_smithahaufast_flag }
-		}
 		complete_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision form_wum_smithahaufast"
+			set_global_flag = form_wum_smithahaufast_flag
 			set_cosmetic_tag = UNIFIED_WUM_SMITHAHAUFAST
 			set_capital = { state = 25 }
 			hidden_effect = {
+				ROOT = { sound_effect = complete_focus }
 				# Main Core
 				25  = { add_core_of = ROOT }
 				573 = { add_core_of = ROOT }
@@ -4270,10 +4727,9 @@ form_dwarven_wum_smithahaufast_category = {
 				611 = { add_core_of = ROOT }
 				633 = { add_core_of = ROOT }
 			}
-			hidden_effect = { set_global_flag = form_wum_smithahaufast_flag }
 		}
 		ai_will_do = {
-			factor = 5
+			factor = 1
 			modifier = {
 				factor = 10
 				is_historical_focus_on = yes
@@ -4290,6 +4746,9 @@ form_dwarven_sonnenvergen_smithahaufast_category = {
 				original_tag = DOO
 				original_tag = TRH
 			}
+		}
+		visible = {
+			NOT = { has_global_flag = form_sonnenvergen_smithahaufast_flag }
 		}
 		available = {
 			is_subject = no
@@ -4326,14 +4785,13 @@ form_dwarven_sonnenvergen_smithahaufast_category = {
 				834 = { is_controlled_by = ROOT }
 			}
 		}
-		visible = {
-			NOT = { has_global_flag = form_sonnenvergen_smithahaufast_flag }
-		}
 		complete_effect = {
 			log = "[GetDateText]: [Root.GetName]: Decision form_sonnenvergen_smithahaufast"
+			set_global_flag = form_wum_smithahaufast_flag
 			set_cosmetic_tag = UNIFIED_WUM_SONNENVERGEN
 			set_capital = { state = 434 }
 			hidden_effect = {
+				ROOT = { sound_effect = complete_focus }
 				# Main Core
 				25  = { add_core_of = ROOT }
 				305 = { add_core_of = ROOT }
@@ -4388,10 +4846,9 @@ form_dwarven_sonnenvergen_smithahaufast_category = {
 				836 = { add_core_of = ROOT }
 				837 = { add_core_of = ROOT }
 			}
-			hidden_effect = { set_global_flag = form_wum_smithahaufast_flag }
 		}
 		ai_will_do = {
-			factor = 5
+			factor = 1
 			modifier = {
 				factor = 10
 				is_historical_focus_on = yes

@@ -10,19 +10,6 @@ calculate_GDP = {
     set_temp_variable = { actual_core_manpower_k = 0 }
     set_temp_variable = { actual_noncore_manpower_k = 0 }
     clr_country_flag = gdp_menu
-    every_owned_state = {
-        limit = { is_core_of = PREV }
-        add_to_temp_variable = { PREV.actual_core_manpower_k = state_population_k }
-    }
-
-    every_owned_state = {
-        add_to_temp_variable = { actual_manpower_k = state_population_k }
-    }
-
-    every_owned_state = {
-        limit = { NOT = { is_core_of = PREV  } }
-        add_to_temp_variable = { PREV.actual_noncore_manpower_k = state_population_k }
-    }
 
     # -----------------------
     # CATEGORY FACTOR SECTION
@@ -33,18 +20,31 @@ calculate_GDP = {
     }
 
     every_state = {
-        limit = { is_core_of = PREV }
-        set_variable = { state_category_factor = 1 }
-        if       = { limit = { has_state_category = megalopolis } multiply_variable = { state_category_factor = 3 } }
-        else_if  = { limit = { has_state_category = metropolis  } multiply_variable = { state_category_factor = 2 } }
-        else_if  = { limit = { has_state_category = large_city  } multiply_variable = { state_category_factor = 1.5 } }
-        else_if  = { limit = { has_state_category = city        } multiply_variable = { state_category_factor = 1.25 } }
-        else_if  = { limit = { has_state_category = large_town  } multiply_variable = { state_category_factor = 1 } }
-        else_if  = { limit = { has_state_category = town        } multiply_variable = { state_category_factor = 0.75 } }
-        else_if  = { limit = { has_state_category = large_rural } multiply_variable = { state_category_factor = 0.6 } }
-        else_if  = { limit = { has_state_category = rural       } multiply_variable = { state_category_factor = 0.25 } }
-        else     = { multiply_variable = { state_category_factor = 0.1 } }
-        OWNER = { add_to_variable = { This.country_category_factor = Prev.state_category_factor } }
+        IF = {
+            limit = { is_owned_by = PREV }
+            add_to_temp_variable = { actual_manpower_k = state_population_k }
+            if = {
+                limit = { is_core_of = PREV }
+                add_to_temp_variable = { PREV.actual_core_manpower_k = state_population_k }
+            }
+            else = {
+                add_to_temp_variable = { PREV.actual_noncore_manpower_k = state_population_k }
+            }
+        }
+        IF = {
+            limit = { is_core_of = PREV }
+            set_variable = { state_category_factor = 1 }
+            if       = { limit = { has_state_category = megalopolis } multiply_variable = { state_category_factor = 3 } }
+            else_if  = { limit = { has_state_category = metropolis  } multiply_variable = { state_category_factor = 2 } }
+            else_if  = { limit = { has_state_category = large_city  } multiply_variable = { state_category_factor = 1.5 } }
+            else_if  = { limit = { has_state_category = city        } multiply_variable = { state_category_factor = 1.25 } }
+            else_if  = { limit = { has_state_category = large_town  } multiply_variable = { state_category_factor = 1 } }
+            else_if  = { limit = { has_state_category = town        } multiply_variable = { state_category_factor = 0.75 } }
+            else_if  = { limit = { has_state_category = large_rural } multiply_variable = { state_category_factor = 0.6 } }
+            else_if  = { limit = { has_state_category = rural       } multiply_variable = { state_category_factor = 0.25 } }
+            else     = { multiply_variable = { state_category_factor = 0.1 } }
+            OWNER = { add_to_variable = { This.country_category_factor = Prev.state_category_factor } }
+        }
     }
 
     every_country = {
@@ -227,16 +227,16 @@ calculate_GDP = {
     subtract_from_variable = { m_overlord_factor = m_overlord_factor_2 }
     multiply_variable = { temp_mil = m_overlord_factor }
 
-    if = { # Trade Laws
-        limit = {
-            has_idea = free_trade
-        }
-        multiply_temp_variable = { temp_civ = 1 }
-        multiply_temp_variable = { temp_mil = 1 }
-        multiply_temp_variable = { temp_doc = 1 }
-    }
+    #if = { # Trade Laws
+    #    limit = {
+    #        has_idea = free_trade
+    #    }
+    #    multiply_temp_variable = { temp_civ = 1 }
+    #    multiply_temp_variable = { temp_mil = 1 }
+    #    multiply_temp_variable = { temp_doc = 1 }
+    #}
 
-    else_if = {
+    if = {
         limit = {
             has_idea = export_focus
         }
@@ -262,6 +262,10 @@ calculate_GDP = {
         multiply_temp_variable = { temp_mil = 0.67 }
         multiply_temp_variable = { temp_doc = 0.67 }
     }
+
+    set_temp_variable = { var = trade_modifier value = modifier@min_export }
+    add_to_temp_variable = { var = trade_modifier value = 0.5 }
+    multiply_variable = { var = trade_modifier value = 100 }
 
     if = { # Mobilisation
         limit = {

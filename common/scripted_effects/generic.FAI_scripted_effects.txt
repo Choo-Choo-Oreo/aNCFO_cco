@@ -535,34 +535,3 @@ FAI_air_base_queuing = {
 		}
 	}
 }
-
-AI_has_war_with_player = {
-	IF = {
-		LIMIT = {
-			is_ai = yes
-			any_country = {
-				is_ai = yes
-				any_country = {
-					has_war_with = PREV
-					PREV = { has_capitulated = no }
-					NOT = { has_war_with = PREV }
-				}
-			}
-			any_country = {
-				is_ai = no
-				has_capitulated = yes
-				days_since_capitulated > 8
-			}
-		}
-		set_country_flag = ignore_micro_scripts
-		ELSE = {
-			LIMIT = { is_ai = yes }
-			clr_country_flag = ignore_micro_scripts
-		}
-	}
-}
-
-TAG_has_war_with_TAG = {
-	#IMPORT_has_war_with_IMPORT = yes
-	AI_has_war_with_player = yes
-}
