@@ -13,7 +13,12 @@
 	-- NGame
 		NDefines.NGame.START_DATE = "1724.1.1.12"
 		NDefines.NGame.END_DATE = "1936.1.1.1"
-		NDefines.NGame.MAP_SCALE_PIXEL_TO_KM = 8.529	-- Yes, I Choo_Choo_Oreo, did the math.
+		-- Fyjuh Map Scale Calculation
+		-- 1. Surface Area: 4 * pi * (7645.0^2) = 734,449,843.43 km^2
+		-- 2. Areal Resolution (at 8192x4096): 734,449,843.43 / 33,554,432 = ~21.888311 km^2/px
+		-- 3. Equatorial Circumference: 2 * pi * 7645.0 = 48,034.952 km
+		-- 4. HOI4 Scale (Circumference / 5632 px wide): 48,034.952 / 5,632 = 8.528933...
+		NDefines.NGame.MAP_SCALE_PIXEL_TO_KM = 8.529 -- Yes, I Choo_Choo_Oreo, did the math.
 		NDefines.NGame.HANDS_OFF_START_TAG = "LLA"
 		-- Optimization
 			NDefines.NGame.LAG_DAYS_FOR_LOWER_SPEED = 100
