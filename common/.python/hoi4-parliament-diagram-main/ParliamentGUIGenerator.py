@@ -126,7 +126,7 @@ class UI(tk.Frame):
 		self.total_delegates_slider_label["text"] = "Total Delegates:"
 		self.total_delegates_slider_label.pack(side="top")
 
-		self.total_delegates_slider = tk.Scale(self, from_=10, to=1200, orient=tk.HORIZONTAL, command=self.update_positions, length=1200)
+		self.total_delegates_slider = tk.Scale(self, from_=10, to=600, orient=tk.HORIZONTAL, command=self.update_positions, length=600)
 		self.total_delegates_slider.set(450)
 		self.total_delegates_slider.pack()
 
@@ -134,28 +134,28 @@ class UI(tk.Frame):
 		self.other_color_slider_label["text"] = "Preview Progress:"
 		self.other_color_slider_label.pack(side="top")
 
-		self.other_color_slider = tk.Scale(self, from_=0, to=1200, orient=tk.HORIZONTAL, command=self.update_positions, length=1200)
+		self.other_color_slider = tk.Scale(self, from_=0, to=600, orient=tk.HORIZONTAL, command=self.update_positions, length=600)
 		self.other_color_slider.set(0)
 		self.other_color_slider.pack()
 
 		self.oaf_slider_label = tk.Label(self)
 		self.oaf_slider_label["text"] = "Ordering Adjustment Factor:"
 		#self.oaf_slider_label.pack(side="top")
-		self.oaf_slider = tk.Scale(self, from_=-1, to=1, orient=tk.HORIZONTAL, resolution = 0.01,  command=self.update_positions, length=1200)
+		self.oaf_slider = tk.Scale(self, from_=-1, to=1, orient=tk.HORIZONTAL, resolution = 0.01,  command=self.update_positions, length=600)
 		self.oaf_slider.set(0)
 		#self.oaf_slider.pack()
 
 		self.spread_slider_label = tk.Label(self)
 		self.spread_slider_label["text"] = "Spread:"
 		self.spread_slider_label.pack(side="top")
-		self.spread_slider = tk.Scale(self, from_=0, to=10, orient=tk.HORIZONTAL, resolution = 0.01,  command=self.update_positions, length=1200)
+		self.spread_slider = tk.Scale(self, from_=0, to=10, orient=tk.HORIZONTAL, resolution = 0.01,  command=self.update_positions, length=600)
 		self.spread_slider.set(1.85)
 		self.spread_slider.pack()
 
 		self.hole_slider_label = tk.Label(self)
 		self.hole_slider_label["text"] = "First Row Radius:"
 		self.hole_slider_label.pack(side="top")
-		self.hole_slider = tk.Scale(self, from_=0, to=20, orient=tk.HORIZONTAL, resolution = 0.01,  command=self.update_positions, length=1200)
+		self.hole_slider = tk.Scale(self, from_=0, to=20, orient=tk.HORIZONTAL, resolution = 0.01,  command=self.update_positions, length=600)
 		self.hole_slider.set(5.7)
 		self.hole_slider.pack()
 
