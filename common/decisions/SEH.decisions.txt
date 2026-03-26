@@ -1,0 +1,154 @@
+SEH_integration_actions = {
+	SEH_integration_region = {
+		icon = generic_prepare_civil_war
+		target_non_existing = yes
+		target_array = occupied_countries
+		
+		cost = 200
+
+		#visible = {
+		#	has_core_occupation_modifier = {
+		#		occupied_country_tag = FROM
+		#		modifier = compliance_60
+		#	}
+		#}
+
+		available = {
+			has_core_occupation_modifier = {
+				occupied_country_tag = FROM
+				modifier = compliance_80
+			}
+		}
+
+		complete_effect = {
+			every_state = {
+				limit = {
+					is_core_of = FROM
+					is_owned_by = ROOT
+				}
+				ROOT = {
+					add_state_core = PREV
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 0
+
+			modifier = {
+				any_state = {
+					is_on_same_continent_as = ROOT
+					is_core_of = FROM
+					is_core_of = ROOT
+				}
+				add = 50
+			}
+		}
+	}
+
+	instantiate_collaboration = {
+		icon = generic_prepare_civil_war
+
+		#visible = {
+		#	has_core_occupation_modifier = {
+		#		occupied_country_tag = FROM
+		#		modifier = compliance_60
+		#	}
+		#}
+
+		available = {
+			has_core_occupation_modifier = {
+				occupied_country_tag = FROM
+				modifier = compliance_80
+			}
+		}
+
+		complete_effect = {
+			set_temp_variable = { country_to_initiate = FROM }
+			instantiate_collaboration_government = yes
+		}
+
+		target_non_existing = yes
+		target_array = occupied_countries
+
+		ai_will_do = {
+			factor = 2
+
+			modifier = {
+				NOT = { has_decision = SEH_integration_region }
+				any_state = {
+					is_on_same_continent_as = ROOT
+					is_core_of = FROM
+					is_core_of = ROOT
+				}
+				factor = 0
+			}
+
+			modifier = {
+				tag = MRC
+				FROM = { tag = CYR }
+				factor = 0
+			}
+
+			modifier = {
+				tag = MJU
+				FROM = {
+					OR = {
+						tag = CPF
+						tag = SPC
+					}
+				}
+				factor = 0
+			}
+
+			modifier = {
+				# calculating cores we control
+				set_temp_variable = { num_cores_we_control = 0 }
+				all_of_scopes = {
+					array = FROM.core_states
+
+					if = {
+						limit = { is_controlled_by = PREV }
+						add_to_temp_variable = { num_cores_we_control = 1 }
+					}
+				}
+
+				# more score if more cores are controlled by us
+				add = num_cores_we_control
+			}
+
+			# dont make too many collaboratios
+			modifier = {
+				# as number of collaboration subjects increases
+				# only accept subjects with more cores
+				set_temp_variable = { num_min_cores = 1.5 }
+				all_of_scopes = {
+					array = subjects
+					if = {
+						limit = {
+							has_autonomy_state = autonomy_collaboration_government
+						}
+						add_to_temp_variable = { num_min_cores = 0.7 }
+					}
+				}
+
+				check_variable = { num_cores_we_control < num_min_cores }
+
+				factor = 0
+			}
+
+			# don't create collab governments if you have contested cores
+			modifier = {
+				any_state = {
+					OR = {
+						is_controlled_by = ROOT
+						is_owned_by = ROOT
+					}
+					is_core_of = FROM
+					is_core_of = ROOT
+				}
+				factor = 0
+			}
+		}
+	}
+}
