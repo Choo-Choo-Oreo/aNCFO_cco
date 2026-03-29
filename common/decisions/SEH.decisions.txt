@@ -151,33 +151,45 @@ SEH_integration_actions = {
 		}
 	}
 
-    SEH_heritage_up = {
-        icon = generic_prepare_civil_war
-        on_map_mode = decision_view_only
-        target_array = global.heritage_decision_states
-        state_target = yes
+	SEH_heritage_up = {
+		icon = generic_prepare_civil_war
+		on_map_mode = decision_view_only
+		target_array = global.heritage_decision_states
+		state_target = yes
 
-        cost = 1000
+		cost = 1000
 
-        visible = {
-            any_owned_state = { check_variable = { SEH_heritage = FROM.SEH_heritage_decision_target } }
-        }
+		visible = {
+			any_owned_state = { check_variable = { SEH_heritage = FROM.SEH_heritage_decision_target } }
+			NOT = {
+				is_in_array = { array = SEH_accepted_heritage_full value = FROM.SEH_heritage_decision_target }
+			}
+		}
 
-        # in any trigger block
-        available = {
-            ROOT = {
-                set_temp_variable = { temp_min_proportion = 0.5 }
-                set_temp_variable = { temp_heritage_check = FROM.SEH_heritage_decision_target }
-                count_proportion_owned_heritage = yes
-            }
-        }
+		# in any trigger block
+		available = {
+			ROOT = {
+				set_temp_variable = { temp_min_proportion = 0.5 }
+				set_temp_variable = { temp_heritage_check = FROM.SEH_heritage_decision_target }
+				count_proportion_owned_heritage = yes
+			}
+		}
 
-        complete_effect = {
+		complete_effect = {
+			set_temp_variable = { SEH_temp_heritage = FROM.SEH_heritage_decision_target }
+			IF = {
+				LIMIT = {
+					is_in_array = { array = SEH_accepted_heritage_partial value = FROM.SEH_heritage_decision_target }
+				}
+				SEH_add_accepted_heritage_full = yes
+				ELSE = {
+					SEH_add_accepted_heritage_partial = yes
+				}
+			}
+		}
 
-        }
-
-        ai_will_do = {
-            factor = 1
-        }
-    }
+		ai_will_do = {
+			factor = 1
+		}
+	}
 }
