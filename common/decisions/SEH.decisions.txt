@@ -151,61 +151,33 @@ SEH_integration_actions = {
 		}
 	}
 
-	SEH_heritage_up_3 = {
-		icon = generic_prepare_civil_war
-		#target_array = global.SEH_species_states_
-		#target_non_existing = yes
+    SEH_heritage_up = {
+        icon = generic_prepare_civil_war
+        on_map_mode = decision_view_only
+        target_array = global.heritage_decision_states
+        state_target = yes
 
-		cost = 1000
+        cost = 1000
 
-		visible = {
-			any_owned_state = { check_variable = { SEH_heritage = 3 } }
-		}
+        visible = {
+            any_owned_state = { check_variable = { SEH_heritage = FROM.SEH_heritage_decision_target } }
+        }
 
-		# in any trigger block
-		available = {
-			ROOT = {
-				set_temp_variable = { temp_min_proportion = 0.5 }
-				set_temp_variable = { temp_heritage_check = 3 }
-				count_proportion_owned_heritage = yes
-			}
-		}
+        # in any trigger block
+        available = {
+            ROOT = {
+                set_temp_variable = { temp_min_proportion = 0.5 }
+                set_temp_variable = { temp_heritage_check = FROM.SEH_heritage_decision_target }
+                count_proportion_owned_heritage = yes
+            }
+        }
 
-		complete_effect = {
+        complete_effect = {
 
-		}
+        }
 
-		ai_will_do = {
-			factor = 1
-		}
-	}
-
-	SEH_heritage_up_45 = {
-		icon = generic_prepare_civil_war
-		#target_array = global.SEH_species_states_
-		#target_non_existing = yes
-
-		cost = 1000
-
-		visible = {
-			any_owned_state = { check_variable = { SEH_heritage = 45 } }
-		}
-
-		# in any trigger block
-		available = {
-			ROOT = {
-				set_temp_variable = { temp_min_proportion = 0.5 }
-				set_temp_variable = { temp_heritage_check = 45 }
-				count_proportion_owned_heritage = yes
-			}
-		}
-
-		complete_effect = {
-
-		}
-
-		ai_will_do = {
-			factor = 1
-		}
-	}
+        ai_will_do = {
+            factor = 1
+        }
+    }
 }
