@@ -468,7 +468,6 @@ HHE_deeds_assassination = {
 	hidden_effect = {
 		set_global_flag = death_of_deed
 		mark_focus_tree_layout_dirty = yes
-		#load_focus_tree = hhe_election_focus
 		add_stability = -0.1
 		add_ideas = HHE_choas4
 		ROOT = {
@@ -484,14 +483,14 @@ HHE_deeds_assassination = {
 			}
 			update_all_dogmata_on_focus_complete = yes
 		}
-		news_event = HHE.0
+		country_event = HHE.0
 	}
 }
 
 HHE_deeds_assassination_row2 = {
-	if = {
-		limit = {
-			or = {
+	IF = {
+		LIMIT = {
+			OR = {
 				is_historical_railroading_on = yes
 				has_game_rule = { rule = rule_developer_restrictions option = RULE_DEV_RESTRICTIONS_OFF }
 				not = {
@@ -521,9 +520,9 @@ HHE_deeds_assassination_row2 = {
 }
 
 HHE_deeds_assassination_row3 = {
-	if = {
-		limit = {
-			or = {
+	IF = {
+		LIMIT = {
+			OR = {
 				is_historical_railroading_on = yes
 				has_game_rule = { rule = rule_developer_restrictions option = RULE_DEV_RESTRICTIONS_OFF }
 				not = {
@@ -690,37 +689,353 @@ elected_warmonger_effect = {
 	}
 }
 
+HHE_harmonainus_senate_transfer_seats_to_effect = {
+	custom_effect_tooltip = HHE_senate_influence_party_gain_tt
+	for_loop_effect = {
+		end = var:temp_seats_to_transfer
+		
+		# 1. Add 1 seat to the designated gaining party
+		if = {
+			limit = { check_variable = { temp_transfer_party = 1 } }
+			add_to_variable = { harmonainus_senate_party1_seats = 1 }
+		}
+		else_if = {
+			limit = { check_variable = { temp_transfer_party = 2 } }
+			add_to_variable = { harmonainus_senate_party2_seats = 1 }
+		}
+		else_if = {
+			limit = { check_variable = { temp_transfer_party = 3 } }
+			add_to_variable = { harmonainus_senate_party3_seats = 1 }
+		}
+		else_if = {
+			limit = { check_variable = { temp_transfer_party = 4 } }
+			add_to_variable = { harmonainus_senate_party4_seats = 1 }
+		}
+		else_if = {
+			limit = { check_variable = { temp_transfer_party = 5 } }
+			add_to_variable = { harmonainus_senate_party5_seats = 1 }
+		}
+		else_if = {
+			limit = { check_variable = { temp_transfer_party = 6 } }
+			add_to_variable = { harmonainus_senate_party6_seats = 1 }
+		}
+		else_if = {
+			limit = { check_variable = { temp_transfer_party = 7 } }
+			add_to_variable = { harmonainus_senate_party7_seats = 1 }
+		}
+		else_if = {
+			limit = { check_variable = { temp_transfer_party = 8 } }
+			add_to_variable = { harmonainus_senate_party8_seats = 1 }
+		}
+
+		# 2. Subtract 1 seat from a random valid party
+		random_list = {
+			10 = {
+				modifier = {
+					factor = 0
+					OR = {
+						check_variable = { temp_transfer_party = 1 }
+						check_variable = { harmonainus_senate_party1_seats < 1 }
+					}
+				}
+				subtract_from_variable = { harmonainus_senate_party1_seats = 1 }
+			}
+			10 = {
+				modifier = {
+					factor = 0
+					OR = {
+						check_variable = { temp_transfer_party = 2 }
+						check_variable = { harmonainus_senate_party2_seats < 1 }
+					}
+				}
+				subtract_from_variable = { harmonainus_senate_party2_seats = 1 }
+			}
+			10 = {
+				modifier = {
+					factor = 0
+					OR = {
+						check_variable = { temp_transfer_party = 3 }
+						check_variable = { harmonainus_senate_party3_seats < 1 }
+					}
+				}
+				subtract_from_variable = { harmonainus_senate_party3_seats = 1 }
+			}
+			10 = {
+				modifier = {
+					factor = 0
+					OR = {
+						check_variable = { temp_transfer_party = 4 }
+						check_variable = { harmonainus_senate_party4_seats < 1 }
+					}
+				}
+				subtract_from_variable = { harmonainus_senate_party4_seats = 1 }
+			}
+			10 = {
+				modifier = {
+					factor = 0
+					OR = {
+						check_variable = { temp_transfer_party = 5 }
+						check_variable = { harmonainus_senate_party5_seats < 1 }
+					}
+				}
+				subtract_from_variable = { harmonainus_senate_party5_seats = 1 }
+			}
+			10 = {
+				modifier = {
+					factor = 0
+					OR = {
+						check_variable = { temp_transfer_party = 6 }
+						check_variable = { harmonainus_senate_party6_seats < 1 }
+					}
+				}
+				subtract_from_variable = { harmonainus_senate_party6_seats = 1 }
+			}
+			10 = {
+				modifier = {
+					factor = 0
+					OR = {
+						check_variable = { temp_transfer_party = 7 }
+						check_variable = { harmonainus_senate_party7_seats < 1 }
+					}
+				}
+				subtract_from_variable = { harmonainus_senate_party7_seats = 1 }
+			}
+			10 = {
+				modifier = {
+					factor = 0
+					OR = {
+						check_variable = { temp_transfer_party = 8 }
+						check_variable = { harmonainus_senate_party8_seats < 1 }
+					}
+				}
+				subtract_from_variable = { harmonainus_senate_party8_seats = 1 }
+			}
+		}
+	}
+	HHE_harmonainus_senate_gui_reload_effect = yes
+}
+
+HHE_harmonainus_senate_transfer_seats_from_effect = {
+	custom_effect_tooltip = HHE_senate_influence_party_remove_tt
+	for_loop_effect = {
+		end = var:temp_seats_to_transfer
+		
+		# 1. Subtract 1 seat from the designated losing party
+		if = {
+			limit = { check_variable = { temp_transfer_party = 1 } }
+			subtract_from_variable = { harmonainus_senate_party1_seats = 1 }
+		}
+		else_if = {
+			limit = { check_variable = { temp_transfer_party = 2 } }
+			subtract_from_variable = { harmonainus_senate_party2_seats = 1 }
+		}
+		else_if = {
+			limit = { check_variable = { temp_transfer_party = 3 } }
+			subtract_from_variable = { harmonainus_senate_party3_seats = 1 }
+		}
+		else_if = {
+			limit = { check_variable = { temp_transfer_party = 4 } }
+			subtract_from_variable = { harmonainus_senate_party4_seats = 1 }
+		}
+		else_if = {
+			limit = { check_variable = { temp_transfer_party = 5 } }
+			subtract_from_variable = { harmonainus_senate_party5_seats = 1 }
+		}
+		else_if = {
+			limit = { check_variable = { temp_transfer_party = 6 } }
+			subtract_from_variable = { harmonainus_senate_party6_seats = 1 }
+		}
+		else_if = {
+			limit = { check_variable = { temp_transfer_party = 7 } }
+			subtract_from_variable = { harmonainus_senate_party7_seats = 1 }
+		}
+		else_if = {
+			limit = { check_variable = { temp_transfer_party = 8 } }
+			subtract_from_variable = { harmonainus_senate_party8_seats = 1 }
+		}
+
+		# 2. Add 1 seat to a random valid party
+		random_list = {
+			10 = {
+				modifier = {
+					factor = 0
+					OR = {
+						check_variable = { temp_transfer_party = 1 }
+					}
+				}
+				add_to_variable = { harmonainus_senate_party1_seats = 1 }
+			}
+			10 = {
+				modifier = {
+					factor = 0
+					OR = {
+						check_variable = { temp_transfer_party = 2 }
+					}
+				}
+				add_to_variable = { harmonainus_senate_party2_seats = 1 }
+			}
+			10 = {
+				modifier = {
+					factor = 0
+					OR = {
+						check_variable = { temp_transfer_party = 3 }
+					}
+				}
+				add_to_variable = { harmonainus_senate_party3_seats = 1 }
+			}
+			10 = {
+				modifier = {
+					factor = 0
+					OR = {
+						check_variable = { temp_transfer_party = 4 }
+					}
+				}
+				add_to_variable = { harmonainus_senate_party4_seats = 1 }
+			}
+			10 = {
+				modifier = {
+					factor = 0
+					OR = {
+						check_variable = { temp_transfer_party = 5 }
+					}
+				}
+				add_to_variable = { harmonainus_senate_party5_seats = 1 }
+			}
+			10 = {
+				modifier = {
+					factor = 0
+					OR = {
+						check_variable = { temp_transfer_party = 6 }
+					}
+				}
+				add_to_variable = { harmonainus_senate_party6_seats = 1 }
+			}
+			10 = {
+				modifier = {
+					factor = 0
+					OR = {
+						check_variable = { temp_transfer_party = 7 }
+					}
+				}
+				add_to_variable = { harmonainus_senate_party7_seats = 1 }
+			}
+			10 = {
+				modifier = {
+					factor = 0
+					OR = {
+						check_variable = { temp_transfer_party = 8 }
+					}
+				}
+				add_to_variable = { harmonainus_senate_party8_seats = 1 }
+			}
+		}
+	}
+	HHE_harmonainus_senate_gui_reload_effect = yes
+}
+
+HHE_harmonainus_senate_transfer_seats_between_effect = {
+	custom_effect_tooltip = HHE_senate_influence_party_transfer_tt
+	for_loop_effect = {
+		end = var:temp_seats_to_transfer
+		if = {
+			limit = { check_variable = { temp_source_party = 1 } }
+			subtract_from_variable = { harmonainus_senate_party1_seats = 1 }
+		}
+		else_if = {
+			limit = { check_variable = { temp_source_party = 2 } }
+			subtract_from_variable = { harmonainus_senate_party2_seats = 1 }
+		}
+		else_if = {
+			limit = { check_variable = { temp_source_party = 3 } }
+			subtract_from_variable = { harmonainus_senate_party3_seats = 1 }
+		}
+		else_if = {
+			limit = { check_variable = { temp_source_party = 4 } }
+			subtract_from_variable = { harmonainus_senate_party4_seats = 1 }
+		}
+		else_if = {
+			limit = { check_variable = { temp_source_party = 5 } }
+			subtract_from_variable = { harmonainus_senate_party5_seats = 1 }
+		}
+		else_if = {
+			limit = { check_variable = { temp_source_party = 6 } }
+			subtract_from_variable = { harmonainus_senate_party6_seats = 1 }
+		}
+		else_if = {
+			limit = { check_variable = { temp_source_party = 7 } }
+			subtract_from_variable = { harmonainus_senate_party7_seats = 1 }
+		}
+		else_if = {
+			limit = { check_variable = { temp_source_party = 8 } }
+			subtract_from_variable = { harmonainus_senate_party8_seats = 1 }
+		}
+		if = {
+			limit = { check_variable = { temp_transfer_party = 1 } }
+			add_to_variable = { harmonainus_senate_party1_seats = 1 }
+		}
+		else_if = {
+			limit = { check_variable = { temp_transfer_party = 2 } }
+			add_to_variable = { harmonainus_senate_party2_seats = 1 }
+		}
+		else_if = {
+			limit = { check_variable = { temp_transfer_party = 3 } }
+			add_to_variable = { harmonainus_senate_party3_seats = 1 }
+		}
+		else_if = {
+			limit = { check_variable = { temp_transfer_party = 4 } }
+			add_to_variable = { harmonainus_senate_party4_seats = 1 }
+		}
+		else_if = {
+			limit = { check_variable = { temp_transfer_party = 5 } }
+			add_to_variable = { harmonainus_senate_party5_seats = 1 }
+		}
+		else_if = {
+			limit = { check_variable = { temp_transfer_party = 6 } }
+			add_to_variable = { harmonainus_senate_party6_seats = 1 }
+		}
+		else_if = {
+			limit = { check_variable = { temp_transfer_party = 7 } }
+			add_to_variable = { harmonainus_senate_party7_seats = 1 }
+		}
+		else_if = {
+			limit = { check_variable = { temp_transfer_party = 8 } }
+			add_to_variable = { harmonainus_senate_party8_seats = 1 }
+		}
+	}
+	HHE_harmonainus_senate_gui_reload_effect = yes
+}
+
 HHE_harmonainus_senate_gui_reload_effect = {
-    # Generate partial sums for all 8 factions
-    set_temp_variable = { t1 = harmonainus_senate_party1_seats }
-    set_temp_variable = { t2 = harmonainus_senate_party2_seats }
-    set_temp_variable = { t3 = harmonainus_senate_party3_seats }
-    set_temp_variable = { t4 = harmonainus_senate_party4_seats }
-    set_temp_variable = { t5 = harmonainus_senate_party5_seats }
-    set_temp_variable = { t6 = harmonainus_senate_party6_seats }
-    set_temp_variable = { t7 = harmonainus_senate_party7_seats }
-    set_temp_variable = { t8 = 400 } # harmonainus_senate_party8_seats
+	# Generate partial sums for all 8 factions
+	set_temp_variable = { t1 = harmonainus_senate_party1_seats }
+	set_temp_variable = { t2 = harmonainus_senate_party2_seats }
+	set_temp_variable = { t3 = harmonainus_senate_party3_seats }
+	set_temp_variable = { t4 = harmonainus_senate_party4_seats }
+	set_temp_variable = { t5 = harmonainus_senate_party5_seats }
+	set_temp_variable = { t6 = harmonainus_senate_party6_seats }
+	set_temp_variable = { t7 = harmonainus_senate_party7_seats }
+	set_temp_variable = { t8 = 400 } # harmonainus_senate_party8_seats
 
-    # Calculate the cumulative sums
-    add_to_temp_variable = { t2 = t1 }
-    add_to_temp_variable = { t3 = t2 }
-    add_to_temp_variable = { t4 = t3 }
-    add_to_temp_variable = { t5 = t4 }
-    add_to_temp_variable = { t6 = t5 }
-    add_to_temp_variable = { t7 = t6 }
+	# Calculate the cumulative sums
+	add_to_temp_variable = { t2 = t1 }
+	add_to_temp_variable = { t3 = t2 }
+	add_to_temp_variable = { t4 = t3 }
+	add_to_temp_variable = { t5 = t4 }
+	add_to_temp_variable = { t6 = t5 }
+	add_to_temp_variable = { t7 = t6 }
 
-    # Clear the previous array completely
-    clear_array = harmonainus_senate_frame
+	# Clear the previous array completely
+	clear_array = harmonainus_senate_frame
 
-    # Rebuild the array with the new proportional sizes
-    resize_array = { array = harmonainus_senate_frame value = 1 size = t1 }
-    resize_array = { array = harmonainus_senate_frame value = 2 size = t2 }
-    resize_array = { array = harmonainus_senate_frame value = 3 size = t3 }
-    resize_array = { array = harmonainus_senate_frame value = 4 size = t4 }
-    resize_array = { array = harmonainus_senate_frame value = 5 size = t5 }
-    resize_array = { array = harmonainus_senate_frame value = 6 size = t6 }
-    resize_array = { array = harmonainus_senate_frame value = 7 size = t7 }
-    resize_array = { array = harmonainus_senate_frame value = 8 size = t8 }
+	# Rebuild the array with the new proportional sizes
+	resize_array = { array = harmonainus_senate_frame value = 1 size = t1 }
+	resize_array = { array = harmonainus_senate_frame value = 2 size = t2 }
+	resize_array = { array = harmonainus_senate_frame value = 3 size = t3 }
+	resize_array = { array = harmonainus_senate_frame value = 4 size = t4 }
+	resize_array = { array = harmonainus_senate_frame value = 5 size = t5 }
+	resize_array = { array = harmonainus_senate_frame value = 6 size = t6 }
+	resize_array = { array = harmonainus_senate_frame value = 7 size = t7 }
+	resize_array = { array = harmonainus_senate_frame value = 8 size = t8 }
 }
 
 HHE_harmonainus_senate_gui_positions_effect = {
@@ -1535,7 +1850,8 @@ HHE_harmonainus_senate_gui_initial_effect = { # The following scripted effect se
 	set_variable = { harmonainus_senate_party5_seats = 72 }
 	set_variable = { harmonainus_senate_party6_seats = 58 }
 	set_variable = { harmonainus_senate_party7_seats = 12 }
-	#set_variable = { harmonainus_senate_party8_seats = 8 }
+	# Won't be called, but is used for localisation.
+	set_variable = { harmonainus_senate_party8_seats = 8 }
 
 	HHE_harmonainus_senate_gui_reload_effect = yes
 	
@@ -1543,6 +1859,30 @@ HHE_harmonainus_senate_gui_initial_effect = { # The following scripted effect se
 	clear_array = harmonainus_senate_y
 
 	HHE_harmonainus_senate_gui_positions_effect = yes
+}
+
+HHE_harmonainus_senate_find_highest_in_array_effect = {
+	# Build a temp array of seat counts in party order (index 0 = party 1, etc.)
+	set_temp_variable = { temp_party_seats = 0 }
+	add_to_temp_array = { temp_party_seats = harmonainus_senate_party1_seats }
+	add_to_temp_array = { temp_party_seats = harmonainus_senate_party2_seats }
+	add_to_temp_array = { temp_party_seats = harmonainus_senate_party3_seats }
+	add_to_temp_array = { temp_party_seats = harmonainus_senate_party4_seats }
+	add_to_temp_array = { temp_party_seats = harmonainus_senate_party5_seats }
+	add_to_temp_array = { temp_party_seats = harmonainus_senate_party6_seats }
+	add_to_temp_array = { temp_party_seats = harmonainus_senate_party7_seats }
+	add_to_temp_array = { temp_party_seats = harmonainus_senate_party8_seats }
+
+	find_highest_in_array = {
+		array = temp_party_seats
+		value = temp_largest_seat_count
+		index = temp_largest_party_index
+	}
+
+	# Index is 0-based, party numbers are 1-based, so correct for that
+	add_to_temp_variable = { temp_largest_party_index = 1 }
+	# temp_largest_party_index now holds the party number 1-8
+	log = "Largest Party [?temp_largest_party_index]"
 }
 # Lucas Deed Effects
 # Tradition Effects
@@ -1554,14 +1894,14 @@ HHE_mobilize_nobility_industry = {
 	IF = { # Starting
 		limit = { has_idea = nobility_held_industry }
 		swap_ideas = {
-		    remove_idea = nobility_held_industry
-		    add_idea = HHE_mobilize_nobility_industry_2
+			remove_idea = nobility_held_industry
+			add_idea = HHE_mobilize_nobility_industry_2
 		}
 		ELSE = {
 			limit = { has_idea = nobility_held_industry_civilwar }
 			swap_ideas = {
-			    remove_idea = nobility_held_industry_civilwar
-			    add_idea = HHE_mobilize_nobility_industry_2
+				remove_idea = nobility_held_industry_civilwar
+				add_idea = HHE_mobilize_nobility_industry_2
 			}
 		}
 	} # Upgrade to...
@@ -1581,8 +1921,8 @@ HHE_mobilize_nobility_industry = {
 	}
 	ELSE_IF = {
 		limit = { has_idea = HHE_mobilize_nobility_industry_0 }
-	    add_stability = 0.05
-	    add_war_support = 0.10
+		add_stability = 0.05
+		add_war_support = 0.10
 	}
 }
 
