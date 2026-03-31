@@ -1,3 +1,4 @@
+# Gross Economic Products
 calculate_GDP = {
     set_variable = { country_GDP = 0 }
     set_temp_variable = { temp_civ = 0 }
@@ -53,20 +54,18 @@ calculate_GDP = {
         divide_variable = { country_category_factor = 10 }
         set_variable = { country_category_factor_1 = 1 }
         add_to_variable = { country_category_factor_1 = country_category_factor }
-    }
 
-    set_variable = { temp_8 = country_category_factor_1 }
-
-    # -----------------------
-    # INFRASTRUCTURE + CIV RESET (single pass)
-    # -----------------------
-    every_country = {
+        # -----------------------
+        # INFRASTRUCTURE + CIV RESET (single pass)
+        # -----------------------
         set_variable = { This.country_average_inf = 0 }
         set_variable = { This.country_num_states = This.num_owned_states }
         set_variable = { This.country_civ = 0 }
         set_variable = { This.country_civ_own = 0 }
         set_variable = { This.country_civ_core = 0 }
     }
+
+    set_variable = { temp_8 = country_category_factor_1 }
 
     # -----------------------
     # STATE ACCUMULATIONS
@@ -84,13 +83,13 @@ calculate_GDP = {
         set_variable = { state_civ_own = 0 }
         add_to_variable = { state_civ_own = This.industrial_complex_level }
         OWNER = { add_to_variable = { This.country_civ_own = Prev.state_civ_own } }
-    }
 
-    every_state = {
-        limit = { is_core_of = PREV }
-        set_variable = { state_civ_core = 0 }
-        add_to_variable = { state_civ_core = This.industrial_complex_level }
-        OWNER = { add_to_variable = { This.country_civ_core = Prev.state_civ_core } }
+        IF = {
+            limit = { is_core_of = PREV }
+            set_variable = { state_civ_core = 0 }
+            add_to_variable = { state_civ_core = This.industrial_complex_level }
+            OWNER = { add_to_variable = { This.country_civ_core = Prev.state_civ_core } }
+        }
     }
 
     # -----------------------
@@ -98,6 +97,12 @@ calculate_GDP = {
     # -----------------------
     every_country = {
         divide_variable = { This.country_average_inf = This.country_num_states }
+        # -----------------------
+        # RESET ALL ARMS VARIABLES
+        # -----------------------
+        set_variable = { This.country_arms      = 0 }
+        set_variable = { This.country_arms_own  = 0 }
+        set_variable = { This.country_arms_core = 0 }
     }
 
     set_variable = { country_civ_con = 0 }
@@ -144,15 +149,6 @@ calculate_GDP = {
     add_to_temp_variable = { temp_civ = temp_6 }
 
     # -----------------------
-    # RESET ALL ARMS VARIABLES
-    # -----------------------
-    every_country = {
-        set_variable = { This.country_arms      = 0 }
-        set_variable = { This.country_arms_own  = 0 }
-        set_variable = { This.country_arms_core = 0 }
-    }
-
-    # -----------------------
     # STATE ACCUMULATIONS (general + owned)
     # -----------------------
     every_state = {
@@ -165,16 +161,16 @@ calculate_GDP = {
         set_variable = { state_arms_own = 0 }
         add_to_variable = { state_arms_own = This.arms_factory_level }
         OWNER = { add_to_variable = { This.country_arms_own = Prev.state_arms_own } }
-    }
 
-    # -----------------------
-    # STATE ACCUMULATION (core states only)
-    # -----------------------
-    every_state = {
-        limit = { is_core_of = PREV }
-        set_variable = { state_arms_core = 0 }
-        add_to_variable = { state_arms_core = This.arms_factory_level }
-        OWNER = { add_to_variable = { This.country_arms_core = Prev.state_arms_core } }
+        # -----------------------
+        # STATE ACCUMULATION (core states only)
+        # -----------------------
+        IF = {
+            limit = { is_core_of = PREV }
+            set_variable = { state_arms_core = 0 }
+            add_to_variable = { state_arms_core = This.arms_factory_level }
+            OWNER = { add_to_variable = { This.country_arms_core = Prev.state_arms_core } }
+        }
     }
 
     set_variable = { country_arms_con = 0 }
@@ -390,7 +386,7 @@ calculate_GDP = {
 
     add_to_variable = { population_modifier_1 = population_core_state }
 
-    if = { 
+    if = {
         limit = {
             check_variable = { population_core_state > 0.999 }
         }
@@ -426,17 +422,12 @@ calculate_GDP = {
 
 
 
-    if = {
-        limit = {
-            always = yes
-        }
-        multiply_temp_variable = { temp_civ = 0.50 }
-        multiply_temp_variable = { temp_mil = 0.50 }
-        multiply_temp_variable = { temp_doc = 0.50 }
-    }
+    multiply_temp_variable = { temp_civ = 0.50 }
+    multiply_temp_variable = { temp_mil = 0.50 }
+    multiply_temp_variable = { temp_doc = 0.50 }
 
-    if = {
-        limit = {
+    IF = {
+        LIMIT = {
             OR = {
                 has_government = semidemocracy
                 has_government = theocratism
@@ -447,8 +438,8 @@ calculate_GDP = {
         multiply_temp_variable = { temp_doc = 0.90 }
     }
 
-    if = {
-        limit = {
+    ELSE_IF = {
+        LIMIT = {
             OR = {
                 has_government = authoritarianism
                 has_government = unitism
@@ -584,14 +575,16 @@ calculate_GDP = {
 
 
 
-    if = {
-        limit = {
-            all_country = {
-                is_in_array = { global.GDP_list_array = THIS }
-            }
-        }
-        update_position = yes
-    }
+    # Can only see the array within the GUI, thus only need to update when opening the GUI.
+    #if = {
+    #    limit = {
+    #        all_country = {
+    #            is_in_array = { global.GDP_list_array = THIS }
+    #        }
+    #    }
+    #    update_position = yes
+    #}
+
     add_to_variable = { country_GDP_B = country_GDP }
     add_to_variable = { country_GDP_M = country_GDP }
     add_to_variable = { country_GDP_T = country_GDP }
@@ -663,7 +656,8 @@ GDP_growth_calculation = {
     multiply_variable = { gdp_growth = 1 }
     
     set_variable = { gdp_last = country_GDP }
-} # Randomized Iterative Quicksort by Yard1
+}
+# Randomized Iterative Quicksort by Yard1
 # Feel free to use in your mods, but give credits to Yard1 (both in code, with comments; and on your download page)
 create_GDP_sorted_array = {
     if = {
@@ -726,7 +720,8 @@ create_GDP_per_capita_sorted_array = {
         scoped_quicksort = yes
         set_variable = { last_sort_var = sort_var }
     }
-} # Randomized Iterative Quicksort by Yard1
+}
+# Randomized Iterative Quicksort by Yard1
 # Feel free to use in your mods, but give credits to Yard1 (both in code, with comments; and on your download page)
 scoped_quicksort = { # I added a meta effect & scripted loc to take in array arguments - reimu
     meta_effect = {

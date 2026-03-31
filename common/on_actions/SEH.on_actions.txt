@@ -1,34 +1,36 @@
 on_actions = {
 	on_startup = {
 		effect = {
-			# Apply the Variables to States.
+			# Apply the Variables to States
 			ZZZ = {
 				SEH_species_effect  = yes
 				SEH_ethnos_effect   = yes
 				SEH_heritage_effect = yes
 
-				initiate_species_array  = yes
-				initiate_ethnos_array   = yes
-				initiate_heritage_array = yes
+				SEH_initiate_species_array  = yes
+				SEH_initiate_ethnos_array   = yes
+				SEH_initiate_heritage_array = yes
 
-				initiate_species_states  = yes
-				initiate_ethnos_states   = yes
-				initiate_heritage_states = yes
+				SEH_initiate_species_states  = yes
+				SEH_initiate_ethnos_states   = yes
+				SEH_initiate_heritage_states = yes
+
+				SEH_initialize_country_acceptance = yes
 			}
 
 			# Initialize Country Arrays and Apply Modifiers
 			every_country = {
-				SEH_initialize_country_acceptance = yes
-
-				# Add specific starting acceptance here using IF/LIMIT
-				# Example:
+				# Example: Add specific starting acceptance here using IF/LIMIT
 				# IF = {
-				#	LIMIT = { tag = GER }
+				#	LIMIT = { tag = HHE }
 				#	SEH_add_accepted_species_full = { ID = 1 }
 				# }
 
 				# Calculate Modifiers for owned states
 				SEH_refresh_all_owned_states = yes
+
+				# Refresh Integration decisions
+				SEH_initialize_enable_integration_decisions = yes
 			}
 
 			# every_country = {
@@ -45,8 +47,12 @@ on_actions = {
 	# ROOT = New Controller, FROM = Old Controller, FROM.FROM = State ID
 	on_state_control_changed = {
 		effect = {
+			# Calculate Modifiers for owned states
 			SEH_update_state_acceptance_modifiers = yes
 			FROM.FROM = { SEH_update_state_acceptance_modifiers = yes }
+
+			# Refresh Integration decisions
+			SEH_enable_integration_decisions = yes
 		}
 	}
 }

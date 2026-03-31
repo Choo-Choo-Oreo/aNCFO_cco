@@ -43,6 +43,15 @@ SEH_integration_actions = {
 				}
 				add = 50
 			}
+
+			modifier = {
+				any_state = {
+					is_on_same_continent_as = ROOT
+					is_core_of = FROM
+					is_claimed_by = ROOT
+				}
+				add = 50
+			}
 		}
 	}
 
@@ -151,6 +160,92 @@ SEH_integration_actions = {
 		}
 	}
 
+	SEH_species_up = {
+		icon = generic_prepare_civil_war
+		on_map_mode = decision_view_only
+		target_array = global.species_decision_states
+		state_target = yes
+
+		cost = 1000
+
+		allowed = { always = no }
+
+		target_trigger = {
+			any_owned_state = { check_variable = { SEH_species = FROM.SEH_species_decision_target } }
+			NOT = {
+				is_in_array = { array = SEH_accepted_species_full value = FROM.SEH_species_decision_target }
+			}
+		}
+
+		available = {
+			ROOT = {
+				set_temp_variable = { temp_min_proportion = 0.5 }
+				set_temp_variable = { temp_species_check = FROM.SEH_species_decision_target }
+				count_proportion_owned_species = yes
+			}
+		}
+
+		complete_effect = {
+			set_temp_variable = { SEH_temp_species = FROM.SEH_species_decision_target }
+			IF = {
+				LIMIT = {
+					is_in_array = { array = SEH_accepted_species_partial value = FROM.SEH_species_decision_target }
+				}
+				SEH_add_accepted_species_full = yes
+				ELSE = {
+					SEH_add_accepted_species_partial = yes
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	SEH_ethnos_up = {
+		icon = generic_prepare_civil_war
+		on_map_mode = decision_view_only
+		target_array = global.ethnos_decision_states
+		state_target = yes
+
+		cost = 1000
+
+		allowed = { always = no }
+
+		target_trigger = {
+			any_owned_state = { check_variable = { SEH_ethnos = FROM.SEH_ethnos_decision_target } }
+			NOT = {
+				is_in_array = { array = SEH_accepted_ethnos_full value = FROM.SEH_ethnos_decision_target }
+			}
+		}
+
+		available = {
+			ROOT = {
+				set_temp_variable = { temp_min_proportion = 0.5 }
+				set_temp_variable = { temp_ethnos_check = FROM.SEH_ethnos_decision_target }
+				count_proportion_owned_ethnos = yes
+			}
+		}
+
+		complete_effect = {
+			set_temp_variable = { SEH_temp_ethnos = FROM.SEH_ethnos_decision_target }
+			IF = {
+				LIMIT = {
+					is_in_array = { array = SEH_accepted_ethnos_partial value = FROM.SEH_ethnos_decision_target }
+				}
+				SEH_add_accepted_ethnos_full = yes
+				ELSE = {
+					SEH_add_accepted_ethnos_partial = yes
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
 	SEH_heritage_up = {
 		icon = generic_prepare_civil_war
 		on_map_mode = decision_view_only
@@ -159,7 +254,9 @@ SEH_integration_actions = {
 
 		cost = 1000
 
-		visible = {
+		allowed = { always = no }
+
+		target_trigger = {
 			any_owned_state = { check_variable = { SEH_heritage = FROM.SEH_heritage_decision_target } }
 			NOT = {
 				is_in_array = { array = SEH_accepted_heritage_full value = FROM.SEH_heritage_decision_target }
