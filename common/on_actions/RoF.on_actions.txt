@@ -1,0 +1,29 @@
+on_actions = {
+	on_startup = {
+		effect = {
+			# Apply the Variables to States
+			ZZZ = {
+				RoF_religion_effect  = yes
+				SEH_initiate_religious_array  = yes
+				SEH_initiate_religious_states = yes
+				SEH_initialize_country_acceptance = yes
+			}
+
+			# Initialize Country Arrays and Apply Modifiers
+			every_country = {
+				# Calculate Modifiers for owned states
+				RoF_refresh_all_owned_states = yes
+			}
+		}
+	}
+
+	# Dynamic Update on Control Change
+	# ROOT = New Controller, FROM = Old Controller, FROM.FROM = State ID
+	on_state_control_changed = {
+		effect = {
+			# Calculate Modifiers for owned states
+			RoF_update_state_acceptance_modifiers = yes
+			FROM.FROM = { RoF_update_state_acceptance_modifiers = yes }
+		}
+	}
+}
