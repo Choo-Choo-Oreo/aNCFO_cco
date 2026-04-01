@@ -34,10 +34,10 @@ calculate_GDP = {
         IF = {
             limit = { is_core_of = PREV }
             set_variable = { state_category_factor = 1 }
-            if       = { limit = { has_state_category = megalopolis } multiply_variable = { state_category_factor = 3 } }
-            else_if  = { limit = { has_state_category = metropolis  } multiply_variable = { state_category_factor = 2 } }
-            else_if  = { limit = { has_state_category = large_city  } multiply_variable = { state_category_factor = 1.5 } }
-            else_if  = { limit = { has_state_category = city        } multiply_variable = { state_category_factor = 1.25 } }
+            if       = { limit = { has_state_category = megalopolis } multiply_variable = { state_category_factor = 2 } }
+            else_if  = { limit = { has_state_category = metropolis  } multiply_variable = { state_category_factor = 1.5 } }
+            else_if  = { limit = { has_state_category = large_city  } multiply_variable = { state_category_factor = 1.25 } }
+            else_if  = { limit = { has_state_category = city        } multiply_variable = { state_category_factor = 1.1 } }
             else_if  = { limit = { has_state_category = large_town  } multiply_variable = { state_category_factor = 1 } }
             else_if  = { limit = { has_state_category = town        } multiply_variable = { state_category_factor = 0.75 } }
             else_if  = { limit = { has_state_category = large_rural } multiply_variable = { state_category_factor = 0.6 } }
@@ -138,7 +138,7 @@ calculate_GDP = {
     divide_temp_variable = { temp_4 = 10 }
 
     set_temp_variable = { temp_6 = country_civ_noncore_temp }
-    divide_temp_variable = { temp_6 = 1.5 }
+    divide_temp_variable = { temp_6 = 3.0 }
 
     add_to_temp_variable = { temp_civ = temp_4 } 
     add_to_temp_variable = { temp_civ = temp_6 }
@@ -196,7 +196,7 @@ calculate_GDP = {
     divide_temp_variable = { temp_5 = 20 }
 
     set_temp_variable = { temp_7 = country_arms_noncore_temp }
-    divide_temp_variable = { temp_7 = 2.5 }
+    divide_temp_variable = { temp_7 = 5.0 }
 
     add_to_temp_variable = { temp_mil = temp_5 } #
 
@@ -347,13 +347,15 @@ calculate_GDP = {
     aNCFO_GDP_idea_effects = yes # added for changes
 
     set_temp_variable = { temp_0 = temp_mil }
-    multiply_temp_variable = { temp_0 = 3 }
-    divide_temp_variable = { temp_0 = 2 }
+    multiply_temp_variable = { temp_0 = 1.5 }
 
     set_temp_variable = { temp_1 = temp_doc }
-    multiply_temp_variable = { temp_1 = 3 }
-    divide_temp_variable = { temp_1 = 2 }
+    multiply_temp_variable = { temp_1 = 1.5 }
 
+    add_to_variable = { max_manpower_m = max_manpower_k } # Set population to give basic GDP
+    divide_variable = { max_manpower_m = 1000 }
+    multiply_variable = { max_manpower_m = 1 } # How much each 1m people are valued.
+    add_to_variable = { country_GDP = max_manpower_m }
     add_to_variable = { country_GDP = temp_0 }
     add_to_variable = { country_GDP = temp_1 }
 
@@ -387,11 +389,11 @@ calculate_GDP = {
 
     multiply_variable = { country_GDP = population_modifier }
 
-    clamp_variable = { var = population_modifier_civ min = 0  max = 5 }
+    clamp_variable = { var = population_modifier_civ min = 0  max = 2.5 }
     multiply_temp_variable = { temp_civ = population_modifier_civ }
 
     set_variable = { country_average_inf_1 = 1 }
-    multiply_variable = { country_average_inf = 0.1 }
+    multiply_variable = { country_average_inf = 0.05 }
     add_to_variable = { country_average_inf_1 = country_average_inf }
     multiply_variable = { country_average_inf_1  = population_modifier }
     multiply_variable = { country_GDP = country_average_inf_1 }
@@ -429,85 +431,85 @@ calculate_GDP = {
 
     set_variable = { temp_civ_resource = 1 }
     set_variable = { temp_civ_resource_1 = temp_civ }
-    multiply_variable = { temp_civ_resource_1 = 0.5 }
+    multiply_variable = { temp_civ_resource_1 = 0.6 }
     add_to_variable = { temp_civ_resource = temp_civ_resource_1 }
 
     # Production Variables
     set_temp_variable = { math_sqrt_number = resource_produced@oil }
-    divide_temp_variable = { math_sqrt_number = 3000 }
+    divide_temp_variable = { math_sqrt_number = 400000 }
     math_square_root = yes
     multiply_temp_variable = { math_sqrt_output = temp_civ_resource }
     add_to_variable = { country_GDP = math_sqrt_output }
 
     set_temp_variable = { math_sqrt_number = resource_produced@coal }
-    divide_temp_variable = { math_sqrt_number = 7000 }
+    divide_temp_variable = { math_sqrt_number = 270000 }
     math_square_root = yes
     multiply_temp_variable = { math_sqrt_output = temp_civ_resource }
     add_to_variable = { country_GDP = math_sqrt_output }
 
     set_temp_variable = { math_sqrt_number = resource_produced@aluminium }
-    divide_temp_variable = { math_sqrt_number = 4250 }
+    divide_temp_variable = { math_sqrt_number = 200 }
     math_square_root = yes
     multiply_temp_variable = { math_sqrt_output = temp_civ_resource }
     add_to_variable = { country_GDP = math_sqrt_output }
 
     set_temp_variable = { math_sqrt_number = resource_produced@rubber }
-    divide_temp_variable = { math_sqrt_number = 7000 }
+    divide_temp_variable = { math_sqrt_number = 4000 }
     math_square_root = yes
     multiply_temp_variable = { math_sqrt_output = temp_civ_resource }
     add_to_variable = { country_GDP = math_sqrt_output }
 
     set_temp_variable = { math_sqrt_number = resource_produced@tungsten }
-    divide_temp_variable = { math_sqrt_number = 5000 }
+    divide_temp_variable = { math_sqrt_number = 60 }
     math_square_root = yes
     multiply_temp_variable = { math_sqrt_output = temp_civ_resource }
     add_to_variable = { country_GDP = math_sqrt_output }
 
     set_temp_variable = { math_sqrt_number = resource_produced@steel }
-    divide_temp_variable = { math_sqrt_number = 3750 }
+    divide_temp_variable = { math_sqrt_number = 28000 }
     math_square_root = yes
     multiply_temp_variable = { math_sqrt_output = temp_civ_resource }
     add_to_variable = { country_GDP = math_sqrt_output }
 
     set_temp_variable = { math_sqrt_number = resource_produced@chromium }
-    divide_temp_variable = { math_sqrt_number = 5750 }
+    divide_temp_variable = { math_sqrt_number = 1000 }
     math_square_root = yes
     multiply_temp_variable = { math_sqrt_output = temp_civ_resource }
     add_to_variable = { country_GDP = math_sqrt_output }
 
     # Export Variables
     set_temp_variable = { math_sqrt_number = resource_exported@oil }
-    divide_temp_variable = { math_sqrt_number = 50 }
+    divide_temp_variable = { math_sqrt_number = 4000 }
     math_square_root = yes
     add_to_variable = { country_GDP = math_sqrt_output }
 
     set_temp_variable = { math_sqrt_number = resource_exported@coal }
-    divide_temp_variable = { math_sqrt_number = 50 }
+    divide_temp_variable = { math_sqrt_number = 2700 }
     math_square_root = yes
     add_to_variable = { country_GDP = math_sqrt_output }
 
     set_temp_variable = { math_sqrt_number = resource_exported@aluminium }
-    divide_temp_variable = { math_sqrt_number = 50 }
+    divide_temp_variable = { math_sqrt_number = 2 }
     math_square_root = yes
     add_to_variable = { country_GDP = math_sqrt_output }
 
     set_temp_variable = { math_sqrt_number = resource_exported@rubber }
-    divide_temp_variable = { math_sqrt_number = 100 }
+    divide_temp_variable = { math_sqrt_number = 40 }
     math_square_root = yes
     add_to_variable = { country_GDP = math_sqrt_output }
 
     set_temp_variable = { math_sqrt_number = resource_exported@tungsten }
-    divide_temp_variable = { math_sqrt_number = 50 }
+    divide_temp_variable = { math_sqrt_number = 0.6 }
     math_square_root = yes
     add_to_variable = { country_GDP = math_sqrt_output }
 
     set_temp_variable = { math_sqrt_number = resource_exported@steel }
-    divide_temp_variable = { math_sqrt_number = 50 }
+    divide_temp_variable = { math_sqrt_number = 280 }
     math_square_root = yes
     add_to_variable = { country_GDP = math_sqrt_output }
 
     set_temp_variable = { math_sqrt_number = resource_exported@chromium }
-    divide_temp_variable = { math_sqrt_number = 50 }
+    divide_temp_variable = { math_sqrt_number = 10 }
     math_square_root = yes
     add_to_variable = { country_GDP = math_sqrt_output }
 
