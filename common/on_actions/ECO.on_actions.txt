@@ -2,24 +2,64 @@ on_actions = {
 	on_startup = {
 		effect = {
 			every_country = {
-				if = {
-					limit = {
+				IF = {
+					LIMIT = {
 						NOT = { is_in_array = { global.GDP_list_array = THIS } }
 					}
 					add_to_array = { global.GDP_list_array = THIS }
 				}
-				calculate_GDP = yes
-				GDP_growth_calculation = no
+				calculate_GDP = no
+				GDP_growth_calculation = yes
+				set_variable = { gdp_growth = 0 }
 			}
+			set_variable = { global.ECO_inflation = 0 }
+			set_variable = { global.ECO_efficiency = 0 }
+			ZZZ = { ECO_generate_csv_data_per_country = yes }
 		}
 	}
-	
+
 	on_monthly_ZZZ = {
 		effect = {
-			calculate_GDP = yes
-			GDP_growth_calculation = yes
-		    force_update_map_mode = { mapmode = TWR_GDP_map_mode }
-		    force_update_map_mode = { mapmode = TWR_GDP_per_capita_map_mode }
+			log = "OQLY / OYLY fire on_monthly_ZZZ"
+			# --- ON_QUARTERLY (Country Scoped) ---
+			subtract_from_variable = { global.quarterly_counter = 1 }
+			IF = {
+				LIMIT = { check_variable = { global.quarterly_counter = 0 } }
+
+				# --- RESET ---
+				country_event = { id = pulse_offset.1 days = 7 }
+			}
+
+			# --- ON_YEARLY (Country Scoped) ---
+			subtract_from_variable = { global.yearly_counter = 1 }
+			IF = {
+				LIMIT = { check_variable = { global.yearly_counter = 0 } }
+
+				# --- RESET ---
+				country_event = { id = pulse_offset.2 days = 7 }
+			}
+		}
+
+		effect = {
+			log = "ECO fire on_monthly_ZZZ"
+			IF = {
+				LIMIT = { check_variable = { global.quarterly_counter = 0 } }
+				every_country = {
+					calculate_GDP = yes
+					GDP_growth_calculation = yes
+				}
+			}
+			IF = {
+				LIMIT = { check_variable = { global.yearly_counter = 0 } }
+				ECO_generate_csv_data_per_country = yes
+			}
+			force_update_map_mode = { mapmode = TWR_GDP_map_mode }
+			force_update_map_mode = { mapmode = TWR_GDP_per_capita_map_mode }
+			# Divided by 100 in background, a whole number of 1 represents 1%
+			add_to_variable = { global.ECO_inflation = 0.15 }
+			add_to_variable = { global.ECO_efficiency = 0.20 }
+			log = "global.ECO_inflation [GetDateText] = [?global.ECO_inflation]"
+			log = "global.ECO_efficiency [GetDateText] = [?global.ECO_efficiency]"
 		}
 	}
 }
