@@ -1,4 +1,4 @@
-version="0.2.1"
+version="0.2.2"
 replace_path="common/ai_equipment"
 replace_path="common/ai_faction_theaters"
 replace_path="common/ai_focuses"
