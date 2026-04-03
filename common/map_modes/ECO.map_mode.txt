@@ -1,252 +1,233 @@
 scripted_map_modes = {
-	TWR_GDP_map_mode = {
+	# GDP Map Mode with TNO Color Scheme
+	ECO_GDP_map_mode = {
 		top = {
 			type = country
 	
 			color = {
+				# Find the highest GDP country
 				any_country = {
 					all_other_country = {
 						NOT = { check_variable = { country_GDP > PREV.country_GDP } }
 					}
-					set_temp_variable = { value_country_GDP = country_GDP }
-					divide_temp_variable = { value_country_GDP = 5.5 }
+					set_temp_variable = { max_GDP = country_GDP }
 				}
-				set_temp_variable = { value_country_GDP_minus_0 = value_country_GDP }
-				multiply_temp_variable = { value_country_GDP_minus_0 = 0.95 }
-				round_temp_variable = value_country_GDP_minus_0
-				set_temp_variable = { value_country_GDP_minus_1 = value_country_GDP }
-				multiply_temp_variable = { value_country_GDP_minus_1 = 0.9 }
-				round_temp_variable = value_country_GDP_minus_1
-				set_temp_variable = { value_country_GDP_minus_2 = value_country_GDP }
-				multiply_temp_variable = { value_country_GDP_minus_2 = 0.85 }
-				round_temp_variable = value_country_GDP_minus_2
-				set_temp_variable = { value_country_GDP_minus_3 = value_country_GDP }
-				multiply_temp_variable = { value_country_GDP_minus_3 = 0.8 }
-				round_temp_variable = value_country_GDP_minus_3
-				set_temp_variable = { value_country_GDP_minus_4 = value_country_GDP }
-				multiply_temp_variable = { value_country_GDP_minus_4 = 0.75 }
-				round_temp_variable = value_country_GDP_minus_4
-				set_temp_variable = { value_country_GDP_minus_5 = value_country_GDP }
-				multiply_temp_variable = { value_country_GDP_minus_5 = 0.7 }
-				round_temp_variable = value_country_GDP_minus_5
-				set_temp_variable = { value_country_GDP_minus_6 = value_country_GDP }
-				multiply_temp_variable = { value_country_GDP_minus_6 = 0.65 }
-				round_temp_variable = value_country_GDP_minus_6
-				set_temp_variable = { value_country_GDP_minus_7 = value_country_GDP }
-				multiply_temp_variable = { value_country_GDP_minus_7 = 0.6 }
-				round_temp_variable = value_country_GDP_minus_7
-				set_temp_variable = { value_country_GDP_minus_8 = value_country_GDP }
-				multiply_temp_variable = { value_country_GDP_minus_8 = 0.55 }
-				round_temp_variable = value_country_GDP_minus_8
-				set_temp_variable = { value_country_GDP_minus_9 = value_country_GDP }
-				multiply_temp_variable = { value_country_GDP_minus_9 = 0.5 }
-				round_temp_variable = value_country_GDP_minus_9
-				set_temp_variable = { value_country_GDP_minus_10 = value_country_GDP }
-				multiply_temp_variable = { value_country_GDP_minus_10 = 0.45 }
-				round_temp_variable = value_country_GDP_minus_10
-				set_temp_variable = { value_country_GDP_minus_11 = value_country_GDP }
-				multiply_temp_variable = { value_country_GDP_minus_11 = 0.4 }
-				round_temp_variable = value_country_GDP_minus_11
-				set_temp_variable = { value_country_GDP_minus_12 = value_country_GDP }
-				multiply_temp_variable = { value_country_GDP_minus_12 = 0.35 }
-				round_temp_variable = value_country_GDP_minus_12
-				set_temp_variable = { value_country_GDP_minus_13 = value_country_GDP }
-				multiply_temp_variable = { value_country_GDP_minus_13 = 0.3 }
-				round_temp_variable = value_country_GDP_minus_13
-				set_temp_variable = { value_country_GDP_minus_14 = value_country_GDP }
-				multiply_temp_variable = { value_country_GDP_minus_14 = 0.25 }
-				round_temp_variable = value_country_GDP_minus_14
-				set_temp_variable = { value_country_GDP_minus_15 = value_country_GDP }
-				multiply_temp_variable = { value_country_GDP_minus_15 = 0.2 }
-				round_temp_variable = value_country_GDP_minus_15
-				set_temp_variable = { value_country_GDP_minus_16 = value_country_GDP }
-				multiply_temp_variable = { value_country_GDP_minus_16 = 0.15 }
-				round_temp_variable = value_country_GDP_minus_16
-				set_temp_variable = { value_country_GDP_minus_17 = value_country_GDP }
-				multiply_temp_variable = { value_country_GDP_minus_17 = 0.1 }
-				round_temp_variable = value_country_GDP_minus_17
-				set_temp_variable = { value_country_GDP_minus_18 = value_country_GDP }
-				multiply_temp_variable = { value_country_GDP_minus_18 = 0.05 }
-				round_temp_variable = value_country_GDP_minus_18
+				
+				# TOP HALF: Dynamic thresholds (% of max_GDP)
+				# Covers major powers - spreads dynamically across blues/yellows
+				# At USA=100B: 70, 55, 42, 32, 24, 18, 13, 05
+				set_temp_variable = { GDP_threshold_0 = max_GDP }
+				multiply_temp_variable = { GDP_threshold_0 = 0.70 }
+				
+				set_temp_variable = { GDP_threshold_1 = max_GDP }
+				multiply_temp_variable = { GDP_threshold_1 = 0.55 }
+				
+				set_temp_variable = { GDP_threshold_2 = max_GDP }
+				multiply_temp_variable = { GDP_threshold_2 = 0.42 }
+				
+				set_temp_variable = { GDP_threshold_3 = max_GDP }
+				multiply_temp_variable = { GDP_threshold_3 = 0.32 }
+				
+				set_temp_variable = { GDP_threshold_4 = max_GDP }
+				multiply_temp_variable = { GDP_threshold_4 = 0.24 }
+				
+				set_temp_variable = { GDP_threshold_5 = max_GDP }
+				multiply_temp_variable = { GDP_threshold_5 = 0.18 }
+				
+				set_temp_variable = { GDP_threshold_6 = max_GDP }
+				multiply_temp_variable = { GDP_threshold_6 = 0.13 }
+				
+				set_temp_variable = { GDP_threshold_7 = max_GDP }
+				multiply_temp_variable = { GDP_threshold_7 = 0.05 }
+				
+				# BOTTOM HALF: Fixed absolute thresholds (in billions)
+				# Covers minor/small powers - always differentiated regardless of top country
+				set_temp_variable = { GDP_threshold_8 = 10 }
+				set_temp_variable = { GDP_threshold_9 = 7 }
+				set_temp_variable = { GDP_threshold_10 = 5 }
+				set_temp_variable = { GDP_threshold_11 = 3.5 }
+				set_temp_variable = { GDP_threshold_12 = 2.5 }
+				set_temp_variable = { GDP_threshold_13 = 1.8 }
+				set_temp_variable = { GDP_threshold_14 = 1.2 }
+				set_temp_variable = { GDP_threshold_15 = 0.8 }
+				set_temp_variable = { GDP_threshold_16 = 0.5 }
+				
 				FROM = {
 					set_temp_variable = { alpha = 1.0 }
 					set_temp_variable = { thickness = 1.0 }
+					
+					# #1 - Highest GDP - Deep Blue (TNO: 4, 90, 141)
 					if = {
 						limit = {
-							check_variable = { country_GDP = value_country_GDP }
+							check_variable = { country_GDP = max_GDP }
 						}
-						set_temp_variable = { red = 0.0 }
-						set_temp_variable = { green = 0.5 }
-						set_temp_variable = { blue = 0.0 }
-						if = {
-							limit = {
-								all_other_country = {
-									check_variable = { country_GDP < PREV.country_GDP }
-								}
-							}
-							set_temp_variable = { highlighted = 1.0 }
-						}
+						set_temp_variable = { red = 0.016 }
+						set_temp_variable = { green = 0.353 }
+						set_temp_variable = { blue = 0.553 }
+						set_temp_variable = { highlighted = 1.0 }
 					}
+					# >50% max - Deep Blue
 					else_if = {
 						limit = {
-							NOT = { check_variable = { country_GDP < value_country_GDP_minus_0 } }
+							NOT = { check_variable = { country_GDP < GDP_threshold_0 } }
 						}
-						set_temp_variable = { red = 0.0 }
-						set_temp_variable = { green = 0.4 }
-						set_temp_variable = { blue = 0.0 }
+						set_temp_variable = { red = 0.08 }
+						set_temp_variable = { green = 0.42 }
+						set_temp_variable = { blue = 0.63 }
 					}
+					# >37.5% max - Medium Deep Blue
 					else_if = {
 						limit = {
-							NOT = { check_variable = { country_GDP < value_country_GDP_minus_1 } }
+							NOT = { check_variable = { country_GDP < GDP_threshold_1 } }
 						}
-						set_temp_variable = { red = 0.0 }
-						set_temp_variable = { green = 0.6 }
-						set_temp_variable = { blue = 0.0 }
+						set_temp_variable = { red = 0.15 }
+						set_temp_variable = { green = 0.49 }
+						set_temp_variable = { blue = 0.70 }
 					}
+					# >28% max - Medium Blue (TNO: 54, 145, 192)
 					else_if = {
 						limit = {
-							NOT = { check_variable = { country_GDP < value_country_GDP_minus_2 } }
+							NOT = { check_variable = { country_GDP < GDP_threshold_2 } }
 						}
-						set_temp_variable = { red = 0.0 }
-						set_temp_variable = { green = 0.8 }
-						set_temp_variable = { blue = 0.0 }
+						set_temp_variable = { red = 0.212 }
+						set_temp_variable = { green = 0.569 }
+						set_temp_variable = { blue = 0.753 }
 					}
+					# >21% max - Medium Blue Lighter
 					else_if = {
 						limit = {
-							NOT = { check_variable = { country_GDP < value_country_GDP_minus_3 } }
+							NOT = { check_variable = { country_GDP < GDP_threshold_3 } }
 						}
-						set_temp_variable = { red = 0.0 }
-						set_temp_variable = { green = 1.0 }
-						set_temp_variable = { blue = 0.0 }
+						set_temp_variable = { red = 0.30 }
+						set_temp_variable = { green = 0.65 }
+						set_temp_variable = { blue = 0.81 }
 					}
+					# >16% max - Light Blue (TNO: 147, 197, 222)
 					else_if = {
 						limit = {
-							NOT = { check_variable = { country_GDP < value_country_GDP_minus_4 } }
+							NOT = { check_variable = { country_GDP < GDP_threshold_4 } }
 						}
-						set_temp_variable = { red = 0.2 }
-						set_temp_variable = { green = 1.0 }
-						set_temp_variable = { blue = 0.0 }
+						set_temp_variable = { red = 0.576 }
+						set_temp_variable = { green = 0.773 }
+						set_temp_variable = { blue = 0.871 }
 					}
+					# >12% max - Very Light Blue
 					else_if = {
 						limit = {
-							NOT = { check_variable = { country_GDP < value_country_GDP_minus_5 } }
+							NOT = { check_variable = { country_GDP < GDP_threshold_5 } }
 						}
-						set_temp_variable = { red = 0.3 }
-						set_temp_variable = { green = 1.0 }
-						set_temp_variable = { blue = 0.0 }
+						set_temp_variable = { red = 0.70 }
+						set_temp_variable = { green = 0.82 }
+						set_temp_variable = { blue = 0.90 }
 					}
+					# >9% max - Pale Blue
 					else_if = {
 						limit = {
-							NOT = { check_variable = { country_GDP < value_country_GDP_minus_6 } }
+							NOT = { check_variable = { country_GDP < GDP_threshold_6 } }
 						}
-						set_temp_variable = { red = 0.4 }
-						set_temp_variable = { green = 1.0 }
-						set_temp_variable = { blue = 0.0 }
+						set_temp_variable = { red = 0.82 }
+						set_temp_variable = { green = 0.87 }
+						set_temp_variable = { blue = 0.92 }
 					}
+					# >5% max - Yellow-ish White (transition zone)
 					else_if = {
 						limit = {
-							NOT = { check_variable = { country_GDP < value_country_GDP_minus_7 } }
+							NOT = { check_variable = { country_GDP < GDP_threshold_7 } }
 						}
-						set_temp_variable = { red = 0.5 }
-						set_temp_variable = { green = 1.0 }
-						set_temp_variable = { blue = 0.0 }
+						set_temp_variable = { red = 0.95 }
+						set_temp_variable = { green = 0.92 }
+						set_temp_variable = { blue = 0.78 }
 					}
+					# >10B fixed - Light Yellow
 					else_if = {
 						limit = {
-							NOT = { check_variable = { country_GDP < value_country_GDP_minus_8 } }
-						}
-						set_temp_variable = { red = 0.6 }
-						set_temp_variable = { green = 1.0 }
-						set_temp_variable = { blue = 0.0 }
-					}
-					else_if = {
-						limit = {
-							NOT = { check_variable = { country_GDP < value_country_GDP_minus_9 } }
-						}
-						set_temp_variable = { red = 0.7 }
-						set_temp_variable = { green = 1.0 }
-						set_temp_variable = { blue = 0.0 }
-					}
-					else_if = {
-						limit = {
-							NOT = { check_variable = { country_GDP < value_country_GDP_minus_10 } }
-						}
-						set_temp_variable = { red = 0.8 }
-						set_temp_variable = { green = 1.0 }
-						set_temp_variable = { blue = 0.0 }
-					}
-					else_if = {
-						limit = {
-							NOT = { check_variable = { country_GDP < value_country_GDP_minus_11 } }
-						}
-						set_temp_variable = { red = 0.9 }
-						set_temp_variable = { green = 1.0 }
-						set_temp_variable = { blue = 0.0 }
-					}
-					else_if = {
-						limit = {
-							NOT = { check_variable = { country_GDP < value_country_GDP_minus_12 } }
+							NOT = { check_variable = { country_GDP < GDP_threshold_8 } }
 						}
 						set_temp_variable = { red = 1.0 }
-						set_temp_variable = { green = 1.0 }
-						set_temp_variable = { blue = 0.0 }
+						set_temp_variable = { green = 0.90 }
+						set_temp_variable = { blue = 0.60 }
 					}
+					# >7B fixed - Yellow (TNO: 255, 217, 118)
 					else_if = {
 						limit = {
-							NOT = { check_variable = { country_GDP < value_country_GDP_minus_13 } }
+							NOT = { check_variable = { country_GDP < GDP_threshold_9 } }
 						}
 						set_temp_variable = { red = 1.0 }
-						set_temp_variable = { green = 0.85 }
-						set_temp_variable = { blue = 0.0 }
+						set_temp_variable = { green = 0.851 }
+						set_temp_variable = { blue = 0.463 }
 					}
+					# >5B fixed - Yellow-Orange
 					else_if = {
 						limit = {
-							NOT = { check_variable = { country_GDP < value_country_GDP_minus_14 } }
+							NOT = { check_variable = { country_GDP < GDP_threshold_10 } }
 						}
 						set_temp_variable = { red = 1.0 }
-						set_temp_variable = { green = 0.7 }
-						set_temp_variable = { blue = 0.0 }
+						set_temp_variable = { green = 0.78 }
+						set_temp_variable = { blue = 0.35 }
 					}
+					# >3.5B fixed - Light Orange
 					else_if = {
 						limit = {
-							NOT = { check_variable = { country_GDP < value_country_GDP_minus_15 } }
+							NOT = { check_variable = { country_GDP < GDP_threshold_11 } }
 						}
 						set_temp_variable = { red = 1.0 }
-						set_temp_variable = { green = 0.55 }
-						set_temp_variable = { blue = 0.0 }
+						set_temp_variable = { green = 0.70 }
+						set_temp_variable = { blue = 0.28 }
 					}
+					# >2.5B fixed - Orange (TNO: 253, 140, 60)
 					else_if = {
 						limit = {
-							NOT = { check_variable = { country_GDP < value_country_GDP_minus_16 } }
+							NOT = { check_variable = { country_GDP < GDP_threshold_12 } }
 						}
-						set_temp_variable = { red = 1.0 }
-						set_temp_variable = { green = 0.4 }
-						set_temp_variable = { blue = 0.0 }
+						set_temp_variable = { red = 0.992 }
+						set_temp_variable = { green = 0.549 }
+						set_temp_variable = { blue = 0.235 }
 					}
+					# >1.8B fixed - Orange-Red
 					else_if = {
 						limit = {
-							NOT = { check_variable = { country_GDP < value_country_GDP_minus_17 } }
+							NOT = { check_variable = { country_GDP < GDP_threshold_13 } }
 						}
-						set_temp_variable = { red = 1.0 }
-						set_temp_variable = { green = 0.25 }
-						set_temp_variable = { blue = 0.0 }
+						set_temp_variable = { red = 0.98 }
+						set_temp_variable = { green = 0.45 }
+						set_temp_variable = { blue = 0.18 }
 					}
+					# >1.2B fixed - Red-Orange
 					else_if = {
 						limit = {
-							NOT = { check_variable = { country_GDP < value_country_GDP_minus_18 } }
+							NOT = { check_variable = { country_GDP < GDP_threshold_14 } }
 						}
-						set_temp_variable = { red =  0.694 }
-						set_temp_variable = { green = 0.1 }
-						set_temp_variable = { blue = 0.0 }
+						set_temp_variable = { red = 0.95 }
+						set_temp_variable = { green = 0.35 }
+						set_temp_variable = { blue = 0.14 }
 					}
+					# >0.8B fixed - Red
+					else_if = {
+						limit = {
+							NOT = { check_variable = { country_GDP < GDP_threshold_15 } }
+						}
+						set_temp_variable = { red = 0.90 }
+						set_temp_variable = { green = 0.15 }
+						set_temp_variable = { blue = 0.12 }
+					}
+					# >0.5B fixed - Dark Red (TNO: 226, 26, 28)
+					else_if = {
+						limit = {
+							NOT = { check_variable = { country_GDP < GDP_threshold_16 } }
+						}
+						set_temp_variable = { red = 0.886 }
+						set_temp_variable = { green = 0.102 }
+						set_temp_variable = { blue = 0.110 }
+					}
+					# <0.5B - Darkest Red (microstates, colonies)
 					else = {
-						set_temp_variable = { red = 0.392 }
-						set_temp_variable = { green = 0.1 }
-						set_temp_variable = { blue = 0.0 }
+						set_temp_variable = { red = 0.70 }
+						set_temp_variable = { green = 0.05 }
+						set_temp_variable = { blue = 0.07 }
 					}
 				}
 			}
-	
+		
 			thickness = no
 		}
 	
@@ -256,253 +237,353 @@ scripted_map_modes = {
 	
 		far_text = country
 		near_text = state
-		update_daily = no
+		update_daily = yes
 	}
-	# to be added later
-	TWR_GDP_per_capita_map_mode = {
+
+	# GDP per Capita Map Mode with TNO Color Scheme
+	ECO_GDP_per_capita_map_mode = {
 		top = {
 			type = country
-
+	
 			color = {
+				# Find the highest GDP per capita and calculate percentage thresholds
 				any_country = {
 					all_other_country = {
 						NOT = { check_variable = { country_GDP_per_capita > PREV.country_GDP_per_capita } }
 					}
-					set_temp_variable = { value_country_GDP_per_capita = country_GDP_per_capita }
-					divide_temp_variable = { value_country_GDP_per_capita = 1 }
+					set_temp_variable = { max_GDP_per_capita = country_GDP_per_capita }
 				}
-				set_temp_variable = { value_country_GDP_per_capita_minus_0 = value_country_GDP_per_capita }
-				multiply_temp_variable = { value_country_GDP_per_capita_minus_0 = 0.95 }
-				round_temp_variable = value_country_GDP_per_capita_minus_0
-				set_temp_variable = { value_country_GDP_per_capita_minus_1 = value_country_GDP_per_capita }
-				multiply_temp_variable = { value_country_GDP_per_capita_minus_1 = 0.9 }
-				round_temp_variable = value_country_GDP_per_capita_minus_1
-				set_temp_variable = { value_country_GDP_per_capita_minus_2 = value_country_GDP_per_capita }
-				multiply_temp_variable = { value_country_GDP_per_capita_minus_2 = 0.85 }
-				round_temp_variable = value_country_GDP_per_capita_minus_2
-				set_temp_variable = { value_country_GDP_per_capita_minus_3 = value_country_GDP_per_capita }
-				multiply_temp_variable = { value_country_GDP_per_capita_minus_3 = 0.8 }
-				round_temp_variable = value_country_GDP_per_capita_minus_3
-				set_temp_variable = { value_country_GDP_per_capita_minus_4 = value_country_GDP_per_capita }
-				multiply_temp_variable = { value_country_GDP_per_capita_minus_4 = 0.75 }
-				round_temp_variable = value_country_GDP_per_capita_minus_4
-				set_temp_variable = { value_country_GDP_per_capita_minus_5 = value_country_GDP_per_capita }
-				multiply_temp_variable = { value_country_GDP_per_capita_minus_5 = 0.7 }
-				round_temp_variable = value_country_GDP_per_capita_minus_5
-				set_temp_variable = { value_country_GDP_per_capita_minus_6 = value_country_GDP_per_capita }
-				multiply_temp_variable = { value_country_GDP_per_capita_minus_6 = 0.65 }
-				round_temp_variable = value_country_GDP_per_capita_minus_6
-				set_temp_variable = { value_country_GDP_per_capita_minus_7 = value_country_GDP_per_capita }
-				multiply_temp_variable = { value_country_GDP_per_capita_minus_7 = 0.6 }
-				round_temp_variable = value_country_GDP_per_capita_minus_7
-				set_temp_variable = { value_country_GDP_per_capita_minus_8 = value_country_GDP_per_capita }
-				multiply_temp_variable = { value_country_GDP_per_capita_minus_8 = 0.55 }
-				round_temp_variable = value_country_GDP_per_capita_minus_8
-				set_temp_variable = { value_country_GDP_per_capita_minus_9 = value_country_GDP_per_capita }
-				multiply_temp_variable = { value_country_GDP_per_capita_minus_9 = 0.5 }
-				round_temp_variable = value_country_GDP_per_capita_minus_9
-				set_temp_variable = { value_country_GDP_per_capita_minus_10 = value_country_GDP_per_capita }
-				multiply_temp_variable = { value_country_GDP_per_capita_minus_10 = 0.45 }
-				round_temp_variable = value_country_GDP_per_capita_minus_10
-				set_temp_variable = { value_country_GDP_per_capita_minus_11 = value_country_GDP_per_capita }
-				multiply_temp_variable = { value_country_GDP_per_capita_minus_11 = 0.4 }
-				round_temp_variable = value_country_GDP_per_capita_minus_11
-				set_temp_variable = { value_country_GDP_per_capita_minus_12 = value_country_GDP_per_capita }
-				multiply_temp_variable = { value_country_GDP_per_capita_minus_12 = 0.35 }
-				round_temp_variable = value_country_GDP_per_capita_minus_12
-				set_temp_variable = { value_country_GDP_per_capita_minus_13 = value_country_GDP_per_capita }
-				multiply_temp_variable = { value_country_GDP_per_capita_minus_13 = 0.3 }
-				round_temp_variable = value_country_GDP_per_capita_minus_13
-				set_temp_variable = { value_country_GDP_per_capita_minus_14 = value_country_GDP_per_capita }
-				multiply_temp_variable = { value_country_GDP_per_capita_minus_14 = 0.25 }
-				round_temp_variable = value_country_GDP_per_capita_minus_14
-				set_temp_variable = { value_country_GDP_per_capita_minus_15 = value_country_GDP_per_capita }
-				multiply_temp_variable = { value_country_GDP_per_capita_minus_15 = 0.2 }
-				round_temp_variable = value_country_GDP_per_capita_minus_15
-				set_temp_variable = { value_country_GDP_per_capita_minus_16 = value_country_GDP_per_capita }
-				multiply_temp_variable = { value_country_GDP_per_capita_minus_16 = 0.15 }
-				round_temp_variable = value_country_GDP_per_capita_minus_16
-				set_temp_variable = { value_country_GDP_per_capita_minus_17 = value_country_GDP_per_capita }
-				multiply_temp_variable = { value_country_GDP_per_capita_minus_17 = 0.1 }
-				round_temp_variable = value_country_GDP_per_capita_minus_17
-				set_temp_variable = { value_country_GDP_per_capita_minus_18 = value_country_GDP_per_capita }
-				multiply_temp_variable = { value_country_GDP_per_capita_minus_18 = 0.05 }
-				round_temp_variable = value_country_GDP_per_capita_minus_18
+				
+				# Create 19 graduated thresholds (95% down to 5% in 5% steps)
+				set_temp_variable = { GDP_pc_threshold_0 = max_GDP_per_capita }
+				multiply_temp_variable = { GDP_pc_threshold_0 = 0.95 }
+				
+				set_temp_variable = { GDP_pc_threshold_1 = max_GDP_per_capita }
+				multiply_temp_variable = { GDP_pc_threshold_1 = 0.90 }
+				
+				set_temp_variable = { GDP_pc_threshold_2 = max_GDP_per_capita }
+				multiply_temp_variable = { GDP_pc_threshold_2 = 0.85 }
+				
+				set_temp_variable = { GDP_pc_threshold_3 = max_GDP_per_capita }
+				multiply_temp_variable = { GDP_pc_threshold_3 = 0.80 }
+				
+				set_temp_variable = { GDP_pc_threshold_4 = max_GDP_per_capita }
+				multiply_temp_variable = { GDP_pc_threshold_4 = 0.75 }
+				
+				set_temp_variable = { GDP_pc_threshold_5 = max_GDP_per_capita }
+				multiply_temp_variable = { GDP_pc_threshold_5 = 0.70 }
+				
+				set_temp_variable = { GDP_pc_threshold_6 = max_GDP_per_capita }
+				multiply_temp_variable = { GDP_pc_threshold_6 = 0.65 }
+				
+				set_temp_variable = { GDP_pc_threshold_7 = max_GDP_per_capita }
+				multiply_temp_variable = { GDP_pc_threshold_7 = 0.60 }
+				
+				set_temp_variable = { GDP_pc_threshold_8 = max_GDP_per_capita }
+				multiply_temp_variable = { GDP_pc_threshold_8 = 0.55 }
+				
+				set_temp_variable = { GDP_pc_threshold_9 = max_GDP_per_capita }
+				multiply_temp_variable = { GDP_pc_threshold_9 = 0.50 }
+				
+				set_temp_variable = { GDP_pc_threshold_10 = max_GDP_per_capita }
+				multiply_temp_variable = { GDP_pc_threshold_10 = 0.45 }
+				
+				set_temp_variable = { GDP_pc_threshold_11 = max_GDP_per_capita }
+				multiply_temp_variable = { GDP_pc_threshold_11 = 0.40 }
+				
+				set_temp_variable = { GDP_pc_threshold_12 = max_GDP_per_capita }
+				multiply_temp_variable = { GDP_pc_threshold_12 = 0.35 }
+				
+				set_temp_variable = { GDP_pc_threshold_13 = max_GDP_per_capita }
+				multiply_temp_variable = { GDP_pc_threshold_13 = 0.30 }
+				
+				set_temp_variable = { GDP_pc_threshold_14 = max_GDP_per_capita }
+				multiply_temp_variable = { GDP_pc_threshold_14 = 0.25 }
+				
+				set_temp_variable = { GDP_pc_threshold_15 = max_GDP_per_capita }
+				multiply_temp_variable = { GDP_pc_threshold_15 = 0.20 }
+				
+				set_temp_variable = { GDP_pc_threshold_16 = max_GDP_per_capita }
+				multiply_temp_variable = { GDP_pc_threshold_16 = 0.15 }
+				
+				set_temp_variable = { GDP_pc_threshold_17 = max_GDP_per_capita }
+				multiply_temp_variable = { GDP_pc_threshold_17 = 0.10 }
+				
+				set_temp_variable = { GDP_pc_threshold_18 = max_GDP_per_capita }
+				multiply_temp_variable = { GDP_pc_threshold_18 = 0.05 }
+				
 				FROM = {
 					set_temp_variable = { alpha = 1.0 }
 					set_temp_variable = { thickness = 1.0 }
+					
+					# Highest GDP per capita - Deep Blue (TNO: 4, 90, 141)
 					if = {
 						limit = {
-							check_variable = { country_GDP_per_capita = value_country_GDP_per_capita }
+							check_variable = { country_GDP_per_capita = max_GDP_per_capita }
 						}
-						set_temp_variable = { red = 0.0 }
-						set_temp_variable = { green = 0.5 }
-						set_temp_variable = { blue = 0.0 }
-						if = {
-							limit = {
-								all_other_country = {
-									check_variable = { country_GDP_per_capita < PREV.country_GDP_per_capita }
-								}
-							}
-							set_temp_variable = { highlighted = 1.0 }
-						}
+						set_temp_variable = { red = 0.016 }
+						set_temp_variable = { green = 0.353 }
+						set_temp_variable = { blue = 0.553 }
+						set_temp_variable = { highlighted = 1.0 }
 					}
+					# 95% - Deep Blue
 					else_if = {
 						limit = {
-							NOT = { check_variable = { country_GDP_per_capita < value_country_GDP_per_capita_minus_0 } }
+							NOT = { check_variable = { country_GDP_per_capita < GDP_pc_threshold_0 } }
 						}
-						set_temp_variable = { red = 0.0 }
-						set_temp_variable = { green = 0.4 }
-						set_temp_variable = { blue = 0.0 }
+						set_temp_variable = { red = 0.08 }
+						set_temp_variable = { green = 0.42 }
+						set_temp_variable = { blue = 0.63 }
 					}
+					# 90% - Medium Deep Blue
 					else_if = {
 						limit = {
-							NOT = { check_variable = { country_GDP_per_capita < value_country_GDP_per_capita_minus_1 } }
+							NOT = { check_variable = { country_GDP_per_capita < GDP_pc_threshold_1 } }
 						}
-						set_temp_variable = { red = 0.0 }
-						set_temp_variable = { green = 0.6 }
-						set_temp_variable = { blue = 0.0 }
+						set_temp_variable = { red = 0.15 }
+						set_temp_variable = { green = 0.49 }
+						set_temp_variable = { blue = 0.70 }
 					}
+					# 85% - Medium Blue (TNO: 54, 145, 192)
 					else_if = {
 						limit = {
-							NOT = { check_variable = { country_GDP_per_capita < value_country_GDP_per_capita_minus_2 } }
+							NOT = { check_variable = { country_GDP_per_capita < GDP_pc_threshold_2 } }
 						}
-						set_temp_variable = { red = 0.0 }
-						set_temp_variable = { green = 0.8 }
-						set_temp_variable = { blue = 0.0 }
+						set_temp_variable = { red = 0.212 }
+						set_temp_variable = { green = 0.569 }
+						set_temp_variable = { blue = 0.753 }
 					}
+					# 80% - Medium Blue Lighter
 					else_if = {
 						limit = {
-							NOT = { check_variable = { country_GDP_per_capita < value_country_GDP_per_capita_minus_3 } }
+							NOT = { check_variable = { country_GDP_per_capita < GDP_pc_threshold_3 } }
 						}
-						set_temp_variable = { red = 0.0 }
-						set_temp_variable = { green = 1.0 }
-						set_temp_variable = { blue = 0.0 }
+						set_temp_variable = { red = 0.30 }
+						set_temp_variable = { green = 0.65 }
+						set_temp_variable = { blue = 0.81 }
 					}
+					# 75% - Light Blue (TNO: 147, 197, 222)
 					else_if = {
 						limit = {
-							NOT = { check_variable = { country_GDP_per_capita < value_country_GDP_per_capita_minus_4 } }
+							NOT = { check_variable = { country_GDP_per_capita < GDP_pc_threshold_4 } }
 						}
-						set_temp_variable = { red = 0.2 }
-						set_temp_variable = { green = 1.0 }
-						set_temp_variable = { blue = 0.0 }
+						set_temp_variable = { red = 0.576 }
+						set_temp_variable = { green = 0.773 }
+						set_temp_variable = { blue = 0.871 }
 					}
+					# 70% - Very Light Blue
 					else_if = {
 						limit = {
-							NOT = { check_variable = { country_GDP_per_capita < value_country_GDP_per_capita_minus_5 } }
+							NOT = { check_variable = { country_GDP_per_capita < GDP_pc_threshold_5 } }
 						}
-						set_temp_variable = { red = 0.3 }
-						set_temp_variable = { green = 1.0 }
-						set_temp_variable = { blue = 0.0 }
+						set_temp_variable = { red = 0.70 }
+						set_temp_variable = { green = 0.82 }
+						set_temp_variable = { blue = 0.90 }
 					}
+					# 65% - Pale Blue
 					else_if = {
 						limit = {
-							NOT = { check_variable = { country_GDP_per_capita < value_country_GDP_per_capita_minus_6 } }
+							NOT = { check_variable = { country_GDP_per_capita < GDP_pc_threshold_6 } }
 						}
-						set_temp_variable = { red = 0.4 }
-						set_temp_variable = { green = 1.0 }
-						set_temp_variable = { blue = 0.0 }
+						set_temp_variable = { red = 0.82 }
+						set_temp_variable = { green = 0.87 }
+						set_temp_variable = { blue = 0.92 }
 					}
+					# 60% - Yellow-ish White
 					else_if = {
 						limit = {
-							NOT = { check_variable = { country_GDP_per_capita < value_country_GDP_per_capita_minus_7 } }
+							NOT = { check_variable = { country_GDP_per_capita < GDP_pc_threshold_7 } }
 						}
-						set_temp_variable = { red = 0.5 }
-						set_temp_variable = { green = 1.0 }
-						set_temp_variable = { blue = 0.0 }
+						set_temp_variable = { red = 0.95 }
+						set_temp_variable = { green = 0.92 }
+						set_temp_variable = { blue = 0.78 }
 					}
+					# 55% - Light Yellow
 					else_if = {
 						limit = {
-							NOT = { check_variable = { country_GDP_per_capita < value_country_GDP_per_capita_minus_8 } }
-						}
-						set_temp_variable = { red = 0.6 }
-						set_temp_variable = { green = 1.0 }
-						set_temp_variable = { blue = 0.0 }
-					}
-					else_if = {
-						limit = {
-							NOT = { check_variable = { country_GDP_per_capita < value_country_GDP_per_capita_minus_9 } }
-						}
-						set_temp_variable = { red = 0.7 }
-						set_temp_variable = { green = 1.0 }
-						set_temp_variable = { blue = 0.0 }
-					}
-					else_if = {
-						limit = {
-							NOT = { check_variable = { country_GDP_per_capita < value_country_GDP_per_capita_minus_10 } }
-						}
-						set_temp_variable = { red = 0.8 }
-						set_temp_variable = { green = 1.0 }
-						set_temp_variable = { blue = 0.0 }
-					}
-					else_if = {
-						limit = {
-							NOT = { check_variable = { country_GDP_per_capita < value_country_GDP_per_capita_minus_11 } }
-						}
-						set_temp_variable = { red = 0.9 }
-						set_temp_variable = { green = 1.0 }
-						set_temp_variable = { blue = 0.0 }
-					}
-					else_if = {
-						limit = {
-							NOT = { check_variable = { country_GDP_per_capita < value_country_GDP_per_capita_minus_12 } }
+							NOT = { check_variable = { country_GDP_per_capita < GDP_pc_threshold_8 } }
 						}
 						set_temp_variable = { red = 1.0 }
-						set_temp_variable = { green = 1.0 }
-						set_temp_variable = { blue = 0.0 }
+						set_temp_variable = { green = 0.90 }
+						set_temp_variable = { blue = 0.60 }
 					}
+					# 50% - Yellow (TNO: 255, 217, 118)
 					else_if = {
 						limit = {
-							NOT = { check_variable = { country_GDP_per_capita < value_country_GDP_per_capita_minus_13 } }
+							NOT = { check_variable = { country_GDP_per_capita < GDP_pc_threshold_9 } }
 						}
 						set_temp_variable = { red = 1.0 }
-						set_temp_variable = { green = 0.85 }
-						set_temp_variable = { blue = 0.0 }
+						set_temp_variable = { green = 0.851 }
+						set_temp_variable = { blue = 0.463 }
 					}
+					# 45% - Yellow-Orange
 					else_if = {
 						limit = {
-							NOT = { check_variable = { country_GDP_per_capita < value_country_GDP_per_capita_minus_14 } }
+							NOT = { check_variable = { country_GDP_per_capita < GDP_pc_threshold_10 } }
 						}
 						set_temp_variable = { red = 1.0 }
-						set_temp_variable = { green = 0.7 }
-						set_temp_variable = { blue = 0.0 }
+						set_temp_variable = { green = 0.78 }
+						set_temp_variable = { blue = 0.35 }
 					}
+					# 40% - Light Orange
 					else_if = {
 						limit = {
-							NOT = { check_variable = { country_GDP_per_capita < value_country_GDP_per_capita_minus_15 } }
+							NOT = { check_variable = { country_GDP_per_capita < GDP_pc_threshold_11 } }
 						}
 						set_temp_variable = { red = 1.0 }
-						set_temp_variable = { green = 0.55 }
-						set_temp_variable = { blue = 0.0 }
+						set_temp_variable = { green = 0.70 }
+						set_temp_variable = { blue = 0.28 }
 					}
+					# 35% - Orange (TNO: 253, 140, 60)
 					else_if = {
 						limit = {
-							NOT = { check_variable = { country_GDP_per_capita < value_country_GDP_per_capita_minus_16 } }
+							NOT = { check_variable = { country_GDP_per_capita < GDP_pc_threshold_12 } }
 						}
-						set_temp_variable = { red = 1.0 }
-						set_temp_variable = { green = 0.4 }
-						set_temp_variable = { blue = 0.0 }
+						set_temp_variable = { red = 0.992 }
+						set_temp_variable = { green = 0.549 }
+						set_temp_variable = { blue = 0.235 }
 					}
+					# 30% - Orange-Red
 					else_if = {
 						limit = {
-							NOT = { check_variable = { country_GDP_per_capita < value_country_GDP_per_capita_minus_17 } }
+							NOT = { check_variable = { country_GDP_per_capita < GDP_pc_threshold_13 } }
 						}
-						set_temp_variable = { red = 1.0 }
+						set_temp_variable = { red = 0.98 }
+						set_temp_variable = { green = 0.45 }
+						set_temp_variable = { blue = 0.18 }
+					}
+					# 25% - Red-Orange
+					else_if = {
+						limit = {
+							NOT = { check_variable = { country_GDP_per_capita < GDP_pc_threshold_14 } }
+						}
+						set_temp_variable = { red = 0.95 }
+						set_temp_variable = { green = 0.35 }
+						set_temp_variable = { blue = 0.14 }
+					}
+					# 20% - Orange-Red
+					else_if = {
+						limit = {
+							NOT = { check_variable = { country_GDP_per_capita < GDP_pc_threshold_15 } }
+						}
+						set_temp_variable = { red = 0.92 }
 						set_temp_variable = { green = 0.25 }
-						set_temp_variable = { blue = 0.0 }
+						set_temp_variable = { blue = 0.13 }
 					}
+					# 15% - Red
 					else_if = {
 						limit = {
-							NOT = { check_variable = { country_GDP_per_capita < value_country_GDP_per_capita_minus_18 } }
+							NOT = { check_variable = { country_GDP_per_capita < GDP_pc_threshold_16 } }
 						}
-						set_temp_variable = { red =  0.694 }
-						set_temp_variable = { green = 0.1 }
-						set_temp_variable = { blue = 0.0 }
+						set_temp_variable = { red = 0.90 }
+						set_temp_variable = { green = 0.15 }
+						set_temp_variable = { blue = 0.12 }
 					}
+					# 10% - Dark Red (TNO: 226, 26, 28)
+					else_if = {
+						limit = {
+							NOT = { check_variable = { country_GDP_per_capita < GDP_pc_threshold_17 } }
+						}
+						set_temp_variable = { red = 0.886 }
+						set_temp_variable = { green = 0.102 }
+						set_temp_variable = { blue = 0.110 }
+					}
+					# 5% - Darker Red
+					else_if = {
+						limit = {
+							NOT = { check_variable = { country_GDP_per_capita < GDP_pc_threshold_18 } }
+						}
+						set_temp_variable = { red = 0.80 }
+						set_temp_variable = { green = 0.08 }
+						set_temp_variable = { blue = 0.09 }
+					}
+					# Below 5% - Darkest Red
 					else = {
-						set_temp_variable = { red = 0.392 }
-						set_temp_variable = { green = 0.1 }
-						set_temp_variable = { blue = 0.0 }
+						set_temp_variable = { red = 0.70 }
+						set_temp_variable = { green = 0.05 }
+						set_temp_variable = { blue = 0.07 }
+					}
+				}
+			}
+		
+			thickness = no
+		}
+	
+		bottom = {
+			type = none
+		}
+	
+		far_text = country
+		near_text = state
+		update_daily = yes
+	}
+
+	# State GDP Per Capita Map Mode
+	# Gradient mirrors TWR_GDP_per_capita_map_mode: all-dynamic % of max
+	ECO_state_GDP_per_capita_map_mode = {
+		top = {
+			type = state
+
+			color = {
+				# Read pre-computed global max (set in calculate_state_GDP, avoids scope issues)
+				set_temp_variable = { max_sGDPPC = global.max_state_GDP_per_capita }
+				clamp_temp_variable = { var = max_sGDPPC min = 1 }
+
+				# Dynamic thresholds (% of max state GDPPC) — mirrors country GDPPC mode
+				set_temp_variable = { sPC_t0  = max_sGDPPC } multiply_temp_variable = { sPC_t0  = 0.95 }
+				set_temp_variable = { sPC_t1  = max_sGDPPC } multiply_temp_variable = { sPC_t1  = 0.90 }
+				set_temp_variable = { sPC_t2  = max_sGDPPC } multiply_temp_variable = { sPC_t2  = 0.85 }
+				set_temp_variable = { sPC_t3  = max_sGDPPC } multiply_temp_variable = { sPC_t3  = 0.80 }
+				set_temp_variable = { sPC_t4  = max_sGDPPC } multiply_temp_variable = { sPC_t4  = 0.75 }
+				set_temp_variable = { sPC_t5  = max_sGDPPC } multiply_temp_variable = { sPC_t5  = 0.70 }
+				set_temp_variable = { sPC_t6  = max_sGDPPC } multiply_temp_variable = { sPC_t6  = 0.65 }
+				set_temp_variable = { sPC_t7  = max_sGDPPC } multiply_temp_variable = { sPC_t7  = 0.60 }
+				set_temp_variable = { sPC_t8  = max_sGDPPC } multiply_temp_variable = { sPC_t8  = 0.55 }
+				set_temp_variable = { sPC_t9  = max_sGDPPC } multiply_temp_variable = { sPC_t9  = 0.50 }
+				set_temp_variable = { sPC_t10 = max_sGDPPC } multiply_temp_variable = { sPC_t10 = 0.45 }
+				set_temp_variable = { sPC_t11 = max_sGDPPC } multiply_temp_variable = { sPC_t11 = 0.40 }
+				set_temp_variable = { sPC_t12 = max_sGDPPC } multiply_temp_variable = { sPC_t12 = 0.35 }
+				set_temp_variable = { sPC_t13 = max_sGDPPC } multiply_temp_variable = { sPC_t13 = 0.30 }
+				set_temp_variable = { sPC_t14 = max_sGDPPC } multiply_temp_variable = { sPC_t14 = 0.25 }
+				set_temp_variable = { sPC_t15 = max_sGDPPC } multiply_temp_variable = { sPC_t15 = 0.20 }
+				set_temp_variable = { sPC_t16 = max_sGDPPC } multiply_temp_variable = { sPC_t16 = 0.15 }
+				set_temp_variable = { sPC_t17 = max_sGDPPC } multiply_temp_variable = { sPC_t17 = 0.10 }
+				set_temp_variable = { sPC_t18 = max_sGDPPC } multiply_temp_variable = { sPC_t18 = 0.05 }
+
+				FROM = {
+					set_temp_variable = { alpha = 1.0 }
+					set_temp_variable = { thickness = 1.0 }
+
+					if = {
+						limit = { check_variable = { state_GDP_per_capita = max_sGDPPC } }
+						set_temp_variable = { red = 0.016 }
+						set_temp_variable = { green = 0.353 }
+						set_temp_variable = { blue = 0.553 }
+						set_temp_variable = { highlighted = 1.0 }
+					}
+					else_if = { limit = { NOT = { check_variable = { state_GDP_per_capita < sPC_t0  } } } set_temp_variable = { red = 0.08  } set_temp_variable = { green = 0.42  } set_temp_variable = { blue = 0.63  } }
+					else_if = { limit = { NOT = { check_variable = { state_GDP_per_capita < sPC_t1  } } } set_temp_variable = { red = 0.15  } set_temp_variable = { green = 0.49  } set_temp_variable = { blue = 0.70  } }
+					else_if = { limit = { NOT = { check_variable = { state_GDP_per_capita < sPC_t2  } } } set_temp_variable = { red = 0.212 } set_temp_variable = { green = 0.569 } set_temp_variable = { blue = 0.753 } }
+					else_if = { limit = { NOT = { check_variable = { state_GDP_per_capita < sPC_t3  } } } set_temp_variable = { red = 0.30  } set_temp_variable = { green = 0.65  } set_temp_variable = { blue = 0.81  } }
+					else_if = { limit = { NOT = { check_variable = { state_GDP_per_capita < sPC_t4  } } } set_temp_variable = { red = 0.576 } set_temp_variable = { green = 0.773 } set_temp_variable = { blue = 0.871 } }
+					else_if = { limit = { NOT = { check_variable = { state_GDP_per_capita < sPC_t5  } } } set_temp_variable = { red = 0.70  } set_temp_variable = { green = 0.82  } set_temp_variable = { blue = 0.90  } }
+					else_if = { limit = { NOT = { check_variable = { state_GDP_per_capita < sPC_t6  } } } set_temp_variable = { red = 0.82  } set_temp_variable = { green = 0.87  } set_temp_variable = { blue = 0.92  } }
+					else_if = { limit = { NOT = { check_variable = { state_GDP_per_capita < sPC_t7  } } } set_temp_variable = { red = 0.95  } set_temp_variable = { green = 0.92  } set_temp_variable = { blue = 0.78  } }
+					else_if = { limit = { NOT = { check_variable = { state_GDP_per_capita < sPC_t8  } } } set_temp_variable = { red = 1.0   } set_temp_variable = { green = 0.90  } set_temp_variable = { blue = 0.60  } }
+					else_if = { limit = { NOT = { check_variable = { state_GDP_per_capita < sPC_t9  } } } set_temp_variable = { red = 1.0   } set_temp_variable = { green = 0.851 } set_temp_variable = { blue = 0.463 } }
+					else_if = { limit = { NOT = { check_variable = { state_GDP_per_capita < sPC_t10 } } } set_temp_variable = { red = 1.0   } set_temp_variable = { green = 0.78  } set_temp_variable = { blue = 0.35  } }
+					else_if = { limit = { NOT = { check_variable = { state_GDP_per_capita < sPC_t11 } } } set_temp_variable = { red = 1.0   } set_temp_variable = { green = 0.70  } set_temp_variable = { blue = 0.28  } }
+					else_if = { limit = { NOT = { check_variable = { state_GDP_per_capita < sPC_t12 } } } set_temp_variable = { red = 0.992 } set_temp_variable = { green = 0.549 } set_temp_variable = { blue = 0.235 } }
+					else_if = { limit = { NOT = { check_variable = { state_GDP_per_capita < sPC_t13 } } } set_temp_variable = { red = 0.98  } set_temp_variable = { green = 0.45  } set_temp_variable = { blue = 0.18  } }
+					else_if = { limit = { NOT = { check_variable = { state_GDP_per_capita < sPC_t14 } } } set_temp_variable = { red = 0.95  } set_temp_variable = { green = 0.35  } set_temp_variable = { blue = 0.14  } }
+					else_if = { limit = { NOT = { check_variable = { state_GDP_per_capita < sPC_t15 } } } set_temp_variable = { red = 0.92  } set_temp_variable = { green = 0.25  } set_temp_variable = { blue = 0.13  } }
+					else_if = { limit = { NOT = { check_variable = { state_GDP_per_capita < sPC_t16 } } } set_temp_variable = { red = 0.90  } set_temp_variable = { green = 0.15  } set_temp_variable = { blue = 0.12  } }
+					else_if = { limit = { NOT = { check_variable = { state_GDP_per_capita < sPC_t17 } } } set_temp_variable = { red = 0.886 } set_temp_variable = { green = 0.102 } set_temp_variable = { blue = 0.110 } }
+					else_if = { limit = { NOT = { check_variable = { state_GDP_per_capita < sPC_t18 } } } set_temp_variable = { red = 0.80  } set_temp_variable = { green = 0.08  } set_temp_variable = { blue = 0.09  } }
+					else = {
+						set_temp_variable = { red = 0.70 }
+						set_temp_variable = { green = 0.05 }
+						set_temp_variable = { blue = 0.07 }
 					}
 				}
 			}

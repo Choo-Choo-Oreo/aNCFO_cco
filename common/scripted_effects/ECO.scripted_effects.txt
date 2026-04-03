@@ -3,6 +3,233 @@
 # Gold Grams to Currency ratio, USD = 31.1035
 @currency_conversion_factor = 31.1035
 
+calculate_state_GDP = {
+	# Reset global max trackers each run
+	set_variable = { global.max_state_GDP = 0 }
+	set_variable = { global.max_state_GDP_per_capita = 0 }
+
+	# -----------------------------------------------------------------------
+	# STATE GDP & STATE GDPPC — Informational / Map Mode
+	# -----------------------------------------------------------------------
+	# Computes a per-state GDP figure that reflects each state's productive
+	# contribution. Country-level policy modifiers (trade, conscription,
+	# inflation, stability, factory output, population, category factor,
+	# overlord extraction) are combined into a single national_policy_scalar
+	# and applied uniformly to every state — since those are national policies
+	# that affect all states equally.
+	#
+	# state_GDP variables are purely informational. They do not feed back
+	# into country_GDP in any way.
+	# -----------------------------------------------------------------------
+
+	# -----------------------
+	# STEP 1: Compute national_policy_scalar at country scope
+	# This is the combined product of all country-level modifiers
+	# -----------------------
+
+	# Construction bonus
+	set_temp_variable = { s_construction = modifier@production_speed_buildings_factor }
+	clamp_temp_variable = { var = s_construction min = -1 }
+	add_to_temp_variable = { s_construction = 1 }
+
+	# Inflation deflation
+	set_temp_variable = { s_inflation = global.ECO_inflation }
+	divide_temp_variable = { s_inflation = 100 }
+	add_to_temp_variable = { s_inflation = 1 }
+	set_temp_variable = { s_inflation_mult = 1.0 }
+	divide_temp_variable = { s_inflation_mult = s_inflation }
+
+	# Overlord extraction (civ)
+	set_temp_variable = { s_overlord = modifier@cic_to_overlord_factor }
+	multiply_temp_variable = { s_overlord = 0.99 }
+	set_temp_variable = { s_overlord_mult = 1.0 }
+	subtract_from_temp_variable = { s_overlord_mult = s_overlord }
+
+	# Trade bonus
+	set_temp_variable = { s_trade = modifier@min_export }
+	clamp_temp_variable = { var = s_trade min = 0 max = 1 }
+	set_temp_variable = { s_trade_scaled = @ECO_trade_scaled_weight }
+	multiply_temp_variable = { s_trade_scaled = s_trade }
+	set_temp_variable = { s_trade_penalty = @ECO_trade_penalty_weight }
+	multiply_temp_variable = { s_trade_penalty = s_trade }
+	multiply_temp_variable = { s_trade_penalty = s_trade }
+	set_temp_variable = { s_trade_bonus = 1.0 }
+	add_to_temp_variable = { s_trade_bonus = s_trade_scaled }
+	subtract_from_temp_variable = { s_trade_bonus = s_trade_penalty }
+
+	# Conscription penalty (civ)
+	set_temp_variable = { s_conscript = modifier@conscription }
+	set_temp_variable = { s_conscript_factor = modifier@conscription_factor }
+	add_to_temp_variable = { s_conscript_factor = 1 }
+	multiply_temp_variable = { s_conscript = s_conscript_factor }
+	clamp_temp_variable = { var = s_conscript min = 0 max = 1 }
+	set_temp_variable = { s_civ_conscript_penalty = 0.5 }
+	multiply_temp_variable = { s_civ_conscript_penalty = s_conscript }
+	set_temp_variable = { s_civ_mult = 1.0 }
+	subtract_from_temp_variable = { s_civ_mult = s_civ_conscript_penalty }
+
+	# Factory output efficiency
+	set_temp_variable = { s_factory_output = modifier@industrial_capacity_factory }
+	multiply_temp_variable = { s_factory_output = 0.2 }
+	add_to_temp_variable = { s_factory_output = 1 }
+	clamp_temp_variable = { var = s_factory_output min = 0.5 max = 1.5 }
+
+	# Stability
+	set_temp_variable = { s_stability = stability }
+	multiply_temp_variable = { s_stability = 0.003 }
+	add_to_temp_variable = { s_stability = 0.85 }
+	clamp_temp_variable = { var = s_stability min = 0.70 max = 1.15 }
+
+	# Population modifier
+	set_temp_variable = { s_pop_mod = population_modifier }
+	clamp_temp_variable = { var = s_pop_mod min = 0 max = 1.25 }
+
+	# Category factor
+	set_temp_variable = { s_cat_factor = temp_8 }
+
+	# ECO efficiency for agriculture
+	set_temp_variable = { s_eco_eff = global.ECO_efficiency }
+	divide_temp_variable = { s_eco_eff = 100 }
+	add_to_temp_variable = { s_eco_eff = 2 }
+
+	# Combined national policy scalar
+	# = construction * inflation_mult * overlord * trade * civ_conscript * factory_output * stability * pop * category
+	set_variable = { national_policy_scalar = 1.0 }
+	multiply_variable = { national_policy_scalar = s_construction }
+	multiply_variable = { national_policy_scalar = s_inflation_mult }
+	multiply_variable = { national_policy_scalar = s_overlord_mult }
+	multiply_variable = { national_policy_scalar = s_trade_bonus }
+	multiply_variable = { national_policy_scalar = s_civ_mult }
+	multiply_variable = { national_policy_scalar = s_factory_output }
+	multiply_variable = { national_policy_scalar = s_stability }
+	multiply_variable = { national_policy_scalar = s_pop_mod }
+	multiply_variable = { national_policy_scalar = s_cat_factor }
+
+	# Resource scale (mirrors country-level temp_civ_resource = 8 + 0.25*temp_civ)
+	# Use a fixed base of 8 for state scope since temp_civ is country-level
+	set_variable = { state_resource_scale = 8 }
+
+	# -----------------------
+	# STEP 2: Compute state_GDP and state_GDP_per_capita per state
+	# -----------------------
+	set_variable = { state_gdp_sum = 0 }
+	every_state = {
+		# Only compute for states that have an owner
+
+		# Weighted civs (× labour ratio — state_labour_ratio set in main calculate_GDP loop)
+		set_temp_variable = { s_civs = THIS.non_damaged_building_level@industrial_complex }
+		multiply_temp_variable = { s_civs = state_productivity_weight }
+		multiply_temp_variable = { s_civs = state_labour_ratio }
+		multiply_temp_variable = { s_civs = 7.0 }
+
+		# Weighted arms (× labour ratio)
+		set_temp_variable = { s_arms = THIS.non_damaged_building_level@arms_factory }
+		multiply_temp_variable = { s_arms = state_productivity_weight }
+		multiply_temp_variable = { s_arms = state_labour_ratio }
+		multiply_temp_variable = { s_arms = 5.0 }
+
+		# Weighted dockyards (× labour ratio)
+		set_temp_variable = { s_docs = THIS.non_damaged_building_level@dockyard }
+		multiply_temp_variable = { s_docs = state_productivity_weight }
+		multiply_temp_variable = { s_docs = state_labour_ratio }
+		multiply_temp_variable = { s_docs = 5.0 }
+
+		# Resources (raw slots × gram values)
+		set_temp_variable = { s_res = 0 }
+		set_temp_variable = { s_res_val = resource@oil }
+		multiply_temp_variable = { s_res_val = 0.001 }
+		add_to_temp_variable = { s_res = s_res_val }
+		set_temp_variable = { s_res_val = resource@coal }
+		multiply_temp_variable = { s_res_val = 0.00067 }
+		add_to_temp_variable = { s_res = s_res_val }
+		set_temp_variable = { s_res_val = resource@steel }
+		multiply_temp_variable = { s_res_val = 0.00007 }
+		add_to_temp_variable = { s_res = s_res_val }
+		set_temp_variable = { s_res_val = resource@rubber }
+		multiply_temp_variable = { s_res_val = 0.00001 }
+		add_to_temp_variable = { s_res = s_res_val }
+		set_temp_variable = { s_res_val = resource@chromium }
+		multiply_temp_variable = { s_res_val = 0.0000025 }
+		add_to_temp_variable = { s_res = s_res_val }
+		set_temp_variable = { s_res_val = resource@aluminium }
+		multiply_temp_variable = { s_res_val = 0.0000005 }
+		add_to_temp_variable = { s_res = s_res_val }
+		set_temp_variable = { s_res_val = resource@tungsten }
+		multiply_temp_variable = { s_res_val = 0.00000015 }
+		add_to_temp_variable = { s_res = s_res_val }
+		# Scale by state resource scale (mirrors country resource multiplier)
+		OWNER = { multiply_temp_variable = { s_res = state_resource_scale } }
+
+		# Agriculture (state population × agri_weight × eco_efficiency / inflation)
+		set_temp_variable = { s_agri = THIS.state_population_k }
+		multiply_temp_variable = { s_agri = state_agri_weight }
+		divide_temp_variable = { s_agri = 1000 }
+		OWNER = {
+			multiply_temp_variable = { s_agri = s_eco_eff }
+			divide_temp_variable = { s_agri = s_inflation }
+		}
+
+		# Raw state GDP (pre-policy, pre-currency)
+		set_temp_variable = { s_raw_gdp = s_civs }
+		add_to_temp_variable = { s_raw_gdp = s_arms }
+		add_to_temp_variable = { s_raw_gdp = s_docs }
+		add_to_temp_variable = { s_raw_gdp = s_res }
+		add_to_temp_variable = { s_raw_gdp = s_agri }
+
+		# Apply national policy scalar and currency conversion
+		OWNER = { multiply_temp_variable = { s_raw_gdp = national_policy_scalar } }
+		divide_temp_variable = { s_raw_gdp = @currency_conversion_factor }
+		clamp_temp_variable = { var = s_raw_gdp min = 0 }
+
+		# Store as state variable
+		set_variable = { state_GDP = s_raw_gdp }
+
+		# State GDPPC = state_GDP / state_population_k × 1000
+		set_variable = { state_GDP_per_capita = state_GDP }
+		multiply_variable = { state_GDP_per_capita = 1000 }
+		set_temp_variable = { s_state_pop = THIS.state_population_k }
+		clamp_temp_variable = { var = s_state_pop min = 1 }
+		divide_variable = { state_GDP_per_capita = s_state_pop }
+		multiply_variable = { state_GDP_per_capita = 1000 }
+		clamp_variable = { var = state_GDP_per_capita min = 0 }
+		OWNER = { add_to_variable = { state_gdp_sum = PREV.state_GDP } }
+	}
+
+	# -----------------------
+	# ISSUE 3 FIX: Correction factor — align sum of state GDPs to country GDP
+	# Raw resource slots vs produced output causes ~10-20% overcounting.
+	# Compute country_GDP / sum(state_GDPs) and apply to all states uniformly.
+	# Sanity clamp: 0.5–2.0 to prevent runaway corrections.
+	clamp_variable = { var = state_gdp_sum min = 0.0001 } # guard div/0
+	set_variable = { state_gdp_correction = country_GDP }
+	divide_variable = { state_gdp_correction = state_gdp_sum }
+	clamp_variable = { var = state_gdp_correction min = 0.5 max = 2.0 }
+	every_state = {
+		OWNER = {
+			multiply_variable = { PREV.state_GDP = state_gdp_correction }
+			# Recompute state GDPPC after correction
+			set_variable = { PREV.state_GDP_per_capita = PREV.state_GDP }
+			multiply_variable = { PREV.state_GDP_per_capita = 1000 }
+			set_temp_variable = { s_pop_corr = PREV.state_population_k }
+			clamp_temp_variable = { var = s_pop_corr min = 1 }
+			divide_variable = { PREV.state_GDP_per_capita = s_pop_corr }
+			multiply_variable = { PREV.state_GDP_per_capita = 1000 }
+			clamp_variable = { var = PREV.state_GDP_per_capita min = 0 }
+		}
+		# -----------------------
+		# Track global max for map mode gradient — globals readable across scope jumps
+		# -----------------------
+		if = {
+			limit = { check_variable = { state_GDP > global.max_state_GDP } }
+			set_variable = { global.max_state_GDP = state_GDP }
+		}
+		if = {
+			limit = { check_variable = { state_GDP_per_capita > global.max_state_GDP_per_capita } }
+			set_variable = { global.max_state_GDP_per_capita = state_GDP_per_capita }
+		}
+	}
+}
+
 calculate_GDP = {
 	set_variable = { country_GDP = 0 }
 	set_variable = { country_resource_GDP = 0 }
@@ -38,8 +265,8 @@ calculate_GDP = {
 			limit = { is_core_of = PREV }
 			set_variable = { state_category_factor = 1 }
 			IF      = { limit = { has_state_category = theogennopolis      } multiply_variable = { state_category_factor = 2.50 } }
-			ELSE_IF = { limit = { has_state_category = hieropalingenopolis } multiply_variable = { state_category_factor = 2.25 } }
-			ELSE_IF = { limit = { has_state_category = archethnopolis      } multiply_variable = { state_category_factor = 2.15 } }
+			ELSE_IF = { limit = { has_state_category = hieropalingenopolis } multiply_variable = { state_category_factor = 2.15 } }
+			ELSE_IF = { limit = { has_state_category = archethnopolis      } multiply_variable = { state_category_factor = 2.25 } }
 			ELSE_IF = { limit = { has_state_category = megalopolis         } multiply_variable = { state_category_factor = 2.00 } }
 			ELSE_IF = { limit = { has_state_category = metropolis          } multiply_variable = { state_category_factor = 1.75 } }
 			ELSE_IF = { limit = { has_state_category = large_city          } multiply_variable = { state_category_factor = 1.50 } }
@@ -51,12 +278,6 @@ calculate_GDP = {
 			ELSE    = { multiply_variable = { state_category_factor = 0.20 } }
 			OWNER   = { add_to_variable = { THIS.country_category_factor = Prev.state_category_factor } }
 		}
-	}
-
-	IF = {
-		LIMIT = { THIS = { tag = MRC } }
-		log = "[THIS.GetTag] actual_core_manpower_k = [?actual_core_manpower_k]"
-		log = "[THIS.GetTag] actual_noncore_manpower_k = [?actual_noncore_manpower_k]"
 	}
 
 	every_country = {
@@ -74,6 +295,7 @@ calculate_GDP = {
 		set_variable = { THIS.country_civ = 0 }
 		set_variable = { THIS.country_civ_own = 0 }
 		set_variable = { THIS.country_civ_core = 0 }
+		set_variable = { THIS.country_agriculture_weight = 0 }
 	}
 
 	set_variable = { temp_8 = country_category_factor_1 }
@@ -84,21 +306,94 @@ calculate_GDP = {
 	every_state = {
 		# STATE INF
 		set_variable = { state_inf = 0 }
-		add_to_variable = { state_inf = THIS.infrastructure_level }
+		add_to_variable = { state_inf = THIS.non_damaged_building_level@infrastructure }
 		OWNER = { add_to_variable = { THIS.country_average_inf = Prev.state_inf } }
-		# STATE CIV
+
+		# FACTORY PRODUCTIVITY WEIGHT
+		# city = 1.00 baseline. Above: agglomeration bonus (capped ~2.40 at inf5). Below: harsh penalty.
+		# inf_factor: base 0.80, +0.08 per level → inf0=0.80, inf5=1.20
+		set_variable = { state_productivity_weight = 1.00 }
+		# AGRICULTURE PRODUCTIVITY WEIGHT (bell curve)
+		# Peaks at large_town: organized farming with market surplus
+		# Falls below (subsistence) and above (urbanisation eats farmland)
+		# inf_factor: base 0.90, +0.04 per level → inf0=0.90, inf5=1.10 (gentler — roads matter but less than for industry)
+		set_variable = { state_agri_weight = 1.00 }
+		IF      = { limit = { has_state_category = theogennopolis      } set_variable = { state_productivity_weight = 2.50 } set_variable = { state_agri_weight = 0.03 } }
+		ELSE_IF = { limit = { has_state_category = hieropalingenopolis } set_variable = { state_productivity_weight = 2.15 } set_variable = { state_agri_weight = 0.08 } }
+		ELSE_IF = { limit = { has_state_category = archethnopolis      } set_variable = { state_productivity_weight = 2.25 } set_variable = { state_agri_weight = 0.05 } }
+		ELSE_IF = { limit = { has_state_category = megalopolis         } set_variable = { state_productivity_weight = 2.00 } set_variable = { state_agri_weight = 0.10 } }
+		ELSE_IF = { limit = { has_state_category = metropolis          } set_variable = { state_productivity_weight = 1.65 } set_variable = { state_agri_weight = 0.25 } }
+		ELSE_IF = { limit = { has_state_category = large_city          } set_variable = { state_productivity_weight = 1.30 } set_variable = { state_agri_weight = 0.50 } }
+		ELSE_IF = { limit = { has_state_category = city                } set_variable = { state_productivity_weight = 1.00 } set_variable = { state_agri_weight = 0.75 } }
+		ELSE_IF = { limit = { has_state_category = large_town          } set_variable = { state_productivity_weight = 0.60 } set_variable = { state_agri_weight = 1.00 } }
+		ELSE_IF = { limit = { has_state_category = town                } set_variable = { state_productivity_weight = 0.35 } set_variable = { state_agri_weight = 0.90 } }
+		ELSE_IF = { limit = { has_state_category = large_rural         } set_variable = { state_productivity_weight = 0.25 } set_variable = { state_agri_weight = 0.65 } }
+		ELSE_IF = { limit = { has_state_category = rural               } set_variable = { state_productivity_weight = 0.15 } set_variable = { state_agri_weight = 0.40 } }
+		ELSE    = { set_variable = { state_productivity_weight = 0.05 } set_variable = { state_agri_weight = 0.05 } }
+
+		# Factory infrastructure factor: base 0.80, +0.08 per level (inf0=0.80, inf5=1.20)
+		set_variable = { state_inf_factor = 0.80 }
+		set_temp_variable = { temp_inf_bonus = THIS.non_damaged_building_level@infrastructure }
+		multiply_temp_variable = { temp_inf_bonus = 0.08 }
+		add_to_variable = { state_inf_factor = temp_inf_bonus }
+
+		# Final factory productivity = category * inf
+		multiply_variable = { state_productivity_weight = state_inf_factor }
+
+		# -----------------------------------------------------------------------
+		# POPULATION/FACTORY LABOUR RATIO
+		# Labour supply is the binding constraint on industrial output.
+		# One factory complex requires FACTORY_POP_REQUIREMENT thousand people
+		# to operate at full capacity. Below that, output scales down.
+		# Historical basis: ~400k people per factory (WWII industrial calibration)
+		# TUNING: change the 0.4 value on the multiply line below (= 400k per factory)
+		# FLOOR:  0.0001 = 0.01% minimum — even Petsamo contributes something
+		# -----------------------------------------------------------------------
+		set_temp_variable = { state_total_factories = THIS.non_damaged_building_level@industrial_complex }
+		add_to_temp_variable = { state_total_factories = THIS.non_damaged_building_level@arms_factory }
+		add_to_temp_variable = { state_total_factories = THIS.non_damaged_building_level@dockyard }
+		clamp_temp_variable = { var = state_total_factories min = 0.0001 }
+		set_temp_variable = { factory_pop_req = state_total_factories }
+		multiply_temp_variable = { factory_pop_req = 400 } # TUNING: 400 = 400k people per factory (state_population_k is in thousands)
+		set_temp_variable = { state_pop_factory_ratio = THIS.state_population_k }
+		divide_temp_variable = { state_pop_factory_ratio = factory_pop_req }
+		clamp_temp_variable = { var = state_pop_factory_ratio min = 0.0001 max = 1.0 }
+		set_variable = { state_labour_ratio = state_pop_factory_ratio } # stored as state var for reuse
+
+		# Agriculture infrastructure factor: base 0.90, +0.04 per level (inf0=0.90, inf5=1.10)
+		set_variable = { state_agri_inf_factor = 0.90 }
+		set_temp_variable = { temp_agri_inf_bonus = THIS.non_damaged_building_level@infrastructure }
+		multiply_temp_variable = { temp_agri_inf_bonus = 0.04 }
+		add_to_variable = { state_agri_inf_factor = temp_agri_inf_bonus }
+
+		# Final agriculture weight = category * inf
+		multiply_variable = { state_agri_weight = state_agri_inf_factor }
+
+		# Accumulate weighted population into owner for agriculture calculation
+		set_temp_variable = { temp_state_pop = THIS.state_population_k }
+		multiply_temp_variable = { temp_state_pop = state_agri_weight }
+		OWNER = { add_to_variable = { THIS.country_agriculture_weight = temp_state_pop } }
+
+		# STATE CIV (weighted × labour ratio)
 		set_variable = { state_civ = 0 }
-		add_to_variable = { state_civ = THIS.industrial_complex_level }
+		add_to_variable = { state_civ = THIS.non_damaged_building_level@industrial_complex }
+		multiply_variable = { state_civ = state_productivity_weight }
+		multiply_variable = { state_civ = state_labour_ratio }
 		controller = { add_to_variable = { THIS.country_civ = Prev.state_civ } }
-		# STATE CIV OWN
+
+		# STATE CIV OWN (weighted × labour ratio)
 		set_variable = { state_civ_own = 0 }
-		add_to_variable = { state_civ_own = THIS.industrial_complex_level }
+		add_to_variable = { state_civ_own = THIS.non_damaged_building_level@industrial_complex }
+		multiply_variable = { state_civ_own = state_productivity_weight }
+		multiply_variable = { state_civ_own = state_labour_ratio }
 		OWNER = { add_to_variable = { THIS.country_civ_own = Prev.state_civ_own } }
 
 		IF = {
 			limit = { is_core_of = PREV }
 			set_variable = { state_civ_core = 0 }
-			add_to_variable = { state_civ_core = THIS.industrial_complex_level }
+			add_to_variable = { state_civ_core = THIS.non_damaged_building_level@industrial_complex }
+			multiply_variable = { state_civ_core = state_productivity_weight }
+			multiply_variable = { state_civ_core = state_labour_ratio }
 			OWNER = { add_to_variable = { THIS.country_civ_core = Prev.state_civ_core } }
 		}
 	}
@@ -107,6 +402,7 @@ calculate_GDP = {
 	# FINAL NORMALIZATION
 	# -----------------------
 	every_country = {
+		clamp_variable = { var = THIS.country_num_states min = 1 } # Guard: no owned states edge case
 		divide_variable = { THIS.country_average_inf = THIS.country_num_states }
 		# -----------------------
 		# RESET ALL ARMS VARIABLES
@@ -190,14 +486,21 @@ calculate_GDP = {
 	# STATE ACCUMULATIONS (general + owned)
 	# -----------------------
 	every_state = {
-		# Arms factories (controller)
+		# Arms factories use same state_productivity_weight computed in the civ loop above
+		# state_productivity_weight is already set as a state variable at this point
+
+		# Arms factories (controller, weighted × labour ratio)
 		set_variable = { state_arms = 0 }
-		add_to_variable = { state_arms = THIS.arms_factory_level }
+		add_to_variable = { state_arms = THIS.non_damaged_building_level@arms_factory }
+		multiply_variable = { state_arms = state_productivity_weight }
+		multiply_variable = { state_arms = state_labour_ratio }
 		controller = { add_to_variable = { THIS.country_arms = Prev.state_arms } }
 
-		# Arms factories (owner)
+		# Arms factories (owner, weighted × labour ratio)
 		set_variable = { state_arms_own = 0 }
-		add_to_variable = { state_arms_own = THIS.arms_factory_level }
+		add_to_variable = { state_arms_own = THIS.non_damaged_building_level@arms_factory }
+		multiply_variable = { state_arms_own = state_productivity_weight }
+		multiply_variable = { state_arms_own = state_labour_ratio }
 		OWNER = { add_to_variable = { THIS.country_arms_own = Prev.state_arms_own } }
 
 		# -----------------------
@@ -206,7 +509,9 @@ calculate_GDP = {
 		IF = {
 			limit = { is_core_of = PREV }
 			set_variable = { state_arms_core = 0 }
-			add_to_variable = { state_arms_core = THIS.arms_factory_level }
+			add_to_variable = { state_arms_core = THIS.non_damaged_building_level@arms_factory }
+			multiply_variable = { state_arms_core = state_productivity_weight }
+			multiply_variable = { state_arms_core = state_labour_ratio }
 			OWNER = { add_to_variable = { THIS.country_arms_core = Prev.state_arms_core } }
 		}
 	}
@@ -220,11 +525,8 @@ calculate_GDP = {
 	set_variable = { country_arms_core_temp = country_arms_core }
 
 	subtract_from_variable = { country_arms_ocp_temp = country_arms_coreown_temp }
-
 	subtract_from_variable = { country_arms_noncore_temp  = country_arms_core_temp }
-
 	subtract_from_variable = { country_arms_con = country_arms_noncore_temp }
-
 	subtract_from_variable = { country_arms_ocp_temp = country_arms_noncore_temp }
 
 	clamp_variable = { var = country_arms_ocp_temp min = 0}
@@ -331,6 +633,13 @@ calculate_GDP = {
 
 	add_to_variable = { population_modifier_1 = population_core_state }
 
+	if = {
+		limit = {
+			check_variable = { population_core_state > 0.999 }
+		}
+		divide_variable = { population_modifier_1 = 500 }
+	}
+
 	add_to_variable = { population_modifier = population_modifier_1 }
 	divide_variable = { population_core_state_1 = 3500 }
 	divide_variable = { population_core_state_1 = 100 }
@@ -343,13 +652,12 @@ calculate_GDP = {
 	clamp_variable = { var = population_modifier_civ min = 0  max = 2.5 }
 	multiply_temp_variable = { temp_civ = population_modifier_civ }
 
+	# Infrastructure multiplier removed — infra is now baked into per-state factory productivity weights.
+	# country_average_inf_1 kept at 1.0 (neutral) to avoid breaking any downstream references.
 	set_variable = { country_average_inf_1 = 1 }
-	multiply_variable = { country_average_inf = 0.05 }
-	add_to_variable = { country_average_inf_1 = country_average_inf }
-	multiply_variable = { country_average_inf_1  = population_modifier }
-	multiply_variable = { country_GDP = country_average_inf_1 }
 
-	multiply_variable = { temp_8 = population_modifier }
+	# category_factor applied directly without population compounding
+	# (population already applied once above at line 420)
 	multiply_variable = { country_GDP = temp_8 }
 
 	multiply_temp_variable = { temp_civ = 7.00 }
@@ -367,6 +675,9 @@ calculate_GDP = {
 
 	# Oil: 1,000,000 grams
 	set_temp_variable = { res_val = resource_produced@oil }
+	set_temp_variable = { fuel_gain_bonus = modifier@fuel_gain_factor }
+	add_to_temp_variable = { fuel_gain_bonus = 1 }
+	multiply_temp_variable = { res_val = fuel_gain_bonus }
 	multiply_temp_variable = { res_val = 0.001 }
 	add_to_variable = { country_resource_GDP = res_val }
 
@@ -418,17 +729,31 @@ calculate_GDP = {
 
 
 
+	# Stability multiplier
+		set_temp_variable = { stability_val = stability }
+		multiply_temp_variable = { stability_val = 0.003 }
+		set_temp_variable = { stability_gdp_factor = 0.85 }
+		add_to_temp_variable = { stability_gdp_factor = stability_val }
+		clamp_temp_variable = { var = stability_gdp_factor min = 0.70 max = 1.15 }
+		multiply_variable = { country_GDP = stability_gdp_factor }
+	# Stability multiplier end
+
 	# Simple Labor
 		set_temp_variable = { temp_ECO_efficiency = global.ECO_efficiency }
 		divide_temp_variable = { temp_ECO_efficiency = 100 }
 		add_to_temp_variable = { temp_ECO_efficiency = 2 } # Minor bump to have higher Agricultural GDP
 
-		add_to_variable = { max_manpower_m = max_manpower_k } # Set population to give basic GDP
-		divide_variable = { max_manpower_m = 1000 }
-		multiply_variable = { max_manpower_m = temp_ECO_efficiency } # How much each 1m people are valued.
+		add_to_variable = { country_agri_pop_m = country_agriculture_weight } # Set population to give basic GDP
+		divide_variable = { country_agri_pop_m = 1000 }
+		multiply_variable = { country_agri_pop_m = temp_ECO_efficiency } # How much each 1m people are valued.
 		
-		set_variable = { country_agriculture_GDP = max_manpower_m }
-		add_to_variable = { country_GDP = max_manpower_m }
+		set_temp_variable = { agri_inflation_factor = global.ECO_inflation }
+		divide_temp_variable = { agri_inflation_factor = 100 }
+		add_to_temp_variable = { agri_inflation_factor = 1 }
+		divide_variable = { country_agri_pop_m = agri_inflation_factor }
+
+		set_variable = { country_agriculture_GDP = country_agri_pop_m }
+		add_to_variable = { country_GDP = country_agri_pop_m }
 	# Simple Labor end
 
 
@@ -447,11 +772,19 @@ calculate_GDP = {
 
 	set_variable = { country_GDP_per_capita = country_GDP }
 	multiply_variable = { country_GDP_per_capita = 1000 }
-	divide_variable = { country_GDP_per_capita = actual_core_manpower_k }
+	set_temp_variable = { actual_population_per_capita = actual_noncore_manpower_k }
+	divide_temp_variable = { actual_population_per_capita = 3 }
+	add_to_temp_variable = { actual_population_per_capita = actual_core_manpower_k }
+	divide_variable = { country_GDP_per_capita = actual_population_per_capita }
 	multiply_variable = { country_GDP_per_capita = 1000 }
 	clamp_variable = { var = country_GDP_per_capita min = 0 }
 
 
+
+	IF = {
+		LIMIT = { check_variable = { global.yearly_counter = 0 } }
+		calculate_state_GDP = yes
+	}
 
 	set_variable = { country_GDP_B = country_GDP }
 	set_variable = { country_GDP_M = country_GDP }
@@ -705,7 +1038,7 @@ create_GDP_per_capita_sorted_array = {
 
 ECO_generate_csv_data_per_country = {
 	# Log CSV header
-	log = "[GetDateText] Data:Country_Tag,Country_Population_K,Conscription_Rate,Num_Owned_States,Num_Controlled_States,Military_Factories,Civilian_Factories,Naval_Dockyards,Total_Factories,Oil_Units,Oil_BarrelsK,Aluminium_Units,Aluminium_TonsK,Rubber_Units,Rubber_TonsK,Tungsten_Units,Tungsten_TonsK,Steel_Units,Steel_TonsK,Chromium_Units,Chromium_TonsK,Coal,Coal_ShortTonsK,Maximum_Potential_Exporting,Country_GDP_M,Resource_Sector_GDP_USD_M,Resource_Share_Pct,Agriculture_Sector_GDP_USD_M,Agriculture_Share_Pct,Country_GDP_per_C,Global_Inflation,Global_Efficiency"
+	log = "[GetDateText] Data:Country_Tag,Country_Population_K,Conscription_Rate,Num_Owned_States,Num_Controlled_States,Stability,War_Support,Military_Factories,Civilian_Factories,Naval_Dockyards,Total_Factories,Avg_Infra_per_State,Oil_Units,Oil_BarrelsK,Aluminium_Units,Aluminium_TonsK,Rubber_Units,Rubber_TonsK,Tungsten_Units,Tungsten_TonsK,Steel_Units,Steel_TonsK,Chromium_Units,Chromium_TonsK,Coal,Coal_ShortTonsK,Maximum_Potential_Exporting,Country_GDP_M,Resource_Sector_GDP_USD_M,Resource_Share_Pct,Agriculture_Sector_GDP_USD_M,Agriculture_Share_Pct,Country_GDP_per_C,Global_Inflation,Global_Efficiency"
 
 	# Iterate through all countries
 	every_country = {
@@ -723,6 +1056,12 @@ ECO_generate_csv_data_per_country = {
 		set_temp_variable = { naval_factories = num_of_naval_factories }
 		set_temp_variable = { total_factories = num_of_factories }
 
+		set_temp_variable = { average_infrastructure_level_per_state = 0 }
+		every_owned_state = {
+			owner = { add_to_temp_variable = { average_infrastructure_level_per_state = infrastructure_level } }
+		}
+		divide_temp_variable = { average_infrastructure_level_per_state = num_owned_states }
+
 		# Collect resource production (base units)
 		set_temp_variable = { oil_base = resource_produced@oil }
 		set_temp_variable = { aluminium_base = resource_produced@aluminium }
@@ -732,9 +1071,14 @@ ECO_generate_csv_data_per_country = {
 		set_temp_variable = { chromium_base = resource_produced@chromium }
 		set_temp_variable = { coal_base = resource_produced@coal }
 
+		set_temp_variable = { oil_production_base = resource_produced@oil }
+		set_temp_variable = { base_fuel_gain_bonus = modifier@fuel_gain_factor }
+		add_to_temp_variable = { base_fuel_gain_bonus = 1 }
+		multiply_temp_variable = { oil_production_base = base_fuel_gain_bonus }
+
 		# Convert resources to real-world units
 		# Oil: 1 unit = 1,000,000 barrels
-		set_temp_variable = { oil_converted = oil_base }
+		set_temp_variable = { oil_converted = oil_production_base }
 		multiply_temp_variable = { oil_converted = 1000 }
 
 		# Aluminium: 1 unit = 500 metric tons
@@ -783,6 +1127,6 @@ ECO_generate_csv_data_per_country = {
 		divide_temp_variable = { global_efficiency_based = 100 }
 
 		# Log CSV row with country tag and all data
-		log = "[THIS.GetTag],[?max_manpower_k|0],[?base_conscription_rate|0%],[?num_owned_states|0],[?num_controlled_states|0],[?mil_factories|0],[?civ_factories|0],[?naval_factories|0],[?total_factories|0],[?oil_base|0],[?oil_converted|0],[?aluminium_base|0],[?aluminium_converted|0],[?rubber_base|0],[?rubber_converted|0],[?tungsten_base|0],[?tungsten_converted|0],[?steel_base|0],[?steel_converted|0],[?chromium_base|0],[?chromium_converted|0],[?coal_base|0],[?coal_converted|0],[?base_total_export_percent|0%],[?country_gdp_based|0],[?country_resource_gdp_based|0],[?resource_share_pct|0%],[?country_agriculture_gdp_based|0],[?agriculture_share_pct|0%],[?country_gdp_c_based|0],[?global_inflation_based|0%],[?global_efficiency_based|0%]"
+		log = "[THIS.GetTag],[?max_manpower_k|0],[?base_conscription_rate|0%],[?num_owned_states|0],[?num_controlled_states|0],[?stability|0],[?has_war_support|0],[?mil_factories|0],[?civ_factories|0],[?naval_factories|0],[?total_factories|0],[?average_infrastructure_level_per_state|0],[?oil_base|0],[?oil_converted|0],[?aluminium_base|0],[?aluminium_converted|0],[?rubber_base|0],[?rubber_converted|0],[?tungsten_base|0],[?tungsten_converted|0],[?steel_base|0],[?steel_converted|0],[?chromium_base|0],[?chromium_converted|0],[?coal_base|0],[?coal_converted|0],[?base_total_export_percent|0%],[?country_gdp_based|0],[?country_resource_gdp_based|0],[?resource_share_pct|0%],[?country_agriculture_gdp_based|0],[?agriculture_share_pct|0%],[?country_gdp_c_based|0],[?global_inflation_based|0%],[?global_efficiency_based|0%]"
 	}
 }
