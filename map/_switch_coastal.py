@@ -11,7 +11,7 @@ DEFINITION_FILE = "definition.csv"
 
 # List of province IDs you want to invert
 INVERT_PROVINCES = [
-    5986, 6229, 9065, 9134, 14521
+    1426, 4553, 4998, 9776, 9810, 10215
 ]
 
 # If true, the script will NOT change any province where land/sea column == "sea"
