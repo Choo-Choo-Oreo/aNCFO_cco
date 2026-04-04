@@ -280,6 +280,9 @@ calculate_GDP = {
 		}
 	}
 
+	set_variable = { tracking_core_manpower_k = actual_core_manpower_k }
+	set_variable = { tracking_noncore_manpower_k = actual_noncore_manpower_k }
+
 	every_country = {
 		divide_variable = { THIS.country_category_factor = THIS.country_num_states }
 		subtract_from_variable = { country_category_factor = 1 }
@@ -543,9 +546,9 @@ calculate_GDP = {
 	set_temp_variable = { temp_7 = country_arms_noncore_temp }
 	divide_temp_variable = { temp_7 = 5.0 }
 
-	add_to_temp_variable = { temp_mil = temp_5 } #
+	add_to_temp_variable = { temp_mil = temp_5 }
 
-	add_to_temp_variable = { temp_mil = temp_7 } #
+	add_to_temp_variable = { temp_mil = temp_7 }
 
 	set_variable = { overlord_factor = 1 }
 	set_variable = { overlord_factor_2 = modifier@cic_to_overlord_factor }
@@ -660,15 +663,13 @@ calculate_GDP = {
 	# (population already applied once above at line 420)
 	multiply_variable = { country_GDP = temp_8 }
 
-	multiply_temp_variable = { temp_civ = 7.00 }
-	multiply_temp_variable = { temp_mil = 4.00 }
-	multiply_temp_variable = { temp_doc = 4.00 }
 
 
+	multiply_temp_variable = { temp_civ = 8.00 }
 
-	set_temp_variable = { temp_civ_resource = 8 }
+	set_temp_variable = { temp_civ_resource = 10 }
 	set_temp_variable = { temp_civ_bonus = temp_civ }
-	multiply_temp_variable = { temp_civ_bonus = 0.25 } 
+	multiply_temp_variable = { temp_civ_bonus = 0.325 }
 	add_to_temp_variable = { temp_civ_resource = temp_civ_bonus }
 
 	# Multipliers = [Physical Grams per Unit] / 1,000,000,000
@@ -686,9 +687,9 @@ calculate_GDP = {
 	multiply_temp_variable = { res_val = 0.00067 }
 	add_to_variable = { country_resource_GDP = res_val }
 
-	# Steel: 70,000 grams
+	# Steel: 50,000 grams
 	set_temp_variable = { res_val = resource_produced@steel }
-	multiply_temp_variable = { res_val = 0.00007 }
+	multiply_temp_variable = { res_val = 0.00005 }
 	add_to_variable = { country_resource_GDP = res_val }
 
 	# Rubber: 10,000 grams
@@ -716,10 +717,6 @@ calculate_GDP = {
 
 
 
-	clamp_temp_variable = { var = temp_civ min = 1 }
-
-
-
 	set_variable = { factory_output = 1 }
 	set_variable = { factory_output_2 = modifier@industrial_capacity_factory }
 	multiply_variable = { factory_output_2 = 0.2 }
@@ -741,7 +738,7 @@ calculate_GDP = {
 	# Simple Labor
 		set_temp_variable = { temp_ECO_efficiency = global.ECO_efficiency }
 		divide_temp_variable = { temp_ECO_efficiency = 100 }
-		add_to_temp_variable = { temp_ECO_efficiency = 2 } # Minor bump to have higher Agricultural GDP
+		add_to_temp_variable = { temp_ECO_efficiency = 3 } # Minor bump to have higher Agricultural GDP
 
 		add_to_variable = { country_agri_pop_m = country_agriculture_weight } # Set population to give basic GDP
 		divide_variable = { country_agri_pop_m = 1000 }
@@ -753,7 +750,7 @@ calculate_GDP = {
 		divide_variable = { country_agri_pop_m = agri_inflation_factor }
 
 		set_variable = { country_agriculture_GDP = country_agri_pop_m }
-		add_to_variable = { country_GDP = country_agri_pop_m }
+		add_to_variable = { country_GDP = country_agriculture_GDP }
 	# Simple Labor end
 
 
@@ -1038,7 +1035,7 @@ create_GDP_per_capita_sorted_array = {
 
 ECO_generate_csv_data_per_country = {
 	# Log CSV header
-	log = "[GetDateText] Data:Country_Tag,Country_Population_K,Conscription_Rate,Num_Owned_States,Num_Controlled_States,Stability,War_Support,Military_Factories,Civilian_Factories,Naval_Dockyards,Total_Factories,Avg_Infra_per_State,Oil_Units,Oil_BarrelsK,Aluminium_Units,Aluminium_TonsK,Rubber_Units,Rubber_TonsK,Tungsten_Units,Tungsten_TonsK,Steel_Units,Steel_TonsK,Chromium_Units,Chromium_TonsK,Coal,Coal_ShortTonsK,Maximum_Potential_Exporting,Country_GDP_M,Resource_Sector_GDP_USD_M,Resource_Share_Pct,Agriculture_Sector_GDP_USD_M,Agriculture_Share_Pct,Country_GDP_per_C,Global_Inflation,Global_Efficiency"
+	log = "[GetDateText] Data:Country_Tag,Country_Population_K,Country_Core_Population_K,Country_NonCore_Population_K,Conscription_Rate,Num_Owned_States,Num_Core_States,Num_Controlled_States,Stability,War_Support,Military_Factories,Civilian_Factories,Naval_Dockyards,Total_Factories,Total_Controlled_Factories,Total_Owned_Factories,Avg_Infra_per_State,Oil_Units,Oil_Barrels_Thousands,Aluminium_Units,Aluminium_Tons_Thousands,Rubber_Units,Rubber_Tons_Thousands,Tungsten_Units,Tungsten_Tons_Thousands,Steel_Units,Steel_Tons_Thousands,Chromium_Units,Chromium_Tons_Thousands,Coal,Coal_ShortTons_Thousands,Maximum_Potential_Exporting,Total_Country_GDP_M,Resource_Sector_GDP_USD_M,Resource_Share_Pct,Subsistence_Sector_GDP_USD_M,Subsistence_Share_Pct,Country_GDP_per_C,Global_Inflation,Global_Labor_Efficiency"
 
 	# Iterate through all countries
 	every_country = {
@@ -1055,10 +1052,13 @@ ECO_generate_csv_data_per_country = {
 		set_temp_variable = { civ_factories = num_of_civilian_factories }
 		set_temp_variable = { naval_factories = num_of_naval_factories }
 		set_temp_variable = { total_factories = num_of_factories }
+		set_temp_variable = { total_controlled_factories = num_of_controlled_factories }
+		set_temp_variable = { total_owned_factories = num_of_owned_factories }
 
 		set_temp_variable = { average_infrastructure_level_per_state = 0 }
 		every_owned_state = {
-			owner = { add_to_temp_variable = { average_infrastructure_level_per_state = infrastructure_level } }
+			add_to_temp_variable = { THIS.temp_carry_infra = infrastructure_level }
+			owner = { add_to_temp_variable = { OWNER.average_infrastructure_level_per_state = THIS.temp_carry_infra } }
 		}
 		divide_temp_variable = { average_infrastructure_level_per_state = num_owned_states }
 
@@ -1093,7 +1093,7 @@ ECO_generate_csv_data_per_country = {
 		set_temp_variable = { tungsten_converted = tungsten_base }
 		multiply_temp_variable = { tungsten_converted = 0.15 }
 
-		# Steel: 1 unit = 70,000 metric tons
+		# Steel: 1 unit = 50,000 metric tons
 		set_temp_variable = { steel_converted = steel_base }
 		multiply_temp_variable = { steel_converted = 70 }
 
@@ -1127,6 +1127,6 @@ ECO_generate_csv_data_per_country = {
 		divide_temp_variable = { global_efficiency_based = 100 }
 
 		# Log CSV row with country tag and all data
-		log = "[THIS.GetTag],[?max_manpower_k|0],[?base_conscription_rate|0%],[?num_owned_states|0],[?num_controlled_states|0],[?stability|0],[?has_war_support|0],[?mil_factories|0],[?civ_factories|0],[?naval_factories|0],[?total_factories|0],[?average_infrastructure_level_per_state|0],[?oil_base|0],[?oil_converted|0],[?aluminium_base|0],[?aluminium_converted|0],[?rubber_base|0],[?rubber_converted|0],[?tungsten_base|0],[?tungsten_converted|0],[?steel_base|0],[?steel_converted|0],[?chromium_base|0],[?chromium_converted|0],[?coal_base|0],[?coal_converted|0],[?base_total_export_percent|0%],[?country_gdp_based|0],[?country_resource_gdp_based|0],[?resource_share_pct|0%],[?country_agriculture_gdp_based|0],[?agriculture_share_pct|0%],[?country_gdp_c_based|0],[?global_inflation_based|0%],[?global_efficiency_based|0%]"
+		log = "[THIS.GetTag],[?max_manpower_k|0],[?tracking_core_manpower_k|0],[?tracking_noncore_manpower_k|0],[?base_conscription_rate|0%],[?num_owned_states|0],[?num_core_states|0],[?num_controlled_states|0],[?stability|0],[?has_war_support|0],[?mil_factories|0],[?civ_factories|0],[?naval_factories|0],[?total_factories|0],[?total_controlled_factories|0],[?total_owned_factories|0],[?average_infrastructure_level_per_state|0],[?oil_base|0],[?oil_converted|0],[?aluminium_base|0],[?aluminium_converted|0],[?rubber_base|0],[?rubber_converted|0],[?tungsten_base|0],[?tungsten_converted|0],[?steel_base|0],[?steel_converted|0],[?chromium_base|0],[?chromium_converted|0],[?coal_base|0],[?coal_converted|0],[?base_total_export_percent|0%],[?country_gdp_based|0],[?country_resource_gdp_based|0],[?resource_share_pct|0%],[?country_agriculture_gdp_based|0],[?agriculture_share_pct|0%],[?country_gdp_c_based|0],[?global_inflation_based|0%],[?global_efficiency_based|0%]"
 	}
 }

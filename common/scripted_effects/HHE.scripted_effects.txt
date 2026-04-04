@@ -464,7 +464,7 @@ HHE_deed_reform_starter_up = { # Important to put HIGHEST first
 	}
 }
 
-HHE_deeds_assassination = {
+HHE_luke_deeds_assassination = {
 	hidden_effect = {
 		set_global_flag = death_of_deed
 		mark_focus_tree_layout_dirty = yes
@@ -487,67 +487,44 @@ HHE_deeds_assassination = {
 	}
 }
 
-HHE_deeds_assassination_row2 = {
+HHE_luke_deeds_has_not_completed_prev_focus = {
 	IF = {
 		LIMIT = {
 			OR = {
 				is_historical_railroading_on = yes
 				has_game_rule = { rule = rule_developer_restrictions option = RULE_DEV_RESTRICTIONS_OFF }
-				not = {
-					has_country_flag = {
-						flag = the_divinipuer_1
-					}
-				}
-				not = {
-					has_country_flag = {
-						flag = the_higher_priest_1
-					}
-				}
-				not = {
-					has_country_flag = {
-						flag = the_nobility_1
-					}
-				}
-				not = {
-					has_country_flag = {
-						flag = the_people_1
-					}
-				}
+				has_completed_focus = HHE_the_divinipuer_1
+				has_completed_focus = HHE_the_higher_priest_1
+				has_completed_focus = HHE_the_nobility_1
+				has_completed_focus = HHE_the_people_1
+			}
+			NOT = {
+				has_completed_focus = HHE_the_divinipuer_1
+				has_completed_focus = HHE_the_higher_priest_1
+				has_completed_focus = HHE_the_nobility_1
+				has_completed_focus = HHE_the_people_1
 			}
 		}
-		HHE_deeds_assassination = yes
+		HHE_luke_deeds_assassination = yes
 	}
-}
-
-HHE_deeds_assassination_row3 = {
-	IF = {
+	ELSE_IF = {
 		LIMIT = {
 			OR = {
 				is_historical_railroading_on = yes
 				has_game_rule = { rule = rule_developer_restrictions option = RULE_DEV_RESTRICTIONS_OFF }
-				not = {
-					has_country_flag = {
-						flag = the_divinipuer_2
-					}
-				}
-				not = {
-					has_country_flag = {
-						flag = the_higher_priest_2
-					}
-				}
-				not = {
-					has_country_flag = {
-						flag = the_nobility_2
-					}
-				}
-				not = {
-					has_country_flag = {
-						flag = the_people_2
-					}
+				has_completed_focus = HHE_the_divinipuer_2
+				has_completed_focus = HHE_the_higher_priest_2
+				has_completed_focus = HHE_the_nobility_2
+				has_completed_focus = HHE_the_people_2
+				NOT = {
+					has_completed_focus = HHE_the_divinipuer_2
+					has_completed_focus = HHE_the_higher_priest_2
+					has_completed_focus = HHE_the_nobility_2
+					has_completed_focus = HHE_the_people_2
 				}
 			}
 		}
-		HHE_deeds_assassination = yes
+		HHE_luke_deeds_assassination = yes
 	}
 }
 
@@ -570,6 +547,7 @@ elected_tradition_effect = {
 	set_global_flag = elected_tradition
 	hidden_effect = {
 		load_focus_tree = hhe_tradition_focus
+		mark_focus_tree_layout_dirty = yes
 		ROOT = {
 			HHE_gabriel_strongheart = {
 				add_country_leader_role = {
@@ -593,6 +571,7 @@ elected_influencer_effect = {
 	set_global_flag = elected_influencer
 	hidden_effect = {
 		load_focus_tree = hhe_influencer_focus
+		mark_focus_tree_layout_dirty = yes
 		ROOT = {
 			HHE_isabella_delfina = {
 				add_country_leader_role = {
@@ -616,6 +595,7 @@ elected_authority_effect = {
 	set_global_flag = elected_authority
 	hidden_effect = {
 		load_focus_tree = hhe_authority_focus
+		mark_focus_tree_layout_dirty = yes
 		ROOT = {
 			HHE_gaius_divitiis = {
 				add_country_leader_role = {
@@ -640,6 +620,7 @@ elected_warmonger_effect = {
 	hidden_effect = {
 		add_ideas = initial_takeover
 		load_focus_tree = hhe_warmonger_focus
+		mark_focus_tree_layout_dirty = yes
 		ROOT = {
 			HHE_archard_vladaros = {
 				add_country_leader_role = {
@@ -2621,6 +2602,7 @@ HHI_subjects_civil_war_ends = {
 post_civil_war_tradition_effect = {
 	set_global_flag = elected_tradition # To pretend they were elected instead of civil-war victor.
 	load_focus_tree = hhe_tradition_focus
+	mark_focus_tree_layout_dirty = yes
 	ROOT = {
 		HHE_gabriel_strongheart = {
 			add_country_leader_role = {
@@ -2637,6 +2619,7 @@ post_civil_war_tradition_effect = {
 post_civil_war_influencer_effect = {
 	set_global_flag = elected_influencer # To pretend they were elected instead of civil-war victor.
 	load_focus_tree = hhe_influencer_focus
+	mark_focus_tree_layout_dirty = yes
 	ROOT = {
 		HST_isabella_delfina = {
 			add_country_leader_role = {
@@ -2653,6 +2636,7 @@ post_civil_war_influencer_effect = {
 post_civil_war_authority_effect = {
 	set_global_flag = elected_authority # To pretend they were elected instead of civil-war victor.
 	load_focus_tree = hhe_authority_focus
+	mark_focus_tree_layout_dirty = yes
 	ROOT = {
 		HHE_gaius_divitiis = {
 			add_country_leader_role = {
@@ -2669,6 +2653,7 @@ post_civil_war_authority_effect = {
 post_civil_war_peoples_government_effect = {
 	#set_global_flag = elected_peoples_government # Only though civil-war so pretending isnt needed.
 	#load_focus_tree = hhe_peoples_government_focus
+	#mark_focus_tree_layout_dirty = yes
 }
 
 post_civil_war_subject_effect = {
