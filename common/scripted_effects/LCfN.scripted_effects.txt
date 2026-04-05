@@ -339,6 +339,12 @@ LCfN_calculate_naval_capacity_logistics_formula = {
 	IF = {
 		LIMIT = { has_game_rule = { rule = LCfN_scaling_logic_rule option = LOGIC_PERCENT } }
 		set_temp_variable = { var = percentage_curve_value value = capacity_diff }
+		
+		IF = {
+			LIMIT = { check_variable = { var = percentage_curve_value value = 0 compare = less_than } }
+			multiply_temp_variable = { var = percentage_curve_value value = -1 }
+		}
+		
 		divide_temp_variable = { var = percentage_curve_value value = LCfN_calculated_naval_cap }
 		multiply_temp_variable = { var = LCfN_curve_value value = percentage_curve_value }
 	}
