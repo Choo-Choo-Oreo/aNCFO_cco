@@ -112,156 +112,145 @@ calculate_state_GDP = {
 	# -----------------------
 	# STEP 2: Compute state_GDP and state_GDP_per_capita per state
 	# -----------------------
-	every_state = {
-		# Only compute for states that have an owner
-		if = {
-			limit = { has_owner = yes }
-
-			# Weighted civs (× labour ratio — state_labour_ratio set in main calculate_GDP loop)
-			set_temp_variable = { s_civs = THIS.non_damaged_building_level@industrial_complex }
-			multiply_temp_variable = { s_civs = state_productivity_weight }
-			multiply_temp_variable = { s_civs = state_labour_ratio }
-			multiply_temp_variable = { s_civs = 7.0 }
-
-			# Weighted arms (× labour ratio)
-			set_temp_variable = { s_arms = THIS.non_damaged_building_level@arms_factory }
-			multiply_temp_variable = { s_arms = state_productivity_weight }
-			multiply_temp_variable = { s_arms = state_labour_ratio }
-			multiply_temp_variable = { s_arms = 5.0 }
-
-			# Weighted dockyards (× labour ratio)
-			set_temp_variable = { s_docs = THIS.non_damaged_building_level@dockyard }
-			multiply_temp_variable = { s_docs = state_productivity_weight }
-			multiply_temp_variable = { s_docs = state_labour_ratio }
-			multiply_temp_variable = { s_docs = 5.0 }
-
-			# Resources (raw slots × gram values)
-			set_temp_variable = { s_res = 0 }
-			set_temp_variable = { s_res_val = resource@oil }
-			multiply_temp_variable = { s_res_val = 0.001 }
-			add_to_temp_variable = { s_res = s_res_val }
-			set_temp_variable = { s_res_val = resource@coal }
-			multiply_temp_variable = { s_res_val = 0.00067 }
-			add_to_temp_variable = { s_res = s_res_val }
-			set_temp_variable = { s_res_val = resource@steel }
-			multiply_temp_variable = { s_res_val = 0.00007 }
-			add_to_temp_variable = { s_res = s_res_val }
-			set_temp_variable = { s_res_val = resource@rubber }
-			multiply_temp_variable = { s_res_val = 0.00001 }
-			add_to_temp_variable = { s_res = s_res_val }
-			set_temp_variable = { s_res_val = resource@chromium }
-			multiply_temp_variable = { s_res_val = 0.0000025 }
-			add_to_temp_variable = { s_res = s_res_val }
-			set_temp_variable = { s_res_val = resource@aluminium }
-			multiply_temp_variable = { s_res_val = 0.0000005 }
-			add_to_temp_variable = { s_res = s_res_val }
-			set_temp_variable = { s_res_val = resource@tungsten }
-			multiply_temp_variable = { s_res_val = 0.00000015 }
-			add_to_temp_variable = { s_res = s_res_val }
-			# Scale by state resource scale (mirrors country resource multiplier)
-			OWNER = { multiply_temp_variable = { s_res = state_resource_scale } }
-
-			# -----------------------------------------------------------------------
-			# RESOURCE EXTRACTION POPULATION LABOUR RATIO
-			# Extraction requires workforce proportional to output volume.
-			# Each resource weighted by intensity. Base: 2k people per workforce-equivalent slot.
-			# TUNING: per-resource weights and the ×2 base multiplier below.
-			# FLOOR: 0.0001 (0.01%). Calibrated: Texas 1936 (6M pop, ~100 oil slots) ≈ 1.0 ratio.
-			# -----------------------------------------------------------------------
-			set_temp_variable = { s_res_equiv = resource@oil }
-			multiply_temp_variable = { s_res_equiv = 15 }        # TUNING: Oil — most workforce-intensive
-			set_temp_variable = { s_res_equiv_b = resource@coal }
-			multiply_temp_variable = { s_res_equiv_b = 8 }       # TUNING: Coal — underground mining
-			add_to_temp_variable = { s_res_equiv = s_res_equiv_b }
-			set_temp_variable = { s_res_equiv_b = resource@steel }
-			multiply_temp_variable = { s_res_equiv_b = 10 }      # TUNING: Steel — smelting + ore extraction
-			add_to_temp_variable = { s_res_equiv = s_res_equiv_b }
-			set_temp_variable = { s_res_equiv_b = resource@rubber }
-			multiply_temp_variable = { s_res_equiv_b = 3 }       # TUNING: Rubber — plantation, labour-light
-			add_to_temp_variable = { s_res_equiv = s_res_equiv_b }
-			set_temp_variable = { s_res_equiv_b = resource@chromium }
-			multiply_temp_variable = { s_res_equiv_b = 5 }       # TUNING: Chromium — open-cast mining
-			add_to_temp_variable = { s_res_equiv = s_res_equiv_b }
-			set_temp_variable = { s_res_equiv_b = resource@aluminium }
-			multiply_temp_variable = { s_res_equiv_b = 5 }       # TUNING: Aluminium — bauxite + smelting
-			add_to_temp_variable = { s_res_equiv = s_res_equiv_b }
-			set_temp_variable = { s_res_equiv_b = resource@tungsten }
-			multiply_temp_variable = { s_res_equiv_b = 4 }       # TUNING: Tungsten — precision mining
-			add_to_temp_variable = { s_res_equiv = s_res_equiv_b }
-			clamp_temp_variable = { var = s_res_equiv min = 0.0001 } # guard div/0 for resource-less states
-			set_temp_variable = { s_res_pop_req = s_res_equiv }
-			multiply_temp_variable = { s_res_pop_req = 2 }       # TUNING: 2 = 2k people per workforce-equivalent
-			set_temp_variable = { s_res_labour_ratio = THIS.state_population_k }
-			divide_temp_variable = { s_res_labour_ratio = s_res_pop_req }
-			clamp_temp_variable = { var = s_res_labour_ratio min = 0.0001 max = 1.0 }
-			multiply_temp_variable = { s_res = s_res_labour_ratio }
-
-			# Agriculture (state population × agri_weight × eco_efficiency / inflation)
-			set_temp_variable = { s_agri = THIS.state_population_k }
-			multiply_temp_variable = { s_agri = state_agri_weight }
-			divide_temp_variable = { s_agri = 1000 }
-			OWNER = {
-				multiply_temp_variable = { s_agri = s_eco_eff }
-				divide_temp_variable = { s_agri = s_inflation }
-			}
-
-			# Raw state GDP (pre-policy, pre-currency)
-			set_temp_variable = { s_raw_gdp = s_civs }
-			add_to_temp_variable = { s_raw_gdp = s_arms }
-			add_to_temp_variable = { s_raw_gdp = s_docs }
-			add_to_temp_variable = { s_raw_gdp = s_res }
-			add_to_temp_variable = { s_raw_gdp = s_agri }
-
-			# Apply national policy scalar and currency conversion
-			OWNER = { multiply_temp_variable = { s_raw_gdp = national_policy_scalar } }
-			divide_temp_variable = { s_raw_gdp = @currency_conversion_factor }
-			clamp_temp_variable = { var = s_raw_gdp min = 0 }
-
-			# Store as state variable
-			set_variable = { state_GDP = s_raw_gdp }
-
-			# State GDPPC = state_GDP / state_population_k × 1000
-			set_variable = { state_GDP_per_capita = state_GDP }
-			multiply_variable = { state_GDP_per_capita = 1000 }
-			set_temp_variable = { s_state_pop = THIS.state_population_k }
-			clamp_temp_variable = { var = s_state_pop min = 1 }
-			divide_variable = { state_GDP_per_capita = s_state_pop }
-			multiply_variable = { state_GDP_per_capita = 1000 }
-			clamp_variable = { var = state_GDP_per_capita min = 0 }
-		}
-	}
-
-	# -----------------------
-	# ISSUE 3 FIX: Correction factor — align sum of state GDPs to country GDP
-	# Raw resource slots vs produced output causes ~10-20% overcounting.
-	# Compute country_GDP / sum(state_GDPs) and apply to all states uniformly.
-	# Sanity clamp: 0.5–2.0 to prevent runaway corrections.
-	# -----------------------
 	set_variable = { state_gdp_sum = 0 }
+
 	every_state = {
-		if = {
-			limit = { has_owner = yes }
-			OWNER = { add_to_variable = { state_gdp_sum = PREV.state_GDP } }
+		# Weighted civs (× labour ratio — state_labour_ratio set in main calculate_GDP loop)
+		set_temp_variable = { s_civs = THIS.non_damaged_building_level@industrial_complex }
+		multiply_temp_variable = { s_civs = state_productivity_weight }
+		multiply_temp_variable = { s_civs = state_labour_ratio }
+		multiply_temp_variable = { s_civs = 7.0 }
+
+		# Weighted arms (× labour ratio)
+		set_temp_variable = { s_arms = THIS.non_damaged_building_level@arms_factory }
+		multiply_temp_variable = { s_arms = state_productivity_weight }
+		multiply_temp_variable = { s_arms = state_labour_ratio }
+		multiply_temp_variable = { s_arms = 5.0 }
+
+		# Weighted dockyards (× labour ratio)
+		set_temp_variable = { s_docs = THIS.non_damaged_building_level@dockyard }
+		multiply_temp_variable = { s_docs = state_productivity_weight }
+		multiply_temp_variable = { s_docs = state_labour_ratio }
+		multiply_temp_variable = { s_docs = 5.0 }
+
+		# Resources (raw slots × gram values)
+		set_temp_variable = { s_res = 0 }
+		set_temp_variable = { s_res_val = resource@oil }
+		multiply_temp_variable = { s_res_val = 0.001 }
+		add_to_temp_variable = { s_res = s_res_val }
+		set_temp_variable = { s_res_val = resource@coal }
+		multiply_temp_variable = { s_res_val = 0.00067 }
+		add_to_temp_variable = { s_res = s_res_val }
+		set_temp_variable = { s_res_val = resource@steel }
+		multiply_temp_variable = { s_res_val = 0.00007 }
+		add_to_temp_variable = { s_res = s_res_val }
+		set_temp_variable = { s_res_val = resource@rubber }
+		multiply_temp_variable = { s_res_val = 0.00001 }
+		add_to_temp_variable = { s_res = s_res_val }
+		set_temp_variable = { s_res_val = resource@chromium }
+		multiply_temp_variable = { s_res_val = 0.0000025 }
+		add_to_temp_variable = { s_res = s_res_val }
+		set_temp_variable = { s_res_val = resource@aluminium }
+		multiply_temp_variable = { s_res_val = 0.0000005 }
+		add_to_temp_variable = { s_res = s_res_val }
+		set_temp_variable = { s_res_val = resource@tungsten }
+		multiply_temp_variable = { s_res_val = 0.00000015 }
+		add_to_temp_variable = { s_res = s_res_val }
+		# Scale by state resource scale (mirrors country resource multiplier)
+		OWNER = { multiply_temp_variable = { s_res = state_resource_scale } }
+
+		# -----------------------------------------------------------------------
+		# RESOURCE EXTRACTION POPULATION LABOUR RATIO
+		# Extraction requires workforce proportional to output volume.
+		# Each resource weighted by intensity. Base: 2k people per workforce-equivalent slot.
+		# TUNING: per-resource weights and the ×2 base multiplier below.
+		# FLOOR: 0.0001 (0.01%). Calibrated: Texas 1936 (6M pop, ~100 oil slots) ≈ 1.0 ratio.
+		# -----------------------------------------------------------------------
+		set_temp_variable = { s_res_equiv = resource@oil }
+		multiply_temp_variable = { s_res_equiv = 15 }        # TUNING: Oil — most workforce-intensive
+		set_temp_variable = { s_res_equiv_b = resource@coal }
+		multiply_temp_variable = { s_res_equiv_b = 8 }       # TUNING: Coal — underground mining
+		add_to_temp_variable = { s_res_equiv = s_res_equiv_b }
+		set_temp_variable = { s_res_equiv_b = resource@steel }
+		multiply_temp_variable = { s_res_equiv_b = 10 }      # TUNING: Steel — smelting + ore extraction
+		add_to_temp_variable = { s_res_equiv = s_res_equiv_b }
+		set_temp_variable = { s_res_equiv_b = resource@rubber }
+		multiply_temp_variable = { s_res_equiv_b = 3 }       # TUNING: Rubber — plantation, labour-light
+		add_to_temp_variable = { s_res_equiv = s_res_equiv_b }
+		set_temp_variable = { s_res_equiv_b = resource@chromium }
+		multiply_temp_variable = { s_res_equiv_b = 5 }       # TUNING: Chromium — open-cast mining
+		add_to_temp_variable = { s_res_equiv = s_res_equiv_b }
+		set_temp_variable = { s_res_equiv_b = resource@aluminium }
+		multiply_temp_variable = { s_res_equiv_b = 5 }       # TUNING: Aluminium — bauxite + smelting
+		add_to_temp_variable = { s_res_equiv = s_res_equiv_b }
+		set_temp_variable = { s_res_equiv_b = resource@tungsten }
+		multiply_temp_variable = { s_res_equiv_b = 4 }       # TUNING: Tungsten — precision mining
+		add_to_temp_variable = { s_res_equiv = s_res_equiv_b }
+		clamp_temp_variable = { var = s_res_equiv min = 0.0001 } # guard div/0 for resource-less states
+		set_temp_variable = { s_res_pop_req = s_res_equiv }
+		multiply_temp_variable = { s_res_pop_req = 2 }       # TUNING: 2 = 2k people per workforce-equivalent
+		set_temp_variable = { s_res_labour_ratio = THIS.state_population_k }
+		divide_temp_variable = { s_res_labour_ratio = s_res_pop_req }
+		clamp_temp_variable = { var = s_res_labour_ratio min = 0.0001 max = 1.0 }
+		multiply_temp_variable = { s_res = s_res_labour_ratio }
+
+		# Agriculture (state population × agri_weight × eco_efficiency / inflation)
+		set_temp_variable = { s_agri = THIS.state_population_k }
+		multiply_temp_variable = { s_agri = state_agri_weight }
+		divide_temp_variable = { s_agri = 1000 }
+		OWNER = {
+			multiply_temp_variable = { s_agri = s_eco_eff }
+			divide_temp_variable = { s_agri = s_inflation }
 		}
+
+		# Raw state GDP (pre-policy, pre-currency)
+		set_temp_variable = { s_raw_gdp = s_civs }
+		add_to_temp_variable = { s_raw_gdp = s_arms }
+		add_to_temp_variable = { s_raw_gdp = s_docs }
+		add_to_temp_variable = { s_raw_gdp = s_res }
+		add_to_temp_variable = { s_raw_gdp = s_agri }
+
+		# Apply national policy scalar and currency conversion
+		OWNER = { multiply_temp_variable = { s_raw_gdp = national_policy_scalar } }
+		divide_temp_variable = { s_raw_gdp = @currency_conversion_factor }
+		clamp_temp_variable = { var = s_raw_gdp min = 0 }
+
+		# Store as state variable
+		set_variable = { state_GDP = s_raw_gdp }
+
+		# State GDPPC = state_GDP / state_population_k × 1000
+		set_variable = { state_GDP_per_capita = state_GDP }
+		multiply_variable = { state_GDP_per_capita = 1000 }
+		set_temp_variable = { s_state_pop = THIS.state_population_k }
+		clamp_temp_variable = { var = s_state_pop min = 1 }
+		divide_variable = { state_GDP_per_capita = s_state_pop }
+		multiply_variable = { state_GDP_per_capita = 1000 }
+		clamp_variable = { var = state_GDP_per_capita min = 0 }
+
+		# -----------------------
+		# ISSUE 3 FIX: Correction factor — align sum of state GDPs to country GDP
+		# Raw resource slots vs produced output causes ~10-20% overcounting.
+		# Compute country_GDP / sum(state_GDPs) and apply to all states uniformly.
+		# Sanity clamp: 0.5–2.0 to prevent runaway corrections.
+		# -----------------------
+		OWNER = { add_to_variable = { state_gdp_sum = PREV.state_GDP } }
 	}
+
 	clamp_variable = { var = state_gdp_sum min = 0.0001 } # guard div/0
 	set_variable = { state_gdp_correction = country_GDP }
 	divide_variable = { state_gdp_correction = state_gdp_sum }
 	clamp_variable = { var = state_gdp_correction min = 0.5 max = 2.0 }
 	every_state = {
-		if = {
-			limit = { has_owner = yes }
-			OWNER = {
-				multiply_variable = { PREV.state_GDP = state_gdp_correction }
-				# Recompute state GDPPC after correction
-				set_variable = { PREV.state_GDP_per_capita = PREV.state_GDP }
-				multiply_variable = { PREV.state_GDP_per_capita = 1000 }
-				set_temp_variable = { s_pop_corr = PREV.state_population_k }
-				clamp_temp_variable = { var = s_pop_corr min = 1 }
-				divide_variable = { PREV.state_GDP_per_capita = s_pop_corr }
-				multiply_variable = { PREV.state_GDP_per_capita = 1000 }
-				clamp_variable = { var = PREV.state_GDP_per_capita min = 0 }
-			}
+		OWNER = {
+			multiply_variable = { PREV.state_GDP = state_gdp_correction }
+			# Recompute state GDPPC after correction
+			set_variable = { PREV.state_GDP_per_capita = PREV.state_GDP }
+			multiply_variable = { PREV.state_GDP_per_capita = 1000 }
+			set_temp_variable = { s_pop_corr = PREV.state_population_k }
+			clamp_temp_variable = { var = s_pop_corr min = 1 }
+			divide_variable = { PREV.state_GDP_per_capita = s_pop_corr }
+			multiply_variable = { PREV.state_GDP_per_capita = 1000 }
+			clamp_variable = { var = PREV.state_GDP_per_capita min = 0 }
 		}
 	}
 
