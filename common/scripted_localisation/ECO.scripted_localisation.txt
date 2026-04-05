@@ -1,4 +1,3 @@
-
 defined_text = {
 	name = country_GDP_f
 	text = {
@@ -55,6 +54,7 @@ defined_text = {
 		localization_key = country_GDP_B_map_tooltip
 	}
 }
+
 defined_text = {
 	name = country_GDP_f_map_d
 	text = {
@@ -74,27 +74,8 @@ defined_text = {
 	}
 }
 
-
 defined_text = {
 	name = GetSortArray
-	text = {
-		trigger = {
-			check_variable = { temp_array_sort = 1 }
-		}
-		localization_key = "RUS_duma_government_array"
-	}
-	text = {
-		trigger = {
-			check_variable = { temp_array_sort = 2 }
-		}
-		localization_key = "RUS_duma_neutral_array"
-	}
-	text = {
-		trigger = {
-			check_variable = { temp_array_sort = 3 }
-		}
-		localization_key = "RUS_duma_opposition_array"
-	}
 	text = {
 		trigger = {
 			check_variable = { temp_array_sort = 4 }
@@ -107,12 +88,6 @@ defined_text = {
 	name = GetSortValue
 	text = {
 		trigger = {
-			check_variable = { temp_value_sort = 1 }
-		}
-		localization_key = "RUS_duma_seat"
-	}
-	text = {
-		trigger = {
 			check_variable = { temp_value_sort = 2 }
 		}
 		localization_key = "country_GDP"
@@ -122,5 +97,1098 @@ defined_text = {
 			check_variable = { temp_value_sort = 3 }
 		}
 		localization_key = "country_GDP_per_capita"
+	}
+}
+
+# ── STATE GDPPC MAP MODE TOOLTIP — 75-combination matrix ─────────────────────
+# 15 wealth tiers × 5 state type groups — LAST MATCH WINS
+# Closed ranges (> lower AND < upper) + full mutual exclusion per type
+# Types: metro / urban / agrarian(large_town) / rural(town+rural) / wasteland
+
+defined_text = {
+	name = state_gdppc_condition
+	# ── ABJECT Level 1 ────────────────────────────────────────
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita < 35 }
+			OR = {
+				is_megalopolis_state = yes
+				is_metropolis_state = yes
+			}
+		}
+		localization_key = state_gdppc_abject_metro
+	}
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita < 15 }
+			OR = {
+				is_large_city_state = yes
+				is_city_state = yes
+			}
+			NOT = { is_megalopolis_state = yes }
+			NOT = { is_metropolis_state = yes }
+		}
+		localization_key = state_gdppc_abject_urban
+	}
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita < 5 }
+			is_large_town_state = yes
+			NOT = { is_megalopolis_state = yes }
+			NOT = { is_metropolis_state = yes }
+			NOT = { is_large_city_state = yes }
+			NOT = { is_city_state = yes }
+		}
+		localization_key = state_gdppc_abject_agrarian
+	}
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita < 1 }
+			OR = {
+				is_town_state = yes
+				is_rural_state = yes
+			}
+			NOT = { is_megalopolis_state = yes }
+			NOT = { is_metropolis_state = yes }
+			NOT = { is_large_city_state = yes }
+			NOT = { is_city_state = yes }
+			NOT = { is_large_town_state = yes }
+		}
+		localization_key = state_gdppc_abject_rural
+	}
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita < 0 }
+			OR = {
+				has_state_category = wasteland
+				has_state_category = pastoral
+				has_state_category = small_island
+				has_state_category = tiny_island
+			}
+			NOT = { is_megalopolis_state = yes }
+			NOT = { is_metropolis_state = yes }
+			NOT = { is_large_city_state = yes }
+			NOT = { is_city_state = yes }
+			NOT = { is_large_town_state = yes }
+			NOT = { is_town_state = yes }
+			NOT = { is_rural_state = yes }
+		}
+		localization_key = state_gdppc_abject_wasteland
+	}
+	# ── SQUALID Level 2 ────────────────────────────────────────
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita > 35 }
+			check_variable = { state_GDP_per_capita < 80 }
+			OR = {
+				is_megalopolis_state = yes
+				is_metropolis_state = yes
+			}
+		}
+		localization_key = state_gdppc_squalid_metro
+	}
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita > 15 }
+			check_variable = { state_GDP_per_capita < 35 }
+			OR = {
+				is_large_city_state = yes
+				is_city_state = yes
+			}
+			NOT = { is_megalopolis_state = yes }
+			NOT = { is_metropolis_state = yes }
+		}
+		localization_key = state_gdppc_squalid_urban
+	}
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita > 5 }
+			check_variable = { state_GDP_per_capita < 15 }
+			is_large_town_state = yes
+			NOT = { is_megalopolis_state = yes }
+			NOT = { is_metropolis_state = yes }
+			NOT = { is_large_city_state = yes }
+			NOT = { is_city_state = yes }
+		}
+		localization_key = state_gdppc_squalid_agrarian
+	}
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita > 1 }
+			check_variable = { state_GDP_per_capita < 5 }
+			OR = {
+				is_town_state = yes
+				is_rural_state = yes
+			}
+			NOT = { is_megalopolis_state = yes }
+			NOT = { is_metropolis_state = yes }
+			NOT = { is_large_city_state = yes }
+			NOT = { is_city_state = yes }
+			NOT = { is_large_town_state = yes }
+		}
+		localization_key = state_gdppc_squalid_rural
+	}
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita < 1 }
+			OR = {
+				has_state_category = wasteland
+				has_state_category = pastoral
+				has_state_category = small_island
+				has_state_category = tiny_island
+			}
+			NOT = { is_megalopolis_state = yes }
+			NOT = { is_metropolis_state = yes }
+			NOT = { is_large_city_state = yes }
+			NOT = { is_city_state = yes }
+			NOT = { is_large_town_state = yes }
+			NOT = { is_town_state = yes }
+			NOT = { is_rural_state = yes }
+		}
+		localization_key = state_gdppc_squalid_wasteland
+	}
+	# ── HARDSCRABBLE Level 3 ────────────────────────────────────────
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita > 80 }
+			check_variable = { state_GDP_per_capita < 150 }
+			OR = {
+				is_megalopolis_state = yes
+				is_metropolis_state = yes
+			}
+		}
+		localization_key = state_gdppc_hardscrabble_metro
+	}
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita > 35 }
+			check_variable = { state_GDP_per_capita < 80 }
+			OR = {
+				is_large_city_state = yes
+				is_city_state = yes
+			}
+			NOT = { is_megalopolis_state = yes }
+			NOT = { is_metropolis_state = yes }
+		}
+		localization_key = state_gdppc_hardscrabble_urban
+	}
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita > 15 }
+			check_variable = { state_GDP_per_capita < 35 }
+			is_large_town_state = yes
+			NOT = { is_megalopolis_state = yes }
+			NOT = { is_metropolis_state = yes }
+			NOT = { is_large_city_state = yes }
+			NOT = { is_city_state = yes }
+		}
+		localization_key = state_gdppc_hardscrabble_agrarian
+	}
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita > 5 }
+			check_variable = { state_GDP_per_capita < 15 }
+			OR = {
+				is_town_state = yes
+				is_rural_state = yes
+			}
+			NOT = { is_megalopolis_state = yes }
+			NOT = { is_metropolis_state = yes }
+			NOT = { is_large_city_state = yes }
+			NOT = { is_city_state = yes }
+			NOT = { is_large_town_state = yes }
+		}
+		localization_key = state_gdppc_hardscrabble_rural
+	}
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita > 1 }
+			check_variable = { state_GDP_per_capita < 5 }
+			OR = {
+				has_state_category = wasteland
+				has_state_category = pastoral
+				has_state_category = small_island
+				has_state_category = tiny_island
+			}
+			NOT = { is_megalopolis_state = yes }
+			NOT = { is_metropolis_state = yes }
+			NOT = { is_large_city_state = yes }
+			NOT = { is_city_state = yes }
+			NOT = { is_large_town_state = yes }
+			NOT = { is_town_state = yes }
+			NOT = { is_rural_state = yes }
+		}
+		localization_key = state_gdppc_hardscrabble_wasteland
+	}
+	# ── GRIMY Level 4 ────────────────────────────────────────
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita > 150 }
+			check_variable = { state_GDP_per_capita < 250 }
+			OR = {
+				is_megalopolis_state = yes
+				is_metropolis_state = yes
+			}
+		}
+		localization_key = state_gdppc_grimy_metro
+	}
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita > 80 }
+			check_variable = { state_GDP_per_capita < 150 }
+			OR = {
+				is_large_city_state = yes
+				is_city_state = yes
+			}
+			NOT = { is_megalopolis_state = yes }
+			NOT = { is_metropolis_state = yes }
+		}
+		localization_key = state_gdppc_grimy_urban
+	}
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita > 35 }
+			check_variable = { state_GDP_per_capita < 80 }
+			is_large_town_state = yes
+			NOT = { is_megalopolis_state = yes }
+			NOT = { is_metropolis_state = yes }
+			NOT = { is_large_city_state = yes }
+			NOT = { is_city_state = yes }
+		}
+		localization_key = state_gdppc_grimy_agrarian
+	}
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita > 15 }
+			check_variable = { state_GDP_per_capita < 35 }
+			OR = {
+				is_town_state = yes
+				is_rural_state = yes
+			}
+			NOT = { is_megalopolis_state = yes }
+			NOT = { is_metropolis_state = yes }
+			NOT = { is_large_city_state = yes }
+			NOT = { is_city_state = yes }
+			NOT = { is_large_town_state = yes }
+		}
+		localization_key = state_gdppc_grimy_rural
+	}
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita > 5 }
+			check_variable = { state_GDP_per_capita < 15 }
+			OR = {
+				has_state_category = wasteland
+				has_state_category = pastoral
+				has_state_category = small_island
+				has_state_category = tiny_island
+			}
+			NOT = { is_megalopolis_state = yes }
+			NOT = { is_metropolis_state = yes }
+			NOT = { is_large_city_state = yes }
+			NOT = { is_city_state = yes }
+			NOT = { is_large_town_state = yes }
+			NOT = { is_town_state = yes }
+			NOT = { is_rural_state = yes }
+		}
+		localization_key = state_gdppc_grimy_wasteland
+	}
+	# ── MEAGER Level 5 ────────────────────────────────────────
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita > 250 }
+			check_variable = { state_GDP_per_capita < 450 }
+			OR = {
+				is_megalopolis_state = yes
+				is_metropolis_state = yes
+			}
+		}
+		localization_key = state_gdppc_meager_metro
+	}
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita > 150 }
+			check_variable = { state_GDP_per_capita < 250 }
+			OR = {
+				is_large_city_state = yes
+				is_city_state = yes
+			}
+			NOT = { is_megalopolis_state = yes }
+			NOT = { is_metropolis_state = yes }
+		}
+		localization_key = state_gdppc_meager_urban
+	}
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita > 80 }
+			check_variable = { state_GDP_per_capita < 150 }
+			is_large_town_state = yes
+			NOT = { is_megalopolis_state = yes }
+			NOT = { is_metropolis_state = yes }
+			NOT = { is_large_city_state = yes }
+			NOT = { is_city_state = yes }
+		}
+		localization_key = state_gdppc_meager_agrarian
+	}
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita > 35 }
+			check_variable = { state_GDP_per_capita < 80 }
+			OR = {
+				is_town_state = yes
+				is_rural_state = yes
+			}
+			NOT = { is_megalopolis_state = yes }
+			NOT = { is_metropolis_state = yes }
+			NOT = { is_large_city_state = yes }
+			NOT = { is_city_state = yes }
+			NOT = { is_large_town_state = yes }
+		}
+		localization_key = state_gdppc_meager_rural
+	}
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita > 15 }
+			check_variable = { state_GDP_per_capita < 35 }
+			OR = {
+				has_state_category = wasteland
+				has_state_category = pastoral
+				has_state_category = small_island
+				has_state_category = tiny_island
+			}
+			NOT = { is_megalopolis_state = yes }
+			NOT = { is_metropolis_state = yes }
+			NOT = { is_large_city_state = yes }
+			NOT = { is_city_state = yes }
+			NOT = { is_large_town_state = yes }
+			NOT = { is_town_state = yes }
+			NOT = { is_rural_state = yes }
+		}
+		localization_key = state_gdppc_meager_wasteland
+	}
+	# ── DECENT Level 6 ────────────────────────────────────────
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita > 450 }
+			check_variable = { state_GDP_per_capita < 700 }
+			OR = {
+				is_megalopolis_state = yes
+				is_metropolis_state = yes
+			}
+		}
+		localization_key = state_gdppc_decent_metro
+	}
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita > 250 }
+			check_variable = { state_GDP_per_capita < 450 }
+			OR = {
+				is_large_city_state = yes
+				is_city_state = yes
+			}
+			NOT = { is_megalopolis_state = yes }
+			NOT = { is_metropolis_state = yes }
+		}
+		localization_key = state_gdppc_decent_urban
+	}
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita > 150 }
+			check_variable = { state_GDP_per_capita < 250 }
+			is_large_town_state = yes
+			NOT = { is_megalopolis_state = yes }
+			NOT = { is_metropolis_state = yes }
+			NOT = { is_large_city_state = yes }
+			NOT = { is_city_state = yes }
+		}
+		localization_key = state_gdppc_decent_agrarian
+	}
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita > 80 }
+			check_variable = { state_GDP_per_capita < 150 }
+			OR = {
+				is_town_state = yes
+				is_rural_state = yes
+			}
+			NOT = { is_megalopolis_state = yes }
+			NOT = { is_metropolis_state = yes }
+			NOT = { is_large_city_state = yes }
+			NOT = { is_city_state = yes }
+			NOT = { is_large_town_state = yes }
+		}
+		localization_key = state_gdppc_decent_rural
+	}
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita > 35 }
+			check_variable = { state_GDP_per_capita < 80 }
+			OR = {
+				has_state_category = wasteland
+				has_state_category = pastoral
+				has_state_category = small_island
+				has_state_category = tiny_island
+			}
+			NOT = { is_megalopolis_state = yes }
+			NOT = { is_metropolis_state = yes }
+			NOT = { is_large_city_state = yes }
+			NOT = { is_city_state = yes }
+			NOT = { is_large_town_state = yes }
+			NOT = { is_town_state = yes }
+			NOT = { is_rural_state = yes }
+		}
+		localization_key = state_gdppc_decent_wasteland
+	}
+	# ── COMFORTABLE Level 7 ────────────────────────────────────────
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita > 700 }
+			check_variable = { state_GDP_per_capita < 1100 }
+			OR = {
+				is_megalopolis_state = yes
+				is_metropolis_state = yes
+			}
+		}
+		localization_key = state_gdppc_comfortable_metro
+	}
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita > 450 }
+			check_variable = { state_GDP_per_capita < 700 }
+			OR = {
+				is_large_city_state = yes
+				is_city_state = yes
+			}
+			NOT = { is_megalopolis_state = yes }
+			NOT = { is_metropolis_state = yes }
+		}
+		localization_key = state_gdppc_comfortable_urban
+	}
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita > 250 }
+			check_variable = { state_GDP_per_capita < 450 }
+			is_large_town_state = yes
+			NOT = { is_megalopolis_state = yes }
+			NOT = { is_metropolis_state = yes }
+			NOT = { is_large_city_state = yes }
+			NOT = { is_city_state = yes }
+		}
+		localization_key = state_gdppc_comfortable_agrarian
+	}
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita > 150 }
+			check_variable = { state_GDP_per_capita < 250 }
+			OR = {
+				is_town_state = yes
+				is_rural_state = yes
+			}
+			NOT = { is_megalopolis_state = yes }
+			NOT = { is_metropolis_state = yes }
+			NOT = { is_large_city_state = yes }
+			NOT = { is_city_state = yes }
+			NOT = { is_large_town_state = yes }
+		}
+		localization_key = state_gdppc_comfortable_rural
+	}
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita > 80 }
+			check_variable = { state_GDP_per_capita < 150 }
+			OR = {
+				has_state_category = wasteland
+				has_state_category = pastoral
+				has_state_category = small_island
+				has_state_category = tiny_island
+			}
+			NOT = { is_megalopolis_state = yes }
+			NOT = { is_metropolis_state = yes }
+			NOT = { is_large_city_state = yes }
+			NOT = { is_city_state = yes }
+			NOT = { is_large_town_state = yes }
+			NOT = { is_town_state = yes }
+			NOT = { is_rural_state = yes }
+		}
+		localization_key = state_gdppc_comfortable_wasteland
+	}
+	# ── ROBUST Level 8 ────────────────────────────────────────
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita > 1100 }
+			check_variable = { state_GDP_per_capita < 1700 }
+			OR = {
+				is_megalopolis_state = yes
+				is_metropolis_state = yes
+			}
+		}
+		localization_key = state_gdppc_robust_metro
+	}
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita > 700 }
+			check_variable = { state_GDP_per_capita < 1100 }
+			OR = {
+				is_large_city_state = yes
+				is_city_state = yes
+			}
+			NOT = { is_megalopolis_state = yes }
+			NOT = { is_metropolis_state = yes }
+		}
+		localization_key = state_gdppc_robust_urban
+	}
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita > 450 }
+			check_variable = { state_GDP_per_capita < 700 }
+			is_large_town_state = yes
+			NOT = { is_megalopolis_state = yes }
+			NOT = { is_metropolis_state = yes }
+			NOT = { is_large_city_state = yes }
+			NOT = { is_city_state = yes }
+		}
+		localization_key = state_gdppc_robust_agrarian
+	}
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita > 250 }
+			check_variable = { state_GDP_per_capita < 450 }
+			OR = {
+				is_town_state = yes
+				is_rural_state = yes
+			}
+			NOT = { is_megalopolis_state = yes }
+			NOT = { is_metropolis_state = yes }
+			NOT = { is_large_city_state = yes }
+			NOT = { is_city_state = yes }
+			NOT = { is_large_town_state = yes }
+		}
+		localization_key = state_gdppc_robust_rural
+	}
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita > 150 }
+			check_variable = { state_GDP_per_capita < 250 }
+			OR = {
+				has_state_category = wasteland
+				has_state_category = pastoral
+				has_state_category = small_island
+				has_state_category = tiny_island
+			}
+			NOT = { is_megalopolis_state = yes }
+			NOT = { is_metropolis_state = yes }
+			NOT = { is_large_city_state = yes }
+			NOT = { is_city_state = yes }
+			NOT = { is_large_town_state = yes }
+			NOT = { is_town_state = yes }
+			NOT = { is_rural_state = yes }
+		}
+		localization_key = state_gdppc_robust_wasteland
+	}
+	# ── VIBRANT Level 9 ────────────────────────────────────────
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita > 1700 }
+			check_variable = { state_GDP_per_capita < 2500 }
+			OR = {
+				is_megalopolis_state = yes
+				is_metropolis_state = yes
+			}
+		}
+		localization_key = state_gdppc_vibrant_metro
+	}
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita > 1100 }
+			check_variable = { state_GDP_per_capita < 1700 }
+			OR = {
+				is_large_city_state = yes
+				is_city_state = yes
+			}
+			NOT = { is_megalopolis_state = yes }
+			NOT = { is_metropolis_state = yes }
+		}
+		localization_key = state_gdppc_vibrant_urban
+	}
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita > 700 }
+			check_variable = { state_GDP_per_capita < 1100 }
+			is_large_town_state = yes
+			NOT = { is_megalopolis_state = yes }
+			NOT = { is_metropolis_state = yes }
+			NOT = { is_large_city_state = yes }
+			NOT = { is_city_state = yes }
+		}
+		localization_key = state_gdppc_vibrant_agrarian
+	}
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita > 450 }
+			check_variable = { state_GDP_per_capita < 700 }
+			OR = {
+				is_town_state = yes
+				is_rural_state = yes
+			}
+			NOT = { is_megalopolis_state = yes }
+			NOT = { is_metropolis_state = yes }
+			NOT = { is_large_city_state = yes }
+			NOT = { is_city_state = yes }
+			NOT = { is_large_town_state = yes }
+		}
+		localization_key = state_gdppc_vibrant_rural
+	}
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita > 250 }
+			check_variable = { state_GDP_per_capita < 450 }
+			OR = {
+				has_state_category = wasteland
+				has_state_category = pastoral
+				has_state_category = small_island
+				has_state_category = tiny_island
+			}
+			NOT = { is_megalopolis_state = yes }
+			NOT = { is_metropolis_state = yes }
+			NOT = { is_large_city_state = yes }
+			NOT = { is_city_state = yes }
+			NOT = { is_large_town_state = yes }
+			NOT = { is_town_state = yes }
+			NOT = { is_rural_state = yes }
+		}
+		localization_key = state_gdppc_vibrant_wasteland
+	}
+	# ── PROSPEROUS Level 10 ────────────────────────────────────────
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita > 2500 }
+			check_variable = { state_GDP_per_capita < 3600 }
+			OR = {
+				is_megalopolis_state = yes
+				is_metropolis_state = yes
+			}
+		}
+		localization_key = state_gdppc_prosperous_metro
+	}
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita > 1700 }
+			check_variable = { state_GDP_per_capita < 2500 }
+			OR = {
+				is_large_city_state = yes
+				is_city_state = yes
+			}
+			NOT = { is_megalopolis_state = yes }
+			NOT = { is_metropolis_state = yes }
+		}
+		localization_key = state_gdppc_prosperous_urban
+	}
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita > 1100 }
+			check_variable = { state_GDP_per_capita < 1700 }
+			is_large_town_state = yes
+			NOT = { is_megalopolis_state = yes }
+			NOT = { is_metropolis_state = yes }
+			NOT = { is_large_city_state = yes }
+			NOT = { is_city_state = yes }
+		}
+		localization_key = state_gdppc_prosperous_agrarian
+	}
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita > 700 }
+			check_variable = { state_GDP_per_capita < 1100 }
+			OR = {
+				is_town_state = yes
+				is_rural_state = yes
+			}
+			NOT = { is_megalopolis_state = yes }
+			NOT = { is_metropolis_state = yes }
+			NOT = { is_large_city_state = yes }
+			NOT = { is_city_state = yes }
+			NOT = { is_large_town_state = yes }
+		}
+		localization_key = state_gdppc_prosperous_rural
+	}
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita > 450 }
+			check_variable = { state_GDP_per_capita < 700 }
+			OR = {
+				has_state_category = wasteland
+				has_state_category = pastoral
+				has_state_category = small_island
+				has_state_category = tiny_island
+			}
+			NOT = { is_megalopolis_state = yes }
+			NOT = { is_metropolis_state = yes }
+			NOT = { is_large_city_state = yes }
+			NOT = { is_city_state = yes }
+			NOT = { is_large_town_state = yes }
+			NOT = { is_town_state = yes }
+			NOT = { is_rural_state = yes }
+		}
+		localization_key = state_gdppc_prosperous_wasteland
+	}
+	# ── OPULENT Level 11 ────────────────────────────────────────
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita > 3600 }
+			check_variable = { state_GDP_per_capita < 5000 }
+			OR = {
+				is_megalopolis_state = yes
+				is_metropolis_state = yes
+			}
+		}
+		localization_key = state_gdppc_opulent_metro
+	}
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita > 2500 }
+			check_variable = { state_GDP_per_capita < 3600 }
+			OR = {
+				is_large_city_state = yes
+				is_city_state = yes
+			}
+			NOT = { is_megalopolis_state = yes }
+			NOT = { is_metropolis_state = yes }
+		}
+		localization_key = state_gdppc_opulent_urban
+	}
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita > 1700 }
+			check_variable = { state_GDP_per_capita < 2500 }
+			is_large_town_state = yes
+			NOT = { is_megalopolis_state = yes }
+			NOT = { is_metropolis_state = yes }
+			NOT = { is_large_city_state = yes }
+			NOT = { is_city_state = yes }
+		}
+		localization_key = state_gdppc_opulent_agrarian
+	}
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita > 1100 }
+			check_variable = { state_GDP_per_capita < 1700 }
+			OR = {
+				is_town_state = yes
+				is_rural_state = yes
+			}
+			NOT = { is_megalopolis_state = yes }
+			NOT = { is_metropolis_state = yes }
+			NOT = { is_large_city_state = yes }
+			NOT = { is_city_state = yes }
+			NOT = { is_large_town_state = yes }
+		}
+		localization_key = state_gdppc_opulent_rural
+	}
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita > 700 }
+			check_variable = { state_GDP_per_capita < 1100 }
+			OR = {
+				has_state_category = wasteland
+				has_state_category = pastoral
+				has_state_category = small_island
+				has_state_category = tiny_island
+			}
+			NOT = { is_megalopolis_state = yes }
+			NOT = { is_metropolis_state = yes }
+			NOT = { is_large_city_state = yes }
+			NOT = { is_city_state = yes }
+			NOT = { is_large_town_state = yes }
+			NOT = { is_town_state = yes }
+			NOT = { is_rural_state = yes }
+		}
+		localization_key = state_gdppc_opulent_wasteland
+	}
+	# ── GILDED Level 12 ────────────────────────────────────────
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita > 5000 }
+			check_variable = { state_GDP_per_capita < 6500 }
+			OR = {
+				is_megalopolis_state = yes
+				is_metropolis_state = yes
+			}
+		}
+		localization_key = state_gdppc_gilded_metro
+	}
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita > 3600 }
+			check_variable = { state_GDP_per_capita < 5000 }
+			OR = {
+				is_large_city_state = yes
+				is_city_state = yes
+			}
+			NOT = { is_megalopolis_state = yes }
+			NOT = { is_metropolis_state = yes }
+		}
+		localization_key = state_gdppc_gilded_urban
+	}
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita > 2500 }
+			check_variable = { state_GDP_per_capita < 3600 }
+			is_large_town_state = yes
+			NOT = { is_megalopolis_state = yes }
+			NOT = { is_metropolis_state = yes }
+			NOT = { is_large_city_state = yes }
+			NOT = { is_city_state = yes }
+		}
+		localization_key = state_gdppc_gilded_agrarian
+	}
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita > 1700 }
+			check_variable = { state_GDP_per_capita < 2500 }
+			OR = {
+				is_town_state = yes
+				is_rural_state = yes
+			}
+			NOT = { is_megalopolis_state = yes }
+			NOT = { is_metropolis_state = yes }
+			NOT = { is_large_city_state = yes }
+			NOT = { is_city_state = yes }
+			NOT = { is_large_town_state = yes }
+		}
+		localization_key = state_gdppc_gilded_rural
+	}
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita > 1100 }
+			check_variable = { state_GDP_per_capita < 1700 }
+			OR = {
+				has_state_category = wasteland
+				has_state_category = pastoral
+				has_state_category = small_island
+				has_state_category = tiny_island
+			}
+			NOT = { is_megalopolis_state = yes }
+			NOT = { is_metropolis_state = yes }
+			NOT = { is_large_city_state = yes }
+			NOT = { is_city_state = yes }
+			NOT = { is_large_town_state = yes }
+			NOT = { is_town_state = yes }
+			NOT = { is_rural_state = yes }
+		}
+		localization_key = state_gdppc_gilded_wasteland
+	}
+	# ── RADIANT Level 13 ────────────────────────────────────────
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita > 6500 }
+			check_variable = { state_GDP_per_capita < 8200 }
+			OR = {
+				is_megalopolis_state = yes
+				is_metropolis_state = yes
+			}
+		}
+		localization_key = state_gdppc_radiant_metro
+	}
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita > 5000 }
+			check_variable = { state_GDP_per_capita < 6500 }
+			OR = {
+				is_large_city_state = yes
+				is_city_state = yes
+			}
+			NOT = { is_megalopolis_state = yes }
+			NOT = { is_metropolis_state = yes }
+		}
+		localization_key = state_gdppc_radiant_urban
+	}
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita > 3600 }
+			check_variable = { state_GDP_per_capita < 5000 }
+			is_large_town_state = yes
+			NOT = { is_megalopolis_state = yes }
+			NOT = { is_metropolis_state = yes }
+			NOT = { is_large_city_state = yes }
+			NOT = { is_city_state = yes }
+		}
+		localization_key = state_gdppc_radiant_agrarian
+	}
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita > 2500 }
+			check_variable = { state_GDP_per_capita < 3600 }
+			OR = {
+				is_town_state = yes
+				is_rural_state = yes
+			}
+			NOT = { is_megalopolis_state = yes }
+			NOT = { is_metropolis_state = yes }
+			NOT = { is_large_city_state = yes }
+			NOT = { is_city_state = yes }
+			NOT = { is_large_town_state = yes }
+		}
+		localization_key = state_gdppc_radiant_rural
+	}
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita > 1700 }
+			check_variable = { state_GDP_per_capita < 2500 }
+			OR = {
+				has_state_category = wasteland
+				has_state_category = pastoral
+				has_state_category = small_island
+				has_state_category = tiny_island
+			}
+			NOT = { is_megalopolis_state = yes }
+			NOT = { is_metropolis_state = yes }
+			NOT = { is_large_city_state = yes }
+			NOT = { is_city_state = yes }
+			NOT = { is_large_town_state = yes }
+			NOT = { is_town_state = yes }
+			NOT = { is_rural_state = yes }
+		}
+		localization_key = state_gdppc_radiant_wasteland
+	}
+	# ── TRANSCENDENTAL Level 14 ────────────────────────────────────────
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita > 8200 }
+			check_variable = { state_GDP_per_capita < 10000 }
+			OR = {
+				is_megalopolis_state = yes
+				is_metropolis_state = yes
+			}
+		}
+		localization_key = state_gdppc_transcendental_metro
+	}
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita > 6500 }
+			check_variable = { state_GDP_per_capita < 8000 }
+			OR = {
+				is_large_city_state = yes
+				is_city_state = yes
+			}
+			NOT = { is_megalopolis_state = yes }
+			NOT = { is_metropolis_state = yes }
+		}
+		localization_key = state_gdppc_transcendental_urban
+	}
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita > 5000 }
+			check_variable = { state_GDP_per_capita < 6000 }
+			is_large_town_state = yes
+			NOT = { is_megalopolis_state = yes }
+			NOT = { is_metropolis_state = yes }
+			NOT = { is_large_city_state = yes }
+			NOT = { is_city_state = yes }
+		}
+		localization_key = state_gdppc_transcendental_agrarian
+	}
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita > 3600 }
+			check_variable = { state_GDP_per_capita < 4500 }
+			OR = {
+				is_town_state = yes
+				is_rural_state = yes
+			}
+			NOT = { is_megalopolis_state = yes }
+			NOT = { is_metropolis_state = yes }
+			NOT = { is_large_city_state = yes }
+			NOT = { is_city_state = yes }
+			NOT = { is_large_town_state = yes }
+		}
+		localization_key = state_gdppc_transcendental_rural
+	}
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita > 2500 }
+			check_variable = { state_GDP_per_capita < 3000 }
+			OR = {
+				has_state_category = wasteland
+				has_state_category = pastoral
+				has_state_category = small_island
+				has_state_category = tiny_island
+			}
+			NOT = { is_megalopolis_state = yes }
+			NOT = { is_metropolis_state = yes }
+			NOT = { is_large_city_state = yes }
+			NOT = { is_city_state = yes }
+			NOT = { is_large_town_state = yes }
+			NOT = { is_town_state = yes }
+			NOT = { is_rural_state = yes }
+		}
+		localization_key = state_gdppc_transcendental_wasteland
+	}
+	# ── UTOPIAN Level 15 ────────────────────────────────────────
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita > 10000 }
+			OR = {
+				is_megalopolis_state = yes
+				is_metropolis_state = yes
+			}
+		}
+		localization_key = state_gdppc_utopian_metro
+	}
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita > 8000 }
+			OR = {
+				is_large_city_state = yes
+				is_city_state = yes
+			}
+			NOT = { is_megalopolis_state = yes }
+			NOT = { is_metropolis_state = yes }
+		}
+		localization_key = state_gdppc_utopian_urban
+	}
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita > 6000 }
+			is_large_town_state = yes
+			NOT = { is_megalopolis_state = yes }
+			NOT = { is_metropolis_state = yes }
+			NOT = { is_large_city_state = yes }
+			NOT = { is_city_state = yes }
+		}
+		localization_key = state_gdppc_utopian_agrarian
+	}
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita > 4500 }
+			OR = {
+				is_town_state = yes
+				is_rural_state = yes
+			}
+			NOT = { is_megalopolis_state = yes }
+			NOT = { is_metropolis_state = yes }
+			NOT = { is_large_city_state = yes }
+			NOT = { is_city_state = yes }
+			NOT = { is_large_town_state = yes }
+		}
+		localization_key = state_gdppc_utopian_rural
+	}
+	text = {
+		trigger = {
+			check_variable = { state_GDP_per_capita > 3000 }
+			OR = {
+				has_state_category = wasteland
+				has_state_category = pastoral
+				has_state_category = small_island
+				has_state_category = tiny_island
+			}
+			NOT = { is_megalopolis_state = yes }
+			NOT = { is_metropolis_state = yes }
+			NOT = { is_large_city_state = yes }
+			NOT = { is_city_state = yes }
+			NOT = { is_large_town_state = yes }
+			NOT = { is_town_state = yes }
+			NOT = { is_rural_state = yes }
+		}
+		localization_key = state_gdppc_utopian_wasteland
 	}
 }

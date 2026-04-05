@@ -1,6 +1,14 @@
 on_actions = {
 	on_startup = {
 		effect = {
+			set_variable = { global.ECO_quarterly_counter = 3 }
+			log = "GLOBAL LOG: Quarterly Economic Pulse Triggered on [GetDateText]. Variable Reset to 3."
+			
+			set_variable = { global.ECO_yearly_counter = 12 }
+			log = "GLOBAL LOG: Yearly Economic Pulse Triggered on [GetDateText]. Variable Reset to 12."
+		}
+
+		effect = {
 			every_country = {
 				IF = {
 					LIMIT = {
@@ -15,6 +23,97 @@ on_actions = {
 			set_variable = { global.ECO_inflation = 0 }
 			set_variable = { global.ECO_efficiency = 0 }
 			ZZZ = { ECO_generate_csv_data_per_country = yes }
+		}
+
+		effect = {
+			log = "Economic fire give_GDPPC_buff = yes, give_GDP_buff = yes"
+			every_country = {
+				# Assign correct GDPPC tier based on current variable
+				give_GDPPC_buff = yes
+
+				# Assign correct GDP size tier based on current variable
+				give_GDP_buff = yes
+			}
+		}
+	}
+
+	on_monthly = {
+		effect = {
+			IF = {
+				LIMIT = { NOT = { has_global_flag = global_monthly_done } }
+				set_global_flag = { flag = global_monthly_done days = 1 value = 1 }
+
+				log = "OQLY / OYLY fire on_monthly_TAG"
+				subtract_from_variable = { global.ECO_quarterly_counter = 1 }
+				subtract_from_variable = { global.ECO_yearly_counter = 1 }
+
+				# --- Economic ON_QUARTERLY ---
+				IF = {
+					LIMIT = { check_variable = { global.ECO_quarterly_counter = 0 } }
+					log = "Economic fire calculate_GDP = yes, GDP_growth_calculation = yes"
+					every_country = {
+						calculate_GDP = yes
+						GDP_growth_calculation = yes
+					}
+				}
+
+				# --- Economic ON_YEARLY ---
+				IF = {
+					LIMIT = { check_variable = { global.ECO_yearly_counter = 0 } }
+					log = "Economic fire ECO_generate_csv_data_per_country = yes"
+					ECO_generate_csv_data_per_country = yes
+				}
+
+				# --- ON_QUARTERLY (Country Scoped) ---
+				IF = {
+					LIMIT = { check_variable = { global.ECO_quarterly_counter = 0 } }
+					
+					# --- ON_QUARTERLY ---
+					log = "GLOBAL LOG: Quarterly Pulse Triggered on [GetDateText]. Variable Reset to 3."
+					
+					# --- RESET ---
+					set_variable = { global.ECO_quarterly_counter = 3 }
+				}
+
+				# --- ON_YEARLY (Country Scoped) ---
+				IF = {
+					LIMIT = { check_variable = { global.ECO_yearly_counter = 0 } }
+					
+					# --- ON_YEARLY ---
+					log = "GLOBAL LOG: Yearly Pulse Triggered on [GetDateText]. Variable Reset to 12."
+					
+					# --- RESET ---
+					set_variable = { global.ECO_yearly_counter = 12 }
+				}
+
+				force_update_map_mode = { mapmode = ECO_GDP_map_mode }
+				force_update_map_mode = { mapmode = ECO_GDP_per_capita_map_mode }
+				force_update_map_mode = { mapmode = ECO_state_GDP_per_capita_map_mode }
+
+				# Divided by 100 in background, a whole number of 1 represents 1%
+				set_temp_variable = { threat_inflation = threat }
+				add_to_temp_variable = { threat_inflation = 1 }
+
+				set_temp_variable = { ECO_temp_inflation = 0.15 }
+				multiply_temp_variable = { ECO_temp_inflation = threat_inflation }
+
+				add_to_variable = { global.ECO_inflation = ECO_temp_inflation }
+				add_to_variable = { global.ECO_efficiency = 0.20 }
+				log = "global.ECO_inflation [GetDateText] = [?global.ECO_inflation]"
+				log = "global.ECO_efficiency [GetDateText] = [?global.ECO_efficiency]"
+			}
+		}
+		# Runs scripted effects directly — no event dispatch overhead.
+		# Dirty-flag guard inside give_GDP_buff / give_GDPPC_buff ensures
+		# remove/add ideas only fires on actual tier change.
+		effect = {
+			log = "Economic fire give_GDPPC_buff = yes, give_GDP_buff = yes"
+
+			# Assign correct GDPPC tier based on current variable
+			give_GDPPC_buff = yes
+
+			# Assign correct GDP size tier based on current variable
+			give_GDP_buff = yes
 		}
 	}
 }

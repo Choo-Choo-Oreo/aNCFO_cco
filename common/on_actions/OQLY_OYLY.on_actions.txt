@@ -14,9 +14,14 @@ on_actions = {
 			IF = {
 	            LIMIT = { NOT = { has_global_flag = global_monthly_done } }
 	            set_global_flag = { flag = global_monthly_done days = 1 value = 1 }
+
 				log = "OQLY / OYLY fire on_monthly_TAG"
-				# --- ON_QUARTERLY (Country Scoped) ---
 				subtract_from_variable = { global.quarterly_counter = 1 }
+				subtract_from_variable = { global.yearly_counter = 1 }
+
+				# Place any scripts that relay on ON_QUARTERLY or ON_YEARLY here.
+
+				# --- ON_QUARTERLY (Country Scoped) ---
 				IF = {
 					LIMIT = { check_variable = { global.quarterly_counter = 0 } }
 					
@@ -28,7 +33,6 @@ on_actions = {
 				}
 				
 				# --- ON_YEARLY (Country Scoped) ---
-				subtract_from_variable = { global.yearly_counter = 1 }
 				IF = {
 					LIMIT = { check_variable = { global.yearly_counter = 0 } }
 					

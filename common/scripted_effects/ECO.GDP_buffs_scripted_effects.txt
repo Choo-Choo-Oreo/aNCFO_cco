@@ -1,0 +1,424 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# DYNAMIC TIER SYSTEM — Dual-check: relative standing + absolute floor
+# ─────────────────────────────────────────────────────────────────────────────
+# GDPPC tiers (ratio = multiple of global.average_GDP_per_capita):
+# Decent (tier 6) is the baseline at 0.75x world average
+#   Tier  Name             Ratio    Floor($)
+#    1    Abject           —        —
+#    2    Squalid          0.12x    15
+#    3    Hardscrabble     0.22x    35
+#    4    Grimy            0.35x    80
+#    5    Meager           0.52x    150
+#    6    Decent           0.75x    300   ← BASELINE (75% of world avg)
+#    7    Comfortable      1.05x    500
+#    8    Robust           1.40x    800
+#    9    Vibrant          1.85x    1200
+#   10    Prosperous       2.50x    1800
+#   11    Opulent          3.40x    2500
+#   12    Gilded           4.50x    3600
+#   13    Radiant          6.00x    5000
+#   14    Transcendental   7.50x    6500
+#   15    Utopian          9.00x    8200
+#
+# GDP Size tiers (% = share of global.GDP_total via percentage_of_GDP variable):
+# Hegemon requires 50% of world GDP — near-impossible, reflects true dominance
+#   Tier  Name             % of World GDP   Floor(B)
+#    1    Primitive        —                —
+#    2    Negligible       0.03%            0.05
+#    3    Peripheral       0.08%            0.15
+#    4    Rudimentary      0.20%            0.40
+#    5    Developing       0.50%            0.90
+#    6    Moderate         1.00%            2.0
+#    7    Established      2.00%            5.0
+#    8    Substantial      3.50%            12.0
+#    9    Considerable     6.00%            25.0
+#   10    Powerful         9.00%            50.0
+#   11    Major            13.0%            90.0
+#   12    Dominant         18.0%            140.0
+#   13    Paramount        24.0%            220.0
+#   14    Titan            35.0%            400.0
+#   15    Hegemon          50.0%            700.0
+# ─────────────────────────────────────────────────────────────────────────────
+
+remove_GDP_buff = {
+	# GDPPC ideas
+	if = { limit = { has_idea = idea_GDPPC_Abject }			remove_ideas = idea_GDPPC_Abject }
+	if = { limit = { has_idea = idea_GDPPC_Squalid }		remove_ideas = idea_GDPPC_Squalid }
+	if = { limit = { has_idea = idea_GDPPC_Hardscrabble }	remove_ideas = idea_GDPPC_Hardscrabble }
+	if = { limit = { has_idea = idea_GDPPC_Grimy }			remove_ideas = idea_GDPPC_Grimy }
+	if = { limit = { has_idea = idea_GDPPC_Meager }			remove_ideas = idea_GDPPC_Meager }
+	if = { limit = { has_idea = idea_GDPPC_Decent }			remove_ideas = idea_GDPPC_Decent }
+	if = { limit = { has_idea = idea_GDPPC_Comfortable }	remove_ideas = idea_GDPPC_Comfortable }
+	if = { limit = { has_idea = idea_GDPPC_Robust }			remove_ideas = idea_GDPPC_Robust }
+	if = { limit = { has_idea = idea_GDPPC_Vibrant }		remove_ideas = idea_GDPPC_Vibrant }
+	if = { limit = { has_idea = idea_GDPPC_Prosperous }		remove_ideas = idea_GDPPC_Prosperous }
+	if = { limit = { has_idea = idea_GDPPC_Opulent }		remove_ideas = idea_GDPPC_Opulent }
+	if = { limit = { has_idea = idea_GDPPC_Gilded }			remove_ideas = idea_GDPPC_Gilded }
+	if = { limit = { has_idea = idea_GDPPC_Radiant }		remove_ideas = idea_GDPPC_Radiant }
+	if = { limit = { has_idea = idea_GDPPC_Transcendental }	remove_ideas = idea_GDPPC_Transcendental }
+	if = { limit = { has_idea = idea_GDPPC_Utopian }		remove_ideas = idea_GDPPC_Utopian }
+	# GDP Size ideas
+	if = { limit = { has_idea = idea_GDP_Primitive }	remove_ideas = idea_GDP_Primitive }
+	if = { limit = { has_idea = idea_GDP_Negligible }	remove_ideas = idea_GDP_Negligible }
+	if = { limit = { has_idea = idea_GDP_Peripheral }	remove_ideas = idea_GDP_Peripheral }
+	if = { limit = { has_idea = idea_GDP_Rudimentary }	remove_ideas = idea_GDP_Rudimentary }
+	if = { limit = { has_idea = idea_GDP_Developing }	remove_ideas = idea_GDP_Developing }
+	if = { limit = { has_idea = idea_GDP_Moderate }		remove_ideas = idea_GDP_Moderate }
+	if = { limit = { has_idea = idea_GDP_Established }	remove_ideas = idea_GDP_Established }
+	if = { limit = { has_idea = idea_GDP_Substantial }	remove_ideas = idea_GDP_Substantial }
+	if = { limit = { has_idea = idea_GDP_Considerable }	remove_ideas = idea_GDP_Considerable }
+	if = { limit = { has_idea = idea_GDP_Powerful }		remove_ideas = idea_GDP_Powerful }
+	if = { limit = { has_idea = idea_GDP_Major }		remove_ideas = idea_GDP_Major }
+	if = { limit = { has_idea = idea_GDP_Dominant }		remove_ideas = idea_GDP_Dominant }
+	if = { limit = { has_idea = idea_GDP_Paramount }	remove_ideas = idea_GDP_Paramount }
+	if = { limit = { has_idea = idea_GDP_Titan }		remove_ideas = idea_GDP_Titan }
+	if = { limit = { has_idea = idea_GDP_Hegemon }		remove_ideas = idea_GDP_Hegemon }
+}
+
+give_GDP_buff = {
+	# Step 1: compute new tier — DUAL CHECK: % of world GDP AND absolute floor
+	# Relative: percentage_of_GDP (already computed) >= threshold %
+	# Absolute floor: country_GDP >= floor in billions
+	# Hegemon requires 50% of world GDP — currently near-impossible
+	# TUNING: see % threshold/floor table in header comment
+	set_temp_variable = { new_GDP_tier = 1 }
+
+	# Walk up tiers — both checks must pass to advance
+	if = {
+		limit = {
+			check_variable = { var = percentage_of_GDP value = 0.03 compare = greater_than_or_equals } # >= 0.03% of world GDP
+			check_variable = { var = country_GDP value = 0.05 compare = greater_than_or_equals } # floor: 0.05B
+		}
+		set_temp_variable = { new_GDP_tier = 2 }
+	}
+	if = {
+		limit = {
+			check_variable = { var = percentage_of_GDP value = 0.08 compare = greater_than_or_equals } # >= 0.08% of world GDP
+			check_variable = { var = country_GDP value = 0.15 compare = greater_than_or_equals } # floor: 0.15B
+		}
+		set_temp_variable = { new_GDP_tier = 3 }
+	}
+	if = {
+		limit = {
+			check_variable = { var = percentage_of_GDP value = 0.2 compare = greater_than_or_equals } # >= 0.2% of world GDP
+			check_variable = { var = country_GDP value = 0.4 compare = greater_than_or_equals } # floor: 0.4B
+		}
+		set_temp_variable = { new_GDP_tier = 4 }
+	}
+	if = {
+		limit = {
+			check_variable = { var = percentage_of_GDP value = 0.5 compare = greater_than_or_equals } # >= 0.5% of world GDP
+			check_variable = { var = country_GDP value = 0.9 compare = greater_than_or_equals } # floor: 0.9B
+		}
+		set_temp_variable = { new_GDP_tier = 5 }
+	}
+	if = {
+		limit = {
+			check_variable = { var = percentage_of_GDP value = 1.0 compare = greater_than_or_equals } # >= 1.0% of world GDP
+			check_variable = { var = country_GDP value = 2.0 compare = greater_than_or_equals } # floor: 2.0B
+		}
+		set_temp_variable = { new_GDP_tier = 6 }
+	}
+	if = {
+		limit = {
+			check_variable = { var = percentage_of_GDP value = 2.0 compare = greater_than_or_equals } # >= 2.0% of world GDP
+			check_variable = { var = country_GDP value = 5.0 compare = greater_than_or_equals } # floor: 5.0B
+		}
+		set_temp_variable = { new_GDP_tier = 7 }
+	}
+	if = {
+		limit = {
+			check_variable = { var = percentage_of_GDP value = 3.5 compare = greater_than_or_equals } # >= 3.5% of world GDP
+			check_variable = { var = country_GDP value = 12.0 compare = greater_than_or_equals } # floor: 12.0B
+		}
+		set_temp_variable = { new_GDP_tier = 8 }
+	}
+	if = {
+		limit = {
+			check_variable = { var = percentage_of_GDP value = 6.0 compare = greater_than_or_equals } # >= 6.0% of world GDP
+			check_variable = { var = country_GDP value = 25.0 compare = greater_than_or_equals } # floor: 25.0B
+		}
+		set_temp_variable = { new_GDP_tier = 9 }
+	}
+	if = {
+		limit = {
+			check_variable = { var = percentage_of_GDP value = 9.0 compare = greater_than_or_equals } # >= 9.0% of world GDP
+			check_variable = { var = country_GDP value = 50.0 compare = greater_than_or_equals } # floor: 50.0B
+		}
+		set_temp_variable = { new_GDP_tier = 10 }
+	}
+	if = {
+		limit = {
+			check_variable = { var = percentage_of_GDP value = 13.0 compare = greater_than_or_equals } # >= 13.0% of world GDP
+			check_variable = { var = country_GDP value = 90.0 compare = greater_than_or_equals } # floor: 90.0B
+		}
+		set_temp_variable = { new_GDP_tier = 11 }
+	}
+	if = {
+		limit = {
+			check_variable = { var = percentage_of_GDP value = 18.0 compare = greater_than_or_equals } # >= 18.0% of world GDP
+			check_variable = { var = country_GDP value = 140.0 compare = greater_than_or_equals } # floor: 140.0B
+		}
+		set_temp_variable = { new_GDP_tier = 12 }
+	}
+	if = {
+		limit = {
+			check_variable = { var = percentage_of_GDP value = 24.0 compare = greater_than_or_equals } # >= 24.0% of world GDP
+			check_variable = { var = country_GDP value = 220.0 compare = greater_than_or_equals } # floor: 220.0B
+		}
+		set_temp_variable = { new_GDP_tier = 13 }
+	}
+	if = {
+		limit = {
+			check_variable = { var = percentage_of_GDP value = 35.0 compare = greater_than_or_equals } # >= 35.0% of world GDP
+			check_variable = { var = country_GDP value = 400.0 compare = greater_than_or_equals } # floor: 400.0B
+		}
+		set_temp_variable = { new_GDP_tier = 14 }
+	}
+	if = {
+		limit = {
+			check_variable = { var = percentage_of_GDP value = 50.0 compare = greater_than_or_equals } # >= 50.0% of world GDP
+			check_variable = { var = country_GDP value = 700.0 compare = greater_than_or_equals } # floor: 700.0B
+		}
+		set_temp_variable = { new_GDP_tier = 15 }
+	}
+
+	# Step 2: only swap ideas if tier changed
+	if = {
+		limit = {
+			NOT = {
+				check_variable = {
+					var = new_GDP_tier
+					value = country_GDP_tier
+					compare = equals
+				}
+			}
+		}
+
+		# Remove old GDP ideas
+		if = { limit = { has_idea = idea_GDP_Primitive }	remove_ideas = idea_GDP_Primitive }
+		if = { limit = { has_idea = idea_GDP_Negligible }	remove_ideas = idea_GDP_Negligible }
+		if = { limit = { has_idea = idea_GDP_Peripheral }	remove_ideas = idea_GDP_Peripheral }
+		if = { limit = { has_idea = idea_GDP_Rudimentary }	remove_ideas = idea_GDP_Rudimentary }
+		if = { limit = { has_idea = idea_GDP_Developing }	remove_ideas = idea_GDP_Developing }
+		if = { limit = { has_idea = idea_GDP_Moderate }		remove_ideas = idea_GDP_Moderate }
+		if = { limit = { has_idea = idea_GDP_Established }	remove_ideas = idea_GDP_Established }
+		if = { limit = { has_idea = idea_GDP_Substantial }	remove_ideas = idea_GDP_Substantial }
+		if = { limit = { has_idea = idea_GDP_Considerable }	remove_ideas = idea_GDP_Considerable }
+		if = { limit = { has_idea = idea_GDP_Powerful }		remove_ideas = idea_GDP_Powerful }
+		if = { limit = { has_idea = idea_GDP_Major }		remove_ideas = idea_GDP_Major }
+		if = { limit = { has_idea = idea_GDP_Dominant }		remove_ideas = idea_GDP_Dominant }
+		if = { limit = { has_idea = idea_GDP_Paramount }	remove_ideas = idea_GDP_Paramount }
+		if = { limit = { has_idea = idea_GDP_Titan }		remove_ideas = idea_GDP_Titan }
+		if = { limit = { has_idea = idea_GDP_Hegemon }		remove_ideas = idea_GDP_Hegemon }
+
+		# Add new GDP idea
+		if      = { limit = { check_variable = { new_GDP_tier = 1 } }	add_ideas = idea_GDP_Primitive }
+		else_if = { limit = { check_variable = { new_GDP_tier = 2 } }	add_ideas = idea_GDP_Negligible }
+		else_if = { limit = { check_variable = { new_GDP_tier = 3 } }	add_ideas = idea_GDP_Peripheral }
+		else_if = { limit = { check_variable = { new_GDP_tier = 4 } }	add_ideas = idea_GDP_Rudimentary }
+		else_if = { limit = { check_variable = { new_GDP_tier = 5 } }	add_ideas = idea_GDP_Developing }
+		else_if = { limit = { check_variable = { new_GDP_tier = 6 } }	add_ideas = idea_GDP_Moderate }
+		else_if = { limit = { check_variable = { new_GDP_tier = 7 } }	add_ideas = idea_GDP_Established }
+		else_if = { limit = { check_variable = { new_GDP_tier = 8 } }	add_ideas = idea_GDP_Substantial }
+		else_if = { limit = { check_variable = { new_GDP_tier = 9 } }	add_ideas = idea_GDP_Considerable }
+		else_if = { limit = { check_variable = { new_GDP_tier = 10 } }	add_ideas = idea_GDP_Powerful }
+		else_if = { limit = { check_variable = { new_GDP_tier = 11 } }	add_ideas = idea_GDP_Major }
+		else_if = { limit = { check_variable = { new_GDP_tier = 12 } }	add_ideas = idea_GDP_Dominant }
+		else_if = { limit = { check_variable = { new_GDP_tier = 13 } }	add_ideas = idea_GDP_Paramount }
+		else_if = { limit = { check_variable = { new_GDP_tier = 14 } }	add_ideas = idea_GDP_Titan }
+		else    = {													add_ideas = idea_GDP_Hegemon }
+
+		# Cache tier for dirty check
+		set_variable = { country_GDP_tier = new_GDP_tier }
+	}
+}
+
+give_GDPPC_buff = {
+	# Step 1: compute new tier — DUAL CHECK: relative ratio AND absolute floor
+	# Relative: country_GDP_per_capita >= global.average_GDP_per_capita × ratio
+	# Absolute floor: country_GDP_per_capita >= floor
+	# Decent (tier 6) is the baseline at 0.75x world average
+	# TUNING: see ratio/floor table in header comment
+	set_temp_variable = { new_GDPPC_tier = 1 }
+
+	# Pre-compute relative thresholds
+	set_temp_variable = { dyn_pc_2 = global.average_GDP_per_capita }
+	multiply_temp_variable = { dyn_pc_2 = 0.12 }
+	set_temp_variable = { dyn_pc_3 = global.average_GDP_per_capita }
+	multiply_temp_variable = { dyn_pc_3 = 0.22 }
+	set_temp_variable = { dyn_pc_4 = global.average_GDP_per_capita }
+	multiply_temp_variable = { dyn_pc_4 = 0.35 }
+	set_temp_variable = { dyn_pc_5 = global.average_GDP_per_capita }
+	multiply_temp_variable = { dyn_pc_5 = 0.52 }
+	set_temp_variable = { dyn_pc_6 = global.average_GDP_per_capita }
+	multiply_temp_variable = { dyn_pc_6 = 0.75 }
+	set_temp_variable = { dyn_pc_7 = global.average_GDP_per_capita }
+	multiply_temp_variable = { dyn_pc_7 = 1.05 }
+	set_temp_variable = { dyn_pc_8 = global.average_GDP_per_capita }
+	multiply_temp_variable = { dyn_pc_8 = 1.4 }
+	set_temp_variable = { dyn_pc_9 = global.average_GDP_per_capita }
+	multiply_temp_variable = { dyn_pc_9 = 1.85 }
+	set_temp_variable = { dyn_pc_10 = global.average_GDP_per_capita }
+	multiply_temp_variable = { dyn_pc_10 = 2.5 }
+	set_temp_variable = { dyn_pc_11 = global.average_GDP_per_capita }
+	multiply_temp_variable = { dyn_pc_11 = 3.4 }
+	set_temp_variable = { dyn_pc_12 = global.average_GDP_per_capita }
+	multiply_temp_variable = { dyn_pc_12 = 4.5 }
+	set_temp_variable = { dyn_pc_13 = global.average_GDP_per_capita }
+	multiply_temp_variable = { dyn_pc_13 = 6.0 }
+	set_temp_variable = { dyn_pc_14 = global.average_GDP_per_capita }
+	multiply_temp_variable = { dyn_pc_14 = 7.5 }
+	set_temp_variable = { dyn_pc_15 = global.average_GDP_per_capita }
+	multiply_temp_variable = { dyn_pc_15 = 9.0 }
+
+	# Walk up tiers — both checks must pass to advance
+	if = {
+		limit = {
+			check_variable = { var = country_GDP_per_capita value = dyn_pc_2 compare = greater_than_or_equals }
+			check_variable = { var = country_GDP_per_capita value = 15 compare = greater_than_or_equals }
+		}
+		set_temp_variable = { new_GDPPC_tier = 2 }
+	}
+	if = {
+		limit = {
+			check_variable = { var = country_GDP_per_capita value = dyn_pc_3 compare = greater_than_or_equals }
+			check_variable = { var = country_GDP_per_capita value = 35 compare = greater_than_or_equals }
+		}
+		set_temp_variable = { new_GDPPC_tier = 3 }
+	}
+	if = {
+		limit = {
+			check_variable = { var = country_GDP_per_capita value = dyn_pc_4 compare = greater_than_or_equals }
+			check_variable = { var = country_GDP_per_capita value = 80 compare = greater_than_or_equals }
+		}
+		set_temp_variable = { new_GDPPC_tier = 4 }
+	}
+	if = {
+		limit = {
+			check_variable = { var = country_GDP_per_capita value = dyn_pc_5 compare = greater_than_or_equals }
+			check_variable = { var = country_GDP_per_capita value = 150 compare = greater_than_or_equals }
+		}
+		set_temp_variable = { new_GDPPC_tier = 5 }
+	}
+	if = {
+		limit = {
+			check_variable = { var = country_GDP_per_capita value = dyn_pc_6 compare = greater_than_or_equals }
+			check_variable = { var = country_GDP_per_capita value = 300 compare = greater_than_or_equals }
+		}
+		set_temp_variable = { new_GDPPC_tier = 6 }
+	}
+	if = {
+		limit = {
+			check_variable = { var = country_GDP_per_capita value = dyn_pc_7 compare = greater_than_or_equals }
+			check_variable = { var = country_GDP_per_capita value = 500 compare = greater_than_or_equals }
+		}
+		set_temp_variable = { new_GDPPC_tier = 7 }
+	}
+	if = {
+		limit = {
+			check_variable = { var = country_GDP_per_capita value = dyn_pc_8 compare = greater_than_or_equals }
+			check_variable = { var = country_GDP_per_capita value = 800 compare = greater_than_or_equals }
+		}
+		set_temp_variable = { new_GDPPC_tier = 8 }
+	}
+	if = {
+		limit = {
+			check_variable = { var = country_GDP_per_capita value = dyn_pc_9 compare = greater_than_or_equals }
+			check_variable = { var = country_GDP_per_capita value = 1200 compare = greater_than_or_equals }
+		}
+		set_temp_variable = { new_GDPPC_tier = 9 }
+	}
+	if = {
+		limit = {
+			check_variable = { var = country_GDP_per_capita value = dyn_pc_10 compare = greater_than_or_equals }
+			check_variable = { var = country_GDP_per_capita value = 1800 compare = greater_than_or_equals }
+		}
+		set_temp_variable = { new_GDPPC_tier = 10 }
+	}
+	if = {
+		limit = {
+			check_variable = { var = country_GDP_per_capita value = dyn_pc_11 compare = greater_than_or_equals }
+			check_variable = { var = country_GDP_per_capita value = 2500 compare = greater_than_or_equals }
+		}
+		set_temp_variable = { new_GDPPC_tier = 11 }
+	}
+	if = {
+		limit = {
+			check_variable = { var = country_GDP_per_capita value = dyn_pc_12 compare = greater_than_or_equals }
+			check_variable = { var = country_GDP_per_capita value = 3600 compare = greater_than_or_equals }
+		}
+		set_temp_variable = { new_GDPPC_tier = 12 }
+	}
+	if = {
+		limit = {
+			check_variable = { var = country_GDP_per_capita value = dyn_pc_13 compare = greater_than_or_equals }
+			check_variable = { var = country_GDP_per_capita value = 5000 compare = greater_than_or_equals }
+		}
+		set_temp_variable = { new_GDPPC_tier = 13 }
+	}
+	if = {
+		limit = {
+			check_variable = { var = country_GDP_per_capita value = dyn_pc_14 compare = greater_than_or_equals }
+			check_variable = { var = country_GDP_per_capita value = 6500 compare = greater_than_or_equals }
+		}
+		set_temp_variable = { new_GDPPC_tier = 14 }
+	}
+	if = {
+		limit = {
+			check_variable = { var = country_GDP_per_capita value = dyn_pc_15 compare = greater_than_or_equals }
+			check_variable = { var = country_GDP_per_capita value = 8200 compare = greater_than_or_equals }
+		}
+		set_temp_variable = { new_GDPPC_tier = 15 }
+	}
+
+	# Step 2: only swap ideas if tier changed
+	if = {
+		limit = {
+			NOT = {
+				check_variable = {
+					var = new_GDPPC_tier
+					value = country_GDPPC_tier
+					compare = equals
+				}
+			}
+		}
+
+		# Remove old GDPPC ideas
+		if = { limit = { has_idea = idea_GDPPC_Abject }			remove_ideas = idea_GDPPC_Abject }
+		if = { limit = { has_idea = idea_GDPPC_Squalid }		remove_ideas = idea_GDPPC_Squalid }
+		if = { limit = { has_idea = idea_GDPPC_Hardscrabble }	remove_ideas = idea_GDPPC_Hardscrabble }
+		if = { limit = { has_idea = idea_GDPPC_Grimy }			remove_ideas = idea_GDPPC_Grimy }
+		if = { limit = { has_idea = idea_GDPPC_Meager }			remove_ideas = idea_GDPPC_Meager }
+		if = { limit = { has_idea = idea_GDPPC_Decent }			remove_ideas = idea_GDPPC_Decent }
+		if = { limit = { has_idea = idea_GDPPC_Comfortable }	remove_ideas = idea_GDPPC_Comfortable }
+		if = { limit = { has_idea = idea_GDPPC_Robust }			remove_ideas = idea_GDPPC_Robust }
+		if = { limit = { has_idea = idea_GDPPC_Vibrant }		remove_ideas = idea_GDPPC_Vibrant }
+		if = { limit = { has_idea = idea_GDPPC_Prosperous }		remove_ideas = idea_GDPPC_Prosperous }
+		if = { limit = { has_idea = idea_GDPPC_Opulent }		remove_ideas = idea_GDPPC_Opulent }
+		if = { limit = { has_idea = idea_GDPPC_Gilded }			remove_ideas = idea_GDPPC_Gilded }
+		if = { limit = { has_idea = idea_GDPPC_Radiant }		remove_ideas = idea_GDPPC_Radiant }
+		if = { limit = { has_idea = idea_GDPPC_Transcendental }	remove_ideas = idea_GDPPC_Transcendental }
+		if = { limit = { has_idea = idea_GDPPC_Utopian }		remove_ideas = idea_GDPPC_Utopian }
+
+		# Add new GDPPC idea
+		if      = { limit = { check_variable = { new_GDPPC_tier = 1 } }	add_ideas = idea_GDPPC_Abject }
+		else_if = { limit = { check_variable = { new_GDPPC_tier = 2 } }	add_ideas = idea_GDPPC_Squalid }
+		else_if = { limit = { check_variable = { new_GDPPC_tier = 3 } }	add_ideas = idea_GDPPC_Hardscrabble }
+		else_if = { limit = { check_variable = { new_GDPPC_tier = 4 } }	add_ideas = idea_GDPPC_Grimy }
+		else_if = { limit = { check_variable = { new_GDPPC_tier = 5 } }	add_ideas = idea_GDPPC_Meager }
+		else_if = { limit = { check_variable = { new_GDPPC_tier = 6 } }	add_ideas = idea_GDPPC_Decent }
+		else_if = { limit = { check_variable = { new_GDPPC_tier = 7 } }	add_ideas = idea_GDPPC_Comfortable }
+		else_if = { limit = { check_variable = { new_GDPPC_tier = 8 } }	add_ideas = idea_GDPPC_Robust }
+		else_if = { limit = { check_variable = { new_GDPPC_tier = 9 } }	add_ideas = idea_GDPPC_Vibrant }
+		else_if = { limit = { check_variable = { new_GDPPC_tier = 10 } }	add_ideas = idea_GDPPC_Prosperous }
+		else_if = { limit = { check_variable = { new_GDPPC_tier = 11 } }	add_ideas = idea_GDPPC_Opulent }
+		else_if = { limit = { check_variable = { new_GDPPC_tier = 12 } }	add_ideas = idea_GDPPC_Gilded }
+		else_if = { limit = { check_variable = { new_GDPPC_tier = 13 } }	add_ideas = idea_GDPPC_Radiant }
+		else_if = { limit = { check_variable = { new_GDPPC_tier = 14 } }	add_ideas = idea_GDPPC_Transcendental }
+		else    = {														add_ideas = idea_GDPPC_Utopian }
+
+		# Cache tier for dirty check
+		set_variable = { country_GDPPC_tier = new_GDPPC_tier }
+	}
+}
