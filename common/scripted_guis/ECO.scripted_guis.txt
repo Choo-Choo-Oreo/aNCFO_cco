@@ -87,6 +87,21 @@ scripted_gui = {
 			close_GDP_button_click = {
 				clear_variable = show_GDP_main
 			}
+			debug_opening_button_click = {
+				if = {
+					limit = { has_variable = show_debug_window }
+					clear_variable = show_debug_window
+				}
+				else = {
+					set_variable = { show_debug_window = 1 }
+				}
+			}
+		}
+
+		triggers = {
+			debug_opening_button_visible = {
+				is_debug = yes
+			}
 		}
 
 		properties = {
@@ -98,6 +113,71 @@ scripted_gui = {
 			}
 			top_ten_GDP_country_flag_icon = {
 				image = "[THIS.GetFlag]"
+			}
+		}
+	}
+
+	debug_window = {
+		context_type = player_context
+		parent_window_token = top_bar
+		window_name = "debug_window_container"
+		
+		# Only visible in debug mode AND if the button was clicked
+		visible = {
+			is_debug = yes
+			has_variable = show_debug_window
+		}
+
+		effects = {
+			close_debug_button_click = {
+				clear_variable = show_debug_window
+			}
+
+			refresh_gdp_and_per_capita_debug_click = {
+				every_country = {
+					calculate_GDP = yes
+					GDP_growth_calculation = yes
+				}
+			}
+			
+			add_inflation_debug_click = {
+				add_to_variable = { global.ECO_inflation = 1 tooltip = loc_add_inflation_debug }
+			}
+			
+			remove_inflation_debug_click = {
+				subtract_from_variable = { global.ECO_inflation = 1 tooltip = loc_remove_inflation_debug }
+			}
+			
+			add_efficiency_debug_click = {
+				add_to_variable = { global.ECO_efficiency = 1 tooltip = loc_add_efficiency_debug }
+			}
+			
+			remove_efficiency_debug_click = {
+				subtract_from_variable = { global.ECO_efficiency = 1 tooltip = loc_remove_efficiency_debug }
+			}
+			
+			log_gdp_calc_steps_debug_click = {
+				log = "[THIS.GetTag]"
+				log = "add_to_variable = { temp_civ = temp_civ_con<[?log_temp_civ_temp_civ_con_debug]> }"
+				log = "add_to_variable = { temp_civ = temp_civ_bonus<[?log_temp_civ_temp_civ_bonus_debug]> }"
+				log = "add_to_variable = { temp_civ = real_value_mult<[?log_temp_civ_real_value_mult_debug]> }"
+				log = "add_to_variable = { country_GDP = temp_civ<[?log_country_GDP_temp_civ_debug]> }"
+				log = "add_to_variable = { country_GDP = temp_mil<[?log_country_GDP_temp_mil_debug]> }"
+				log = "add_to_variable = { country_GDP = temp_doc<[?log_country_GDP_temp_doc_debug]> }"
+				log = "multiply_temp_variable = { temp_civ = trade_bonus<[?log_temp_civ_trade_bonus_debug]> }"
+				log = "multiply_temp_variable = { temp_mil = trade_bonus<[?log_temp_mil_trade_bonus_debug]> }"
+				log = "multiply_temp_variable = { temp_doc = trade_bonus<[?log_temp_doc_trade_bonus_debug]> }"
+				log = "multiply_temp_variable = { temp_civ = civ_multiplier<[?log_temp_civ_civ_multiplier_debug]> }"
+				log = "multiply_temp_variable = { temp_mil = mil_multiplier<[?log_temp_mil_mil_multiplier_debug]> }"
+				log = "multiply_temp_variable = { temp_doc = mil_multiplier<[?log_temp_doc_mil_multiplier_debug]> }"
+				log = "multiply_variable = { country_GDP = population_modifier<[?log_country_GDP_population_modifier_debug]> }"
+				log = "multiply_temp_variable = { temp_civ = population_modifier_civ<[?log_temp_civ_population_modifier_civ_debug]> }"
+				log = "multiply_variable = { country_GDP = temp_8<[?log_country_GDP_temp_8_civ_debug]> }"
+				log = "add_to_variable = { country_GDP = temp_civ_resource<[?log_country_GDP_temp_civ_resource_debug]> }"
+				log = "multiply_variable = { country_GDP = factory_output<[?log_country_GDP_factory_output_debug]> }"
+				log = "multiply_variable = { country_GDP = stability_gdp_factor<[?log_country_GDP_stability_gdp_factor_debug]> }"
+				log = "add_to_variable = { country_GDP = country_subsistence_pop_m<[?log_country_GDP_country_subsistence_pop_m_debug]> }"
+				log = "divide_variable = { country_GDP = @currency_conversion_factor<[?log_temp_currency_conversion_factor_debug]> }"
 			}
 		}
 	}
