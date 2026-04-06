@@ -1,0 +1,273 @@
+demobilization_military = {
+	demobilization_military_ai_decision = {
+		icon = generic_civil_support
+
+		visible = { has_active_mission = demobilization_military_mission is_ai = yes }
+
+		available = {
+			check_variable = { OCfA_current_battalion_load > OCfA_calculated_battalion_capacity }
+		}
+
+		cost = 0
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 10
+				OR = {
+					has_stability < 0.8
+					has_war_support < 0.8
+				}
+			}
+			modifier = {
+				factor = 50
+				OR = {
+					has_stability < 0.5
+					has_war_support < 0.5
+				}
+			}
+			modifier = {
+				factor = -1
+				OR = {
+					AND = {
+						any_country = { has_wargoal_against = ROOT }
+						OR = {
+							has_stability > 0.9
+							has_war_support > 0.9
+						}
+					}
+					has_war = yes
+				}
+			}
+		}
+
+		complete_effect = {
+			set_temp_variable = { temp_manpower = deployed_army_manpower_k }
+			while_loop_effect = {
+				limit = {
+					check_variable = { OCfA_current_battalion_load > OCfA_calculated_battalion_capacity }
+				}
+				random_country_division = {
+					destroy_unit = yes
+				}
+				OCfA_calculate_battalion_capacity_formula = yes
+			}
+			subtract_from_temp_variable = { temp_manpower = deployed_army_manpower_k }
+			multiply_temp_variable = { temp_manpower = 1000 }
+			hidden_effect = { add_manpower = var:temp_manpower }
+		}
+	}
+
+	demobilization_military_mission = {
+		icon = generic_civil_support
+
+		priority = 10
+		days_mission_timeout = 90
+		is_good = yes
+
+		allowed = { always = no }
+
+		cancel_trigger = { has_war = yes }
+
+		available = {
+			OCfA_has_war_economy = no
+			OCfA_has_war_conscription = no
+			check_variable = { OCfA_current_battalion_load < OCfA_calculated_battalion_capacity tooltip = demobilization_military_mission_tt }
+		}
+
+		timeout_effect = {
+			random_list = {
+				20 = { country_event = OCfA_event.1 }
+				20 = { country_event = OCfA_event.2 }
+				20 = {
+					modifier = {
+						factor = 2
+						NOT = { has_idea = OCfA_industrial_labor_shortage }
+					}
+					modifier = {
+						factor = -1
+						has_idea = OCfA_industrial_labor_shortage
+					}
+					country_event = OCfA_event.3
+				}
+				20 = { country_event = OCfA_event.4 }
+				20 = {
+					modifier = {
+						factor = 2
+						NOT = { has_idea = OCfA_military_committees }
+					}
+					modifier = {
+						factor = -1
+						has_idea = OCfA_military_committees
+					}
+					country_event = OCfA_event.5
+				}
+			}
+			add_stability = -0.10
+			add_war_support = -0.05
+			activate_mission = demobilization_military_mission
+		}
+
+		complete_effect = {
+			country_event = OCfA_event.0
+			set_country_flag = { flag = OCfA_recent_demobilization days = 365 value = 1 }
+			remove_mission = demobilization_military_mission
+		}
+
+		ai_will_do = { factor = 0 }
+	}
+
+	OCfA_lower_conscription_decision = {
+		icon = generic_manpower
+		
+		visible = { has_active_mission = demobilization_military_mission }
+		
+		available = {
+			OCfA_has_war_conscription = yes
+			set_temp_variable = { OCfA_conscription_demob_cost = modifier@conscription }
+			multiply_temp_variable = { OCfA_conscription_demob_cost = 1000 }
+			clamp_temp_variable = { var = OCfA_conscription_demob_cost min = 10 max = 300 }
+		}
+
+		cost = var:OCfA_conscription_demob_cost
+
+		complete_effect = {
+			add_ideas = volunteer_only
+			hidden_effect = { OCfA_calculate_battalion_capacity_formula = yes }
+		}
+		
+		ai_will_do = {
+			factor = 10
+			modifier = {
+				factor = 50
+				OR = {
+					has_stability < 0.5
+					has_war_support < 0.5
+				}
+			}
+			modifier = {
+				factor = -1
+				OR = {
+					AND = {
+						any_country = { has_wargoal_against = ROOT }
+						OR = {
+							has_stability > 0.9
+							has_war_support > 0.9
+						}
+					}
+					has_war = yes
+				}
+			}
+		}
+	}
+
+	OCfA_lower_economy_decision = { # Decision to lower Economy Law
+		icon = generic_production_bonus
+		
+		visible = { has_active_mission = demobilization_military_mission }
+		
+		available = {
+			OCfA_has_war_economy = yes
+			set_temp_variable = { OCfA_economy_demob_cost = 300 }
+			set_temp_variable = { OCfA_consumer_goods_expected_cost = modifier@consumer_goods_expected_value }
+			multiply_temp_variable = { OCfA_consumer_goods_expected_cost = 500 }
+			subtract_from_temp_variable = { OCfA_economy_demob_cost = OCfA_consumer_goods_expected_cost }
+			clamp_temp_variable = { var = OCfA_economy_demob_cost min = 10 max = 300 }
+		}
+
+		cost = var:OCfA_economy_demob_cost
+
+		complete_effect = {
+			add_ideas = civilian_economy
+			hidden_effect = { OCfA_calculate_battalion_capacity_formula = yes }
+		}
+		
+		ai_will_do = {
+			factor = 10
+			modifier = {
+				factor = 50
+				OR = {
+					has_stability < 0.5
+					has_war_support < 0.5
+				}
+			}
+			modifier = {
+				factor = -1
+				OR = {
+					AND = {
+						any_country = { has_wargoal_against = ROOT }
+						OR = {
+							has_stability > 0.9
+							has_war_support > 0.9
+						}
+					}
+					has_war = yes
+				}
+			}
+		}
+	}
+	
+	OCfA_propaganda_delay_demob = {
+		icon = generic_civil_support
+
+		visible = { has_active_mission = demobilization_military_mission }
+
+		available = {
+			any_country = {
+				OR = {
+					has_wargoal_against = ROOT
+					ROOT = { has_wargoal_against = PREV }
+				}
+			}
+		}
+
+		cost = var:OCfA_propaganda_delay_cost?50
+
+		complete_effect = {
+			add_days_mission_timeout = { mission = demobilization_military_mission  days = 90 }
+			IF = {
+				LIMIT = { NOT = { has_variable = OCfA_propaganda_delay_cost } }
+				set_variable = { OCfA_propaganda_delay_cost = 50 }
+			}
+			add_to_variable = { OCfA_propaganda_delay_cost = 50 }
+			custom_effect_tooltip = OCfA_propaganda_delay_demob_tt
+		}
+		
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 10
+				OR = {
+					AND = {
+						any_country = { has_wargoal_against = ROOT }
+						OR = {
+							has_stability > 0.8
+							has_war_support > 0.8
+						}
+					}
+					has_war = yes
+				}
+			}
+			modifier = {
+				factor = -1
+				OR = {
+					has_stability < 0.7
+					has_war_support < 0.7
+				}
+			}
+		}
+	}
+	
+	OCfA_reintegration_program = { # Helps manage the transition by trading PP for Stability
+		icon = generic_civil_support
+		visible = { has_active_mission = demobilization_military_mission }
+		available = { has_stability < 0.95 }
+		cost = 25
+		
+		complete_effect = {
+			add_stability = 0.02
+			add_war_support = -0.02
+		}
+
+		ai_will_do = { factor = 0 }
+	}
+}

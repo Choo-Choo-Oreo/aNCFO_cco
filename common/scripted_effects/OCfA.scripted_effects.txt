@@ -257,6 +257,24 @@ OCfA_calculate_battalion_capacity_formula = {
 		set_variable = { var = OCfA_current_battalion_load value = num_battalions }
 	}
 
+	set_variable = { var = OCfA_calculated_demob_battalion_capacity value = OCfA_calculated_battalion_capacity }
+	multiply_variable = { var = OCfA_calculated_demob_battalion_capacity value = 1.02 }
+	add_to_temp_variable = { var = OCfA_calculated_demob_battalion_capacity value = 25 }
+	round_variable = OCfA_calculated_demob_battalion_capacity
+
+	IF = { # --- Demob ---
+		LIMIT = {
+			has_war = no
+			check_variable = { OCfA_current_battalion_load > OCfA_calculated_demob_battalion_capacity }
+			NOT = {
+				has_active_mission = demobilization_military_mission
+				has_country_flag = OCfA_recent_demobilization
+				has_global_flag = OCfA_prevent_demobilization
+			}
+		}
+		activate_mission = demobilization_military_mission
+	}
+
 	# --- STEP 6: CURVE ---
 	set_temp_variable = { var = OCfA_capacity_diff value = OCfA_calculated_battalion_capacity }
 	subtract_from_temp_variable = { var = OCfA_capacity_diff value = OCfA_current_battalion_load }

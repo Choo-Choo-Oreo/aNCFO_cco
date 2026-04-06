@@ -629,20 +629,6 @@ ideas = {
 		use_list_view = yes
 
 		undisturbed_isolation = {
-			#available = {
-			#	IF = { LIMIT = { is_species_human = yes }
-			#	}
-			#	IF = { LIMIT = { is_species_beastfolk = yes }
-			#	}
-			#	IF = { LIMIT = { is_species_dwarf = yes }
-			#	}
-			#	IF = { LIMIT = { is_species_elf = yes }
-			#	}
-			#	IF = { LIMIT = { is_species_rhyniognatha = yes }
-			#	}
-			#	IF = { LIMIT = { is_species_krohmapsari = yes }
-			#	}
-			#}
 
 			allowed = { always = no }
 			removal_cost = -1
@@ -680,20 +666,6 @@ ideas = {
 		}
 
 		isolation = {
-			#available = {
-			#	IF = { LIMIT = { is_species_human = yes }
-			#	}
-			#	IF = { LIMIT = { is_species_beastfolk = yes }
-			#	}
-			#	IF = { LIMIT = { is_species_dwarf = yes }
-			#	}
-			#	IF = { LIMIT = { is_species_elf = yes }
-			#	}
-			#	IF = { LIMIT = { is_species_rhyniognatha = yes }
-			#	}
-			#	IF = { LIMIT = { is_species_krohmapsari = yes }
-			#	}
-			#}
 
 			allowed = { always = no }
 			removal_cost = -1
@@ -731,20 +703,6 @@ ideas = {
 		}
 
 		civilian_economy = {
-			#available = {
-			#	IF = { LIMIT = { is_species_human = yes }
-			#	}
-			#	IF = { LIMIT = { is_species_beastfolk = yes }
-			#	}
-			#	IF = { LIMIT = { is_species_dwarf = yes }
-			#	}
-			#	IF = { LIMIT = { is_species_elf = yes }
-			#	}
-			#	IF = { LIMIT = { is_species_rhyniognatha = yes }
-			#	}
-			#	IF = { LIMIT = { is_species_krohmapsari = yes }
-			#	}
-			#}
 
 			cost = 150
 			removal_cost = -1
@@ -785,6 +743,19 @@ ideas = {
 			}
 			default = yes
 			cancel_if_invalid = no
+			ai_will_do = {
+   				factor = 1
+				modifier = {
+					factor = 50
+					has_war = no
+				}
+   				modifier = {
+					factor = -1
+					NOT = {
+						has_idea = low_economic_mobilisation
+					}
+				}
+   			}
 		}
 
 		low_economic_mobilisation = {
@@ -830,10 +801,21 @@ ideas = {
 			}
 			cancel_if_invalid = no
 			ai_will_do = {
-   				factor = 3
+   				factor = 1
+				modifier = {
+					factor = 40
+					has_war = no
+				}
+				modifier = {
+					factor = 10
+					has_war = yes
+				}
    				modifier = {
-					factor = 20
-					is_major = yes
+					factor = -1
+					NOT = {
+						has_idea = civilian_economy
+						has_idea = partial_economic_mobilisation
+					}
 				}
    			}
 		}
@@ -881,10 +863,21 @@ ideas = {
 			}
 			cancel_if_invalid = no
 			ai_will_do = {
-   				factor = 4
-   				modifier = {
+   				factor = 1
+				modifier = {
+					factor = 30
+					has_war = no
+				}
+				modifier = {
 					factor = 20
-					is_major = yes
+					has_war = yes
+				}
+   				modifier = {
+					factor = -1
+					NOT = {
+						has_idea = low_economic_mobilisation
+						has_idea = economic_mobilisation
+					}
 				}
    			}
 		}
@@ -932,20 +925,21 @@ ideas = {
 			}
 			cancel_if_invalid = no
 			ai_will_do = {
-   				factor = 10
-				modifier = { # To prevent support collapse
-					factor = -50
-					has_war_support < 0.50
-				}
-				modifier = { # To prevent support collapse
-					factor = 10
-					has_war_support > 0.50
-					has_war_support < 0.60
+   				factor = 1
+				modifier = {
+					factor = 20
+					has_war = no
 				}
 				modifier = {
-					#High prio on production
-					factor = 20
-					manpower_per_military_factory >  1000
+					factor = 30
+					has_war = yes
+				}
+   				modifier = {
+					factor = -1
+					NOT = {
+						has_idea = partial_economic_mobilisation
+						has_idea = war_economy
+					}
 				}
    			}
 		}
@@ -1006,26 +1000,21 @@ ideas = {
 			}
 			cancel_if_invalid = no
 			ai_will_do = {
-   				factor = 12.5
-				modifier = { # To prevent support collapse
-					factor = -50
-					has_war_support < 0.60
-				}
-				modifier = { # To prevent support collapse
+   				factor = 1
+				modifier = {
 					factor = 10
-					has_war_support > 0.60
-					has_war_support < 0.75
+					has_war = no
 				}
 				modifier = {
-					#High prio on production
-					factor = 20
-					manpower_per_military_factory >  2000
+					factor = 40
 					has_war = yes
 				}
-				modifier = {
-					#High prio on production
-					factor = 10
-					has_war = yes
+   				modifier = {
+					factor = -1
+					NOT = {
+						has_idea = economic_mobilisation
+						has_idea = tot_economic_mobilisation
+					}
 				}
    			}
 		}
@@ -1041,41 +1030,6 @@ ideas = {
 					}
 				}
 			}
-			ai_will_do = {
-   				factor = 15
-				modifier = { # To prevent support collapse
-					factor = -50
-					has_war_support < 0.75
-				}
-				modifier = {
-					factor = 25
-					#Prio this if nation has a lot of manpower compared to MIC
-					manpower_per_military_factory >  10000
-					has_war = yes
-				}
-				modifier = {
-					#Block  unless nation has a lot of manpower
-					factor = 0
-					manpower_per_military_factory <  3000
-					has_war = yes
-				}
-				modifier = {
-					# never take this if we are on low conscription laws for safety
-					factor = 0
-					OR = {
-						has_idea = volunteer_only
-						has_idea = limited_conscription
-					}
-					has_war = yes
-				}
-				modifier = {
-					#High prio on production
-					factor = 10
-					has_war = yes
-				}
-   			}
-			removal_cost = -1
-			level = 8
 
 			cost = 150
 			modifier = {
@@ -1113,6 +1067,21 @@ ideas = {
 				production_speed_coastal_bunker_factor = 0.15
 			}
 			cancel_if_invalid = no
+			ai_will_do = {
+   				factor = 1
+				modifier = {
+					factor = 50
+					has_war = yes
+				}
+   				modifier = {
+					factor = -1
+					NOT = {
+						has_idea = war_economy
+					}
+				}
+   			}
+			removal_cost = -1
+			level = 8
 		}
 	}
 

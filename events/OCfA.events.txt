@@ -1,0 +1,97 @@
+add_namespace = OCfA_event
+
+# Good Outcome: Demobilization Successful
+country_event = {
+	id = OCfA_event.0
+	title = OCfA_event.0.t
+	desc = OCfA_event.0.d
+	picture = GFX_report_event_generic_parade
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = OCfA_event.0.a
+		add_political_power = 50
+		add_stability = 0.05
+	}
+}
+
+# Failed Outcome 1: Administrative Discrepancies
+country_event = {
+	id = OCfA_event.1
+	title = OCfA_event.1.t
+	desc = OCfA_event.1.d
+	picture = GFX_report_event_generic_corruption
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = OCfA_event.1.a
+		add_political_power = -75
+		add_stability = -0.05
+	}
+}
+
+# Failed Outcome 2: Unrest
+country_event = {
+	id = OCfA_event.2
+	title = OCfA_event.2.t
+	desc = OCfA_event.2.d
+	picture = GFX_report_event_generic_protest
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = OCfA_event.2.a
+		add_stability = -0.10
+		add_war_support = -0.05
+	}
+}
+
+# Failed Outcome 3: Labor Shortage
+country_event = {
+	id = OCfA_event.3
+	title = OCfA_event.3.t
+	desc = OCfA_event.3.d
+	picture = GFX_report_event_generic_factory
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = OCfA_event.3.a
+		add_timed_idea = { idea = OCfA_industrial_labor_shortage days = 180 }
+	}
+}
+
+# Failed Outcome 4: Unsanctioned Desertions
+country_event = {
+	id = OCfA_event.4
+	title = OCfA_event.4.t
+	desc = OCfA_event.4.d
+	picture = GFX_report_event_generic_infantry
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = OCfA_event.4.a
+		set_temp_variable = { desertion_amount = manpower }
+		multiply_temp_variable = { desertion_amount = 0.05 }
+		add_manpower = -var:desertion_amount
+		army_experience = -10
+	}
+}
+
+# Failed Outcome 5: Chain of Command Breakdown
+country_event = {
+	id = OCfA_event.5
+	title = OCfA_event.5.t
+	desc = OCfA_event.5.d
+	picture = GFX_report_event_generic_readiness_low
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = OCfA_event.5.a
+		add_timed_idea = { idea = OCfA_military_committees days = 180 }
+	}
+}

@@ -531,63 +531,43 @@ wants_steel_global_shortage = {
 		}
 	}
 	abort_when_not_enabled = yes
-	ai_strategy = {
-		type = building_target
-		id = steel_complex
-		value = 200
-	}
+
+	ai_strategy = { type = build_building id = steel_complex value = 200 }
 }
 
 wants_local_steel_production = {
 	enable = {
 		is_major = yes
 		check_variable = { num_of_civilian_factories^2 > resource_produced@steel }
+		NOT = { has_global_flag = Artificers.GlobalIronShortage }
 	}
 	abort_when_not_enabled = yes
-	ai_strategy = {
-		type = building_target
-		id = steel_complex
-		value = 50
-	}
+
+	ai_strategy = { type = build_building id = steel_complex value = 50 }
 }
 
 wants_local_aluminium_production = {
 	enable = {
 		is_major = yes
-		check_variable = { num_of_civilian_factories > resource_produced@aluminium }
+		check_variable = { num_of_civilian_factories^5 > resource_produced@aluminium }
 		NOT = { has_global_flag = Artificers.GlobalIronShortage }
 	}
 	abort_when_not_enabled = yes
-	ai_strategy = {
-		type = building_target
-		id = aluminium_complex
-		value = 20
-	}
+
+	ai_strategy = { type = build_building id = aluminium_complex value = 20 }
 }
 
 BAR_industrial_heartland = {
 	enable = { tag = BAR }
 	abort_when_not_enabled = yes
 
-	ai_strategy = {
-		type = building_target
-		id = steel_complex
-		value = 999
-	}
+	ai_strategy = { type = build_building id = steel_complex value = 100 }
 }
 
 FFN_industrial_heartland = {
 	enable = { tag = FFN }
 	abort_when_not_enabled = yes
 
-	ai_strategy = {
-		type = building_target
-		id = steel_complex
-		value = 999
-	}
-
-	ai_strategy = {
-		type = dockyard_to_military_factory_ratio
-		value = 200
-	}
+	ai_strategy = { type = build_building id = steel_complex value = 100 }
+	ai_strategy = { type = dockyard_to_military_factory_ratio value = 100 }
 }
