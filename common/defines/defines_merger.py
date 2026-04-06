@@ -1,9 +1,9 @@
 import re
 
 # File paths (adjust if needed)
-dominant_file = "generic.FAI_defines.lua"
+dominant_file = "tallEIS_defines.lua"
 subordinate_file = "aNCFO_defines.lua"
-output_file = "aNCFO_defines_cleaned.lua"
+output_file = "tallEIS_defines_cleaned.lua"
 
 # Regex to find the "NDefines.X.Y" part of a line
 key_pattern = re.compile(r'(NDefines\.[a-zA-Z0-9._]+)')

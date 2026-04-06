@@ -70,9 +70,9 @@ Contributions are tracked in one of the following formats:
     "Better Mechanics : Optimization" | *19 Jan 2024*
     "Better Mechanics : Battalion Limiter" | *6 Jan 2024*
     "Better Mechanics : Combat" | *23 Nov 2024*
-    "Better Mechanics : Divisional AI" | *9 Aug 2024* | *Version 6.8*
+    "Better Mechanics : Divisional AI" | *9 Aug 2024*
     "Better Mechanics : Division Designer" | *18 Mar 2024*
-    "Better Mechanics : Frontline AI | Updated" | *3 Jan 2024* | *Version 8.1*
+    "Better Mechanics : Frontline AI | Updated" | *4 Apr 2026*
     "Better Mechanics : More Spies" | *Oct 10 2023*
     "Better Mechanics : National Economy" | *7 Apr 2024*
     "Better Mechanics : Production" | *18 Mar 2024*
