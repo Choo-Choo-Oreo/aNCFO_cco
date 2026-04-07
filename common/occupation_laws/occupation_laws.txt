@@ -78,7 +78,6 @@ autonomous_occupation = {
 		modifier = {
 			FROM = {
 				has_war = no
-				has_government = pluralism
 			}
 			add = 5000
 		}
@@ -401,20 +400,6 @@ harsh_quotas_occupation = {
 		}
 
 		modifier = {
-			FROM = {
-				original_tag = SPR
-			}
-			date < 1943.1.1
-
-			add = -9999
-		}
-
-		modifier = {
-			OR = {
-				is_on_continent = europe
-				is_core_of = USA
-			}
-
 			OR ={
 				AND = {
 					check_variable = { building_level@arms_factory = 1 compare = greater_than }
@@ -424,9 +409,14 @@ harsh_quotas_occupation = {
 				check_variable = { building_level@industrial_complex = 2 compare = greater_than }
 			}
 			
-			
-			FROM  = {
-				NOT = { has_government = unitism } #we get better occupation law
+			FROM  = { # we get better occupation law
+				NOT = {
+					OR = {
+						has_government = pluralism
+						has_government = semidemocracy
+						has_government = unitism
+					}
+				}
 			}
 
 			add = 2000
@@ -443,9 +433,14 @@ harsh_quotas_occupation = {
 				check_variable = { building_level@industrial_complex = 4 compare = greater_than }
 			}
 			
-			
-			FROM  = {
-				NOT = { has_government = unitism }
+			FROM  = { # we get better occupation law
+				NOT = {
+					OR = {
+						has_government = pluralism
+						has_government = semidemocracy
+						has_government = unitism
+					}
+				}
 			}
 
 			add = 2000

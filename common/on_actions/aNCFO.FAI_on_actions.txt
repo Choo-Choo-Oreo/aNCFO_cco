@@ -54,6 +54,7 @@ on_actions = {
 							every_core_state = { # Oil-Fired Generator Queuing
 								random_select_amount = [BATCH_SIZE] # "random_select_amount" prevents "oil_fired_generator" Queue overload
 								LIMIT = {
+									is_core_of = ROOT
 									set_temp_variable = { state_total_factories = building_level@arms_factory }
 									add_to_temp_variable = { state_total_factories = building_level@dockyard }
 									add_to_temp_variable = { state_total_factories = building_level@industrial_complex }
@@ -97,6 +98,7 @@ on_actions = {
 						every_core_state = { # Construction Sector Queuing
 							random_select_amount = [BATCH_SIZE] # "random_select_amount" prevents "construction_complex" Queue overload
 							LIMIT = {
+								is_core_of = ROOT
 								free_building_slots = { building = industrial_complex size < 1 }
 								NOT = {
 									has_state_flag = bq_construction_complex
