@@ -696,6 +696,13 @@ ideas = {
 				}
 			}
 			cancel_if_invalid = no
+			ai_will_do = {
+   				factor = 10
+				modifier = {
+					add = 1000
+					has_idea = undisturbed_isolation
+				}
+			}
 			rule = {
 				can_access_market = no
 				desc = can_not_access_market_closed_economy
@@ -746,8 +753,21 @@ ideas = {
 			ai_will_do = {
    				factor = 1
 				modifier = {
+					add = 1000
+					OR = {
+						has_idea = undisturbed_isolation
+						has_idea = isolation
+					}
+				}
+				modifier = {
+					add = 100
+					has_war = no
+					has_idea = low_economic_mobilisation
+				}
+				modifier = {
 					factor = 50
 					has_war = no
+					has_idea = low_economic_mobilisation
 				}
    				modifier = {
 					factor = -1
@@ -803,12 +823,27 @@ ideas = {
 			ai_will_do = {
    				factor = 1
 				modifier = {
-					factor = 40
-					has_war = no
+					add = 100
+					OR = {
+						AND = {
+							has_war = yes
+							has_idea = civilian_economy
+						}
+						AND = {
+							has_war = no
+							has_idea = partial_economic_mobilisation
+						}
+					}
 				}
 				modifier = {
 					factor = 10
 					has_war = yes
+					has_idea = civilian_economy
+				}
+				modifier = {
+					factor = 40
+					has_war = no
+					has_idea = partial_economic_mobilisation
 				}
    				modifier = {
 					factor = -1
@@ -865,12 +900,27 @@ ideas = {
 			ai_will_do = {
    				factor = 1
 				modifier = {
-					factor = 30
-					has_war = no
+					add = 100
+					OR = {
+						AND = {
+							has_war = yes
+							has_idea = low_economic_mobilisation
+						}
+						AND = {
+							has_war = no
+							has_idea = economic_mobilisation
+						}
+					}
 				}
 				modifier = {
 					factor = 20
 					has_war = yes
+					has_idea = low_economic_mobilisation
+				}
+				modifier = {
+					factor = 30
+					has_war = no
+					has_idea = economic_mobilisation
 				}
    				modifier = {
 					factor = -1
@@ -927,12 +977,27 @@ ideas = {
 			ai_will_do = {
    				factor = 1
 				modifier = {
-					factor = 20
-					has_war = no
+					add = 100
+					OR = {
+						AND = {
+							has_war = yes
+							has_idea = partial_economic_mobilisation
+						}
+						AND = {
+							has_war = no
+							has_idea = war_economy
+						}
+					}
 				}
 				modifier = {
 					factor = 30
 					has_war = yes
+					has_idea = partial_economic_mobilisation
+				}
+				modifier = {
+					factor = 20
+					has_war = no
+					has_idea = war_economy
 				}
    				modifier = {
 					factor = -1
@@ -1002,12 +1067,27 @@ ideas = {
 			ai_will_do = {
    				factor = 1
 				modifier = {
-					factor = 10
-					has_war = no
+					add = 100
+					OR = {
+						AND = {
+							has_war = yes
+							has_idea = war_economy
+						}
+						AND = {
+							has_war = no
+							has_idea = tot_economic_mobilisation
+						}
+					}
 				}
 				modifier = {
 					factor = 40
 					has_war = yes
+					has_idea = economic_mobilisation
+				}
+				modifier = {
+					factor = 10
+					has_war = no
+					has_idea = tot_economic_mobilisation
 				}
    				modifier = {
 					factor = -1
@@ -1070,8 +1150,14 @@ ideas = {
 			ai_will_do = {
    				factor = 1
 				modifier = {
+					add = 100
+					has_war = yes
+					has_idea = war_economy
+				}
+				modifier = {
 					factor = 50
 					has_war = yes
+					has_idea = war_economy
 				}
    				modifier = {
 					factor = -1
