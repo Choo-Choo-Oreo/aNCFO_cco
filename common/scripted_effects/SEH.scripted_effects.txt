@@ -195,6 +195,64 @@ SEH_enable_integration_decisions = {
 	#	}
 	}
 }
+
+SEH_generate_csv_data_per_demographics = {
+	log = "--- SPECIES (0 to 7) POPULATION ---"
+	log = "[GetDateText] Data:Species_ID,Population_K"
+	
+	for_loop_effect = {
+		end = 8
+		value = current_id
+		
+		# Initialize the population counter for this iteration
+		set_temp_variable = { pop_total = 0 }
+		
+		# Loop through all states saved to this specific ID's array
+		for_each_scope_loop = {
+			array = global.SEH_species_states_@var:current_id
+			
+			# Temp variables are unscoped, so we can add the state's population directly to it
+			add_to_temp_variable = { pop_total = state_population_k }
+		}
+		
+		# Log the result in pseudo-CSV format
+		log = "[?current_id],[?pop_total]"
+	}
+
+	log = "--- ETHNOS (0 to 13) POPULATION ---"
+	log = "[GetDateText] Data:Ethnos_ID,Population_K"
+	
+	for_loop_effect = {
+		end = 14
+		value = current_id
+		
+		set_temp_variable = { pop_total = 0 }
+		
+		for_each_scope_loop = {
+			array = global.SEH_ethnos_states_@var:current_id
+			add_to_temp_variable = { pop_total = state_population_k }
+		}
+		
+		log = "[?current_id],[?pop_total]"
+	}
+
+	log = "--- HERITAGE (0 to 48) POPULATION ---"
+	log = "[GetDateText] Data:Heritage_ID,Population_K"
+	
+	for_loop_effect = {
+		end = 49
+		value = current_id
+		
+		set_temp_variable = { pop_total = 0 }
+		
+		for_each_scope_loop = {
+			array = global.SEH_heritage_states_@var:current_id
+			add_to_temp_variable = { pop_total = state_population_k }
+		}
+		
+		log = "[?current_id],[?pop_total]"
+	}
+}
 # --- SPECIES ---
 # Scripted effects for managing species-level acceptance arrays.
 # Requires 'SEH_temp_species' to be defined via 'set_temp_variable' before execution.
@@ -317,13 +375,13 @@ SEH_initialize_enable_integration_decisions = {
 SEH_initiate_species_array = {
 	every_state = {
 		add_to_array = { global.SEH_species_states_@var:SEH_species = THIS }
-		#log = "Added state [THIS.GetID] to species array [?SEH_species]. Array length: [?global.SEH_species_states_@var:SEH_species^num]"
+		log = "Added state [THIS.GetID] to species array [?SEH_species]. Array length: [?global.SEH_species_states_@var:SEH_species^num]"
 	}
 }
 
 SEH_initiate_species_states = {
 	for_loop_effect = {
-		end = 7 # Total number of species
+		end = 8 # Total number of species
 		value = v
 		
 		add_to_array = { global.species_decision_states = global.states^v }
@@ -336,13 +394,13 @@ SEH_initiate_species_states = {
 SEH_initiate_ethnos_array = {
 	every_state = {
 		add_to_array = { global.SEH_ethnos_states_@var:SEH_ethnos = THIS }
-		#log = "Added state [THIS.GetID] to ethnos array [?SEH_ethnos]. Array length: [?global.SEH_ethnos_states_@var:SEH_ethnos^num]"
+		log = "Added state [THIS.GetID] to ethnos array [?SEH_ethnos]. Array length: [?global.SEH_ethnos_states_@var:SEH_ethnos^num]"
 	}
 }
 
 SEH_initiate_ethnos_states = {
 	for_loop_effect = {
-		end = 13 # Total number of ethnos
+		end = 14 # Total number of ethnos
 		value = v
 		
 		add_to_array = { global.ethnos_decision_states = global.states^v }
@@ -355,13 +413,13 @@ SEH_initiate_ethnos_states = {
 SEH_initiate_heritage_array = {
 	every_state = {
 		add_to_array = { global.SEH_heritage_states_@var:SEH_heritage = THIS }
-		#log = "Added state [THIS.GetID] to heritage array [?SEH_heritage]. Array length: [?global.SEH_heritage_states_@var:SEH_heritage^num]"
+		log = "Added state [THIS.GetID] to heritage array [?SEH_heritage]. Array length: [?global.SEH_heritage_states_@var:SEH_heritage^num]"
 	}
 }
 
 SEH_initiate_heritage_states = {
 	for_loop_effect = {
-		end = 48 # Total number of heritages
+		end = 49 # Total number of heritages
 		value = v
 		
 		add_to_array = { global.heritage_decision_states = global.states^v }
@@ -1966,8 +2024,8 @@ SEH_initialize_tyenren_acceptance = {
 
 		# Initialize Heritage Arrays
 		add_to_array = { array = SEH_accepted_heritage_full value = 17 }
-		#add_to_array = { array = SEH_accepted_heritage_partial value = 16 }
-		#add_to_array = { array = SEH_accepted_heritage_partial value = 18 }
+		add_to_array = { array = SEH_accepted_heritage_partial value = 16 }
+		add_to_array = { array = SEH_accepted_heritage_partial value = 18 }
 	}
 
 	FDL = {
