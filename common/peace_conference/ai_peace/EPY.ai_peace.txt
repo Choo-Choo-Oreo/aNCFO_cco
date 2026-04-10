@@ -1,28 +1,33 @@
-peace_ai_desires = { # EPY
-	EPY_take_core_claim = {
+peace_ai_desires = {
+	EPY_take_own_cores = {
 		peace_action_type = take_states
 		enable = {
-			original_tag = EPY
+			ROOT = { original_tag = EPY }
+			FROM = { original_tag = EPY }
 			FROM.FROM.FROM = {
-				OR = {
-					is_core_of = EPY
-					is_claimed_by = EPY
-				}
+				is_core_of = ROOT
 			}
 		}
-		ai_desire = 100
+		ai_desire = 2000
 	}
 	
-	EPY_respect_allies_subjects_cores = {
+	EPY_give_cores_to_puppets = {
 		peace_action_type = take_states
 		enable = {
-			original_tag = EPY
+			ROOT = { original_tag = EPY }
+			FROM = { is_subject_of = ROOT }
 			FROM.FROM.FROM = {
-				any_country_with_core = {
-					is_ally_with = ROOT
-				}
+				is_core_of = FROM
 			}
 		}
-		ai_desire = -1000
+		ai_desire = 1000
+	}
+
+	EPY_puppet_remaining = {
+		peace_action_type = puppet
+		enable = {
+			ROOT = { original_tag = EPY }
+		}
+		ai_desire = 500
 	}
 }

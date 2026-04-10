@@ -1,40 +1,98 @@
-EPY_overseas_deployment = {
+EPY_fronts_naval_invasions = {
+	allowed = {
+		OR = {
+			original_tag = EPY
+			original_tag = HEU
+			original_tag = HIN
+			original_tag = NAM
+		}
+	}
+	enable = { has_war = yes }
+	abort_when_not_enabled = yes
+
+	ai_strategy = { type = invade value = 500 }
+	ai_strategy = { type = invasion_unit_request value = 200 }
+	ai_strategy = { type = naval_invasion_focus value = 500 }
+}
+
+EPY_fronts_linsong_thunderdome = {
+	allowed = {
+		OR = {
+			original_tag = EPY
+			original_tag = HEU
+			original_tag = HIN
+			original_tag = NAM
+		}
+	}
 	enable = {
-		tag = EPY
-		NOT = { surrender_progress > 0.05 }
+		OR = {
+			is_erly_game = yes
+			is_late_game = yes
+		}
+		OR = {
+			has_war_with = FGJ
+			has_war_with = RPG
+			has_war_with = LCS
+		}
 	}
 	abort_when_not_enabled = yes
 
-	ai_strategy = {
-		type = garrison
-		value = -150
+	# Multiply the importance score of invasions against specific countries
+	ai_strategy = { type = invade id = FGJ value = 500 }
+	ai_strategy = { type = invade id = RPG value = 500 }
+	ai_strategy = { type = invade id = LCS value = 500 }
+
+	# Pursues AI to put more units on a naval invasion with the specified target
+	ai_strategy = { type = invasion_unit_request tag = FGJ value = 200 }
+	ai_strategy = { type = invasion_unit_request tag = RPG value = 200 }
+	ai_strategy = { type = invasion_unit_request tag = LCS value = 200 }
+}
+
+EPY_overseas_deployment = {
+	allowed = {
+		OR = {
+			original_tag = EPY
+			original_tag = HEU
+			original_tag = HIN
+			original_tag = NAM
+		}
 	}
+	enable = { NOT = { surrender_progress > 0.05 } }
+	abort_when_not_enabled = yes
+
+	ai_strategy = { type = garrison value = -150 }
 }
 
 EPY_invade_LMN = {
-	enable = {
-		tag = EPY
-		has_war_with = LMN
+	allowed = {
+		OR = {
+			original_tag = EPY
+			original_tag = HEU
+			original_tag = HIN
+			original_tag = NAM
+		}
 	}
+	enable = { has_war_with = LMN }
 	abort_when_not_enabled = yes
 
-	ai_strategy = {
-		type = invade
-		id = LMN
-		value = 100
-	}
+	# Multiply the importance score of invasions against specific countries
+	ai_strategy = { type = invade id = LMN value = 500 }
+
+	# Pursues AI to put more units on a naval invasion with the specified target
+	ai_strategy = { type = invasion_unit_request tag = LMN value = 200 }
 }
 
 EPY_invade_HHE = {
-	enable = {
-		tag = EPY
-		has_war_with = HHE
+	allowed = {
+		OR = {
+			original_tag = EPY
+			original_tag = HEU
+			original_tag = HIN
+			original_tag = NAM
+		}
 	}
+	enable = { has_war_with = HHE }
 	abort_when_not_enabled = yes
 
-	ai_strategy = {
-		type = invade
-		id = HHE
-		value = 100
-	}
+	ai_strategy = { type = invade id = HHE value = 100 }
 }

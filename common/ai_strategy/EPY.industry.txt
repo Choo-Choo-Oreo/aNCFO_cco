@@ -1,29 +1,35 @@
 EPY_steel_bumper_vs_EPC = {
-	enable = { 
-		tag = EPY
+	allowed = {
+		OR = {
+			original_tag = EPY
+			original_tag = HEU
+			original_tag = HIN
+			original_tag = NAM
+		}
+	}
+	enable = {
 		check_variable = { EPC.resource_produced@steel > EPY.resource_produced@steel }
-		check_variable = { 1000 > EPY.resource_produced@steel }
-	}
-	abort_when_not_enabled = yes
-
-	ai_strategy = {
-		type = building_target
-		id = steel_complex
-		value = 500
-	}
-}
-
-EPY_steel_bumper_vs_MRC = {
-	enable = { 
-		tag = EPY
-		check_variable = { MRC.resource_produced@steel > EPY.resource_produced@steel }
 		check_variable = { 600 > EPY.resource_produced@steel }
 	}
 	abort_when_not_enabled = yes
 
-	ai_strategy = {
-		type = building_target
-		id = steel_complex
-		value = 500
+	ai_strategy = { type = build_building id = steel_complex value = 100 }
+}
+
+EPY_steel_bumper_vs_MRC = {
+	allowed = {
+		OR = {
+			original_tag = EPY
+			original_tag = HEU
+			original_tag = HIN
+			original_tag = NAM
+		}
 	}
+	enable = {
+		check_variable = { MRC.resource_produced@steel > EPY.resource_produced@steel }
+		check_variable = { 300 > EPY.resource_produced@steel }
+	}
+	abort_when_not_enabled = yes
+
+	ai_strategy = { type = build_building id = steel_complex value = 100 }
 }
