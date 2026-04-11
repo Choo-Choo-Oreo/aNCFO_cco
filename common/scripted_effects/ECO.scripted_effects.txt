@@ -344,102 +344,113 @@ calculate_GDP = {
 	# STATE ACCUMULATIONS
 	# -----------------------
 	every_state = {
-		# STATE INF
-		set_variable = { state_inf = 0 }
-		add_to_variable = { state_inf = THIS.non_damaged_building_level@infrastructure }
-		OWNER = { add_to_variable = { THIS.country_average_inf = Prev.state_inf } }
-
-		# FACTORY PRODUCTIVITY WEIGHT
-		# city = 1.00 baseline. Above: agglomeration bonus (capped ~2.40 at inf5). Below: harsh penalty.
-		# inf_factor: base 0.80, +0.08 per level → inf0=0.80, inf5=1.20
-		set_variable = { state_productivity_weight = 1.00 }
-		IF = { limit = { is_megalopolis_state = yes  } set_variable = { state_productivity_weight = 2.25 } }
-		ELSE_IF = { limit = { is_metropolis_state = yes   } set_variable = { state_productivity_weight = 1.95 } }
-		ELSE_IF = { limit = { is_large_city_state = yes   } set_variable = { state_productivity_weight = 1.55 } }
-		ELSE_IF = { limit = { is_city_state = yes         } set_variable = { state_productivity_weight = 1.25 } }
-		ELSE_IF = { limit = { is_large_town_state = yes   } set_variable = { state_productivity_weight = 0.85 } }
-		ELSE_IF = { limit = { is_town_state = yes         } set_variable = { state_productivity_weight = 0.55 } }
-		ELSE_IF = { limit = { is_rural_state = yes        } set_variable = { state_productivity_weight = 0.30 } }
-		ELSE    = { set_variable = { state_productivity_weight = 0.05 } }
-
-		# Factory infrastructure factor: base 0.80, +0.08 per level (inf0=0.80, inf5=1.20)
-		set_variable = { state_inf_factor = 0.80 }
-		set_temp_variable = { temp_inf_bonus = THIS.non_damaged_building_level@infrastructure }
-		multiply_temp_variable = { temp_inf_bonus = 0.08 }
-		add_to_variable = { state_inf_factor = temp_inf_bonus }
-
-		# Final factory productivity = category * inf
-		multiply_variable = { state_productivity_weight = state_inf_factor }
-
-		# -----------------------------------------------------------------------
-		# POPULATION/FACTORY LABOUR RATIO
-		# Labour supply is the binding constraint on industrial output.
-		# One factory complex requires FACTORY_POP_REQUIREMENT thousand people
-		# to operate at full capacity. Below that, output scales down.
-		# Historical basis: ~400k people per factory (WWII industrial calibration)
-		# TUNING: change the 0.4 value on the multiply line below (= 400k per factory)
-		# FLOOR:  0.0001 = 0.01% minimum — even Petsamo contributes something
-		# -----------------------------------------------------------------------
-		set_temp_variable = { state_total_factories = THIS.non_damaged_building_level@industrial_complex }
-		add_to_temp_variable = { state_total_factories = THIS.non_damaged_building_level@arms_factory }
-		add_to_temp_variable = { state_total_factories = THIS.non_damaged_building_level@dockyard }
-		clamp_temp_variable = { var = state_total_factories min = 0.0001 }
-		set_temp_variable = { factory_pop_req = state_total_factories }
-		multiply_temp_variable = { factory_pop_req = 400 } # TUNING: 400 = 400k people per factory (state_population_k is in thousands)
-		set_temp_variable = { state_pop_factory_ratio = THIS.state_population_k }
-		divide_temp_variable = { state_pop_factory_ratio = factory_pop_req }
-		clamp_temp_variable = { var = state_pop_factory_ratio min = 0.0001 max = 1.0 }
-		set_variable = { state_labour_ratio = state_pop_factory_ratio } # stored as state var for reuse
-
-		# AGRICULTURE PRODUCTIVITY WEIGHT (bell curve)
-		# Peaks at large_town: organized farming with market surplus
-		# Falls below (subsistence) and above (urbanisation eats farmland)
-		# inf_factor: base 0.90, +0.04 per level → inf0=0.90, inf5=1.10 (gentler — roads matter but less than for industry)
-		set_variable = { state_agri_weight = 1.00 }
-		IF = { limit = { is_megalopolis_state = yes  } set_variable = { state_agri_weight = 0.05 } }
-		ELSE_IF = { limit = { is_metropolis_state = yes   } set_variable = { state_agri_weight = 0.20 } }
-		ELSE_IF = { limit = { is_large_city_state = yes   } set_variable = { state_agri_weight = 0.45 } }
-		ELSE_IF = { limit = { is_city_state = yes         } set_variable = { state_agri_weight = 0.75 } }
-		ELSE_IF = { limit = { is_large_town_state = yes   } set_variable = { state_agri_weight = 1.10 } }
-		ELSE_IF = { limit = { is_town_state = yes         } set_variable = { state_agri_weight = 1.05 } }
-		ELSE_IF = { limit = { is_rural_state = yes        } set_variable = { state_agri_weight = 0.75 } }
-		ELSE    = { set_variable = { state_agri_weight = 0.30 } }
-
-		# Agriculture infrastructure factor: base 0.90, +0.04 per level (inf0=0.90, inf5=1.10)
-		set_variable = { state_agri_inf_factor = 0.90 }
-		set_temp_variable = { temp_agri_inf_bonus = THIS.non_damaged_building_level@infrastructure }
-		multiply_temp_variable = { temp_agri_inf_bonus = 0.04 }
-		add_to_variable = { state_agri_inf_factor = temp_agri_inf_bonus }
-
-		# Final agriculture weight = category * inf
-		multiply_variable = { state_agri_weight = state_agri_inf_factor }
-
-		# Accumulate weighted population into owner for agriculture calculation
-		set_temp_variable = { temp_state_pop = THIS.state_population_k }
-		multiply_temp_variable = { temp_state_pop = state_agri_weight }
-		OWNER = { add_to_variable = { THIS.country_subsistence_weight = temp_state_pop } }
-
-		# STATE CIV (weighted × labour ratio)
-		set_variable = { state_civ = 0 }
-		add_to_variable = { state_civ = THIS.non_damaged_building_level@industrial_complex }
-		multiply_variable = { state_civ = state_productivity_weight }
-		multiply_variable = { state_civ = state_labour_ratio }
-		controller = { add_to_variable = { THIS.country_civ = Prev.state_civ } }
-
-		# STATE CIV OWN (weighted × labour ratio)
-		set_variable = { state_civ_own = 0 }
-		add_to_variable = { state_civ_own = THIS.non_damaged_building_level@industrial_complex }
-		multiply_variable = { state_civ_own = state_productivity_weight }
-		multiply_variable = { state_civ_own = state_labour_ratio }
-		OWNER = { add_to_variable = { THIS.country_civ_own = Prev.state_civ_own } }
-
+		# FAILSAFE: states with near-zero population (e.g. 1 person) produce 0 GDP
+		# state_population_k is in thousands — 0.002 = 2 people minimum threshold
 		IF = {
-			limit = { is_core_of = PREV }
-			set_variable = { state_civ_core = 0 }
-			add_to_variable = { state_civ_core = THIS.non_damaged_building_level@industrial_complex }
-			multiply_variable = { state_civ_core = state_productivity_weight }
-			multiply_variable = { state_civ_core = state_labour_ratio }
-			OWNER = { add_to_variable = { THIS.country_civ_core = Prev.state_civ_core } }
+			LIMIT = { check_variable = { THIS.state_population_k < 0.002 } }
+			set_variable = { state_GDP = 0 }
+			set_variable = { state_GDP_per_capita = 0 }
+			set_variable = { state_productivity_weight = 0 }
+			set_variable = { state_labour_ratio = 0 }
+		}
+		ELSE = {
+			# STATE INF
+			set_variable = { state_inf = 0 }
+			add_to_variable = { state_inf = THIS.non_damaged_building_level@infrastructure }
+			OWNER = { add_to_variable = { THIS.country_average_inf = Prev.state_inf } }
+
+			# FACTORY PRODUCTIVITY WEIGHT
+			# city = 1.00 baseline. Above: agglomeration bonus (capped ~2.40 at inf5). Below: harsh penalty.
+			# inf_factor: base 0.80, +0.08 per level → inf0=0.80, inf5=1.20
+			set_variable = { state_productivity_weight = 1.00 }
+			IF      = { LIMIT = { is_megalopolis_state = yes  } set_variable = { state_productivity_weight = 2.25 } }
+			ELSE_IF = { LIMIT = { is_metropolis_state = yes   } set_variable = { state_productivity_weight = 1.95 } }
+			ELSE_IF = { LIMIT = { is_large_city_state = yes   } set_variable = { state_productivity_weight = 1.55 } }
+			ELSE_IF = { LIMIT = { is_city_state = yes         } set_variable = { state_productivity_weight = 1.25 } }
+			ELSE_IF = { LIMIT = { is_large_town_state = yes   } set_variable = { state_productivity_weight = 0.85 } }
+			ELSE_IF = { LIMIT = { is_town_state = yes         } set_variable = { state_productivity_weight = 0.55 } }
+			ELSE_IF = { LIMIT = { is_rural_state = yes        } set_variable = { state_productivity_weight = 0.30 } }
+			ELSE    = { set_variable = { state_productivity_weight = 0.05 } }
+
+			# Factory infrastructure factor: base 0.80, +0.08 per level (inf0=0.80, inf5=1.20)
+			set_variable = { state_inf_factor = 0.80 }
+			set_temp_variable = { temp_inf_bonus = THIS.non_damaged_building_level@infrastructure }
+			multiply_temp_variable = { temp_inf_bonus = 0.08 }
+			add_to_variable = { state_inf_factor = temp_inf_bonus }
+
+			# Final factory productivity = category * inf
+			multiply_variable = { state_productivity_weight = state_inf_factor }
+
+			# -----------------------------------------------------------------------
+			# POPULATION/FACTORY LABOUR RATIO
+			# Labour supply is the binding constraint on industrial output.
+			# One factory complex requires FACTORY_POP_REQUIREMENT thousand people
+			# to operate at full capacity. Below that, output scales down.
+			# Historical basis: ~400k people per factory (WWII industrial calibration)
+			# TUNING: change the 0.4 value on the multiply line below (= 400k per factory)
+			# FLOOR:  0.0001 = 0.01% minimum — even Petsamo contributes something
+			# -----------------------------------------------------------------------
+			set_temp_variable = { state_total_factories = THIS.non_damaged_building_level@industrial_complex }
+			add_to_temp_variable = { state_total_factories = THIS.non_damaged_building_level@arms_factory }
+			add_to_temp_variable = { state_total_factories = THIS.non_damaged_building_level@dockyard }
+			clamp_temp_variable = { var = state_total_factories min = 0.0001 }
+			set_temp_variable = { factory_pop_req = state_total_factories }
+			multiply_temp_variable = { factory_pop_req = 400 } # TUNING: 400 = 400k people per factory (state_population_k is in thousands)
+			set_temp_variable = { state_pop_factory_ratio = THIS.state_population_k }
+			divide_temp_variable = { state_pop_factory_ratio = factory_pop_req }
+			clamp_temp_variable = { var = state_pop_factory_ratio min = 0.0001 max = 1.0 }
+			set_variable = { state_labour_ratio = state_pop_factory_ratio } # stored as state var for reuse
+
+			# AGRICULTURE PRODUCTIVITY WEIGHT (bell curve)
+			# Peaks at large_town: organized farming with market surplus
+			# Falls below (subsistence) and above (urbanisation eats farmland)
+			# inf_factor: base 0.90, +0.04 per level → inf0=0.90, inf5=1.10 (gentler — roads matter but less than for industry)
+			set_variable = { state_agri_weight = 1.00 }
+			IF = { limit = { is_megalopolis_state = yes  } set_variable = { state_agri_weight = 0.05 } }
+			ELSE_IF = { limit = { is_metropolis_state = yes   } set_variable = { state_agri_weight = 0.20 } }
+			ELSE_IF = { limit = { is_large_city_state = yes   } set_variable = { state_agri_weight = 0.45 } }
+			ELSE_IF = { limit = { is_city_state = yes         } set_variable = { state_agri_weight = 0.75 } }
+			ELSE_IF = { limit = { is_large_town_state = yes   } set_variable = { state_agri_weight = 1.10 } }
+			ELSE_IF = { limit = { is_town_state = yes         } set_variable = { state_agri_weight = 1.05 } }
+			ELSE_IF = { limit = { is_rural_state = yes        } set_variable = { state_agri_weight = 0.75 } }
+			ELSE    = { set_variable = { state_agri_weight = 0.30 } }
+
+			# Agriculture infrastructure factor: base 0.90, +0.04 per level (inf0=0.90, inf5=1.10)
+			set_variable = { state_agri_inf_factor = 0.90 }
+			set_temp_variable = { temp_agri_inf_bonus = THIS.non_damaged_building_level@infrastructure }
+			multiply_temp_variable = { temp_agri_inf_bonus = 0.04 }
+			add_to_variable = { state_agri_inf_factor = temp_agri_inf_bonus }
+
+			# Final agriculture weight = category * inf
+			multiply_variable = { state_agri_weight = state_agri_inf_factor }
+
+			# Accumulate weighted population into owner for agriculture calculation
+			set_temp_variable = { temp_state_pop = THIS.state_population_k }
+			multiply_temp_variable = { temp_state_pop = state_agri_weight }
+			OWNER = { add_to_variable = { THIS.country_subsistence_weight = temp_state_pop } }
+
+			# STATE CIV (weighted × labour ratio)
+			set_variable = { state_civ = 0 }
+			add_to_variable = { state_civ = THIS.non_damaged_building_level@industrial_complex }
+			multiply_variable = { state_civ = state_productivity_weight }
+			multiply_variable = { state_civ = state_labour_ratio }
+			controller = { add_to_variable = { THIS.country_civ = Prev.state_civ } }
+
+			# STATE CIV OWN (weighted × labour ratio)
+			set_variable = { state_civ_own = 0 }
+			add_to_variable = { state_civ_own = THIS.non_damaged_building_level@industrial_complex }
+			multiply_variable = { state_civ_own = state_productivity_weight }
+			multiply_variable = { state_civ_own = state_labour_ratio }
+			OWNER = { add_to_variable = { THIS.country_civ_own = Prev.state_civ_own } }
+
+			IF = {
+				limit = { is_core_of = PREV }
+				set_variable = { state_civ_core = 0 }
+				add_to_variable = { state_civ_core = THIS.non_damaged_building_level@industrial_complex }
+				multiply_variable = { state_civ_core = state_productivity_weight }
+				multiply_variable = { state_civ_core = state_labour_ratio }
+				OWNER = { add_to_variable = { THIS.country_civ_core = Prev.state_civ_core } }
+			}
 		}
 	}
 
