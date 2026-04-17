@@ -64,21 +64,22 @@ Contributions are tracked in one of the following formats:
 - **truck gaming** – *Graphics Integrated*
   [Modifier Icons](https://steamcommunity.com/sharedfiles/filedetails/?id=2668048070) | *Götterdämmerung*
 
-- **Amine Alkaline, Kaarlo, Sheep, Code, Vonkaja, & Yard1 – Better Mechanics Collection** – *Various Components Integrated*
+- **Amine Alkaline, Kaarlo, Choo_Choo_Oreo, Sheep, Code, Vonkaja, & Yard1 – Better Mechanics Collection** – *Various Components Integrated*
   ["Better Mechanics Collection"](https://steamcommunity.com/workshop/filedetails/?id=2994645469)
   Components include:  
     "Better Mechanics : Optimization" | *19 Jan 2024*
-    "Better Mechanics : Battalion Limiter" | *6 Jan 2024*
+    "Better Mechanics : Battalion Limiter" | *Dev Instance*
+    "Better Mechanics : Logistical Capacity for Navies" | *Dev Instance*
     "Better Mechanics : Combat" | *23 Nov 2024*
     "Better Mechanics : Divisional AI" | *9 Aug 2024*
     "Better Mechanics : Division Designer" | *18 Mar 2024*
     "Better Mechanics : Frontline AI | Updated" | *4 Apr 2026*
     "Better Mechanics : More Spies" | *Oct 10 2023*
-    "Better Mechanics : National Economy" | *7 Apr 2024*
+    "Better Mechanics : Economic Scales" | *Dev Instance*
     "Better Mechanics : Production" | *18 Mar 2024*
     "Better Mechanics : Tactical Warfare" | *17 Aug 2024*
     "Better Mechanics : Training and Experience" | *18 Mar 2024*
-    "Better Mechanics : State" Categorie| - *Pre-Release*
+    "Better Mechanics : States Categories - *Pre-Release*
     "Better Mechanics : Officer Corps" | *11 May 2024*
     "Better Mechanics : Supply" Replenishmen| - *Not Used*
     "Better Mechanics : Strategic View" | *3 Jun 2024*

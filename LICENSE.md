@@ -68,7 +68,7 @@ The Author retains exclusive ownership of all Project Source Material. No licens
 All original logic and scripts written in Paradox-proprietary languages (e.g., .txt script, .gui, .gfx) are provided to Paradox Interactive AB under the non-exclusive license terms of the Paradox EULA. However, the underlying narrative structures and fictional concepts represented by this code remain the intellectual property of the Author as part of the [aNCFO] IP.
 
 3.5 **Independent Existence of IP**:
-The Property (as defined in Section 1.7) exists as an independent creative work. The presence of assets or lore from The Property within this Paradox Interactive mod does not grant any rights to The Property itself to any third party or entity. While Paradox Interactive AB is granted a license to the specific files distributed in the mod (per the Paradox EULA), the overarching copyright to the names, characters, and the world of Fyjuh remains exclusively with the Author.
+The Property (as defined in Section 1.7) exists as an independent creative work. The presence of assets or lore from The Property within this Paradox Interactive mod does not grant any rights to The Property itself to any third party or entity. While Paradox Interactive AB is granted a license to the specific files distributed in the mod (per the Paradox EULA), the overarching copyright to the names, characters, and the world of Fyjuh remains exclusively with the Author. The Author reserves the right to monetize The Property in any medium outside of Paradox Interactive software (e.g., books, standalone games, or art prints) without interference from this license.
 
 ---
 

@@ -44,7 +44,6 @@ This is a fantasy mod for HoI4 based off my own stories and documents. I am a so
 I am centralizing everything for my mod collection on a new Discord server. Comments, bug reports, and suggestions here will rarely receive a response. Please use the Discord link below for all future requests.
 
 [url=https://discord.gg/6qDDTEVyC3] 💬 Join the Discord Server![/url]
-[url=ko-fi.com/choo_choo_oreo] ☕ Commission Me on Ko-Fi[/url], Commission me to update or port HOI4 mods.
 [url=patreon.com/Choo_Choo_Oreo] 🎖️ Support Me on Patreon[/url], I post updates for my main mod here.
 
 [h1]Check out my other mods![/h1]

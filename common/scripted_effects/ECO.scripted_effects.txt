@@ -813,6 +813,23 @@ calculate_GDP = {
 	multiply_temp_variable = { res_val = 0.00000015 }
 	add_to_variable = { country_resource_GDP = res_val }
 
+	# Inflation Impact on Resource Value
+		set_temp_variable = { temp_inflation_factor = global.ECO_inflation }
+		divide_temp_variable = { temp_inflation_factor = 100 }
+		add_to_temp_variable = { temp_inflation_factor = 1 }
+
+		set_temp_variable = { real_value_mult = 1.0 }
+		divide_temp_variable = { real_value_mult = temp_inflation_factor }
+
+		multiply_temp_variable = { country_resource_GDP = real_value_mult }
+
+		IF = {
+			LIMIT = { is_debug = yes }
+			set_variable = { log_temp_res_val_real_value_mult_debug = real_value_mult }
+			log = "[THIS.GetTag] add_to_variable = { country_resource_GDP = real_value_mult<[?log_temp_res_val_real_value_mult_debug]> }"
+		}
+	# Inflation Impact on Resource Value end
+
 	multiply_variable = { country_resource_GDP = temp_civ_resource }
 	add_to_variable = { country_GDP = country_resource_GDP }
 
@@ -1161,7 +1178,7 @@ create_GDP_per_capita_sorted_array = {
 
 ECO_generate_csv_data_per_country = {
 	# Log CSV header
-	log = "[GetDateText] Data:Country_Tag,Country_Population_K,Country_Core_Population_K,Country_NonCore_Population_K,Conscription_Rate,Num_Owned_States,Num_Core_States,Num_Controlled_States,Stability,War_Support,Military_Factories,Civilian_Factories,Naval_Dockyards,Total_Factories,Total_Controlled_Factories,Total_Owned_Factories,Avg_Infra_per_State,Oil_Units,Oil_Barrels_Thousands,Aluminium_Units,Aluminium_Tons_Thousands,Rubber_Units,Rubber_Tons_Thousands,Tungsten_Units,Tungsten_Tons_Thousands,Steel_Units,Steel_Tons_Thousands,Chromium_Units,Chromium_Tons_Thousands,Coal,Coal_ShortTons_Thousands,Maximum_Potential_Exporting,Total_Country_GDP_M,Resource_Sector_GDP_USD_M,Resource_Share_Pct,Subsistence_Sector_GDP_USD_M,Subsistence_Share_Pct,Country_GDP_per_C,Global_Inflation,Global_Labor_Efficiency"
+	log = "[GetDateText] Data:Country_Tag,Country_Population_K,Country_Core_Population_K,Country_NonCore_Population_K,Conscription_Rate,Num_Owned_States,Num_Core_States,Num_Controlled_States,Stability,War_Support,Military_Factories,Civilian_Factories,Naval_Dockyards,Total_Factories,Total_Controlled_Factories,Total_Owned_Factories,Avg_Infra_per_State,Oil_Units,Oil_Barrels_Thousands,Aluminium_Units,Aluminium_Tons_Thousands,Rubber_Units,Rubber_Tons_Thousands,Tungsten_Units,Tungsten_Tons_Thousands,Steel_Units,Steel_Tons_Thousands,Chromium_Units,Chromium_Tons_Thousands,Coal,Coal_ShortTons_Thousands,Maximum_Potential_Exporting,Total_Country_GDP_M,Resource_Sector_GDP_M,Resource_Share_Pct,Subsistence_Sector_GDP_M,Subsistence_Share_Pct,Country_GDP_per_C,Global_Inflation,Global_Labor_Efficiency"
 
 	# Iterate through all countries
 	every_country = {
