@@ -52,8 +52,8 @@ Contributions are tracked in one of the following formats:
 - **Sakul805** – *Fully Integrated*
   ["Intelligence Agency Upgrade Alert"](https://steamcommunity.com/sharedfiles/filedetails/?id=3490527691) | *31 May 2025*
 
-- **Equestria at War Team Mod** – *Airtech + Localisation + Integrated*
-  ["Equestria at War"](https://steamcommunity.com/sharedfiles/filedetails/?id=1826643372) | *Pre‑Götterdämmerung*
+- **Freezer** – *Fully Integrated*
+  ["Reworked Air Designer"](https://steamcommunity.com/sharedfiles/filedetails/?id=2948174914) | *Reworked Designer: Air Continued*
 
 - **MrPunk Mod** – *Fully Integrated*
   ["Vanilla Navy Rework"](https://steamcommunity.com/sharedfiles/filedetails/?id=2993766165) | *16 Nov 2024* | *Version 1.15*
