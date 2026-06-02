@@ -1,8 +1,10 @@
 focus_tree = {
 	id = uek_focus
 
-	country = { factor = 0
-		modifier = { add = 10
+	country = {
+		factor = 0
+		modifier = {
+			add = 10
 			tag = UEK
 			NOT = { is_subject_of = TRH }
 		}
@@ -14,654 +16,654 @@ focus_tree = {
 	shared_focus = IWum_focus_ally_with_MRC # 123
 	shared_focus = IWum_focus_ally_with_nobody # ROOT
 	# Defence
-		focus = { # Wum Question
-			id = UEK_wum_question_focus
-			icon = GFX_focus_unknown_expansion
-			#prerequisite = { focus =  }
-			#mutually_exclusive = { focus =  }
-			#relative_position_id = 
-			x = 3
-			y = 3
-			cost = 10
+	focus = { # Wum Question
+		id = UEK_wum_question_focus
+		icon = GFX_focus_unknown_expansion
+		#prerequisite = { focus =  }
+		#mutually_exclusive = { focus =  }
+		#relative_position_id = 
+		x = 3
+		y = 3
+		cost = 10
 
-			allow_branch = {
-			}
-			available = {
-			}
-			bypass = {
-			}
-
-			ai_will_do = { factor = 2.5 }
-
-			available_if_capitulated = yes
-
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus UEK_wum_question_focus"
-				country_event = { id = UEK.0 }
-			}
+		allow_branch = {
+		}
+		available = {
+		}
+		bypass = {
 		}
 
-		focus = { # Single Strike
-			id = UEK_single_strike_focus
-			icon = GFX_focus_unknown_expansion
-			prerequisite = { focus = UEK_wum_question_focus }
-			mutually_exclusive = { focus = UEK_attrition_focus }
-			relative_position_id = UEK_wum_question_focus
-			x = -2
-			y = 1
-			cost = 0
+		ai_will_do = { factor = 2.5 }
 
-			allow_branch = {
-			}
-			available = {
-				always = no
-			}
-			bypass = {
-			}
+		available_if_capitulated = yes
 
-			ai_will_do = { factor = 0.0 }
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus UEK_wum_question_focus"
+			country_event = { id = UEK.0 }
+		}
+	}
 
-			available_if_capitulated = yes
+	focus = { # Single Strike
+		id = UEK_single_strike_focus
+		icon = GFX_focus_unknown_expansion
+		prerequisite = { focus = UEK_wum_question_focus }
+		mutually_exclusive = { focus = UEK_attrition_focus }
+		relative_position_id = UEK_wum_question_focus
+		x = -2
+		y = 1
+		cost = 0
 
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus UEK_single_strike_focus"
-				add_timed_idea = { idea = UEK_single_strike_idea days = 1095 }
-			}
+		allow_branch = {
+		}
+		available = {
+			always = no
+		}
+		bypass = {
 		}
 
-			focus = { # Mobilized Militia
-				id = UEK_mobilized_militia_focus
-				icon = GFX_focus_unknown_military
-				prerequisite = { focus = UEK_single_strike_focus }
-				#mutually_exclusive = { focus =  }
-				relative_position_id = UEK_single_strike_focus
-				x = -1
-				y = 1
-				cost = 5
+		ai_will_do = { factor = 0.0 }
 
-				allow_branch = {
-				}
-				available = {
-				}
-				bypass = {
-				}
+		available_if_capitulated = yes
 
-				ai_will_do = { factor = 1.0 }
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus UEK_single_strike_focus"
+			add_timed_idea = { idea = UEK_single_strike_idea days = 1095 }
+		}
+	}
 
-				available_if_capitulated = yes
+	focus = { # Mobilized Militia
+		id = UEK_mobilized_militia_focus
+		icon = GFX_focus_unknown_military
+		prerequisite = { focus = UEK_single_strike_focus }
+		#mutually_exclusive = { focus =  }
+		relative_position_id = UEK_single_strike_focus
+		x = -1
+		y = 1
+		cost = 5
 
-				completion_reward = {
-					log = "[GetDateText]: [Root.GetName]: Focus UEK_mobilized_militia_focus"
-					load_oob = "UEK_militia_load"
-				}
-			}
-
-			focus = { # Railways to the Wum Desert
-				id = UEK_wum_desert_railways_focus
-				icon = GFX_focus_unknown_political
-				prerequisite = { focus = UEK_mobilized_militia_focus }
-				#mutually_exclusive = { focus =  }
-				relative_position_id = UEK_mobilized_militia_focus
-				x = -1
-				y = 1
-				cost = 5
-
-				allow_branch = {
-				}
-				available = {
-				}
-				bypass = {
-				}
-
-				ai_will_do = { factor = 1.0 }
-
-				available_if_capitulated = yes
-
-				completion_reward = {
-					log = "[GetDateText]: [Root.GetName]: Focus UEK_wum_desert_railways_focus"
-					build_railway = {
-						level = 1 fallback = yes build_only_on_allied = yes
-						path = { 9090 6063 3265 9287 }
-					}
-					build_railway = {
-						level = 1 fallback = yes build_only_on_allied = yes
-						path = { 9287 9336 9392 2786 9560 }
-					}
-					build_railway = {
-						level = 1 fallback = yes build_only_on_allied = yes
-						path = { 9739 9631 3297 9061 9336 }
-					}
-				}
-			}
-
-			focus = { # Ready for the Wum Desert
-				id = UEK_ready_wum_desert_focus
-				icon = GFX_focus_unknown_political
-				prerequisite = { focus = UEK_wum_desert_railways_focus }
-				#mutually_exclusive = { focus =  }
-				relative_position_id = UEK_wum_desert_railways_focus
-				x = 1
-				y = 1
-				cost = 5
-
-				allow_branch = {
-				}
-				available = {
-				}
-				bypass = {
-				}
-
-				ai_will_do = { factor = 1.0 }
-
-				available_if_capitulated = yes
-
-				completion_reward = {
-					log = "[GetDateText]: [Root.GetName]: Focus UEK_ready_wum_desert_focus"
-					add_ideas = UEK_desert_warfare
-				}
-			}
-
-		focus = { # Attrition
-			id = UEK_attrition_focus
-			icon = GFX_focus_unknown_expansion
-			prerequisite = { focus = UEK_wum_question_focus }
-			mutually_exclusive = { focus = UEK_single_strike_focus }
-			relative_position_id = UEK_wum_question_focus
-			x = 2
-			y = 1
-			cost = 0
-
-			allow_branch = {
-			}
-			available = {
-				always = no
-			}
-			bypass = {
-			}
-
-			ai_will_do = { factor = 0.0 }
-
-			available_if_capitulated = yes
-
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus UEK_attrition_focus"
-				add_timed_idea = { idea = UEK_attrition_idea days = 2190 }
-			}
+		allow_branch = {
+		}
+		available = {
+		}
+		bypass = {
 		}
 
-			focus = { # Mobilized the Nobility
-				id = UEK_mobilized_the_guard_focus
-				icon = GFX_focus_unknown_military
-				prerequisite = { focus = UEK_attrition_focus }
-				#mutually_exclusive = { focus =  }
-				relative_position_id = UEK_attrition_focus
-				x = 1
-				y = 1
-				cost = 5
+		ai_will_do = { factor = 1.0 }
 
-				allow_branch = {
-				}
-				available = {
-				}
-				bypass = {
-				}
+		available_if_capitulated = yes
 
-				ai_will_do = { factor = 1.0 }
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus UEK_mobilized_militia_focus"
+			load_oob = "UEK_militia_load"
+		}
+	}
 
-				available_if_capitulated = yes
+	focus = { # Railways to the Wum Desert
+		id = UEK_wum_desert_railways_focus
+		icon = GFX_focus_unknown_political
+		prerequisite = { focus = UEK_mobilized_militia_focus }
+		#mutually_exclusive = { focus =  }
+		relative_position_id = UEK_mobilized_militia_focus
+		x = -1
+		y = 1
+		cost = 5
 
-				completion_reward = {
-					log = "[GetDateText]: [Root.GetName]: Focus UEK_mobilized_the_guard_focus"
-					load_oob = "UEK_guard_load"
-				}
+		allow_branch = {
+		}
+		available = {
+		}
+		bypass = {
+		}
+
+		ai_will_do = { factor = 1.0 }
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus UEK_wum_desert_railways_focus"
+			build_railway = {
+				level = 1 fallback = yes build_only_on_allied = yes
+				path = { 9090 6063 3265 9287 }
 			}
+			build_railway = {
+				level = 1 fallback = yes build_only_on_allied = yes
+				path = { 9287 9336 9392 2786 9560 }
+			}
+			build_railway = {
+				level = 1 fallback = yes build_only_on_allied = yes
+				path = { 9739 9631 3297 9061 9336 }
+			}
+		}
+	}
 
-			focus = { # Failback Fortification
-				id = UEK_failback_fortification_focus
-				icon = GFX_focus_unknown_political
-				prerequisite = { focus = UEK_mobilized_the_guard_focus }
-				#mutually_exclusive = { focus =  }
-				relative_position_id = UEK_mobilized_the_guard_focus
-				x = 1
-				y = 1
-				cost = 5
+	focus = { # Ready for the Wum Desert
+		id = UEK_ready_wum_desert_focus
+		icon = GFX_focus_unknown_political
+		prerequisite = { focus = UEK_wum_desert_railways_focus }
+		#mutually_exclusive = { focus =  }
+		relative_position_id = UEK_wum_desert_railways_focus
+		x = 1
+		y = 1
+		cost = 5
 
-				allow_branch = {
-				}
-				available = {
-				}
-				bypass = {
-				}
+		allow_branch = {
+		}
+		available = {
+		}
+		bypass = {
+		}
 
-				ai_will_do = { factor = 1.0 }
+		ai_will_do = { factor = 1.0 }
 
-				available_if_capitulated = yes
+		available_if_capitulated = yes
 
-				completion_reward = {
-					log = "[GetDateText]: [Root.GetName]: Focus UEK_failback_fortification_focus"
-					if = {
-						limit = {
-							798 = {
-								any_province_building_level = {
-									province = {
-										id = 4532
-										id = 8595
-										id = 8733
-									}
-									building = bunker
-									level < 4
-								}
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus UEK_ready_wum_desert_focus"
+			add_ideas = UEK_desert_warfare
+		}
+	}
+
+	focus = { # Attrition
+		id = UEK_attrition_focus
+		icon = GFX_focus_unknown_expansion
+		prerequisite = { focus = UEK_wum_question_focus }
+		mutually_exclusive = { focus = UEK_single_strike_focus }
+		relative_position_id = UEK_wum_question_focus
+		x = 2
+		y = 1
+		cost = 0
+
+		allow_branch = {
+		}
+		available = {
+			always = no
+		}
+		bypass = {
+		}
+
+		ai_will_do = { factor = 0.0 }
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus UEK_attrition_focus"
+			add_timed_idea = { idea = UEK_attrition_idea days = 2190 }
+		}
+	}
+
+	focus = { # Mobilized the Nobility
+		id = UEK_mobilized_the_guard_focus
+		icon = GFX_focus_unknown_military
+		prerequisite = { focus = UEK_attrition_focus }
+		#mutually_exclusive = { focus =  }
+		relative_position_id = UEK_attrition_focus
+		x = 1
+		y = 1
+		cost = 5
+
+		allow_branch = {
+		}
+		available = {
+		}
+		bypass = {
+		}
+
+		ai_will_do = { factor = 1.0 }
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus UEK_mobilized_the_guard_focus"
+			load_oob = "UEK_guard_load"
+		}
+	}
+
+	focus = { # Failback Fortification
+		id = UEK_failback_fortification_focus
+		icon = GFX_focus_unknown_political
+		prerequisite = { focus = UEK_mobilized_the_guard_focus }
+		#mutually_exclusive = { focus =  }
+		relative_position_id = UEK_mobilized_the_guard_focus
+		x = 1
+		y = 1
+		cost = 5
+
+		allow_branch = {
+		}
+		available = {
+		}
+		bypass = {
+		}
+
+		ai_will_do = { factor = 1.0 }
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus UEK_failback_fortification_focus"
+			if = {
+				limit = {
+					798 = {
+						any_province_building_level = {
+							province = {
+								id = 4532
+								id = 8595
+								id = 8733
 							}
-
-						}
-						798 = {
-							add_building_construction = {
-								type = bunker
-								level = 2
-								province = {
-									id = 4532
-									id = 8595
-									id = 8733
-								}
-								instant_build = yes
-							}
+							building = bunker
+							level < 4
 						}
 					}
-					if = {
-						limit = {
-							800 = {
-								any_province_building_level = {
-									province = {
-										id = 3297
-										id = 9085
-										id = 9090
-									}
-									building = bunker
-									level < 4
-								}
-							}
 
+				}
+				798 = {
+					add_building_construction = {
+						type = bunker
+						level = 2
+						province = {
+							id = 4532
+							id = 8595
+							id = 8733
 						}
-						800 = {
-							add_building_construction = {
-								type = bunker
-								level = 2
-								province = {
-									id = 3297
-									id = 9085
-									id = 9090
-								}
-								instant_build = yes
-							}
-						}
-					}
-					if = {
-						limit = {
-							803 = {
-								any_province_building_level = {
-									province = {
-										id = 9221
-										id = 9287
-										id = 9336
-										id = 9392
-									}
-									building = bunker
-									level < 4
-								}
-							}
-
-						}
-						803 = {
-							add_building_construction = {
-								type = bunker
-								level = 2
-								province = {
-									id = 9221
-									id = 9287
-									id = 9336
-									id = 9392
-								}
-								instant_build = yes
-							}
-						}
+						instant_build = yes
 					}
 				}
 			}
+			if = {
+				limit = {
+					800 = {
+						any_province_building_level = {
+							province = {
+								id = 3297
+								id = 9085
+								id = 9090
+							}
+							building = bunker
+							level < 4
+						}
+					}
 
-			focus = { # Loosen Conscription Requirements
-				id = UEK_loosen_conscription_requirements_focus
-				icon = GFX_focus_unknown_political
-				prerequisite = { focus = UEK_failback_fortification_focus }
-				#mutually_exclusive = { focus =  }
-				relative_position_id = UEK_failback_fortification_focus
-				x = -1
-				y = 1
-				cost = 5
-
-				allow_branch = {
 				}
-				available = {
-				}
-				bypass = {
-				}
-
-				ai_will_do = { factor = 1.0 }
-
-				available_if_capitulated = yes
-
-				completion_reward = {
-					log = "[GetDateText]: [Root.GetName]: Focus UEK_loosen_conscription_requirements_focus"
-					army_training_standards_lower = yes
-					conscripts_age_raise = yes
+				800 = {
+					add_building_construction = {
+						type = bunker
+						level = 2
+						province = {
+							id = 3297
+							id = 9085
+							id = 9090
+						}
+						instant_build = yes
+					}
 				}
 			}
+			if = {
+				limit = {
+					803 = {
+						any_province_building_level = {
+							province = {
+								id = 9221
+								id = 9287
+								id = 9336
+								id = 9392
+							}
+							building = bunker
+							level < 4
+						}
+					}
+
+				}
+				803 = {
+					add_building_construction = {
+						type = bunker
+						level = 2
+						province = {
+							id = 9221
+							id = 9287
+							id = 9336
+							id = 9392
+						}
+						instant_build = yes
+					}
+				}
+			}
+		}
+	}
+
+	focus = { # Loosen Conscription Requirements
+		id = UEK_loosen_conscription_requirements_focus
+		icon = GFX_focus_unknown_political
+		prerequisite = { focus = UEK_failback_fortification_focus }
+		#mutually_exclusive = { focus =  }
+		relative_position_id = UEK_failback_fortification_focus
+		x = -1
+		y = 1
+		cost = 5
+
+		allow_branch = {
+		}
+		available = {
+		}
+		bypass = {
+		}
+
+		ai_will_do = { factor = 1.0 }
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus UEK_loosen_conscription_requirements_focus"
+			army_training_standards_lower = yes
+			conscripts_age_raise = yes
+		}
+	}
 	# Defence - Shared Middle
-		focus = { # Prepare for War
-			id = UEK_prepare_for_war_focus
-			icon = GFX_focus_unknown_industry
-			prerequisite = { focus = UEK_single_strike_focus focus = UEK_attrition_focus }
-			mutually_exclusive = { focus = UEK_import_industrial_goods_focus }
-			relative_position_id = UEK_wum_question_focus
-			x = -1
-			y = 2
-			cost = 8
+	focus = { # Prepare for War
+		id = UEK_prepare_for_war_focus
+		icon = GFX_focus_unknown_industry
+		prerequisite = { focus = UEK_single_strike_focus focus = UEK_attrition_focus }
+		mutually_exclusive = { focus = UEK_import_industrial_goods_focus }
+		relative_position_id = UEK_wum_question_focus
+		x = -1
+		y = 2
+		cost = 8
 
-			allow_branch = {
-			}
-			available = {
-			}
-			bypass = {
-			}
+		allow_branch = {
+		}
+		available = {
+		}
+		bypass = {
+		}
 
-			ai_will_do = { factor = 1.0 }
+		ai_will_do = { factor = 1.0 }
 
-			available_if_capitulated = yes
+		available_if_capitulated = yes
 
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus UEK_prepare_for_war_focus"
-				552 = {
-					add_extra_state_shared_building_slots = 1
-					add_building_construction = {
-						type = arms_factory
-						level = 1
-						instant_build = yes
-					}
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus UEK_prepare_for_war_focus"
+			552 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
 				}
-				636 = {
-					add_extra_state_shared_building_slots = 1
-					add_building_construction = {
-						type = arms_factory
-						level = 1
-						instant_build = yes
-					}
+			}
+			636 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
 				}
 			}
 		}
+	}
 
-		focus = { # Import Industrial Goods
-			id = UEK_import_industrial_goods_focus
-			icon = GFX_focus_unknown_industry
-			prerequisite = { focus = UEK_single_strike_focus focus = UEK_attrition_focus }
-			mutually_exclusive = { focus = UEK_prepare_for_war_focus }
-			relative_position_id = UEK_wum_question_focus
-			x = 1
-			y = 2
-			cost = 8
+	focus = { # Import Industrial Goods
+		id = UEK_import_industrial_goods_focus
+		icon = GFX_focus_unknown_industry
+		prerequisite = { focus = UEK_single_strike_focus focus = UEK_attrition_focus }
+		mutually_exclusive = { focus = UEK_prepare_for_war_focus }
+		relative_position_id = UEK_wum_question_focus
+		x = 1
+		y = 2
+		cost = 8
 
-			allow_branch = {
-			}
-			available = {
-			}
-			bypass = {
-			}
+		allow_branch = {
+		}
+		available = {
+		}
+		bypass = {
+		}
 
-			ai_will_do = { factor = 2.5 }
+		ai_will_do = { factor = 2.5 }
 
-			available_if_capitulated = yes
+		available_if_capitulated = yes
 
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus UEK_import_industrial_goods_focus"
-				569 = {
-					add_extra_state_shared_building_slots = 2
-					add_building_construction = {
-						type = industrial_complex
-						level = 1
-						instant_build = yes
-					}
-					add_building_construction = {
-						type = dockyard
-						level = 1
-						instant_build = yes
-					}
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus UEK_import_industrial_goods_focus"
+			569 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
 				}
-				571 = {
-					add_extra_state_shared_building_slots = 2
-					add_building_construction = {
-						type = industrial_complex
-						level = 1
-						instant_build = yes
-					}
-					add_building_construction = {
-						type = dockyard
-						level = 1
-						instant_build = yes
-					}
+				add_building_construction = {
+					type = dockyard
+					level = 1
+					instant_build = yes
+				}
+			}
+			571 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = dockyard
+					level = 1
+					instant_build = yes
 				}
 			}
 		}
+	}
 
-		focus = { # Resource Investments
-			id = UEK_resource_investments_focus
-			icon = GFX_focus_unknown_industry
-			prerequisite = { focus = UEK_prepare_for_war_focus focus = UEK_import_industrial_goods_focus }
-			#mutually_exclusive = { focus =  }
-			relative_position_id = UEK_wum_question_focus
-			x = 0
-			y = 3
-			cost = 8
+	focus = { # Resource Investments
+		id = UEK_resource_investments_focus
+		icon = GFX_focus_unknown_industry
+		prerequisite = { focus = UEK_prepare_for_war_focus focus = UEK_import_industrial_goods_focus }
+		#mutually_exclusive = { focus =  }
+		relative_position_id = UEK_wum_question_focus
+		x = 0
+		y = 3
+		cost = 8
 
-			allow_branch = {
-			}
-			available = {
-			}
-			bypass = {
-			}
-
-			ai_will_do = { factor = 2.5 }
-
-			available_if_capitulated = yes
-
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus UEK_resource_investments"
-				569 = { add_extra_state_shared_building_slots = 1 }
-				add_resource = { type = steel state = 569 amount = 3 }
-				add_resource = { type = chromium state = 569 amount = 1 }
-				571 = { add_extra_state_shared_building_slots = 1 }
-				add_resource = { type = steel state = 571 amount = 2 }
-				
-			}
+		allow_branch = {
+		}
+		available = {
+		}
+		bypass = {
 		}
 
-			focus = { # Central Knowledge
-				id = UEK_central_knowledge_focus
-				icon = GFX_focus_unknown_industry
-				prerequisite = { focus = UEK_prepare_for_war_focus }
-				#mutually_exclusive = { focus =  }
-				relative_position_id = UEK_prepare_for_war_focus
-				x = -1
-				y = 1
-				cost = 8
+		ai_will_do = { factor = 2.5 }
 
-				allow_branch = {
-				}
-				available = {
-				}
-				bypass = {
-				}
+		available_if_capitulated = yes
 
-				ai_will_do = { factor = 1.0 }
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus UEK_resource_investments"
+			569 = { add_extra_state_shared_building_slots = 1 }
+			add_resource = { type = steel state = 569 amount = 3 }
+			add_resource = { type = chromium state = 569 amount = 1 }
+			571 = { add_extra_state_shared_building_slots = 1 }
+			add_resource = { type = steel state = 571 amount = 2 }
+			
+		}
+	}
 
-				available_if_capitulated = yes
+	focus = { # Central Knowledge
+		id = UEK_central_knowledge_focus
+		icon = GFX_focus_unknown_industry
+		prerequisite = { focus = UEK_prepare_for_war_focus }
+		#mutually_exclusive = { focus =  }
+		relative_position_id = UEK_prepare_for_war_focus
+		x = -1
+		y = 1
+		cost = 8
 
-				completion_reward = {
-					log = "[GetDateText]: [Root.GetName]: Focus UEK_central_knowledge_focus"
-					add_ideas = UEK_center_of_knowledge_idea
-				}
-			}
-
-			focus = { # Field Support
-				id = UEK_field_support_focus
-				icon = GFX_focus_unknown_research
-				prerequisite = { focus = UEK_central_knowledge_focus }
-				prerequisite = { focus = UEK_resource_investments_focus }
-				#mutually_exclusive = { focus =  }
-				relative_position_id = UEK_central_knowledge_focus
-				x = 1
-				y = 1
-				cost = 8
-
-				allow_branch = {
-				}
-				available = {
-				}
-				bypass = {
-				}
-
-				ai_will_do = { factor = 1.0 }
-
-				available_if_capitulated = yes
-
-				completion_reward = {
-					log = "[GetDateText]: [Root.GetName]: Focus UEK_field_support_focus"
-					add_tech_bonus = {
-						bonus = 0.50 uses = 2
-						category = radar_tech
-					}
-					add_tech_bonus = {
-						bonus = 0.50 uses = 2
-						category = support_tech
-					}
-				}
-			}
-
-			focus = { # Wum Desert Training
-				id = UEK_wum_desert_training_focus
-				icon = GFX_focus_unknown_military
-				prerequisite = { focus = UEK_import_industrial_goods_focus }
-				#mutually_exclusive = { focus =  }
-				relative_position_id = UEK_import_industrial_goods_focus
-				x = 1
-				y = 1
-				cost = 8
-
-				allow_branch = {
-				}
-				available = {
-				}
-				bypass = {
-				}
-
-				ai_will_do = { factor = 1.0 }
-
-				available_if_capitulated = yes
-
-				completion_reward = {
-					log = "[GetDateText]: [Root.GetName]: Focus UEK_wum_desert_training_focus"
-					add_timed_idea = { idea = UEK_wum_desert_training_idea days = 1825 }
-				}
-			}
-
-			focus = { # Coastal Engineering
-				id = UEK_coastal_engineering_focus
-				icon = GFX_focus_unknown_research
-				prerequisite = { focus = UEK_wum_desert_training_focus }
-				prerequisite = { focus = UEK_resource_investments_focus }
-				#mutually_exclusive = { focus =  }
-				relative_position_id = UEK_wum_desert_training_focus
-				x = -1
-				y = 1
-				cost = 8
-
-				allow_branch = {
-				}
-				available = {
-				}
-				bypass = {
-				}
-
-				ai_will_do = { factor = 1.0 }
-
-				available_if_capitulated = yes
-
-				completion_reward = {
-					log = "[GetDateText]: [Root.GetName]: Focus UEK_coastal_engineering_focus"
-					add_tech_bonus = {
-						bonus = 0.50 uses = 2
-						category = computing_tech
-					}
-					add_tech_bonus = {
-						bonus = 0.50 uses = 2
-						category = air_equipment
-					}
-				}
-			}
-
-		focus = { # Counter-Strike
-			id = UEK_declaration_of_war_focus
-			icon = GFX_focus_unknown_expansion
-			prerequisite = { focus = UEK_ready_wum_desert_focus }
-			prerequisite = { focus = UEK_field_support_focus focus = UEK_coastal_engineering_focus }
-			#mutually_exclusive = { focus =  }
-			relative_position_id = UEK_wum_question_focus
-			x = -2
-			y = 5
-			cost = 5
-
-			allow_branch = {
-			}
-			available = {
-			}
-			bypass = {
-			}
-
-			ai_will_do = { factor = 1.0 }
-
-			available_if_capitulated = yes
-
-			will_lead_to_war_with = TRH
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus UEK_declaration_of_war_focus"
-				declare_war_on = { type = annex_everything target = TRH }
-				create_wargoal = { type = annex_everything target = TRH expire = 36 }
-			}
+		allow_branch = {
+		}
+		available = {
+		}
+		bypass = {
 		}
 
-		focus = { # Stay Steadfast
-			id = UEK_steadfast_focus
-			icon = GFX_focus_unknown_expansion
-			prerequisite = { focus = UEK_loosen_conscription_requirements_focus }
-			prerequisite = { focus = UEK_field_support_focus focus = UEK_coastal_engineering_focus }
-			#mutually_exclusive = { focus =  }
-			relative_position_id = UEK_wum_question_focus
-			x = 2
-			y = 5
-			cost = 10
+		ai_will_do = { factor = 1.0 }
 
-			allow_branch = {
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus UEK_central_knowledge_focus"
+			add_ideas = UEK_center_of_knowledge_idea
+		}
+	}
+
+	focus = { # Field Support
+		id = UEK_field_support_focus
+		icon = GFX_focus_unknown_research
+		prerequisite = { focus = UEK_central_knowledge_focus }
+		prerequisite = { focus = UEK_resource_investments_focus }
+		#mutually_exclusive = { focus =  }
+		relative_position_id = UEK_central_knowledge_focus
+		x = 1
+		y = 1
+		cost = 8
+
+		allow_branch = {
+		}
+		available = {
+		}
+		bypass = {
+		}
+
+		ai_will_do = { factor = 1.0 }
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus UEK_field_support_focus"
+			add_tech_bonus = {
+				bonus = 0.50 uses = 2
+				category = radar_tech
 			}
-			available = {
-			}
-			bypass = {
-			}
-
-			ai_will_do = { factor = 1.0 }
-
-			available_if_capitulated = yes
-
-			completion_reward = {
-				log = "[GetDateText]: [Root.GetName]: Focus UEK_steadfast_focus"
-				add_ideas = deterrence
+			add_tech_bonus = {
+				bonus = 0.50 uses = 2
+				category = support_tech
 			}
 		}
+	}
+
+	focus = { # Wum Desert Training
+		id = UEK_wum_desert_training_focus
+		icon = GFX_focus_unknown_military
+		prerequisite = { focus = UEK_import_industrial_goods_focus }
+		#mutually_exclusive = { focus =  }
+		relative_position_id = UEK_import_industrial_goods_focus
+		x = 1
+		y = 1
+		cost = 8
+
+		allow_branch = {
+		}
+		available = {
+		}
+		bypass = {
+		}
+
+		ai_will_do = { factor = 1.0 }
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus UEK_wum_desert_training_focus"
+			add_timed_idea = { idea = UEK_wum_desert_training_idea days = 1825 }
+		}
+	}
+
+	focus = { # Coastal Engineering
+		id = UEK_coastal_engineering_focus
+		icon = GFX_focus_unknown_research
+		prerequisite = { focus = UEK_wum_desert_training_focus }
+		prerequisite = { focus = UEK_resource_investments_focus }
+		#mutually_exclusive = { focus =  }
+		relative_position_id = UEK_wum_desert_training_focus
+		x = -1
+		y = 1
+		cost = 8
+
+		allow_branch = {
+		}
+		available = {
+		}
+		bypass = {
+		}
+
+		ai_will_do = { factor = 1.0 }
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus UEK_coastal_engineering_focus"
+			add_tech_bonus = {
+				bonus = 0.50 uses = 2
+				category = computing_tech
+			}
+			add_tech_bonus = {
+				bonus = 0.50 uses = 2
+				category = air_equipment
+			}
+		}
+	}
+
+	focus = { # Counter-Strike
+		id = UEK_declaration_of_war_focus
+		icon = GFX_focus_unknown_expansion
+		prerequisite = { focus = UEK_ready_wum_desert_focus }
+		prerequisite = { focus = UEK_field_support_focus focus = UEK_coastal_engineering_focus }
+		#mutually_exclusive = { focus =  }
+		relative_position_id = UEK_wum_question_focus
+		x = -2
+		y = 5
+		cost = 5
+
+		allow_branch = {
+		}
+		available = {
+		}
+		bypass = {
+		}
+
+		ai_will_do = { factor = 1.0 }
+
+		available_if_capitulated = yes
+
+		will_lead_to_war_with = TRH
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus UEK_declaration_of_war_focus"
+			declare_war_on = { type = annex_everything target = TRH }
+			create_wargoal = { type = annex_everything target = TRH expire = 36 }
+		}
+	}
+
+	focus = { # Stay Steadfast
+		id = UEK_steadfast_focus
+		icon = GFX_focus_unknown_expansion
+		prerequisite = { focus = UEK_loosen_conscription_requirements_focus }
+		prerequisite = { focus = UEK_field_support_focus focus = UEK_coastal_engineering_focus }
+		#mutually_exclusive = { focus =  }
+		relative_position_id = UEK_wum_question_focus
+		x = 2
+		y = 5
+		cost = 10
+
+		allow_branch = {
+		}
+		available = {
+		}
+		bypass = {
+		}
+
+		ai_will_do = { factor = 1.0 }
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus UEK_steadfast_focus"
+			add_ideas = deterrence
+		}
+	}
 	continuous_focus_position = { x = 0 y = 50 }
 }
