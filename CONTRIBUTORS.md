@@ -18,6 +18,7 @@ This document tracks the Direct Team members who assist in the development of th
 | **[ajtak_cz8]** | Artist | Graphical Assets | Custom Flags for [ATL], [ATL_authoritarianism], [ATL_semidemocracy], [ATL_unitism], [BHK], [BHK_authoritarianism], [ATL_pluralism], and [NLL]. |
 | **[CameraCraft]** | Artist | Graphical Assets | Custom Flags for [DRC], [LPR], and [TAM]. |
 | **[swordfish3790]** | Artist | Graphical Assets | Custom Flags for [ABL], [ATL_pluralism], [CUL_authoritarianism], [ERP], [DTP], [HYP], [LEE], [LLD], [LMC], [MLB], [KGK], [KSA], [SEK], [TRI], [TPD], [WGK], [OAK_unitism], [UNIFIED_WUM_HIGH_KINGDOM] |
+| **[Anthonanon]** | Collaborator | Graphical Assets & Content | Custom Flags for [UNIFIED_LINSONG_EMPIRE], [DVC], [LMC]. Content for [LMN] |
 
 ---
 
