@@ -1,15 +1,15 @@
 focus_tree = {
-	id = LMN_focus_tree_heir
+	id = TAG_focus_tree
 
 	country = {
 		base = 0
 		modifier = {
 			add = 100
-			original_tag = LMN
+			original_tag = TAG
 		}
 	}
 
-	continuous_focus_position = { x = 50 y = 20 }
+	continuous_focus_position = { x = 3300 y = 300 }
 
 	focus = {
 		id = LMN_focus_diet
@@ -83,7 +83,7 @@ focus_tree = {
 		icon = generic_political_pressure
 		x = 38
 		y = 2
-		cost = 10
+		cost = 8
 		prerequisite = { focus = LMN_focus_heir }
 		mutually_exclusive = { focus = LMN_focus_firm }
 		search_filters = { FOCUS_FILTER_POLITICAL }
@@ -103,7 +103,7 @@ focus_tree = {
 		icon = generic_political_pressure
 		x = 34
 		y = 2
-		cost = 10
+		cost = 8
 		prerequisite = { focus = LMN_focus_heir }
 		mutually_exclusive = { focus = LMN_focus_gentry }
 		search_filters = { FOCUS_FILTER_POLITICAL }
@@ -129,7 +129,12 @@ focus_tree = {
 
 		completion_reward = {
 			log = "[GetDateText]: [Root.GetName]: Focus LMN_focus_meritocracy"
-			add_ideas = my_spirit
+			add_ideas = LMN_idea_meritocracy
+			add_political_power = -35
+			add_timed_idea = {
+				idea = LMN_idea_st_negative
+				days = 365
+			}
 		}
 
 		ai_will_do = {
@@ -142,14 +147,61 @@ focus_tree = {
 		icon = generic_political_pressure
 		x = 37
 		y = 3
-		cost = 35
+		cost = 5
 		prerequisite = { focus = LMN_focus_gentry }
 		search_filters = { FOCUS_FILTER_POLITICAL }
 
 		completion_reward = {
 			log = "[GetDateText]: [Root.GetName]: Focus LMN_focus_advisory"
 			add_political_power = 50
-			add_stability = -5
+			add_stability = -0.05
+			add_timed_idea = {
+				idea = LMN_idea_st_negative
+				days = 365
+			}
+		}
+
+		ai_will_do = {
+			base = 1
+		}
+	}
+
+	focus = {
+		id = LMN_focus_abolish_landlordism
+		icon = generic_political_pressure
+		x = 35
+		y = 3
+		cost = 5
+		prerequisite = { focus = LMN_focus_firm }
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus LMN_focus_abolish_landlordism"
+			add_stability = 0.05
+		}
+
+		ai_will_do = {
+			base = 1
+		}
+	}
+
+	focus = {
+		id = LMN_focus_fire_foreign
+		icon = generic_political_pressure
+		x = 33
+		y = 3
+		cost = 5
+		prerequisite = { focus = LMN_focus_firm }
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus LMN_focus_fire_foreign"
+			add_political_power = 75
+			add_stability = 0.05
+			swap_ideas = {
+				remove_idea = LMN_idea_foreign_imperialists_1
+				add_idea = LMN_idea_foreign_imperialists_2
+			}
 		}
 
 		ai_will_do = {
