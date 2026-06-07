@@ -1,138 +1,44 @@
-focus_tree = {
-	id = lmn_reconquest_focus
-
-	country = { 
-		factor = 1
-		modifier = { 
-			add = 10
-			tag = LMN
-		}
-	}
-	default = no
-	
-	shared_focus = army_effort
-	shared_focus = aviation_effort
-	shared_focus = naval_effort
-	shared_focus = political_effort
-	shared_focus = international_effort
-	shared_focus = LMN_reunification
-	# Reunification
-	focus = {
-		id = LMN_secure_JJY
-		icon = GFX_focus_unknown_expansion
-		#prerequisite = { focus =  }
-		#mutually_exclusive = { focus =  }
-		#relative_position_id = 
-		x = 13
-		y = 0
-		cost = 10
-
-		allow_branch = {
-		}
-		available = {
-			has_war = no
-		}
-		bypass = {
-		}
-
-		ai_will_do = { 
-			factor = 2.5
-			modifier = { 
-				add = 1.0
-				DRC = { is_ai = no }
-			}
-			modifier = { 
-				add = 1.0
-				LMN = { is_ai = no }
-			}
-			modifier = { 
-				add = 1.0
-				LPR = { is_ai = no }
-			}
-			modifier = { 
-				add = 1.0
-				EPC = { is_ai = no }
-			}
-			modifier = { 
-				add = 1.0
-				EPY = { is_ai = no }
-			}
-			modifier = { 
-				factor = 5.0
-				date > 1925.6.1
-			}
-			modifier = { 
-				factor = 7.5
-				date > 1927.1.1
-			}
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-			log = "[GetDateText]: [Root.GetName]: Focus LMN_secure_JJY"
-			declare_war_on = { type = annex_everything target = JJY }
-			create_wargoal = { type = annex_everything target = JJY expire = 36 }
-		}
-	}
-
-	focus = {
-		id = LMN_reclaim_industry
-		icon = GFX_focus_unknown_expansion
-		prerequisite = { focus = LMN_secure_JJY }
-		#mutually_exclusive = { focus =  }
-		relative_position_id = LMN_secure_JJY
-		x = 0
-		y = 1
-		cost = 10
-
-		allow_branch = {
-		}
-		available = {
-			has_war = no
-		}
-		bypass = {
-		}
-
-		ai_will_do = { 
-			factor = 2.5
-			modifier = { 
-				add = 1.0
-				DRC = { is_ai = no }
-			}
-			modifier = { 
-				add = 1.0
-				LMN = { is_ai = no }
-			}
-			modifier = { 
-				add = 1.0
-				LPR = { is_ai = no }
-			}
-			modifier = { 
-				add = 1.0
-				EPC = { is_ai = no }
-			}
-			modifier = { 
-				add = 1.0
-				EPY = { is_ai = no }
-			}
-			modifier = { 
-				factor = 5.0
-				date > 1925.6.1
-			}
-			modifier = { 
-				factor = 7.5
-				date > 1927.1.1
-			}
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-			log = "[GetDateText]: [Root.GetName]: Focus LPR_secure_EAST"
-			declare_war_on = { type = annex_everything target = DVC }
-			create_wargoal = { type = annex_everything target = DVC expire = 36 }
-		}
-	}
-	continuous_focus_position = { x = 50 y = 950 }
+{
+  "tree_name": "TAG_focus_tree",
+  "focuses": [
+    {
+      "id": 2,
+      "name": "LMN_focus_diet",
+      "icon": "\ud83d\udcdc",
+      "gfx": "GFX_goal_generic_political_pressure",
+      "x": 50,
+      "y": 0,
+      "cost": 10,
+      "desc": "",
+      "effects": [
+        {
+          "type": "state_event",
+          "fields": {
+            "id": "LMN_event_diet_1",
+            "days": "0"
+          }
+        }
+      ],
+      "prereqs": [],
+      "mutex": [],
+      "cancel_if_invalid": true,
+      "continue_if_invalid": false,
+      "available_if_capitulated": false,
+      "ai_will_do": 1,
+      "ai_will_do_raw": "base = 1",
+      "relative_position_id": null,
+      "search_filters": "FOCUS_FILTER_POLITICAL",
+      "available_cond": "",
+      "bypass_cond": "",
+      "cancel_cond": "",
+      "will_lead_to_war_with": "",
+      "complete_tooltip": "",
+      "select_effect": "",
+      "bypass_effect": "",
+      "allow_branch": "",
+      "text": "",
+      "offsets": [],
+      "tree_idx": 0
+    }
+  ]
 }
