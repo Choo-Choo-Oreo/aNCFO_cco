@@ -9,14 +9,14 @@ focus_tree = {
 		}
 	}
 
-	continuous_focus_position = { x = 0 y = 0 }
+	continuous_focus_position = { x = 3300 y = 500 }
 
 	focus = {
 		id = LMN_focus_diet
 		icon = generic_political_pressure
 		x = 40
 		y = 0
-		cost = 10
+		cost = 2
 		search_filters = { FOCUS_FILTER_POLITICAL }
 
 		completion_reward = {
@@ -81,7 +81,7 @@ focus_tree = {
 		icon = generic_political_pressure
 		x = 38
 		y = 2
-		cost = 8
+		cost = 3
 		prerequisite = { focus = LMN_focus_heir }
 		mutually_exclusive = { focus = LMN_focus_firm }
 		search_filters = { FOCUS_FILTER_POLITICAL }
@@ -100,7 +100,7 @@ focus_tree = {
 		icon = generic_political_pressure
 		x = 34
 		y = 2
-		cost = 8
+		cost = 3
 		prerequisite = { focus = LMN_focus_heir }
 		mutually_exclusive = { focus = LMN_focus_gentry }
 		search_filters = { FOCUS_FILTER_POLITICAL }
@@ -119,7 +119,7 @@ focus_tree = {
 		icon = generic_political_pressure
 		x = 39
 		y = 3
-		cost = 35
+		cost = 8
 		prerequisite = { focus = LMN_focus_gentry }
 		search_filters = { FOCUS_FILTER_POLITICAL }
 
@@ -143,18 +143,15 @@ focus_tree = {
 		icon = generic_political_pressure
 		x = 37
 		y = 3
-		cost = 5
+		cost = 8
 		prerequisite = { focus = LMN_focus_gentry }
 		search_filters = { FOCUS_FILTER_POLITICAL }
 
 		completion_reward = {
 			log = "[GetDateText]: [Root.GetName]: Focus LMN_focus_advisory"
 			add_political_power = 50
-			add_stability = -0.05
-			add_timed_idea = {
-				idea = LMN_idea_st_negative
-				days = 365
-			}
+			add_ideas = LMN_idea_advisory_boards
+			add_stability = -0.02
 		}
 
 		ai_will_do = {
@@ -167,7 +164,7 @@ focus_tree = {
 		icon = generic_political_pressure
 		x = 35
 		y = 3
-		cost = 5
+		cost = 8
 		prerequisite = { focus = LMN_focus_firm }
 		search_filters = { FOCUS_FILTER_POLITICAL }
 
@@ -192,7 +189,7 @@ focus_tree = {
 		icon = generic_political_pressure
 		x = 33
 		y = 3
-		cost = 5
+		cost = 8
 		prerequisite = { focus = LMN_focus_firm }
 		search_filters = { FOCUS_FILTER_POLITICAL }
 
@@ -216,13 +213,14 @@ focus_tree = {
 		icon = generic_political_pressure
 		x = 35
 		y = 4
-		cost = 5
+		cost = 8
 		prerequisite = { focus = LMN_focus_abolish_landlordism }
 		search_filters = { FOCUS_FILTER_POLITICAL }
 
 		completion_reward = {
 			log = "[GetDateText]: [Root.GetName]: Focus LMN_focus_progressive_tax"
-			# TODO: add effects
+			add_ideas = LMN_idea_progressive_tax
+			add_stability = 0.03
 		}
 
 		ai_will_do = {
@@ -235,15 +233,17 @@ focus_tree = {
 		icon = generic_political_pressure
 		x = 33
 		y = 4
-		cost = 5
+		cost = 8
 		prerequisite = { focus = LMN_focus_fire_foreign }
 		search_filters = { FOCUS_FILTER_POLITICAL }
 
 		completion_reward = {
 			log = "[GetDateText]: [Root.GetName]: Focus LMN_focus_nationalize_sectors"
 			add_political_power = 50
-			remove_ideas = LMN_idea_foreign_imperialists_2
-			add_ideas = LMN_idea_nationalization
+			swap_ideas = {
+				remove_idea = LMN_idea_foreign_imperialists_2
+				add_idea = LMN_idea_nationalization
+			}
 		}
 
 		ai_will_do = {
@@ -256,13 +256,13 @@ focus_tree = {
 		icon = generic_political_pressure
 		x = 37
 		y = 4
-		cost = 5
+		cost = 8
 		prerequisite = { focus = LMN_focus_advisory }
 		search_filters = { FOCUS_FILTER_POLITICAL }
 
 		completion_reward = {
 			log = "[GetDateText]: [Root.GetName]: Focus LMN_focus_regressive_tax"
-			# TODO: add effects
+			add_ideas = LMN_idea_regressive_tax
 		}
 
 		ai_will_do = {
@@ -275,13 +275,65 @@ focus_tree = {
 		icon = generic_political_pressure
 		x = 39
 		y = 4
-		cost = 5
+		cost = 8
 		prerequisite = { focus = LMN_focus_meritocracy }
 		search_filters = { FOCUS_FILTER_POLITICAL }
 
 		completion_reward = {
 			log = "[GetDateText]: [Root.GetName]: Focus LMN_focus_give_handouts"
-			# TODO: add effects
+			add_timed_idea = {
+				idea = LMN_idea_handouts
+				days = 200
+			}
+		}
+
+		ai_will_do = {
+			base = 1
+		}
+	}
+
+	focus = {
+		id = LMN_focus_form_council
+		icon = generic_political_pressure
+		x = 38
+		y = 5
+		cost = 10
+		prerequisite = { focus = LMN_focus_regressive_tax }
+		prerequisite = { focus = LMN_focus_give_handouts }
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus LMN_focus_form_council"
+			add_political_power = 75
+			swap_ideas = {
+				remove_idea = LMN_idea_old_aristocracy
+				add_idea = LMN_idea_formed_council
+			}
+		}
+
+		ai_will_do = {
+			base = 1
+		}
+	}
+
+	focus = {
+		id = LMN_focus_appoint_council
+		icon = generic_political_pressure
+		x = 34
+		y = 5
+		cost = 10
+		prerequisite = { focus = LMN_focus_progressive_tax }
+		prerequisite = { focus = LMN_focus_nationalize_sectors }
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus LMN_focus_appoint_council"
+			add_stability = 0.05
+			swap_ideas = {
+				remove_idea = LMN_idea_old_aristocracy
+				add_idea = LMN_idea_appointed_council
+			}
+			add_political_power = 75
 		}
 
 		ai_will_do = {
