@@ -781,7 +781,7 @@
 			------ Macro-Strategy: Guarantees, Calling Allies, War Entry ----------
 			--------------------------------------
 			NDefines.NAI.AI_GUARANTEE_DESIRE_WITH_PRESSURE_MODIFIER = -0.35   -- vanilla 0 (less spam guarantees)
-			NDefines.NAI.TENSION_MIN_FOR_GUARANTEE_VS_MINOR = 0.45            -- vanilla 0.25
+			NDefines.NAI.TENSION_MIN_FOR_GUARANTEE_VS_MINOR = 10.0            -- vanilla 0.25
 
 			NDefines.NAI.CALL_ALLY_BASE_DESIRE = 40                           -- vanilla 50
 			NDefines.NAI.CALL_ALLY_WAR_LENGTH_NR_MONTHS = 6                   -- vanilla 3
