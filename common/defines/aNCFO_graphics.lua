@@ -72,5 +72,12 @@
 	-- NDefines_Graphics.NGraphics.GRADIENT_BORDERS_OUTLINE_CUTOFF_DIPLOMACY = 0.98
 
 -- Country‐color modifiers
-	NDefines_Graphics.NGraphics.COUNTRY_COLOR_SATURATION_MODIFIER = 0.725 -- Vintage 0.725 -- Vanilla 0.60
-	NDefines_Graphics.NGraphics.COUNTRY_COLOR_BRIGHTNESS_MODIFIER = 0.80  -- Vintage 0.70  -- Vanilla 0.80
+	NDefines_Graphics.NGraphics.COUNTRY_COLOR_SATURATION_MODIFIER = 0.725 -- Vintage 0.725 -- Default 0.60
+	NDefines_Graphics.NGraphics.COUNTRY_COLOR_BRIGHTNESS_MODIFIER = 0.80  -- Vintage 0.70  -- Default 0.80
+
+
+
+-- Terrain Mapmod
+	NDefines_Graphics.NMapMode.MAP_MODE_TERRAIN_TRANSPARENCY = 1.0							-- Default 0.5
+	NDefines_Graphics.NMapMode.MAP_MODE_NAVAL_TERRAIN_TRANSPARENCY = 1.0					-- Default 0.8
+	NDefines_Graphics.NGraphics.GRADIENT_BORDERS_CAMERA_DISTANCE_OVERRIDE_TERRAIN = 0.20	-- Default 0.39
