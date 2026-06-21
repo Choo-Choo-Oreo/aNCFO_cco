@@ -1,56 +1,6 @@
 sub_units = {
-	anti_tank = {
-		abbreviation = "AT"
-		sprite = anti_tank
-		map_icon_category = infantry
-		priority = 0
-		ai_priority = 0
-		active = yes
-		affects_speed = no
-		
-		group = support
-
-		type = {
-			infantry
-			support
-		}
-		
-		categories = {
-			category_front_line
-			category_support_battalions
-			category_divisional_support_battalions
-			category_army
-			category_anti_tank
-			category_mobile_anti_tank
-		}
-
-		regimental = no
-		combat_width = 0
-
-		need = {
-			anti_tank_equipment = 24
-		}
-		manpower = 300
-		max_organisation = 0
-		default_morale = 0.1
-		max_strength = 0.2
-		training_time = 120
-		weight = 0.1
-
-		can_be_parachuted = no
-		
-		supply_consumption = 0.08
-
-		# Support nerfs to combat abilities
-		defense = -0.4
-		breakthrough = -0.4
-		soft_attack = -0.4
-		hard_attack = -0.5
-		ap_attack = -0.15
-	}
-
-	support_light_td = {
-		abbreviation = "SLTD"
+	support_light_tank = {
+		abbreviation = "SLT"
 		sprite = "light_armor"
 		map_icon_category = armored
 		
@@ -70,14 +20,15 @@ sub_units = {
 			category_all_armor
 			category_army
 			category_support_battalions
-			category_divisional_support_battalions
 		}
 		
-		regimental = no
 		combat_width = 0
 		
+		divisional = no
+		regimental = yes
+		
 		need = {
-			light_tank_destroyer_chassis = 20
+			light_tank_chassis = 20
 		}
 		
 		#same_support_type = support_td # blocks adding other td types to template
@@ -93,6 +44,12 @@ sub_units = {
 		weight = 0.5
 		supply_consumption = 0.02
 		can_be_parachuted = yes
+
+		battalion_mult = {
+			category = category_light_infantry
+			breakthrough = 0.15
+			add = yes
+		}
 
 		# Support nerfs to combat abilities
 		defense = -0.6
@@ -128,15 +85,12 @@ sub_units = {
 			movement = -0.02
 		}
 		amphibious = { 
-			attack = -0.06
-		}
-
-		same_support_type = anti_tank
-		same_support_type = support_light_td
+			attack = -0.04
+		}	
 	}
 
-	support_medium_td = {
-		abbreviation = "SMTD"
+	support_medium_tank = {
+		abbreviation = "SMT"
 		sprite = "medium_armor"
 		map_icon_category = armored
 		priority = 0
@@ -152,18 +106,15 @@ sub_units = {
 		
 		categories = {
 			category_front_line
-			category_all_armor
-			category_army
 			category_support_battalions
-			category_divisional_support_battalions
+			category_army
+			category_all_armor
 		}
 		
-		regimental = no
 		combat_width = 0
 		
-		need = {
-			medium_tank_destroyer_chassis = 20
-		}
+		divisional = no
+		regimental = yes
 		
 		#Size Definitions
 		max_strength = 2
@@ -177,6 +128,12 @@ sub_units = {
 		supply_consumption = 0.02
 		can_be_parachuted = yes
 
+		battalion_mult = {
+			category = category_light_infantry
+			breakthrough = 0.25
+			add = yes
+		}
+
 		# Support nerfs to combat abilities
 		defense = -0.6
 		breakthrough = -0.6
@@ -186,6 +143,10 @@ sub_units = {
 		#ap_attack = -0.2
 		
 		suppression = 1.0
+		
+		need = {
+			medium_tank_chassis = 20
+		}
 		
 		forest = {
 		    attack = -0.03
@@ -214,18 +175,14 @@ sub_units = {
 			movement = -0.02
 		}
 		amphibious = { 
-			attack = -0.07
+			attack = -0.08
 		}
-
-		same_support_type = anti_tank
-		same_support_type = support_medium_td
 	}
 
-	support_heavy_td = {
-		abbreviation = "SHTD"
+	support_heavy_tank = {
+		abbreviation = "SHT"
 		sprite = "heavy_armor"
 		map_icon_category = armored
-		
 		priority = 0
 		ai_priority = 0
 		active = yes
@@ -239,18 +196,15 @@ sub_units = {
 		
 		categories = {
 			category_front_line
-			category_all_armor
-			category_army
 			category_support_battalions
-			category_divisional_support_battalions
+			category_army
+			category_all_armor
 		}
 		
-		regimental = no
 		combat_width = 0
 		
-		need = {
-			heavy_tank_destroyer_chassis = 16
-		}
+		divisional = no
+		regimental = yes
 		
 		#Size Definitions
 		max_strength = 2
@@ -264,6 +218,12 @@ sub_units = {
 		supply_consumption = 0.02
 		can_be_parachuted = no
 
+		battalion_mult = {
+			category = category_light_infantry
+			breakthrough = 0.35
+			add = yes
+		}
+
 		# Support nerfs to combat abilities
 		defense = -0.6
 		breakthrough = -0.6
@@ -273,6 +233,10 @@ sub_units = {
 		#ap_attack = -0.2
 		
 		suppression = 1.0
+		
+		need = {
+			heavy_tank_chassis = 16
+		}
 		
 		forest = {
 		    attack = -0.04
@@ -301,111 +265,17 @@ sub_units = {
 			movement = -0.04
 		}
 		amphibious = { 
-			attack = -0.08 
+			attack = -0.09
 		}
 		fort = {
-			attack = 0.05
+			attack = 0.01
 		}
-
-		same_support_type = anti_tank
-		same_support_type = support_heavy_td
 	}
 
-	support_super_heavy_td = {
-		abbreviation = "SSHTD"
-		sprite = "super_heavy_armor"
-		map_icon_category = armored
-		
-		priority = 0
-		ai_priority = 0
-		active = no #(!)
-		
-		type = {
-			infantry
-			support
-		}
-		
-		group = support
-		
-		categories = {
-			category_front_line
-			category_all_armor
-			category_army
-			category_support_battalions
-			category_divisional_support_battalions
-		}
-		
-		regimental = no
-		combat_width = 0
-		
-		need = {
-			super_heavy_tank_destroyer_chassis = 16
-		}
-		
-		#Size Definitions
-		max_strength = 2
-		max_organisation = 20
-		default_morale = 0.3
-		manpower = 500
-		training_time = 120
-
-		#Misc Abilities
-		weight = 0.87
-		supply_consumption = 0.02
-		can_be_parachuted = no
-
-		# Support nerfs to combat abilities
-		defense = -0.6
-		breakthrough = -0.6
-		soft_attack = -0.6
-		hard_attack = -0.6
-		armor_value = -0.6
-		#ap_attack = -0.2
-		
-		suppression = 1.0
-		
-		forest = {
-		    attack = -0.05
-			movement = -0.04
-		}
-		hills = {
-		    attack = -0.03
-		}
-		mountain = 	{
-		    attack = -0.04
-		}
-		jungle = {
-		    attack = -0.07
-			movement = -0.04
-		}
-		marsh = {
-		    attack = -0.05 
-			movement = -0.02
-		}
-		urban = {
-			attack = -0.06
-			defence = -0.02
-		}
-		river = { 
-			attack = -0.05
-			movement = -0.05
-		}
-		amphibious = { 
-			attack = -0.1
-		}
-		fort = {
-			attack = 0.03
-		}
-
-		same_support_type = anti_tank
-		same_support_type = support_super_heavy_td
-	}
-	
-	support_modern_td = {
-		abbreviation = "SATD"
+	support_modern_tank = {
+		abbreviation = "SAT"
 		sprite = "modern_armor"
 		map_icon_category = armored
-		
 		priority = 0
 		ai_priority = 0
 		active = yes
@@ -419,18 +289,15 @@ sub_units = {
 		
 		categories = {
 			category_front_line
-			category_all_armor
-			category_army
 			category_support_battalions
-			category_divisional_support_battalions
+			category_army
+			category_all_armor
 		}
 		
-		regimental = no
 		combat_width = 0
 		
-		need = {
-			modern_tank_destroyer_chassis = 20
-		}
+		divisional = no
+		regimental = yes
 		
 		#Size Definitions
 		max_strength = 2
@@ -453,6 +320,10 @@ sub_units = {
 		#ap_attack = -0.2
 		
 		suppression = 1.0
+		
+		need = {
+			modern_tank_chassis = 20
+		}
 		
 		forest = {
 		    attack = -0.03
@@ -483,8 +354,97 @@ sub_units = {
 		amphibious = { 
 			attack = -0.07
 		}
+	}
 
-		same_support_type = anti_tank
-		same_support_type = support_modern_td
+	super_heavy_armor = {
+		abbreviation = "STK"
+		sprite = heavy_armor
+		map_icon_category = armored
+		priority = 2520
+		ai_priority = 2520
+		active = yes
+
+		type = {
+			support
+			armor
+		}
+		
+		group = support
+
+		categories = {
+			category_tanks
+			category_support_battalions
+			category_divisional_support_battalions
+			category_front_line
+			category_all_armor
+			category_army
+		}
+
+		combat_width = 0
+		
+		divisional = no
+		regimental = yes
+
+		need = {
+			super_heavy_tank_chassis = 20
+		}
+
+		manpower = 500
+		max_organisation = 10
+		default_morale = 0.3
+		max_strength = 2
+		training_time = 180
+		weight = 1.0
+		
+		supply_consumption = 0.4
+
+		#Support nerfs to combat abilities
+		soft_attack = -0.30
+		hard_attack = -0.30
+		defense = -0.50
+		breakthrough = -0.30
+		armor_value = -0.50
+		#ap_attack = -0.50
+		
+		suppression = 2.5
+
+		forest = {
+		    attack = -0.25
+			movement = -0.3
+		}
+		hills = {
+		    attack = -0.15
+		    defence = -0.15
+		}
+		mountain = 	{
+		    attack = -0.2
+		    defence = -0.2
+		}
+		urban = {
+			attack = -0.3
+			defence = -0.3
+		}
+		jungle = {
+		    attack = -0.35
+		    defence = -0.35
+			movement = -0.3
+		}
+		marsh = {
+		    attack = -0.3
+		    defence = -0.3
+			movement = -0.3
+		}
+		fort = {
+			attack = 0.1
+			defence = 0.05
+		}
+		river = { 
+			attack = -0.25
+			defence = -0.25
+			movement = -0.3
+		}
+		amphibious = { 
+			attack = -0.6
+		}
 	}
 }
