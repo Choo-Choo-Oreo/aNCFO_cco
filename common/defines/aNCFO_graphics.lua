@@ -75,8 +75,6 @@
 	NDefines_Graphics.NGraphics.COUNTRY_COLOR_SATURATION_MODIFIER = 0.725 -- Vintage 0.725 -- Default 0.60
 	NDefines_Graphics.NGraphics.COUNTRY_COLOR_BRIGHTNESS_MODIFIER = 0.80  -- Vintage 0.70  -- Default 0.80
 
-
-
 -- Terrain Mapmod
 	NDefines_Graphics.NMapMode.MAP_MODE_TERRAIN_TRANSPARENCY = 1.0							-- Default 0.5
 	NDefines_Graphics.NMapMode.MAP_MODE_NAVAL_TERRAIN_TRANSPARENCY = 1.0					-- Default 0.8

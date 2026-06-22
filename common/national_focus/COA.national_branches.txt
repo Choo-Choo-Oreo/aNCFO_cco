@@ -1,0 +1,95 @@
+focus_tree = {
+	id = COA_artificers_focus
+	
+	country = {
+		factor = 0
+		modifier = {
+			add = 10
+			tag = COA
+		}
+	}
+	default = no
+	reset_on_civilwar = no
+	continuous_focus_position = { x = 50 y = 950 }
+	initial_show_position = { focus = aritifcers_focus_new_year_new_state }
+
+	shared_focus = army_effort
+	shared_focus = aviation_effort
+	shared_focus = naval_effort
+	shared_focus = political_effort
+	shared_focus = aritifcers_focus_new_year_new_state
+
+	shortcut = {
+		name = aritifcers_focus_new_year_new_state_shortcut
+		target = aritifcers_focus_new_year_new_state 
+		scroll_wheel_factor = 1.0
+		trigger = {  }
+	}
+	# Reconstruction Politics
+	focus = { # Reconstruction Politics
+		id = COA_focus_reconstruction_politics
+		icon = GFX_focus_unknown_political
+		#prerequisite = { focus =  }
+		#mutually_exclusive = { focus =  }
+		#relative_position_id = 
+		x = -8
+		y = 0
+		cost = 10
+
+		allow_branch = {
+		}
+		available = {
+			has_completed_focus = aritifcers_focus_reconstruction
+		}
+		bypass = {
+		}
+
+		ai_will_do = { factor = 2.0 }
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus COA_focus_reconstruction_politics"
+			custom_effect_tooltip = modify_OAK_state_heart_of_iron_modifier_tt
+			add_to_variable = {
+				global.OAK_heartofiron_local_factories = 0.10
+				tooltip = local_factories_tt
+			}
+		}
+	}
+
+	focus = { # End the Wum Wars
+		id = COA_focus_end_wum_wars
+		icon = GFX_focus_unknown_political
+		prerequisite = { focus = COA_focus_reconstruction_politics }
+		#mutually_exclusive = { focus =  }
+		relative_position_id = COA_focus_reconstruction_politics
+		x = 0
+		y = 1
+		cost = 10
+
+		allow_branch = {
+		}
+		available = {
+			has_completed_focus = aritifcers_focus_reconstruction
+		}
+		bypass = {
+		}
+
+		ai_will_do = { factor = 2.0 }
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus COA_focus_end_wum_wars"
+			create_wargoal = { type = puppet_wargoal_focus target = DOO expire = 1095 }
+			create_wargoal = { type = puppet_wargoal_focus target = TRH expire = 1095 }
+			create_wargoal = { type = puppet_wargoal_focus target = UEK expire = 1095 }
+			add_ai_strategy = { type = declare_war id = DOO value = 200 }
+			add_ai_strategy = { type = declare_war id = TRH value = 200 }
+			add_ai_strategy = { type = declare_war id = UEK value = 200 }
+			add_ai_strategy = { type = declare_war id = HNT value = 200 }
+		}
+	}
+	# A Heart of Iron
+}
