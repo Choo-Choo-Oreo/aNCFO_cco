@@ -5,7 +5,11 @@ focus_tree = {
 		factor = 0
 		modifier = {
 			add = 10
-			original_tag = EPY
+			OR = {
+				original_tag = EPY
+				original_tag = HIN
+				original_tag = HEU
+			}
 		}
 	}
 	default = no
@@ -13,33 +17,30 @@ focus_tree = {
 	continuous_focus_position = { x = 50 y = 950 }
 	initial_show_position = { focus = EPY_focus_ }
 
-	shared_focus = army_effort
-	shared_focus = aviation_effort
-	shared_focus = naval_effort
-	shared_focus = industrial_effort
-	shared_focus = EPY_focus_ # Modifers
-	shared_focus = EPY_focus_ # Modifers
-	shared_focus = EPY_focus_ # Modifers
+	#shared_focus = EPY_focus_military_land # Modifers
+	#shared_focus = EPY_focus_military_air # Modifers
+	#shared_focus = EPY_focus_military_sea # Modifers
 	shared_focus = EPY_annex_fenghuang
 
-	shortcut = {
-		name = MRC_political_lobbying_shortcut
-		target = MRC_political_lobbying
-		scroll_wheel_factor = 1.0
-		trigger = {  }
-	}
+	#shortcut = {
+	#	name = MRC_political_lobbying_shortcut
+	#	target = MRC_political_lobbying
+	#	scroll_wheel_factor = 1.0
+	#	trigger = {  }
+	#}
 
-	shortcut = {
-		name = MRC_focus_military_insulae_ground_defense_force_shortcut
-		target = MRC_focus_military_insulae_ground_defense_force
-		scroll_wheel_factor = 1.0
-		trigger = {  }
-	}
-	# Crownfather Emperorship
-	focus = { # Party Elections Branch: Political Lobbying
-		id = EPY_focus_
+	#shortcut = {
+	#	name = MRC_focus_military_insulae_ground_defense_force_shortcut
+	#	target = MRC_focus_military_insulae_ground_defense_force
+	#	scroll_wheel_factor = 1.0
+	#	trigger = {  }
+	#}
+	# Crownfather Branch
+	focus = { # Mentees of the Crownfather
+		id = EPY_focus_mentees_of_the_crownfather
 		icon = GFX_focus_unknown_political
-		x = 0
+		mutually_exclusive = { focus = EPY_focus_shinminirgen_movement }
+		x = -5
 		y = 0
 	
 		cost = 5
@@ -62,8 +63,104 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			log = "[GetDateText]: [Root.GetName]: Focus MRC_political_lobbying"
-			add_political_power = 100
+			log = "[GetDateText]: [Root.GetName]: Focus EPY_focus_mentees_of_the_crownfather"
+		}
+	}
+	# Opposition Branch - Shinminirgen says the Hinozuku, who bridge both factions, are the face that unifies it. Not the Heukin or Namu whom both oppose each other more often than the Hinozuku.
+	focus = { # Shinminirgen Movement
+		id = EPY_focus_shinminirgen_movement
+		icon = GFX_focus_unknown_political
+		mutually_exclusive = { focus = EPY_focus_mentees_of_the_crownfather }
+		x = 5
+		y = 0
+	
+		cost = 5
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		available = {
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			factor = 2
+			modifier = {
+				add = 0.10
+				factor = 1.10
+				is_historical_focus_on = yes
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus EPY_focus_mentees_of_the_crownfather"
+		}
+	}
+	# Liberal Zatsirgen Branch
+	focus = { # Zatsirgen Republicanism
+		id = EPY_focus_zatsirgen_republicanism
+		icon = GFX_focus_unknown_political
+		prerequisite = { focus = EPY_focus_shinminirgen_movement }
+		mutually_exclusive = { focus = EPY_focus_japirgen_collectivist }
+		relative_position_id = EPY_focus_shinminirgen_movement
+		x = -2
+		y = 5
+	
+		cost = 5
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		available = {
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			factor = 2
+			modifier = {
+				add = 0.10
+				factor = 1.10
+				is_historical_focus_on = yes
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus EPY_focus_mentees_of_the_crownfather"
+		}
+	}
+	# Collective Japirgen Branch
+	focus = { # Japirgen Collectivist
+		id = EPY_focus_japirgen_collectivist
+		icon = GFX_focus_unknown_political
+		prerequisite = { focus = EPY_focus_shinminirgen_movement }
+		mutually_exclusive = { focus = EPY_focus_zatsirgen_republicanism }
+		relative_position_id = EPY_focus_shinminirgen_movement
+		x = 2
+		y = 5
+	
+		cost = 5
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		available = {
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			factor = 2
+			modifier = {
+				add = 0.10
+				factor = 1.10
+				is_historical_focus_on = yes
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus EPY_focus_mentees_of_the_crownfather"
 		}
 	}
 }
