@@ -19,6 +19,7 @@ This document tracks the Direct Team members who assist in the development of th
 | **[CameraCraft]** | Artist | Graphical Assets | Custom Flags for [DRC], [LPR], and [TAM]. |
 | **[swordfish3790]** | Artist | Graphical Assets | Custom Flags for [ABL], [ATL_pluralism], [CUL_authoritarianism], [ERP], [DTP], [HYP], [LEE], [LLD], [LMC], [MLB], [KGK], [KSA], [SEK], [TRI], [TPD], [WGK], [OAK_unitism], [UNIFIED_WUM_HIGH_KINGDOM] |
 | **[Anthonanon]** | Collaborator | Graphical Assets & Content | Custom Flags for [UNIFIED_LINSONG_EMPIRE], [DVC], [LMC_authoritarianism]. Content for [LMN] |
+| Pencildude (kirbyfan228) | Commissioned Artist | Graphical Assets | Character portraits: Lucas Actius, Archardus Vladarus, Isabella Delphina. Commissioned work, copyright held by Author per Section 3.6. |
 
 ---
 

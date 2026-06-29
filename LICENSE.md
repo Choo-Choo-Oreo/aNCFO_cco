@@ -70,6 +70,9 @@ All original logic and scripts written in Paradox-proprietary languages (e.g., .
 3.5 **Independent Existence of IP**:
 The Property (as defined in Section 1.7) exists as an independent creative work. The presence of assets or lore from The Property within this Paradox Interactive mod does not grant any rights to The Property itself to any third party or entity. While Paradox Interactive AB is granted a license to the specific files distributed in the mod (per the Paradox EULA), the overarching copyright to the names, characters, and the world of Fyjuh remains exclusively with the Author. The Author reserves the right to monetize The Property in any medium outside of Paradox Interactive software (e.g., books, standalone games, or art prints) without interference from this license.
 
+3.6 **Commissioned Works**:
+Any Graphical Assets produced under a paid commission agreement with the Author are considered works made for hire. Full copyright transfers to the Author upon payment. The commissioned artist retains the right to display the work in their personal portfolio but may not relicense, sell, or redistribute the work independently.
+
 ---
 
 ## 4. Restrictions for Non‑Contributors
