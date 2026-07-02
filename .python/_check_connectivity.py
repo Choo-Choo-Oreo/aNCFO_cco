@@ -420,19 +420,28 @@ def main():
         sys.exit(0)
 
     selected_ids = set(selected)
+    # Strict owned-only connectivity: a bridging edge only ever forms when BOTH
+    # endpoint provinces belong to states this tag owns ("owned" or "both").
+    # Core-only states ("core") are never merged into any cluster, regardless of
+    # adjacency -- each always reports as its own isolated singleton.
+    owned_ids = {sid for sid, rel in selected.items() if rel in ("owned", "both")}
 
-    # Build state graph over own territory only: an edge exists only when both
-    # provinces of a land-adjacency belong to this country's selected states.
+    # Build the state graph. Every selected state is a node so isolated states
+    # (all core-only states, plus any owned exclave) form their own component.
     uf = UnionFind()
     for sid in selected_ids:
-        uf.find(sid)  # ensure isolated states are their own component
+        uf.find(sid)
+
+    # Connect owned states to each other through owned-only pixel / adjacencies.csv
+    # connectivity. This is the only place clusters get merged, so a claimed-but-
+    # not-owned state can never act as a stepping stone or attach to a cluster.
     for pair in land_adj:
         a, b = tuple(pair)
         sa = prov2state.get(a)
         sb = prov2state.get(b)
-        if sa is None or sb is None:
+        if sa is None or sb is None or sa == sb:
             continue
-        if sa in selected_ids and sb in selected_ids and sa != sb:
+        if sa in owned_ids and sb in owned_ids:
             uf.union(sa, sb)
 
     # Group states by component root.
@@ -543,9 +552,21 @@ def main():
             print(f"\n  Cluster #{cid} ({len(members)} state(s), {csize} provinces):")
             for r in members:
                 impassable_tag = " [impassable]" if r["state_impassable"] else ""
+                # Under strict owned-only connectivity every core-only state is
+                # always its own singleton and thus always flagged -- expected,
+                # not an edge case. Mark it so a claim reads differently from a
+                # physically detached OWNED holding (a real accidental exclave).
+                claim_note = (
+                    "  <- claim only (not owned): always reported separately "
+                    "under owned-only connectivity; reflects a claim without "
+                    "physical control, e.g. a mutual claim / frozen conflict, "
+                    "not an accidental exclave"
+                    if r["relation"] == "core"
+                    else ""
+                )
                 print(
                     f"    - state {r['state_id']:>5}  {r['state_name']:<28} "
-                    f"[{r['relation']}]{impassable_tag}"
+                    f"[{r['relation']}]{impassable_tag}{claim_note}"
                 )
 
     print(f"\nWrote {csv_path}" + (f" and connectivity_{tag}.json" if args.json else ""))
