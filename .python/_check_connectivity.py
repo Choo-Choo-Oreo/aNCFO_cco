@@ -11,6 +11,12 @@ holds only exceptions, never standard land borders). Ownership is used only to
 restrict which provinces are eligible path nodes; it is never used as an
 adjacency signal.
 
+Each state also gets a distance_from_capital_px / _pct_map_width, the straight
+line pixel distance from the state's pixel centroid to the capital state's
+centroid (capital read from history/countries/<TAG>). This is STRAIGHT LINE
+distance only -- it does not account for terrain, sea routes, or actual travel
+difficulty, so it measures physical proximity, not reachability.
+
 This script lives in the mod's root-level .python/ folder. All input files are
 resolved relative to the script's own location (mod root = the parent of the
 .python/ folder), so it can be invoked from any working directory. Output CSV /
@@ -30,304 +36,26 @@ Requires: Pillow, numpy.
 import argparse
 import csv
 import json
-import re
 import sys
 from pathlib import Path
 
-import numpy as np
-from PIL import Image
-
-# -------------------------------------------------------------
-# CONFIGURATION SECTION
-# -------------------------------------------------------------
-
-# The script lives in <mod_root>/.python/ so the mod root is one level up.
-# Everything is resolved from the script's own location, never from the current
-# working directory.
-SCRIPT_DIR = Path(__file__).resolve().parent
-MOD_ROOT = SCRIPT_DIR.parent
-
-DEFINITION_FILE = MOD_ROOT / "map" / "definition.csv"
-PROVINCES_BMP = MOD_ROOT / "map" / "provinces.bmp"
-ADJACENCIES_FILE = MOD_ROOT / "map" / "adjacencies.csv"
-STATES_DIR = MOD_ROOT / "history" / "states"
-COUNTRY_TAGS_DIR = MOD_ROOT / "common" / "country_tags"
-
-
-def verify_mod_root(root: Path):
-    """Confirm the resolved mod root actually looks like the mod, so a moved or
-    renamed script fails loudly instead of silently finding nothing. Returns a
-    list of human-readable problems (empty when everything checks out)."""
-    problems = []
-    if not (root / "descriptor.mod").is_file():
-        problems.append(f"descriptor.mod not found at mod root ({root})")
-    if not (root / "map").is_dir():
-        problems.append(f"map/ folder not found at mod root ({root})")
-    if not (root / "history" / "states").is_dir():
-        problems.append(f"history/states/ folder not found at mod root ({root})")
-    return problems
-
-# -------------------------------------------------------------
-# PARSING: definition.csv
-# -------------------------------------------------------------
-
-
-def parse_definition(path: Path):
-    """Return (code2id, land_ids).
-
-    code = R<<16 | G<<8 | B  ->  province id
-    land_ids = set of province ids whose type is 'land'
-    """
-    code2id = {}
-    land_ids = set()
-
-    with path.open("r", newline="", encoding="utf-8") as f:
-        reader = csv.reader(f, delimiter=";")
-        for row in reader:
-            # Same row-shape guard as map/_switch_land_sea.py: data rows start
-            # with a numeric province id.
-            if not row or not row[0].isdigit():
-                continue
-            pid = int(row[0])
-            r, g, b = int(row[1]), int(row[2]), int(row[3])
-            ptype = row[4].strip().lower()
-            code = (r << 16) | (g << 8) | b
-            code2id[code] = pid
-            if ptype == "land":
-                land_ids.add(pid)
-
-    return code2id, land_ids
-
-
-# -------------------------------------------------------------
-# PIXEL ADJACENCY: provinces.bmp
-# -------------------------------------------------------------
-
-
-def _pairs_from_shift(a, b):
-    """Given two aligned code arrays, return the (min,max) id-agnostic code
-    pairs where they differ, as an (N,2) int64 array."""
-    a = a.ravel()
-    b = b.ravel()
-    mask = a != b
-    a = a[mask]
-    b = b[mask]
-    lo = np.minimum(a, b)
-    hi = np.maximum(a, b)
-    return np.stack([lo, hi], axis=1)
-
-
-def extract_pixel_adjacency(bmp_path: Path, code2id: dict, land_ids: set, conn: int):
-    """Return a set of frozensets {id_a, id_b} of land provinces whose pixels
-    touch on the bitmap. Horizontal edges wrap (map loops E-W)."""
-    img = Image.open(bmp_path).convert("RGB")
-    arr = np.asarray(img, dtype=np.uint32)  # H x W x 3
-    code = (arr[:, :, 0] << 16) | (arr[:, :, 1] << 8) | arr[:, :, 2]
-
-    chunks = []
-    # Horizontal neighbours.
-    chunks.append(_pairs_from_shift(code[:, :-1], code[:, 1:]))
-    # Horizontal wrap: last column against first column.
-    chunks.append(_pairs_from_shift(code[:, -1], code[:, 0]))
-    # Vertical neighbours.
-    chunks.append(_pairs_from_shift(code[:-1, :], code[1:, :]))
-
-    if conn == 8:
-        # Down-right and down-left diagonals.
-        chunks.append(_pairs_from_shift(code[:-1, :-1], code[1:, 1:]))
-        chunks.append(_pairs_from_shift(code[:-1, 1:], code[1:, :-1]))
-        # Diagonal wrap columns.
-        chunks.append(_pairs_from_shift(code[:-1, -1], code[1:, 0]))
-        chunks.append(_pairs_from_shift(code[:-1, 0], code[1:, -1]))
-
-    all_pairs = np.concatenate(chunks, axis=0)
-    # Deduplicate code pairs before translating (far fewer unique border pairs).
-    unique_pairs = np.unique(all_pairs, axis=0)
-
-    land_adj = set()
-    missing_codes = set()
-    for lo, hi in unique_pairs:
-        ida = code2id.get(int(lo))
-        idb = code2id.get(int(hi))
-        if ida is None:
-            missing_codes.add(int(lo))
-            continue
-        if idb is None:
-            missing_codes.add(int(hi))
-            continue
-        if ida in land_ids and idb in land_ids and ida != idb:
-            land_adj.add(frozenset((ida, idb)))
-
-    if missing_codes:
-        print(
-            f"WARNING: {len(missing_codes)} bitmap colour(s) had no "
-            f"definition.csv entry; those borders were skipped."
-        )
-
-    return land_adj
-
-
-# -------------------------------------------------------------
-# EXCEPTIONS: adjacencies.csv
-# -------------------------------------------------------------
-
-
-def apply_adjacency_exceptions(land_adj: set, path: Path, land_ids: set):
-    """Mutate land_adj in place per adjacencies.csv. Returns (added, removed)."""
-    added = 0
-    removed = 0
-
-    with path.open("r", newline="", encoding="utf-8") as f:
-        reader = csv.reader(f, delimiter=";")
-        header_seen = False
-        for row in reader:
-            if not row:
-                continue
-            if not header_seen:
-                header_seen = True
-                # First line is the column header (From;To;Type;...).
-                if not row[0].strip().lstrip("-").isdigit():
-                    continue
-            # Terminator line and malformed rows.
-            if not row[0].strip().lstrip("-").isdigit():
-                continue
-            frm = int(row[0])
-            to = int(row[1])
-            if frm < 0 or to < 0:
-                continue  # -1;-1;... terminator
-            atype = (row[2].strip().lower() if len(row) > 2 else "")
-
-            # Only land-land pairs affect landmass connectivity.
-            if frm not in land_ids or to not in land_ids:
-                continue
-
-            pair = frozenset((frm, to))
-            if atype == "impassable":
-                if pair in land_adj:
-                    land_adj.discard(pair)
-                    removed += 1
-            else:
-                # sea straits, tunnels, canal passages, or blank (defaults sea)
-                if pair not in land_adj:
-                    land_adj.add(pair)
-                    added += 1
-
-    return added, removed
-
-
-# -------------------------------------------------------------
-# STATES: history/states/*.txt
-# -------------------------------------------------------------
-
-_ID_RE = re.compile(r"\bid\s*=\s*(\d+)")
-_OWNER_RE = re.compile(r"\bowner\s*=\s*([A-Z0-9]{3})")
-_CORE_RE = re.compile(r"\badd_core_of\s*=\s*([A-Z0-9]{3})")
-# Top-level state-block flag from history/states (State_modding wiki). This is a
-# state-level wasteland/buffer flag and is UNRELATED to the adjacencies.csv
-# 'impassable' adjacency type handled in apply_adjacency_exceptions().
-_STATE_IMPASSABLE_RE = re.compile(r"\bimpassable\s*=\s*yes\b")
-
-
-def _extract_provinces_block(text: str):
-    """Return the list of province ids inside provinces={ ... }."""
-    m = re.search(r"provinces\s*=\s*\{", text)
-    if not m:
-        return []
-    start = m.end()
-    depth = 1
-    i = start
-    while i < len(text) and depth > 0:
-        c = text[i]
-        if c == "{":
-            depth += 1
-        elif c == "}":
-            depth -= 1
-        i += 1
-    body = text[start : i - 1]
-    return [int(tok) for tok in body.split() if tok.isdigit()]
-
-
-def parse_states(states_dir: Path):
-    """Return list of dicts:
-    {id, name, provinces(set), owner, cores(set), impassable(bool)}."""
-    states = []
-    for path in sorted(states_dir.glob("*.txt")):
-        text = path.read_text(encoding="utf-8-sig", errors="replace")
-
-        id_m = _ID_RE.search(text)
-        if not id_m:
-            continue
-        sid = int(id_m.group(1))
-
-        name_m = re.search(r'name\s*=\s*"([^"]*)"', text)
-        name = name_m.group(1) if name_m else f"STATE_{sid}"
-
-        provinces = set(_extract_provinces_block(text))
-
-        owner_m = _OWNER_RE.search(text)
-        owner = owner_m.group(1) if owner_m else None
-        cores = set(_CORE_RE.findall(text))
-
-        # Optional top-level state flag; absent means passable.
-        impassable = _STATE_IMPASSABLE_RE.search(text) is not None
-
-        states.append(
-            {
-                "id": sid,
-                "name": name,
-                "provinces": provinces,
-                "owner": owner,
-                "cores": cores,
-                "impassable": impassable,
-                "file": path.name,
-            }
-        )
-    return states
-
-
-# -------------------------------------------------------------
-# CONNECTED COMPONENTS (union-find)
-# -------------------------------------------------------------
-
-
-class UnionFind:
-    def __init__(self):
-        self.parent = {}
-
-    def find(self, x):
-        self.parent.setdefault(x, x)
-        root = x
-        while self.parent[root] != root:
-            root = self.parent[root]
-        # Path compression.
-        while self.parent[x] != root:
-            self.parent[x], x = root, self.parent[x]
-        return root
-
-    def union(self, a, b):
-        ra, rb = self.find(a), self.find(b)
-        if ra != rb:
-            self.parent[ra] = rb
-
-
-# -------------------------------------------------------------
-# COUNTRY TAG VALIDATION (optional, non-fatal)
-# -------------------------------------------------------------
-
-
-def tag_is_known(tag: str, tags_dir: Path):
-    """Best-effort check that the tag appears in common/country_tags. Returns
-    True/False, or None if the directory can't be read."""
-    if not tags_dir.is_dir():
-        return None
-    pattern = re.compile(rf"^\s*{re.escape(tag)}\s*=", re.MULTILINE)
-    for path in tags_dir.glob("*.txt"):
-        try:
-            if pattern.search(path.read_text(encoding="utf-8-sig", errors="replace")):
-                return True
-        except OSError:
-            continue
-    return False
+from _map_common import (
+    ADJACENCIES_FILE,
+    COUNTRY_TAGS_DIR,
+    DEFINITION_FILE,
+    MOD_ROOT,
+    PROVINCES_BMP,
+    STATES_DIR,
+    UnionFind,
+    apply_adjacency_exceptions,
+    compute_province_centroids,
+    extract_pixel_adjacency,
+    parse_definition,
+    parse_states,
+    read_capital,
+    tag_is_known,
+    verify_mod_root,
+)
 
 
 # -------------------------------------------------------------
@@ -419,6 +147,52 @@ def main():
         print(f"\n{tag} owns or cores no states. Nothing to analyze.")
         sys.exit(0)
 
+    # --- Straight-line distance from the capital (physical proximity only) ---
+    print(f"Computing province centroids from {PROVINCES_BMP.name} ...")
+    centroids, map_width = compute_province_centroids(PROVINCES_BMP, code2id)
+
+    def state_centroid(sid):
+        """Pixel-count weighted mean of a state's province centroids, or None if
+        none of its provinces have pixels."""
+        st = by_id.get(sid)
+        if st is None:
+            return None
+        sx = sy = 0.0
+        total = 0
+        for pid in st["provinces"]:
+            c = centroids.get(pid)
+            if c is not None:
+                cx, cy, n = c
+                sx += cx * n
+                sy += cy * n
+                total += n
+        return (sx / total, sy / total) if total else None
+
+    def wrapped_distance(a, b):
+        """Straight-line pixel distance, taking the shorter of the direct span
+        and the span going the other way around the horizontally-wrapping map."""
+        if a is None or b is None:
+            return None
+        dx = abs(a[0] - b[0])
+        dx = min(dx, map_width - dx)  # same E-W wrap as extract_pixel_adjacency
+        dy = abs(a[1] - b[1])
+        return (dx * dx + dy * dy) ** 0.5
+
+    capital_state_id = read_capital(tag)
+    capital_centroid = (
+        state_centroid(capital_state_id) if capital_state_id is not None else None
+    )
+    if capital_state_id is None:
+        print(
+            f"WARNING: no capital found for {tag} in history/countries; "
+            "distances will be null."
+        )
+    elif capital_centroid is None:
+        print(
+            f"WARNING: capital state {capital_state_id} has no pixels on the "
+            "bitmap; distances will be null."
+        )
+
     selected_ids = set(selected)
     # Strict owned-only connectivity: a bridging edge only ever forms when BOTH
     # endpoint provinces belong to states this tag owns ("owned" or "both").
@@ -472,6 +246,7 @@ def main():
     for sid in sorted(selected_ids):
         st = by_id[sid]
         in_largest = sid in largest_ids
+        dist_px = wrapped_distance(state_centroid(sid), capital_centroid)
         rows.append(
             {
                 "state_id": sid,
@@ -482,6 +257,12 @@ def main():
                 "in_largest_cluster": in_largest,
                 "flag_verify": not in_largest,
                 "state_impassable": st["impassable"],
+                "distance_from_capital_px": (
+                    round(dist_px, 1) if dist_px is not None else None
+                ),
+                "distance_from_capital_pct_map_width": (
+                    round(dist_px / map_width * 100, 2) if dist_px is not None else None
+                ),
             }
         )
     rows.sort(key=lambda r: (r["cluster_id"], r["state_id"]))
@@ -500,6 +281,8 @@ def main():
                 "in_largest_cluster",
                 "flag_verify",
                 "state_impassable",
+                "distance_from_capital_px",
+                "distance_from_capital_pct_map_width",
             ],
         )
         w.writeheader()
@@ -516,6 +299,10 @@ def main():
             "cluster_count": len(ordered),
             "largest_cluster_id": 1,
             "largest_cluster_province_count": largest_size,
+            "capital_state_id": capital_state_id,
+            "map_width_px": map_width,
+            "distance_note": "straight-line pixel distance only; ignores terrain, "
+            "sea routes, and travel difficulty (proximity, not reachability)",
             "states": rows,
         }
         json_path.write_text(json.dumps(payload, indent=2), encoding="utf-8")
@@ -525,6 +312,8 @@ def main():
     print(f"Connectivity report for {tag}  (own-territory-only)")
     print("=" * 60)
     print(f"States analyzed : {len(rows)} (owned + core)")
+    cap_desc = capital_state_id if capital_state_id is not None else "unknown"
+    print(f"Capital state   : {cap_desc}  (distances are straight-line, not routes)")
     print(f"Clusters found  : {len(ordered)}")
     print(
         f"Largest cluster : #1 ({len(largest_members)} states, "
@@ -552,6 +341,8 @@ def main():
             print(f"\n  Cluster #{cid} ({len(members)} state(s), {csize} provinces):")
             for r in members:
                 impassable_tag = " [impassable]" if r["state_impassable"] else ""
+                pct = r["distance_from_capital_pct_map_width"]
+                dist_tag = f" [dist {pct:.1f}% map]" if pct is not None else " [dist n/a]"
                 # Under strict owned-only connectivity every core-only state is
                 # always its own singleton and thus always flagged -- expected,
                 # not an edge case. Mark it so a claim reads differently from a
@@ -566,7 +357,7 @@ def main():
                 )
                 print(
                     f"    - state {r['state_id']:>5}  {r['state_name']:<28} "
-                    f"[{r['relation']}]{impassable_tag}{claim_note}"
+                    f"[{r['relation']}]{impassable_tag}{dist_tag}{claim_note}"
                 )
 
     print(f"\nWrote {csv_path}" + (f" and connectivity_{tag}.json" if args.json else ""))
