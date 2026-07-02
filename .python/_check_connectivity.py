@@ -11,7 +11,16 @@ holds only exceptions, never standard land borders). Ownership is used only to
 restrict which provinces are eligible path nodes; it is never used as an
 adjacency signal.
 
-Usage (run from the map/ directory, like the sibling _*.py scripts):
+This script lives in the mod's root-level .python/ folder. All input files are
+resolved relative to the script's own location (mod root = the parent of the
+.python/ folder), so it can be invoked from any working directory. Output CSV /
+JSON files are written to the current working directory.
+
+Usage (from anywhere):
+
+    python /path/to/mod/.python/_check_connectivity.py TAG [--json] [--conn 4|8]
+
+or from the .python/ folder:
 
     python _check_connectivity.py TAG [--json] [--conn 4|8]
 
@@ -32,11 +41,31 @@ from PIL import Image
 # CONFIGURATION SECTION
 # -------------------------------------------------------------
 
-DEFINITION_FILE = "definition.csv"
-PROVINCES_BMP = "provinces.bmp"
-ADJACENCIES_FILE = "adjacencies.csv"
-STATES_DIR = Path("..") / "history" / "states"
-COUNTRY_TAGS_DIR = Path("..") / "common" / "country_tags"
+# The script lives in <mod_root>/.python/ so the mod root is one level up.
+# Everything is resolved from the script's own location, never from the current
+# working directory.
+SCRIPT_DIR = Path(__file__).resolve().parent
+MOD_ROOT = SCRIPT_DIR.parent
+
+DEFINITION_FILE = MOD_ROOT / "map" / "definition.csv"
+PROVINCES_BMP = MOD_ROOT / "map" / "provinces.bmp"
+ADJACENCIES_FILE = MOD_ROOT / "map" / "adjacencies.csv"
+STATES_DIR = MOD_ROOT / "history" / "states"
+COUNTRY_TAGS_DIR = MOD_ROOT / "common" / "country_tags"
+
+
+def verify_mod_root(root: Path):
+    """Confirm the resolved mod root actually looks like the mod, so a moved or
+    renamed script fails loudly instead of silently finding nothing. Returns a
+    list of human-readable problems (empty when everything checks out)."""
+    problems = []
+    if not (root / "descriptor.mod").is_file():
+        problems.append(f"descriptor.mod not found at mod root ({root})")
+    if not (root / "map").is_dir():
+        problems.append(f"map/ folder not found at mod root ({root})")
+    if not (root / "history" / "states").is_dir():
+        problems.append(f"history/states/ folder not found at mod root ({root})")
+    return problems
 
 # -------------------------------------------------------------
 # PARSING: definition.csv
@@ -193,6 +222,10 @@ def apply_adjacency_exceptions(land_adj: set, path: Path, land_ids: set):
 _ID_RE = re.compile(r"\bid\s*=\s*(\d+)")
 _OWNER_RE = re.compile(r"\bowner\s*=\s*([A-Z0-9]{3})")
 _CORE_RE = re.compile(r"\badd_core_of\s*=\s*([A-Z0-9]{3})")
+# Top-level state-block flag from history/states (State_modding wiki). This is a
+# state-level wasteland/buffer flag and is UNRELATED to the adjacencies.csv
+# 'impassable' adjacency type handled in apply_adjacency_exceptions().
+_STATE_IMPASSABLE_RE = re.compile(r"\bimpassable\s*=\s*yes\b")
 
 
 def _extract_provinces_block(text: str):
@@ -215,7 +248,8 @@ def _extract_provinces_block(text: str):
 
 
 def parse_states(states_dir: Path):
-    """Return list of dicts: {id, name, provinces(set), owner, cores(set)}."""
+    """Return list of dicts:
+    {id, name, provinces(set), owner, cores(set), impassable(bool)}."""
     states = []
     for path in sorted(states_dir.glob("*.txt")):
         text = path.read_text(encoding="utf-8-sig", errors="replace")
@@ -234,6 +268,9 @@ def parse_states(states_dir: Path):
         owner = owner_m.group(1) if owner_m else None
         cores = set(_CORE_RE.findall(text))
 
+        # Optional top-level state flag; absent means passable.
+        impassable = _STATE_IMPASSABLE_RE.search(text) is not None
+
         states.append(
             {
                 "id": sid,
@@ -241,6 +278,7 @@ def parse_states(states_dir: Path):
                 "provinces": provinces,
                 "owner": owner,
                 "cores": cores,
+                "impassable": impassable,
                 "file": path.name,
             }
         )
@@ -314,12 +352,24 @@ def main():
     args = ap.parse_args()
     tag = args.tag.strip().upper()
 
-    def_path = Path(DEFINITION_FILE)
-    bmp_path = Path(PROVINCES_BMP)
-    adj_path = Path(ADJACENCIES_FILE)
-    for p in (def_path, bmp_path, adj_path):
+    # Confirm the script can reliably locate the mod root from its own location
+    # before doing any work.
+    root_problems = verify_mod_root(MOD_ROOT)
+    if root_problems:
+        print("ERROR: could not confirm the mod root from the script location.")
+        print(f"  Script:   {Path(__file__).resolve()}")
+        print(f"  Expected mod root: {MOD_ROOT}")
+        for prob in root_problems:
+            print(f"  - {prob}")
+        print(
+            "  This script must stay inside <mod_root>/.python/. Move it back or "
+            "adjust MOD_ROOT."
+        )
+        sys.exit(1)
+
+    for p in (DEFINITION_FILE, PROVINCES_BMP, ADJACENCIES_FILE):
         if not p.exists():
-            print(f"ERROR: cannot find {p} (run this from the map/ directory).")
+            print(f"ERROR: cannot find {p}")
             sys.exit(1)
 
     # Optional tag validation.
@@ -327,17 +377,17 @@ def main():
     if known is False:
         print(f"WARNING: {tag} was not found in common/country_tags (continuing).")
 
-    print(f"Parsing {DEFINITION_FILE} ...")
-    code2id, land_ids = parse_definition(def_path)
+    print(f"Parsing {DEFINITION_FILE.name} ...")
+    code2id, land_ids = parse_definition(DEFINITION_FILE)
     print(f"  {len(code2id)} provinces defined, {len(land_ids)} land provinces.")
 
-    print(f"Extracting pixel adjacency from {PROVINCES_BMP} (conn={args.conn}) ...")
-    land_adj = extract_pixel_adjacency(bmp_path, code2id, land_ids, args.conn)
+    print(f"Extracting pixel adjacency from {PROVINCES_BMP.name} (conn={args.conn}) ...")
+    land_adj = extract_pixel_adjacency(PROVINCES_BMP, code2id, land_ids, args.conn)
     print(f"  {len(land_adj)} land-land pixel borders.")
 
-    added, removed = apply_adjacency_exceptions(land_adj, adj_path, land_ids)
+    added, removed = apply_adjacency_exceptions(land_adj, ADJACENCIES_FILE, land_ids)
     print(
-        f"Applied {ADJACENCIES_FILE}: +{added} crossing(s), -{removed} impassable; "
+        f"Applied {ADJACENCIES_FILE.name}: +{added} crossing(s), -{removed} impassable; "
         f"{len(land_adj)} edges total."
     )
 
@@ -422,6 +472,7 @@ def main():
                 "state_province_count": len(st["provinces"]),
                 "in_largest_cluster": in_largest,
                 "flag_verify": not in_largest,
+                "state_impassable": st["impassable"],
             }
         )
     rows.sort(key=lambda r: (r["cluster_id"], r["state_id"]))
@@ -439,6 +490,7 @@ def main():
                 "state_province_count",
                 "in_largest_cluster",
                 "flag_verify",
+                "state_impassable",
             ],
         )
         w.writeheader()
@@ -490,9 +542,10 @@ def main():
             csize = cluster_provs([m["state_id"] for m in members])
             print(f"\n  Cluster #{cid} ({len(members)} state(s), {csize} provinces):")
             for r in members:
+                impassable_tag = " [impassable]" if r["state_impassable"] else ""
                 print(
                     f"    - state {r['state_id']:>5}  {r['state_name']:<28} "
-                    f"[{r['relation']}]"
+                    f"[{r['relation']}]{impassable_tag}"
                 )
 
     print(f"\nWrote {csv_path}" + (f" and connectivity_{tag}.json" if args.json else ""))
