@@ -1,0 +1,1675 @@
+{{version|1.13}}
+'''Scopes''' change the currently-selected entity where the [[effects]] should apply or which is checked by the [[triggers]]. Each one must follow the same formatting of <code>scope = { <contents> }</code>.
+
+When a scope is used as for effects, each effect inside of the scope's block is executed. Conversely, when a scope is used as for triggers, it serves as a [[wp:Logical conjunction|logical conjunction]], requiring every trigger in the scope's block to be met for that scope to evaluate as true.
+
+In addition to serving as blocks for effects or triggers, some scopes can also serve as targets of effects or triggers: e.g. <code>transfer_state_to = ROOT</code> or <code>owns_state = 123</code>.<br/> However, only [[#Dual scopes|some dual scopes]] can be used as a target. For scopes that cannot be used as targets, [[#PREV usage|PREV]], [[Variables]], or [[Event targets]] can be used to get around this limitation.
+
+==Types==
+{{Anchor|Scope types}}
+Scopes can be thought of as divided into 3 types by purpose:
+* Trigger scopes - those that can only be used in trigger blocks, failing when put within an effect block.
+* Effect scopes - those that can only be used in effect blocks, failing when put within an trigger block.
+* Dual scopes - those that can be put in both trigger and effect blocks without issues.
+
+It is to be noted that trigger or effect scopes cannot ever be used as targets. That is strictly limited to [[#Dual scopes|some dual scopes]].
+
+Most of the non-dual scopes follow one of these following patterns:
+{| class="wikitable"
+! Prefix !! Description
+|-
+| all_<object> || Trigger scope, evaluated for each contained scope. Returns false when encountering at least one scope that is false, returns true otherwise.
+|-
+| any_<object> || Trigger scope, evaluated for each contained scope. Returns true when encountering at least one scope that is true, returns false otherwise.<br>It have optional <code>count = <int>/<variable></code> functionality which will evaluate true if at least "count" items fulfill the child triggers.
+|-
+| every_<object> || Effect scope, executes the effects on each contained scope [[#Scope limits|that meets the limit]] in order.
+|-
+| random_<object> || Effect scope, executes the effects on a random contained scope [[#Scope limits|that meets the limit]].
+|}
+
+Only some scopes that follow this pattern have equivalents with a different pattern. For example, <code>random_owned_controlled_state</code> exists, but <code>every_owned_controlled_state</code> does not. '''Each of these non-dual scopes cannot select a country that does not exist''', with the exception of [[#every_possible_country|every_possible_country]].
+
+Additionally, scopes can be divided into 6 types by the targets of the scope for which effects are executed or triggers are checked:
+* Country scopes - Executed for countries.
+* State scopes - Executed for states.
+* Character scopes - Executed for characters. Some subsets exist, such as unit leaders and country leaders.
+* Division scopes - Executed for divisions.
+* MIO scopes - Executed for [[military industrial organisation]]s.
+* Contract scopes - Executed for purchase contracts. 
+* Special Project scopes - Executed for special projects. 
+Only [[effects]] or [[triggers]] of the same target type can be used. For example, <code>add_building_construction</code> can only be used in a state scope such as <code>random_owned_controlled_state = { ... }</code>, as you can only construct buildings in states. For countries, [[Effect#add_offsite_building|offsite buildings are used instead]].
+
+== Examples ==
+Example scope with effects: all contained effects are executed for the scope. This adds 10% {{icon|stability|1}} and 20% {{icon|war support|1}} to the {{flag|Soviet Union}}:
+<pre>SOV = {
+    add_stability = 0.1
+    add_war_support = 0.2
+}</pre>
+
+Example scope with triggers: all contained triggers must return true for the scope; otherwise, the scope returns false. This requires the state 123 (South-West England) to be owned by the {{flag|United Kingdom}} and controlled by {{flag|Ireland}}:
+<pre>123 = {
+    is_owned_by = ENG
+    is_controlled_by = IRE
+}</pre>
+
+Example use of PREV as target for non-targetable scope. Since <code>random_country</code> cannot be used as a target, {{nowrap|1=<code>add_to_faction = random_country</code>}} is not valid syntax; instead, [[#PREV usage|PREV]] can be used to get around this limitation. The following example adds random country to ROOT's faction:
+<pre>random_country = {  
+    ROOT = { add_to_faction = PREV }
+}</pre>
+
+== Settings ==
+{{SVersion|1.13}}
+Scopes can have additional settings to narrow down the usage. This may change how many and which targets it's able to select or what the tooltip shows.
+===Limiting===
+{{Anchor|Scope limits|Limits}}
+Non-dual scopes that select unit leaders or [[MIO]]s, such as <code>every_navy_leader</code>, by default only include those that are visible to the player, i.e. those unit leaders whose roles do not have an unfulfilled <code>visible = { ... }</code> and those MIOs that do not have an unfulfilled <code>visible = { ... }</code>. By including <code>include_invisible = yes</code>, this can be changed. This will look as such:
+<pre>random_army_leader = {
+    include_invisible = yes
+    set_nationality = SWE
+}</pre>
+
+Within '''only''' effect scopes, <code>limit = { ... }</code> can be used as a trigger block, evaluated for each possible target contained by the scope. In case of the <code>every_<name></code> pattern, this will ensure that the tooltip will function properly, which may not be the case when using <code>if</code> directly. In case of the <code>random_<name></code> pattern, this will remove the possibility of scopes not meeting the triggers being chosen, limiting the selection. For <code>party_leader</code> in specific, the limit must contain [[Triggers#has_ideology|has_ideology]], while there are no requirements on other scopes. An example of limiting the selection is the following:
+<pre>
+every_neighbor_country = { #Targets every neighbor country
+    limit = {
+        num_of_military_factories > 5 #Limit the scope to neighbor countries with more than 5 (at least 6) military factories
+    }
+    give_military_access = ROOT #Neighbor countries with more than 5 military factories give military access to the ROOT country
+}
+</pre>
+In case of multiple triggers, <code>limit</code> acts like an <code>AND</code> block, requiring each one to be true. To reiterate, '''this cannot be used within trigger or dual scopes''', only in effect scopes.
+
+For scopes of the <code>every_</code> type, an additional setting for limiting the selection is <code>random_select_amount</code>. In particular, it takes an integer and limits the maximum amount of chosen scopes to that number, picking a random sub-set if exceeded. It is used as such:
+<pre>every_country = {
+    random_select_amount = 3 # Selects 3 random countries
+    country_event = lottery_win.0
+}</pre>
+
+=== Tooltip ===
+By default, using a scope of either of the <code>any_</code>, <code>all_</code>, and <code>every_</code> types will show a title specific to that scope in the tooltip, such as <code>Every country:</code> or <code>All neighbor states:</code>. If scope limits are used, then this changes to the list of scopes that fulfill the limit, such as <code>Corsica, Rome, Sardinia:</code>. For countries, the order in which [[Country creation#Country tags|country tags are created]] is used in ordering; for states, the state ID is used. If the tooltip differs depending on the scope where it's executed, such as with if statements, then only the first-selected scope is used in the evaluation.
+
+By using <code>tooltip = loc_key</code> within any non-dual scope, including of the <code>random_</code> type, the tooltip shown to the player can be changed towards the value of the targeted [[localisation]] key in the currently enabled language. This will look like the following:
+<pre>any_country = {
+    hidden_trigger = {
+        has_opinion = { target = PREV value > 50 } # Serves as a "limit" hidden from the player.
+    }
+    tooltip = any_friendly_country_tt # Replaces "Any country" with the localisation key
+    has_war_with = ITA
+}</pre>
+The localisation key will be defined as such in any localisation file:
+<syntaxhighlight lang="yaml">l_english:
+ any_friendly_country_tt: "Any friendly country"</syntaxhighlight>
+This will appear in the tooltip as such:
+{| class="eu4box-inline" style="padding: 1px;"
+|-
+| {{icon|yes}} Any friendly country:
+: Is at war with {{flag|Italy}}.
+|}
+
+In tooltips of the <code>every_</code> type where scope limits are used, by default the tooltip unites it into a single scope, such as <code>Germany, United Kingdom, Soviet Union:</code>. By using <code>display_individual_scopes = yes</code>, this will make each selected scope appear in the tooltip separately. For example:
+<pre>every_neighbor_country = {
+    limit = {
+        OR = { has_government = communism has_government = fascism }
+    }
+    display_individual_scopes = yes
+    if = {
+        limit = {
+            has_government = fascism
+        }
+        add_war_support = -0.1
+    }
+    else = { add_stability = -0.1 }
+}</pre>
+Without displaying individual scopes, this will be shown as one effect block, such as the following:
+{| class="eu4box-inline" style="padding: 1px;"
+|-
+| {{Flag|Germany}}, {{Flag|Soviet Union}}:
+: Gain Base War Support: {{red|-10%}}.
+|}
+By the nature of tooltips, the if statements for the first country are evaluated and the same tooltip is shown for both countries. This falsely implies that the Soviet Union will have 10% {{icon|war support|1}} removed. However, adding <code>display_individual_scopes = yes</code> changes it to the following:
+{| class="eu4box-inline" style="padding: 1px;"
+|-
+| {{Flag|Germany}}:
+: Gain Base War Support: {{red|-10%}}.<br/>
+{{Flag|Soviet Union}}:
+: Gain Base Stability: {{red|-10%}}.
+|}
+===Priority===
+{{Anchor|Scope priority}}
+Within effect scopes of the <code>random_</code> type, if it is aimed at states, it is possible to prioritize a certain state if possible, by using <code>prioritize</code> as such:
+<pre>random_owned_controlled_state = {
+    prioritize = { 123 321 }
+    limit = {
+        is_core_of = PREV
+    }
+    <...>
+}</pre> In this case, the limit will first be evaluated for states 123 and 321. Only if neither of the states 123 or 321 meets the conditions of being owned, controlled, and cored by the country will the random_owned_controlled_state scope be able to select a state that isn't 123 or 321. States 123 and 321, in this case, have the same priority: if both have conditions fulfilled, which one will be picked is random. This only applies at scopes of the <code>random_</code> type which target states, this cannot be done with countries or characters.
+
+==Dual scopes==
+The following scopes can be used either as effect or trigger scopes; some can also be used as the right side of some effects and triggers as a target. If usage as a target is possible, it's marked within the table.
+
+Several dual scopes may have a scope that varies depending on where it's used, such as variables, which can be set to anything.
+
+{| class="wikitable sortable mw-collapsible" style="display: inline-block; padding: 5px" width="100%"
+|+ style="white-space:nowrap;" | Dual scopes:<br/>
+! width="5%" | Name
+! width="10%" | Usage
+! width="10%" | Target type
+! width="23%" | Example
+! width="37%" | Description
+! width="5%" | Usable as target
+! width="5%" | Version Added
+|-id="TAG"
+|TAG
+|Always usable
+|Country scope
+|<code>SOV = { country_event = my_event.1 }</code>
+|The country defined by the tag or tag alias. Tag aliases are defined in {{path|common/country_tag_aliases}}, as a way to refer to a specific country (such as a side in a civil war) in addition to its actual tag. If the country with the exact tag doesn't exist, but a dynamic country originating from the specified tag does, the scope will refer to the dynamic country.
+|✓
+|1.0
+|-id="state_id"
+|<state_id>
+|Always usable
+|State scope
+|<code>123 = { transfer_state_to = SCO }</code>
+|The state defined by this id.
+|✓
+|1.0
+|-id="character"
+|<character>
+|not within Character scope
+|Character scope
+|<code>ENG_theodore_makhno = { set_nationality = UKR }</code>
+|On game versions prior to 1.12.8, the character must be already recruited by the country this is scoped from.
+|✓
+|1.11
+|-id="mio"
+|mio:<MIO>
+|Within country scope only
+|MIO scope
+|<code>mio:AST_cockatoo_doe_organization = { &hellip; }</code>
+|The MIO identified by that ID as defined within the {{path|common/military_industrial_organization/organizations/*.txt}} file.
+|✓
+|1.13
+|-"sp"
+|sp:<special_project>
+|Within country scope only
+|Special project scope
+|<code>sp:sp_land_flamethrower_tank = { &hellip; }</code>
+|The special project identified by that ID as defined within the {{path|common/special_projects/projects/*.txt}} file.
+|✓
+|1.15
+|-id="ROOT"
+|ROOT
+|Always usable
+|Depends on usage
+|<pre>
+ENG = {
+    FRA = {
+        GER = {
+            declare_war_on = {
+                target = ROOT
+                type = annex_everything
+            }
+        }
+    }
+} #GER declares war on ENG (if there is no scope before ENG)
+</pre>
+|Targets the root node of the block, an inherent property of each block. Most commonly, this is the default scope: for example, ROOT [[National focus modding|within a national focus]] will always refer to the country doing the focus and ROOT [[Event modding|within a event]] will always refer to the country getting the event. However, some blocks do distinguish between the default scope and ROOT, such as [[Scripted GUI modding|certain scripted GUI contexts]] or [[On actions#La_R.C3.A9sistance|certain on actions]]. If a block doesn't have ROOT defined (such as [[On actions#on_startup|on_startup in on actions]]), then it is impossible to use it.
+|✓
+|1.0
+|-id="THIS"
+|THIS
+|Always usable
+|Depends on usage
+|<pre>set_temp_variable = { target_country = THIS }</pre>
+|Targets the current scope where it's used. For example, when used in [[#every_state|every_state]], it will refer to the state that's currently being evaluated. Primarily useful for [[variables]] (as in the example, where omitting it wouldn't work) or for [[Localisation#Namespaces|built-in localisation commands]], where some scope must be specified. More rarely, this may help with scope manipulation when using [[#PREV|PREV]]. Since omitting it makes no difference in how the code gets interpreted, there is little to no usage outside of these cases.
+|✓
+|1.0
+|-id="PREV"
+|PREV
+|Always usable
+|Depends on usage
+|<pre>
+FRA = {
+    random_country = {
+        GER = {
+            declare_war_on = {
+                target = PREV
+                type = annex_everything
+            }
+        }
+    }
+} #Germany declares war on random_country
+</pre>
+|Targets the scope that the current scope is contained in. Can have additional applications where the assumed default scope differs from the ROOT, such as in state events or some on_actions. Can be chained indefinitely as PREV.PREV. '''Commonly results in broken-looking tooltips''': what's shown to the player doesn't always correlate with reality.<br/>
+See also: [[Scopes#PREV usage|PREV usage]].
+|✓
+|1.0
+|-id="FROM"
+|FROM
+|Always usable
+|Depends on usage
+|<pre>
+declare_war_on = {
+    target = FROM
+    type = annex_everything
+}
+
+FROM = {
+    load_oob = defend_ourselves
+}
+</pre>
+|Can be chained indefinitely as FROM.FROM. Used to target various hardcoded scopes inherent to the block, often a secondary scope in addition to ROOT. For example:<br/>
+In [[event modding|events]], this refers to the country that sent the event (i.e. if the event was fired [[Event modding#Effect|using an effect]], then it's the ROOT scope where it was fired).<br/>
+In [[decision modding#targeted decisions|targeted decisions]] or [[Conditions#Scripted triggers|diplomacy scripted triggers]], this refers to the scope that is targeted.<br/>
+|✓
+|1.0
+|-id="overlord"
+|overlord
+|Within country scope only
+|Country scope
+|<code>overlord = { &hellip; }</code>
+|The overlord of the country if it is a subject. [[Scopes#Invalid event target|Subject to the 'invalid event target' error.]]
+|X
+|1.3
+|-id="faction_leader"
+|faction_leader
+|Within country scope only
+|Country scope
+|<code>faction_leader = { add_to_faction = FROM }</code>
+|Faction leader of the faction the country is a part of. [[Scopes#Invalid event target|Subject to the 'invalid event target' error.]]
+|X
+|1.10.1
+|-id="owner"
+|owner
+|Within state, character, or combatant scope only
+|Country scope
+|<code>owner = { add_ideas = owns_this_state }</code>
+|In state scope, the country that owns the state. In {{hover|Used in triggers within abilities, combat tactics, and unit leader traits.|combatant scope}}, the country that owns the divisions. In character scope, the country that has recruited the character. [[Scopes#Invalid event target|Subject to the 'invalid event target' error]] when used for a state.
+|X
+|1.0
+|-id="controller"
+|controller
+|Within state scope only
+|Country scope
+|<pre>controller = { 
+    ROOT = {
+        create_wargoal = {
+            target = PREV
+            type = take_state_focus
+            generator = { 123 }
+        }
+    }
+}</pre>
+|The controller of the current state. [[Scopes#Invalid event target|Subject to the 'invalid event target' error.]]
+|X
+|1.0
+|-id="capital_scope"
+|capital_scope
+|Within country scope only
+|State scope
+|<code>capital_scope = { &hellip; }</code>
+|The state where the capital of the current country is located in. [[Scopes#Invalid event target|Subject to the 'invalid event target' error]] in rare cases.
+|X
+|1.0
+|-id="event_target"
+|event_target:<event_target_key>
+|Always usable
+|Depends on usage
+|<code>event_target:my_event_target = { &hellip; }</code>
+|Saved [[Data structures#Event targets|event target or global event target]], with no space after the colon. [[Scopes#Invalid event target|Subject to the 'invalid event target' error.]]
+|✓
+|1.0
+|-id="var"
+|var:<variable>
+|Always usable
+|Depends on usage
+|<code>var:my_variable = { &hellip; }</code><br><code>add_to_faction = my_variable</code> or <br><code>add_to_faction = var:my_variable</code>
+|[[Variable]] set to a scope.<br/>
+When used as a target rather than a scope, the <code>var:</code> can be omitted in most cases.
+|✓
+|1.5
+|}
+<noinclude>
+
+=== Invalid event target ===
+{{See also|Event targets}}
+In regards to some dual scopes, a possible logged error to get while using them is "Invalid event target", as in <code>common/national_focus/generic.txt:690: controller: invalid event target: controller</code>, while the scope being used is not necessarily an event target.<br/>
+This refers to the scope not having any defined target in the context that it is used, i.e. it is impossible to select any single target when it is used. In case of <code>controller = { ... }</code> as in the example, this means that the scope is checked or executed in a state that isn't controlled by any country. Such states are rather unstable and can cause crashes easily (such as if evaluated for an air mission by AI or if doing almost any effect on them), so if this happens for <code>controller</code> or <code>owner</code>, then this must be fixed only by making sure that every state has an owner or controller.
+
+In practice, this gets skipped over entirely when evaluating the effects or triggers: none of the effects would be executed; as a trigger it'll not come up as either true or false. However, since this can be checked every tick, leaving it as is can result in cluttering the error log. To avoid this, it's possible to use the if statement in [[Effect#If statements|effects]] or [[Triggers#if|triggers]] in such a manner that the dual scope would only be checked if the conditions for it existing are fulfilled, such as by checking that the country is indeed a subject before checking the overlord. An example of that being done is as such:
+<pre>if = {
+    limit = {
+        is_subject = yes
+    }
+    overlord = {
+        country_event = example.0
+    }
+}</pre>
+While this has identical effects regardless of whether the country is independent or is a subject, this doesn't access the <code>overlord</code> scope for an independent country.</noinclude>
+
+==Trigger scopes==
+{{SVersion|1.15}}
+These can only be used as [[triggers]]; trying to use them as [[effects]] will result in nothing happening.
+{| class="wikitable sortable mw-collapsible" style="display: inline-block; padding: 5px" width="100%"
+|+ style="white-space:nowrap;" | Trigger scopes:<br/>
+! width="10%" | Name
+! width="15%" | Usage
+! width="10%" | Target type
+! width="23%" | Example
+! width="37%" | Description
+! width="5%" | Version Added
+|-id="all_country"
+|all_country
+|Always usable
+|Country
+|<code>all_country = { &hellip; }</code>
+|Checks if all countries meet the triggers.
+|1.0
+|-id="any_country"
+|any_country
+|Always usable
+|Country
+|<code>any_country = { &hellip; }</code>
+|Checks if any country meets the triggers.
+|1.0
+|-id="all_other_country"
+|all_other_country
+|Within country scope only
+|Country
+|<code>all_other_country = { &hellip; }</code>
+|Checks if all countries other than the one where this scope is located meet the triggers.
+|1.0
+|-id="any_other_country"
+|any_other_country
+|Within country scope only
+|Country
+|<code>any_other_country = { &hellip; }</code>
+|Checks if any country other than the one where this scope is located meets the triggers.
+|1.0
+|-id="all_country_with_original_tag"
+|all_country_with_original_tag
+|Always usable
+|Country
+|<pre>all_country_with_original_tag = {
+    original_tag_to_check = TAG  #required
+    &hellip;                  #triggers to check
+}</pre>
+|Checks if all countries originating from the specified country, including the dynamic countries created for civil wars and other purposes, meet the triggers. <code>original_tag_to_check = TAG</code> is used to specify the original tag.
+|1.9
+|-id="any_country_with_original_tag"
+|any_country_with_original_tag
+|Always usable
+|Country
+|<pre>any_country_with_original_tag = {
+    original_tag_to_check = TAG  #required
+    &hellip;                  #triggers to check
+}</pre>
+|Checks if any country originating from the specified country, including the dynamic countries created for civil wars and other purposes, meets the triggers. <code>original_tag_to_check = TAG</code> is used to specify the original tag.
+|1.9
+|-id="all_neighbor_country"
+|all_neighbor_country
+|Within country scope only
+|Country
+|<code>all_neighbor_country = { &hellip; }</code>
+|Checks if all countries that border the one where this scope is located meet the triggers.
+|1.0
+|-id="any_neighbor_country"
+|any_neighbor_country
+|Within country scope only
+|Country
+|<code>any_neighbor_country = { &hellip; }</code>
+|Checks if any country that borders the one where this scope is located meets the triggers.
+|1.0
+|-id="any_home_area_neighbor_country"
+|any_home_area_neighbor_country
+|Within country scope only
+|Country
+|<code>any_home_area_neighbor_country = { &hellip; }</code>
+|Checks if any country that borders the one where this scope is located, as well as being in its home area - meaning a direct land connection between the capitals of countries - meets the triggers.
+|1.0
+|-id="all_guaranteed_country"
+|all_guaranteed_country
+|Within country scope only
+|Country
+|<code>all_guaranteed_country = { &hellip; }</code>
+|Checks if all countries that are guaranteed by the one where this scope is located meet the triggers.
+|1.9
+|-id="any_guaranteed_country"
+|any_guaranteed_country
+|Within country scope only
+|Country
+|<code>any_guaranteed_country = { &hellip; }</code>
+|Checks if any country that is guaranteed by the one where this scope is located meets the triggers.
+|1.9
+|-id="all_allied_country"
+|all_allied_country
+|Within country scope only
+|Country
+|<code>all_allied_country = { &hellip; }</code>
+|Checks if all countries that are allied with the one where this scope is located - meaning that they are either a subject of the country, its overlord, or that they share a faction - meet the triggers. Does not include the country itself.
+|1.9
+|-id="any_allied_country"
+|any_allied_country
+|Within country scope only
+|Country
+|<code>any_allied_country = { &hellip; }</code>
+|Checks if any country that is allied with the one where this scope is located - meaning that they are either a subject of the country, its overlord, or that they share a faction - meets the triggers. Does not include the country itself.
+|1.9
+|-id="all_occupied_country"
+|all_occupied_country
+|Within country scope only
+|Country
+|<code>all_occupied_country = { &hellip; }</code>
+|Checks if all countries that are occupied by the one where this scope is located - meaning that the occupied country has core states controlled by the occupier country - meet the triggers.
+|1.9
+|-id="any_occupied_country"
+|any_occupied_country
+|Within country scope only
+|Country
+|<code>any_occupied_country = { &hellip; }</code>
+|Checks if any country that is occupied by the one where this scope is located - meaning that the occupied country has core states controlled by the occupier country - meets the triggers.
+|1.9
+|-id="all_enemy_country"
+|all_enemy_country
+|Within country scope only
+|Country
+|<code>all_enemy_country = { &hellip; }</code>
+|Checks if all countries that are at war with the one where this scope is located meet the triggers.
+|1.9
+|-id="any_enemy_country"
+|any_enemy_country
+|Within country scope only
+|Country
+|<code>any_enemy_country = { &hellip; }</code>
+|Checks if any country that are at war with the one where this scope is located meets the triggers.
+|1.9
+|-id="all_subject_countries"
+|all_subject_countries
+|Within country scope only
+|Country
+|<code>all_subject_countries = { &hellip; }</code>
+|Checks if all countries that are a subject of the one where this scope is located meet the triggers. Notice the plural spelling in the scope.
+|1.11
+|-id="any_subject_country"
+|any_subject_country
+|Within country scope only
+|Country
+|<code>any_subject_country = { &hellip; }</code>
+|Checks if any country that is a subject of the one where this scope is located meets the triggers.
+|1.11
+|-id="any_country_with_core"
+|any_country_with_core
+|Within state scope only
+|Country
+|<code>any_country_with_core = { &hellip; }</code>
+|Checks if any country that has the current scope as a core state meets the triggers. '''Does not have an equivalent for other effect/trigger scope types.'''
+|1.12
+|-id="all_country_of"
+|all_country_of
+|Alway usable
+|Country
+|<pre>
+all_country_of = {
+    tooltip = my_loc # Optional bindable localization
+    target = { SWE NOR FIN DEN ICE }
+    has_defensive_war = yes
+}
+
+all_country_of = {
+    tooltip = my_loc # Optional bindable localization
+    target = constant:country_groups:nordics
+    has_defensive_war = yes
+}
+</pre>
+|Checks if all of the provided countries fulfill the specified triggers. The `target` supports script constants and `tooltip` supports bindable localization.
+|1.17
+|-id="any_country_of"
+|any_country_of
+|Alway usable
+|Country
+|<pre>
+any_country_of = {
+    tooltip = my_loc # Optional bindable localization
+    target = { SWE NOR FIN DEN ICE }
+    has_defensive_war = yes
+}
+
+any_country_of = {
+    tooltip = my_loc # Optional bindable localization
+    target = constant:country_groups:nordics
+    has_defensive_war = yes
+}
+</pre>
+|Checks if any of the provided countries fulfills the specified triggers. The `target` supports script constants and `tooltip` supports bindable localization.
+|1.17
+|-id="all_state"
+|all_state
+|Always usable
+|State
+|<code>all_state = { &hellip; }</code>
+|Check if all states meet the triggers.
+|1.0
+|-id="any_state"
+|any_state
+|Always usable
+|State
+|<code>any_state = { &hellip; }</code>
+|Check if any state meets the triggers.
+|1.0
+|-id="any_state_in"
+|any_state_in
+|Always usable 
+|State
+|<pre>any_state_in = {
+  array = array_of_states  #required 
+    &hellip;                  #triggers to check
+}</pre>
+Requires on of the following fields<pre>
+array = <array_of_states>
+continent = <continent_name>
+ai_area = <ai_area_name>
+strategic_region = <strategic_region_number></pre>
+|Check if any state in the given category meets the trigger.
+|1.15
+|-id="any_state_of"
+|any_state_of
+|Alway usable
+|State
+|<pre>
+any_state_of = {
+    tooltip = my_loc # Optional bindable localization
+    target = { 1 42 1992 }
+    controller = {
+        has_defensive_war = yes
+    }
+}
+
+any_state_of = {
+    tooltip = my_loc # Optional bindable localization
+    target = constant:country_groups:nordics
+    controller = {
+        has_defensive_war = yes
+    }
+}
+</pre>
+|Checks if any of the provided states fulfills the specified triggers. The `target` supports script constants and `tooltip` supports bindable localization.
+|1.17
+|-id="all_neighbor_state"
+|all_neighbor_state
+|Within state scope only
+|State
+|<code>all_neighbor_state = { &hellip; }</code>
+|Check if all states that are neighbour to the one where this scope is located meet the triggers.
+|1.0
+|-id="any_neighbor_state"
+|any_neighbor_state
+|Within state scope only
+|State
+|<code>any_neighbor_state = { &hellip; }</code>
+|Check if any state that is neighbour to the one where this scope is located meets the triggers.
+|1.0
+|-id="all_owned_state"
+|all_owned_state
+|Within country scope only
+|State
+|<code>all_owned_state = { &hellip; }</code>
+|Check if all states that are owned by the country where this scope is located meet the triggers.
+|1.0
+|-id="any_owned_state"
+|any_owned_state
+|Within country scope only
+|State
+|<code>any_owned_state = { &hellip; }</code>
+|Check if any state that is owned by the country where this scope is located meets the triggers.
+|1.0
+|-id="all_core_state"
+|all_core_state
+|Within country scope only
+|State
+|<code>all_core_state = { &hellip; }</code>
+|Check if any state that is cored by the country where this scope is located meets the triggers.
+|1.11
+|-id="any_core_state"
+|any_core_state
+|Within country scope only
+|State
+|<code>any_core_state = { &hellip; }</code>
+|Check if all states that are cored by the country where this scope is located meet the triggers.
+|1.11
+|-id="all_controlled_state"
+|all_controlled_state
+|Within country scope only
+|State
+|<code>all_controlled_state = { &hellip; }</code>
+|Check if all states that are controlled by the country where this scope is located meet the triggers.
+|1.9
+|-id="any_controlled_state"
+|any_controlled_state
+|Within country scope only
+|State
+|<code>any_controlled_state = { &hellip; }</code>
+|Check if any state that is controlled by the country where this scope is located meets the triggers.
+|1.9
+|-id="all_unit_leader"
+|all_unit_leader
+|Within country scope only
+|Unit Leader
+|<code>all_unit_leader = { &hellip; }</code>
+|Checks if all unit leaders (corps commanders, field marshals, admirals) that are employed by the country where this scope is located meet the triggers.
+|1.5
+|-id="any_unit_leader"
+|any_unit_leader
+|Within country scope only
+|Unit Leader
+|<code>any_unit_leader = { &hellip; }</code>
+|Checks if any unit leader (corps commander, field marshal, admiral) that is employed by the country where this scope is located meets the triggers.
+|1.5
+|-id="all_army_leader"
+|all_army_leader
+|Within country scope only
+|Unit Leader
+|<code>all_army_leader = { &hellip; }</code>
+|Checks if all army leaders that are employed by the country where this scope is located meet the triggers.
+|1.5
+|-id="any_army_leader"
+|any_army_leader
+|Within country scope only
+|Unit Leader
+|<code>any_army_leader = { &hellip; }</code>
+|Checks if any army leader that is employed by the country where this scope is located meets the triggers.
+|1.5
+|-id="all_navy_leader"
+|all_navy_leader
+|Within country scope only
+|Unit Leader
+|<code>all_navy_leader = { &hellip; }</code>
+|Checks if all navy leaders that are employed by the country where this scope is located meet the triggers.
+|1.5
+|-id="any_navy_leader"
+|any_navy_leader
+|Within country scope only
+|Unit Leader
+|<code>any_navy_leader = { &hellip; }</code>
+|Checks if any navy leader that is employed by the country where this scope is located meets the triggers.
+|1.5
+|-id="all_operative_leader"
+|all_operative_leader
+|Within country scope or operations only
+|Operative
+|<code>all_operative_leader = { &hellip; }</code>
+|Checks if all operatives that are employed by the country where this scope is located meet the triggers.
+|1.9
+|-id="any_operative_leader"
+|any_operative_leader
+|Within country scope or operations only
+|Operative
+|<code>any_operative_leader = { &hellip; }</code>
+|Checks if any operative that is employed by the country where this scope is located meets the triggers.
+|1.9
+|-id="all_character"
+|all_character
+|Within country scope only
+|Character
+|<code>all_character = { &hellip; }</code>
+|Checks if all characters that are recruited by the country where this scope is located meet the triggers.
+|1.11
+|-id="any_character"
+|any_character
+|Within country scope only
+|Character
+|<code>any_character = { &hellip; }</code>
+|Checks if any character that is recruited by the country where this scope is located meets the triggers.
+|1.11
+|-id="any_country_division"
+|any_country_division
+|Within country scope only
+|Division
+|<code>any_country_division = { &hellip; }</code>
+|Checks if any division owned by the current country meets the triggers.
+|1.12
+|-id="any_state_division"
+|any_state_division
+|Within state scope only
+|Division
+|<code>any_state_division = { &hellip; }</code>
+|Checks if any division within the current state meets the triggers.
+|1.12
+|-id="all_military_industrial_organization"
+|all_military_industrial_organization
+|Within country scope only
+|MIO
+|<code>all_military_industrial_organization = { &hellip; }</code>
+|Checks if all MIOs within the current country meet the conditions.
+|1.13
+|-id="any_military_industrial_organization"
+|any_military_industrial_organization
+|Within country scope only
+|MIO
+|<code>any_military_industrial_organization = { &hellip; }</code>
+|Checks if any MIO within the current country meets the conditions.
+|1.13
+|-id="all_purchase_contract"
+|all_purchase_contract
+|Within country scope only
+|Purchase contract
+|<code>all_purchase_contract = { &hellip; }</code>
+|Checks if all purchase contracts within the current country meet the conditions.
+|1.13
+|-id="any_purchase_contract"
+|any_purchase_contract
+|Within country scope only
+|Purchase contract
+|<code>any_purchase_contract = { &hellip; }</code>
+|Checks if any purchase contract within the current country meets the conditions.
+|1.13
+|-id="all_scientists"
+|all_scientists
+|Within country scope only
+|Character
+|<code>all_scientistst = { &hellip; }</code>
+|Checks if all scientists of the Country in scope matches the triggers.
+|1.15
+|-id="any_scientist"
+|any_scientist
+|Within country scope only
+|Character
+|<code>any_scientist = { &hellip; }</code>
+|Checks if at least one active scientist of the Country in scope matches the triggers.
+|1.15
+|-id="all_active_scientist"
+|all_active_scientist
+|Within country scope only
+|Character
+|<code>all_active_scientist = { &hellip; }</code>
+|Checks if all active scientists of the Country in scope matches the triggers.
+|1.15
+|-id="any_active_scientist"
+|any_active_scientist
+|Within country scope only
+|Character
+|<code>any_active_scientist = { &hellip; }</code>
+|Checks if at least one active scientist of the Country in scope matches the triggers.
+|1.15
+|}
+
+==Effect scopes==
+{{SVersion|1.17}}
+These can only be used as [[effects]]; trying to use them as [[triggers]] will result in nothing happening.
+
+{| class="wikitable sortable mw-collapsible" style="display: inline-block; padding: 5px" width="100%"
+|+ style="white-space:nowrap;" | Effect scopes:<br/>
+! width="10%" | Name
+! width="15%" | Usage
+! width="10%" | Target type
+! width="23%" | Example
+! width="37%" | Description
+! width="5%" | Version Added
+|-id="every_possible_country"
+|every_possible_country
+|Always usable
+|Country
+|<code>every_possible_country = { ... }</code>
+|Executes children effects on every country that meets the limit, including those that do not exist.
+|1.11
+|-id="every_country"
+|every_country
+|Always usable
+|Country
+|<code>every_country = { &hellip; }</code>
+|Executes contained effects on every country that meets the limit.
+|1.0
+|-id="random_country"
+|random_country
+|Always usable
+|Country
+|<code>random_country = { &hellip; }</code>
+|Executes contained effects on a random country that meets the limit.
+|1.0
+|-id="every_other_country"
+|every_other_country
+|Within country scope only
+|Country
+|<code>every_other_country = { &hellip; }</code>
+|Executes contained effects on every country that meets the limit and is not the same country as the one this is contained in.
+|1.0
+|-id="random_other_country"
+|random_other_country
+|Within country scope only
+|Country
+|<code>random_other_country = { &hellip; }</code>
+|Executes contained effects on a random country that meets the limit and is not the same country as the one this is contained in.
+|1.0
+|-id="every_country_with_original_tag"
+|every_country_with_original_tag
+|Always usable
+|Country
+|<pre>every_country_with_original_tag = {
+    original_tag_to_check = TAG  #required
+    &hellip;                  #effects to run
+}</pre>
+|Executes contained effects on every country that meets the limit and has the specified original tag.
+|1.9
+|-id="random_country_with_original_tag"
+|random_country_with_original_tag
+|Always usable
+|Country
+|<pre>random_country_with_original_tag = {
+    original_tag_to_check = TAG  #required
+    &hellip;                  #effects to run
+}</pre>
+|Executes contained effects on a random country that meets the limit and has the specified original tag.
+|-id="every_neighbor_country"
+|every_neighbor_country
+|Within country scope only
+|Country
+|<code>every_neighbor_country = { &hellip; }</code>
+|Executes contained effects on every country that meets the limit and borders the country this is contained in.
+|1.0
+|-id="random_neighbor_country"
+|random_neighbor_country
+|Within country scope only
+|Country
+|<code>random_neighbor_country = { &hellip; }</code>
+|Executes contained effects on a random country that meets the limit and borders the country this is contained in.
+|1.0
+|-id="every_occupied_country"
+|every_occupied_country
+|Within country scope only
+|Country
+|<code>every_occupied_country = { &hellip; }</code>
+|Executes contained effects on every country that meets the limit and has any core states controlled by the country this is contained in.
+|1.9
+|-id="random_occupied_country"
+|random_occupied_country
+|Within country scope only
+|Country
+|<code>random_occupied_country = { &hellip; }</code>
+|Executes contained effects on a random country that meets the limit and has any core states controlled by the country this is contained in.
+|1.9
+|-id="every_allied_country"
+|every_allied_country
+|Within country scope only
+|Country
+|<code>every_allied_country = { &hellip; }</code>
+|Executes children effects on every Allied Country different from the one in scope (or `random_select_amount` of random country if specified) that fulfills the `limit` trigger.
+|1.15
+|-id="random_allied_country"
+|random_allied_country
+|Within country scope only
+|Country
+|<code>random_allied_country = { &hellip; }</code>
+|Executes children effects on a random Allied Country different from the one in scope that fulfills the `limit` trigger.
+|1.15
+|-id="every_enemy_country"
+|every_enemy_country
+|Within country scope only
+|Country
+|<code>every_enemy_country = { &hellip; }</code>
+|Executes contained effects on every country that meets the limit and is at war with the country this is contained in.
+|1.0
+|-id="random_enemy_country"
+|random_enemy_country
+|Within country scope only
+|Country
+|<code>random_enemy_country = { &hellip; }</code>
+|Executes contained effects on a random country that meets the limit and is at war with the country this is contained in.
+|1.0
+|-id="every_subject_country"
+|every_subject_country
+|Within country scope only
+|Country
+|<code>every_subject_country = { &hellip; }</code>
+|Executes contained effects on every country that meets the limit and is a subject of the country this is contained in.
+|1.11
+|-id="random_subject_country"
+|random_subject_country
+|Within country scope only
+|Country
+|<code>random_subject_country = { &hellip; }</code>
+|Executes contained effects on a random country that meets the limit and is a subject of the country this is contained in.
+|1.11
+|-id="every_faction_member"
+|every_faction_member
+|Within country scope only
+|Country
+|<code>every_faction_member = { &hellip; }</code>
+|Executes children effects on every faction member of the country's faction in scope, if country does not have a faction it will only work on itself.
+|1.17
+|-id="every_state"
+|every_state
+|Always usable
+|State
+|<code>every_state = { &hellip; }</code>
+|Executes contained effects on every state that meets the limit.
+|1.0
+|-id="random_state"
+|random_state
+|Always usable
+|State
+|<pre>random_state = {
+    prioritize = { 123 321 } #optional
+    &hellip;    #effects to run
+}</pre>
+|Executes contained effects on a random state that meets the limit.
+|1.0
+|-id="every_neighbor_state"
+|every_neighbor_state
+|Within state scope only
+|State
+|<code>every_neighbor_state = { &hellip; }</code>
+|Executes contained effects on every state that meets the limit and neighbours the state this is contained in.
+|1.0
+|-id="random_neighbor_state"
+|random_neighbor_state
+|Within state scope only
+|State
+|<code>random_neighbor_state = { &hellip; }</code>
+|Executes contained effects on a random state that meets the limit and neighbours the state this is contained in. Does not support [[#Scope priority|prioritizing]].
+|1.0
+|-id="every_owned_state"
+|every_owned_state
+|Within country scope only
+|State
+|<code>every_owned_state = { &hellip; }</code>
+|Executes contained effects on every state that meets the limit and is owned by the country this is contained in.
+|1.0
+|-id="random_owned_state"
+|random_owned_state
+|Within country scope only
+|State
+|<pre>random_owned_state = {
+    prioritize = { 123 321 } #optional
+    &hellip;    #effects to run
+}</pre>
+|Executes contained effects on a random state that meets the limit and is owned by the country this is contained in.
+|1.0
+|-id="every_core_state"
+|every_core_state
+|Within country scope only
+|State
+|<code>every_core_state = { &hellip; }</code>
+|Executes contained effects on every state that meets the limit and is a core of the country this is contained in.
+|1.11
+|-id="random_core_state"
+|random_core_state
+|Within country scope only
+|State
+|<pre>random_core_state = {
+    prioritize = { 123 321 } #optional
+    &hellip;    #effects to run
+}</pre>
+|Executes contained effects on a random state that meets the limit and is a core of the country this is contained in.
+|1.11
+|-id="every_controlled_state"
+|every_controlled_state
+|Within country scope only
+|State
+|<code>every_controlled_state = { &hellip; }</code>
+|Executes contained effects on every state that meets the limit and is controlled by the country this is contained in.
+|1.9
+|-id="random_controlled_state"
+|random_controlled_state
+|Within country scope only
+|State
+|<pre>random_controlled_state = {
+    prioritize = { 123 321 } #optional
+    &hellip;    #effects to run
+}</pre>
+|Executes contained effects on a random state that meets the limit and is controlled by the country this is contained in.
+|1.9
+|-id="random_owned_controlled_state"
+|random_owned_controlled_state
+|Within country scope only
+|State
+|<pre>random_owned_controlled_state = {
+    prioritize = { 123 321 } #optional
+    &hellip;    #effects to run
+}</pre>
+|Executes contained effects on a random state that meets the limit and is owned and controlled by the country this is contained in.
+|1.3
+|-id="every_unit_leader"
+|every_unit_leader
+|Within country scope only
+|Unit Leader
+|<code>every_unit_leader = { &hellip; }</code>
+|Executes contained effects on every unit leader (corps commanders, field marshals, admirals) that meets the limit and is recruited by the country this is contained in.
+|1.5
+|-id="random_unit_leader"
+|random_unit_leader
+|Within country scope only
+|Unit Leader
+|<code>random_unit_leader = { &hellip; }</code>
+|Executes contained effects on a random unit leader (corps commanders, field marshals, admirals) that meets the limit and is recruited by the country this is contained in.
+|1.5
+|-id="every_army_leader"
+|every_army_leader
+|Within country scope only
+|Unit Leader
+|<code>every_unit_leader = { &hellip; }</code>
+|Executes contained effects on every army leader that meets the limit and is recruited by the country this is contained in.
+|1.5
+|-id="random_army_leader"
+|random_army_leader
+|Within country scope only
+|Unit Leader
+|<code>random_army_leader = { &hellip; }</code>
+|Executes contained effects on a random army leader that meets the limit and is recruited by the country this is contained in.
+|1.5
+|-id="global_every_army_leader"
+|global_every_army_leader
+|Always usable
+|Unit Leader
+|<code>global_every_army_leader = { &hellip; }</code>
+|Executes contained effects on every army leader that meets the limit. Preferable to use every_army_leader unless necessary to use global_every_army_leader.
+|1.5
+|-id="every_navy_leader"
+|every_navy_leader
+|Within country scope only
+|Unit Leader
+|<code>every_navy_leader = { &hellip; }</code>
+|Executes contained effects on every navy leader that meets the limit and is recruited by the country this is contained in.
+|1.5
+|-id="random_navy_leader"
+|random_navy_leader
+|Within country scope only
+|Unit Leader
+|<code>random_navy_leader = { &hellip; }</code>
+|Executes contained effects on a random navy leader that meets the limit and is recruited by the country this is contained in.
+|1.5
+|-id="every_operative "
+|every_operative
+|Within country scope or operations only
+|Operative
+|<code>every_operative = { &hellip; }</code>
+|Executes contained effects on every operative that meets the limit and is recruited by the country this is contained in.
+|1.9
+|-id="random_operative"
+|random_operative
+|Within country scope or operations only
+|Operative
+|<code>random_operative = { &hellip; }</code>
+|Executes contained effects on a random operative that meets the limit and is recruited by the country this is contained in.
+|1.9
+|-id="every_character"
+|every_character
+|Within country scope only
+|Character
+|<code>every_character = { &hellip; }</code>
+|Executes contained effects on every character that meets the limit and is recruited by the country this is contained in.
+|1.11
+|-id="random_character"
+|random_character
+|Within country scope only
+|Character
+|<code>random_character = { &hellip; }</code>
+|Executes contained effects on a random character that meets the limit and is recruited by the country this is contained in.
+|1.11
+|-id="every_country_division"
+|every_country_division
+|Within country scope only
+|Division
+|<code>every_country_division = { &hellip; }</code>
+|Executes contained effects on every division that meets the limit and is owned by the current country.
+|1.12
+|-id="random_country_division"
+|random_country_division
+|Within country scope only
+|Division
+|<code>random_country_division = { &hellip; }</code>
+|Executes contained effects on a random division that meets the limit and is owned by the current country.
+|1.12
+|-id="every_state_division"
+|every_state_division
+|Within state scope only
+|Division
+|<code>every_state_division = { &hellip; }</code>
+|Executes contained effects on every division that meets the limit and is located within the current state.
+|1.12
+|-id="random_state_division"
+|random_state_division
+|Within state scope only
+|Division
+|<code>random_state_division = { &hellip; }</code>
+|Executes contained effects on a random division that meets the limit and is located within the current state.
+|1.12
+|-id="every_military_industrial_organization"
+|every_military_industrial_organization
+|Within country scope only
+|MIO
+|<code>every_military_industrial_organization = { &hellip; }</code>
+|Executes contained effects on every MIO within the current country that meets the limit.
+|1.13
+|-id="random_military_industrial_organization"
+|random_military_industrial_organization
+|Within country scope only
+|MIO
+|<code>random_military_industrial_organization = { &hellip; }</code>
+|Executes contained effects on a random MIO within the current country that meets the limit.
+|1.13
+|-id="every_purchase_contract"
+|every_purchase_contract
+|Within country scope only
+|Purchase contract
+|<code>every_purchase_contract = { &hellip; }</code>
+|Executes contained effects on every purchase contract within the current country that meets the limit.
+|1.13
+|-id="random_purchase_contract"
+|random_purchase_contract
+|Within country scope only
+|Purchase contract
+|<code>random_purchase_contract = { &hellip; }</code>
+|Executes contained effects on a random purchase contract within the current country that meets the limit.
+|1.13
+|-id="every_scientist"
+|every_scientist
+|Within country scope only
+|Character
+|<code>every_scientist = { &hellip; }</code>
+|Executes children effects on every scientist (or "random_select_amount" of random character if specified) of the country in scope, that fulfills the "limit" trigger.
+|1.15
+|-id="random_scientist"
+|random_scientist
+|Within country scope only
+|Character
+|<code>random_scientist = { &hellip; }</code>
+|Executes children effects on random scientists that fulfills the "limit" trigger.
+|1.15
+|-id="every_active_scientist"
+|every_active_scientist
+|Within country scope only
+|Character
+|<code>every_active_scientist = { &hellip; }</code>
+|Executes children effects on every active scientist (or "random_select_amount" of random character if specified) of the country in scope, that fulfills the "limit" trigger.title.
+|1.15
+|-id="random_active_scientist"
+|random_active_scientist
+|Within country scope only
+|Character
+|<code>random_active_scientist = { &hellip; }</code>
+|Executes children effects on random scientists that fulfills the "limit" trigger.
+|1.15
+|-id="party_leader"
+|party_leader
+|Within country scope only
+|Character
+|<pre>party_leader = {
+    limit = {
+        has_ideology = liberalism
+    }
+    set_nationality = BHR
+}</pre>
+|Executes the effects on the party leader with the specified ideology type. Must contain a <code>has_ideology</code> in the limit that refers to a specific ideology type (e.g. Despotic), not a group that contain the type (e.g. Non-Aligned). The selected character must be the leader of a party corresponding to the ideology group.
+|1.11
+|-id="every_collection_element"
+|every_collection_element
+|Always usable
+|Collection/Any
+|<pre>every_collection_element = {
+    input = {
+        input = collection_id # This can be a collection name or an inline definition of a collection
+        limit = {
+            # Trigger - limit effect execution to a subset of elements
+        }
+    }
+    # Effects to be executed
+}</pre>
+|Applies arbitrary effects to all elements of a collection. To learn more about collections, see the documentation in {{path|common/collections}}.
+|1.17
+|}
+
+'''NOTE:''' Some of these scopes may have no countries/states that match the criteria.
+
+=== Effects with scopes ===
+<noinclude>There are the following [[effects]] that also change the currently-selected scope:
+{| class="wikitable sortable mw-collapsible" style="display: inline-block; padding: 5px" width="100%"
+|+ style="white-space:nowrap;" | Effects changing the scope:<br/>
+! width="10%" |Name
+! width="25%" |Parameters
+! width="25%" |Examples
+! width="20%" |Description
+! width="15%" |Notes
+! width="5%"  |Version Added
+|-id="start_civil_war"
+|start_civil_war
+|<code>ideology = <ideology></code><br/>The ideology of the breakaway country.
+<code>ruling_party = <ideology></code><br/>The ruling party of the '''original, player-led''' country. Optional.<br/>
+<code>size = <float></code><br/>The size of the breakaway country and the fraction of the original stockpile and military units it will receive by default. Optional, defaults to 0.5.<br/>
+<code>army_ratio = <float></code><br/>The size of the land army that the breakaway country gets. Optional, defaults to being the same as size.<br/>
+<code>navy_ratio = <float></code><br/>The size of the naval forces that the breakaway country gets. Optional, defaults to being the same as size.<br/>
+<code>air_ratio = <float></code><br/>The size of the airforce that the breakaway country gets. Optional, defaults to being the same as size.<br/>
+<code>capital = <state></code><br/>The capital state of the breakaway country. Optional.<br/>
+<code>states = { <state> }</code><br/>The states included in the breakway country. Optional, defaults to random states based off size. <code>all</code> will result in all states that meet the filter going to the breakaway.<br/>
+<code>states_filter = { <triggers> }</code><br/>A trigger block checked for the state that must be met to be transferred to the breakaway. Optional.<br/>
+<code>keep_unit_leaders = { <unit leader id> }</code><br/>List of unit leaders to be kept by their legacy_id. Optional.<br/>
+<code>keep_unit_leaders_trigger = { <triggers> }</code><br/>Trigger block checked for every unit leader that forces them to be kept if they meet the triggers. Optional.<br/>
+<code>keep_political_leader = <bool></code><br/>Controls if the promoted party leader (i.e. the one that'd take power if the country were to be switched to that ideology group) of the revolting ideology group will be kept by the country or join the revolt, yes resulting in the former. Optional, defaults to false.<br/>
+<code>keep_political_party_members = <bool></code><br>Controls if non-promoted party leaders of the revolting ideology group will be kept by the country or join the revolt, yes resulting in the former. Optional, defaults to false.<br/>
+<code>keep_all_characters = yes</code><br/>If true, the revolter will have no characters from the original country transferred to them. Optional, defaults to false.<br/>
+<code><effects></code><br/>An effect block executed for the breakaway country.
+|<pre>start_civil_war = {
+    ruling_party = communism
+    # Original country's ideology changes to communism
+    ideology = ROOT
+    # Breakaway gets old ideology of ROOT
+    size = 0.8
+    capital = 282
+    states = {
+        282 533 536 555 529 530 528
+    }
+    keep_unit_leaders = {
+        750 751 752
+    }
+    keep_political_leader = yes
+    keep_political_party_members = yes
+}
+</pre>
+<pre>start_civil_war = {
+    ideology = democratic
+    size = 0.1
+    states = all
+    states_filter = {
+        is_on_continent = europe
+        is_capital = no
+    }
+    set_country_flag = TAG_my_country_tag_alias_trigger
+    # Sets a country flag that gets used in a country tag alias.
+}</pre>
+([[Country tag aliases|See country tag aliases]])
+<pre>start_civil_war = {
+    ideology = neutrality
+    size = 0.1
+    army_ratio = 0.5
+    navy_ratio = 0
+    air_ratio = 1
+    keep_unit_leaders_trigger = {
+        has_trait = my_trait_name
+    }
+    keep_all_characters = yes
+    PREV = {  # Original country
+        TAG_airforce_leader = { # Character
+            set_nationality = PREV.PREV
+            # Transfers to breakaway
+        }
+    }
+    promote_character = TAG_airforce_leader
+}</pre>
+([[Scopes#PREV usage|See usage for PREV and PREV.PREV]])
+|'''Within country scope:''' starts a civil war for the current scope with the specified parameters, changing the scope to the dynamic country.
+|<code>states = all</code> would include every single state controlled by the country. '''If the country's current capital state is set as one of the states that the revolt can gain, it won't fire'''. [[#set_capital|set_capital]] can be used to change the capital beforehand, with [[On_actions#on_civil_war_end]] being used to set it back to the default after the civil war ends.
+|1.0
+|-id="create_dynamic_country"
+|create_dynamic_country
+|<code>original_tag = <tag></code><br/>The original tag to be used by the country.<br/>
+<code>copy_tag = <tag></code><br/>If specified, copies stuff from this tag rather than the original tag.<br/>
+<code><effects></code><br/>Effects that will be executed on the new dynamic country.<br/>
+|<pre>
+create_dynamic_country = {
+    original_tag = POL
+    copy_tag = SOV
+    add_political_power = 100
+    transfer_state = 123
+}
+</pre>
+|'''Within country scope:''' Creates a new dynamic country, akin to ones used in civil wars, adding every core of the original tag as core and changing the scope to the dynamic country.
+|The [[Effect#reserve_dynamic_country|reserve_dynamic_country]] effect can be used if the dynamic country does not yet exist in order to ensure that it does not get overwritten by other creations of dynamic countries.
+|1.9
+|}
+</noinclude>
+<includeonly>Effects that change the scope include the following:
+* [[Effect#start_civil_war|start_civil_war]], which changes it to the rebelling dynamic country.
+* [[Effect#create_dynamic_country|create_dynamic_country]], which changes it to the newly-created dynamic country.</includeonly>
+
+== Array scopes ==
+{{See also|Arrays}}
+[[Arrays]] can be used to create a generic selection of scopes meeting the criteria. These scopes exist for checking conditions on elements of an array or executing effects on them:
+{| class="wikitable sortable mw-collapsible" style="display: inline-block; padding: 5px" width="100%"
+|+ style="white-space:nowrap;" | Array-related scopes:<br/>
+! width="10%" |Name
+! width="5%"  |Type
+! width="25%" |Parameters
+! width="25%" |Examples
+! width="20%" |Description
+! width="15%" |Notes
+|-id="any_of_scopes"
+|any_of_scopes
+|Trigger
+|<code>array = <array></code><br/>The array to check.<br/>
+<code>tooltip = <localisation key></code><br/>The localisation key used for the trigger.<br/>
+<code><triggers></code><br/> An AND trigger block.
+|<pre>any_of_scopes = {
+    array = global.majors
+    tooltip = has_more_states_than_any_other_major_tt
+    NOT = { tag = PREV }
+    check_variable = { num_owned_controlled_states > PREV.num_owned_controlled_states }
+}</pre>
+|Checks if any value within the array fulfills the triggers, halting and returning true if that's the case, scoping into each element in the array.
+|Appending <code>_NOT</code> to the tooltip's key (such as has_more_states_than_any_other_major_tt_NOT in the example) results in the localisation key used if this any_of_scopes is put inside of <code>NOT = { ... }</code>.
+|-id="all_of_scopes"
+|all_of_scopes
+|Trigger
+|<code>array = <array></code><br/>The array to check.<br/>
+<code>tooltip = <localisation key></code><br/>The localisation key used for the trigger.<br/>
+<code><triggers></code><br/> An AND trigger block.
+|<pre>all_of_scopes = {
+    array = global.majors
+    tooltip = has_more_states_than_every_other_major_tt
+    OR = { 
+        tag = PREV
+        check_variable = { num_owned_controlled_states < PREV.num_owned_controlled_states }
+    }
+}</pre>
+|Checks if every value within the array fulfills the triggers, halting and returning false if any one doesn't, scoping into each element in the array.
+|Appending <code>_NOT</code> to the tooltip's key (such as has_more_states_than_every_other_major_tt_NOT in the example) results in the localisation key used if this any_of_scopes is put inside of <code>NOT = { ... }</code>.
+|-id="for_each_scope_loop"
+|for_each_scope_loop
+|Effect
+|<code>array = <array></code><br/>The array to check.<br/>
+<code>break = <variable></code><br/>The temporary variable that can be set to be not 0 to instantly break the loop.<br/>
+<code><effects></code><br/> An effect block.
+|<pre>for_each_scope_loop = {
+    array = global.majors
+    if = {
+        limit = {
+            NOT = { tag = ROOT }
+        }
+        random_owned_controlled_state = {
+            transfer_state_to = ROOT
+        }
+    }
+}</pre>
+|Runs the effects for every scope within the array.
+|Equivalent to a <code>every_<...></code> effect scope type, with additional <code>break</code>.
+|-id="random_scope_in_array"
+|random_scope_in_array
+|Effect
+|<code>array = <array></code><br/>The array to check.<br/>
+<code>break = <variable></code><br/>The temporary variable that can be set to be not 0 to instantly break the loop.<br/>
+<code>limit = { <triggers> }</code><br/>An AND trigger block deciding which scopes can be picked.<br/>
+<code><effects></code><br/> An effect block.
+|<pre>random_scope_in_array = {
+    array = global.countries
+    break = break
+    limit = {
+        is_dynamic_country = no
+        exists = no
+        any_state = {
+            is_core_of = PREV   # Is core of the currently-checked country
+        }
+    }
+    random_core_state = {
+        transfer_state_to = PREV    # Transfers to the currently-selected country.
+    }
+}</pre>
+|Runs the effects for a random scope within the array.
+|Equivalent to a <code>random_<...></code> effect scope type, with additional <code>break</code>.
+|}
+
+
+==PREV usage==
+
+In order to understand PREV, it can be helpful to think back to the trigger/effect scopes such as every_controlled_state. In this case, if put inside directly, PREV can be used as the controller of the state. In fact, every_controlled_state is equivalent to every_state with a limit of <code>is_controlled_by = PREV</code> in most ways, although it is recommended to use every_controlled_state instead as it is better for optimisation. For example, the following will transfer every state to its controller, changing the owner:
+<pre>every_country = {
+    every_controlled_state = {
+        transfer_state_to = PREV
+    }
+}</pre>If thinking of it as a tree, the scopes are in the order of [every_country,every_controlled_state]. Using it within every_controlled_state will refer back to the parent node, or every_country, specifically the country in the every_country list this is currently being executed for. This can be used in other ways, such as obtaining a wargoal against the owner of a state:
+<pre>123 = {
+    owner = {
+        ROOT = {
+            create_wargoal = {
+                target = PREV
+                type = take_state_focus
+                generator = { 123 }
+            }
+        }
+    }
+}</pre>
+[[File:PREV usage.png|thumb|450px|alt=A diagram showing the connection in the code.|Diagram showing how PREV and PREV.PREV connect to other entries in the code example.]]In this case, the tree is constructed with [123,owner,ROOT]. Using PREV within ROOT will refer to the previously-defined owner.
+
+Chaining PREV can be done by separating them with a dot as PREV.PREV.PREV. This can be useful if the needed scope is more than 1 scope back.<br/>
+This is an another example of PREV usage with an attached diagram showing how they connect to other scopes:
+<pre>
+every_country = {
+    limit = {
+        any_country = {
+            any_country = {
+                has_war_with = PREV
+                is_neighbor_of = PREV.PREV
+            }
+            has_attache_from = PREV
+        }
+    }
+    country_event = my_event.0
+}
+</pre>In this case, an event will be sent to every country that has sent an [[attaché]] to a country that's at war with a neighbour of the original country (i.e. the country that would receive the event). Using PREV.PREV is necessary in this case as all 3 countries don't have single defined tags or pointers and all interact with each other.{{clear}}
+
+In many cases, using PREV can result in seemingly broken tooltips which'll work fine regardless when executing the effects in-game. This typically happens when using it pointing to scopes of the <code>every_<...></code>/<code>all_<...></code> types. A single effect or trigger's tooltip can only show one scope as a target at once, and the game would only pick the first possible scope in the tooltip. This can look like the following:
+* (Sardinia, Corsica, Sicily):
+** {{flag|Switzerland}}:
+*** Becomes owner and controller of '''Sardinia'''
+This can not be avoided with traditional means while still using PREV. Instead, it's possible to use [[Effect#Effect tooltips|hidden_effect and custom_effect_tooltip]] or [[Triggers#custom_trigger_tooltip|custom_trigger_tooltip]] in order to completely replace the tooltip in this case.
+
+==Flow control tools==
+While these aren't scopes, not changing where the effects are run or triggers are checked, they still function as blocks of code that can be used within any trigger and/or effect.
+{| class="wikitable sortable mw-collapsible" style="display: inline-block; padding: 5px" width="100%"
+|+ style="white-space:nowrap;" | Flow control tools:<br/>
+!Script
+! width="10%" | Usage
+! width="25%" class="unsortable" |Example
+! class="unsortable" |Description
+! width="25%" class="unsortable" |Notes
+|-id="AND"
+|AND
+|Within triggers
+|<pre>
+AND = {
+    original_tag = GER
+    has_stability > 0.5
+}
+</pre>
+|Returns false if any sub-trigger returns false, true otherwise. Evaluation stops at the first false sub-trigger.<br/>
+Nearly all trigger blocks (including scopes) use AND by defaults, so its primary use is with OR and NOT, which affects their function.
+|Usually modifies trigger tooltips to include "All of the following must be true"
+|-id="OR"
+|OR
+|Within triggers
+|<pre>
+OR = {
+    original_tag = ENG
+    original_tag = USA
+}
+</pre>
+|Returns true if any sub-trigger returns true, false otherwise. Evaluation stops at the first true sub-trigger.
+
+By default, OR checks each contained trigger separately, AND can be used in order to check between groups of triggers.
+|Usually modifies trigger tooltips to include "One of the following must be true"
+|-id="NOT"
+|NOT
+|Within triggers
+|<pre>
+NOT = {
+    has_stability > 0.5
+    has_war_support > 0.5
+}
+</pre>
+|Returns false if any sub-trigger returns true, true otherwise. Evaluation stops at the first true sub-trigger.<br/>
+This is equivalent to logical NOR, as it returns true only if all contained triggers are false.<br/>
+There is no direct form of logical NAND (true if any contained trigger is false), however <code>NOT = { AND = { … } }</code> emulates NAND, as does <code>OR = { NOT = { … } NOT = { … } }</code>, with each contained trigger in a separate NOT block.
+|NOT also allows emulating greater/less than or equals in comparisions that are normally strictly greater or less than.
+NOT usually inverts trigger tooltips, though not always predictably or neatly. The inverted tooltip for scopes or <code>custom_trigger_tooltip</code> can be defined by appending <code>_NOT</code> to the localisation key of the tooltip.
+|-id="count_triggers"
+|count_triggers
+|Within triggers
+|<pre>
+count_triggers = {
+    amount = 2
+    10 = { state_population_k > 100 }
+    11 = { state_population_k > 100 }
+    12 = { state_population_k > 100 }
+}
+</pre>
+|Returns true if the number of contained triggers which return true is greater than or equal to the value of <code>amount</code>
+|
+|-id="hidden_trigger"
+|hidden_trigger
+|Within triggers
+|<pre>
+hidden_trigger = {
+    country_exists = GER
+}
+</pre>
+|Hides the tooltips from all contained triggers
+|
+|-id="custom_trigger_tooltip"
+|custom_trigger_tooltip
+|Within triggers
+|<pre>
+custom_trigger_tooltip = {
+    tooltip = sunrise_invasion_tt
+    any_state = {
+        is_owned_by = JAP
+        is_on_continent = europe
+        is_coastal = yes
+    }
+}
+</pre>
+|Replaces the tooltips from all contained triggers with the custom localisation set by <code>tooltip</code>
+|If the <code>custom_trigger_tooltip</code> is negated (within NOT or a <code><scripted_trigger> = no</code>, the negated tooltip can be customized by appending <code>_NOT</code> to the localisation key of the tooltip (e.g. <code>sunrise_invasion_tt_NOT</code>).
+|-id="custom_override_tooltip"
+|custom_override_tooltip
+|Within effects and triggers
+|<pre>custom_override_tooltip = {
+    tooltip = MY_TOOLTIP
+    not_tooltip = MY_TOOLTIP_NOT
+    <triggers/effects>
+}</pre>
+|An [[#AND|AND]] trigger/effect that has an overriden custom tooltip.
+|A positive tooltip can be set with <code>tooltip</code> and the tooltip to be used inside a [[#NOT|NOT]] can be set with <code>not_tooltip</code>. If no positive tooltip is provided and the root key is a localization key (not a formatter, see formatted localization), then a negative tooltip will be generated by appending <code>_NOT</code> to the root localization for the positive tooltip. Both <code>tooltip</code> and <code>not_tooltip</code> are bindable localizations.
+|-id="hidden_effect"
+|hidden_effect
+|Within effects
+|<pre>
+hidden_effect = {
+    declare_war_on = {
+        target = PREV
+        type = annex_everything
+    }
+}
+</pre>
+|Hides the tooltips from all contained effects
+|Commonly used alongside <code>custom_effect_tooltip</code>, to avoid messy effect tooltips or hide precise effects from the player.
+|-id="effect_tooltip"
+|effect_tooltip
+|Within effects
+|<pre>
+effect_tooltip = {
+    declare_war_on = {
+        target = FROM
+        type = annex_everything
+    }
+}
+</pre>
+|Shows the tooltips of the contained effects, but does not execute them.
+|Most often useful with event chains, where the actual effect is done in a follow-up event.
+|-id="if"
+|if
+|Always usable
+|<pre>
+if = {
+    limit = {
+        original_tag = GER
+    }
+    has_political_power > 100
+}
+else_if = {
+    limit = {
+        original_tag = ENG
+    }
+    has_stability > 0.5
+}
+else = {
+    has_war_support > 0.5
+}
+</pre>
+|If statements allow to conditionally check triggers or run effects. The <code>limit</code> block is used to define triggers that must be fulfilled for the effects to be run or triggers to be checked. The triggers in <code>limit</code> are ''never'' shown to the player: if they are unfulfilled, the if statement will have no tooltip, while, if fulfilled, the player will see the effects/triggers inside the if statement itself.
+
+In addition, <code>else_if</code> and <code>else</code> can be optionally defined to run if the limit is considered false. They can be defined as both nested (i.e. directly inside of the previous <code>if</code> or <code>else_if</code>) or unnested (i.e. directly after, but not inside of the previous <code>if</code> or <code>else_if</code>). In case of overlap, the game will prefer the unnested variant, so using that is preferred.
+|<code>else_if</code> is optional and can be used as many times as desired. <code>else</code> is also optional, but can only be used once per <code>if</code>.<br/>
+The main <code>if</code> as well as any <code>else_if</code> must have a <code>limit</code>, and <code>else</code> cannot use a <code>limit</code>.<br/>
+If statements can be used to clean up tooltips on triggers: the limit can check if the country has a specific tag, while the if statement can contain an always false custom trigger tooltip. This will restrict it from being true for that country, while other countries will not see anything in the tooltip.
+|-id="for_loop_effect"
+|for_loop_effect
+|Within effects
+|<pre>
+for_loop_effect = {
+    start = -3
+    end = 9
+    compare = less_than_or_equals
+    add = 3
+    value = value_name
+    break = break_name
+    add_political_power = value_name    # Adds -3, then 0, then 3, then 6, then 9, after which the loop breaks for 15 total political power.
+}
+</pre>
+|Runs the effect in a typical [[wp:For_loop|for loop]], with the current value of the variable kept with the [[variables|temp variable]] specified with <code>value</code>. <code>break</code> defines a [[variables|temp variable]] that can be set to 1 to break the loop instantly.
+|If unspecified, <code>start</code> and <code>end</code> are 0, <code>compare</code> is less_than, <code>add</code> is 1, <code>value</code> is v, and <code>break</code> is break. Can run for up to {{hover|MAX_EFFECT_ITERATION &#61; 1000 in common/defines/00_defines.lua|1000 times}} before stopping automatically.
+|-id="while_loop_effect"
+|while_loop_effect
+|Within effects
+|<pre>
+while_loop_effect = {
+    break = temp_break
+    limit = {
+        country_exists = GER
+    }
+    random_state = {
+        limit = {
+            is_owned_by = GER
+        }
+        random_country = {
+            limit = {
+                NOT = { tag = GER }
+            }
+            transfer_state = PREV
+        }
+    }
+}
+</pre>
+|Runs the effect as long as the trigger is true. <code>break</code> defines a [[variables|temp variable]] that can be set to 1 to break the loop instantly.
+|The trigger is checked at the start of each loop only. Can run for up to {{hover|MAX_EFFECT_ITERATION &#61; 1000 in common/defines/00_defines.lua|1000 times}} before stopping automatically. If <code>break</code> is unspecified, assumes to be a temp variable with the name of break.
+|-id="random"
+|random
+|Within effects
+|<pre>
+random = {
+    chance = 80
+    add_stability = 0.8
+}
+</pre>
+|Simulates a random chance to either execute the effect or do nothing, with the <code>chance</code> used to define the chance.
+|Chance is defined on the scale from 0 to 100.
+|-id="random_list"
+|random_list
+|Within effects
+|<pre>
+random_list = {
+    10 = {
+        modifier = {
+            factor = 0
+            has_stability > 0.9
+        }
+        add_stability = 0.1
+    }
+    20 = {
+        add_stability = -0.1
+    }
+}
+</pre>
+|Simulates a random chance to pick one of the listed effects.
+|Chance for each section is proportional, doesn't have to add up to 100. Can use a variable as a chance. Modifiers can be used in the same way as in [[AI modding#AI will do|ai_will_do blocks]].
+|}
+
+{{Modding navbox}}
+[[Category:Modding]]

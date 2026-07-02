@@ -1,0 +1,618 @@
+{{Version|1.13}}
+The guide below presumes that you understand the basics of how to [[Mod_structure|create a mod]]. This page should also help modders understand how to change some more specific aspects of a country.
+
+== Quick checklist ==
+{{anchor|Quick check-list}}
+*Define a unique 3-character country tag in any {{path|custom=1|<yourmod>/common/country_tags/*.txt}} file.
+*Create a file in the {{path|custom=1|<yourmod>/common/countries}} folder with the same name as the one that's linked in the country tag definition.
+*Define the country leader and optionally advisors and unit leaders in {{path|custom=1|<yourmod>/common/characters}}
+*Create a .txt file in the {{path|custom=1|<yourmod>/history/countries}} folder, with the first three letters of the filename being the country's tag, and fill it with the starting historical information.
+*Create an OOB file in {{path|custom=1|<yourmod>/history/units}} and load it within the previous country history file. '''Buildings will not be assigned to the country properly otherwise.'''
+*Add the country's name to any {{path|custom=1|<yourmod>/localisation/english/*_l_english.yml}} file that uses the UTF-8-BOM encoding{{cref|a}}.
+*Add a large, medium and small flag for each ideology to the {{path|custom=1|<yourmod>/gfx/flags}} folder.
+*Optionally add the country to the game by assigning it states within the {{path|custom=1|<yourmod>/history/states/*.txt}} files.
+
+== Tag ==
+{{Anchor|Country tag}}
+Countries need a 3-character country tag. This is how a country is referred to in all of the game's script. All country tags must be unique. A country must not share a tag with any other country.
+
+To create a tag, add a new file to {{path|custom=1|<yourmod>/common/country_tags}} (or edit an existing file, though creating a new one is preferable due to making the mod easier to make compatible to newer game versions) and add a line similar to <code>SCO = "countries/Scotland.txt"</code>, where <code>countries/Scotland.txt</code> is the address of the country file that will be created/edited, located in {{path|custom=1|<yourmod>/common/countries}}. There is no need for this file to be unique: multiple countries may use the exact same {{path|custom=1|common/countries/}} file in its definition.
+
+There are some country tags that must be avoided, as they will cause in-game confusion whether something is meant to be a reference to a country or not. Their mere existence can cause other code to break. A list of them is the following:
+{|class = "wikitable sortable" width = "100%"
+!width = "4%" style = "text-align:center;" | Tag
+!width = "96%" | Reason to avoid
+|-
+|style = "text-align:right;" | NOT
+|Used as a [[Scopes#Flow control tools|flow control tool]] that comes up as true when any of the triggers within is false.
+|-
+|style = "text-align:right;" | AND
+|Used as a [[Scopes#Flow control tools|flow control tool]] that comes up as true when all of the triggers within are true.
+|-
+|style = "text-align:right;" | TAG
+|Used as a [[Conditions#tag|trigger]] that checks the country being chosen.
+|-
+|style = "text-align:right;" | OOB
+|Used within country history files as an argument deciding the loaded order of battle file, deciding the amount of divisions and where they are located.
+|-
+|style = "text-align:right;" | LOG
+|Used as an [[Effect#log|effect]] or a [[Conditions#log|trigger]] that writes the specified argument within the [[Modding|user directory]]'s {{path|logs/game.log}} file or in console if it is open.
+|-
+|style = "text-align:right;" | NUM
+|Used for [[arrays]] in order to count the amount of elements within them. This will break the resistance system as the [[Conditions#Scripted triggers|scripted trigger]] responsible for deciding when resistance must be enabled utilises this.
+|-
+|style = "text-align:right;" | RED
+|Used within custom map modes as a temporary variable deciding how red the state should be. This will make every custom map mode always have 0 as the red value.
+|-
+|style = "text-align:right;" | Numbers
+|Numbers meaning an entirely numeric country tag such as <code>123</code>, although the game prevents tags from ''beginning'' with numbers. While numbers can be used within country tags (such as <code>D01</code>), if it's entirely numeric there might be confusion whether, for example, <code>123</code> would refer to a state ID or a country tag.
+|}
+
+A file can have <code>dynamic_tags = yes</code> within of itself, which marks every country defined in that file afterwards to be marked as a dynamic country. A dynamic country is one that doesn't have explicit data defined, but instead copies it on the fly from an original country that it branches off. This is most commonly used within civil wars, with [[Effect#start_civil_war|the effect to start one]] auto-generating one. '''If the mod doesn't have enough dynamic countries defined, the game will crash''' if there is a sufficient amount of non-dynamic countries, with [[Troubleshooting#Crash data log|the last read file being marked as map/cities.txt or a savegame]] (Though that crash is not necessarily caused by the lack of dynamic countries).
+
+== Country file ==
+
+The country tag list refers to a file in the {{path|custom=1|<yourmod>/common/countries/}} folder. The file sets the graphical culture and the default colour which may be overwritten by a <code>colors.txt</code> entry. An example of a file is as such:
+<pre>graphical_culture = commonwealth_gfx
+graphical_culture_2d = commonwealth_2d
+color = rgb { 2  10  222 }</pre>
+
+Graphical culture defines the set of graphics used for units, while the 2D graphical culture defines portraits used for aces and generic advisors. A list can be found in {{path|common/graphicalculturetype.txt}}. For Scotland this would be the following:
+<pre>graphical_culture = commonwealth_gfx
+graphical_culture_2d = commonwealth_2d</pre>
+
+<code>color = rgb { 2  10  222 }</code> is the country's default colour on the political map mode (overridden by a colors.txt entry if one exists. '''This requires specifying a colour model, such as rgb or hsv, to work.'''). The [[Wikipedia:RGB colour model|RGB colour model]] uses numbers on the scale from 0 to 255 or 0 to 1 (using exactly 1 is considered to be on the second scale), while the [[Wikipedia:HSV colour model|HSV colour model]] uses numbers on the scale from 0 to 1.
+
+Additionally, an entry can be made in {{path|custom=1|<yourmod>/common/countries/colors.txt}} in order to specify more country colours. The file '''has to be called colors.txt''', and so it will overwrite the base game file if the entry is added. An entry in the file is formatted as the following:
+<pre>SCO = {
+    color = rgb { 2  10  222 }
+    color_ui = rgb { 255 255 155 }
+}</pre>
+
+<code>color</code> will overwrite the country's colour on the political map, while <code>color_ui</code> will be used externally, such as in the map generated with the {{key press|ctrl}} + {{key press|F10}} hotkey or the history viewer tool in {{path|tools/history_viewer/}}. Colours may also be specified in the [[Wikipedia:HSL and HSV|HSV color model]], in which case <code>rgb</code> will need to be replaced with <code>hsv</code>. The <code>color_ui</code> is also used in order to colour in the background of the country's division counter, if the option is set to be country-specific. If a country doesn't have a color_ui entry, it defaults to a grey colour.<br/>
+In HSV, hue, saturation, and value are each on the scale from 0 to 1, using decimals to show the value.
+
+After reading the colour from the file, the saturation and value of the colour will be multiplied by 0.6 and 0.8 respectively by default<ref><code>NDefines.NGraphics.COUNTRY_COLOR_SATURATION_MODIFIER = 0.6</code> and <code>NDefines.NGraphics.COUNTRY_COLOR_BRIGHTNESS_MODIFIER = 0.8</code> in [[Defines]]</ref>. This means the colour appearing in-game will be slightly darker and less saturated (closer to a shade of grey) than defined in the file. In order to have a country colour in HSV have a higher saturation or value than 0.6 or 0.8 respectively, a value larger than 1 can be used as long as it'll end up between 0 and 1 after the application of modifiers. For example, a pure red country colour can be simulated in HSV with <code>color = hsv { 0 1.66 1.25 }</code>. After applying the offsets, this will result in a saturation of 0.996 and a value of 1, being as close to pure red as possible. <br/>
+For RGB, this calculation is harder: "Saturation" defines the difference between the colour with the largest value and the others (changing it does not change the largest colour's value), while "Value" manifests in multiplying every colour's value by that. For replicating a desired value, let <math>V_M</math> represent the maximum value of colour. As such, each colour's value, originally <math>V</math>, by default should be <math>\frac{5}{12}\left(5V-2V_M\right)</math>. With arbitrary Value/Saturation modifiers (represented with <math>M_V</math> and <math>M_S</math>), it's <math>\frac{1}{M_V}\left(\frac{V}{M_S}+V_M*\frac{M_S-1}{M_S}\right)</math>. For example, pure green (i.e. what <code>rgb { 0 255 0 }</code> intends), would be represented well with <code>rgb { -107 425 -107 }</code> plugging numbers into that formula. Indeed, entering this value into the game, the result is exactly pure green, far closer to it than <code>rgb { 0 255 0 }</code> or {{nowrap|<code>rgb { 0 425 0 }</code>}} are.<br/>
+These modifiers do not get applied when using the <code>tag_color</code> [[console command]].
+
+==History==
+{{SVersion|1.13}}
+{{Anchor|Country history}}
+Create a file in the {{path|custom=1|<yourmod>/history/countries}} folder. Alternatively, copy, rename, and edit a similar file. The filename typically follows the format of <code>TAG - country name.txt</code>, e.g. "SCO - Scotland.txt". The important aspect is that the '''first three letters of the filename must be the same as the country's tag''' in order to be loaded, without taking capitalisation into account. Everything after the tag is purely a comment and can be made into anything: "SCO - Bahrain.txt" will work just as well for SCO as would "SCO_qatar.txt".<br/>
+This file contains information about the starting attributes of the country for each scenario, such as the capital and the ruling party. They serve as an effect block, so most effects can be used within of them. '''These files get executed in the order of the countries in the country_tags file,''' which may come into play for subjects, as puppeting changes party popularity.
+
+A country may have more than one history file, in which case each one will be used.<br/>
+As a note, '''any unnecessary closing bracket will stop the execution of the file prematurely''', leading anything afterwards to not be read. If nothing in the history file after a certain point applies, this is likely the cause.
+
+<code>capital = 121</code> defines the capital state. The province with the most victory points within that state will get used as the capital. In case of overlap, the lowest province ID out of the possible choices gets chosen. In this case, 121 is the state Lothian, which contains Edinburgh as the largest victory point. To reiterate, '''this must be a state ID, not a province ID.'''
+
+===Order of battle===
+{{See also|Division modding}} {{anchor|oob}} {{anchor|OOB}}
+Orders of battle are used for the starting military information: templates, divisions that use them, as well as the starting navy and airforce. Traditionally, the starting equipment production is put there within instant_effect while equipment variants are within country history, however instant_effect in orders of battle is an effect block, similarly to country history, so it's not necessary to divide them in this manner. As a byproduct of how the engine works, '''countries with no order of battle will have broken buildings''': any building [[Effect#add_building_construction|constructed via an effect]] will not apply to the country immediately, rendering them impossible to use until the consumer goods percentage changes or a savefile gets reloaded. Orders of battle can also contain information on what national focus the country is ''currently'' doing, however any already-completed focuses must be in country history.
+
+There are several arguments/effects that can be used in country history. Each one is constructed in the manner of <code>oob = "filename"</code>, which would link to the {{path|custom=1|<yourmod>/history/units/filename.txt}} file. The .txt extension is omitted from the filename necessary to be put in. '''The filename of the order of battle is irrelevant as long as it matches up with the one loaded within the country history file.''' These are what can be used:<br/>
+*<code>oob = "SCO_1936"</code> is the traditional way to load a land order of battle, assigning it to the country to be loaded before the game's start. However, ''this is not an effect but an argument in country history'', meaning that it can't be used within other effect blocks (e.g. if statements).
+*<code>set_oob = "SCO_1936"</code> is identical to the prior way: assigning a land order of battle to the country to be loaded before the game's start. However, ''this is an effect'', meaning it can indeed be used in if statements. This is required to use within if statements, such as if different orders of battle are used depending on the DLC, however this can be used outside of if statements.
+*<code>set_naval_oob = "SCO_1936_naval_legacy"</code> and <code>set_air_oob = "SCO_1936_air_bba"</code> are similar to the previous one, however are instead used for the specified branches of the military. These will overwrite any other previously-defined order of battle of the same type.
+*<code>load_oob = "my_template_shared"</code> is an effect and '''is not recommended to be used in history'''. It, instead, loads the order of battle ''immediately'', which can lead to errors if it's put before technologies necessary to load the order and can lead to crashes if the order contains any divisions. However, this can be used to load orders of battle ''after'' the first-defined orders. This can be used for compatibility reasons as to not overwrite any unnecessary files or to re-use the same file containing templates, starting effects, or starting focus information across different countries to be loaded after the base order of battle.
+
+
+Naval and air units are divided into two separate orders of battle. This is because {{icon|mtg|1}} changes the naval system and {{icon|bba|1}} changes the air system enough that any orders of battle created for the base game will not be compatible with the DLC or vise-versa. At times, the land order of battle can also be divided into multiple, most commonly if there are any references to tank equipment within <code>force_equipment_variants</code> or starting equipment production. For each one of these, the same [[Effect#If statements|if statements are used]]:
+<pre>
+if = {
+    limit = { has_dlc = "Man the Guns" }
+    set_naval_oob = "SCO_1936_naval_mtg"
+}
+if = {
+    limit = { NOT = { has_dlc = "Man the Guns" } }
+    set_naval_oob = "SCO_1936_naval_legacy"
+}
+if = {
+    limit = { has_dlc = "By Blood Alone" }
+    set_air_oob = "SCO_1936_air_bba"
+}
+if = {
+    limit = { NOT = { has_dlc = "By Blood Alone" } }
+    set_air_oob = "SCO_1936_air_legacy"
+}
+</pre>
+Note that <code>else</code> only works in its nested form in history files.
+
+===Effects===
+{{main|Effects}}
+These are [[effects]] which are traditionally put in history files of the country to be executed on startup, meaning that they can be used elsewhere as well. '''Any other [[Effect|effect within the list]] can be used as well.'''
+
+<code>set_research_slots = 3</code> defines the amount of research slots a country has access to at the start. Normally, major powers have 4 slots, minor countries in North America and Europe have 3, and minor countries in the rest of the world have 2. Defaults to 2 slots if not specified.
+
+<code>set_stability = 0.7</code> defines the {{icon|stability|1}} that a country will have at the start of the game, defined on the scale from 0 to 1. The prior example of 0.7 will lead to the country starting with 70% stability.
+
+<code>set_war_support = 0.5</code> defines the {{icon|war support|1}} that a country will have at the start of the game. Similar to stability, it is defined on the scale from 0 to 1, the prior example of 0.5 being 50%.
+
+<pre>add_ideas = {
+    henschel
+    GER_autarky_idea
+    #laws #Remember that the sharp sign is used to mark comments.
+    war_economy
+    extensive_conscription
+}</pre>This is the list of [[ideas]] that the country starts with in the game, including national spirits, design companies, and laws. Ideas are defined in {{path|common/ideas}}. If starting laws aren't defined, then the country will start with the laws of {{icon|volunteer only|1}}, {{icon|export focus|1}}, and {{icon|civilian economy|1}}.
+
+<pre>set_technology = {
+    infantry_weapons = 1
+    infantry_weapons1 = 1
+    gw_artillery = 1
+    interwar_antiair = 1
+    fuel_silos = 1
+    basic_train = 1
+}</pre>
+This defines the starting technologies of the country. A list of technologies can be found in {{path|common/technologies/}}. It is notable that, similarly to orders of battle, several technologies depend on DLC, such as the {{icon|mtg|1}} naval tech and {{icon|nsb|1}} tank tech. In that case, an if statement needs to be used in order to set only the technologies that the country has access to, such as, using it in a conjunction with the prior naval oob:
+<pre>
+if = {
+    limit = { has_dlc = "Man the Guns" }
+    set_technology = {
+        basic_naval_mines = 1
+        submarine_mine_laying = 1
+        early_ship_hull_light = 1
+        early_ship_hull_submarine = 1
+        basic_ship_hull_submarine = 1
+        basic_battery = 1
+        basic_torpedo = 1
+        basic_depth_charges = 1
+    }
+    set_naval_oob = "SCO_1936_naval_mtg"
+}
+if = {
+    limit = { NOT = { has_dlc = "Man the Guns" } }
+    set_technology = {
+        early_submarine = 1
+        early_destroyer = 1
+    }
+    set_naval_oob = "SCO_1936_naval_legacy"
+}
+</pre>
+
+<code>recruit_character = TAG_character_name</code> is used to recruit [[#Starting characters|the specified character]]. This includes country leaders, commanders, admirals, and advisors. Country leaders that are recruited ''after'' setting political information can fail to appear, so it's recommended to recruit them before setting any political information. If multiple country leaders fall under the same political party, the game will place the first-recruited one as its leader. The recruitment will fail if the effect is placed as the last line in the file: there must be at least one line after the recruitment, even if it's empty.
+
+====Diplomacy-related effects====
+
+In order to make the country start as a subject, the following can be put in the history file:
+<pre>ENG = {
+    if = {
+        limit = {
+            has_dlc = "Together for Victory"
+        }
+        set_autonomy = {
+            target = SCO
+            autonomous_state = autonomy_integrated_puppet
+        }
+        else = {
+            puppet = SCO
+        }
+    }
+}</pre>'''Since the history files get loaded in a specific order, it is preferable to put it in the subject's history file, as to avoid the case where the overlord's file gets loaded after the subject's, which'll make the puppeting reset the politics of the subject. For this reason, <code>set_autonomy</code> must also be set before the political party and popularities of the subject.''' The if statement is there to ensure that the integrated puppet is only there with {{icon|tfv|1}}, as that autonomous state is not available otherwise. A list of autonomous states can be found in {{path|common/autonomous_states/*.txt}} files.
+
+A faction can be created with <code>create_faction = localisation_key</code>. The localisation key will be used to define the name of the faction, defined in any {{path|custom=1|<yourmod>/localisation/english/*_l_english.yml}} file.<br/>
+Members are added to the faction with <code>add_to_faction = IRE</code> within the faction leader's history file. Although puppets usually get added to the faction automatically, it is recommended to add them manually as well.
+
+In order to use technology sharing groups, <code>add_to_tech_sharing_group = my_tech_group</code> can be used in each country's history file. This requires the {{icon|tfv|1}} DLC check (always positive) in order to work properly. Technology groups are defined in {{path|common/technology_sharing/*.txt}} files. [[Technology modding#Technology sharing groups|Additional details on the technology groups can be found on the dedicated article]].
+
+====Politics-related effects====
+<pre>set_popularities = {
+    democratic = 80
+    communism = 10
+    fascism = 10
+}</pre> This defines the starting party popularities, on the scale from 0 to 100. If an ideology is left out, then it will be assumed to have 0% popularity. '''If it doesn't add up to 100, then the popularities will fail to be set.'''
+<pre>set_politics = {
+    ruling_party = neutrality
+    last_election = "1932.11.8"
+    election_frequency = 48 # Every 4 years
+    elections_allowed = yes
+}</pre> This defines the starting political situation of the country, with the ruling party and details on elections. Notably, the election frequency is defined in months.
+==== Variants ====
+Special variants on equipment available for this country from the start can be put in, defining the starting equipment upgrades or modules. Since this can depend on DLC, for ships, tanks, and airplanes, a DLC check can be used as the following:
+<pre>if = {
+    limit = { has_dlc = "Man the Guns" }
+    create_equipment_variant = {
+        name = "Celtic Series"
+        type = ship_hull_submarine_1                            # See list in common/units/equipment
+        name_group = SCO_SS_HISTORICAL                          # Defines names used for ships of this variant, defined in common/units/names_ships/
+        modules = {
+            fixed_ship_torpedo_slot = ship_torpedo_sub_1        # Module slots for equipment types are defined in common/units/equipment
+            fixed_ship_engine_slot = sub_ship_engine_1          # While modules themselves are defined in common/units/equipment/modules
+            rear_1_custom_slot = empty
+        }
+        obsolete = yes                                          # Marks as obsolete, changing the UI.
+    }
+}
+if = {
+    limit = { NOT = { has_dlc = "Man the Guns" } }
+    create_equipment_variant = {
+        name = "Celtic Series"
+        type = submarine_1                                      # Note different equipment type due to no MtG.
+        upgrades = {
+            ship_reliability_upgrade = 1                        # See list in common/units/equipment/upgrades
+            sub_engine_upgrade = 1
+            sub_stealth_upgrade = 1
+            sub_torpedo_upgrade = 1
+        }
+        obsolete = yes
+    }
+}</pre>
+
+=== Date-dependent history ===
+{{Anchor|Adding history for other bookmarks}}
+In order to assign a part of the history file to only apply on start dates later than a certain date, a date block is used. It's formatted in the manner of <code>YYYY.MM.DD = { ... }</code> and accepts the same attributes and effects that may be used elsewhere in the file:
+<pre>
+1939.1.1 = {
+    oob = "SCO_1939"
+    set_technology = {
+        atomic_research = 1
+        nuclear_reactor = 1
+        nukes = 1
+    }
+}
+</pre>
+In particular, this would ''replace'' the used order of battle with {{path|history/units/SCO_1939.txt}} and ''add'' atomic_research, nuclear_reactor, and nukes technologies to the ones the country already has researched.<br/>
+This will only apply on the start dates that are '''strictly''' later than the defined timestamp.
+==== Useful effects ====
+While any [[#effects|effects]] can be used, same as in regular history, the following are specifically useful for later start dates:
+
+In order to simulate completion of the national focus tree, the two effects are used: [[Effect#unlock_national_focus|unlock_national_focus = focus_name]], which bypasses the focus without granting effects, and [[Effect#complete_national_focus|complete_national_focus = focus_name]], which fully completes the focus, granting the effects.
+
+The [[Effect#diplomatic_relation|diplomatic_relation effect]] can be used in order to cancel previously applied diplomatic relations, such as guarantees or military access. Ideas would be removed with the [[Effect#remove_ideas|remove_ideas effect]], applied in the exact same manner as <code>add_ideas</code>
+
+In order to replace the country leader, the [[Effect#promote_character|promote_character effect]] can be used as <code>promote_character = TAG_character_name</code>. However, make sure that the character is recruited beforehand and has a country leader role within their definition. Recruitment is allowed within a date-block.
+===Full file example===
+{{VisibleCollapse|<pre>capital = 121
+oob = "SCO_1936"
+
+set_research_slots = 3
+set_stability = 0.7
+set_war_support = 0.5
+
+recruit_character = SCO_ronald_mcdonald # Before set_politics
+
+add_ideas = {
+    henschel
+    GER_autarky_idea
+    #laws
+    war_economy
+    extensive_conscription
+}
+
+set_technology = {
+    infantry_weapons = 1
+    infantry_weapons1 = 1
+    gw_artillery = 1
+    interwar_antiair = 1
+    early_fighter = 1
+    early_bomber = 1
+    fuel_silos = 1
+    basic_train = 1
+}
+
+if = {
+    limit = { has_dlc = "Man the Guns" }
+    set_technology = {
+        basic_naval_mines = 1
+        submarine_mine_laying = 1
+        early_ship_hull_light = 1
+        early_ship_hull_submarine = 1
+        basic_ship_hull_submarine = 1
+        basic_battery = 1
+        basic_torpedo = 1
+        basic_depth_charges = 1
+    }
+    create_equipment_variant = {
+        name = "Celtic Series"
+        type = ship_hull_submarine_1
+        name_group = SCO_SS_HISTORICAL
+        modules = {
+            fixed_ship_torpedo_slot = ship_torpedo_sub_1
+            fixed_ship_engine_slot = sub_ship_engine_1
+            rear_1_custom_slot = empty
+        }
+        obsolete = yes
+    }
+    set_naval_oob = "SCO_1936_naval_mtg"
+}
+if = {
+    limit = { NOT = { has_dlc = "Man the Guns" } }
+    set_technology = {
+        early_submarine = 1
+        early_destroyer = 1
+    }
+    create_equipment_variant = {
+        name = "Celtic Series"
+        type = submarine_1
+        upgrades = {
+            ship_reliability_upgrade = 1
+            sub_engine_upgrade = 1
+            sub_stealth_upgrade = 1
+            sub_torpedo_upgrade = 1
+        }
+        obsolete = yes
+    }
+    set_naval_oob = "SCO_1936_naval_legacy"
+}
+if = {
+    limit = { has_dlc = "By Blood Alone" }
+    set_air_oob = "SCO_1936_air_bba"
+    set_technology = {
+        aa_lmg = 1
+        engines_1 = 1
+        engines_2 = 1
+        early_bombs = 1
+        aircraft_construction = 1
+        iw_small_airframe = 1
+        iw_medium_airframe = 1
+        iw_large_airframe = 1
+        basic_medium_airframe = 1
+        basic_small_airframe = 1
+    }
+}
+if = {
+    limit = { NOT = { has_dlc = "By Blood Alone" } }
+    set_air_oob = "SCO_1936_air_legacy"
+    set_technology = {
+        early_fighter = 1
+        cv_early_fighter = 1
+        cv_naval_bomber1 = 1
+        naval_bomber1 = 1
+        early_bomber = 1
+        CAS1 = 1
+    }
+}
+
+ENG = {
+    if = {
+        limit = {
+            has_dlc = "Together for Victory"
+        }
+        set_autonomy = {
+            target = SCO
+            autonomous_state = autonomy_integrated_puppet
+        }
+    }
+    else = {
+        puppet = SCO
+    }
+}
+
+
+set_popularities = {    # Notice how set_popularities is after puppeting. Otherwise would lead to puppeting resetting politics.
+    democratic = 80
+    communism = 10
+    fascism = 10
+}
+set_politics = {
+    ruling_party = democratic
+    last_election = "1932.11.8"
+    election_frequency = 48 # Every 4 years
+    elections_allowed = yes
+}</pre>}}
+
+==Flag==
+{{SVersion|Timeless}}
+The flags representing a country are stored in {{path|gfx/flags}} and its subfolders. Each country needs at least 3 flags. Each flag is commonly used in the UI, most notably the regular flag is used when viewing the country in the diplomacy menu or in the top-left corner of the screen, while the medium and small flags are used for divisions and in [[Localisation#GetFlag|localisation]]; the flags get automatically assigned to countries based on the flag's filename.<br/>
+Each flag needs to be a [[wikipedia:Truevision TGA|TGA-file]] with the name of the country tag and, optionally, the ideology group that the flag is assigned to. '''The flag file format is uncompressed 32-bit ARGB.''' In this case, "32-bit", "32 bits per pixel (bpp)", and "32 bitdepth" have the exact same meaning. In some editors where the bitdepth isn't settable when exporting but rather static without allowing the user to draw anything that the bitdepth doesn't allow, 32-bit means the RGB image mode alongside an alpha channel used for transparency present within the image. If it is 24-bit (meaning there is no alpha channel), the file will load but throw an error stating that it'll slow down the game and that it's recommended to use 32bpp.<br/>
+If the origin point is set to top left rather than bottom left, the image will appear flipped upside down. This can be common within online converters. Instead, it's better to use a more configurable image editor in order to convert files to TGA, such as [https://getpaint.net/ Paint.net], [https://gimp.org/ GIMP], or [https://adobe.com/products/photoshop.html Photoshop].
+
+There are two ways to name a flag:
+* Ideology group-specific, such as <code>SCO_neutrality.tga</code>. These will have the highest priority as the starting flags (Assuming no [[Cosmetic tag modding|cosmetic tags]] are set).
+* Non-specific, such as <code>SCO.tga</code>. If there's an ideology group-specific flag for the party ruling over the country, that one will be chosen, and this one is used as a backup in case it's not present.
+Either one is optional, however it's recommended for a country to have some sort of a flag regardless which ideology group it has (Meaning either that there's a non-specific flag optionally alongside some ideology group-specific ones or that each ideology group in the mod has a specific flag for this country)
+
+{| class="wikitable"
+|-
+!  !! Size requirement<ref>{{cd2|NGraphics|COUNTRY_FLAG_TEX_WIDTH|COUNTRY_FLAG_TEX_HEIGHT|COUNTRY_FLAG_MEDIUM_TEX_WIDTH|COUNTRY_FLAG_MEDIUM_TEX_HEIGHT|COUNTRY_FLAG_SMALL_TEX_WIDTH|COUNTRY_FLAG_SMALL_TEX_HEIGHT}} in [[Defines]]</ref> !! Resulting filesize{{cref|b}}
+|-
+| Standard || 82x52 pixels || 16.6 or 17.1 KiB
+|-
+| Medium || 41x26 pixels || 4.2 or 4.69 KiB
+|-
+| Small || 10x7 pixels || 324 or 819 bytes
+|}
+For the purpose of this mode, place them in {{path|custom=1|<yourmod>/gfx/flags}}, each flag size into the corresponding folder.
+
+For medium and small flags to be generated, the game requires there to be a sufficient amount of [[#Country tag|dynamic country tags]], ~10 for medium flags to work and ~20 for small flags to work. If the requirement isn't met, the medium and small flags will appear as transparent for every single country even if they're saved properly, without anything related in {{path|custom=1|logs/error.log}}.
+
+== Name ==
+{{SVersion|Timeless}}
+{{Anchor|Localisation}}
+{{See also|Localisation}}
+
+Localisation, such as the country name, is defined in the {{path|custom=1|<yourmod>/localisation/english/}} folder for English. It is preferable to use a new file in the folder, as to not overwrite any base game files. The newly-created file will have to end with <code>_l_english.yml</code> in its filename ('''This is a lowercase L, not an uppercase i''') for it to be loaded properly. Additionally, '''it has to use the UTF-8-BOM text encoding'''. Exact details on how to change the encoding depend on the text editor used.
+
+Within the file, localisation can be added accordingly:
+<syntaxhighlight lang = "yaml">l_english:
+ SCO: "Scotland"                               #Non-ideology name, primarily used for collaboration governments and as a fallback if an ideology group-specific one doesn't exist.
+ SCO_DEF: "Scotland"
+ SCO_ADJ: "Scottish"
+ SCO_democratic: "Republic of Scotland"
+ SCO_democratic_DEF: "the Republic of Scotland"
+ SCO_democratic_ADJ: "Scottish"
+ <...>
+</syntaxhighlight>
+The localisation key follows the formatting of <code>TAG_ideology</code>, where TAG is to be replaced with the country's tag and ideology is to be replaced with the ideology group.
+The _DEF and _ADJ suffixes may be added. The suffixes serve the following purpose:
+* No suffix: The primary name for the country. Shows up on the world map and with the [TAG.GetName] [[Localisation#Namespaces|localisation command]]
+* _ADJ: The adjective form for the country. Used with the [TAG.GetAdjective] localisation command.
+* _DEF: The definition form for the country. Used with the [TAG.GetNameDef] localisation command and when hovering over the state on the world map as the owner/controller. In base game, it's most commonly the same as the country's regular name but with "the " (Beginning with a lowercase letter as [TAG.GetNameDefCap] exists for otherwise) inserted in the beginning ''if needed''. Due to widespread use of this localisation command within generic events and decisions, this is essentially mandatory to define.
+
+By changing each instance of English to the corresponding language, including the filename, the folder, and the first line of the file, it is also possible to make the name for different languages, including and limited to Brazilian Portuguese (l_braz_por instead of l_english), French, German, Polish, Russian, Spanish, and Japanese.<br/>
+Additionally, there are other cosmetic versions of the country's name that can apply automatically that can be mixed together:
+<syntaxhighlight lang = "yaml">l_english:
+ SCO_liberalism: "Federal Republic of Scotland"                         # Applies when the country has a specific ideology type, commonly called sub-ideologies in community jargon.
+ SCO_subject: "$OVERLORDADJ$ Scotland"                                  # Applies when the country is a subject of any other country.
+ SCO_IRE_subject: "Alba"                                                # Applies when the country is a subject of a specific another country.
+ SCO_autonomy_dominion: "Dominion of Scotland"                          # Applies when the country has the specified autonomy type with any other country as overlord.
+ SCO_IRE_democratic_autonomy_integrated_puppet: "Most Northern Ireland" # Example of mixing these together. Must be in the country-ideology-autonomy order.
+ COUNTRY_SCO_autonomy_dominion: "Comhairle nan $NONIDEOLOGY$"           # The first tag can be replaced with COUNTRY to apply to a generic country.
+</syntaxhighlight>
+IDs of autonomous states can be found within {{path|common/autonomous_states/*.txt}} files, while the names of ideology types can be found in {{path|common/ideologies/*.txt}} files.<br/>
+The country names are applied with the following priority:<br/>
+* Autonomous state with a specific country as overlord
+* Autonomous state
+* Subject of a specific country
+* Subject
+* Ideology type
+* Ideology group
+* TAG
+* COUNTRY
+For example, <code>COUNTRY_SCO_autonomy_dominion</code>, due to being on the top of the list, will apply towards ''every'' country that's a dominion of Scotland, unless a more specific mix of a Scottish-controlled dominion applies (e.g. <code>ENG_SCO_autonomy_dominion</code> or <code>COUNTRY_SCO_democratic_autonomy_dominion</code>).
+
+Inside of subject names, [[Localisation#Nesting strings|nested strings can be used]] that correspond to the overlord's name and the country's non-ideology name. Despite the fact that the latter doesn't seem to be subject-related, it cannot be used in names of independent countries.
+These include:
+* <code>$NONIDEOLOGY$</code>, <code>$NONIDEOLOGYADJ$</code>, and <code>$NONIDEOLOGYDEF$</code> for the non-ideology name.
+* <code>$OVERLORD$</code>, <code>$OVERLORDADJ$</code>, and <code>$OVERLORDNAMEDEF$</code> (Note the NAME) for the overlord's name.
+This can ''only'' be used in country names, regardless if it's an automatically-applying name or a [[Cosmetic tag modding|cosmetic tag]].
+
+These localisation keys may unintentionally make the country name be something unexpected. For example, the base game {{flag|Turkey|Turkish}} national spirit <code>TUR_liberalism</code> gets used as the country's name when it gets a leader with the <code>liberalism</code> ideology type, making it have the name of "Liberalism". To find such instances, [[Modding#Searching multiple files|most text editors have capacity to search entire folders]]. By searching for the country's unintended name surrounded by quotes (in this case, <code>"Liberalism"</code>) in all of the loaded localisation files (usually the mod and the base game), the file with the root cause can be found to know the localisation key. From this key, every instance of the database entry with the overlapping name can be found and edited with another folder search, with the localisation key either deleted by copying over the entire file if necessary or [[Localisation#Replacing|replaced without copying the file]].
+=== Other localisation ===
+Other than the country name, there are certain other aspects of localisation that are commonly used to provide country-specific flair. Same as the name, this can go into any {{path|localisation/english/*_l_english.yml}} file with the UTF-8-BOM encoding:
+* Party names. More strictly, parties are country-specific names for ideology group that show up near the pie chart in the politics and diplomacy menus, whose names can also be accessed elsewhere with [[Localisation#Namespaces|localisation namespaces]]. A party uses up to 2 localisation keys: the regular name that appears in the piechart and the optional long name, which appears when hovering over the party name. If the long name is undefined, it will re-use the regular name.
+: A localisation key for the regular name follows the <code>TAG_ideology_party</code> format, while the long name uses the <code>TAG_ideology_party_long</code> format. 
+* Equipment: In order to rename an equipment type for a country, the localisation key used for it needs to be prefixed with the country's tag (separated with an underscore), such as <code>TAG_infantry_equipment_1</code>. Equipment may also have an optional short name, by appending <code>_short</code> to the key. Equipment is defined in {{path|common/units/equipment/*.txt}} files, where the IDs can be obtained. The same also works for equipment modules.
+Some other localisation keys that support similar country prefixing, such as division experience titles or idea/advisor names. Example localisation file with party/equipment renaming:
+<syntaxhighlight lang="yaml">l_english:
+  SCO_communism_party: "SCP"
+  SCO_communism_party_long: "Scottish Communist Party"
+  SCO_neutrality_party: "True Scotsman" # The long name will re-use this
+  SCO_artillery_equipment: "Armata 75mm wz. 31 St."
+  SCO_artillery_equipment_short: "75mm wz. 31"
+</syntaxhighlight>
+
+== Starting characters ==
+{{Main|Character modding}}
+
+Characters are defined in any file in the {{path|common/characters/}} folder. An example of a file within that folder, with just a country leader, is the following:
+<pre>characters = {
+    SCO_ronald_mcdonald = {
+        name = SCO_ronald_mcdonald
+        portraits = {
+            civilian = {
+                large = GFX_SCO_ronald_mcdonald
+            }
+        }
+        country_leader = {
+            ideology = socialism
+            traits = { scary_clown }
+        }
+    }
+}</pre>
+The <code>ideology</code> defined for the country leader must be an {{hover|Commonly called sub-ideology in community jargon, but called ideology type with in-game code|ideology type}}, rather than an ideology group such as {{icon|democratic|1}}. A list of ideology types across groups, alongside more information, can be found on the [[Character modding#Country leader|dedicated character modding article]].
+
+The picture used is a spriteType, defined in any {{path|interface/*.gfx}} file. It is recommended to use a new file for this purpose instead of overwriting the base game files. An example of how a new file can look like is the following:
+<pre>spriteTypes = {
+    spriteType = {
+        name = GFX_SCO_ronald_mcdonald
+        texturefile = gfx/leaders/SCO/ronald_mcdonald.dds
+    }
+}</pre>
+
+The name picked for the character depending on the language set when launching the game is defined within {{path|localisation/}}. In particular, for English, this would be in any {{path|localisation/english/*_l_english.yml}} file as this: <code>SCO_ronald_mcdonald:0 "Ronald McDonald"</code>. The description when hovering over the character can be added by appending <code>_desc</code> to the character's name, as <code>SCO_ronald_mcdonald_desc:0 "Insert description here"</code>.
+
+In order to appear, a character '''must''' be recruited in the history file of the country. This is done with the <code>recruit_character</code> effect, as the following:
+<pre>recruit_character = SCO_ronald_mcdonald</pre>
+If multiple country leaders fall under the same political party, the game will place the first-recruited one as its leader. Since <code>set_politics = { ... }</code> forces a leader of the specified ideology group to come to power, any characters recruited after a <code>set_politics</code> block will not immediately become country leader since the country already has one: '''recruitment of the intended country leader must be before setting politics'''. <br/>
+Corps commanders, field marshals, admirals, and advisors are also regarded as characters in the in-game code, and are added similarly: [[Character modding|defined in the characters file]] and then recruited in {{path|history/countries/TAG*.txt}}
+
+==Order of battle==
+{{Hatnote|Parts of this section are transcluded from [[Division modding]]}}
+{{SVersion|1.12}}
+If the country will exist at the start, an order of battle is necessary for the country to have an army. Orders of battle are used for establishing the starting military of the country, and they are generally separated into land, naval, and air branches, since enabling the {{icon|mtg|1}} and {{icon|bba|1}} DLCs requires separate definitions for the navy and the air force respectively that are not compatible with the DLC being disabled.
+
+'''[[#Order of battle|Each order of battle must be loaded, usually in country history,]] in order for the units to show up.''' The filename is irrelevant, as long as it matches up with the one given in the country history file.
+
+The internal names for sub-units can be found in {{path|common/units/*.txt}} files, [[Modding#Searching multiple files|localisation can be checked as well]]. For the sake of briefness, naval and air branches will be covered in the main article of [[Division modding]] instead. 
+===Division template===
+{{#section-h:Division modding|Division template}}
+
+===Division placement===
+{{#section-h:Division modding|Division placement}}
+===Equipment production===
+{{#section-h:Division modding|Equipment production}}
+
+== Character names ==
+{{Anchor|Randomly-generated names (optional)}}
+{{See also|Namelist modding}}
+Character names are used for randomly-generated characters. This includes but is not limited to generic advisors, division commanders, newly-created unit leaders, or generic country leaders. Any {{path|common/names/*.txt}} file can be used as the file, and each country's entry is marked by being a block with the name of the country's tag (with <code>default</code> or a [[cosmetic tag]] also being possible). An example entry looks like this:
+<pre>TAG = {
+    male = {
+        names = {
+            Name "Name with multiple words"
+        }
+    }
+    female = {
+        names = {
+            Name "Name with multiple words"
+        }
+    }
+    surnames = {
+        Surname "Surname with multiple words"
+    }
+    callsigns = {
+        Callsign "Callsign with multiple words"
+    }
+}</pre>This will assign these names to TAG. In particular:
+* <code>names = { ... }</code> is used to assign the first names of the characters. For [[ace]]s, this is used for [[Localisation#GetName|the GetName localisation namespace]]. For other characters or pseudo-characters, it's used as the word or the combination of words that are placed in the beginning of the name.
+* <code>surnames = { ... }</code> is used to assign the last names of the characters. For [[ace]]s, this is used for [[Localisation#GetSurname|the GetSurname localisation namespace]]. For other characters or pseudo-characters, it's used as the word or the combination of words that are placed in the end of the name.
+* <code>male = { ... }</code> and <code>female = { ... }</code> are used to assign a name or a surname to be specific to a particular gender. <code>names</code> and <code>surnames</code> may be used either inside or outside of the gendered blocks, in case of unisex names or gendered surnames.
+* <code>callsigns = { ... }</code> is used to assign a callsign to newly-generated [[operatives]].
+[[Modding#Code structure|Quotation marks may be used in order to include whitespaces inside of a single token]], as names are traditionally unlocalised.
+== Character portraits ==
+{{Anchor|Randomly-generated portraits (optional)}}
+{{Main|Portrait modding}}
+When the game automatically generates a country or a unit leader, a portrait is randomly chosen from a pool that depends on country or continent, if there's not a country-specific one. This pool is located in any {{path|portraits/*.txt}} file. An example entry looks like
+<pre>TAG = {
+    navy = {
+        male = {
+            "GFX_navy_portrait_male_1"
+        }
+        female = {
+            "GFX_navy_portrait_female_1"
+        }
+    }
+    army = {
+        male = {
+            "GFX_army_portrait_male_1"
+        }
+        female = {
+            "GFX_army_portrait_female_1"
+        }
+    }
+    operative = {
+        male = {
+            "GFX_operative_portrait_male_1"
+        }
+        female = {
+            "GFX_operative_portrait_female_1"
+        }
+    }
+    political = {
+        neutrality = { # Each ideology group should be present individually.
+            male = {
+                "GFX_neutrality_portrait_male_1"
+            }
+            female = {
+                "GFX_neutrality_portrait_female_1"
+            }
+        }
+    }
+}</pre>
+This assigns these particular [[spriteType]]s to the newly-created character. In particular, it is important for army portraits to also have a small equivalent, created as a new spriteType where the <code>name</code> attribute is the same as the large one, but with <code>_small</code> to the end (e.g. <code>GFX_army_portrait_male_1_small</code> would be a small male portrait in the example). This is used for the [[Officer corps]] system.
+
+== Adding the country to the game ==
+The country will exist as long as an entry in {{path|common/country_tags/*.txt}} exists. However, it will not exist on the map at first.
+
+If it should appear on the game's start, whether fully owning the states or just having them as cores, [[State modding|the states themselves need to be edited]] to be owned by the country at the game's start, stored in {{path|history/states/*.txt}} files.
+
+If the country is only to appear in the middle of the game, effects can be used within any effect block, such as a focus reward or an event option. In particular, [[Effect#add_state_core|add_state_core]] and [[Effect#transfer_state|transfer_state]], [[Scopes|within that country's scope]] can be used to, respectively, core the specified states and change their owner and controller to the needed country.
+
+== Notes and references ==
+{{cnote|a|A similar process applies for other languages that the game supports, with the filename ending with the internal name of the language. The exact folder path is actually irrelevant, as long as the file is contained within the localisation folder or any of its subfolders at any depth level.}}
+{{cnote|b|If the correct settings of 32 bitdepth/bits per pixel and no RLE encoding are used, saving the flag should result in a consistent filesize each time. Paint.net, however, adds an approximately 500 byte large watermark to the end of the file if it is used to save the flag, which is not present when GIMP or Photoshop are used instead. The filesize is as shown in the Windows File Explorer and may differ in rounding if viewed elsewhere, such as the image editor's export menu.}}
+<references/>
+{{Modding navbox}}
+[[Category:Modding]]

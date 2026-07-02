@@ -1,0 +1,90 @@
+{{version|1.10}}
+
+== Resources ==
+{{SVersion|1.10}}
+The resources used by the game are found in {{path|common/resources/00_resources.txt}}.
+
+The resource file follows this format:
+<pre>
+resources = {
+    <resource> = {
+        icon_frame = <frame>
+        cic = <float>
+        convoys = <float>
+    }
+}
+</pre>
+
+=== Icon frame ===
+{{SVersion|1.10}}
+Icon frame controls which frame from the resource image strip is used for the resource icon. A 'frame' is the 27 by 27 pixel square the icon occupies in the image. 
+
+The resource image strip is defined by the '''GFX_resources_strip''' spritetype, which points to {{path|gfx/interface/resources_strip.dds}} by default. By default 1 will refer to the Oil icon, 2 to Aluminium, etc.
+
+The icons are defined in {{path|interface/general_stuff.gfx}}. Their definition must be changed if you're adding or removing resources: 
+<pre>   spriteType = {
+        name = "GFX_resources_strip"
+        texturefile = "gfx/interface/resources_strip.dds"
+        noOfFrames = X #X being the number of resources you have, 
+    }
+
+    spriteType = {
+        name = "GFX_missing_resources_strip"
+        texturefile = "gfx/interface/missing_resources_strip.dds"
+        noOfFrames = X
+    }</pre>The number of frames strictly corresponds to the amount of resources.
+
+=== CIC ===
+{{SVersion|1.5}}
+
+CIC defines the amount of resources needed to trade for 1 Civilian Factory. By default, this is 0.125, meaning 8 units of that resource are traded for 1 factory. Value can not be larger than 1.
+
+=== Convoys ===
+{{SVersion|1.5}}
+
+Convoys controls the maximum amount of this resource a single convoy carries. By default, this is 0.1, meaning a convoy can carry 10 of the resource.
+
+== Localization ==
+{{SVersion|1.9}}
+
+Localisation is defined in {{path|localisation/production_l_<language>.yml}} with the following localization keys:
+<pre>
+PRODUCTION_MATERIALS_<RESOURCE>:0 "Name of resource"
+<resource>_desc:0 "Description of resource"
+</pre>
+
+== Interface ==
+{{SVersion|1.5}}
+
+If implementing different resources, you will need to edit the interface so the game understands how to display the new resource. {{path|interface/countryproductionlineview.gui}} is the relevant file here.
+
+Each resource is utilised two GUI elements: ''<resource>_icon'' and ''<resource>_value'', which are found under the '''resources''' windowtype.
+
+<pre>
+buttonType = {
+    name = "<resource>_icon"
+    position = { x=0 y=2 }
+    spriteType = "GFX_resources_strip"
+    frame = 1 # Which icon is used from the spriteType image referred to above.
+}
+                    
+instantTextboxType = {
+    name = "<resource>_value"
+    position = { x = 31 y = 5 }
+    textureFile = ""
+    font = "hoi_18mbs"
+    borderSize = {x = 0 y = 0}
+    text = "999"
+    maxWidth = 50
+    maxHeight = 20
+    format = left
+}
+</pre>
+
+=== Additional notes ===
+A fuel can also correspond to the fuel dynamic, however only one resource at a time can do that. This is decided by the FUEL_RESOURCE [[Defines|define]]. <br/>
+Infrastructure's bonus on resource gain is decided by the INFRASTRUCTURE_RESOURCE_BONUS define and applies to all resources the same.
+
+
+{{Modding navbox}}
+[[Category:Modding]]

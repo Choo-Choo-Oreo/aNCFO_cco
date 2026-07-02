@@ -1,0 +1,221 @@
+{{Version|1.13}}
+A bookmark is a scenario chosen by the player at the start of the game, allowing changing the interesting countries recommended to the player and the starting date.
+__TOC__
+The {{path|common/bookmarks/*.txt}} files are used for defining the selctable bookmarks.
+
+Each file consists of a <code>bookmarks = { ... }</code> block that contains each bookmark, each as a separate <code>bookmark = { ... }</code> definition. In particular, a file with two bookmarks will be structured as such:
+<pre>bookmarks = {
+    bookmark = {
+         <...>
+    }
+    bookmark = {
+         <...>
+    }
+}</pre>
+== Attributes ==
+{{SVersion|1.13}}
+These attributes go into a <code>bookmark = { ... }</code> block. Each of the arguments of a bookmark is theoretically optional.
+* <code>name = loc_key</code> decides on the [[localisation]] key used for the name of the bookmark used during the start date selection. Defaults to showing nothing.
+* <code>desc = loc_key</code> decides on the [[localisation]] key used for the description of the bookmark used during the start date selection. Defaults to showing nothing.
+* <code>date = 1936.1.1.12</code> decides on the date which notes when the game should start, written in the YYYY.MM.DD.HH format. Defaults to 2.1.1.1, and no earlier date can be used.
+* <code>picture = GFX_select_date_1936</code> decides on the [[spriteType]] definition used for the start date, defined in any {{path|interface/*.gfx}} file. Defaults to being pure black.
+* <code>default = yes</code> is used to mark the bookmark as default, resulting in the game pre-loading its conditions during the main menu and making the player choose it by default. Defaults to false, only one bookmark should have this.
+* <code>default_country = GER</code> decides on the country tag that should be chosen by the player by default. The country must be among the interesting countries.
+* <code>effect = { ... }</code> is an [[effect]] block that will be executed when the bookmark is selected. This is done after the history folder but before the player can select a country. In particular, [[Effect#randomize_weather|randomize_weather]] should be used to ensure that the weather works properly, but this can also be used to ensure that the bookmark has different conditions from another one on the same date.
+* <code>TAG = { ... }</code> is used to create an entry for a country among the interesting countries. Using the tag of <code>---</code> will be taken as the "other countries" menu, allowing the player to enter the country selection without any selected. The same country may have several definitions. In particular, these are used as arguments inside:
+** <code>history = loc_key</code> decides on the [[localisation]] key used for the description shown to the player when this country is chosen.
+** <code>ideology = neutrality</code> is the [[ideology]] group that the country starts with. This is used to determine the country leader, the ideology icon, the name of the country, and the flag.
+** <code>minor = yes</code> is used to mark the country as minor, making it appear in the lower menu with small flags instead of the top one where the leader is shown. '''This will also requires the country to start with a national focus tree that doesn't have <code>default = yes</code> to show up in the selection''', used in the base game to make the interesting country selection depend on the [[DLC]]s.
+** <code>available = { has_dlc = "Poland: United and Ready" }</code> is a [[trigger]] block that must be fulfilled for the country to show up in the selection. This is typically only used for DLC checks, as nothing else may reasonably change before country selection.
+** <code>ideas = { TAG_idea_1 TAG_idea_2 TAG_idea_3 }</code> is the list of [[national spirit]]s that should be shown to the player when the country is selected. This doesn't modify or depend on the actual spirits that the country will have on startup, which is typically handled in [[Country creation#Country history|country history]] or [[State modding#History|state history]]. By default, limited to 3 entries.<ref>Decided by the max slots in the <code>ideas_grid</code> gridbox in <code>gamesetup_interesting_countries_window</code>, by default defined in {{path|interface/frontendgamesetupview.gui}}</ref>
+** <code>focuses = { TAG_focus_1 TAG_focus_2 TAG_focus_3 }</code> is the list of [[national focus]]es that should be shown to the player when the country is selected. By default, limited to 3 entries.<ref>Decided by the max slots in the <code>focus_grid</code> gridbox in <code>gamesetup_interesting_countries_window</code>, by default defined in {{path|interface/frontendgamesetupview.gui}}</ref>
+
+== File example ==
+<pre>bookmarks = {
+    bookmark = {    # Relatively empty bookmark
+        name = example_bookmark_1
+        desc = example_bookmark_1_desc
+        date = 1936.1.1.12
+        picture = GFX_select_date_1936
+        
+        "---" = {
+            history = OTHER_SCENARIO1_DESC
+        }
+        effect = {
+            randomize_weather = 1228
+        }
+    }
+    bookmark = {    # A bookmark with a few countries.
+        name = example_bookmark_2
+        desc = example_bookmark_2_desc
+        date = 1936.1.1.12
+        picture = GFX_select_date_1936
+        
+        default = yes
+        default_country = BHR
+        
+        BHR = {
+            history = BHR_SCENARIO2_DESC
+            ideology = neutrality
+            
+            focuses = { BHR_focus_1 }
+            ideas = {
+                BHR_idea_1
+                BHR_idea_2
+            }
+        }
+        QAT = {
+            history = QAT_SCENARIO2_DESC
+            ideology = democratic
+            minor = yes
+            
+            available = { NOT = { has_dlc = "Arms Against Tyranny" } }
+        }
+        QAT = {
+            history = QAT_SCENARIO2_DESC
+            ideology = democratic
+            minor = yes
+            
+            focuses = {
+                QAT_focus_1
+                QAT_focus_2
+            }
+            available = { has_dlc = "Arms Against Tyranny" }
+        }
+        "---" = {
+            history = OTHER_SCENARIO2_DESC
+        }
+        effect = {
+            randomize_weather = 45768
+            321 = { transfer_state_to = QAT }  # Despite being on the same date as the previous bookmark, it will have different starting history
+        }
+    }
+}</pre>
+
+== User interface ==
+{{Anchor|Interface}}{{See also|Interface modding}}{{SVersion|1.13}}
+{{Sprite overview|collapsed=yes}}
+In the base game, the images used to represent a bookmark (e.g. <code>GFX_select_date_1936</code>) have the size of 180x104 pixels, with there being a gap in the bottom to prevent overlap with the frame. This gap can be created by selecting and deleting a circle with a radius of ~35 pixels and the centre approximately 90 pixels to the right from the left edge and 130 pixels below the top edge. 
+
+By default, the selection of bookmarks and interesting countries within bookmarks is defined in the {{path|interface/frontendgamesetupview.gui}} file. In particular, these changes are common to make:
+* The <code>bookmarks_grid</code> gridbox is used for positioning the bookmarks for the player to select, and the <code>bookmark_entry</code> container windows are the individual elements of that gridbox. If the amount of bookmarks doesn't match the ones in the base game, this is necessary to edit:
+** By default, having one bookmark in the loaded files skips the bookmark selection entirely. This can be circumvented by having two bookmarks, but hiding the second one from view. Adding <code>max_slots_horizontal = 1</code> to the gridbox will prevent more than 1 from showing. The gridbox may be edited in the opposite case of more than 2 bookmarks as well, by increasing the amount of possible rows.
+** If the amount of bookmark differs from the default, the size of each bookmark may be changed. This would require changing the coordinate positions of elements inside of each bookmark, as well as changing the image used for the frame and/or the font size.
+* There are 3 <code>countries_grid</code> gridboxes in the file used for positioning the interesting countries. The one inside of the <code>countries</code> container window is used for major countries, while the ones inside <code>countries_medium</code> and <code>countries_mini</code> are for minor countries, changing from one to the other after a 9th minor country is added.
+** There is no way to make either gridbox not follow a grid pattern. However, it is instead possible to create dummy country entries and hide them from the final product by placing [[Interface modding#iconType|iconTypes]] inside of the <code>gamesetup_interesting_countries_window</code> container window after the gridbox, set to use an image that covers up the minor interesting country with the background.
+
+== Notes ==
+* If there is only one bookmark defined within the loaded files, the game will skip the bookmark selection for the player and go straight into the bookmark selection. From that menu, going back to the main menu, either with the interface button or by using hte hotkey, is impossible. This can be avoided by still having a second bookmark but hiding it from the player, as in {{section link||User interface}}.
+* The start date cannot be placed before the year 2. If the earliest start date is changed from default, it is necessary to edit the [[Defines]] in an [[Defines#Overrides|override file]]. In particular,[[Defines#START_DATE|NGame.START_DATE]], [[Defines#END_DATE|NGame.END_DATE]], and [[Defines#TENSION_TIME_SCALE_START_DATE|NDiplomacy.TENSION_TIME_SCALE_START_DATE]] are the ones may need changing.
+* In order for the in-game state to change between the start dates, it is possible to place date blocks in [[Country_creation#Adding_history_for_other_bookmarks|country history]] or [[State modding#History|state history]], which will be executed if and only if the start date is strictly later than the specified date. For example, this state history block will make it be owned by ABC on the game's start, but by DEF if the start date is later than 1937.1.1:
+<pre>history = {
+    owner = ABC
+    1937.1.1 = {
+        owner = DEF
+    }
+}</pre>
+* If there should be a difference between bookmarks with the same date, then the <code>effect</code> attribute can be used.
+* The bookmarks are positioned in the order of their start dates. If two bookmarks have the same date, then they are positioned in the order [[Modding#Loading files|in which they are evaluated]]. The interesting countries are positioned in the order in which they are written in the bookmark.
+== Game rules ==
+The game rules allow the player to change the gameplay conditions that will apply after the country selection has been finished. There are two types of database elements that are grouped under "Game rules" for the player:
+* Difficulty settings, in {{path|common/difficulty_settings/*.txt}} files. These are used to apply a modifier to a country or a group of countries and present themselves as a slider.
+* Game rules, in {{path|common/game_rules/*.txt}} files. These are used to present a dropdown menu to the player out of a few options.
+'''Either one having no valid entries will result in the player being unable to open the menu for editing the game rules.'''
+=== Difficulty settings ===
+Difficulty settings will apply a [[static modifier]] to a country or a group of countries based on the slider that the player chooses, defined within {{path|common/difficulty_settings/*.txt}} files. This is unrelated to the difficulty itself that the player chooses.{{cref|a}}
+
+The files are structured with a unified <code>difficulty_settings = { ... }</code> entry, with each difficulty setting being a separate <code>difficulty_setting = { ... }</code> inside of it. In particular, these attributes exist:
+* <code>key = custom_diff_strong_tag</code> is the [[localisation]] key used as the name of the setting in the game rules menu.
+* <code>modifier = diff_strong_ai_generic</code> is the [[static modifier]] that gets used for the setting.
+* <code>countries = { ABC DEF GHI }</code> is a list of country tags that should have the modifier applied.
+* <code>multiplier = 2.0</code> is how much the modifier should be multiplied to on the maximum scale. This scales linearly depending on which value the player chose out of 5 total positions the slider can take, from 0 to the number in the attribute. For example, if the static modifier contains <code>stability_factor = 0.4</code> and the multiplier is set to 2.0, each position of the slider from left to right will respectively give the country 0%, 20%, 40%, 60%, and 80% {{icon|stability|1}}.
+The sliders are positioned in the order [[Modding#Loading files|in which they are evaluated]]. In particular, the [[wp:ASCII#Printable characters|files in the folder are sorted using the ASCII character order]], then the sliders are added in the order that they are defined in the files.
+
+Example file structure:
+<pre>difficulty_settings = {
+    difficulty_setting = {
+        key = "custom_diff_strong_bhr"
+        modifier = diff_strong_ai_generic
+        countries = { BHR }
+        multiplier = 2.0
+    }
+    difficulty_setting = {
+        key = "custom_diff_weak_arab"
+        modifier = diff_weak_ai_generic # Doesn't exist in the base game
+        countries = { BHR QAT OMA YEM SAU }
+        multiplier = 4.0
+    }
+}</pre>
+=== Game rules ===
+Game rules apply allow the player to choose an option among the selection of a few choices before the game's start, defined in {{path|common/game_rules/*.txt}} files. For any new game rules, this will '''only''' change how the [[Triggers#has_game_rule|has_game_rule trigger]] evaluates, which can be used in [[Effect#if|conditional statements]] to give a different result based on the game rule.
+
+There are these three general categories of game rules that exist in the base game:
+* One-time change in-game: This usually changes some aspect of the world immediately after the game starts, using [[On actions#on_startup|the on_startup on action]]. For example, the "nation fragmentation" game rules fall into this category.
+* Mechanical change: This changes how some mechanic works by continuously checking for the game rule being set in-game. For example, the game rule to hide obsolete [[national focus]] branches does so by including a check for the game rule being set in the [[National focus modding#allow_branch|allow_branch of the national focuses to hide]]. These two subsets are particularly notable:
+:* Diplomatic actions: these game rules modify the prerequisites necessary to execute a diplomatic action. These are usually handled with [[diplomacy scripted triggers]], though occassionally there is distinction that's purely hard-coded (Usually this is the difference between the "Limited" and "Free" options).
+:* AI behaviour: these game rules are checked for within [[AI strategy plans]] and enable one to choose a random focus path. The "random" option is typically handled by setting a [[flag|country flag]] using [[Effect#random_list|random_list]] within the [[On actions#on_startup|the on_startup on action]]. 
+* Entirely hard-coded game rules: Some game rules' values are checked directly in the game's binary and thus are unmoddable for the most part with the exception of deleting them or some options of them. For example, the game rule that changes the maximum level of land forts falls under this category.
+
+Each game rule is defined as a separate root-level block within the {{path|custom=1|common/game_rules/}} file, where the ID of the game rule is the name of this block. These attributes can be used:
+* <code>name = loc_key</code> is the [[localisation]] key used as the name of the game rule shown to the player. In particular, the localisation values for this usually include [[Localisation#Country.27s_flags|flags of countries]] or [[text icon]]s.
+* <code>group = group_id</code> is the group where this game rule is positioned. '''A group needs no other definition''' and will be automatically created if any game rule uses this group. The group ID also serves as the [[localisation]] key used for the name in the currently-enabled language.
+* <code>icon = GFX_example_sprite</code> is the [[spriteType]] used as the icon of the game rule. In the base game, these link to images approximately 32x32 pixels large.
+* <code>required_dlc = "Wojtek Expansion Pack"</code> is the DLC required for the game rule to be ''created''. If the DLC isn't enabled, then the game rule will not be created entirely, which may also manifest in additional entries in error.log when evaluating trigger blocks that reference the game rule. Optional, defaults to the game rule requiring no DLC.
+* <code>exclude_dlc</code> opposite to <code>required_dlc</code>.
+* <code>option = { ... }</code> and <code>default = { ... }</code> are used to define options of the game rule, with the latter being automatically selected by default. These can be replicated multiple times. In particular, these have the following attributes:
+** <code>name = option_name</code> is the ID of the option used for the [[Triggers#has_game_rule|has_game_rule trigger]] and occassionally hard-coded checks.
+** <code>text = loc_key</code> the [[localisation]] key deciding the name of the game rule shown to the player.
+** <code>desc = loc_key</code> the [[localisation]] key deciding the text shown to the player when they hover over the option.
+** <code>allow_achievements = yes</code> makes a game rule not disable achievements upon being selected. Since modifying game rules inherently changes the [[checksum]] from the base game, which disables achievements, this will not result in any change in a mod. Only works inside of <code>option = { ... }</code>, as the default option already allows achievements.
+
+Example file structure:
+<pre>allow_new_diplo_option = {
+    name = "RULE_ALLOW_SCRIPTED_DIPLO_OPTION"
+    group = "RULE_GROUP_GENERAL_FOREIGN_POLICY"
+    icon = "GFX_new_icon"
+    default = {
+        name = "ALLOWED"
+        text = "RULE_OPTION_ALLOWED"
+        desc = "RULE_ALLOW_SCRIPTED_DIPLO_OPTION_ALLOWED_DESC"
+    }
+    option = {
+        name = "BLOCKED"
+        text = "RULE_OPTION_BLOCKED"
+        desc = "RULE_ALLOW_SCRIPTED_DIPLO_OPTION_BLOCKED_DESC"
+    }
+}
+BHR_ai_behavior = {
+    name = "BHR_AI_BEHAVIOR"
+    group = "RULE_GROUP_AI_BEHAVIOR"
+    default = {
+        name = DEFAULT
+        text = "RULE_OPTION_DEFAULT"
+        desc = "RULE_OPTION_DEFAULT_AI_DESC"
+    }
+    option = {
+        name = COMMUNIST
+        text = "RULE_OPTION_COMMUNIST"
+        desc = "RULE_OPTION_COMMUNIST_BHR_AI_DESC"
+    }
+    option = {
+        name = DEMOCRATIC
+        text = "RULE_OPTION_DEMOCRATIC"
+        desc = "RULE_OPTION_DEMOCRATIC_BHR_AI_DESC"
+    }
+    option = {
+        name = FASCIST
+        text = "RULE_OPTION_FASCIST"
+        desc = "RULE_FASCIST_BHR_AI_DESC"
+    }
+    option = {
+        name = RANDOM
+        text = "RULE_OPTION_RANDOM"
+        desc = "RULE_OPTION_RANDOM_AI_DESC"
+    }
+}</pre>
+
+== References and notes ==
+{{cnote|a|The difficulty itself applies a [[static modifier]] to every country. There can only be 5 (though others can be hidden from the UI, it will still be possible to select them as the last selected difficulty carries over across savefiles), and different modifiers are granted to the players and AI. In particular, <code>diff_very_easy_player</code> to <code>diff_very_hard_player</code> are given to the player-led countries, and <code>diff_very_easy_ai</code> to <code>diff_very_hard_ai</code> are given to the AI-led countries.}}
+<references/>
+{{Modding navbox}}
+[[Category:Modding]]

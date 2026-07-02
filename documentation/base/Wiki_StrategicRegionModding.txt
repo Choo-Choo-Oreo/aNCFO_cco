@@ -1,0 +1,64 @@
+{{Version|1.10}}
+[[Strategic_Region|Strategic regions]] are defined in {{path|map/strategicregions/*.txt}}.
+
+Each strategic region is typically stored in it's own file, although you can store multiple strategic region definitions within the same file, as the ID is defined within the strategic region definition, rather than the file title.
+
+Here is a generic example of a strategic region:
+<pre>
+strategic_region = {
+    id = <int>
+    name = <localization key>
+    
+    provinces = {
+        <province ids>
+    }
+    
+    weather = {
+        period = {
+            between = { <min> <max> }
+            temperature = { <min> <max> }
+            no_phenomenon = <weight>
+            rain_light = <weight>
+            rain_heavy = <weight>
+            snow = <weight>
+            blizzard = <weight>
+            mud = <weight>
+            sandstorm = <weight>
+            min_snow_level = <amount>
+        }
+    }
+}
+</pre>
+
+* '''id''' defines the numerical id used by the strategic region. The strategic region IDs must be added sequentially, skipping numbers will cause crashes.
+
+* '''name''' defines the localization key the strategic region uses. You can use a non-localized string (i.e. "Paris"), but it is best practice to use localized strings.
+
+* '''provinces''' scope defines which provinces the strategic region is composed over.
+
+* '''weather''' scope determines the weather within the provinces covered by the strategic region.
+
+== Weather ==
+{{SVersion|1.10}}
+
+Each strategic region has a '''weather''' scope that determines how the weather changes for provinces within it.
+
+Each weather system is defined within a '''period''' scope within the '''weather''' scope. 
+
+* '''between''' scope determines when the weather system occurs, the notation is <code>day.month day.month</code>, i.e. <code>0.0 30.0</code> means the weather system occurs between the 1st of January and the 31st, including these days. Note that the first day and the first month are marked as 0, not as 1. 
+
+* '''temperature''' scope determines the minimum and maximum temperature for the weather system.
+
+* <s>'''temperature_day_night''' scope determines the minimum and maximum temperature variability during day and night for the weather system.</s> (This is no longer used since version 1.11, set all temperature ranges via temperature)
+
+* '''min_snow_level''' scope determines the minimum amount of snow that is always present in the weather system. Typically only used for areas with year-round snow.
+
+Each of the weather states are given a weight, determining how likely the state will occur within the weather system. The weather states can be found in {{path|common/weather.txt}}.
+
+== Tips ==
+{{SVersion|1.10}}
+* When placing strategic regions, the provinces they are compose of should be contiguous. This means islands are normally part of a ''sea'' strategic region.
+
+
+{{Modding navbox}}
+[[Category:Modding]]

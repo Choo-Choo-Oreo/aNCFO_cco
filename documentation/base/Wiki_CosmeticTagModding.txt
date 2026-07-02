@@ -1,0 +1,110 @@
+{{version|Timeless}}
+Cosmetic tags are a feature used to change the cosmetic appearance of a country.
+__TOC__
+Unlike regular tags, cosmetic tags do not require any definition to work and are not limited to 3 letters. A cosmetic tag changes the cosmetic aspects of the country that has it. In debug mode, the name of the cosmetic tag is shown when hovering over the country's flag in the politics or diplomacy view. The country may only have at most one cosmetic tag, setting a new one will remove the previous one.
+
+Most commonly, this is used to change the flag, name, and/or the colour of the country as it appears on the map, but it may also be used to change other information, such as the names and portraits of randomly-generated characters or entities used for the troop models. If a cosmetic tag doesn't change the appearance of a cosmetic aspect, it will remain unchanged from the default after the country gets it. The content for cosmetic tags is nearly always added identically to base cosmetic content, with the country tag replaced with the cosmetic tag.
+== Flag ==
+{{See also|Country creation|Flag|section=yes}}
+Flags are added in for cosmetic tags the same way as they would be added for the base appearance of countries: three 32-bit [[wikipedia:Truevision TGA|TGA-file]] flags with no RLE encoding with the bottom-left origin point are added into {{path|gfx/flags}} and its subfolders and their usage is based off the filename.
+{| class="wikitable"
+|-
+!  !! Size requirement<ref>{{cd|NGraphics|COUNTRY_FLAG_TEX_WIDTH}}, {{cd|NGraphics|COUNTRY_FLAG_TEX_HEIGHT}}, {{cd|NGraphics|COUNTRY_FLAG_MEDIUM_TEX_WIDTH}}, {{cd|NGraphics|COUNTRY_FLAG_MEDIUM_TEX_HEIGHT}}, {{cd|NGraphics|COUNTRY_FLAG_SMALL_TEX_WIDTH}}, {{cd|NGraphics|COUNTRY_FLAG_SMALL_TEX_HEIGHT}} in [[Defines]]</ref> !! Resulting filesize{{cref|a}}
+|-
+| Standard || 82x52 pixels || 16.6 or 17.1 KiB
+|-
+| Medium || 41x26 pixels || 4.2 or 4.69 KiB
+|-
+| Small || 10x7 pixels || 324 or 819 bytes
+|}
+
+The name of the flag follows the same pattern as for regular flags: if ideology-specific, <code>COSMETICTAG_ideology.tga</code>, for the non-ideology fallback <code>COSMETICTAG.tga</code>. '''The fallback does not have priority over an ideology-specific base country flag.''' If the country TAG may choose between <code>TAG_ideology.tga</code> and <code>COSMETICTAG.tga</code>, it will use the former. Therefore, if the cosmetic tag should change the flag, adding ideology-specific flags for cosmetic tags is mandatory, unless the base country doesn't have ideology-specific flags itself.
+
+== Map colour ==
+{{See also|Country creation|Country file|section=yes}}
+The map colours of a cosmetic tag, if they should change, are assigned in the {{path|common/countries/cosmetic.txt}} file. The file follows the exact same formatting as the {{path|custom=yes|colors.txt}} file used for regular tags:
+<pre>COSMETICTAG = {
+    color = rgb { 2  10  222 }
+    color_ui = rgb { 255 255 155 }
+}</pre>
+Either the [[wp:RGB_color_model|RGB colour model]] or the [[wp:HSL and HSV|HSV colour model]] may be used, signified by the <code>rgb</code>/<code>hsv</code> before the brackets. The RGB model may use decimals between 0 and 1 or between 0 and 255 for each value, while the HSV model must have its values limited to decimals between 0 and 1.
+
+== Localisation ==
+{{See also|Country creation|Localisation|section=yes}}
+For the English language, the name of the country is created in any {{path|localisation/english/*_l_english.yml}} file encoded in UTF-8 with the byte order mark (or UTF-8-BOM). Either of the three versions of the name will overwrite the base country equivalent, for example:
+<syntaxhighlight lang = "yaml">l_english:
+ COSMETICTAG_neutrality: "Cosmetic tag"
+ COSMETICTAG_neutrality_ADJ: "Cosmetic"
+ COSMETICTAG_neutrality_DEF: "The cosmetic tag"</syntaxhighlight>
+
+The cosmetic tag takes priority over the base localisation of the country. Each automatically-applying variation of the name may also be used, such as checking whether the country is a subject or if the check is moved to the ideology type within the ideology group, such as:
+<syntaxhighlight lang = "yaml">l_english:
+ COSMETICTAG_despotism_subject: "$OVERLORDADJ$ despotist cosmetic tag"</syntaxhighlight>
+
+== Other changes ==
+Other than these main uses, cosmetic tags serve several more minor cosmetic changes.
+* Randomly-generated names: A cosmetic tag may have its entry in {{path|common/names}} overwrite the entries used for the base country. This is used for randomly-generated character and idea (outside of the <code>country</code> category) names. This may be used to show that a different culture from usual dominates the government of the country. This is done in the exact same way as with a country tag:
+<pre>COSMETICTAG = {
+    male = { names = { examplename } }
+    female = { names = { examplename } }
+    surnames = { examplesurname }
+}</pre>
+* Randomly-generated portraits: A cosmetic tag may have its entry in {{path|portraits}} overwrite the entries used for the base country. This is used for randomly-generated characters. This is done in the exact same way as with a country tag:
+<pre>EUROPEAN_COSMETIC_TAG = {
+    army = { male = { "GFX_Portrait_Europe_Generic_land_1" } }
+    navy = { male = { "GFX_Portrait_Europe_Generic_navy_1" } }
+}</pre>
+* Entities used for units: A cosmetic tag may have the [[Entity modding|entities]] used for its [[Unit modding|units]] be changed from the default in {{path|gfx/entities/*.asset}} files. This is done similarly to regular countries, by prepending the name of the cosmetic tag to the name of the entity, such as this entry that clones the {{flag|France|French}} artillery entity for the country with COSMETICTAG:
+<pre>entity = {
+    name = "COSMETICTAG_artillery_entity"
+    clone = "FRA_artillery_entity"
+}</pre>
+== Application ==
+{{Anchor|Applying the cosmetic tag}}
+The cosmetic tag may be applied in any [[effect]] block, and is limited to only being possible to add or remove via them. Effect blocks include but are not limited to focus rewards, event options, decision effects, and country history files.
+
+<code>set_cosmetic_tag = COSMETICTAG</code> is used to apply the cosmetic tag to the country where the effect is executed. The tooltip will show that "Country will become known as the Cosmetic Tag", using the name of the country with the definite article (_DEF name, by the suffix in localisation) in the first part and the _DEF name of the cosmetic tag afterwards. If it appears in the tooltip that the name of the country doesn't change while the cosmetic tag is intended to, this is a sign that the _DEF name isn't defined. If the name shouldn't change, [[Effect#hidden_effect|it may be better to hide the tooltip from the player]] to avoid confusion.
+
+<code>drop_cosmetic_tag = yes</code> is used to remove the cosmetic tag that the country currently has. It has no tooltip.
+
+Example event that sets a cosmetic tag:
+<pre>country_event = {
+    id = event.1
+    title = event.1.t
+    desc = event.1.desc
+    
+    is_triggered_only = yes
+    
+    option = {
+        name = event.1.a
+        set_cosmetic_tag = COSMETICTAG
+    }
+}</pre>
+
+[[On actions]] are commonly used to dynamically apply or remove cosmetic tags depending on the game circumstances, such as ideology change or puppeting (on actions are only able to detect puppeting in peace conferences and when releasing a country; [[effect#puppet|if puppeting is done via an effect]], then set_cosmetic_tag has to be in the same effect block that puppets the country).<br/>
+An example on action that applies a cosmetic tag only when the country is {{icon|non-aligned|1}} is as such:
+<pre>on_actions = {
+    on_ruling_party_change = { # Note: the on action only runs after the game's start
+        effect = {
+            if = {
+                limit = {
+                    original_tag = ABC
+                    has_government = neutrality
+                }
+                set_cosmetic_tag = ABC_neutrality
+            }
+            else_if = {
+                limit = {
+                    original_tag = ABC
+                }
+                drop_cosmetic_tag = yes
+            }
+        }
+    }
+}</pre>
+
+== Notes and references ==
+{{cnote|a|If the correct settings of 32 bitdepth/bits per pixel and no RLE encoding are used, saving the flag should result in a consistent filesize each time. Paint.net, however, adds an approximately 500 byte large watermark to the end of the file if it is used to save the flag, which is not present when GIMP or Photoshop are used instead. The filesize is as shown in the Windows File Explorer and may differ in rounding if viewed elsewhere, such as the image editor's export menu.}}
+<references/>
+{{Modding navbox}}
+[[Category:Modding]]

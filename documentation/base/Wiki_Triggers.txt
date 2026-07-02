@@ -1,0 +1,5104 @@
+{{Version|1.16}}
+
+'''Conditions''' (also known as '''Triggers''') are used to check whether certain conditions are fulfilled in the game's current state or not, without being able to change anything in the game's state.{{cref|a}} These return a [[wp:Boolean_data_type|boolean]] (true or false), which may be interpreted by the block where it's used. Usually blocks that allow using triggers are an [[#AND|AND]] unless stated otherwise, which would instantly stop execution upon receiving a single false statement and return false.
+
+The list of triggers may be outdated. A complete, but unsorted, list of triggers can be found in {{path|documentation/triggers_documentation.html}} or {{path|documentation/triggers_documentation.md}}. As of 1.17.1.1, this file was last updated in the version 1.17.0.
+
+<!--is_operation_type is a trigger that exists according to documentation, but it's never used in-game. Please check.
+The following seem to be related localisation keys:
+ TRIGGER_IS_NOT_OPERATION:0 "Is not operation of $OPERATION|H$"
+ TRIGGER_IS_OPERATION:0 "Is operation of $OPERATION|H$"
+ !-->
+
+==Operators==
+Every trigger uses one of the three operators: The equality sign <code>=</code> or the comparison signs <code>></code> and <code><</code>. 
+
+The equality sign can either mean strict equality (Unlike previous games in the series where it checked for being equal or greater than) or can serve as a way to introduce a block of additional triggers, as in <code>has_opinion = { target = GRE value < -10 }</code>. The comparison signs serves as strict comparison: <code>has_political_power > 100</code> will not be true if the country has exactly 100 political power, for instance.
+
+Not all triggers support the equality sign or comparison signs. See the details for each trigger in the notes for it. If not stated otherwise, the trigger only supports the equality sign.
+
+==Context scopes==
+There are three general scopes all triggers operate in:
+*country
+*state
+*character
+
+They give context to a trigger by stating what the trigger is checking against. 
+
+Each country acts as a sub-scope of the general country scope, i.e. <code>GER = { }</code> will check only against Germany, whereas <code>any_country</code> will check against all countries. Likewise for states and characters.
+
+Triggers won't work in scopes they are not assigned to. Country triggers will not work for states or vice-versa.
+
+==Scopes==
+{{Main|Scopes}}
+These don't serve as triggers, but rather as scopes that change for whom the triggers are being checked. Each one also serves as an [[#AND|AND statement]].
+
+===Trigger scopes===
+{{#lsth:Scopes|Trigger scopes}}
+
+===Dual scopes===
+{{#lsth:Scopes|Dual scopes}}
+
+==Flow control tools==
+{{Main|Scopes#Flow control tools}}
+These are triggers that serve as more of a way to establish a connection in how triggers are evaluated. Each one serves as a trigger scope with additional arguments and can be used regardless of scope.
+{| class="wikitable sortable mw-collapsible" style="display: inline-block; padding: 5px" width="100%"
+|+ {{nowrap|Flow control tools:}}<br>
+! width="10%" | Name
+! width="25%" | Additional parameters
+! width="25%" | Examples
+! width="20%" | Description
+! width="15%" | Notes
+! width="5%" | Version Added
+|-id="AND"
+|AND
+|None
+|<pre>AND = {
+    original_tag = GER
+    has_stability > 0.5
+}</pre>
+|Returns false if any sub-trigger returns false, true otherwise. Evaluation stops at the first false sub-trigger.
+|Only necessary within [[#OR|OR statements]] and [[#NOT|NOT statements]], as everything else is implicitly AND.
+|1.0
+|-id="OR"
+|OR
+|None
+|<pre>OR = {
+    original_tag = ENG
+    original_tag = USA
+}</pre>
+|Returns true if any sub-trigger returns true, false otherwise. Evaluation stops at the first true sub-trigger.
+|
+|1.0
+|-id="NOT"
+|NOT
+|None
+|<pre>NOT = {
+    has_stability > 0.5
+    has_war_support > 0.5
+}</pre>
+|Returns false if any sub-trigger returns true, true otherwise. Evaluation stops at the first true sub-trigger.
+|Equivalent to a NOR rather than a NAND.
+|1.0
+|-id="count_triggers"
+|count_triggers
+|<code>amount = <int></code><br> The amount of triggers that need to be fulfilled.
+|<pre>count_triggers = {
+    amount = 2
+    10 = { state_population = 100000 }
+    11 = { state_population = 100000 }
+    12 = { state_population = 100000 }
+}</pre>
+|Sums the results of all sub-triggers (false=0, true=1) and returns true if the sum is at least <code>amount</code>.
+|
+|1.5
+|-id="if"
+|if
+|<code>limit = <trigger block></code><br>
+<code>else_if = <if-trigger></code><br>
+Alternative condition. Optional.<br>
+<code>else = <AND-trigger></code><br>
+Final alternative condition. Optional.
+|<pre>if = {
+    limit = {
+        has_dlc = "Poland: United and Ready"
+    }
+    has_political_power > 100
+}
+else_if = {
+    limit = {
+        has_dlc = "Waking the Tiger"
+    }
+    has_war_support > 0.5
+}
+else = {
+    always = no
+}
+</pre>
+|If <code>limit</code> is true, the sub-triggers are evaluated like an AND-trigger. If <code>limit</code> is false, <code>else_if</code> blocks are tried in sequence and finally <code>else</code> (if present). ''Otherwise true is returned''.
+|Both nested (As in inside of <code>if = { ... }</code>) and unnested (As in the example) <code>else</code> and <code>else_if</code> exist. In case of overlap, unnested is preferred.
+
+Can be useful for tooltip management: same as in effects, if the limit is unmet, nothing appears. If it is met, then the limit is hidden while the condition outside of the limit appears in the tooltip.
+
+<code>if = { limit = { trigger_1 = yes } trigger_2 = yes }</code> is equivalent to <code>OR = { NOT = { trigger_1 = yes } trigger_2 = yes }</code>, but generates a different tooltip.
+|1.0
+|-id="hidden_trigger"
+|hidden_trigger
+|None
+|<pre>hidden_trigger = {
+    country_exists = GER
+}</pre>
+|Hides the triggers from the tooltip shown to the player.
+|Also serves as an [[#AND|AND statement]].
+|1.0
+|-id="custom_trigger_tooltip"
+|custom_trigger_tooltip
+|<code>tooltip = <string></code><br>The localisation key to use.
+|<pre>custom_trigger_tooltip = {
+    tooltip = sunrise_invasion_tt       
+    any_state = {
+        is_owned_by = JAP
+        is_on_continent = europe
+        is_coastal = yes
+    }
+}</pre>
+|Hides the triggers from the tooltip shown to the player and instead uses the specified localisation key.
+|Alias for [[#custom_override_tooltip]] trigger (see that trigger for more info). Kept for backward compatibility. Prefer [[#custom_override_tooltip]] instead.
+Also supports [[Localisation#Bindable_localisation]].
+|1.0
+|-id="custom_override_tooltip"
+|custom_override_tooltip
+|<code>tooltip = <string></code><br>The localisation key to use.
+<code>not_tooltip = <string></code><br>The localisation key to use for NOT block. Optional.
+|<pre>custom_override_tooltip = {
+    tooltip = {
+      localization_key = GER_inner_circle_focus_in_progress_tt
+      CHARACTER = GER_rudolf_hess
+      FLAG_DAYS = [?GER_rally_the_industrialists_in_progress_flag:days]
+    }
+    not_tooltip = MY_TOOLTIP_NOT
+    <triggers>
+}</pre>
+|An [[#AND|AND]] trigger that has an overriden custom tooltip.
+|A positive tooltip can be set with <code>tooltip</code> and the tooltip to be used inside a [[#NOT|NOT]] can be set with <code>not_tooltip</code>. If no positive tooltip is provided and the root key is a localization key (not a formatter, see formatted localization), then a negative tooltip will be generated by appending <code>_NOT</code> to the root localization for the positive tooltip. Both <code>tooltip</code> and <code>not_tooltip</code> are bindable localizations.
+[[Effects#custom_override_tooltip|Can also be used as effect.]]<br>
+Also supports [[Localisation#Bindable_localisation]].
+|1.15
+|}
+
+==Any scope==
+{{SVersion|1.16}}
+These triggers do not require any particular scope.
+
+===General===
+{| class="wikitable sortable mw-collapsible" style="display: inline-block; padding: 5px" width="100%"
+|+ {{nowrap|General any-scoped triggers:}}<br>
+! width="10%" | Name
+! width="25%" | Parameters
+! width="25%" | Examples
+! width="20%" | Description
+! width="15%" | Notes
+! width="5%" | Version Added
+|-id="always"
+|always
+|<code><bool></code><br>Boolean.
+|<pre>always = yes</pre>
+|Always returns true or false. Useful for debugging.
+|
+|1.0
+|-id="has_global_flag"
+|has_global_flag
+|<code><string></code><br>The flag to check.
+|<pre>has_global_flag = my_flag</pre>
+|Checks if the specified flag has been set.
+|
+|1.0
+|-id="has_global_flag"
+|has_global_flag
+|<code>flag = <string></code><br>The flag to check.<br>
+<code>value = <int></code><br>The flag value to check for. Optional.<br>
+<code>date = <date></code><br>The flag creation date to check for. Optional.<br>
+<code>days = <int></code><br>The duration the flag existed for. Optional.
+|<pre>
+has_global_flag = {
+    flag = my_flag
+    days > 30
+    date > 1936.6.1
+    value > 0
+}
+</pre>
+|Compares the specified flag's last set date, days since last set, and/or value.
+|If not set, the value comparison is <code>>0</code>. <code>value</code> is limited between -32768 and 32767.
+|1.0
+|-id="has_dlc"
+|has_dlc
+|<code><string></code><br>The DLC name to check for.
+|<pre>has_dlc = "Waking the Tiger"</pre>
+|Checks if the specified DLC is enabled.
+|
+|1.0
+|-id="has_start_date"
+|has_start_date
+|<code><date></code><br>The date to check for.
+|<pre>has_start_date > 1950.01.01</pre>
+|Checks if the specified date was the start date used for the current game.
+|Year.Month.Day 
+Must use either > or < operators.
+|1.0
+|-id="date"
+|date
+|<code><date></code><br>The date to check for.
+|<pre>date < 1950.01.01</pre>
+|Checks if the specified date against the current date.
+|Year.Month.Day 
+Must use either > or < operators.
+|1.0
+|-id="difficulty"
+|difficulty
+|<code><int></code><br>The difficulty value.
+|<pre>difficulty > 0</pre>
+|checks if the specified difficulty against the current difficulty.
+|Must use either > or < operators.
+|1.0
+|-id="has_any_custom_difficulty_setting"
+|has_any_custom_difficulty_setting
+|<code><bool></code><br>Boolean.
+|<pre>has_any_custom_difficulty_setting = yes</pre>
+|Checks if any custom difficulty setting is changed from their default value.
+|Custom difficulty in this case refers to {{path|common/difficulty_settings/*.txt}}, used in base game to strengthen a specific country.
+|1.0
+|-id="has_custom_difficulty_setting"
+|has_custom_difficulty_setting
+|<code><string></code><br>The setting to check.
+|<pre>has_custom_difficulty_setting = custom_diff_strong_sov</pre>
+|Checks if the specified custom difficulty setting is changed from the default value.
+|Custom difficulty in this case refers to {{path|common/difficulty_settings/*.txt}}, used in base game to strengthen a specific country.
+|1.0
+|-id="game_rules_allow_achievements"
+|game_rules_allow_achievements
+|<code><bool></code><br>Boolean.
+|<pre>game_rules_allow_achievements = yes</pre>
+|Checks if all of the active game rule options allow achievements.
+|
+|1.9
+|-id="country_exists"
+|country_exists
+|<code><scope> / <variable></code><br>The country to check.
+|<pre>country_exists = GER</pre>
+|Checks if the specified country currently exists in game.
+|
+|1.0
+|-id="is_ironman"
+|is_ironman
+|<code><bool></code><br>Boolean.
+|<pre>is_ironman = yes</pre>
+|Checks if the current game is running in Ironman mode.
+|
+|1.0
+|-id="is_historical_focus_on"
+|is_historical_focus_on
+|<code><bool></code><br>Boolean.
+|<pre>is_historical_focus_on = yes</pre>
+|Checks if the current game is running with Historical Focuses on.
+|
+|1.0
+|-id="is_tutorial"
+|is_tutorial
+|<code><bool></code><br>Boolean.
+|<pre>is_tutorial = yes</pre>
+|Checks if the current game is running in Tutorial mode.
+|
+|1.0
+|-id="is_debug"
+|is_debug
+|<code><bool></code><br>Boolean.
+|<pre>is_debug = yes</pre>
+|Checks if game is in debug mode (launched with -debug argument).
+|
+|1.9
+|-id="threat"
+|threat
+|<code><float></code><br>The amount to check for.
+|<pre>threat > 0.5</pre>
+|Checks if World Tension is above the specified amount.
+|Must use either > or < operators.
+|1.0
+|-id="has_game_rule"
+|has_game_rule
+|<code><string></code><br>The game rule to check for.<br>
+<code><string> / <bool></code><br>The option to check.<br>
+|<pre>has_game_rule = { rule = GER_can_remilitarize_rhineland option = yes }</pre>
+|Checks if a game rule is set to a particular option.
+|
+|1.5
+|-id="has_completed_custom_achievement"
+|has_completed_custom_achievement
+|<code>mod = <mod ID></code><br>The mod where the achievement is from.<br>
+<code>achievement = <achievement ID></code><br>The name of the achievement.
+|<pre>has_completed_custom_achievement = {
+    mod = my_mod_unique_id
+    achievement = my_achievement_token
+}</pre>
+|Checks if the player controlling the current scope has completed the specified custom achievement.
+|The achievement (including the ID of the mod it's from) is defined within {{path|common/achievements/*.txt}} files<ref>[[forum:1544899|[Modding] Achievement for mods]]<br>[[forum:1544901|Tutorial to write achievements files in your mod]]</ref>. The achievement could be completed during a previous session, not necessarily the current one.<br>
+If the mod defining the achievement is not loaded, the trigger evaluates as false.
+|1.12.5
+|}
+
+===Career profile===
+{| class="wikitable sortable mw-collapsible" style="display: inline-block; padding: 5px" width="100%"
+|+ {{nowrap|Career profile-releated any-scoped triggers:}}<br>
+! width="10%" | Name
+! width="25%" | Parameters
+! width="25%" | Examples
+! width="20%" | Description
+! width="15%" | Notes
+! width="5%" | Version Added
+|-id="career_profile_check_medal"
+|career_profile_check_medal
+|<code>medal = <medal></code><br>Medal to check.
+<code>???</code><br>
+|<pre>career_profile_check_medal = {
+  medal = raining_debris_medal
+  ???
+}</pre>
+|Checks if the required medal is achieved and collected.
+|Provide no tooltip.
+|???
+|-id="career_profile_check_ribbon"
+|career_profile_check_ribbon
+|<code>ribbon = <ribbon></code><br>Ribbon to check.
+<code>tooltip = <loc_key></code><br>Optional.
+|<pre>career_profile_check_ribbon = {
+  ribbon = orchestra_of_boom
+  tooltip = my_loc_key
+}</pre>
+|Checks if the required ribbon is achieved and collected.
+|By default provide no tooltip.
+|???
+|-id="career_profile_check_playthrough_ratio"
+|career_profile_check_playthrough_ratio
+|<code>frits = <variable></code><br>
+<code>second = <variable></code><br><br>
+<code>ratio = <int></code><br>Ratio.<br>
+<code>compare = <type></code><br>The type of comparison.<br>
+|<pre>career_profile_check_playthrough_ratio = {
+  first = enemy_casualties
+  second = total_own_casualties
+  ratio = 4
+  compare = greater_than_or_equals
+}</pre>
+|Compares the ratio (first/second) of two playthrough values to a number.
+|Provide no tooltip.
+Possible compare types:
+* less_than
+* less_than_or_equals
+* greater_than
+* greater_than_or_equals
+* equals
+* not_equals
+|???
+|-id="career_profile_check_playthrough_value"
+|career_profile_check_playthrough_value
+|<code>{ ... }</code><br>
+'''OR'''<br>
+<code>var = <variable></code><br>Value to compare.<br>
+<code>value = <int></code><br>Value to compare to.<br>
+<code>compare = <type></code><br>The type of comparison. Optional.<br>
+<code>tooltip = <loc_key></code><br>Optional.<br>
+<code>tooltip_value = <int></code><br>Optional.
+|<pre>career_profile_check_playthrough_value = {
+  plan_landlocked_battleship > 1
+  plan_landlocked_carrier > 0
+}</pre>
+<pre>career_profile_check_playthrough_value = {
+  var = deployed_airplanes_with_air_defense_gold
+  value = 100
+  compare = greater_than_or_equals
+  tooltip = CAREER_PROFILE_TRIGGER_DEPLOYED_AIRPLANES_WITH_AIR_DEFENSE
+  tooltip_value = 100
+</pre>
+|Compares a playthrough value to a number.
+|By default provide no tooltip.
+Possible compare types:
+* less_than
+* less_than_or_equals
+* greater_than
+* greater_than_or_equals
+* equals
+* not_equals
+|???
+|-id="career_profile_check_points"
+|career_profile_check_points
+|<code>value = <int></code><br>Value to compare.
+<code>compare = <type></code><br>The type of comparison.<br>
+<code>tooltip = <loc_key></code><br>Optional.<br>
+|<pre>career_profile_check_points = {
+  value = 5000
+  compare = greater_than_or_equals
+  tooltip = CAREER_PROFILE_TRIGGER_MINED_SEA_REGIONS
+}</pre>
+|Compares a career points value to a number.
+|By default provide no tooltip.
+Possible compare types:
+* less_than
+* less_than_or_equals
+* greater_than
+* greater_than_or_equals
+* equals
+* not_equals
+|???
+|-id="career_profile_check_ratio"
+|career_profile_check_ratio
+|Possible the same as [[#career_profile_check_playthrough_ratio]].
+|Possible the same as [[#career_profile_check_playthrough_ratio]].
+|Compares the ratio (first/second) of two career profile values to a number.
+|Possible the same as [[#career_profile_check_playthrough_ratio]].
+|???
+|-id="career_profile_check_value"
+|career_profile_check_value
+|Possible the same as [[#career_profile_check_playthrough_value]].
+|Possible the same as [[#career_profile_check_playthrough_value]].
+|Compares a career profile value to a number.
+|Possible the same as [[#career_profile_check_playthrough_value]].
+|???
+|-id="career_profile_has_player_flag"
+|career_profile_has_player_flag
+|<code><string></code><br>The flag to check.
+|<pre>career_profile_has_player_flag = career_profile_overrun_infantry_flag</pre>
+|Checks if the flag is set for the local player.
+|
+|???
+|}
+
+===Variables===
+{{SVersion|1.16}}
+
+{| class="wikitable sortable mw-collapsible" style="display: inline-block; padding: 5px" width="100%"
+|+ {{nowrap|Variable-related triggers:}}<br>
+! width="10%" |Name
+! width="25%" |Parameters
+! width="25%" |Examples
+! width="20%" |Description
+! width="15%" |Notes
+! width="5%" |Version Added
+|-id="has_variable"
+|has_variable
+|<code><variable></code><br>The variable to check.
+|<pre>has_variable = my_var</pre>
+|Checks if the specified variable exists for the current scope.
+|
+|1.5
+|-id="check_variable"
+|check_variable
+|<code>var = <variable></code><br>The variable to check.<br>
+<code>value = <float> / <variable></code><br>The value to check for.<br>
+<code>compare = <type></code><br>The type of comparison. Optional, can use < or > instead.
+|<pre>
+check_variable = {
+    var = my_var
+    value = 10
+    compare = greater_than_or_equals
+}
+</pre>
+<pre>
+check_variable = {
+    my_var > 10
+}
+</pre>
+|Check the specified variable for the current scope.
+|Possible compare types:
+*less_than
+*less_than_or_equals
+*greater_than
+*greater_than_or_equals
+*equals
+*not_equals
+|1.5
+|}
+
+Remember that variables need to refer to the scope they were set in. This means you can't check a country variable in a state scope without scoping the variable. 
+
+For example, to get the country variable whilst in a state scope, you'd do the following:
+
+<pre>
+<country> = {
+    <state> = {
+        limit = {
+            check_variable = { from.my_country_var > 0.0 }
+        }
+    }
+}
+</pre>
+
+See [[Variables]] for more information.
+
+===Debugging===
+These are usable as both effects and triggers and are used for debugging, with the player never seeing them.
+{| class="wikitable sortable mw-collapsible" style="display: inline-block; padding: 5px" width="100%"
+|+ {{nowrap|Debugging-helpful triggers:}}<br>
+! width="10%" |Name
+! width="25%" |Parameters
+! width="25%" |Examples
+! width="20%" |Description
+! width="15%" |Notes
+! width="5%" |Version Added
+|-id="log"
+|log
+|<code><string></code><br>What to log. Supports dynamic localisation.<br>
+|<pre>log = "Added [?temp_add] to [THIS.GetTag]'s variable [?THIS.varvalue]"</pre>
+|Appends an entry into the game.log and, if open, the console when evaluating the trigger.
+|game.log is stored within {{path|logs/}} in the [[Modding|user directory]]
+|1.5
+|-id="print_variables"
+|print_variables
+|<code>print_global = <bool></code><br>Print global variables. Defaults to <code>no</code>.<br>
+<code>var_list = <list></code><br>The variables to print. Defaults to all variables.<br>
+<code>file = <string></code>The file path to log to. Defaults to "variable_dump". Does not include the <code>.log</code> extension.<br>
+<code>text = <string></code>Text to prepend. Defaults to "No Header".<br>
+<code>append = <bool></code>Whether to append to the file instead of overwrite. Defaults to <code>yes</code>
+|<pre>print_variables = {
+    var_list = { myvar1 myvar2 }
+    file = "my_dump_file"
+    text = "my header"
+}</pre>
+|Dumps the specified variables from the current scope and optionally the global scope into a log file with the specified name.
+|The log will be within {{path|logs/variable_dumps/}} in the [[Modding|user directory]]. See also [[Variables#Debugging|debugging variables]].
+|1.5
+|}
+
+==Country scope==
+{{SVersion|1.16}}
+Can be used in '''country''' scope.
+
+===General===
+{{SVersion|1.16}}
+
+{| class="wikitable sortable mw-collapsible" style="display: inline-block; padding: 5px" width="100%"
+|+ {{nowrap|General country-scoped triggers:}}<br>
+! width="10%" | Name
+! width="25%" | Parameters
+! width="25%" | Examples
+! width="20%" | Description
+! width="15%" | Notes
+! width="5%" | Version Added
+|-id="exists"
+|exists
+|<code><bool></code><br>Boolean.
+|<pre>exists = yes</pre>
+|Checks if the current scope exists in game.
+|
+|1.0
+|-id="tag"
+|tag
+|<code><scope> / <variable></code><br>The country to check.
+|<pre>tag = GER</pre>
+<pre>tag = var:my_country</pre>
+|Checks if the current scope is the specified country.
+|Only checks the actual tag while excluding dynamic countries, see [[#original_tag|original_tag]] if they should be included.
+|1.0
+|-id="original_tag"
+|original_tag
+|<code><scope> / <variable></code><br>The country to check.
+|<pre>original_tag = GER</pre>
+<pre>original_tag = var:my_country</pre>
+|Checks if the current scope originates from the specified country.
+|This also includes dynamic countries: civil war breakaways and countries created via [[Effect#create_dynamic_country|create_dynamic_country]]. True for the original country.
+|1.0
+|-id="is_ai"
+|is_ai
+|<code><bool></code><br>Boolean.
+|<pre>is_ai = yes</pre>
+|Checks if the current scope is AI.
+|
+|1.0
+|-id="has_collaboration"
+|has_collaboration
+|<code>target = <country></code><br>The country to check.<br>
+<code>value <> <decimal></code><br>The value of the collaboration on the 0-1 scale.
+|<pre>has_collaboration = {
+    target = GER
+    value > 0.5
+}</pre>
+|Checks if the current scope has a collaboration level in the target scope.
+|The target is occupied by the current scope. Must use < or > in the value argument.
+|1.9
+|-id="has_country_flag"
+|has_country_flag
+|<code><string></code><br>The flag to check.
+|<pre>has_country_flag = my_flag</pre>
+|Checks if the current scope has the specified flag.
+|
+|1.0
+|-id="has_country_flag"
+|has_country_flag
+|<code>flag = <string></code><br>The flag to check.<br>
+<code>value = <int></code><br>The flag value to check for. Optional.<br>
+<code>date = <date></code><br>The flag creation date to check for. Optional.<br>
+<code>days = <int></code><br>The duration the flag existed for. Optional.
+|<pre>
+has_country_flag = {
+    flag = my_flag
+    days > 30
+    date > 1936.6.1
+    value > 0
+}
+</pre>
+|Compares the specified flag's last set date, days since last set, and/or value.
+|If not set, the value comparison is <code>>0</code>. <code>value</code> is limited between -32768 and 32767.
+|1.0
+|-id="has_cosmetic_tag"
+|has_cosmetic_tag
+|<code><string></code><br>The cosmetic tag to check.
+|<pre>has_cosmetic_tag = SOV_custom</pre>
+|Checks if the current scope has the specified cosmetic tag active.
+|
+|1.5
+|-id="has_event_target"
+|has_event_target
+|<code><event target></code><br>The event target to check.
+|<pre>has_event_target = my_var</pre>
+|Checks if current scope or global scope has the specified event target saved.
+|
+|1.0
+|-id="has_decision"
+|has_decision
+|<code><string></code><br>The decision to check.
+|<pre>has_decision = my_decision</pre>
+|Checks if the current scope has the specified decision activated.
+|
+|1.5
+|-id="has_dynamic_modifier"
+|has_dynamic_modifier
+|<code>modifier = <string></code><br>The dynamic_modifier to check. <br>
+<code>scope = <scope></code><br> The country to check. Optional, if the original modifier has been targeted.
+|<pre>has_dynamic_modifier = {
+    modifier = my_dynamic_modifier
+    scope = GER
+}
+</pre>
+|Checks if the current scope has the specified dynamic modifier activated.
+|
+|1.6
+|-id="has_active_mission"
+|has_active_mission
+|<code><string></code><br>The mission to check.
+|<pre>has_active_mission = my_mission</pre>
+|Checks if the current scope has the specified mission active.
+|
+|1.5
+|-id="has_country_custom_difficulty_setting"
+|has_country_custom_difficulty_setting
+|<code><bool></code><br>Boolean.
+|<pre>has_country_custom_difficulty_setting = yes</pre>
+|Checks if the any custom difficulty setting targeting the current scope is changed from the default value.
+|Custom difficulty in this case refers to {{path|common/difficulty_settings/*.txt}}, used in base game to strengthen a specific country.
+|1.0
+|-id="has_terrain"
+|has_terrain
+|<code><terrain></code><br>Terrain.
+|<pre>has_terrain = urban</pre>
+|Checks if the current scope has any provinces of the specified terrain.
+|Only can be used in country scope.
+|1.11
+|-id="is_dynamic_country"
+|is_dynamic_country
+|<code><bool></code><br>Boolean.
+|<pre>is_dynamic_country = yes</pre>
+|Checks if the current scope is a dynamic country.
+|Dynamic countries include those generated in civil wars as well as those generated with the create_dynamic_country effect, such as collaboration governments.
+|1.11
+|-id="num_of_supply_nodes"
+|num_of_supply_nodes
+|<code><int></code><br>The amount to check for.
+|<pre>num_of_supply_nodes > 10</pre>
+|Checks if the current scope has the specified amount of supply nodes under control.
+|Can only use < or > operators.
+|1.11
+|-id="resource_count_trigger"
+|<resource> (resource_count_trigger)
+|<code><int></code><br>The amount to check for.
+|<pre>tungsten > 10
+</pre>
+|Checks if the current scope has the specified amount of the specified resource.
+|Must use either > or < operators for amount.
+[[#s_resource_count_trigger|Can also be used in state scope.]]
+|???
+|-id="has_resources_in_country"
+|has_resources_in_country
+|<code>resource = <resource></code><br>The resource to check for.<br>
+<code>amount = <int></code><br>The amount to check for.<br>
+<code>extracted = <bool></code><br>Limits the checked resources only to those gained from the state's base value and multiplicative modifiers on top of it if true. Optional, defaults to false.<br>
+<code>buildings = <bool></code><br>Limits the checked resources only to those gained from the state's modifiers applied by buildings. Optional, defaults to false.
+|<pre>
+has_resources_in_country = {
+    resource = oil
+    amount > 10
+    extracted = yes
+}
+</pre>
+|Checks if the current scope has the specified amount of the specified resource in reserve.
+|Must use either > or < operators for amount. 'In reserve' means that it's not spent on equipment production or exports.
+|1.12
+|}
+
+===National focuses===
+{{SVersion|1.17}}
+
+{| class="wikitable sortable mw-collapsible" style="display: inline-block; padding: 5px" width="100%"
+|+ {{nowrap|National focus-related country-scoped triggers:}}<br>
+! width="10%" | Name
+! width="25%" | Parameters
+! width="25%" | Examples
+! width="20%" | Description
+! width="15%" | Notes
+! width="5%" | Version Added
+|-id="has_focus_tree"
+|has_focus_tree
+|<code><string></code><br>The focus tree to check.
+|<pre>has_focus_tree = soviet_tree</pre>
+|Checks if the current scope has the specified focus tree.
+|
+|1.3
+|-id="has_completed_focus"
+|has_completed_focus
+|<code><string></code><br>The focus to check.
+|<pre>has_completed_focus = my_focus</pre>
+|Checks if the current scope has the specified focus completed.
+|
+|1.0
+|-id="focus_progress"
+|focus_progress
+|<code>focus = <string></code><br>The focus to check.<br>
+<code>progress = <string></code><br>The progress to check for.
+|<pre>focus_progress = {
+  focus = my_focus
+  progress > 0.5
+}
+</pre>
+|Checks if the specified focus has been completed the specified percent for the current scope.
+|Must use either > or < operators for progress.
+|1.0
+|-id="has_shine_effect_on_focus"
+|has_shine_effect_on_focus
+|<code><string></code><br>The focus to check.
+|<pre>has_shine_effect_on_focus = GER_wunderwaffe</pre>
+|Check if country has shine effect on focus (either manually achieved or by being worked on).
+|Note that tooltips are only shown in debug mode.
+Shine can be added manually by selecting focus, or via [[Effects#activate_shine_on_focus|activate_shine_on_focus]] effect.
+|1.15
+|}
+
+===Politics===
+{{SVersion|1.16}}
+
+{| class="wikitable sortable mw-collapsible" style="display: inline-block; padding: 5px" width="100%"
+|+ {{nowrap|Political country-scoped triggers:}}<br>
+! width="10%" | Name
+! width="25%" | Parameters
+! width="25%" | Examples
+! width="20%" | Description
+! width="15%" | Notes
+! width="5%" | Version Added
+|-id="ideology_support_trigger"
+|<ideology> (ideology_support_trigger)
+|<code><ideology> = <float> / <variable></code><br>The amount of the ideology to check for.
+|<pre>fascism > 0.5</pre>
+<pre>democratic > party_popularity@communism</pre>
+|Checks if the current scope has popularity of the specified ideology above the specified amount.
+|
+|1.0
+|-id="has_political_power"
+|has_political_power
+|<code><float> / <variable></code><br>The amount to check for.
+|<pre>has_political_power > 100</pre>
+|Checks if the current scope has the specified amount of political power.
+|Must use either > or < operators.
+|1.0
+|-id="political_power_daily"
+|political_power_daily
+|<code><float> / <variable></code><br>The amount to check for.
+|<pre>political_power_daily > 1</pre>
+|Checks if the current scope has the specified amount of daily political power gain.
+|Must use either > or < operators.
+|1.5
+|-id="political_power_growth"
+|political_power_growth
+|<code><float> / <variable></code><br>The amount to check for.
+|<pre>political_power_growth > 1</pre>
+|Checks if the current scope has the specified amount of daily political power gain.
+|Must use either > or < operators.
+|1.5
+|-id="command_power"
+|command_power
+|<code><float> / <variable></code><br>The amount to check for.
+|<pre>command_power > 1</pre>
+|Checks if the current scope has the specified amount of command power.
+|Must use either > or < operators.
+|1.5
+|-id="command_power_daily"
+|command_power_daily
+|<code><float> / <variable></code><br>The amount to check for.
+|<pre>command_power_daily > 1</pre>
+|Checks if the current scope has the specified amount of daily command power gain.
+|Must use either > or < operators.
+|1.5
+|-id="has_war_support"
+|has_war_support
+|<code><float> / <variable></code><br>The amount to check for.
+|<pre>has_war_support > 0.5</pre>
+|Checks if the current scope has the specified percentage of War Support.
+|Must use either > or < operators.
+|1.5
+|-id="has_stability"
+|has_stability
+|<code><float> / <variable></code><br>The amount to check for.
+|<pre>has_stability > 0.5</pre>
+|Checks if the current scope has the specified percentage of Stability.
+|Must use either > or < operators.
+|1.5
+|-id="has_government"
+|has_government
+|<code><ideology></code><br>The ideology group to check for.<br>
+'''OR'''<br>
+<code><country></code><br>The country to compare with.
+|<pre>has_government = fascism</pre>
+<pre>has_government = ROOT</pre>
+|Checks if the ruling party of the current scope meets the requirements of being either the specified ideology group or having the same ideology group as the specified country.
+|
+|1.0
+|-id="has_elections"
+|has_elections
+|<code><bool></code><br>Boolean.
+|<pre>has_elections = yes</pre>
+|Checks if the current scope holds elections.
+|
+|1.0
+|-id="is_staging_coup"
+|is_staging_coup
+|<code><bool></code><br>Boolean.
+|<pre>is_staging_coup = yes</pre>
+|Checks if the current scope is staging a coup.
+|
+|1.3
+|-id="is_target_of_coup"
+|is_target_of_coup
+|<code><bool></code><br>Boolean.
+|<pre>is_target_of_coup = yes</pre>
+|Checks if the current scope is the target of a coup.
+|
+|1.0
+|-id="has_civil_war"
+|has_civil_war
+|<code><bool></code><br>Boolean.
+|<pre>has_civil_war = yes</pre>
+|Checks if the current scope has a civil war active.
+|
+|1.0
+|-id="civilwar_target"
+|civilwar_target
+|<code><scope></code><br>The target country.
+|<pre>civilwar_target = GER</pre>
+|Checks if the specified country is a target of a civil war.
+|
+|1.0
+|-id="has_manpower_for_recruit_change_to"
+|has_manpower_for_recruit_change_to
+|<code>value = <float></code><br>The amount to check for.
+<code>group = <group></code><br>The group to check for.
+|<pre>has_manpower_for_recruit_change_to = {
+    value > 0.05
+    group = mobilization_laws
+}</pre>
+|Checks if the current scope has the specified amount of manpower for changing the specified idea group.
+|'''Must''' use either > or < operators as = operator checks for the '''exact''' value
+|1.0
+|-id="has_rule"
+|has_rule
+|<code><string></code><br>The rule to check for.
+|
+<pre>
+has_rule = can_create_factions
+</pre>
+|Checks if the current scope has the specified country rule.
+|
+|1.6
+|-id="has_casualties_war_support"
+|has_casualties_war_support
+|<code><float> / <variable></code><br>The amount to check for.
+|<pre>has_casualties_war_support < 0</pre>
+|Checks if the current scope has the specified percentage of war support from own combat casualties.
+|Must use either > or < operators.
+|1.12
+|-id="has_convoys_war_support"
+|has_convoys_war_support
+|<code><float> / <variable></code><br>The amount to check for.
+|<pre>has_convoys_war_support < 0</pre>
+|Checks if the current scope has the specified percentage of war support from own convoys sunk.
+|Must use either > or < operators.
+|1.12
+|-id="has_bombing_war_support"
+|has_bombing_war_support
+|<code><float> / <variable></code><br>The amount to check for.
+|<pre>has_bombing_war_support < 0</pre>
+|Checks if the current scope has the specified percentage of war support from own states bombed by the enemy.
+|Must use either > or < operators.
+|1.12
+|}
+
+===Balance of power===
+{{SVersion|1.16}}<!-- This is transcluded onto [[Balance of power modding]]!-->
+<noinclude>Balances of power are stored within {{path|common/bop/*.txt}} files.
+</noinclude>
+{| class="wikitable sortable mw-collapsible" style="display: inline-block; padding: 5px" width="100%"
+|+ {{nowrap|Balance of power-related country-scoped triggers:}}<br>
+! width="10%" | Name
+! width="25%" | Parameters
+! width="25%" | Examples
+! width="20%" | Description
+! width="15%" | Notes
+! width="5%" | Version Added
+|-id="has_power_balance"
+|has_power_balance
+|<code>id = <bop ID></code><br>The balance to check for.
+|<pre>has_power_balance = {
+    id = TAG_my_bop
+}</pre>
+|Checks if the current scope has the specified balance of power active.
+|
+|1.12
+|-id="has_any_power_balance"
+|has_any_power_balance
+|<code><bool></code><br>Boolean.
+|<pre>has_any_power_balance = yes</pre>
+|Checks if the current scope has any balance of power active.
+|
+|1.12
+|-id="power_balance_value"
+|power_balance_value
+|<code>id = <bop ID></code><br>The balance to check in.<br>
+<code>value = <float></code><br>The value to check for.
+|<pre>power_balance_value = {
+    id = TAG_my_bop
+    value > 0.7
+}</pre>
+|Checks if the current scope has the specified value within the balance of power.
+|Either =, >, or < operators are allowed.
+|1.12
+|-id="power_balance_daily_change"
+|power_balance_daily_change
+|<code>id = <bop ID></code><br>The balance to check in.<br>
+<code>value = <float></code><br>The value to check for.
+|<pre>power_balance_daily_change = {
+    id = TAG_my_bop
+    value < -0.01
+}</pre>
+|Checks if the current scope's balance of power changes each day by the specified value.
+|Either =, >, or < operators are allowed.
+|1.12
+|-id="power_balance_weekly_change"
+|power_balance_weekly_change
+|<code>id = <bop ID></code><br>The balance to check in.<br>
+<code>value = <float></code><br>The value to check for.
+|<pre>power_balance_weekly_change = {
+    id = TAG_my_bop
+    value < -0.01
+}</pre>
+|Checks if the current scope's balance of power changes each week by the specified value.
+|Either =, >, or < operators are allowed.
+|1.12
+|-id="is_power_balance_in_range"
+|is_power_balance_in_range
+|<code>id = <bop ID></code><br>The balance to check in.<br>
+<code>range = <range ID></code><br>The range to check for.
+|<pre>is_power_balance_in_range = {
+    id = TAG_my_bop
+    range > TAG_my_bop_right_range
+}</pre>
+|Checks if the current scope's balance of power value lies within the specified range.
+|Ranges are defined within the balance of power. Can use either =, >, and < operators. In case of > or <, the comparison is 'strict', i.e. excluding the range itself.
+|1.12
+|-id="is_power_balance_side_active"
+|is_power_balance_side_active
+|<code>id = <bop ID></code><br>The balance to check in.<br>
+<code>side = <side ID></code><br>The side to check.
+|<pre>is_power_balance_side_active = {
+    id = TAG_my_bop
+    side = TAG_my_bop_right_range
+}</pre>
+|Checks if the specified balance of power has a side active.
+|Sides are defined within the balance of power. "Active" means that the side is among those that are currently visible instead of relying on the current value.
+|1.12
+|-id="has_power_balance_modifier"
+|has_power_balance_modifier
+|<code>id = <bop ID></code><br>The balance to check in.<br>
+<code>modifier = <modifier ID></code><br>The [[Static modifiers|static modifier]].
+|<pre>has_power_balance_modifier = {
+    id = TAG_my_bop
+    modifier = TAG_my_bop_modifier
+}</pre>
+|Checks if the current scope's balance of power value activates a modifier.
+|BoP modifiers are defined within {{path|common/modifiers/*.txt}} files, while they're activated in the balance of power definition.
+|1.12
+|}
+
+===Buildings===
+{{SVersion|1.16}}
+
+{| class="wikitable sortable mw-collapsible" style="display: inline-block; padding: 5px" width="100%"
+|+ {{nowrap|Building-related country-scoped triggers:}}<br>
+! width="10%" | Name
+! width="25%" | Parameters
+! width="25%" | Examples
+! width="20%" | Description
+! width="15%" | Notes
+! width="5%" | Version Added
+|-id="building_count_trigger"
+|<building> (building_count_trigger)
+|<code><int></code><br>The amount of the specified building to to check for.
+|<pre>arms_factory > 10</pre>
+|Checks if the current scope has the specified amount of the specified building.
+|Must use either > or < operators. Works in the state scope as well, unlike the other triggers.
+[[#s_building_count_trigger|Can also be used in state scope.]]
+|1.0
+|-id="num_of_military_factories"
+|num_of_military_factories
+|<code><int></code><br>The amount to check for.
+|<pre>num_of_military_factories > 10</pre>
+|Checks if the current scope has the specified amount of military factories.
+|Must use either > or < operators.
+|1.0
+|-id="num_of_civilian_factories"
+|num_of_civilian_factories
+|<code><int></code><br>The amount to check for.
+|<pre>num_of_civilian_factories > 10</pre>
+|Checks if the current scope has the specified amount of civilian factories.
+|Must use either > or < operators.
+|1.0
+|-id="num_of_naval_factories"
+|num_of_naval_factories
+|<code><int></code><br>The amount to check for.
+|<pre>num_of_naval_factories > 10</pre>
+|Checks if the current scope has the specified amount of dockyards.
+|Must use either > or < operators.
+|1.0
+|-id="num_of_available_military_factories"
+|num_of_available_military_factories
+|<code><int></code><br>The amount to check for.
+|<pre>num_of_available_military_factories > 10</pre>
+|Checks if the current scope has the specified amount of available military factories.
+|Must use either > or < operators.
+|1.0
+|-id="num_of_available_civilian_factories"
+|num_of_available_civilian_factories
+|<code><int></code><br>The amount to check for.
+|<pre>num_of_available_civilian_factories > 10</pre>
+|Checks if the current scope has the specified amount of available civilian factories.
+|Must use either > or < operators.
+|1.0
+|-id="num_of_available_naval_factories"
+|num_of_available_naval_factories
+|<code><int></code><br>The amount to check for.
+|<pre>num_of_available_naval_factories > 10</pre>
+|Checks if the current scope has the specified amount of available dockyards.
+|Must use either > or < operators.
+|1.0
+|-id="num_of_factories"
+|num_of_factories
+|<code><int></code><br>The amount to check for.
+|<pre>num_of_factories > 10</pre>
+|Checks if the current scope has the specified amount of military, civilian or dockyard factories.
+|Must use either > or < operators.
+|1.0
+|-id="num_of_controlled_factories"
+|num_of_controlled_factories
+|<code><int></code><br>The amount to check for.
+|<pre>num_of_controlled_factories > 10</pre>
+|Checks if the current scope has the specified amount of military, civilian or dockyard factories under control.
+|Must use either > or < operators.
+|1.11
+|-id="num_of_owned_factories"
+|num_of_owned_factories
+|<code><int></code><br>The amount to check for.
+|<pre>num_of_owned_factories > 10</pre>
+|Checks if the current scope has the specified amount of military, civilian or dockyard factories under owned states.
+|Must use either > or < operators.
+|1.11
+|-id="num_of_civilian_factories_available_for_projects"
+|num_of_civilian_factories_available_for_projects
+|<code><int></code><br>The amount to check for.
+|<pre>num_of_civilian_factories_available_for_projects > 10</pre>
+|Checks if the current scope has the specified amount of civilian factories usable for projects.
+|Must use either > or < operators.
+|1.5
+|-id="ic_ratio"
+|ic_ratio
+|<code>tag = <scope></code><br>The country to check.
+<code>ratio = <float></code><br>The ratio to check for.
+|<pre>
+ic_ratio = {
+    tag = GER
+    ratio > 0.5
+}
+</pre>
+|Checks if the current scope has the specified ratio of factories with the target country.
+|Must use either > or < operators for ratio.
+|1.0
+|-id="has_damaged_buildings"
+|has_damaged_buildings
+|<code><bool></code><br>Boolean.
+|<pre>has_damaged_buildings = yes</pre>
+|Checks if the current scope has any damanged buildings in their states.
+|
+|1.0
+|-id="has_built"
+|has_built
+|<code>type = <building></code><br>The building to check for.
+<code>value = <int></code><br>The amount to check for.
+|<pre>
+has_built = {
+    type = arms_factory
+    value > 10
+}
+</pre>
+|Checks if the current scope has built the specified building the specified number of times.
+|Must use either > or < operators for value.
+|1.0
+|}
+
+===Technology===
+{{SVersion|1.16}}
+
+{| class="wikitable sortable mw-collapsible" style="display: inline-block; padding: 5px" width="100%"
+|+ {{nowrap|Technology-related country-scoped triggers:}}<br>
+! width="10%" | Name
+! width="25%" | Parameters
+! width="25%" | Examples
+! width="20%" | Description
+! width="15%" | Notes
+! width="5%" | Version Added
+|-id="has_tech"
+|has_tech
+|<code><string></code><br>The technology to check for.
+|<pre>has_tech = my_technology</pre>
+|Checks if the current scope has the specified technology.
+|
+|1.0
+|-id="is_researching_technology"
+|is_researching_technology
+|<code><string></code><br>The technology to check for.
+|<pre>is_researching_technology = my_tech</pre>
+|Checks if the current scope is currently researching the specified technology.
+|
+|1.0
+|-id="can_research"
+|can_research
+|<code><string></code><br>The technology to check for.
+|<pre>can_research = my_tech</pre>
+|Checks if the current scope can start researching the specified technology.
+|
+|1.0
+|-id="original_research_slots"
+|original_research_slots
+|<code><int></code><br>The amount to check for.
+|<pre>original_research_slots > 3</pre>
+|Checks if the current scope had the specified amount of slots at game start.
+|Must use either > or < operators.
+|1.0
+|-id="amount_research_slots"
+|amount_research_slots
+|<code><int></code><br>The amount to check for.
+|<pre>amount_research_slots > 3</pre>
+|Checks if the current scope has the specified amount of research slots.
+|Must use either > or < operators.
+|1.3
+|-id="is_in_tech_sharing_group"
+|is_in_tech_sharing_group
+|<code><string></code><br>The group to check for.
+|<pre>is_in_tech_sharing_group = us_research</pre>
+|Checks if the current scope is in the specified technology sharing group.
+|
+|1.3
+|-id="num_tech_sharing_groups"
+|num_tech_sharing_groups
+|<code><int></code><br>The amount to check for.
+|<pre>num_tech_sharing_groups > 3</pre>
+|Checks if the current scope is in the specified amount of technology sharing groups.
+|Must use either > or < operators.
+|1.3
+|-id="has_tech_bonus"
+|has_tech_bonus
+|<code>technology = <string></code><br>The technology to check for. Optional.<br>
+<code>category = <string></code><br>The category to check for. Optional.<br>
+|<pre>has_tech_bonus = {
+    technology = my_tech
+}</pre>
+<pre>
+has_tech_bonus = {
+    category = my_category
+}
+</pre>
+|Checks if the current scope has a technology bonus in the specified category, or for the specific technology.
+|
+|1.3
+|-id="land_doctrine_level"
+|land_doctrine_level
+|<code><int></code><br>The amount to check for.
+|<pre>land_doctrine_level > 2</pre>
+|Checks if the current scope has the specified amount of land doctrine technologies.
+|Must use either > or < operators.
+|1.0
+|-id="num_researched_technologies"
+|num_researched_technologies
+|<code><int></code><br>The amount to check for.
+|<pre>num_researched_technologies > 10</pre>
+|Checks how many technologies the target has researched.
+|Must use either > or < operators.
+|1.3
+|-id="is_special_project_being_researched"
+|is_special_project_being_researched
+|<code>sp:<string></code><br>A special project to check for.
+|<pre>is_special_project_being_researched = sp:sp_air_radar</pre>
+|Checks if the country in scope is currently researching the special project in input.
+|
+|1.15
+|-id="is_special_project_completed"
+|is_special_project_completed
+|<code>sp:<string></code><br>A special project to check for.
+|<pre>is_special_project_completed = sp:sp_land_flamethrower_tank</pre>
+|Checks if the current scope has the specified special project completed.
+|
+|1.15
+|}
+
+===Ideas===
+{{SVersion|1.16}}
+
+{| class="wikitable sortable mw-collapsible" style="display: inline-block; padding: 5px" width="100%"
+|+ {{nowrap|Idea-related country-scoped triggers:}}<br>
+! width="10%" | Name
+! width="25%" | Parameters
+! width="25%" | Examples
+! width="20%" | Description
+! width="15%" | Notes
+! width="5%" | Version Added
+|-id="has_idea"
+|has_idea
+|<code><string></code><br>The idea to check for.
+|<pre>has_idea = my_idea</pre>
+|Checks if the current scope has the specified idea.
+|
+|-id="has_idea_with_trait"
+|has_idea_with_trait
+|<code><string></code><br>The trait to check for.
+|<pre>has_idea_with_trait = my_trait</pre>
+|Checks if the current scope has any ideas with the specified trait.
+|
+|1.0
+|-id="has_allowed_idea_with_traits"
+|has_allowed_idea_with_traits
+|<code>idea = <string></code><br>The trait to check for.<br>
+<code>limit = <int></code><br>The amount to check for.<br>
+<code>characters = <bool></code><br>If set, will only run this on characters.<br>
+<code>ignore = { <ideas> }</code><br>If set, ignores the ideas inside. Optional.<br>
+|<pre>has_available_idea_with_traits = {
+    idea = my_trait
+    limit = 1
+    ignore = { generic_head_of_intelligence }
+}
+</pre>
+|Checks if the current scope has the specified amount of ideas with the specified trait.
+|ignore = idea_name works for 1 idea.
+|1.9.1
+|-id="has_available_idea_with_traits"
+|has_available_idea_with_traits
+|<code>idea = <string></code><br>The trait to check for.<br>
+<code>limit = <int></code><br>The amount to check for.<br>
+<code>characters = <bool></code><br>If set, will only run this on characters.<br>
+<code>ignore = { <ideas> }</code><br>If set, ignores the ideas inside. Optional.<br>
+|<pre>has_available_idea_with_traits = {
+    idea = my_trait
+    limit = 1
+    ignore = { generic_head_of_intelligence }
+}
+</pre>
+|Checks if the current scope has the specified amount of ideas with the specified trait.
+|ignore = idea_name works for 1 idea.
+|1.0
+|-id="amount_taken_ideas"
+|amount_taken_ideas
+|<code>amount = <int></code><br>The amount to check for.
+<code>slots = { <string> }</code><br>The slot type.
+|<pre>
+amount_taken_ideas = {
+    amount > 3
+    slots = {
+        political_advisor
+    }
+}
+</pre>
+|Checks if the current scope has the specified amount of ideas of the specified slot type. Excludes spirits, hidden ideas, and laws.
+|Slots types are found in {{path|common/idea_tags/*.txt}}.
+|1.4
+|}
+
+===Diplomacy===
+{{SVersion|1.16}}
+
+{| class="wikitable sortable mw-collapsible" style="display: inline-block; padding: 5px" width="100%"
+|+ {{nowrap|Diplomatic country-scoped triggers:}}<br>
+! width="10%" | Name
+! width="25%" | Parameters
+! width="25%" | Examples
+! width="20%" | Description
+! width="15%" | Notes
+! width="5%" | Version Added
+|-id="is_major"
+|is_major
+|<code><bool></code><br>Boolean.
+|<pre>is_major = yes</pre>
+|Checks if the current scope is considered a Major.
+|
+|1.0
+|-id="is_ally_with"
+|is_ally_with
+|<code><scope> / <variable></code><br>The country to check for.
+|<pre>is_ally_with = GER</pre>
+<pre>is_ally_with = var:country</pre>
+|Checks if the current scope is an ally (Faction members or subject-master relation).
+|
+|1.0
+|-id="is_spymaster"
+|is_spymaster
+|<code><bool></code><br>Boolean.
+|<pre>is_spymaster = yes</pre>
+|Checks if the current scope is the spymaster of a faction.
+|
+|1.9
+|-id="has_non_aggression_pact_with"
+|has_non_aggression_pact_with
+|<code><scope> / <variable></code><br>The country to check for.
+|<pre>has_non_aggression_pact_with = GER</pre>
+|Checks if the current scope has a non-aggression pact with the specified country.
+|
+|1.0
+|-id="is_guaranteed_by"
+|is_guaranteed_by
+|<code><scope> / <variable></code><br>The country to check for.
+|<pre>is_guaranteed_by = GER</pre>
+|Checks if the current scope has been guaranteed by the specified country.
+|
+|1.0
+|-id="has_guaranteed"
+|has_guaranteed
+|<code><scope> / <variable></code><br>The country to check for.
+|<pre>has_guaranteed = GER</pre>
+|Checks if the current scope has guaranteed the specified country.
+|
+|1.0
+|-id="has_military_access_to"
+|has_military_access_to
+|<code><scope> / <variable></code><br>The country to check for.
+|<pre>has_military_access_to = GER</pre>
+|Checks if the current scope has military access to the specified country.
+|
+|1.0
+|-id="gives_military_access_to"
+|gives_military_access_to
+|<code><scope> / <variable></code><br>The country to check for.
+|<pre>gives_military_access_to = GER</pre>
+|Checks if the current scope gives military to the specified country.
+|
+|1.0
+|-id="is_neighbor_of"
+|is_neighbor_of
+|<code><scope> / <variable></code><br>The country to check for.
+|<pre>is_neighbor_of = GER</pre>
+|Checks if the current scope is a neighbor of the specified country.
+|
+|1.0
+|-id="is_owner_neighbor_of"
+|is_owner_neighbor_of
+|<code><scope> / <variable></code><br>The country to check for.
+|<pre>is_owner_neighbor_of = GER</pre>
+|Checks if the current scope is a neighbor of the specified country with their core territory only.
+|
+|1.0
+|-id="is_puppet_of"
+|is_puppet_of
+|<code><scope> / <variable></code><br>The country to check for.
+|<pre>is_puppet_of = GER</pre>
+|Checks if the current scope is a puppet of the specified country.
+|A "puppet" is an autonomous state that has <code>is_puppet = yes</code> in its definition within {{path|common/autonomous_states/}}. For any subject type, see [[#is_subject_of|is_subject_of]].
+|1.0
+|-id="is_subject_of"
+|is_subject_of
+|<code><scope> / <variable></code><br>The country to check for.
+|<pre>is_subject_of = GER</pre>
+|Checks if the current scope is a subject of the specified scope.
+|
+|1.0
+|-id="is_puppet"
+|is_puppet
+|<code><bool></code><br>Boolean.
+|<pre>is_puppet = yes</pre>
+|Returns true if the current country is a puppet.
+|A "puppet" is an autonomous state that has <code>is_puppet = yes</code> in its definition within {{path|common/autonomous_states/}}. For any subject type, see [[#is_subject|is_subject]].
+|1.0
+|-id="is_subject"
+|is_subject
+|<code><bool></code><br>Boolean.
+|<pre>is_subject = yes</pre>
+|Checks if the current scope is a subject.
+|
+|1.0
+|-id="has_subject"
+|has_subject
+|<code><bool></code><br>Boolean.
+|<pre>has_subject = GRE</pre>
+|Checks if the country has for subject the given country.
+|
+|1.0
+|-id="num_subjects"
+|num_subjects
+|<code><int></code><br>The amount to check for.
+|<pre>num_subjects > 3</pre>
+|Checks if the current scope has the specified amount of subjects.
+|Must use either > or < operators.
+|1.3
+|-id="has_autonomy_state"
+|has_autonomy_state
+|<code><string></code><br>The autonomy state to check for.
+|<pre>has_autonomy_state = autonomy_dominion</pre>
+|Checks if the current scope is in the specified autonomous state.
+|
+|1.0
+|-id="compare_autonomy_state"
+|compare_autonomy_state
+|<code><string></code><br>The autonomy state to check for.
+|<pre>compare_autonomy_state > autonomy_dominion</pre>
+|Checks if the current scope's autonomy state <code>min_freedom_level</code> is less or greater than that of the specified autonomy state. The special value "autonomy_free" compares as greater than any autonomy state. If the current scope is not a subject, it is treated as greater than any autonomy state (including "autonomy_free"). With <code>=</code>, checks if the current scope is in the specified autonomous state.
+|
+|1.0
+|-id="compare_autonomy_progress_ratio"
+|compare_autonomy_progress_ratio
+|<code><float></code><br>The amount to check for.
+|<pre>compare_autonomy_progress_ratio > 0.5</pre>
+|Checks if the current scope autonomy progress is at the specified ratio. If the current scope is not a subject, the ratio is 1.
+|
+|1.3
+|-id="has_opinion_modifier"
+|has_opinion_modifier
+|<code><string></code><br>The opinion modifier to check for.
+|<pre>has_opinion_modifier = my_modifier</pre>
+|Checks if the current scope has the specified opinion modifier.
+|
+|1.0
+|-id="has_opinion"
+|has_opinion
+|<code>target = <scope></code><br>The country to check for.
+<code>value = <float></code><br>The amount to check for.
+|<pre>
+has_opinion = {
+    target = GER
+    value > 50
+}
+</pre>
+|Checks if the current scope has the specified opinion of the target country.
+|Must use either > or < operators.
+|1.0
+|-id="has_relation_modifier"
+|has_relation_modifier
+|<code>target = <scope></code><br>The country to check for.
+<code>modifier = <modifier></code><br>The modifier to check for.
+|<pre>
+has_relation_modifier = {
+    target = GER
+    modifier = my_modifier
+}
+</pre>
+|Checks if the current scope has the specified relation modifier with the specified country.
+|
+|1.0
+|-id="has_legitimacy"
+|has_legitimacy
+|<code><int></code><br>Amount to check.
+|<pre>has_legitimacy > 50</pre>
+|Checks how much legitimacy the current government in exile has.
+|Must use either > or < operators. Legitimacy ranges from 0 to 100.
+|1.6
+|-id="is_exile_host"
+|is_exile_host
+|<code><bool></code><br>Boolean.
+|<pre>is_exile_host = yes</pre>
+|Checks if the current country is hosting an exile.
+|
+|1.6
+|-id="is_hosting_exile"
+|is_hosting_exile
+|<code><tag></code><br>Country.
+|<pre>is_hosting_exile = POL</pre>
+|Checks if the current country is hosting a specific exile.
+|
+|1.6
+|-id="is_government_in_exile"
+|is_government_in_exile
+|<code><bool></code><br>Boolean.
+|<pre>is_government_in_exile = yes</pre>
+|Checks if the current country is exiled in a different country.
+|
+|1.6
+|-id="is_exiled_in"
+|is_exiled_in
+|<code><tag></code><br>Country to be exiled in.
+|<pre>is_exiled_in = POL</pre>
+|Checks if the current country is exiled in a specific country.
+|
+|1.6
+|-id="received_expeditionary_forces"
+|received_expeditionary_forces
+|<code>sender = <tag></code><br>Country which sent forces.
+<code>value <> <int></code><br>Amount of forces.
+|<pre>received_expeditionary_forces = {
+    sender = POL
+    value > 10
+}</pre>
+|Checks if the current country received X units in expeditions from the specified country.
+|
+|1.6
+|-id="can_declare_war_on"
+|can_declare_war_on
+|<code><tag></code><br>Country to check.
+|<pre>can_declare_war_on = POL</pre>
+|Checks if the current scope is able to declare war on the specified country.
+|
+|1.9
+|-id="foreign_manpower"
+|foreign_manpower
+|<code><int></code><br>Amount to check.
+|<pre>foreign_manpower > 10000</pre>
+|Checks how much foreign manpower we have received for garrisoning.
+|Must use either > or < operators.
+|1.9
+|-id="is_embargoed_by"
+|is_embargoed_by
+|<code><scope></code><br>Amount to check.
+|<pre>is_embargoed_by = USA</pre>
+|Checks if the current scope is embargoed by the specified country.
+|
+|1.12
+|-id="is_embargoing"
+|is_embargoing
+|<code><scope></code><br>Amount to check.
+|<pre>is_embargoing = CUB</pre>
+|Checks if the current scope is embargoing the specified country.
+|
+|1.12
+|}
+
+===Faction===
+{{SVersion|1.17}}
+
+{| class="wikitable sortable mw-collapsible" style="display: inline-block; padding: 5px" width="100%"
+|+ {{nowrap|Faction-related country-scoped triggers:}}<br>
+! width="10%" | Name
+! width="25%" | Parameters
+! width="25%" | Examples
+! width="20%" | Description
+! width="15%" | Notes
+! width="5%" | Version Added
+|-id="is_in_faction"
+|is_in_faction
+|<code><bool></code><br>Boolean.
+|<pre>is_in_faction = yes</pre>
+|Checks if the current scope is in a faction.
+|
+|1.0
+|-id="is_in_faction_with"
+|is_in_faction_with
+|<code><scope> / <variable></code><br>The country to check for.
+|<pre>is_in_faction_with = GER</pre>
+<pre>is_in_faction_with = var:country</pre>
+|Checks if the current scope is in a faction with the specified country.
+|
+|1.0
+|-id="is_faction_leader"
+|is_faction_leader
+|<code><bool></code><br>Boolean.
+|<pre>is_faction_leader = yes</pre>
+|Checks if the current scope is the leader of a faction.
+|
+|1.0
+|-id="num_faction_members"
+|num_faction_members
+|<code><int> / <variable></code><br>The amount to check for.
+|<pre>num_faction_members > 1</pre>
+|Checks if the faction of the current scope has the specified amount of members.
+|Must use either > or < operators.
+|1.0
+|-id="has_manpower_to_become_leader"
+|has_manpower_to_become_leader
+|<code><bool></code><br>Boolean
+|<pre>has_manpower_to_become_leader = yes</pre>
+|Checks if the current country exceeds the current faction leader and its subjects in deployed manpower.
+|
+|1.17
+|-id="has_industry_to_become_leader"
+|has_industry_to_become_leader
+|<code><bool></code><br>Boolean
+|<pre>has_industry_to_become_leader = yes</pre>
+|Checks if the current country exceeds the faction leader in number of factories.
+|
+|1.17
+|-id="has_enough_influence_for_leadership"
+|has_enough_influence_for_leadership
+|<code><bool></code><br>Boolean
+|<pre>has_enough_influence_for_leadership = yes</pre>
+|Checks if the current country has enough political influence to become faction leader.
+|
+|1.17
+|-id="has_faction_template"
+|has_faction_template
+|<code><template_id></code><br>Faction template id.
+|<pre>has_faction_template = faction_template_chinese_united_front</pre>
+|Checks if the current country is in a faction with a template.
+|
+|1.17
+|-id="has_active_rule"
+|has_active_rule
+|<code><rule_id></code><br>Faction rule id.
+|<pre>has_active_rule = government_in_exile_allowed</pre>
+|Checks if the country's faction has a specific active rule.
+|
+|1.17
+|-id="has_faction_goal"
+|has_faction_goal
+|<code><goal_id></code><br>Faction goal id.
+|<pre>has_faction_goal = faction_goal_resource_control</pre>
+|Checks if the country's faction has an active or completed goal.
+|
+|1.17
+|-id="has_completed_faction_goal"
+|has_completed_faction_goal
+|<code><goal_id></code><br>Faction goal id.
+|<pre>has_completed_faction_goal = faction_goal_resource_control</pre>
+|Checks if the country's faction has successfully completed a goal.
+|
+|1.17
+|-id="faction_goal_fulfillment"
+|faction_goal_fulfillment
+|<code>goal = <goal_id></code><br>Faction goal id.
+<code>value = <float> / <variable></code><br>The amount to check for.
+|<pre>faction_goal_fulfillment = {
+    goal = faction_goal_resource_control
+    value > 0.85
+}</pre>
+<pre>faction_goal_fulfillment = {
+    goal = faction_goal_resource_control
+    value > 0.5
+    value < 0.85
+}</pre>
+|Checks fulfillment of a faction goal for the current country's faction.
+|Value supports > and <, can accept variables, can be repeated multiple times.
+|1.17
+|-id="faction_manifest_fulfillment"
+|faction_manifest_fulfillment
+|<code><float> / <variable></code><br>The amount to check for.
+|<pre>faction_manifest_fulfillment > 0.95</pre>
+|Checks manifest fulfillment value of current country's faction manifest.
+|
+|1.17
+|-id="faction_upgrade_level"
+|faction_upgrade_level
+|<code><upgrade_token></code><br>Faction upgrade token.
+|<pre>faction_upgrade_level > upgrade_token</pre>
+|Checks the active faction member upgrade against the specified upgrade.
+|Works with >, <, =
+|1.17
+|-id="faction_power_projection"
+|faction_power_projection
+|<code><int> / <variable></code><br>The amount to check for.
+|<pre>faction_power_projection > 100</pre>
+|Checks power value of current country's faction projection.
+|
+|1.17
+|-id="faction_influence_rank"
+|faction_influence_rank
+|<code><int> / <variable></code><br>The amount to check for.
+|<pre>faction_influence_rank < 5</pre>
+|Checks influence rank in the faction of the current country.
+|
+|1.17
+|-id="faction_influence_ratio"
+|faction_influence_ratio
+|<code><float> / <variable></code><br>The amount to check for.
+|<pre>faction_influence_ratio > 0.1</pre>
+|Checks influence ratio of current country in the faction.
+|
+|1.17
+|-id="faction_influence_score"
+|faction_influence_score
+|<code><int> / <variable></code><br>The amount to check for.
+|<pre>faction_influence_score > 100</pre>
+|Checks influence value of current country in the faction.
+|
+|1.17
+|-id="can_assign_supportive_scientist_to_faction"
+|can_assign_supportive_scientist_to_faction
+|<code><specialization></code><br>Specialization.
+|<pre>can_assign_supportive_scientist_to_faction = specialization_land</pre>
+|Checks if the faction from the country in scope has a free slot for a supportive scientist for the country with the specialization type.
+|
+|1.17
+|-id="has_faction_research_unlocked"
+|has_faction_research_unlocked
+|<code><bool></code><br>Boolean.
+|<pre>has_faction_research_unlocked = yes</pre>
+|Whether the faction has unlocked the research.
+|
+|1.17
+|-id="has_faction_military_unlocked"
+|has_faction_military_unlocked
+|<code><bool></code><br>Boolean.
+|<pre>has_faction_military_unlocked = yes</pre>
+|Whether the faction has unlocked the military operations.
+|
+|1.17
+|-id="compare_ideology_with_faction"
+|compare_ideology_with_faction
+|<code>value = <float> / <variable></code><br>The amount to check for.
+<code>leader = <tag></code><br>Country to check.
+|<pre>compare_ideology_with_faction = {
+    value > 0.5
+    leader = FROM
+}</pre>
+|Compares the ideology support of the country's ruling party for the ideology of the faction it wants to join.
+|Tooltip is visible only if 'leader' is in faction.
+|1.17
+|}
+
+===War===
+{{SVersion|1.17}}
+
+{| class="wikitable sortable mw-collapsible" style="display: inline-block; padding: 5px" width="100%"
+|+ {{nowrap|War-related country-scoped triggers:}}<br>
+! width="10%" | Name
+! width="25%" | Parameters
+! width="25%" | Examples
+! width="20%" | Description
+! width="15%" | Notes
+! width="5%" | Version Added
+|-id="has_war"
+|has_war
+|<code><bool></code><br>Boolean.
+|<pre>has_war = yes</pre>
+|Checks if the current scope is at war.
+|
+|1.0
+|-id="has_war_with"
+|has_war_with
+|<code><scope> / <variable></code><br>The country to check for.
+|<pre>has_war_with = GER</pre>
+<pre>has_war_with = var:country</pre>
+|Checks if the current scope is at war with the specified country.
+|
+|1.0
+|-id="has_offensive_war_with"
+|has_offensive_war_with
+|<code><scope> / <variable></code><br>The country to check for.
+|<pre>has_offensive_war_with = GER</pre>
+|Checks if the current scope is in an offensive war against the specified country.
+|
+|1.0
+|-id="has_offensive_war_without_friend"
+|has_offensive_war_without_friend 
+|<code><scope> / <variable></code><br>The country to check for.
+|<pre>has_offensive_war_without_friend = GER</pre>
+|Is country at offensive war without specific ally present.
+|
+|1.17
+|-id="has_defensive_war_with"
+|has_defensive_war_with
+|<code><scope> / <variable></code><br>The country to check for.
+|<pre>has_defensive_war_with = GER</pre>
+|Checks if the current scope is in an defensive war against the specified country.
+|
+|1.0
+|-id="has_offensive_war"
+|has_offensive_war
+|<code><bool></code><br>Boolean.
+|<pre>has_offensive_war = yes</pre>
+|Checks if the current scope is in an offensive war.
+|
+|1.0
+|-id="has_defensive_war"
+|has_defensive_war
+|<code><bool></code><br>Boolean.
+|<pre>has_defensive_war = yes</pre>
+|Checks if the current scope is in a defensive war.
+|
+|1.0
+|-id="has_war_together_with"
+|has_war_together_with
+|<code><scope> / <variable></code><br>The country to check for.
+|<pre>has_war_together_with = GER</pre>
+|Checks if the current scope is in a war alongside the specified country.
+|
+|1.0
+|-id="has_war_with_major"
+|has_war_with_major
+|<code><bool></code><br>Boolean.
+|<pre>has_war_with_major = yes</pre>
+|Checks if the current scope is at war with any other country that is considered major.
+|
+|1.12
+|-id="has_war_with_wargoal_against"
+|has_war_with_wargoal_against
+|<code>target = <scope> / <variable></code><br>The country to check for.<br>
+<code>type = <wargoal></code><br>The wargoal to check for. Optional.
+|<pre>has_war_with_wargoal_against = {
+    target = ENG
+    type = independence_wargoal
+}</pre>
+|Checks if the current scope is at war with the specified country with the specified wargoal being active.
+|Wargoals are stored within {{path|common/wargoals/*.txt}} files. If no wargoal is specified, checks for ''any'' wargoal. Joining an ally in their war does not count as a wargoal.
+|1.12
+|-id="surrender_progress"
+|surrender_progress
+|<code><float> / <variable></code><br>The amount to check for.
+|<pre>surrender_progress > 0.1</pre>
+|Checks if the current scope has the specified amount of surrender progress.
+|Must use either > or < operators.
+|1.0
+|-id="any_war_score"
+|any_war_score
+|<code><float></code><br>The amount to check for.
+|<pre>any_war_score > 10</pre>
+|Checks if the current scope has the specified amount of '''war progress''' (not war participation)<ref>[[forum:1124460|How does any_war_score work?]]</ref> in any war.
+|Must use either > or < operators.
+|1.0
+|-id="has_capitulated"
+|has_capitulated
+|<code><bool></code><br>Boolean.
+|<pre>has_capitulated = yes</pre>
+|Checks if the current scope has capitulated.
+|
+|1.0
+|-id="days_since_capitulated"
+|days_since_capitulated
+|<code><int></code><br>Amount of days.
+|<pre>days_since_capitulated > 10</pre>
+|Checks the amount of days since the target last capitulated.
+|If the target never capitulated, the amount of days is extremely large. <!-- Needs testing, the amount of days since the 1st of January of the year 2? Documentation doesn't say--> Recommended to combine with has_capitulated.
+|1.9
+|-id="has_border_war_with"
+|has_border_war_with
+|<code><scope> / <variable></code><br>The country to check for.
+|<pre>has_border_war_with = GER</pre>
+|Checks if the current scope has a border war with the specified country.
+|
+|1.5
+|-id="has_border_war_between"
+|has_border_war_between
+|<code>attacker = <scope> / <variable></code><br>The state to check for.
+<code>defender = <scope> / <variable></code><br>The state to check for.
+|<pre>has_border_war_between = {
+    attacker = 1
+    defender = 2
+}
+</pre>
+|Checks if there is a border war between the two specified states.
+|
+|1.5
+|-id="has_border_war"
+|has_border_war
+|<code><bool></code><br>Boolean.
+|<pre>has_border_war = yes</pre>
+|Checks if the current scope has a border war active.
+|
+|1.5
+|-id="has_added_tension_amount"
+|has_added_tension_amount
+|<code><float> / <variable></code><br>The amount to check for.
+|<pre>has_added_tension_amount > 10</pre>
+|Checks if the current scope has caused the specified amount of World Tension.
+|Must use either > or < operators.
+|1.0
+|-id="has_wargoal_against"
+|has_wargoal_against
+|<code><scope> / <variable></code><br>The country to check for.
+|<pre>has_wargoal_against = GER</pre>
+|Checks if the current scope has any wargoal against the specified country.
+|
+|1.0
+|-id="has_wargoal_against"
+|has_wargoal_against
+|<code>target = <scope> / <variable></code><br>The country to check for.<br>
+<code>type = <string></code><br>The type of wargoal to check for.
+|<pre>has_wargoal_against = {
+    target = FROM
+    type = take_state
+}
+</pre>
+|Checks if the current scope has a specific wargoal type against the specified country.
+|
+|1.8
+|-id="is_justifying_wargoal_against"
+|is_justifying_wargoal_against
+|<code><scope> / <variable></code><br>The country to check for.
+|<pre>is_justifying_wargoal_against = GER</pre>
+|Checks if the current scope is justifying a wargoal against the specified country.
+|
+|1.0
+|-id="has_annex_war_goal"
+|has_annex_war_goal
+|<code><scope> / <variable></code><br>The country to check for.
+|<pre>has_annex_war_goal = GER</pre>
+|Checks if the current scope has the Annex wargoal against the specified country.
+|
+|1.0
+|-id="any_claim"
+|any_claim
+|<code><bool></code><br>Boolean.
+|<pre>any_claim = yes</pre>
+|Checks if the current scope has any claims on another country.
+|
+|1.0
+|-id="is_in_peace_conference"
+|is_in_peace_conference
+|<code><bool></code><br>Boolean.
+|<pre>is_in_peace_conference = yes</pre>
+|Checks if the current scope is in a peace conference.
+|Please test this in-game for 1.12.
+|1.0
+|-id="controls_province"
+|controls_province
+|<code><id></code><br>The province to check for.
+|<pre>controls_province = 1239</pre>
+|Checks if the current scope has control of the specified province.
+|
+|1.9
+|-id="longest_war_length"
+|longest_war_length
+|<code><int></code><br>Amount of months.
+|<pre>longest_war_length > 3</pre>
+|Checks how long a country has been at war, in months.
+|
+|1.14
+|-id="war_length_with"
+|war_length_with
+|<code>tag = <scope> / <variable></code><br>Target country.<br>
+<code>months = <int></code><br>Amounth of months.
+|<pre>war_length_with = {
+    tag = GER
+    months > 3
+}</pre>
+|Checks how long a country has been at war with specific country, in months.
+|
+|1.14
+|-id="has_truce_with"
+|has_truce_with
+|<code><scope> / <variable></code><br>The country to check for.
+|<pre>has_truce_with = GER</pre>
+|Checks if the country has truce with the specified country.
+|
+|1.16
+|-id="has_naval_control"
+|has_naval_control
+|<code><id> / <variable></code><br>The region to check in.
+|<pre>has_naval_control = 16</pre>
+|Checks if friendly nations and country scope together has enough naval dominance to assert control in strategic region.
+|
+|1.17
+|-id="has_enemy_naval_control"
+|has_enemy_naval_control
+|<code><id> / <variable></code><br>The region to check in.
+|<pre>has_enemy_naval_control = 16</pre>
+|Checks if any enemy has enough naval dominance to assert control in certain strategic region.
+|
+|1.17
+|}
+
+===State===
+{{SVersion|1.16}}
+These are state-related triggers in the country scope, not [[#State scope|state-scoped triggers]].
+
+{| class="wikitable sortable mw-collapsible" style="display: inline-block; padding: 5px" width="100%"
+|+ {{nowrap|State-related country-scoped triggers:}}<br>
+! width="10%" | Name
+! width="25%" | Parameters
+! width="25%" | Examples
+! width="20%" | Description
+! width="15%" | Notes
+! width="5%" | Version Added
+|-id="controls_state"
+|controls_state
+|<code><scope> / <variable></code><br>The state to check for.
+|<pre>controls_state = 39</pre>
+<pre>controls_state = var:state</pre>
+|Checks if the current scope has control of the specified state.
+|
+|1.0
+|-id="owns_state"
+|owns_state
+|<code><scope> / <variable></code><br>The state to check for.
+|<pre>owns_state = 39</pre>
+|Checks if the current scope owns the specified state.
+|
+|1.0
+|-id="num_of_controlled_states"
+|num_of_controlled_states
+|<code><int></code><br>The amount to check for.
+|<pre>num_of_controlled_states > 5</pre>
+| Checks if the current scope has the specified amount of controlled states.
+|Must use either > or < operators.
+| 1.0
+|-id="num_occupied_states"
+|num_occupied_states
+|<code><int></code><br>The amount to check for.
+|<pre>num_occupied_states > 5</pre>
+|Checks if the current scope has the specified amount of occupied states.
+|Must use either > or < operators.
+|1.0
+|-id="has_full_control_of_state"
+|has_full_control_of_state
+|<code><scope> / <variable></code><br>The state to check for.
+|<pre>has_full_control_of_state = 39</pre>
+|Checks if the current scope has total control (100% occupation) of the specified state.
+|
+|1.3
+|-id="has_resources_rights"
+|has_resources_rights
+|<code>state = <scope> / <variable></code><br>The state to check in. Mandatory if used in country scope.
+<code>resources = { <resource> <...> <resource> }</code><br>Resources to check for. Optional, defaults to any if unset.
+|
+<pre>has_resources_rights = {
+  state = 123
+  resources = { oil steel }
+}</pre>
+|Checks if there are any resource rights with the specified parameters.
+|Can be used in either state or country scope. Always returns false if the state has no resources.
+[[#s_has_resources_rights|Can also be used in state scope.]]
+|1.12
+|-id="core_compliance"
+|core_compliance
+|<code>occupied_country_tag = <TAG></code><br>The country for which to check compliance.<br>
+<code>value = <int></code><br>The value to check for.<br>
+|<pre>
+core_compliance = {
+    occupied_country_tag = ITA
+    value > 10
+}
+</pre>
+|Compares the average compliance of core states of the specified country within controlled states of the current scope.
+|Must use either > or < operators for value.
+|1.9
+|-id="core_resistance"
+|core_resistance
+|<code>occupied_country_tag = <TAG></code><br>The country for which to check resistance.<br>
+<code>value = <int></code><br>The value to check for.<br>
+|<pre>
+core_resistance = {
+    occupied_country_tag = ITA
+    value > 10
+}
+</pre>
+|Compares the average resistance of core states of the specified country within controlled states of the current scope.
+| Must use either > or < operators for value.
+|1.9
+|-id="garrison_manpower_need"
+|garrison_manpower_need
+|<code><int></code><br>Amount to check.
+|<pre>garrison_manpower_need > 10000</pre>
+|Checks how much garrison manpower we need for resistance in controlled states.
+| Must use either > or < operators.
+|1.9
+|-id="has_core_occupation_modifier"
+|has_core_occupation_modifier
+|<code>occupied_country_tag = <scope> / <variable></code><br>The country to check.<br>
+<code>modifier = <token></code>The modifier to check.
+|<pre>has_core_occupation_modifier = {
+  occupied_country_tag = ITA
+  modifier = token
+}</pre>
+|Checks if the current scope has an occupation modifier for resistance/compliance that applies to our occupied states of a specified country.
+|
+|1.9
+|-id="occupation_law"
+|occupation_law
+|<code><law ID></code><br>The law to check.
+|<pre>POL = {
+  POL = {
+    occupation_law = foreign_civilian_oversight
+  }
+}</pre># Checks POL's default occupation law
+<pre>HOL = {
+  BEL = {
+    occupation_law = foreign_civilian_oversight
+  }
+}</pre># Checks HOL's occupation law over BEL
+|Checks the occupation law that's either the default or applied over a specific country.
+|Checks [[Scopes#PREV usage|PREV's]] occupation law over the current country. If they're the same scope, checks the default occupation law.
+[[#s_occupation_law|Can also be used in state scope.]]
+|1.12
+|-id="has_contested_owner"
+|has_contested_owner
+|<code><state> / <variable></code><br>State to check.
+|<pre>has_contested_owner = 42</pre>
+|Checks if a state has the specified country as a contested owner. The trigger can be used either from a country or a state scope and accepts the other as parameter.
+|[[#s_has_contested_owner|Can also be used in state scope.]]
+|1.15
+|-id="owns_any_state_of"
+|owns_any_state_of
+|<code><states></code><br>States to check.
+|<pre>owns_any_state_of = {
+  123
+  246
+}</pre>
+|Check if the country owns any of the states in the list.
+|The same as: <pre>OR = {
+  owns_state = 123
+  owns_state = 246
+}</pre>
+|1.16
+|-id="is_on_same_continent_as"
+|is_on_same_continent_as
+|<code><scope> / <variable></code><br>The state to check for.
+|<pre>is_on_same_continent_as = 111</pre>
+|Checks if the scope country is on the same continent as the given state. The capital state is used for given country tag.
+|[[#s_is_on_same_continent_as|Can also be used in state scope.]]
+|1.17
+|}
+
+===Military===
+{{SVersion|1.17}}
+
+{| class="wikitable sortable mw-collapsible" style="display: inline-block; padding: 5px" width="100%"
+|+ {{nowrap|Military-related country-scoped triggers:}}<br>
+! width="10%" |Name
+! width="25%" |Parameters
+! width="25%" |Examples
+! width="20%" |Description
+! width="15%" |Notes
+! width="5%" |Version Added
+|-id="has_army_experience"
+|has_army_experience
+|<code><float> / <variable></code><br>The amount to check for.
+|<pre>has_army_experience > 10</pre>
+<pre>has_army_experience > var:number</pre>
+|Checks if the current scope has the specified amount of Army experience.
+|'''Must''' use either > or < operators as = operator checks for the '''exact''' value
+|1.3
+|-id="has_air_experience"
+|has_air_experience
+|<code><float> / <variable></code><br>The amount to check for.
+|<pre>has_air_experience > 10</pre>
+|Checks if the current scope has the specified amount of Air experience.
+|'''Must''' use either > or < operators as = operator checks for the '''exact''' value
+|1.3
+|-id="has_navy_experience"
+|has_navy_experience
+|<code><float> / <variable></code><br>The amount to check for.
+|<pre>has_navy_experience < 10</pre>
+| Checks if the current scope has the specified amount of Navy experience.
+|'''Must''' use either > or < operators as = operator checks for the '''exact''' value
+|1.3
+|-id="has_manpower"
+|has_manpower
+|<code><float> / <variable></code><br>The amount to check for.
+|<pre>has_manpower > 1000</pre>
+|Checks if the current scope has the specified amount of manpower.
+|'''Must''' use either > or < operators as = operator checks for the '''exact''' value
+| 1.0
+|-id="has_army_manpower"
+|has_army_manpower
+|<code>size = <int></code><br>The amount to check for.
+|<pre>has_army_manpower = {
+    size > 1000
+}
+</pre>
+| Checks if the current scope has an army using the specified amount of manpower.
+|Must use either > or < operators.
+|1.0
+|-id="manpower_per_military_factory"
+|manpower_per_military_factory
+|<code><float></code><br>The amount to check for.
+|<pre>manpower_per_military_factory > 1000</pre>
+|Checks if the current scope has the specified manpower times their number of military factories.
+|Must use either > or < operators.
+|1.0
+|-id="conscription_ratio"
+|conscription_ratio
+|<code><float> / <variable></code><br>The ratio to compare with.
+|<pre>conscription_ratio < 0.2</pre>
+| Checks if the current scope has the specified conscription ratio currently, not to be mixed up with the target conscription ratio.
+|'''Must''' use either > or < operators as = operator checks for the '''exact''' value
+|1.9
+|-id="current_conscription_amount"
+|current_conscription_amount
+|<code><float> / <variable></code><br>The amount to compare with.
+|<pre>current_conscription_amount > 2000</pre>
+|Checks if the current scope has already conscripted that much manpower.
+|'''Must''' use either > or < operators as = operator checks for the '''exact''' value
+|1.9
+|-id="target_conscription_amount"
+|target_conscription_amount
+|<code><float> / <variable></code><br>The amount to compare with.
+|<pre>target_conscription_amount > 2000</pre>
+|Checks if the current scope is targeting to conscript that much manpower.
+|'''Must''' use either > or < operators as = operator checks for the '''exact''' value
+|1.9
+|-id="num_divisions"
+|num_divisions
+|<code><int></code><br>The amount to check for.
+|<pre>num_divisions > 5</pre>
+|Checks if the current scope has the specified amount of divisions.
+|Must use either > or < operators.
+|1.3
+|-id="num_of_nukes"
+|num_of_nukes
+|<code><int></code><br>The amount to check for.
+|<pre>num_of_nukes > 5</pre>
+|Checks if the current scope has the specified amount of nukes.
+| Must use either > or < operators.
+|1.0
+|-id="casualties"
+|casualties
+|<code><int></code><br>The amount to check for.
+|<pre>casualties > 10000</pre>
+|Checks if the current scope has suffered the specified amount of casualties.
+|Must use either > or < operators.
+|1.0
+|-id="casualties_k"
+| casualties_k
+|<code><int></code><br>The amount to check for.
+|<pre>casualties_k > 10</pre>
+|Checks if the current scope has suffered the specified amount of casualties in thousands.
+| Must use either > or < operators.
+|1.0
+|-id="casualties_inflicted_by"
+|casualties_inflicted_by
+|<code>opponent = <tag></code><br>The tag that inflicted the casualties.<br>
+<code>thousands <> <int></code><br> The amount of casualties in thousands.
+|<pre>casualties_inflicted_by = {
+    opponent = POL
+    thousands > 10
+}</pre>
+|Checks if the current scope has suffered the specified amount of casualties in thousands from a specific country.
+|Must use either > or < operators for thousands.
+|1.6
+|-id="amount_manpower_in_deployment_queue"
+|amount_manpower_in_deployment_queue
+|<code><float></code><br>The amount to check for.
+|<pre>amount_manpower_in_deployment_queue > 1000</pre>
+|Checks if the current scope has the specified amount of manpower in their deployment queue.
+|Must use either > or < operators.
+|1.5
+|-id="has_attache_from"
+|has_attache_from
+|<code><scope> / <variable></code><br>The country to check for.
+|<pre>has_attache_from = GER</pre>
+|Checks if the current scope has an attache from the specified scope.
+|
+|1.5
+|-id="has_attache"
+|has_attache
+|<code><bool></code><br>Boolean.
+|<pre>has_attache = yes</pre>
+|Checks if the current scope has an attache.
+|
+|1.5
+|-id="is_lend_leasing"
+|is_lend_leasing
+|<code><scope> / <variable></code><br>The country to check for.
+|<pre>is_lend_leasing = GER</pre>
+|Checks if the current scope is lend leasing to the specified scope.
+|
+|1.0
+|-id="has_template"
+|has_template
+|<code><string></code><br>The name of the template.
+|<pre>has_template = "Infantry Division"</pre>
+|Checks if the current scope has a division template of the specified name.
+|
+|1.0
+|-id="has_template_majority_unit"
+|has_template_majority_unit
+|<code><string></code><br>The unit to check for.
+|<pre>has_template_majority_unit = infantry</pre>
+|Checks if the current scope has a division template composed mostly of the specified unit.
+|
+|1.0
+|-id="has_template_containing_unit"
+|has_template_containing_unit
+|<code><string></code><br>The name of the unit.
+|<pre>has_template_containing_unit = light_armor</pre>
+|Checks if the current scope has a division template contained any of the specified unit.
+|
+|1.0
+|-id="strength_ratio"
+| strength_ratio
+|<code>tag = <scope></code><br>The country to check for.
+<code>ratio <> <float></code><br>The ratio to check for.
+|<pre>strength_ratio = {
+    tag = GER
+    ratio > 1
+}
+</pre>
+|Checks if the current scope has the specified strength ratio against the specified country. The ratio is the number of fielded divisions of the current scope divided by those of <code>tag</code> (or 1 if <code>tag</code> has no divisions). The ratio gets increased by 10% if the current scope has a stronger air forces.<ref>[[forum:1356228/#post-26361808]]</ref>
+|Must use > or < in the ratio.
+|1.0
+|-id="fighting_army_strength_ratio"
+|fighting_army_strength_ratio
+|<code>tag = <scope></code><br>The country to check for.
+<code>ratio <>= <float> / <variable></code><br>The ratio to check for.
+|<pre>fighting_army_strength_ratio = {
+    tag = GER
+    ratio > 0.7
+}
+</pre>
+|Compares the total army fighting strength between the scope country and the one set with 'tag'.
+|Ratio can be '<','>' or '='.
+|1.15
+|-id="naval_strength_ratio"
+|naval_strength_ratio
+|<code>tag = <scope></code><br>The country to check for.
+<code>ratio <> <float></code><br>The ratio to check for.
+|<pre>naval_strength_ratio = {
+    tag = GER
+    ratio <> 1
+}
+</pre>
+|Checks if the current scope has the specified naval strength ratio against the specified country.
+|Must use > or < in the ratio.
+|1.0
+|-id="naval_strength_comparison"
+|naval_strength_comparison
+|<code>other = <scope></code><br>The country to check for.<br>
+<code>tooltip = <string></code><br>The ratio to check for. Optional.<br>
+<code>ratio <> <float></code><br>The ratio to check for.<br>
+<code>sub_unit_def_weights = { ... }</code> The weight to assign to each unit. Optional.
+|<pre>naval_strength_comparison = {
+    other = POL
+    tooltip = my_loc_key_tt
+    ratio > 1
+    sub_unit_def_weights = {
+        carrier = 1
+        submarine = 2
+    }
+}
+</pre>
+|Checks if the current scope has the specified naval strength ratio against the specified country.
+|Must use > or < in the ratio. If sub_unit_def_weights is unset, each unit is assumed to have 1 weight. If sub_unit_def_weights is set, only specified units will be counted towards strength. Units are defined in {{path|common/units/*.txt}}.
+|1.6
+|-id="alliance_strength_ratio"
+|alliance_strength_ratio
+|<code><float> / <variable></code><br>The ratio to check for.
+|<pre>alliance_strength_ratio > 0.5</pre>
+|Checks if the current scope and allies has an army strength higher than the specified ratio against estimated enemy strength.
+|Must use either > or < operators.
+| 1.0
+|-id="alliance_naval_strength_ratio"
+|alliance_naval_strength_ratio
+|<code><float> / <variable></code><br>The ratio to check for.
+|<pre>alliance_naval_strength_ratio > 0.5</pre>
+|Checks if the current scope and allies has an naval strength ratio higher than the specified ratio against estimated enemy strength.
+|Must use either > or < operators.
+|1.0
+|-id="enemies_strength_ratio"
+|enemies_strength_ratio
+|<code><float> / <variable></code><br>The ratio to check for.
+|<pre>enemies_strength_ratio > 0.5</pre>
+|Checks if the estimated enemy army strength ratio is higher than the specified ratio.
+|Must use either > or < operators.
+|1.0
+|-id="enemies_naval_strength_ratio"
+| enemies_naval_strength_ratio
+|<code><float> / <variable></code><br>The ratio to check for.
+|<pre>enemies_naval_strength_ratio > 0.5</pre>
+|Checks if the estimated enemy naval strength ratio is higher than the specified ratio.
+|Must use either > or < operators.
+|1.0
+|-id="has_army_size"
+|has_army_size
+|<code>size = <float></code><br>The amount to check for.<br>
+<code>type = <string></code><br>The battalion type to check for. Divisions that are majority made up of battalions in that type count. Optional, counts all divisions by default.<br>
+|<pre>has_army_size = {
+    size > 10
+    type = armor
+}
+</pre>
+|Checks if the current scope has the specified number of divisions, or of a specified type of division.
+|Battalion types are defined within {{path|common/units/*.txt}} files. Must use either > or < operators for size.
+|1.0
+|-id="has_navy_size"
+|has_navy_size
+|<code>size = <float> / <variable></code><br>The amount to check for.<br>
+<code>type = <string></code><br>The type to check for. Optional.<br>
+<code>archetype = <string></code><br>The ship archetype to check for. Optional.<br>
+|<pre>has_navy_size = {
+    size > 10
+    type = capital_ship
+    archetype = ship_hull_heavy
+}
+</pre>
+|Checks if the current scope has the specified number of ships, or of a specified type of ship.
+|Ship types are defined within {{path|common/units/*.txt}} files. Must use either > or < operators for size. Ship archetypes are found in {{path|common/units/equipment/*.txt}} files.
+|1.0
+|-id="has_deployed_air_force_size"
+|has_deployed_air_force_size
+|<code>size = <float></code><br>The amount to check for.<br>
+<code>type = <string></code><br>The type to check for. Optional.<br>
+|<pre>has_deployed_air_force_size = {
+    size > 10
+    type = cas
+}
+</pre>
+|Checks if the current scope has the specified number of aircraft, or of a specified type of aircraft.
+|Airwing types are defined within {{path|common/units/*.txt}} files. Must use either > or < operators for size.
+|1.0
+|-id="divisions_in_state"
+|divisions_in_state
+|<code>size = <float></code><br>The amount to check for.<br>
+<code>type = <string></code><br>The battalion type to check for. Divisions that are majority made up of battalions in that type count. Optional, counts all divisions by default.<br>
+<code>unit = <string></code><br>The exact battalion to check for. Divisions that are majority made up of that battalions count. Optional, counts all divisions by default.<br>
+<code>state = <scope> / <variable></code><br>The state to check in.
+|<pre>
+divisions_in_state = {
+    type = armor
+    size > 10
+    state = 49
+}
+</pre>
+|Checks if the specified state contains the specified amount of divisions.
+|Battalions and their types are defined within {{path|common/units/*.txt}} files. Must use either > or < operators for size.
+|1.0
+|-id="army_manpower_in_state"
+|army_manpower_in_state
+|<code>amount <> <float></code><br>The amount to check for.<br>
+<code>type = <string></code><br>The type to check for. Optional.<br>
+<code>state = <scope> / <variable></code><br>The state to check in.
+|<pre>
+army_manpower_in_state = {
+    type = support
+    amount > 10000
+    state = 49
+}
+</pre>
+|Checks if the specified state contains the specified amount of army manpower within the state.
+|Battalion types are defined within {{path|common/units/*.txt}} files. Must use either > or < operators for size.
+|1.6
+|-id="divisions_in_border_state"
+| divisions_in_border_state
+|<code>size = <float></code><br>The amount to check for.<br>
+<code>type = <string></code><br>The battalion type to check for. Divisions that are majority made up of battalions in that type count. Optional, counts all divisions by default.<br>
+<code>state = <scope> / <variable></code><br>The state to check in.<br>
+<code>border_state = <scope> / <variable></code><br>The border state to check in.
+|<pre>
+divisions_in_border_state = {
+    type = infantry
+    size > 10
+    state = 49
+    border_state = var:state
+}
+</pre>
+|Checks if the border provinces between the specified state and border state contain the specified amount of divisions.
+|Battalion types are defined within {{path|common/units/*.txt}} files. Must use either > or < operators for size.
+|1.5
+|-id="num_divisions_in_states"
+|num_divisions_in_states
+|<code>count = <int></code><br>The amount to check for.<br>
+<code>states = { <int> <...> <int> }</code><br>The states to check in.<br>
+<code>types = { <string> <...> <string> }</code><br>The battalion types to check for. Divisions that are majority made up of battalions in that type count. Optional, counts all divisions by default.<br>
+<code>exclude = { <string> <...> <string> }</code><br>The sub-units to exclude from the search. Divisions that are majority made up of specified battalions are excluded. Optional, excludes no divisions by default.
+|<pre>
+num_divisions_in_states = {
+    count > 24
+    states = { 550 559 271 }
+    exclude = { irregular_infantry }
+}
+</pre>
+|Checks if the specified states contain enough divisions of the specified types.
+|Divisions and their types are defined within {{path|common/units/*.txt}} files. Can use either =, >, or < operators for count. The tooltip does not specify the states the check runs for nor the filtered types.
+|1.12
+|-id="num_battalions_in_states"
+|num_battalions_in_states
+|<code>count = <int></code><br>The amount to check for.<br>
+<code>states = { <int> <...> <int> }</code><br>The states to check in.<br>
+<code>types = { <string> <...> <string> }</code><br>The battalion types to check for.<br>
+<code>exclude = { <string> <...> <string> }</code><br>The sub-units to exclude from the search.
+|<pre>
+num_battalions_in_states = {
+    count > 24
+    states = { 550 559 271 }
+    exclude = { irregular_infantry }
+}
+</pre>
+|Checks if the specified states contain enough battalions (or sub-units) of the specified types.
+|Battalions and their types are defined within {{path|common/units/*.txt}} files. Can use either =, >, or < operators for count. The tooltip does not specify the states the check runs for nor the filtered types.
+|1.12
+|-id="ships_in_state_ports"
+|ships_in_state_ports
+|<code>size = <float></code><br>The amount to check for.<br>
+<code>type = <string></code><br>The type to check for. Optional.<br>
+<code>state = <scope> / <variable></code><br>The state to check in.<br>
+|<pre>
+ships_in_state_ports = {
+    type = capital_ship
+    size > 10
+    state = 49
+}
+</pre>
+|Checks if the specified state contains the specified amount of ships, or of ships of the specified type.
+|Ship types are defined within {{path|common/units/*.txt}} files. Must use either > or < operators for size.
+|1.0
+|-id="num_planes_stationed_in_regions"
+|num_planes_stationed_in_regions
+|<code>value = <float></code><br>The amount to check for.<br>
+<code>regions = { <id> <...> <id> }</code><br>The regions to check in.<br>
+|<pre>num_planes_stationed_in_regions = {
+    value > 10
+    regions = { 123 321 }
+}
+</pre>
+|Checks if the current scope has the specified number of aircraft stationed within strategic regions.
+|Must use either =, >, or < operators for value.
+|1.12
+|-id="has_volunteers_amount_from"
+|has_volunteers_amount_from
+|<code>tag = <scope></code><br>The country to check for.<br>
+<code>count = <int></code><br>The amount to check for.
+|<pre>
+has_volunteers_amount_from = {
+    tag = GER
+    count > 10
+}
+</pre>
+|Checks if the current scope has recieved volunteers from the specified country of the specified amounts.
+|Must use either > or < operators for count.
+|1.0
+|-id="convoy_threat"
+|convoy_threat
+|<code><float></code><br>The threat to compate with.
+|<pre>
+convoy_threat > 0.5
+</pre>
+|Checks how much the convoys are threatened.
+|Must use either > or < operators for count. Threat is always between 0 and 1.
+|1.6
+|-id="has_mined"
+|has_mined
+|<code>target = <tag></code><br>The country the coast of which is mined.<br>
+<code>value <> <int></code><br>The amount of mines to compare with.
+|<pre>
+has_mined = {
+    target = POL
+    value > 1000
+}</pre>
+| Checks if the current scope has X mines on the coast of the specified country.
+|Must use either > or < operators for value.
+|1.6
+|-id="has_mines"
+|has_mines
+|<code>region = <ID></code><br>The strategic region that contains the mines.<br>
+<code>amount = <int></code><br>The amount of mines to compare with.
+|<pre>
+has_mined = {
+    target = POL
+    amount = 1000
+}</pre>
+|Checks if the current scope has at least X mines within the specified strategic region.
+|
+|1.6
+|-id="mine_threat"
+|mine_threat
+|<code><float></code><br>The threat to compate with.
+|<pre>mine_threat < 0.6</pre>
+| Checks how dangerous enemy mines are.
+|Must use either > or < operators for count. Threat is always between 0 and 1.
+|1.6
+|-id="has_military_industrial_organization"
+|has_military_industrial_organization
+|<code><token></code><br>The id to check for.
+|<pre>has_military_industrial_organization = infantry_mio_token</pre>
+|Checks if the current scope has a MIO with the specified name.
+|Accepts variables.
+|1.13
+|-id="has_tactic"
+|has_tactic
+|<code><tactic></code><br>The tactic to check for.
+|<pre>has_tactic = tactic_masterful_blitz</pre>
+|Check if the given tactic is unlocked (or active by default) for the country.
+|
+|1.17
+|}
+
+===Doctrine===
+{{SVersion|1.17}}
+
+{| class="wikitable sortable mw-collapsible" style="display: inline-block; padding: 5px" width="100%"
+|+ {{nowrap|Doctrine-related country-scoped triggers:}}<br>
+! width="10%" | Name
+! width="25%" |Parameters
+! width="25%" |Examples
+! width="20%" |Description
+! width="15%" |Notes
+! width="5%" |Version Added
+|-id="has_any_grand_doctrine"
+|has_any_grand_doctrine
+|<code><string></code><br>Doctrine folder.
+|<pre>has_any_grand_doctrine = land</pre>
+|Checks if any grand doctrine in folder is currently active for the country.
+|Folders are land, naval and air.
+|1.17.2
+|-id="has_doctrine"
+|has_doctrine
+|<code><grand doctrine> / <subdoctrine></code><br>The doctrine to check for.
+|<pre>has_doctrine = mobile_warfare # Grand doctrine</pre>
+<pre>has_doctrine = mobile_infantry # Subdoctrine</pre>
+|Checks if the given grand doctrine or subdoctrine is currently active for the country.
+|
+|1.17
+|-id="has_subdoctrine_in_track"
+|has_subdoctrine_in_track
+|<code><track></code><br>The track to check for.
+|<pre>has_subdoctrine_in_track = infantry</pre>
+|Checks if any subdoctrine is currently assigned to (any instance of) the given track.
+|
+|1.17
+|-id="has_completed_subdoctrine"
+|has_completed_subdoctrine
+|<code><subdoctrine></code><br>The subdoctrine to check for.
+|<pre>has_completed_subdoctrine = mobile_infantry</pre>
+|Checks if the current country has ever completed the specified subdoctrine (even if it was later switched out).
+|
+|1.17
+|-id="has_completed_track"
+|has_completed_track
+|<code><track></code><br>The track to check for.
+|<pre>has_completed_track = infantry</pre>
+|Checks if the given subdoctrine track has been completed
+|
+|1.17
+|-id="has_mastery"
+|has_mastery
+|<code>amount = <int></code><br>The amout to check for.
+<code>track = <track></code><br>The track to check for.
+|<pre>has_mastery = {
+    amount = 200
+    track = infantry
+}</pre>
+|Checks if any track of the given type has at least X mastery.
+|
+|1.17
+|-id="has_mastery_level"
+|has_mastery_level
+|<code>amount = <int></code><br>The amount to check for.
+<code>subdoctrine = <subdoctrine></code><br>The subdoctrine to check for.
+|<pre>has_mastery_level = {
+    amount = 2
+    subdoctrine = mobile_infantry
+}</pre>
+|Checks if the country has reached the specified number of mastery levels (rewards) for the given subdoctrine.
+|
+|1.17
+|}
+
+===Equipment===
+{{SVersion|1.17}}
+
+{| class="wikitable sortable mw-collapsible" style="display: inline-block; padding: 5px" width="100%"
+|+ {{nowrap|Equipment-related country-scoped triggers:}}<br>
+! width="10%" | Name
+! width="25%" |Parameters
+! width="25%" |Examples
+! width="20%" |Description
+! width="15%" |Notes
+! width="5%" |Version Added
+|-id="stockpile_ratio"
+| stockpile_ratio
+|<code>archetype = <string></code><br>The equipment archetype to check for.<br>
+<code>ratio = <float></code><br>The ratio of equipment to check for.
+|<pre>stockpile_ratio = {
+    archetype = infantry_equipment
+    ratio > 0.5
+}</pre>
+|Checks if the current scope has stockpiled the specified equipment to the specified ratio against fielded equipment of the same type.
+|Must use either > or < operators for ratio. <br> For the convoy equipment which is not fielded as other equipments, ratio shall be not a percentage but a direct amount (for instance 256 convoys)
+|1.5
+|-id="has_equipment"
+|has_equipment
+|<code><equipment> = <int> / <variable></code><br>The equipment to check for, and the amount to check for.
+|<pre>has_equipment = {
+    infantry_equipment_1 > 10
+}</pre>
+|Checks if the current scope has the specified equipment to the specified amount.
+|Must use either > or < operators.
+| 1.0
+|-id="has_any_license"
+|has_any_license
+|<code><bool></code><br>Boolean.
+|<pre>has_any_license = yes</pre>
+|Checks if the current scope has any licenses from other countries.
+|
+|1.0
+|-id="is_licensing_any_to"
+|is_licensing_any_to
+|<code><scope> / <variable></code><br>The country to check for.
+|<pre>is_licensing_any_to = GER</pre>
+|Checks if the current scope is licensing to the specified scope.
+|
+|1.0
+|-id="is_licensing_to"
+|is_licensing_to
+|<code>target = <scope></code><br>The country to check for.
+<code>archetype = <string></code><br>The equipment archetype to check for. Optional.<br>
+'''Equipment scope'''<br>
+<code>type = <string></code><br>The equipment to check for. Optional.<br>
+<code>version = <int></code><br>The variant id of the equipment. Optional.
+|<pre>is_licensing_to = {
+    target = GER
+    archetype = infantry_equipment
+}</pre>
+<pre>is_licensing_to = {
+    target = GER
+    equipment = {
+        type = light_tank_equipment
+        version = 1
+    }
+}</pre>
+|Checks if the current scope is licensing the specified equipment to the specified country.
+|
+|1.0
+|-id="has_license"
+|has_license
+|<code>from = <scope></code><br>The country to check for.
+<code>archetype = <string></code><br>The equipment archetype to check for. Optional.<br>
+'''Equipment scope'''<br>
+<code>type = <string></code><br>The equipment to check for. Optional.<br>
+<code>version = <int></code><br>The variant id of the equipment. Optional.
+|<pre>has_license = {
+    from = GER
+    archetype = infantry_equipment
+}</pre>
+<pre>has_license = {
+    from = GER
+    equipment = {
+        type = light_tank_equipment
+        version = 1
+    }
+}</pre>
+|Checks if the current scope has a license for the specified equipment from the specified country.
+|
+|1.0
+|-id="fuel_ratio"
+|fuel_ratio
+|<code><float> / <variable></code><br>The ratio to check with.
+|<pre>fuel_ratio > 0.4</pre>
+|Checks the fuel ratio of the country.
+|Must use either < or > operators.
+|1.6
+|-id="has_fuel"
+|has_fuel
+|<code><int> / <variable></code><br>The amount to compare with.
+|<pre>has_fuel > 400</pre>
+|Checks the fuel amount of the country.
+|Must use either < or > operators.
+|1.6
+|-id="has_design_based_on"
+|has_design_based_on
+|<code><archetype></code><br>The equipment archetype.
+|<pre>has_design_based_on = light_tank_chassis</pre>
+|Checks if the country has a builtable non-obsolete design based on the specified equipment archetype.
+|Equipment archetypes can be seen in {{path|common/units/equipment/*}}.
+|1.11
+|}
+
+===Intelligence===
+{{SVersion|1.17}}
+
+{| class="wikitable sortable mw-collapsible" style="display: inline-block; padding: 5px" width="100%"
+|+ {{nowrap|Intelligence-related country-scoped triggers:}}<br>
+! width="10%" |Name
+! width="25%" | Parameters
+! width="25%" | Examples
+! width="20%" |Description
+! width="15%" |Notes
+! width="5%" |Version Added
+|-id="estimated_intel_max_piercing"
+|estimated_intel_max_piercing
+|<code>tag = <scope></code><br>The country to check for.<br>
+<code>value = <int></code><br>The amount to check for.
+|<pre>estimated_intel_max_piercing = {
+    tag = GER
+    value > 2
+}</pre>
+|Checks if the specified scope has the specified amount of piercing based on the current scope's intel.
+|Must use either > or < operators for value.
+|1.0
+|-id="estimated_intel_max_armor"
+|estimated_intel_max_armor
+|<code>tag = <scope></code><br>The country to check for.<br>
+<code>value = <int></code><br>The amount to check for.
+|<pre>estimated_intel_max_armor = {
+    tag = GER
+    value > 2
+}</pre>
+|Checks if the specified scope has the specified amount of armor based on the current scope's intel.
+|Must use either > or < operators for value.
+|1.0
+|-id="compare_intel_with"
+|compare_intel_with
+|<code>target = <tag> / <variable></code><br>The target to compare with.<br>
+<code>civilian_intel <>= <float> / <variable></code><br>Comparison of civilian intel.<br>
+<code>army_intel <>= <float> / <variable></code><br>Comparison of army intel.<br>
+<code>navy_intel <>= <float> / <variable></code><br>Comparison of navy intel.<br>
+<code>airforce_intel <>= <float> / <variable></code><br>Comparison of airforce intel.<br>
+|<pre>compare_intel_with = { 
+    target = POL 
+    civilian_intel > 0.5
+    army_intel = 0
+    navy_intel < 0
+}</pre>
+|Compares intel between 2 countries.
+|Can use < (in which case the current country has x less intel), >, and = (in which case it must be equal).
+| 1.9
+|-id="intel_level_over"
+|intel_level_over
+|<code>target = <tag> / <variable></code><br>The target to compare with.<br>
+<code>civilian_intel <>= <float> / <variable></code><br>Comparison of civilian intel.<br>
+<code>army_intel <>= <float> / <variable></code><br>Comparison of army intel.<br>
+<code>navy_intel <>= <float> / <variable></code><br>Comparison of navy intel.<br>
+<code>airforce_intel <>= <float> / <variable></code><br>Comparison of airforce intel.<br>
+|<pre>intel_level_over = { 
+    target = POL 
+    civilian_intel > 0.5
+    army_intel = 0
+    navy_intel < 0
+}</pre>
+|Checks the intel level from the current country over a specified country.
+|Can use < (in which case the current country has x less intel), >, and = (in which case it must be equal).
+|1.9
+|-id="has_intelligence_agency"
+|has_intelligence_agency
+|<code><boolean></code><br>The intelligence agency to check.<br>
+|<pre>has_intelligence_agency = yes</pre>
+|Checks if the current scope has an intelligence agency.
+|
+|1.9
+|-id="network_national_coverage"
+|network_national_coverage
+|<code>target = <tag> / <variable></code><br>The country which is checked.<br>
+<code>value <> <float> / <variable></code><br>The value of network.
+|<pre>network_national_coverage = {
+    target = POL
+    value < 70
+}</pre>
+|Checks network national coverage over a specific country.
+|Must use < or > for value.
+|-id="network_strength"
+|network_strength
+|<code>target = <tag></code><br>The country which is checked.<br>
+<code>state = <id> / <variable></code><br>The state which is checked.<br>
+<code>value <> <float> / <variable></code><br>The strength of network.
+|<pre>network_strength = {
+    target = POL
+    value < 70
+}</pre>
+|Checks network national coverage over a specific country.
+|Must use < or > for value. Can use either or both of target and state.
+|1.9
+|-id="has_done_agency_upgrade"
+|has_done_agency_upgrade
+|<code><string></code><br>The agency upgrade to check.
+|<pre>has_done_agency_upgrade = upgrade_army_department</pre>
+|Checks if the current scope has the specified agency upgrade (to its highest level).
+|
+|1.9
+|-id="agency_upgrade_number"
+|agency_upgrade_number
+|<code><int> / <variable></code><br>The amount of agency upgrades to check for.
+|<pre>agency_upgrade_number > 4</pre>
+|Checks the number of upgrades done in the current scope's intelligence agency.
+|Must use either > or < operators.
+|1.9
+|-id="decryption_progress"
+|decryption_progress
+|<code>target = <tag></code><br>The country to compare with.<br>
+<code>value <> <float></code><br>The value to compare.
+|<pre>decryption_progress = {
+    target = POL
+    value < 0.5
+}</pre>
+| Checks the decryption progress towards a country.
+|Must use either > or < operators for value.
+|1.9
+|-id="has_captured_operative"
+|has_captured_operative
+|<code><tag>/<bool></code><br>Country whose operative was captured/Whether an operative was captured.
+|<pre>has_captured_operative = POL</pre>
+<pre>has_captured_operative = yes</pre>
+|Checks if the current scope has captured an operative.
+|
+|1.9
+|-id="has_finished_collecting_for_operation"
+|has_finished_collecting_for_operation
+|<code>target = <tag></code><br>Country towards whom the operation is targeted.<br>
+<code>operation = <token></code><br>The operation which current scope is planning against the target.
+|<pre>has_finished_collecting_for_operation = {
+    target = POL
+    operation = operation_infiltrate_armed_forces_navy
+}</pre>
+|Checks if the current scope has finished collecting resources for an operation.
+|
+|1.9
+|-id="is_preparing_operation"
+|is_preparing_operation
+|<code>target = <tag></code><br>Country towards whom the operation is targeted.<br>
+<code>operation = <token></code><br>The operation which current scope is planning against the target. Optional.
+|<pre>is_preparing_operation = {
+    target = POL
+    operation = operation_infiltrate_armed_forces_navy
+}</pre>
+| Checks if the current scope is preparing an operation against the specified country.
+|
+|1.9
+|-id="is_running_operation"
+|is_running_operation
+|<code>target = <tag></code><br>Country towards whom the operation is targeted.<br>
+<code>operation = <token></code><br>The operation which current scope is planning against the target. Optional.
+|<pre>is_running_operation = {
+    target = POL
+    operation = operation_infiltrate_armed_forces_navy
+}</pre>
+| Checks if the current scope is running an operation against the specified country.
+|
+|1.9
+|-id="num_finished_operations"
+|num_finished_operations
+|<code>target = <tag></code><br>Country towards whom the operation is targeted.<br>
+<code>operation = <token></code><br>The operation which current scope is planning against the target. Optional.
+|<pre>num_finished_operations = {
+    target = POL
+    operation = operation_infiltrate_armed_forces_navy
+}</pre>
+|Checks how many finished operations the current scope had against the specified country.
+|
+|1.9
+|-id="has_operation_token"
+|has_operation_token
+|<code>tag = <tag></code><br>Country towards whom the operation is targeted.<br>
+<code>token = <token></code><br>The operation token.
+|<pre>has_operation_token = {
+    tag = POL
+    token = token_name
+}</pre>
+|Checks if the current scope has an operation token against an another country.
+|
+|1.9
+|-id="is_active_decryption_bonuses_enabled"
+|is_active_decryption_bonuses_enabled
+|<code><tag></code><br>The country towards which the bonus is enabled.
+|<pre>is_active_decryption_bonuses_enabled = POL</pre>
+|Checks if the current scope has any decryption bonuses towards the specified country.
+|
+|1.9
+|-id="is_cryptology_department_active"
+|is_cryptology_department_active
+|<code><bool></code><br>Boolean.
+|<pre>is_cryptology_department_active = yes</pre>
+|Checks if the current scope has a cryptology department active.
+|
+|1.9
+|-id="is_decrypting"
+|is_decrypting
+|<code><tag></code><br>The country which is decrypted.
+|<pre>is_decrypting = POL</pre>
+|Checks if the current scope is decrypting a certain country.
+|
+|1.9
+|-id="is_fully_decrypted"
+|is_fully_decrypted
+|<code><tag></code><br>The country which is decrypted.
+|<pre>is_fully_decrypted = POL</pre>
+|Checks if the current scope has fully decrypted a certain country.
+|
+|1.9
+|-id="num_fake_intel_divisions"
+|num_fake_intel_divisions
+|<code><int></code><br>Amount of divisions.
+|<pre>num_fake_intel_divisions > 10</pre>
+|Checks the amount of fake intel divisions.
+|Must use either < or >.
+|1.9
+|-id="num_free_operative_slots"
+|num_free_operative_slots
+|<code><int></code><br>Amount of slots.
+|<pre>num_free_operative_slots > 2</pre>
+|Checks the amount of free operative slots.
+|Must use either < or >.
+|1.9
+|-id="num_operative_slots"
+|num_operative_slots
+|<code><int></code><br>Amount of slots.
+|<pre>num_operative_slots > 2</pre>
+|Checks the amount of operative slots.
+|Must use either < or >.
+|1.9
+|-id="num_of_operatives"
+|num_of_operatives
+|<code><int></code><br>Amount of operatives.
+|<pre>num_of_operatives > 2</pre>
+|Checks the amount of operatives.
+|Must use either < or >.
+|1.9
+|}
+
+===AI===
+{{SVersion|1.16}}
+
+{| class="wikitable sortable mw-collapsible" style="display: inline-block; padding: 5px" width="100%"
+|+ {{nowrap|AI-related country-scoped triggers:}}<br>
+! width="10%" |Name
+! width="25%" |Parameters
+! width="25%" |Examples
+! width="20%" |Description
+! width="15%" |Notes
+! width="5%" | Version Added
+|-id="ai_irrationality"
+|ai_irrationality
+|<code><int></code><br>The amount to check for.
+|<pre>ai_irrationality > 10</pre>
+|Checks if the current scope AI has the specified irrationality.
+|Must use either > or < operators.
+|1.0
+|-id="ai_liberate_desire"
+|ai_liberate_desire
+|<code>target = <scope></code><br>The country to check for.
+<code>count = <float></code><br>The amount to check for.
+|<pre>ai_liberate_desire = {
+    target = GER
+    count > 1
+}
+</pre>
+|Checks if the current scope AI has the specified liberation desire towards the specified country.
+|Must use either > or < operators for count.
+|1.0
+|-id="ai_has_role_division"
+|ai_has_role_division
+|<code><string></code><br>The role to check for.
+|<pre>ai_has_role_division = infantry</pre>
+|Checks if the current scope AI has a division with the specified role.
+|Roles are defined in {{path|common/ai_templates/*.txt}}
+|1.0
+|-id="ai_has_role_template"
+|ai_has_role_template
+|<code><string></code><br>The role to check for.
+|<pre>ai_has_role_template = armor</pre>
+|Checks if the current scope AI has a division template with the specified role.
+| Roles are defined in {{path|common/ai_templates/*.txt}}
+|1.0
+|-id="ai_wants_divisions"
+|ai_wants_divisions
+|<code><int></code><br>The amount to check for.
+|<pre>ai_wants_divisions > 10</pre>
+| Checks if the current scope AI desires the specified amount of divisions.
+|Must use either > or < operators.
+|1.0
+|-id="has_template_ai_majority_unit"
+|has_template_ai_majority_unit
+|<code><string></code><br>The unit to check for.
+|<pre>has_template_ai_majority_unit = infantry</pre>
+|Checks if the current scope AI has a division template mostly made up of the specified unit.
+|
+|1.0
+|}
+
+===Characters===
+{{SVersion|1.16}}
+These are character-related triggers in the country scope, not [[#Character scope|character-scoped triggers]].
+
+{| class="wikitable sortable mw-collapsible" style="display: inline-block; padding: 5px" width="100%"
+|+ {{nowrap|Character-related country-scoped triggers:}}<br>
+! width="10%" |Name
+! width="25%" |Parameters
+! width="25%" | Examples
+! width="20%" | Description
+! width="15%" |Notes
+! width="5%" |Version Added
+|-id="can_be_country_leader"
+| can_be_country_leader
+|<code><character></code><br>The character to check.
+|<pre>can_be_country_leader = POL_character_test</pre>
+|Checks if the specified character has a country leader role, active or not, and can utilise it in this country.
+|
+|1.11
+|-id="has_character"
+|has_character
+|<code><string></code><br>The character to check.
+|<pre>has_character = my_character</pre>
+|Checks if the current scope has the specified character recruited. The character does NOT need to be in power.
+|
+|1.11
+|-id="has_country_leader"
+|has_country_leader
+|<code>ruling_only = <bool></code>(default = yes) Limit check to ruling only. <br>
+<code>character = <character_token></code> (recommended criteria) The character to check for. Optional. <br><code>name = <string></code><br>The name to check for. Optional. <br><code>id = <int></code><br>The id to check for. Optional. <br>
+|<pre>has_country_leader = {
+    id = 10
+}
+</pre><pre>
+has_country_leader = {
+    character = SPR_niceto_alcala_zamora
+    ruling_only = yes
+}
+</pre>
+<pre>
+has_country_leader = {
+    name = "John Smith"
+    ruling_only = yes
+}
+</pre>
+|Checks if the current scope has the specified country leader.
+|
+|1.3
+|-id="has_country_leader_ideology"
+|has_country_leader_ideology
+|<ideology>
+Checks the ideology of the active country leader
+|<pre>has_country_leader_ideology = nazism</pre>
+|Checks if the current scope's active country leader has the specified ideology.
+|
+|1.11
+|-id="has_country_leader_with_trait"
+|has_country_leader_with_trait
+|<code><string></code><br>The trait to check.
+|<pre>has_country_leader_with_trait = champion_of_peace_1</pre>
+|Checks if the leader of the country has a specific trait.
+|
+|1.6
+|-id="is_female"
+|is_female
+|<code><bool></code><br>Boolean.
+|<pre>is_female = yes</pre>
+|Checks if the current country leader is female.
+|
+|1.9
+|-id="has_unit_leader"
+|has_unit_leader
+|<code><int></code><br>The id to check for.
+|<pre>has_unit_leader = 1</pre>
+|Checks if the current scope has a unit leader with the specified id.
+|Only the legacy ID can be used, the character ID doesn't work.
+|1.0
+|-id="has_scientist_specialization"
+|has_scientist_specialization
+|<code>specialization = <specialization_token></code><br>Specialization.
+|<pre>has_scientist_specialization = specialization_nuclear</pre>
+|Checks if the country in scope has a scientist with a skill level of at least 1 in specialization.
+|
+|1.15
+|}
+
+===Peace conferences===
+{{SVersion|1.16}}
+These are not exactly peace conference-related triggers, but '''those that can only be used within peace conferences'''.
+
+{| class="wikitable sortable mw-collapsible" style="display: inline-block; padding: 5px" width="100%"
+|+ {{nowrap|Peace conference-only country-scoped triggers:}}<br>
+! width="10%" |Name
+! width="25%" |Parameters
+! width="25%" | Examples
+! width="20%" | Description
+! width="15%" |Notes
+! width="5%" |Version Added
+|-id="pc_is_winner"
+|pc_is_winner
+|<code><bool></code><br>Boolean.
+|<pre>pc_is_winner = yes</pre>
+|Checks if the current scope is a winner within the peace conference.
+|
+|1.12
+|-id="pc_is_on_winning_side"
+|pc_is_on_winning_side
+|<code><bool></code><br>Boolean.
+|<pre>pc_is_on_winning_side = yes</pre>
+|Checks if the current scope is on the winning side within the peace conference.
+|
+|1.12
+|-id="pc_is_loser"
+|pc_is_loser
+|<code><bool></code><br>Boolean.
+|<pre>pc_is_loser = yes</pre>
+|Checks if the current scope is a loser within the peace conference.
+|
+|1.12
+|-id="pc_is_untouched_loser"
+|pc_is_untouched_loser
+|<code><bool></code><br>Boolean.
+|<pre>pc_is_untouched_loser = yes</pre>
+|Checks if the current scope is an untouched loser within the peace conference.
+|
+|1.12
+|-id="pc_is_on_same_side_as"
+|pc_is_on_same_side_as
+|<code><scope></code><br>Country to check for.
+|<pre>pc_is_on_same_side_as = BHR</pre>
+|Checks if the current scope is on the same side of the peace conference as the specified country.
+|
+|1.12
+|-id="pc_is_liberated"
+|pc_is_liberated
+|<code><bool></code><br>Boolean.
+|<pre>pc_is_liberated = yes</pre>
+|Checks if the current scope has been liberated within the peace conference.
+|
+|1.12
+|-id="pc_is_liberated_by"
+|pc_is_liberated_by
+|<code><scope></code><br>Country to check for.
+|<pre>pc_is_liberated_by = BHR</pre>
+|Checks if the current scope has been liberated within the peace conference by the specified country.
+|
+|1.12
+|-id="pc_is_puppeted"
+|pc_is_puppeted
+|<code><bool></code><br>Boolean.
+|<pre>pc_is_puppeted = yes</pre>
+|Checks if the current scope has been puppeted within the peace conference.
+|
+|1.12
+|-id="pc_is_puppeted_by"
+|pc_is_puppeted_by
+|<code><scope></code><br>Country to check for.
+|<pre>pc_is_puppeted_by = BHR</pre>
+|Checks if the current scope has been puppeted within the peace conference by the specified country.
+|
+|1.12
+|-id="pc_is_forced_government"
+|pc_is_forced_government
+|<code><bool></code><br>Boolean.
+|<pre>pc_is_forced_government = yes</pre>
+|Checks if the current scope has had an enforced government change within the peace conference.
+|
+|1.12
+|-id="pc_is_forced_government_by"
+|pc_is_forced_government_by
+|<code><scope></code><br>Country to check for.
+|<pre>pc_is_forced_government_by = BHR</pre>
+|Checks if the current scope has had an enforced government change within the peace conference demanded by the specified country.
+|
+|1.12
+|-id="pc_is_forced_government_to"
+|pc_is_forced_government_to
+|<code><ideology group></code><br>Ideology group to check for.
+|<pre>pc_is_forced_government_to = democratic</pre>
+|Checks if the current scope has had an enforced government change to the specified ideology group.
+|
+|1.12
+|-id="pc_total_score"
+|pc_total_score
+|<code><decimal></code><br>Scope to check for.
+|<pre>pc_total_score > 2400</pre>
+|Checks if the current scope has the specified amount in total score within the peace conference.
+|Can only be used for the winning countries.
+|1.12
+|-id="pc_current_score"
+|pc_current_score
+|<code><decimal></code><br>Scope to check for.
+|<pre>pc_current_score > 100</pre>
+|Checks if the current scope has the specified amount in current score within the peace conference.
+|Can only be used for the winning countries.
+|1.12
+|}
+
+==Faction scope==
+{{SVersion|1.17}}
+Can be used in '''faction''' scope.
+
+;There are currently no faction-specific triggers.
+<!--{| class="wikitable sortable mw-collapsible" style="display: inline-block; padding: 5px" width="100%"
+|+ {{nowrap|Faction-scoped triggers:}}<br>
+! width="10%" | Name
+! width="25%" |Parameters
+! width="25%" |Examples
+! width="20%" |Description
+! width="15%" |Notes
+! width="5%" |Version Added
+|}-->
+
+==State scope==
+{{SVersion|1.16}}
+Can be used in '''state''' scope.
+
+===General===
+{{SVersion|1.16}}
+
+{| class="wikitable sortable mw-collapsible" style="display: inline-block; padding: 5px" width="100%"
+|+ {{nowrap|General state-scoped triggers:}}<br>
+! width="10%" | Name
+! width="25%" |Parameters
+! width="25%" |Examples
+! width="20%" |Description
+! width="15%" |Notes
+! width="5%" |Version Added
+|-id="state"
+|state
+|<code><scope> / <variable></code><br>The state to check for.
+|<pre>state = 10</pre>
+<pre>state = var:state</pre>
+|Checks if the current scope is the specified state.
+|
+|1.0
+|-id="region"
+|region
+|<code><int></code><br>The strategic region id to check for.
+|<pre>region = 10</pre>
+|Checks if the current scope is a state in the specified strategic region.
+|
+|1.0
+|-id="s_building_count_trigger"
+|<building> (building_count_trigger)
+|<code><int></code><br>The amount of the specified building to check for.
+|<pre>arms_factory > 10</pre>
+| Checks if the current scope has the specified amount of the specified building.
+| Must use either > or < operators.
+[[#building_count_trigger|Can also be used in building scope.]]
+|1.0
+|-id="free_building_slots"
+|free_building_slots
+|<code>building = <string></code><br>The building to check for.<br>
+<code>size = <int></code><br>The amount to check for.<br>
+<code>include_locked = <bool></code><br>Whether to include locked slots.
+|<pre>
+free_building_slots = {
+    building = arms_factory
+    size > 10
+    include_locked = yes
+}
+</pre>
+|Checks if the current scope has available slots for the specified amount of buildings.
+|Must use either > or < operators for size.
+|1.0
+|-id="non_damaged_building_level"
+|non_damaged_building_level
+|<code>building = <string></code><br>The building to check for.<br>
+<code>level = <int></code><br>The amount to check for.<br>
+|<pre>
+non_damaged_building_level = {
+    building = arms_factory
+    level > 4
+}
+</pre>
+|Checks if the current scope has the specified amount of the specified buildings that are undamaged.
+|Must use either > or < operators for level.
+|1.9
+|-id="any_province_building_level"
+|any_province_building_level
+|<code>building = <string></code><br>The building to check for.<br>
+<code>limit = <int></code><br>The amount to check for.<br>
+'''Province scope'''<br>
+<code>id = <int></code><br>The province to check for.<br>
+<code>limit_to_border = <bool></code><br>Whether to limit check to border provinces.
+|<pre>
+any_province_building_level = {
+    province = {
+        id = 445
+        id = 494
+        limit_to_border = yes
+    }
+    building = bunker
+    level < 5
+}
+</pre>
+|Checks if the current scope has the specified provincal building at the specified amount in the specified provinces.
+|Must use either > or < operators for level.
+| 1.0
+<!-- This remains in documentation, yet doesn't make sense.
+|-id="area"
+| area
+|<code><int></code><br>The supply area id to check for.
+|<pre>area = 6</pre>
+|Checks if the current scope is a state in the specified supply area.
+|
+|1.0
+!-->
+|-id="has_state_flag"
+| has_state_flag
+|<code><string></code><br>The flag to check for.
+|<pre>has_state_flag = my_flag</pre>
+|Checks if the current scope has the specified flag.
+|
+|1.0
+|-id="has_state_flag"
+|has_state_flag
+|<code>flag = <string></code><br>The flag to check.<br>
+<code>value = <int></code><br>The flag value to check for. Optional.<br>
+<code>date = <date></code><br>The flag creation date to check for. Optional.<br>
+<code>days = <int></code><br>The duration the flag existed for. Optional.
+|<pre>
+has_state_flag = {
+    flag = my_flag
+    days > 30
+    date > 1936.6.1
+    value > 0
+}
+</pre>
+|Compares the specified flag's last set date, days since last set, and/or value.
+|If not set, the value comparison is <code>>0</code>. <code>value</code> is limited between -32768 and 32767.
+|1.0
+|-id="state_population"
+| state_population
+|<code><float></code><br>The amount to check for.
+|<pre>state_population > 10000</pre>
+|Checks if the current scope has the specified state population.
+|Must use either > or < operators.
+|1.0
+|-id="state_population_k"
+|state_population_k
+|<code><float></code><br>The amount to check for.
+|<pre>state_population_k > 10</pre>
+|Checks if the current scope has the specified state population in thousands.
+| Must use either > or < operators.
+|1.0
+|-id="is_capital"
+|is_capital
+|<code><bool></code><br>Boolean.
+|<pre>is_capital = yes</pre>
+|Checks if the current scope is a capital.
+|
+|1.5
+|-id="is_controlled_by"
+|is_controlled_by
+|<code><scope> / <variable></code><br>The country to check for.
+|<pre>is_controlled_by = GER</pre>
+|Checks if the current scope is controlled by the specified country.
+|
+|1.0
+|-id="is_fully_controlled_by"
+|is_fully_controlled_by
+|<code><scope> / <variable></code><br>The country to check for.
+|<pre>is_fully_controlled_by = GER</pre>
+|Checks if the current scope is fully controlled by the specified country.
+|
+|1.5
+|-id="is_owned_by"
+| is_owned_by
+|<code><scope> / <variable></code><br>The country to check for.
+|<pre>is_owned_by = GER</pre>
+|Checks if the current scope is owned by the specified country.
+|
+|1.0
+|-id="is_claimed_by"
+|is_claimed_by
+|<code><scope> / <variable></code><br>The country to check for.
+|<pre>is_claimed_by = GER</pre>
+|Checks if the current scope is claimed by the specified country.
+|
+|1.0
+|-id="is_core_of"
+|is_core_of
+|<code><scope> / <variable></code><br>The country to check for.
+|<pre>is_core_of = GER</pre>
+|Checks if the current scope is a core of the specified country.
+|
+|1.0
+|-id="is_owned_and_controlled_by"
+|is_owned_and_controlled_by
+|<code><scope> / <variable></code><br>The country to check for.
+|<pre>is_owned_and_controlled_by = GER</pre>
+|Checks if the current scope is owned and controlled by the specified country.
+|
+| 1.0
+|-id="is_demilitarized_zone"
+|is_demilitarized_zone
+|<code><bool></code><br>Boolean.
+|<pre>is_demilitarized_zone = yes</pre>
+|Checks if the current scope is a demilitarized zone.
+|
+|1.0
+|-id="is_border_conflict"
+|is_border_conflict
+|<code><bool></code><br>Boolean.
+|<pre>is_border_conflict = yes</pre>
+|Checks if the current scope is part of a border war.
+|
+|1.0
+|-id="is_in_home_area"
+|is_in_home_area
+|<code><bool></code><br>Boolean.
+|<pre>is_in_home_area = yes</pre>
+|Checks if the current scope is connected to the capital state over land. The scope needs to be owned as well for the statement for it to be true.
+|
+|1.0
+|-id="is_coastal"
+|is_coastal
+|<code><bool></code><br>Boolean.
+|<pre>is_coastal = yes</pre>
+|Checks if the current scope is a coastal state.
+|
+|1.0
+|-id="is_one_state_island"
+|is_one_state_island
+|<code><bool></code><br>Boolean.
+|<pre>is_one_state_island = yes</pre>
+|Checks if the current scope is a coastal state with no adjacent land states.
+|An adjacent land state may be connected via a naval crossing.
+|1.13
+|-id="is_island_state"
+|is_island_state
+|<code><bool></code><br>Boolean.
+|<pre>is_island_state = yes</pre>
+|Checks if the current scope is a state where every province has no land neighbour.
+|An adjacent land division may be connected via a naval crossing.
+|1.0
+|-id="is_on_continent"
+|is_on_continent
+|<code><string></code><br>The continent to check for.
+|<pre>is_on_continent = europe</pre>
+|Checks if the current scope is on the specified continent.
+|Continents are found in {{path|map/continent.txt}}.
+|1.0
+|-id="s_is_on_same_continent_as"
+|is_on_same_continent_as
+|<code><scope> / <variable></code><br>The country to check for.
+|<pre>is_on_same_continent_as = FRA</pre>
+|Checks if the scope state is on the same continent as the given state. The capital state is used for given country tag.
+|[[#is_on_same_continent_as|Can also be used in country scope.]]
+|1.17
+|-id="impassable"
+|impassable
+|<code><bool></code><br>Boolean.
+|<pre>impassable = yes</pre>
+|Checks if the current scope is impassable.
+|
+|1.9.1
+|-id="has_state_category"
+|has_state_category
+|<code><string></code><br>The category to check for.
+|<pre>has_state_category = rural</pre>
+|Checks if the current scope has the specified category.
+| State categories are found in {{path|common/state_category/*.txt}}.
+|1.0
+|-id="state_strategic_value"
+| state_strategic_value
+|<code><int></code><br>The amount to check for.
+|<pre>state_strategic_value > 10</pre>
+|Checks if the current scope has the specified strategic value.
+|Must use either > or < operators.
+|1.5
+|-id="state_and_terrain_strategic_value"
+|state_and_terrain_strategic_value
+|<code><int></code><br>The amount to check for.
+|<pre>state_and_terrain_strategic_value > 10</pre>
+|Checks if the current scope has the specified state and terrain strategic value.
+|Must use either > or < operators.
+| 1.5
+|-id="num_owned_neighbour_states"
+|num_owned_neighbour_states
+|<code>owner = <scope></code><br>The country to check for.
+<code>count = <int></code><br>The amount to check for.
+|<pre>num_owned_neighbour_states = {
+    owner = GER
+    count > 2
+}
+</pre>
+|Checks if the current scope has the specified amount of neighbor states belonging to the specified country.
+|Must use either > or < operators for count.
+|1.0
+|-id="distance_to"
+|distance_to
+|<code>value = <float></code><br>The distance to check for.
+<code>target = <scope></code><br>The state to compare against.
+|<pre>
+distance_to = {
+    value > 1000
+    target = 49
+}
+</pre>
+|Checks if the current scope is at the specified distance from the specified state.
+|Must use either > or < operators for distance.
+| 1.0
+|-id="ships_in_area"
+|ships_in_area
+|<code>area = <int></code><br>The strategic region to check for.
+<code>size = <int></code><br>The amount to check for.
+|<pre>ships_in_area = { area = 104 size > 14 } </pre>
+|Checks if the current scope has the specified amount of ships in the specified strategic region.
+|Must use either > or < operators for count.
+|1.0
+|-id="s_resource_count_trigger"
+|<resource> (resource_count_trigger)
+|<code><int></code><br>The amount to check for.
+|<pre>tungsten > 10
+</pre>
+|Checks if the current scope has the specified amount of the specified resource.
+|Must use either > or < operators for amount.
+[[#resource_count_trigger|Can also be used in country scope.]]
+|???
+|-id="has_resources_amount"
+|has_resources_amount
+|<code>resource = <string></code><br>The resource to check for.<br>
+<code>amount = <int></code><br>The amount to check for.<br>
+<code>delivered = <bool></code><br>If specified, checks the amount after the modifiers are applied rather than the base resource value.
+|<pre>
+has_resources_amount = {
+    resource = oil
+    amount > 10
+    delivered = yes
+}
+</pre>
+|Checks if the current scope has the specified amount of the specified resource.
+|Must use either > or < operators for amount.
+|1.3
+|-id="s_has_resources_rights"
+|has_resources_rights
+|<code>receiver = <scope></code><br>The receiver of the resource rights. Mandatory if used in state scope.
+<code>resources = { <resource> <...> <resource> }</code><br>Resources to check for. Optional, defaults to any if unset.
+|
+<pre>has_resources_rights = {
+  receiver = POL
+  resources = { oil steel }
+}</pre>
+|Checks if there are any resource rights with the specified parameters.
+|Can be used in either state or country scope. Always returns false if the state has no resources.
+[[#has_resources_rights|Can also be used in country scope.]]
+|1.12
+|-id="days_since_last_strategic_bombing"
+|days_since_last_strategic_bombing
+|<code><int></code><br>The amount to compare with.
+|<pre>days_since_last_strategic_bombing < 10 </pre>
+|Checks how many days have passed since the last strategic bombing of the state.
+|Must use either > or < operators.
+|1.6
+|-id="has_railway_connection"
+|has_railway_connection
+|<code><scope> / <variable></code><br>The states to check.
+<code><id></code>
+
+The provinces to check. Optional.
+|<pre>
+has_railway_connection = {
+    start_state = 10
+    target_state = 90
+}
+</pre><pre>
+has_railway_connection = {
+    start_province = 402
+    target_province = 9400
+}
+</pre>
+|Returns true if the states are connected by a railway. Can also check provinces.
+|
+| 1.11
+|-id="can_build_railway"
+|can_build_railway
+|<code><scope> / <variable></code><br>The states to check.
+<code><id></code>
+
+The provinces to check. Optional.
+|<pre>
+can_build_railway = {
+    start_state = 10
+    target_state = 90
+}
+</pre><pre>
+can_build_railway = {
+    start_province = 402
+    target_province = 9400
+}
+</pre>
+|Returns true if a railway can be built between states. Can also check for provinces.
+|
+|1.11
+|-id="has_railway_level"
+| has_railway_level
+|<code><scope> / <variable></code><br>The states to check.
+<code><int></code>
+
+Railway level.
+|<pre>
+has_railway_level = {
+        state = 114
+        level = 5
+}
+</pre>
+|Checks if a state contains a railway at or above the specified level.
+|Works with level 1, 2, 3, 4 or 5. Level 0 does not work. 
+|1.11
+|-id="pc_does_state_stack_demilitarized"
+|pc_does_state_stack_demilitarized
+|<code><bool></code><br>Boolean.
+|<pre>pc_does_state_stack_demilitarized = yes</pre>
+|Checks if the current scope was demilitarised during a current or previously-ended peace conference.
+|
+|1.12
+|-id="pc_does_state_stack_dismantled"
+|pc_does_state_stack_dismantled
+|<code><bool></code><br>Boolean.
+|<pre>pc_does_state_stack_dismantled = yes</pre>
+|Checks if the current scope was dismantled during a current or previously-ended peace conference.
+|
+|1.12
+|-id="pc_is_state_claimed"
+|pc_is_state_claimed
+|<code><scope></code><br>Country to check for.
+|<pre>pc_is_state_claimed = yes</pre>
+|Checks if the current scope was claimed by any country during the peace conference.
+|'''Can only be used within peace conferences.'''
+|1.12.8
+|-id="pc_is_state_claimed_by"
+|pc_is_state_claimed_by
+|<code><scope></code><br>Country to check for.
+|<pre>pc_is_state_claimed_by = BHR</pre>
+|Checks if the current scope was claimed by the specified country during the peace conference.  Note, that "claim" in this context, while includes, is NOT limited to outright taking: forcing government, puppeting and liberating will render that trigger true as well. If one looks specifically for states taken by victors for themselves, [[#pc_is_state_claimed_and_taken_by|pc_is_state_claimed_and_taken_by]] should be used.
+|'''Can only be used within peace conferences.'''
+|1.12
+|-id="pc_is_state_claimed_and_taken_by"
+|pc_is_state_claimed_and_taken_by
+|<code><scope></code><br>Country to check for.
+|<pre>pc_is_state_claimed_and_taken_by = SOV</pre>
+|Checks if the current scope was claimed with "Take State" action (i.e. annexed) by the specified country during the peace conference.
+|'''Can only be used within peace conferences.'''
+|<!--Needs clarification, probably 1.12?-->
+|-id="pc_is_state_outside_influence_for_winner"
+|pc_is_state_outside_influence_for_winner
+|<code><scope></code><br>Country to check for.
+|<pre>pc_is_state_outside_influence_for_winner = ROOT</pre>
+|Checks if the current state is outside of the influence of the specified winner country.
+|'''Can only be used within peace conferences.''' Was called pc_is_state_outside_influence_for prior to 1.12.8.
+|1.12.8
+|-id="pc_turn"
+|pc_turn
+|<code><int></code><br>The amount of turns to check for.
+|<pre>pc_turn > 20</pre>
+|Compares the amount of turns that have passed during the peace conference with a number.
+|'''Can only be used within peace conferences.''' 
+|1.12.8
+|-
+|can_construct_building
+|<code><build type></code>The type of building.
+|<code>can_construct_building = bunker</code>
+|Checks if the country (as ROOT) and state in scope can build a building in the state.
+|
+|1.15
+|-id="s_has_contested_owner"
+|has_contested_owner
+|<code><country> / <variable></code><br>Country to check.
+|<pre>has_contested_owner = GER</pre>
+|Checks if a state has the specified country as a contested owner. The trigger can be used either from a country or a state scope and accepts the other as parameter.
+|[[#has_contested_owner|Can also be used in country scope.]]
+|1.15
+|}
+
+===Resistance and Compliance===
+{{SVersion|1.16}}
+
+{| class="wikitable sortable mw-collapsible" style="display: inline-block; padding: 5px" width="100%"
+|+ {{nowrap|Resistance-related state-scoped triggers:}}<br>
+! width="10%" |Name
+! width="25%" |Parameters
+! width="25%" |Examples
+! width="20%" |Description
+! width="15%" |Notes
+! width="5%" | Version Added
+|-id="compliance"
+|compliance
+|<code><int></code><br>The amount to compare with.
+|<pre>compliance > 50</pre>
+|Compares the compliance value of the current scope with the given value.
+|Must use either > or < operators.
+|1.9
+|-id="compliance_speed"
+|compliance_speed
+|<code><int></code><br>The amount to compare with.
+|<pre>compliance_speed > 50</pre>
+|Compares the compliance speed of the current scope with the given value.
+|Must use either > or < operators.
+|1.9
+|-id="has_active_resistance"
+|has_active_resistance
+|<code><bool></code><br>Boolean.
+|<pre>has_active_resistance = yes</pre>
+|Checks if the current scope has non-zero resistance.
+|
+|1.9
+|-id="has_resistance"
+|has_resistance
+|<code><bool></code><br>Boolean.
+|<pre>has_resistance = yes</pre>
+|Checks if the current scope has resistance.
+|
+|1.9
+|-id="resistance"
+|resistance
+|<code><int></code><br>The amount to compare with.
+|<pre>resistance > 50</pre>
+|Compares the resistance value of the current scope with the given value.
+|Must use either > or < operators.
+|1.9
+|-id="resistance_speed"
+|resistance_speed
+|<code><int></code><br>The amount to compare with.
+|<pre>resistance_speed > 50</pre>
+|Compares the resistance speed of the current scope with the given value.
+|Must use either > or < operators.
+|1.9
+|-id="resistance_target"
+|resistance_target
+|<code><int></code><br>The amount to compare with.
+|<pre>resistance_target > 50</pre>
+|Compares the target resistance value of the current scope with the given value.
+|Must use either > or < operators.
+|1.9
+|-id="has_occupation_modifier"
+|has_occupation_modifier
+|<code><token></code><br>The occupation modifier to check.
+|<pre>has_occupation_modifier = modifier_name</pre>
+|Checks if the current scope has an occupation modifier, changing resistance/compliance.
+|
+|1.9
+|-id="s_occupation_law"
+| occupation_law
+|<code><token></code><br>The occupation law to check.
+|<pre>occupation_law = law_name</pre>
+|Checks if the current scope has an occupation law.
+|[[#occupation_law|Can also be used in country scope.]]
+|1.9
+|-id="occupied_country_tag"
+|occupied_country_tag
+|<code><tag></code><br>The occupation tag to check.
+|<pre>occupied_country_tag = POL</pre>
+|Checks which country creates resistance.
+|
+|1.9
+|}
+
+==Character scope==
+{{SVersion|1.16}}
+Can be used in '''Character''' scope.
+
+===General===
+{| class="wikitable sortable mw-collapsible" style="display: inline-block; padding: 5px" width="100%"
+|+ {{nowrap|General character-scoped triggers:}}<br>
+! width="10%" |Name
+! width="25%" |Parameters
+! width="25%" |Examples
+! width="20%" |Description
+! width="15%" |Notes
+! width="5%" |Version Added
+|-id="is_character"
+|is_character
+|<code><scope></code><br>Character ID.
+|<pre>is_character = POL_test_character</pre>
+|Checks if the current character's token matches up with the specified one.
+|
+| 1.11
+|-id="can_be_country_leader"
+|can_be_country_leader
+|<code><bool></code><br>Boolean.
+|<pre>can_be_country_leader = yes</pre>
+|Checks if the character in the current scope has a country leader role, active or non-active.
+|
+|1.11
+|-id="is_country_leader"
+|is_country_leader
+|<code><bool></code><br>Boolean.
+|<pre>is_country_leader = yes</pre>
+|Checks if the character in the current scope is the active country leader.
+|
+| 1.11
+|-id="is_unit_leader"
+|is_unit_leader
+|<code><bool></code><br>Boolean.
+|<pre>is_unit_leader = yes</pre>
+|Checks if the character in the current scope has an active unit leader (Army/Navy leader) role.
+|
+|1.11
+|-id="is_advisor"
+|is_advisor
+|<code><bool></code><br>Boolean.
+|<pre>is_advisor = yes</pre>
+|Checks if the character in the current scope has an advisor role (includes advisors/theorists/high command).
+|
+|1.11
+|-id="is_air_chief"
+|is_air_chief
+|<code><bool></code><br>Boolean.
+|<pre>is_air_chief = yes</pre>
+|Checks if the character in the current scope is selected as an air chief.
+|Prior to 1.12, checked if the character had a role within the slot, regardless of being selected.
+|1.11
+|-id="is_army_chief"
+|is_army_chief
+|<code><bool></code><br>Boolean.
+|<pre>is_army_chief = yes</pre>
+|Checks if the character in the current scope is selected as an army chief.
+|Prior to 1.12, checked if the character had a role within the slot, regardless of being selected.
+|1.11
+|-id="is_army_leader"
+| is_army_leader
+|<code><bool></code><br>Boolean.
+|<pre>is_army_leader = yes</pre>
+|Checks if the character in the current scope has an army leader (General/Field Marshal) role.
+|
+|1.11
+|-id="is_navy_chief"
+|is_navy_chief
+|<code><bool></code><br>Boolean.
+|<pre>is_navy_chief = yes</pre>
+|Checks if the character in the current scope is selected as a navy chief.
+|Prior to 1.12, checked if the character had a role within the slot, regardless of being selected.
+|1.11
+|-id="is_navy_leader"
+| is_navy_leader
+|<code><bool></code><br>Boolean.
+|<pre>is_navy_leader = yes</pre>
+|Checks if the character in the current scope has an navy leader (Admiral) role.
+|
+|1.11
+|-id="is_high_command"
+|is_high_command
+|<code><bool></code><br>Boolean.
+|<pre>is_high_command = yes</pre>
+|Checks if the character in the current scope is selected as high command.
+|Prior to 1.12, checked if the character had a role within the slot, regardless of being selected.
+|1.11
+|-id="is_corps_commander"
+|is_corps_commander
+|<code><bool></code><br>Boolean.
+|<pre>is_corps_commander = yes</pre>
+|Checks if the character in the current scope is a corps commander.
+|
+|1.11
+|-id="is_operative"
+|is_operative
+|<code><bool></code><br>Boolean.
+|<pre>is_operative = yes</pre>
+|Checks if the character in the current scope is an operative.
+|
+|1.11
+|-id="is_political_advisor"
+|is_political_advisor
+|<code><bool></code><br>Boolean.
+|<pre>is_political_advisor = yes</pre>
+|Checks if the character in the current scope is selected as a political advisor.
+|Prior to 1.12, checked if the character had a role within the slot, regardless of being selected.
+|1.11
+|-id="is_theorist"
+|is_theorist
+|<code><bool></code><br>Boolean.
+|<pre>is_theorist = yes</pre>
+|Checks if the character in the current scope is selected as a theorist.
+|Prior to 1.12, checked if the character had a role within the slot, regardless of being selected.
+|1.11
+|-id="is_character_slot"
+|is_character_slot
+|<code><string></code><br>The advisor slot to check.
+|<pre>is_character_slot = political_advisor</pre>
+|Checks if the character in the current scope has a role within the specified character slot
+|Character slots are defined within {{path|common/idea_tags/*.txt}}.
+|1.11
+|-id="has_air_ledger"
+|has_air_ledger
+|<code><bool></code><br>Boolean.
+|<pre>has_air_ledger = yes</pre>
+|Checks if the character in the current scope has an air ledger.
+|
+|1.11
+|-id="has_army_ledger"
+|has_army_ledger
+|<code><bool></code><br>Boolean.
+|<pre>has_army_ledger = yes</pre>
+|Checks if the character in the current scope has an army ledger.
+|
+|1.11
+|-id="has_navy_ledger"
+|has_navy_ledger
+|<code><bool></code><br>Boolean.
+|<pre>has_navy_ledger = yes</pre>
+|Checks if the character in the current scope has an navy ledger.
+|
+|1.11
+|-id="has_character_flag"
+|has_character_flag
+|<code><string></code><br>The flag to check for.
+|<pre>has_character_flag = my_flag</pre>
+|Checks if the current scope has the specified flag.
+|
+|1.11
+|-id="has_character_flag"
+|has_character_flag
+|<code>flag = <string></code><br>The flag to check.<br>
+<code>value = <int></code><br>The flag value to check for. Optional.<br>
+<code>date = <date></code><br>The flag creation date to check for. Optional.<br>
+<code>days = <int></code><br>The duration the flag existed for. Optional.
+|<pre>
+has_character_flag = {
+    flag = my_flag
+    days > 30
+    date > 1936.6.1
+    value > 0
+}
+</pre>
+|Compares the specified flag's last set date, days since last set, and/or value.
+|If not set, the value comparison is <code>>0</code>. <code>value</code> is limited between -32768 and 32767.
+|1.11
+|-id="has_trait"
+|has_trait
+|<code><trait></code><br>The trait to check for.
+|<pre>has_trait = really_good_boss</pre>
+|Checks if the current scope has the specified trait.
+|
+|1.5
+|-id="has_id"
+|has_id
+|<code><int></code><br>The id to check for.
+|<pre>has_id = 1</pre>
+|Checks if the current character has the specificed ID.
+|
+|1.5
+|}
+
+===Advisors===
+{{SVersion|1.16}}
+These triggers are to be used specifically for advisors.
+
+{| class="wikitable sortable mw-collapsible" style="display: inline-block; padding: 5px" width="100%"
+|+ {{nowrap|Advisor-scoped triggers:}}<br>
+! width="10%" |Name
+! width="25%" |Parameters
+! width="25%" |Examples
+! width="20%" |Description
+! width="15%" |Notes
+! width="5%" | Version Added
+|-id="is_hired_as_advisor"
+|is_hired_as_advisor
+|<code><bool></code><br>Boolean.<br>
+|<pre>is_hired_as_advisor = yes</pre>
+|Checks if the current character is activated as an advisor in any slot.
+|
+|1.12.10
+|-id="not_already_hired_except_as"
+|not_already_hired_except_as
+|<code><slot></code><br>The slot to check in.
+|<pre>not_already_hired_except_as = political_advisor</pre>
+|Checks if the current character is not hired, with the exception of the specified slot.
+|
+|1.11
+|-id="advisor_can_be_fired"
+|advisor_can_be_fired
+|<code><bool></code><br>Boolean.<br>
+'''OR'''<br>
+<code>slot = <slot></code><br>The slot to check in.
+|<pre>advisor_can_be_fired = no</pre>
+<pre>advisor_can_be_fired = {
+    slot = political_advisor
+}</pre>
+|Checks if the current character's <code>can_be_fired</code> attribute is set or not within a certain slot.
+|If an advisor is available in multiple slots, the long version is mandatory to use.
+|1.12.8
+|-id="has_advisor_role"
+|has_advisor_role
+|<code><slot></code><br>The slot to check in.
+|<pre>has_advisor_role = political_advisor</pre>
+|Checks if the character in scope has an advisor role for the given slot.
+|Possible [[Character_modding#Advisors|advisor]] role slots.
+|???
+|}
+
+===Country leaders===
+{{SVersion|1.16}}
+These triggers are to be used specifically for country leaders.
+
+{| class="wikitable sortable mw-collapsible" style="display: inline-block; padding: 5px" width="100%"
+|+ {{nowrap|Country leader-scoped triggers:}}<br>
+! width="10%" |Name
+! width="25%" |Parameters
+! width="25%" |Examples
+! width="20%" |Description
+! width="15%" |Notes
+! width="5%" | Version Added
+|-id="has_ideology"
+|has_ideology
+|<code><ideology></code><br>The sub-ideology to check for.
+|<pre>has_ideology = liberalism</pre>
+|Checks if the current character has the specificed sub-ideology assigned.
+|
+|1.11
+|-id="has_ideology_group"
+|has_ideology_group
+|<code><ideology></code><br>The ideology to check for.
+|<pre>has_ideology_group = democratic</pre>
+|Checks if the current character has the specificed ideology assigned.
+|
+|1.11
+|}
+
+===Unit leaders===
+{{SVersion|1.16}}
+These triggers are to be used specifically for unit leaders, i.e. generals and admirals.
+
+{| class="wikitable sortable mw-collapsible" style="display: inline-block; padding: 5px" width="100%"
+|+ {{nowrap|Unit leader-scoped triggers:}}<br>
+! width="10%" |Name
+! width="25%" |Parameters
+! width="25%" |Examples
+! width="20%" | Description
+! width="15%" |Notes
+! width="5%" |Version Added
+|-id="has_unit_leader_flag"
+|has_unit_leader_flag
+|<code><string></code><br>The flag to check for.
+|<pre>has_unit_leader_flag = my_flag</pre>
+|Checks if the current scope has the specified flag.
+| Deprecated. Use has_character_flag instead.
+|1.5
+|-id="has_unit_leader_flag"
+|has_unit_leader_flag
+|<code>flag = <string></code><br>The flag to check.<br>
+<code>value = <int></code><br>The flag value to check for. Optional.<br>
+<code>date = <date></code><br>The flag creation date to check for. Optional.<br>
+<code>days = <int></code><br>The duration the flag existed for. Optional.
+|<pre>
+has_unit_leader_flag = {
+    flag = my_flag
+    days > 30
+    date > 1936.6.1
+    value > 0
+}
+</pre>
+|Compares the specified flag's last set date, days since last set, and/or value.
+|Deprecated. Use has_character_flag instead. If not set, the value comparison is <code>>0</code>. <code>value</code> is limited between -32768 and 32767.
+|1.5
+|-id="is_leading_army"
+|is_leading_army
+|<code><bool></code><br>Boolean.
+|<pre>is_leading_army = yes</pre>
+|Checks if the current scope is leading a single army.
+|
+|1.5
+|-id="is_leading_army_group"
+|is_leading_army_group
+|<code><bool></code><br>Boolean.
+|<pre>is_leading_army_group = yes</pre>
+|Checks if the current scope is leading an army group.
+|
+|1.5
+|-id="is_leading_volunteer_group"
+|is_leading_volunteer_group
+|<code><tag></code><br>Country tag.
+|<pre>is_leading_volunteer_group = POL</pre>
+|Checks if the current scope is leading a volunteer army within the specified country.
+|If the target country is in a civil war, this will only be valid for one side.
+|1.11
+|-id="is_leading_volunteer_group_with_original_country"
+|is_leading_volunteer_group_with_original_country
+|<code><tag></code><br>Country tag.
+|<pre>is_leading_volunteer_group_with_original_country = POL</pre>
+|Checks if the current scope is leading a volunteer army within a country of the specified original tag.
+|If the target country is in a civil war, this will only be valid for each side.
+|1.11
+|-id="is_field_marshal"
+|is_field_marshal
+|<code><bool></code><br>Boolean.
+|<pre>is_field_marshal = yes</pre>
+|Checks if the current scope is a Field Marshal.
+|
+|1.5
+|-id="is_assigned"
+|is_assigned
+|<code><bool></code><br>Boolean.
+|<pre>is_assigned = yes</pre>
+|Checks if the current scope is an assigned unit leader.
+|
+|1.5
+|-id="can_select_trait"
+|can_select_trait
+|<code><string></code><br>The trait to check for.
+|<pre>can_select_trait = offensive_doctrine</pre>
+| Checks if the current scope can select the specified trait.
+|
+|1.5
+|-id="has_ability"
+|has_ability
+|<code><string></code><br>The ability to check for.
+|<pre>has_ability = glider_planes</pre>
+|Checks if the current scope has the specified unit leader ability.
+|
+|1.5
+|-id="skill"
+| skill
+|<code><int></code><br>The amount to check for.
+|<pre>skill > 1</pre>
+|Checks if the current scope has a Skill above the specified amount.
+|Must use either > or < operators.
+|1.5
+|-id="skill_advantage"
+|skill_advantage
+|<code><int></code><br>The amount to check for.
+|<pre>skill_advantage > 1</pre>
+|Checks if the current scope has a Skill advantage above the specified amount in against an enemy unit leader whilst in combat.
+|Must use either > or < operators.
+|1.5
+|-id="planning_skill_level"
+|planning_skill_level
+|<code><int></code><br>The amount to check for.
+|<pre>planning_skill_level > 1</pre>
+|Checks if the current scope has a Planning skill above the specified amount.
+| Must use either > or < operators.
+|1.5
+|-id="logistics_skill_level"
+|logistics_skill_level
+|<code><int></code><br>The amount to check for.
+|<pre>logistics_skill_level > 1</pre>
+|Checks if the current scope has a Logistics skill above the specified amount.
+|Must use either > or < operators.
+|1.5
+|-id="defense_skill_level"
+|defense_skill_level
+|<code><int></code><br>The amount to check for.
+|<pre>defense_skill_level > 1</pre>
+|Checks if the current scope has a Defense skill above the specified amount.
+|Must use either > or < operators.
+|1.5
+|-id="attack_skill_level"
+|attack_skill_level
+|<code><int></code><br>The amount to check for.
+|<pre>attack_skill_level > 1</pre>
+|Checks if the current scope has a Attack skill above the specified amount.
+|Must use either > or < operators.
+|1.5
+|-id="average_stats"
+|average_stats
+|<code><int></code><br>The amount to check for.
+|<pre>average_stats > 5</pre>
+|Checks if the current scope has an average skill above the specified amount.
+| Must use either > or < operators.
+|1.5
+|-id="is_border_war"
+|is_border_war
+|<code><bool></code><br>Boolean.
+|<pre>is_border_war = yes</pre>
+|Checks if the current socpe is in a border war.
+|
+|1.5
+|-id="num_units"
+| num_units
+|<code><int></code><br>The amount to check for.
+|<pre>num_units > 5</pre>
+|Checks if the current scope is commanding the specified amount of divisions.
+| Must use either > or < operators.
+| 1.5
+|-id="is_exiled_leader"
+|is_exiled_leader
+|<code><bool></code><br>Boolean.
+|<pre>is_exiled_leader = yes</pre>
+|Checks if the current scope is a general from an exiled country.
+|
+|1.6
+|-id="is_exiled_leader_from"
+|is_exiled_leader_from
+|<code><tag></code><br>Country.
+|<pre>is_exiled_leader_from = POL</pre>
+|Checks if the current scope is a general from the specified exiled country.
+|
+|1.6
+|-id="is_female"
+|is_female
+|<code><bool></code><br>Boolean.
+|<pre>is_female = yes</pre>
+|Checks if the current scope is female.
+|Works for aces.
+|1.9
+|-id="is_leading_army_in_province"
+|is_leading_army_in_province
+|<code><province id></code>
+|<pre>is_leading_army_in_province = 1234</pre>
+|Checks if the current unit leader is leading an army that has any division in a specific province
+|
+|1.17
+|}
+
+===Operatives===
+{{SVersion|1.16}}
+These triggers only work for operatives.
+
+{| class="wikitable sortable mw-collapsible" style="display: inline-block; padding: 5px" width="100%"
+|+ {{nowrap|Operative-scoped triggers:}}<br>
+! width="10%" | Name
+! width="25%" |Parameters
+! width="25%" |Examples
+! width="20%" | Description
+! width="15%" |Notes
+! width="5%" |Version Added
+|-id="has_nationality"
+|has_nationality
+|<code><tag></code><br>The nationality to check.
+|<pre>has_nationality = POL</pre>
+|Checks if the current operative has the nationality.
+|
+|1.9
+|-id="is_operative_captured"
+|is_operative_captured
+|<code><bool></code><br>Boolean.
+|<pre>is_operative_captured = yes</pre>
+|Checks if the current scope is captured.
+|
+|1.9
+|-id="operative_leader_mission"
+|operative_leader_mission
+|<code><token></code><br>Mission.
+|<pre>operative_leader_mission = mission_name</pre>
+|Checks if the current scope is on the given mission.
+|
+|1.9
+|-id="operative_leader_operation"
+|operative_leader_operation
+|<code><token></code><br>Operation.
+|<pre>operative_leader_operation = operation_name</pre>
+|Checks if the current scope is on the given operation.
+|
+|1.9
+|}
+
+===Scientists===
+{{SVersion|1.16}}
+These triggers only work for scientists.
+
+{| class="wikitable sortable mw-collapsible" style="display: inline-block; padding: 5px" width="100%"
+|+ {{nowrap|Scientist-scoped triggers:}}<br>
+! width="10%" | Name
+! width="25%" |Parameters
+! width="25%" |Examples
+! width="20%" | Description
+! width="15%" |Notes
+! width="5%" |Version Added
+|-id="has_scientist_level"
+|has_scientist_level
+|<code>level = <int></code><br>Level to check.
+<code>specialization = <specialization_token></code><br>Specialization.
+|<pre>has_scientist_level = {
+  level > 2
+  specialization = specialization_nuclear
+}</pre>
+|Checks if the scientist of the character in scope matches the skill level condition for a specialization. Supports < > = operators.
+|
+|1.15
+|-id="is_active_scientist"
+|is_active_scientist
+|<code><bool></code><br>
+|<pre>is_scientist_active = yes</pre>
+|Checks if the scientist of the character in scope is assigned to a project.
+|
+|1.15
+|-id="is_scientist_injured"
+|is_scientist_injured
+|<code><bool></code><br>
+|<pre>is_scientist_injured = yes</pre>
+|Checks if the scientist of the character in scope is injured.
+|
+|1.15
+|}
+
+==Combat==
+{{SVersion|1.16}}
+These triggers are used within the combatant scope. Some trigger blocks in [[Command power#Abilities for field marshals and generals|abilities]], [[combat tactics]], and [[Trait modding#Unit leader traits|unit leader traits]] check this, and it's impossible to access elsewhere.
+
+{| class="wikitable sortable mw-collapsible" style="display: inline-block; padding: 5px" width="100%"
+|+ {{nowrap|Combatant-scoped triggers:}}<br>
+! width="10%" |Name
+! width="25%" |Parameters
+! width="25%" |Examples
+! width="20%" | Description
+! width="15%" |Notes
+! width="5%" |Version Added
+|-id="hardness"
+|hardness
+|<code><float></code><br>The amount to check for.
+|<pre>hardness > 0.5</pre>
+|Checks if the current scope has the specified amount of hardness.
+|Must use either > or < operators.
+|1.0
+|-id="armor"
+|armor
+|<code><float></code><br>The amount to check for.
+|<pre>armor > 0.5</pre>
+|Checks if the current scope has the specified amount of armor units.
+|Must use either > or < operators.
+|1.0
+|-id="dig_in"
+|dig_in
+|<code><float></code><br>The amount to check for.
+|<pre>dig_in > 0.5</pre>
+|Checks if the current scope has the specified amount of Dig In bonus.
+|Must use either > or < operators.
+| 1.0
+|-id="min_planning"
+|min_planning
+|<code><float></code><br>The amount to check for.
+|<pre>min_planning > 0.5</pre>
+|Checks if the current scope has the specified amount of planning.
+|Must use either > or < operators.
+|1.0
+|-id="fastest_unit"
+|fastest_unit
+|<code><float></code><br>The speed in km/h to check for.
+|<pre>fastest_unit > 12</pre>
+|Checks if the current scope has a unit with the specified speed.
+|Must use either > or < operators.
+|1.0
+|-id="temperature"
+|temperature
+|<code><float></code><br>The temperature in celsius to check for.
+|<pre>temperature > 20</pre>
+|Checks if the current scope is in a province with a temperature above the specified amount.
+| Must use either > or < operators.
+|1.0
+|-id="reserves"
+|reserves
+|<code><float></code><br>The amount to check for.
+|<pre>reserves > 10</pre>
+|Checks if the current scope has the specified amount of reserves waiting.
+|Must use either > or < operators.
+|1.0
+|-id="has_combat_modifier"
+|has_combat_modifier
+|<code><string></code><br>The modifier to check for.
+|<pre>has_combat_modifier = river_crossing</pre>
+|Checks if the current scope has the specified combat modifier.
+|
+|1.0
+|-id="is_fighting_in_terrain"
+|is_fighting_in_terrain
+|<code><string></code><br>The terrain to check for.
+|<pre>is_fighting_in_terrain = desert</pre>
+|Checks if the current scope is fighting in the specified terrain.
+|
+|1.0
+|-id="is_fighting_in_weather"
+|is_fighting_in_weather
+|<code><string></code><br>The weather to check for.<br>
+'''OR'''<br>
+<code>{ <string> <...> <string> }</code><br>The weather to check for in an OR statement.
+|<pre>is_fighting_in_weather = sandstorm</pre>
+<pre>is_fighting_in_weather = { rain_light rain_heavy }</pre>
+|Checks if the current scope is fighting in the specified weather.
+|
+|1.0
+|-id="phase"
+|phase
+|<code><bool></code><br>Boolean.
+|<pre>phase = yes</pre>
+|Checks if the current scope is in phase.
+|
+|1.0
+|-id="recon_advantage"
+|recon_advantage
+|<code><bool></code><br>Boolean.
+|<pre>recon_advantage > 0</pre>
+|Checks if the current scope has x recon advantage.
+|
+|1.0
+|-id="night"
+| night
+|<code><bool></code><br>Boolean.
+|<pre>night = yes</pre>
+|Checks if the current scope is fighting at night.
+|
+|1.0
+|-id="frontage_full"
+|frontage_full
+|<code><bool></code><br>Boolean.
+|<pre>frontage_full = yes</pre>
+|Checks if the current scope has a full combat width.
+|
+|1.0
+|-id="has_flanked_opponent"
+|has_flanked_opponent
+|<code><bool></code><br>Boolean.
+|<pre>has_flanked_opponent = yes</pre>
+|Checks if the current scope has flanked their opponent.
+|
+|1.0
+|-id="has_max_planning"
+|has_max_planning
+|<code><bool></code><br>Boolean.
+|<pre>has_max_planning = yes</pre>
+|Checks if the current scope has the maximum planning bonus.
+|
+|1.0
+|-id="has_reserves"
+|has_reserves
+|<code><bool></code><br>Boolean.
+|<pre>has_reserves = yes</pre>
+|Checks if the current scope has any reserves waiting.
+|
+|1.0
+|-id="is_amphibious_invasion"
+|is_amphibious_invasion
+|<code><bool></code><br>Boolean.
+|<pre>is_amphibious_invasion = yes</pre>
+|Checks if the current scope is performing an amphibious invasion.
+|
+|1.0
+|-id="is_attacker"
+|is_attacker
+|<code><bool></code><br>Boolean.
+|<pre>is_attacker = yes</pre>
+|Checks if the current scope is attacking.
+|
+|1.0
+|-id="is_defender"
+|is_defender
+|<code><bool></code><br>Boolean.
+|<pre>is_defender = yes</pre>
+|Checks if the current scope is defending.
+|
+|1.0
+|-id="is_winning"
+|is_winning
+|<code><bool></code><br>Boolean.
+|<pre>is_winning = yes</pre>
+|Checks if the current scope is winning their battle.
+|
+|1.0
+|-id="is_fighting_air_units"
+|is_fighting_air_units
+|<code><bool></code><br>Boolean.
+|<pre>is_fighting_air_units = yes</pre>
+|Checks if the current scope is fighting air units.
+|
+|1.0
+|-id="less_combat_width_than_opponent"
+|less_combat_width_than_opponent
+|<code><bool></code><br>Boolean.
+|<pre>less_combat_width_than_opponent = yes</pre>
+|Checks if the current scope is fighting with less combat width than their opponent.
+|
+|1.0
+|-id="has_carrier_airwings_on_mission"
+|has_carrier_airwings_on_mission
+|<code><bool></code><br>Boolean.
+|<pre>has_carrier_airwings_on_mission = yes</pre>
+|Checks if the current scope has carrier airwings on a mission.
+|
+|1.0
+|-id="has_carrier_airwings_in_own_combat"
+|has_carrier_airwings_in_own_combat
+|<code><bool></code><br>Boolean.
+|<pre>has_carrier_airwings_in_own_combat = yes</pre>
+|Checks if the current scope has carrier airwings in their own combat.
+|
+|1.0
+|-id="has_artillery_ratio"
+|has_artillery_ratio
+|<code><float></code><br>
+|<pre>has_artillery_ratio > 0.1</pre>
+|Check that ratio of atrillery battalions in the composition of a side of combating troops are over a certain level.
+|
+|???
+|-id="has_unit_type"
+|has_unit_type
+|<code><unit_type></code><br>
+|<pre>has_unit_type = amphibious_mechanized</pre>
+|Check if the combatant has at least one of the provided unit types.
+|
+|???
+|}
+
+==Division scope==
+{{SVersion|1.16}}
+Can be used in '''Division''' scope.
+
+{| class="wikitable sortable mw-collapsible" style="display: inline-block; padding: 5px" width="100%"
+|+ {{nowrap|Division-scoped triggers:}}<br>
+! width="10%" |Name
+! width="25%" |Parameters
+! width="25%" |Examples
+! width="20%" |Description
+! width="15%" |Notes
+! width="5%" |Version Added
+|-id="division_has_majority_template"
+|division_has_majority_template
+|<code><battalion></code><br>Battalion to check for.
+|<pre>division_has_majority_template = light_armor</pre>
+|Checks if the current scope is majority made up of the specified battalion.
+|Battalions are defined within {{path|common/units/*.txt}} files.
+|1.12
+|-id="division_has_battalion_in_template"
+|division_has_battalion_in_template
+|<code><battalion></code><br>Battalion to check for.
+|<pre>division_has_battalion_in_template = light_armor</pre>
+|Checks if the current scope has any battalions of the type in the template.
+|Battalions are defined within {{path|common/units/*.txt}} files.
+|1.12
+|-id="unit_strength"
+|unit_strength
+|<code><float></code><br>The amount to check for.
+|<pre>unit_strength < 0.3</pre>
+|Checks the current strength of the unit on the scale from 0 to 1.
+|Must use either the < or > operator.
+|1.12
+|-id="unit_organization"
+|unit_organization
+|<code><float></code><br>The amount to check for.
+|<pre>unit_organization < 0.3</pre>
+|Checks the current organisation of the unit on the scale from 0 to 1.
+|Must use either the < or > operator.
+|1.12
+|-id="is_unit_template_reserves"
+|is_unit_template_reserves
+|<code><bool></code><br>Boolean.
+|<pre>is_unit_template_reserves = yes</pre>
+|Checks if the current division has the supply priority set to 'Reserves', i.e. the lowest priority.
+|Must use either the < or > operator.
+|1.12
+|-id="has_officer_name"
+|has_officer_name
+|<code><string></code><br>The localization key to check.
+|<pre>has_officer_name = FIN_nikke_parmi</pre>
+|Checks if the current division has an officer with the provided name key.
+|
+|
+|}
+
+==MIO scope==
+{{SVersion|1.16}}
+Can be used in '''Military-industrial organisation''' scope.
+
+{| class="wikitable sortable mw-collapsible" style="display: inline-block; padding: 5px" width="100%"
+|+ {{nowrap|MIO-scoped triggers:}}<br>
+! width="10%" |Name
+! width="25%" |Parameters
+! width="25%" | Examples
+! width="20%" | Description
+! width="15%" |Notes
+! width="5%" |Version Added
+|-id="is_military_industrial_organization"
+|is_military_industrial_organization
+|<code><token></code><br>MIO to check.
+|<pre>is_military_industrial_organization = my_mio_token</pre>
+|Checks if the currently-scoped MIO matches the input token.
+|
+|1.13
+|-id="is_mio_visible"
+|is_mio_visible
+|<code><bool></code><br>Boolean.
+|<pre>is_mio_visible = yes</pre>
+|Checks if the currently-scoped MIO is visible.
+|
+|1.13
+|-id="is_mio_available"
+|is_mio_available
+|<code><bool></code><br>Boolean.
+|<pre>is_mio_available = yes</pre>
+|Checks if the currently-scoped MIO is visible.
+|
+|1.13
+|-id="is_mio_assigned_to_task"
+|is_mio_assigned_to_task
+|<code><bool></code><br>Boolean.
+|<pre>is_mio_assigned_to_task = yes</pre>
+|Checks if the currently-scoped MIO is assigned to a task.
+|
+|1.13
+|-id="has_mio_size"
+|has_mio_size
+|<code><int></code><br>Integer.
+|<pre>has_mio_size > 3</pre>
+|Checks the size of the MIO.
+|Accepts [[variables]]. May use < or >.
+|1.13
+|-id="has_mio_trait"
+|has_mio_trait
+|<code><token></code><br>Trait to check.<br>
+'''OR'''<br>
+<code>trait = <token></code><br>Trait to check.
+|<pre>has_mio_trait = my_trait_token</pre>
+<pre>has_mio_trait = {
+    token = my_trait_token
+}</pre>
+|Checks whether the MIO has the target trait in its list.
+|
+|1.13
+|-id="is_mio_trait_available"
+|is_mio_trait_available
+|<code><token></code><br>Trait to check.<br>
+'''OR'''<br>
+<code>trait = <token></code><br>Trait to check.<br>
+<code>check_mio_parent_completed = <bool></code><br>Whether to check if the parent traits are complete. True by default.
+<code>check_mio_mutually_exclusive = <bool></code><br>Whether to check if any mutually exclusive traits are complete. True by default.
+|<pre>is_mio_trait_available = my_trait_token</pre>
+<pre>is_mio_trait_available = {
+    token = my_trait_token
+    check_mio_parent_completed = no
+}</pre>
+|Checks whether the MIO has the target trait in its list and whether it's available.
+|
+|1.13
+|-id="is_mio_trait_completed"
+|is_mio_trait_completed
+|<code><token></code><br>Trait to check.<br>
+'''OR'''<br>
+<code>trait = <token></code><br>Trait to check.
+|<pre>is_mio_trait_completed = my_trait_token</pre>
+<pre>is_mio_trait_completed = {
+    token = my_trait_token
+}</pre>
+|Checks whether the MIO has the target trait in its list and whether it's completed.
+|
+|1.13
+|-id="has_mio_number_of_completed_traits"
+|has_mio_number_of_completed_traits
+|<code><int></code><br>Integer.
+|<pre>has_mio_number_of_completed_traits < 2</pre>
+|Checks the amount of unlocked MIO traits.
+|Accepts [[variables]]. May use < or >.
+|1.13
+|-id="has_mio_flag"
+|has_mio_flag
+|<code><string></code><br>The flag to check.
+|<pre>has_mio_flag = my_flag</pre>
+|Checks if the current scope has the specified flag.
+|
+|1.13
+|-id="has_mio_flag"
+|has_mio_flag
+|<code>flag = <string></code><br>The flag to check.<br>
+<code>value = <int></code><br>The flag value to check for. Optional.<br>
+<code>date = <date></code><br>The flag creation date to check for. Optional.<br>
+<code>days = <int></code><br>The duration the flag existed for. Optional.
+|<pre>
+has_mio_flag = {
+    flag = my_flag
+    days > 30
+    date > 1936.6.1
+    value > 0
+}
+</pre>
+|Compares the specified flag's last set date, days since last set, and/or value.
+|If not set, the value comparison is <code>>0</code>. <code>value</code> is limited between -32768 and 32767.
+|1.13
+|-id="has_mio_policy"
+|has_mio_policy
+|<code><token></code><br>Policy to check.
+|<pre>has_mio_policy = my_policy_token</pre>
+|Checks if the currently-scoped MIO has the target policy allowed.
+|
+|1.13
+|-id="has_mio_policy_active"
+|has_mio_policy_active
+|<code><token></code><br>Policy to check.
+|<pre>has_mio_policy_active = my_policy_token</pre>
+|Checks if the currently-scoped MIO has the target policy active.
+|
+|1.13
+|-id="has_mio_research_category"
+|has_mio_research_category
+|<code><token></code><br>Category to check.
+|<pre>has_mio_research_category = my_research_category_token</pre>
+|Checks if the currently-scoped MIO has the target research category.
+|
+|1.13
+|-id="has_mio_equipment_type"
+|has_mio_equipment_type
+|<code><token></code><br>Type to check.
+|<pre>has_mio_equipment_type = my_equipment_type_token</pre>
+|Checks if the currently-scoped MIO has the target equipment types.
+|The possible equipment types are defined in <code>script_enum_equipment_bonus_type</code> (in {{path|common/script_enums.txt}}) and in {{path|common/equipment_groups.txt}} files.
+|1.13
+|}
+
+==Contract scope==
+{{SVersion|1.16}}
+Can be used in '''purchase contract''' scope.
+
+{| class="wikitable sortable mw-collapsible" style="display: inline-block; padding: 5px" width="100%"
+|+ {{nowrap|Contract-scoped triggers:}}<br>
+! width="10%" |Name
+! width="25%" |Parameters
+! width="25%" | Examples
+! width="20%" | Description
+! width="15%" |Notes
+! width="5%" |Version Added
+|-id="contract_contains_equipment"
+|contract_contains_equipment
+|<code><token></code><br>Type to check.
+|<pre>contract_contains_equipment = infantry_equipment</pre>
+|Checks if the currently-scoped purchase contract contains an equipment type.
+|May use equipment types, equipment archetypes, or types of equipment archetypes.
+|1.13
+|-id="deal_completion"
+|deal_completion
+|<code><decimal></code><br>Progress to compare with.
+|<pre>deal_completition > 0.6</pre>
+|Checks the deal completion with the target value.
+|May use < or >. On the scale from 0 to 1.
+|1.13
+|-id="seller"
+|seller
+|<code><country></code><br>Country to check.
+|<pre>seller = BHR</pre>
+|Checks the seller in the current purchase contract.
+|
+|1.13
+|-id="buyer"
+|buyer
+|<code><country></code><br>Country to check.
+|<pre>buyer = OMA</pre>
+|Checks the buyer in the current purchase contract.
+|
+|1.13
+|}
+
+==Special projects==
+{{SVersion|1.16}}
+
+{| class="wikitable sortable mw-collapsible" style="display: inline-block; padding: 5px" width="100%"
+|+ {{nowrap|Special project-scoped triggers:}}<br>
+! width="10%" |Name
+! width="25%" |Parameters
+! width="25%" | Examples
+! width="20%" | Description
+! width="15%" |Notes
+! width="5%" |Version Added
+|-id="has_project_flag"
+|has_project_flag
+|<code><string></code><br>The flag to check for.
+'''OR'''<br>
+<code>flag = <string></code><br>The flag to check.<br>
+<code>value = <int></code><br>The flag value to check for. Optional.<br>
+<code>date = <date></code><br>The flag creation date to check for. Optional.<br>
+<code>days = <int></code><br>The duration the flag existed for. Optional.
+|<pre>has_project_flag = my_flag</pre>
+<pre>has_project_flag = {
+  flag = my_flag
+  value < 12
+  date > 1936.3.25
+  days > 365
+}</pre>
+|Check if flag has been set within the special project in scope. May checks on the value or date/days since last modified date.
+|If not set, the value comparison is >0. value is limited between -32768 and 32767.
+|1.15
+|}
+
+==Meta triggers==
+{{SVersion|1.16}}
+
+Meta triggers are a system added with 1.6 with {{icon|mtg|1}}<ref>[[forum:1117516|HOI4 Dev Diary - Modding and Traits]]</ref> used in the exact same manner as [[Effect#Meta effects|meta effects]]: in order to tie a trigger block to a dynamic localisation entry. This is usually used in conjunction with [[Localisation#Scripted localisation|scripted localisation]] for non-numerical checks. This also can serve in order to place a variable check where one is not possible.<br>
+Meta triggers work in any scope that supports triggers, including combat scope.
+
+The following arguments go inside of a scripted trigger:
+* <code>text = { ... }</code> is a trigger block used by the meta trigger. In here, any string that must be made dynamic is marked with the square brackets on each side as <code>[EXAMPLE]</code>.
+* <code>EXAMPLE = "..."</code> is a string that will serve as the dynamic replacement for <code>[EXAMPLE]</code> within <code>text = { ... }</code>. This accepts [[Localisation#Namespaces|dynamic localisation]] to a limited degree, such as getting a variable's value with <code>[?var_name]</code> or some namespaces like <code>[ROOT.GetTag]</code>.
+* <code>debug = yes</code>, if added, will add the final output in the [[Modding|user directory]]'s {{path|logs/game.log}} file for debugging purposes.
+For example, the following can be used with [[#has_equipment|has_equipment]] to make it depend on a variable's value:
+<pre>meta_trigger = {
+    text = {
+        has_equipment = { [EQUIPMENT_ARCHETYPE] > 100 }
+    }
+    EQUIPMENT_ARCHETYPE = "[GetEquipmentArchetype]"
+}
+</pre>
+In this case, <code>GetEquipmentArchetype</code> is [[Localisation#Scripted localisation|scripted localisation]]. An example definition of scripted localisation in this case is as such:
+<pre>defined_text = {
+    name = GetEquipmentArchetype
+    text = {
+        trigger = {
+            check_variable = { v = 0 }
+        }
+        localization_key = artillery_equipment
+    }
+    text = {
+        localization_key = infantry_equipment
+    }
+}</pre>
+
+==Scripted triggers==
+{{SVersion|1.16}}
+Scripted triggers serve a similar purpose to [https://en.wikipedia.org/wiki/Subroutine functions] in that they can be defined in {{path|common/scripted_triggers/*.txt}} and then used elsewhere as a shortened version. Alongside that, the game has certain base game scripted triggers that are checked directly in the game's code determining triggers for functions that cannot be changed.
+
+A scripted trigger is defined simply as <pre>scripted_trigger_name = {
+    <triggers>
+}</pre>This example can be used as a trigger in regular code as <code>scripted_trigger_name = yes</code> or <code>scripted_trigger_name = no</code>.
+
+For example, this would be the definition in any scripted trigger file:
+<pre>state_is_in_area = {
+    OR = {
+        state = 120
+        state = 121
+        state = 123
+        state = 124
+        state = 125
+    }
+}</pre>
+This can then be used in any other trigger block, such as a national focus' available section:
+<pre>focus = {
+    id = TAG_focus_id   # Optional attributes, other than available, have been omitted
+    available = {
+        capital_scope = {
+            state_is_in_area = yes
+        }
+    }
+}</pre>
+If there are several definitions of scripted triggers with the exact same name, the game will make the scripted trigger be the one that was [[Modding#Loading files|evaluated later, as decided by file names and order in files]].
+
+===Diplomacy scripted triggers===
+{{SVersion|1.17}}
+Diplomacy scripted triggers fall into two mutually exclusive groups: deciding availability and deciding visibility. By default, these are defined in {{path|common/scripted_triggers/diplomacy_scripted_triggers.txt}} and {{path|common/scripted_triggers/00_diplo_action_valid_triggers.txt}} respectively. While it is possible to also use them as regular scripted triggers, they will also modify the prerequisites of being able to do a diplomatic action between 2 countries.
+
+A diplomacy scripted trigger is identified by the naming pattern of <code>DIPLOMACY_<action>_ENABLE_TRIGGER</code> for availability, such as <code>DIPLOMACY_GUARANTEE_ENABLE_TRIGGER</code>, and <code>is_diplomatic_action_valid_<action></code> for visibility, such as <code>is_diplomatic_action_valid_stage_coup</code>. In the base game, diplomacy scripted triggers are used to implement the game rules and add some country-specific exceptions, such as the {{flag|United Kingdom}} being unable to release its colonies with the {{icon|mtg|1}} DLC. Checking the base game's contents beforehand or copying it to the mod would ensure that the mod won't accidentally break any existing game rules.
+
+Generally, the pattern in localisation keys used for the button usually matches up with the internal ID of a diplomatic action. If the diplomatic action doesn't already have a scripted trigger in the base game, [[Modding#Searching multiple files|entirety of localisation can be searched]] for the name of the button to find the name of the action. For example, a the English localisation entry of <code> DIPLOMACY_CALL_ALLY_TITLE:0 "Call to arms"</code> would suggest that the diplomatic action of calling ally to war is <code>CALL_ALLY</code>.
+
+List of known triggers:
+<pre>DIPLOMACY_JOIN_ALLY_ENABLE_TRIGGER
+DIPLOMACY_CALL_ALLY_ENABLE_TRIGGER
+DIPLOMACY_WAR_ENABLE_TRIGGER
+DIPLOMACY_JOIN_FACTION_ENABLE_TRIGGER
+DIPLOMACY_CREATE_FACTION_ENABLE_TRIGGER 
+DIPLOMACY_PEACE_PROPOSAL_ENABLE_TRIGGER
+DIPLOMACY_IMPROVERELATION_ENABLE_TRIGGER
+DIPLOMACY_NONAGGRESSIONPACT_ENABLE_TRIGGER
+DIPLOMACY_REVOKE_NONAGGRESSIONPACT_ENABLE_TRIGGER
+DIPLOMACY_OFFER_JOIN_FACTION_ENABLE_TRIGGER
+DIPLOMACY_REQUEST_FOREIGN_MANPOWER_ENABLE_TRIGGER
+DIPLOMACY_CANCEL_FOREIGN_MANPOWER_ENABLE_TRIGGER
+DIPLOMACY_CANCEL_LICENSED_PRODUCTION_ENABLE_TRIGGER
+DIPLOMACY_REQUEST_ACCESS_TO_LICENCE_PRODUCTION_ENABLE_TRIGGER
+DIPLOMACY_SEND_ATTACHE_ENABLE_TRIGGER
+DIPLOMACY_EMBARGO_ENABLE_TRIGGER
+DIPLOMACY_SEND_EXP_FORCE_ENABLE_TRIGGER
+DIPLOMACY_REQUEST_EXP_FORCE_ENABLE_TRIGGER
+DIPLOMACY_RETURN_EXP_FORCE_ENABLE_TRIGGER
+DIPLOMACY_ASKSTATECONTROL_ENABLE_TRIGGER
+DIPLOMACY_GIVESTATECONTROL_ENABLE_TRIGGER
+DIPLOMACY_GUARANTEE_ENABLE_TRIGGER
+DIPLOMACY_REVOKE_GUARANTEE_ENABLE_TRIGGER
+DIPLOMACY_RELEASE_NATION_ENABLE_TRIGGER
+DIPLOMACY_MILACC_ENABLE_TRIGGER
+DIPLOMACY_OFFER_MILACC_ENABLE_TRIGGER
+DIPLOMACY_REVOKE_OFFER_MILACC_ENABLE_TRIGGER
+DIPLOMACY_DOCKING_RIGHTS_ENABLE_TRIGGER
+DIPLOMACY_OFFER_DOCKING_RIGHTS_ENABLE_TRIGGER
+DIPLOMACY_REVOKE_OFFER_DOCKING_RIGHTS_ENABLE_TRIGGER
+DIPLOMACY_REVOKE_OFFER_AIR_BASE_ACCESS_ENABLE_TRIGGER
+DIPLOMACY_LEND_LEASE_ENABLE_TRIGGER
+DIPLOMACY_INCOMING_LEND_LEASE_ENABLE_TRIGGER
+DIPLOMACY_REQUEST_LICENSED_PRODUCTION_ENABLE_TRIGGER
+DIPLOMACY_GENERATE_WARGOAL_ENABLE_TRIGGER
+DIPLOMACY_BOOST_PARTY_POPULARITY_ENABLE_TRIGGER
+DIPLOMACY_STAGE_COUP_ENABLE_TRIGGER
+DIPLOMACY_LEAVE_FACTION_ENABLE_TRIGGER
+DIPLOMACY_ASSUME_FACTION_LEADERSHIP_ENABLE_TRIGGER
+DIPLOMACY_KICK_FROM_FACTION_ENABLE_TRIGGER
+DIPLOMACY_SEND_VOLUNTEERS_ENABLE_TRIGGER</pre>
+
+Know tokens for <code>is_diplomatic_action_valid_<action></code> are:
+* '''declare_war''', for the Declare War button
+* '''generate_wargoal''', only affects the war goal menu by greying out the send button
+* '''guarantee''', for the Guarantee Independence button
+* '''docking_rights''', for the request docking rights button
+* '''offer_docking_right''', for the offer docking rights button
+* '''create_faction''', for the create faction button
+* '''assume_faction_leadership''', for the assume leadership of faction button
+* '''kick_from_faction''', for the kick from faction button
+* '''join_faction''', for the ask to join faction button
+* '''request_access_to_licence_production''', for the negotiate license button
+* '''embargo''', for the embargo button
+* '''send_volunteers''', only affects the sent volunteers menu by greying out the send button
+* '''stage_coup''', for the stage coup button 
+* '''boost_party_popularity''', for the boost party popularity button
+
+Within a diplomacy scripted trigger, the default scope is the country that does the trigger, while [[Scopes#FROM|FROM]] is the target of the action. For availability, the trigger's tooltip is shown to the player when hovering over the diplomatic action; in case of country-specific restrictions, using [[#if|conditional statements]] can ensure that the tooltip would only be generated when needed rather than between any pair of nations.
+
+For example, this trigger will prevent BHR from revoking a guarantee on QAT, while still ensuring the game rule works otherwise:
+<pre>DIPLOMACY_REVOKE_GUARANTEE_ENABLE_TRIGGER = {
+    if = {
+        limit = {
+            has_game_rule = {
+                rule = allow_revoke_guarantees
+                option = BLOCKED
+            }
+        }
+        custom_trigger_tooltip = {
+            tooltip = RULE_ALLOW_REVOKE_GUARANTEES_BLOCKED_TOOLTIP
+            always = no
+        }
+    }
+    if = {
+        limit = {
+            tag = BHR
+            FROM = { tag = QAT }
+        }
+        custom_trigger_tooltip = {
+            tooltip = NO_REVOKING_ON_QAT_TT
+            always = no
+        }
+    }
+}</pre>
+
+===Resistance initiation triggers===
+The behaviour of resistance being automatically initiated is decided by the <code>should_initiate_resistance</code> scripted trigger, by default defined in {{path|common/scripted_triggers/00_resistance_initiate_triggers.txt}}. If it is unfulfilled, the resistance will never initiate unless forced via the [[Effect#force_enable_resistance|the force_enable_resistance effect]]. Likewise, the resistance will always occur if it's true unless forcefully disabled.
+
+The scripted trigger's behaviour can be overwritten with state-specific scripted triggers, which should be named <code>should_initiate_resistance</code> with the list of state IDs suffixed at the end, separated by underscores. For example, this ensures that when a state 321 or 123 is controlled by the {{flag|United Kingdom}}, resistance would get initiated if and only if they're national territory of {{flag|France}}; otherwise, the normal behaviour is used:
+<pre>should_initiate_resistance_123_321 = {
+    if = {
+        limit = {
+            tag = ENG
+        }
+        is_core_of = FRA
+    }
+    else = {
+        should_initiate_resistance = yes # If this is not done, resistance would always activate due to overwriting that scripted trigger.
+    }
+}</pre>
+
+===Useful scripted triggers===
+These scripted triggers are defined in base game and might be useful to keep in the mod to cut down on the amount of code. As scripted triggers, all of these use a boolean value as argument.
+
+{| class="wikitable sortable mw-collapsible" style="display: inline-block; padding: 5px" width="100%"
+|+ {{nowrap|Scripted triggers:}}<br>
+! width="20%" |Name
+! width="10%" |Scope
+! width="25%" |Example
+! width="20%" |Description
+! width="25%" |Notes
+|-id="can_ROOT_get_wargoal_on_THIS"
+|can_ROOT_get_wargoal_on_THIS
+|Country
+|<pre>can_ROOT_get_wargoal_on_THIS = yes</pre>
+|Checks if ROOT can obtain a wargoal on the current scope.
+|To evaluate as true, the current scope must exist, not share a faction with ROOT, and not be a subject of ROOT.
+|-id="is_free_or_subject_of_root"
+|is_free_or_subject_of_root
+|Country
+|<pre>is_free_or_subject_of_root = yes</pre>
+|Checks if the current scope is either independent or a subject of ROOT.
+|
+|-id="has_same_ideology"
+|has_same_ideology
+|Country
+|<pre>has_same_ideology = yes</pre>
+|Checks if the current scope has the same ideology as ROOT.
+|Needs modifying if there are custom ideologies. Equivalent to <code>has_government = ROOT</code> for base game ideologies.
+|-id="is_enemy_ideology"
+|is_enemy_ideology
+|Country
+|<pre>is_enemy_ideology = yes</pre>
+|Checks if the current scope has an ideology that is considered enemy to ROOT's.
+|{{Icon|Communism|1}}, {{Icon|Democracy|1}}, and {{Icon|Fascism|1}} are considered enemy to each other.
+|-id="has_ROOT_at_least_1_div_in_current_state_scope"
+|has_ROOT_at_least_1_div_in_current_state_scope
+|State
+|<pre>has_ROOT_at_least_1_div_in_current_state_scope = yes</pre>
+|Checks if ROOT has at least one division in the current scope.
+|
+|-id="controls_or_subject_of"
+|controls_or_subject_of
+|State
+|<pre>controls_or_subject_of = yes</pre>
+|Checks if the current state is controlled by ROOT or a subject of ROOT.
+|
+|-id="is_controlled_by_ROOT_or_ally"
+|is_controlled_by_ROOT_or_ally
+|State
+|<pre>is_controlled_by_ROOT_or_ally = yes</pre>
+|Checks if the current state is controlled by ROOT, a subject of ROOT, or a country in the same faction as ROOT.
+|
+|-id="owns_or_subject_of"
+|owns_or_subject_of
+|State
+|<pre>owns_or_subject_of = yes</pre>
+|Checks if the current scope is owned by ROOT or a subject of ROOT.
+|
+|}
+
+==References and notes==
+{{cnote|a|Triggers are able to set and modify [[variables|temporary variables]]. This temporary variable itself may be then used separately to change the game's state, such as in a [[MTTH|MTTH block]] or if the trigger block is used in some [[effect]]'s <code>limit {{=}} { ... }</code> (most commonly [[Effect#if|if statements]] or [[Scopes#Scope limits|effect scope limits]]), though the usage of the variable to change the game's state is not a trigger by itself.}}
+
+<references />
+
+{{Modding navbox}}
+[[category:modding]]

@@ -1,0 +1,212 @@
+{{Version|1.13}}
+States (and their history) are defined in {{path|history/states/*.txt}} files. While it is typical to reserve one file to a state, that is not necessary. Unlike, for example, {{path|history/countries/}}, '''the filename does not get read in how the file should be handled''', only its contents do. For that reason, unless a [[Modding#Mod definition|replace_path]] is defined to the folder, it should be avoided to change the filenames of already-existing files, as this can make it so that both the base game and the mod's state files will get read.
+
+__TOC__
+
+== Arguments ==
+Each state is contained within a <code>state = { ... }</code> block that must encompass everything. These are the arguments that can be used.
+=== Mandatory ===
+<code>id = 123</code> is the ID number of the state. It must be an integer.<br/>
+'''State IDs have to follow a numerical order,''' starting from 1: the game will expect every number between 1 and the largest state ID within the mod to be a state. If that expectation is not met, the game will crash when loading the game if the [[Modding#Advantages to using debug|debug mode]] is not turned on, as the map is deemed too erroneous to be played normally.<br/>
+As such, when deleting a state, the state IDs have to be shifted in order respectively, such as by changing the last state's ID to fit the now-missing ID. When doing that, everything that referenced the now-different state IDs will have to be adjusted, and [[Modding#Search in files|searching every text file in the mod using a text editor]] can be used to do so.
+
+<code>name = STATE_123</code> is a localisation key that will become the name of the state, depending on which language is turned on. For English, this gets defined in any {{path|localisation/english/*_l_english.yml}} file as such:
+<syntaxhighlight lang="yaml">l_english:
+ STATE_123: "My state name"</syntaxhighlight>
+By default, the game uses <code>state_names_l_english.yml</code>.
+
+<code>manpower = 500000</code> is the total population of the state at the game's start, both recruitable and non-recruitable. This will be the starting population on every scenario, without population growth being simulated between the first start date and the scenario's beginning. However, a single tick of monthly population growth will be done for each scenario, increasing the state's population by {{#expr:{{rd|NCountry|POPULATION_YEARLY_GROWTH_BASE}}/12*100}}%.<ref>{{cd|NCountry|POPULATION_YEARLY_GROWTH_BASE}}</ref>
+
+<code>state_category = my_category</code> is the category that the state uses. This sets the state modifiers that the state starts with (Including the amount of starting unlocked shared building slots), as well as assigning a colour to the state in the state view map mode. [[#State categories|Details on the state categories are covered later in the article.]]
+
+<code>provinces = { 123 456 7890 }</code> is the list of provinces that are defined as belonging to the state, separated with whitespace characters.
+
+=== Optional ===
+<code>impassable = yes</code>, if added in the state, will mark it as impassable. This includes making troops unable to enter it; its provinces going to the controller of the nearest passable provinces; making it impossible to build provincial buildings within it; marking it as true for the [[Conditions#impassable|impassable trigger]].
+
+<code>resources = { steel = 10 aluminium = 20 }</code> assigns resources to the state. Each resource is added in the format of <code><resource> = <int></code>. Base game resources include <code>oil</code>, <code>aluminium</code> (With the spelling used in British English), <code>rubber</code>, <code>tungsten</code>, <code>steel</code>, and <code>chromium</code>, although [[Resource modding|more can be added]].
+
+<code>local_supplies = 8.3</code> decides [[Logistics#State_supply|the base supply of the state]]. One unit of local_supplies is equal to 0.2 units of supply. If undefined, assumed to be 0.
+
+<code>buildings_max_level_factor = 0.5</code> adds an additional multiplier on the amount of unlocked shared building slots. Recommended to avoid, instead using state categories.
+=== History ===
+All of these are contained within <code>history = { ... }</code>, which is defined within the state. Additionally, these can be used within a YYYY.MM.DD-formatted datestamp inside of history, such as <code>1939.1.1 = { ... }</code>. This will make them be executed only if the start date is strictly after the specified date.
+
+<code>owner = POL</code> defines the initial owner of the state. If a state does not have an owner, the game will run without issues; however, executing nearly any effect on that state, such as transferring it to a country, will crash the game.
+
+<code>controller = LIT</code> defines the initial controller of the state. Optional to define - only necessary if the owner differs from the controller.
+
+<code>victory_points = { 1234 10 }</code> defines the amount of victory points on a specified province, where the first number is the province and the second number is the amount of victory points. '''Only one province can be defined within one victory_points'''. In order to have multiple provinces with victory points in one state, several instances of <code>victory_points = { ... }</code> need to be put in.<br/>
+The localisation key that gets used for the victory point depending on the language of the game is <code>VICTORY_POINTS_1234</code>, where 1234 is the ID of the province. For English, this gets defined in any {{path|localisation/english/*_l_english.yml}} file as such:
+<syntaxhighlight lang="yaml">l_english:
+ VICTORY_POINTS_1234: "My city name"</syntaxhighlight>
+By default, the game uses <code>victory_points_l_english.yml</code>. For positioning the icon of a victory point on the map, the [[Map modding#unitstacks|unitstacks file]] is edited. Note that the icon of a victory point doesn't have to be inside of the province itself: if several victory points show up in the same place, it could be from different provinces with an outdated unitstacks file, which would need to be adjusted in the Nudge's Units section accordingly.
+
+<code>buildings = { ... }</code> defines the initial buildings that the state has. A single building entry consists of the [[#Building types|the ID of the building]] followed by its amount after an equality sign as <code>dockyard = 10</code>. Within <code>buildings = { ... }</code>, it is also possible to specify a province by using <code>1234 = { ... }</code> and putting the province's buildings within, where 1234 is the province's ID. An example definition of buildings that uses this:
+<pre>buildings = {
+    dockyard = 10
+    1234 = {
+        bunker = 5
+        coastal_bunker = 6
+    }
+}</pre>If a building is not mentioned, it does not change the initial value, which is 0 by default; however, the initial building level may be different if the buildings block is within a datestamp rather than being executed immediately. In landlocked states, buildings that can only be built on coastal states/provinces cannot be defined, even if set to 0. 
+
+Additionally, history serves as an [[Effect|effect block]]. Common effects to use within state history include <code>add_core_of = POL</code> or <code>add_claim_by = LIT</code>, but any effect can be used.
+
+== Examples ==
+Bare minimum:
+<pre>state = {
+    id = 123
+    name = STATE_123
+    manpower = 50000
+    state_category = large_town
+    
+    history = {
+        owner = ITA
+    }
+    
+    provinces = {
+        1234 5678
+    }
+}</pre>
+Average state:
+<pre>state = {
+    id = 124
+    name = STATE_124
+    manpower = 50035
+    state_category = megalopolis
+    
+    resources = {
+        oil = 10
+        chromium = 50
+    }
+    
+    history = {
+        owner = SWI
+        add_core_of = SWI
+        buildings = {
+            infrastructure = 3
+            industrial_complex = 1
+            arms_factory = 1
+            dockyard = 10
+            7777 = {
+                coastal_bunker = 5
+                naval_base = 10
+            }
+        }
+        victory_points = { 5555 15 }
+        victory_points = { 6666 10 }
+        1939.1.1 = {
+            controller = ITA
+            set_state_name = ITA_STATE_124
+            buildings = {
+                infrastructure = 4  # This will not change the amount of civilian or military factories.
+            }
+        }
+    }
+    
+    provinces = { 1111 2222 3333 4444 5555 6666 7777 8888 9999 }
+    
+    local_supplies = 10
+}</pre>
+
+== Notes ==
+{{Anchor|Additional notes}}
+
+The building model positions for each state are defined separately from the states themselves, instead being defined in {{path|map/buildings.txt}}. A mismatch will cause errors, taking up space in the log and potentially crashes. For example, if a province is lacking a definition for a naval base or a floating harbour within a province, whether it's set in the wrong state in the buildings.txt file or missing entirely, '''attempting to use one within that province (whether by the player or the AI) will cause a crash''', marked with [[Troubleshooting#Crash_data_log|the last read script being client_ping]]. The simplest way to compile the positions of models is to use the building section in the [[nudger]].<br/>{{path|map/airports.txt}} and {{path|map/rocketsites.txt}} decide in which province in the state the game should put airports or rocket sites. This is also edited in the building section in the [[nudger]]. '''If either is incorrect or missing, the game will not be possible to open without debug mode.'''
+
+The state borders must follow [[Strategic region modding|strategic regions]], defined in {{path|map/strategicregions/*.txt}}. If one province in the state belongs to one strategic region, while a different province in the same state belongs to a different strategic region, a map error will be created, which will cause a game crash on launch if the debug mode is not turned on. Make sure that strategic region borders are followed, either by adjusting the state or the strategic regions.
+== Using the nudger ==
+{{Hatnote|Parts of this section are transcluded from {{Section link|Nudger|States}}}}
+The [[nudger]] is a map editing tool, accessed through the main menu with the <code>-debug</code> [[launch option]] enabled. For the states, it can be used in order to change the borders of states and in order to generate the building models.<br/>
+{{#lsth:Nudger|States}}
+
+== Building types ==
+{{Main|Building modding}}{{#lsth:Building modding|types}}
+== State categories ==
+The base game state categories and their corresponding number of building slots:
+{| class = "wikitable sortable"
+! Localised name !! Internal name !! Amount of slots !! class="unsortable" style ="width:30%" | Color
+|- id="wasteland"
+| Wasteland
+| wasteland
+| 0
+| style="text-align: center; background:#282828" |
+|- id="enclave"
+| Enclave
+| enclave
+| 0
+| style="text-align: center; background:#282828" |
+|- id="tiny_island"
+| Tiny island
+| tiny_island
+| 0
+| style="text-align: center; background:#282828" |
+|- id="pastoral"
+| Pastoral region
+| pastoral
+| 1
+| style="text-align: center; background:#A0A000" |
+|- id="small_island"
+| Small island
+| small_island
+| 1
+| style="text-align: center; background:#C8A000" |
+|- id="rural"
+| Rural region
+| rural
+| 2
+| style="text-align: center; background:#F0A000" |
+|- id="town"
+| Developed Rural Region
+| town
+| 4
+| style="text-align: center; background:#C8C800" |
+|- id="large_town"
+| Sparse Urban Region
+| large_town
+| 5
+| style="text-align: center; background:#F0F000" |
+|- id="city"
+| Urban Region
+| city
+| 6
+| style="text-align: center; background:#00C800" |
+|- id="large_city"
+| Dense Urban Region
+| large_city
+| 8
+| style="text-align: center; background:#00F000" |
+|- id="metropolis"
+| Metropolis Region
+| metropolis
+| 10
+| style="text-align: center; background:#00C8C8" |
+|- id="megalopolis"
+| Megalopolis Region
+| megalopolis
+| 12
+| style="text-align: center; background:#00F0F0" |
+|}
+
+State categories can be added in {{path|common/state_category/*.txt}} files. Each state category is contained within the <code>state_categories = { ... }</code>, as a code block with the name of the state category's ID.
+
+A state category is a [[Modifiers#State scope|modifier block]], where any state-scoped modifier can be used. The only modifier that the base game uses is <code>local_building_slots</code>, set to an integer, but any can be used. Additionally, the <code>color = { 0 0 255 }</code> block corresponds to the state's colour in the state map mode. It is defined in the RGB format, where each value is an integer on the scale from 0 to 255.
+
+Example:
+<pre>state_categories={
+    my_state_category = {
+        color = { 0 255 0 }
+        local_building_slots = 14
+    }
+    my_second_category = {
+        color = { 255 0 0 }
+        local_building_slots = 4
+        resistance_growth = 0.1
+    }
+}</pre>
+
+The <code>set_state_category = category_id</code> effect can be used to change the state category of a state mid-game.
+
+{{Modding navbox}}
+[[Category:Modding]]

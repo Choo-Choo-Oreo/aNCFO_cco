@@ -1,0 +1,147 @@
+{{Version|1.13}}
+A '''balance of power''' (also internally referred to as bop or power balance) is typically used to represent a conflict between two sides, using a progress bar divided into distinct sections and decisions to push it towards some side for benefits. These are defined in {{path|common/bop/*.txt}} files.
+__TOC__
+Each balance of power consists of 2 or more sides. While a balance of power can contain more than 2 sides, at any time the player may only see 2 which are chosen in the effect to initialise the balance of power.<br/>
+To track the current balance, a single value is used, which can range from -1 to 1 with up to 3 decimal points. The <math>[-1; 0)</math> range is used for the left side, <math>[0; 1]</math> is used for the right side. A side having power only has a cosmetic impact, changing the icon and the text used in scripted localisation. A side isn't inherently set as being left or right, instead it is assigned which side is on which half when the power balance is initialised.
+
+Depending on the value, the country is placed in some range representing the exact degree of power on a certain side. This is usually used to grant certain [[modifiers]] or to execute an [[effect]] upon entering it. Most ranges are placed inside of sides, making it only possible to enter when that side is active. A range may also not be assigned to any side and be always visible, usually used for a single "balanced" range in the middle.<br/>
+A range being assigned to a side only means that it'll be visible when the range is active, and a side may have ranges on both halves of the balance at the same time. Entering a range defined on a certain side does not necessitate that the balance is tipped in favour of that side. For example, if a side is set as a left side and yet it includes a range of <math>[0.1, 0.3)</math>, then if the value is at 0.2, then the balance will be tipped towards the right side visually, but it will still be inside of that range.
+
+'''A balance of power is tracked globally.''' If 2 countries are assigned the same BoP, then the value of the balance will always be exactly the same between both countries. If both of these countries have modifiers pushing the BoP to some side daily or weekly, the effects of these modifiers will stack.
+== Code structure ==
+Balances of power are created in any {{path|common/bop/*.txt}} file. A BoP is defined as a root-level block, where the name of the block determines the unique ID of the BoP. In case of duplicates, the error.log entry <code>Template ID duplicate: bop_name</code> is generated and the game will prioritise the one that was [[Modding#Code structure|created later]], determined using the filename and order in files.<br/>
+There are no strictly mandatory arguments, however it is preferred to have at least 2 sides as the UI is built on the assumption that there is always a left and a right side active. In particular, these arguments exist:
+
+* <code>intial_value = -0.1</code> is the default value of the BoP. If unset, defaults to 0. 
+* <code>left_side = side_id</code> is the default left side of the BoP.
+* <code>right_side = side_id</code> is the default right side of the BoP. 
+The default values are used when the BoP is first initialised with [[#set_power_balance|set_power_balance]] (unless overwritten by its arguments) or when that same effect includes <code>set_default = yes</code> to reset it.
+* <code>decision_category = TAG_example_category</code> will move that [[decision]] category to the balance of power view. In particular, this ensures that it's impossible to access the decision category in any way other than by the balance of power. Any trigger blocks in the decision category, such as <code>allowed = { ... }</code>, are still checked for the country with the BoP, however.
+In addition, <code>side = { ... }</code> and <code>range = { ... }</code> are possible with more detail.
+=== Side ===
+Each side is defined using a <code>side = { ... }</code> block in the balance of power. In particular, these arguments exist:
+* <code>id = side_id</code> is the identifier used for the side. There should not be overlap in the same BoP, however overlap may exist between different BoPs. In case of overlap in the same BoP, only the first-created side will be used with a <code>Side ID duplicate: side_id</code> entry in error.log.
+* <code>icon = GFX_idea_unknown</code> is the spriteType used as the image to represent the side. If undefined or if the spriteType doesn't exist, the icon will not be created with no default to replace it.
+{{Sprite overview|collapsed=yes}}
+* <code>range = { ... }</code> is a range set to exist if and only if that side is active.
+=== Range ===
+A range is defined as a <code>range = { ... }</code> block which may exist either directly in the BoP or inside of a <code>side = { ... }</code>. This is used to determine when the range will be visible to the player: a range directly in a BoP is always visible, while a range in a side will only be visible if that side is visible. There are 3 mandatory attributes:
+* <code>id = range_id</code> is used to assign an ID to the specified range. There shouldn't be duplicates across the entire BoP (even in different sides), but there may be between different BoPs. A duplicate will be marked with a <code>Range ID duplicate: range_id</code> entry in error.log. In this case, the game will still display each range with the same ID that is not in a disabled side. However, this can cause issues with strict non-equal comparison when using [[#is_power_balance_in_range|is_power_balance_in_range]]: in particular, the game will only recognise the range that's placed furthest to the left. For example, if there are duplicate <code>range_id</code> on intervals of <math>[-0.3, -0.1)</math> and <math>[0.1, 0.3)</math>, then a strict equilibrium will be recognised as being to the right of <code>range_id</code>, but not to the left of it.
+* <code>min = -0.1</code> is the minimum value in the range's interval. If the value is exactly at this point, this range will be applied.
+* <code>max = 0.1</code> is the maximum value in the range's interval. If the value is exactly at this point, this range will be applied if and only if max is set to 1. Otherwise, the exact point is excluded from the interval.
+
+There are also blocks that decide which impact exactly a range has on the country when the value is inside that. In particular:
+* <code>modifier = { ... }</code> decides on the [[modifiers]] applying to the country when the value is in that range.
+* <code>rule = { ... }</code> decides on the [[Effect#set_rule|game rules]] applying to the country when the value is in that range.
+* <code>on_activate = { ... }</code> executes [[effects]] the instant that the value enters this range.
+* <code>on_deactivate = { ... }</code> executes [[effects]] the instant that the value exits this range.
+
+=== Example ===
+<pre>TAG_example_balance = {
+    initial_value = 0.25
+    left_side = default_left_side
+    right_side = default_right_side
+    decision_category = TAG_example_category
+    range = {
+        id = mid_range
+        min = -0.1
+        max = 0.1
+        modifier = {
+            war_support_weekly = 0.5
+        }
+        rule = {
+            can_create_faction = yes
+        }
+    }
+
+    side = {
+        id = default_left_side
+        icon = GFX_idea_generic_agrarian_society
+        range = {
+            id = left_side_range
+            min = -1
+            max = -0.1
+            modifier = {
+                war_support_weekly = 0.1
+            }
+            on_activate = {
+                random_owned_controlled_state = {
+                    limit = {
+                        NOT = { is_core_of = PREV }
+                    }
+                    add_core_of = PREV
+                    set_state_flag = cored_by_bop
+                }
+            }
+            on_deactivate = {
+                random_owned_controlled_state = {
+                    limit = {
+                        has_state_flag = cored_by_bop
+                    }
+                    remove_core_of = PREV
+                    clr_state_flag = cored_by_bop
+                }
+            }
+        }
+    }
+    side = {
+        id = default_right_side
+        icon = GFX_idea_generic_degauss_ship_hulls
+        range = {
+            id = right_side_range
+            min = 0.1
+            max = 1
+            modifier = {
+                war_support_weekly = 0.9
+            }
+        }
+    }
+}</pre>
+
+== Implementation ==
+{{Anchor|set_power_balance}}
+As a balance of power isn't inherently assigned to any country, it must be manually initialised. This is done using the <code>set_power_balance</code> [[effect]]. For example, this is the most bare-bones way to initialise the BoP, which will set it to the default:
+<pre>set_power_balance = {
+    id = TAG_example_balance
+}</pre>
+The effect can also be used to change details about the currently-active balance of power, such as changing the sides or the value:
+<pre>set_power_balance = {
+    id = TAG_example_balance
+    left_side = default_left_side
+    right_side = default_right_side
+    set_value = 0.1
+}</pre>
+If necessary to reset it completely to the default, <code>set_default = yes</code> will do so.
+<pre>set_power_balance = {
+    id = TAG_example_balance
+    set_default = yes
+}</pre>
+
+As an effect, it can be used in any effect block. If it should be initialised at the game's start, this is usually done in [[Country creation#Country history|country history]], alternatively it can be initialised when needed, such as in a focus reward or an event option.
+
+== Balance of power modifiers ==
+{{See also|Modifiers|Static modifiers|section=yes}}
+Balance of power modifiers are [[static modifiers]] that are applied directly to a balance of power, from which they are cloned to each country that has the BoP assigned. As static modifiers, they're defined in any {{path|common/modifiers/*.txt}} file. They typically include within of themselves only the [[Modifiers#power_balance_daily|power_balance_daily]] and/or [[Modifiers#power_balance_weekly|power_balance_weekly]] modifiers in order to gradually tip the balance towards one side. These modifiers will be shown in the tooltip when hovering over the current value.
+
+An example of a BoP modifier is as such:
+<pre>my_bop_modifier = {
+    power_balance_weekly = -0.01 # Changes by 1% each week to the left
+}</pre>
+Balance of power modifiers are added via [[#add_power_balance_modifier|the add_power_balance_modifier effect]] as such:
+<pre>add_power_balance_modifier = {
+    id = my_bop    # The ID of the balance of power
+    modifier = my_bop_modifier # The modifier to add
+}</pre>[[#remove_power_balance_modifier|The remove_power_balance_modifier effect]], with the same syntax, or [[#remove_all_power_balance_modifiers|remove_all_power_balance_modifiers]] can be used to remove these from the country.
+
+Since these are duplicated to each country that has the BoP, the weekly or daily effect for each modifier will increase for each country that is assigned the BoP. For example, if the BoP is assigned to 3 countries, <code>power_balance_daily = 0.01</code> in a BoP modifier will, in practice, make the balance get pushed by 3% to the right in total daily.
+
+== Effects ==
+{{Hatnote|Parts of this section are transcluded from {{Section link|Effect|Balance of power}}.}}
+Other than <code>set_power_balance</code>, these effects exist which can be used to modify a balance of power:
+{{#section-h:Effect|Balance of power}}
+
+== Triggers ==
+{{Hatnote|Parts of this section are transcluded from {{Section link|Triggers|Balance of power}}.}}
+These triggers exist for checking the state of a balance of power. Some of these can only be used in country scope.{{#section-h:Triggers|Balance of power}}
+{{Modding navbox}}
+[[Category:Modding]]

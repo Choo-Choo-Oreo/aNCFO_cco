@@ -1,0 +1,549 @@
+{{Version|1.15}}
+A building is a structure built using Civilian factories in states or provinces.
+
+== Buildings ==
+Buildings are defined within {{path|common/buildings/*.txt}}. Each building entry lies within the <code>buildings = { ... }</code> block, serving as its own block with arguments within defining the building, as this:
+<pre>buildings = {
+    my_building = {
+        <...>
+    }
+}</pre>
+
+=== Cost ===
+Each building has a set price in industrial capacity required.
+
+This cost is defined with:
+* <code>base_cost = <int></code> - Required base cost of building.
+* <code>per_level_extra_cost = <int></code> - Optional additional cost per building in state/province.
+* <code>per_controlled_building_extra_cost = <int></code> - Optional additional cost per building controlled by country.
+
+<code>base_cost</code> is the primary cost to build the building, added to each building level, <code>per_level_extra_cost</code> gets added for each building level in state or province in an arithmetic progression. With the example of 1000 base_cost and 100 per_level_extra_cost, the first level will cost 1000 IC to build, while the 5th level will cost 1400 IC, as 4 levels have been built before that. <code>per_controlled_building_extra_cost</code> adds additional cost per building controlled by country.
+
+By default, each civilian factory provides {{rd|NProduction|BASE_FACTORY_SPEED|ref=1|beforeref=IC per day|spacebeforeref=1}}, which can be taken into account when calculating the cost. For comparison, by default a civilian factory costs 10800 IC, while infrastructure costs 6000 IC.
+
+Additionally, <code>infrastructure_construction_effect = yes</code>, if included, will make the building get the building speed boost from any infrastructure built in the state. Maximum infrastructure level increase buidling speed by factor of {{rd|NProduction|INFRA_MAX_CONSTRUCTION_COST_EFFECT|ref=1}}. Dividing that value by <code>level_cap</code> of infrastructure (5) gives a +{{#expr: ({{rd|NProduction|INFRA_MAX_CONSTRUCTION_COST_EFFECT}} * 100) / 5 }}% boost per infastructure level.
+
+=== Slots ===
+In general, buildings fall into 3 categories by used building slots:
+* Shared, which use the same, by default, {{rd|NBuildings|MAX_SHARED_SLOTS|ref=1|beforeref=shared slots|spacebeforeref=1}} for each state, such as civilian and military factories.
+* Non-shared, defined for states, but using slots that are unique for each building in particular, such as infrastructure or air bases.
+* Provincial, which get built for each province, using slots that are unique for each building in particular, such as forts or naval bases.
+The 3 categories have separate zones in the country construction view where they are located.
+
+Slot for building is defined inside <code>level_cap</code> block. Which possible parameters are:
+* <code>shares_slots = <bool></code> - Wheter building should use shared slots for state.
+* <code>state_max = <int></code> - Maximum level in a state.
+* <code>province_max = <int></code> - Maximum level in a province. Defines building as provincial.
+* <code>group_by = <string></code> - Group of buildings, limiting all building with the same category to the same maximum used slots.
+* <code>exclusive_with = <building_id></code> - Prohibits the construction of certain buildings in the same state/province.
+
+By default building is defined as state building. If <code>state_max</code> is unspecified, it gets assumed to be {{rd|NBuildings|MAX_BUILDING_LEVELS|ref=1}} by default.
+
+Additional maximum level limit for provincial buldings for each terrain type can be set within {{Path|common/terrain/*.txt}} files.
+<pre>buildings_max_level = {
+  bunker = <int>
+  coastal_bunker = <int>
+}</pre>
+
+By default, all levels of the building are unlocked by default. However, if there are [[Technology modding|technologies]] that enable construction of this building to a specified level, it becomes impossible to build without obtaining at least one of these technologies. It is to be noted that the [[effect#add_building_construction|add_building_construction effect]] or the [[state modding#Buildings|starting state buildings]] can still be used to bypass the technological limit, while still not being possible to bypass the max level total.
+
+=== Modifiers ===
+Bulding can provide modifiers to country or/and state:
+* <code>country_modifiers = { modifiers = { ... } }</code> - Accept only country modifiers.
+* <code>state_modifiers = { ... }</code> - Accept only state modifiers.
+Country modifiers can be restricted to specific countries by <code>enable_for_controllers = { ... }</code> list of tags block inside <code>country_modifiers</code>. Modifiers will apply only if the controller of province/state is in the list, or if the list is empty.
+
+Adding <code>show_modifier = yes</code> will make the modifiers show up in the tooltip of the building.
+
+Example:
+<pre>building = {
+  country_modifiers = {
+    enable_for_controllers { GER ENG }
+    modifiers = {
+       political_power_factor = 2.0
+    }
+  }
+  state_modifiers = {
+    local_building_slots_factor = 2
+  }
+}</pre>
+
+=== Additional arguments ===
+Common arguments applicable to every building:
+* <code>dlc_allowed = { ... }</code> - Limit building to specific dlc. Uses [[trigger#has_dlc|has_dlc]] trigger.
+* <code>special_icon = <int></code> - Used to display icons for specific buildings starting from the left side of the terrain interface within the state interface.(See provinces with facilities for details.)
+* <code>value = 3</code> - Decides the base health of a building for air bombing campaigns, which gets multiplied for each level of the building. Additionally, this also determines the price of the state to get during peace conferences or the cost in {{icon|political power|1}} to occupy.
+* <code>damage_factor = 0.3</code> - Modifies the damage that this building gets from air bombing or land combat. Positive values increase it, while negatives decrease it. At 0, building can't be damaged.
+* <code>allied_build = <bool></code> - If specified, makes the building count as an allied building, making its modifiers apply not just on the country that built it, but also its allies (i.e. subjects, overlord, and/or faction members).
+* <code>only_costal = yes</code> {{hover|Quoted exactly as written|(sic)}} - If specified, will make the building only be possible to build in either provinces that are [[Map modding#Province map|defined as coastal]] or states that contain any such provinces, depending on the type of the building.
+* <code>disabled_in_dmz = <bool></code> - If added, will make the building impossible to build or use in states that are demilitarised zones.
+* <code>need_supply = <bool></code> - Whether building needs supply for operation.
+* <code>hide_if_missing_tech = <bool></code> - Hides building in the construction tab if the required technology has not been researched.
+* <code>missing_tech_loc = { ... }</code> - Custom localized tooltip when the required technology has not been researched.
+* <code>need_detection = <bool></code> - ?
+* <code>detecting_intel_type = <intel_type></code> - Define what type of intelligence affects this building.Types of intelligence available:<code>civilian</code>,<code>army</code>,<code>airforce</code>,<code>navy</code>
+* <code>only_display_if_exists = <bool></code> - The details of the building will only appear in the terrain interface of the province when it is constructed in a province of that state.(Usually used in conjunction with the special_icon parameter mentioned above.)At the same time, the terrain interface maps of other provinces in the state will not show the icon of this building. If set to 'no', all provinces in the entire state will display the icon and detailed information of the building, but provinces without the building will show a level of 0, even though this building can only be constructed once within the same state.
+* <code>specialization = { ... }</code> - Associate the types of special projects.Defined in this path:{{Path|common/special_projects/specialization/specializations.txt}}
+* <code>tags = { ... }</code> -  Building tags, used to target buildings in [[raids]] and in [[effect#damage_building|damage_building]] effect.
+* <code>is_buildable = <bool></code> - Whether building can be build manually. Default to yes.
+* <code>province_damage_modifiers = { ... }</code> - Modifiers to add to province if building is damaged/destroyed. <small>[Need confirmation]</small>
+* <code>state_damage_modifier = { ... }</code> - Modifiers to add to state if building is damaged/destroyed. <small>[Need confirmation]</small>
+* <code>affects_energy = yes/no</code> - Determine whether the building will affect energy consumption.<small>[Need confirmation]</small>
+
+=== Icon ===
+{{SVersion|1.11}}
+The building icon is defined as <code>icon_frame = 10</code>. The integer shows which frame within the GFX_buildings_strip sprite gets used for this building.
+
+By default, GFX_buildings_strip is defined within {{path|interface/countrystateview.gfx}}, however, it can be overwritten in any {{path|interface/*.gfx}} which is positioned later by filename order:
+<pre>
+spriteType = {
+    name = "GFX_buildings_strip"
+    textureFile = "gfx/interface/buildings/building_icon_strip.dds"
+    noOfFrames = 16     # As of 1.11
+}
+</pre>
+The noOfFrames decides in how many frames the specified sprite is divided into, dividing the image horizontally into chunks of approximately equal width. If planning to add a new building icon rather than using a base game one, the building icon strip will need to be updated both in the noOfFrames and in the .dds file. By default, each building has a 46x46 resolution in pixels.
+
+Within the building construction menu, buildings are divided into 3 zones depending on their used building slots category. In order to change where they are to adjust for new or missing buildings, the elements within the possible_constructions container in {{path|interface/countryconstructionsview.gui}} can have their positions changed.
+
+=== Models ===
+{{Main|Entity modding}}
+There are several arguments related to models within buildings.<br/>
+<code>show_on_map = 3</code> decides how many building models should there be per state or per province (depending on the building type) defined for the building. Each building construction will add one more model. If unspecified, will have no map models.<br/>
+<code>show_on_map_meshes = 2</code> decides how many entities are used for each building model. By default assumed to be 1.<br/>
+<code>always_shown = yes</code>, if specified, will make the building model appear regardless whether it's covered by the fog of war or not.<br/>
+<code>has_destroyed_mesh = yes</code>, if specified, will make the game use a separate model if the building has been destroyed by air bombing or occupation.<br/>
+<code>centered = yes</code>, if specified, will mak
+
+In order to assign an entity to a building, it must have a name of <code>building_<building name></code>, like <code>building_my_building</code>, within the {{path|gfx/entities/*.asset}} file. If a building is set to use several entities, then the number will get appended in the end like <code>building_my_building_1</code>, starting with 1. If there's a destroyed mesh, then it'll append _destroyed in the end as <code>building_my_building_destroyed</code>
+
+The locations of building models for each state are defined in {{path|map/buildings.txt}}. An entry in that file is defined as such (If unspecified, assume a number with up to 2 decimal digits):
+<pre>State ID (integer); building ID (string); X position; Y position; Z position; Rotation; Adjacent sea province (integer)</pre>
+*State ID defines which state the building is located in. Even for provincial buildings, this is the ID of the state, not the province. Instead, provincial buildings have several entries per state, with the XYZ position being used by the game to know which province it's for.
+*Building ID is defines which model is being located. While this includes each building, this also includes floating harbours as floating_harbor.
+*X, Y, and Z position represent the position on the map of the building model using the 3-dimensional Cartesian coordinate system. The X and Z positions are equivalent to the X and Y axes on the {{hover|map/provinces.bmp|province bitmap}} with 1 pixel equalling 1 unit, left-to-right and down-to-up respectively. This is also what the game uses to know which province it's for for provincial buildings. The Y position, on the scale of 0 to 25.5, can be calculated with the {{hover|map/heightmap.bmp|heightmap}} by taking the [[wp:Lightness|colour value]] of the pixel at that position and making it fit on the scale of 0 to 25.5 (Such as by dividing it by 10 if it's on the scale of 0 to 255).
+*Rotation is measured in radians. A rotation of 0 will result in the building model pointing in the same direction as the model is set, while positives will rotate it counter-clockwise and negatives will rotate it clockwise. A full rotation resulting in the same position as 0 is equal to the number π multiplied by 2, roughly 6.28.
+*Adjacent sea province is only necessary to define for naval bases and floating harbours, in order to let the game know from which sea province ships or convoys can access the land province where it is located. If the building type is not a naval base, it should be left at 0.
+It is preferable to generate the building models in the building section in the nudger, rather than filling it out manually. However, note that the game will crash if the currently-existing {{path|map/buildings.txt}} file is entirely empty, so there should be at least one definition, even if incorrect.
+
+=== Effects ===
+Each building can accept any [[Modifiers#State_scope|state-scoped modifier]] within itself, applying that to the state when built. Some used in base game include <code>local_resources_<resource></code>, <code>air_defence</code> (for anti-air) and <code>air_defence</code>. In case of provincial buildings, province-level modifiers are accepted instead. This can also be used with [[Modifiers#Modifier tokens|modifier tokens]] to create a custom effect as a variable system.  
+
+Aside from state-scoped modifiers, there are several other arguments to make the building have the same effect as a base game building or be considered one for the AI:
+{| class="wikitable sortable" width="100%"
+! width="10%" | Name
+! width="25%" | Effects
+! width="25%" | Examples
+! width="20%" | Type
+! width="20%" | Notes
+|-
+|military_production
+|Adds the specified amount of military factories to the controller.
+|<pre>military_production = 0.5</pre>
+|Flat.
+|A value that's larger than 1 will be the same as 1 factory, but it can fall between 0 and 1.
+|-
+|general_production
+|Adds the specified amount of civilian factories to the controller.
+|<pre>general_production = 0.5</pre>
+|Flat.
+|A value that's larger than 1 will be the same as 1 factory, but it can fall between 0 and 1.
+|-
+|naval_production
+|Adds the specified amount of dockyards to the controller.
+|<pre>naval_production = 0.5</pre>
+|Flat.
+|A value that's larger than 1 will be the same as 1 factory, but it can fall between 0 and 1.
+|-
+|infrastructure
+|Makes the building be marked as infrastructure.
+|<pre>infrastructure = yes</pre>
+|Boolean.
+|Includes the construction speed bonus and extra resources.
+|-
+|air_base
+|Makes the building be marked as an air base.
+|<pre>air_base = yes</pre>
+|Boolean.
+|
+|-
+|supply_node
+|Makes the building be marked as a supply node.
+|<pre>supply_node = yes</pre>
+|Boolean.
+|
+|-
+|is_port
+|Makes the building be marked as a naval port.
+|<pre>is_port = yes</pre>
+|Boolean.
+|
+|-
+|land_fort
+|Adds that many land forts to the province.
+|<pre>land_fort = 1</pre>
+|Flat.
+|
+|-
+|naval_fort
+|Adds that many coastal forts to the province.
+|<pre>naval_fort = 1</pre>
+|Flat.
+|
+|-
+|refinery
+|Makes the building be marked as a synthetic refinery.
+|<pre>refinery = yes</pre>
+|Boolean.
+|
+|-
+|fuel_silo
+|Makes the building be marked as a fuel silo.
+|<pre>fuel_silo = yes</pre>
+|Boolean.
+|
+|-
+|radar
+|Makes the building be marked as a radar station.
+|<pre>radar = yes</pre>
+|Boolean.
+|
+|-
+|rocket_production
+|Defines how much progress on rocket production is done daily.
+|<pre>rocket_production = 5</pre>
+|Flat.
+|
+|-
+|rocket_launch_capacity
+|Defines how many rockets the build can launch daily.
+|<pre>rocket_launch_capacity = 5</pre>
+|Flat.
+|
+|-
+|nuclear_reactor
+|Makes the building be marked as a nuclear reactor.
+|<pre>nuclear_reactor = yes</pre>
+|Boolean.
+|
+|-
+|gun_emplacement
+|
+|<pre>gun_emplacement = yes</pre>
+|Boolean.
+|
+|}
+
+=== Example ===
+<pre>buildings = {
+    my_provincial_building = {
+        base_cost = 10000
+        infrastructure_construction_effect = yes
+        
+        value = 1
+        
+        icon_frame = 17
+        
+        show_on_map = 1
+        always_shown = yes
+
+        spawn_point = my_provincial_building_spawn
+
+        country_modifiers = {
+            modifiers = {
+                army_attack_factor = 0.01
+                army_defence_factor = 0.01
+            }
+        }
+
+        level_cap = {
+            province_max = 3
+        }
+    }
+    my_shared_building = {
+        base_cost = 1000
+        per_level_extra_cost = 200
+        infrastructure_construction_effect = yes
+        
+        value = 15
+        only_costal = yes
+        
+        icon_frame = 18
+        
+        show_on_map = 3
+        show_on_map_meshes = 3
+        has_destroyed_mesh = yes
+        
+        military_production = 1
+        general_production = 1
+        naval_production = 1
+
+        level_cap = {
+            shares_slots = yes
+            # Max level of 15 since undefined
+        }
+    }
+    my_non_shared_building = {
+        base_cost = 1000
+        per_level_extra_cost = 2000
+        
+        max_level = 2
+        
+        value = 5
+        
+        icon_frame = 19     # No model is defined
+        
+        state_modifiers = {
+            recruitable_population_factor = 0.5
+        }
+
+        level_cap = {
+            state_max = 2
+        }
+    }
+}</pre>
+
+== Spawn point ==
+{{SVersion|1.16}}
+Coordinates for each building on map by default are defined using building name. Spawn point can be defined to to use 1 position for diffrent types of buildings.
+
+Parameters:
+* <code>type</code> - Can be <code>state</code> or <code>province</code>.
+* <code>max = <int></code> - How many spawn points state/province should have.
+* <code>only_costal = <bool></code> - Limit spawn point to coastal states/provinces.
+* <code>disable_auto_nudging = <bool></code> - Disable automatic positioning with nudging tool.
+
+Example:
+<pre>spawn_points = {
+  my_building_type_spawn = {
+    type = state
+    max = 1
+  }
+  my_province_building_type_spawn = {
+    type = province
+    max = 1
+    only_costal = yes
+  }
+}</pre>
+Now multiple buildings can use <code>spawn_point = my_building_type_spawn</code>.
+
+== Localization ==
+{{SVersion|1.16}}
+Buildings use the following localization keys, using my_building as an example:
+<syntaxhighlight lang="yaml">
+ my_building: "My building"
+ my_building_desc: "My building's description"
+ my_building_plural: "My buildings"
+
+ modifier_production_speed_my_building_factor: "§Y$my_building$§! construction speed"
+ modifier_production_speed_my_building_factor_desc: "Modifies the speed of §Y$my_building$§! construction."
+ modifier_state_production_my_building_factor: "§Y$my_building$§! construction speed"
+ modifier_state_production_my_building_factor_desc: "Modifies the speed of §Y$my_building$§! construction in this state."
+</syntaxhighlight>
+
+The first 3 are used for the building itself in various UI elements, while the last 4 are used to localise the modifiers automatically created for each building: <code>production_speed_<building>_factor</code> and <code>state_production_speed_<building>_factor</code>.
+
+== Types ==
+These are the different types of buildings in the game (Can also be found inside {{path|common/buildings/00_buildings.txt}}): 
+{| class = "wikitable sortable"
+! class="unsortable" | Icon !! Localised name !! Internal name !! Maximum level !! Type
+|- id="infrastructure"
+| [[File:Infrastructure.png]]
+| Infrastructure
+| infrastructure
+| 5
+| Non-shared
+|- id="arms_factory"
+| [[File:Military factory.png]]
+| Military factory
+| arms_factory
+| 20
+| Shared
+|- id="industrial_complex"
+| [[File:Civilian factory.png]]
+| Civilian factory
+| industrial_complex
+| 20
+| Shared
+|- id="air_base"
+| [[File:Air base.png]]
+| Air base
+| air_base
+| 10
+| Non-shared
+|- id="supply_node"
+| [[File:Supply hub.png]]
+| Supply hub
+| supply_node
+| 1
+| Provincial
+|- id="rail_way"
+| [[File:Railway.png]]
+| Railway
+| rail_way
+| {{rd|NSupply|MAX_RAILWAY_LEVEL|ref=1}}
+| Provincial
+|- id="naval_facility"
+| [[File:Naval engineering facility.png]]
+| Naval Engineering Facility
+| naval_facility
+| 1
+| Provincial
+|- id="naval_base"
+| [[File:Naval base.png]]
+| Naval base
+| naval_base
+| 10
+| Provincial
+|- id="bunker"
+| [[File:Land fort.png]]
+| Land fort
+| bunker
+| 10
+| Provincial
+|- id="coastal_bunker"
+| [[File:Coastal fort.png]]
+| Coastal fort
+| coastal_bunker
+| 10
+| Provincial
+|- id="stronghold_network"
+| [[File:Stronghold Network.png]]
+| Stronghold Network
+| stronghold_network
+| 1
+| Shared
+|- id="dockyard"
+| [[File:Naval dockyard.png]]
+| Naval dockyard
+| dockyard
+| 20
+| Shared
+|- id="anti_air_building"
+| [[File:Anti-air (building).png]]
+| Anti-air
+| anti_air_building
+| 5
+| Non-shared
+|- id="synthetic_refinery"
+| [[File:Synthetic refinery.png]]
+| Synthetic refinery
+| synthetic_refinery
+| 3
+| Shared
+|- id="fuel_silo"
+| [[File:Fuel silo.png]]
+| Fuel silo
+| fuel_silo
+| 15
+| Shared
+|- id="radar_station"
+| [[File:Radar station.png]]
+| Radar station
+| radar_station
+| 6
+| Non-shared
+|- id="mega_gun_emplacement"
+| [[File:Multi-Charge Large Caliber Gun.png]]
+| Multi-Charge Large Caliber Gun{{Hover|Exclusive with rocket site.|(*)}}
+| mega_gun_emplacement
+| 1
+| Shared
+|- id="rocket_site"
+| [[File:Rocket site.png]]
+| Rocket site{{Hover|Exclusive with multi-charge large caliber gun.|(*)}}
+| rocket_site
+| 3
+| Shared
+|- id="naval_supply_hub"
+| [[File:Naval supply hub.png]]
+| Naval supply hub {{Hover|Prerequisites require Naval Base at level 8 minimum.|(*)}}
+| naval_supply_hub
+| 1
+| Provincial
+|- id="naval_headquarters"
+| [[File:Naval headquarters.png]]
+| Naval headquarters {{Hover|Prerequisites require Naval Base at level 8 minimum.|(*)}}
+| naval_headquarters
+| 1
+| Provincial
+|- id="nuclear_reactor"
+| [[File:Nuclear reactor.png]]
+| Nuclear reactor
+| nuclear_reactor
+| 1
+| Shared
+|- id="nuclear_reactor_heavy_water"
+| [[File:Nuclear reactor.png]]
+| Heavy Water Nuclear Reactor
+| nuclear_reactor_heavy_water
+| 1
+| Shared
+|- id="commercial_nuclear_reactor"
+| [[File:Civilian Nuclear Reactor.png]]
+| Civilian Nuclear Reactor
+| commercial_nuclear_reactor
+| 1
+| Shared
+|- id="nuclear_facility"
+| [[File:Nuclear research facility.png]]
+| Nuclear Research Facility
+| nuclear_facility
+| 1
+| Provincial
+|- id="air_facility"
+| [[File:Aerodynamics and avionics facility.png]]
+| Aerodynamics and Avionics Facility
+| air_facility
+| 1
+| Provincial
+|- id="land_facility"
+| [[File:Land warfare facility.png]]
+| Land Warfare Facility
+| land_facility
+| 1
+| Provincial
+|- id="dam"
+| [[File:Dam.png]]
+| Dam
+| dam
+| 1
+| Provincial
+|- id="dam_mountain"
+| [[File:Dam.png]]
+| Dam
+| dam_mountain
+| 1
+| Provincial
+|- id="canal_kiel"
+| [[File:Canal Locks.png]]
+| Kiel Canal Locks
+| canal_kiel
+| 1
+| Provincial
+|- id="canal_panama"
+| [[File:Canal Locks.png]]
+| Panama Canal Locks
+| canal_panama
+| 1
+| Provincial
+|- id="energy_infrastructure"
+| [[File:Reinforced electrical grid.png]]
+| Reinforced electrical grid{{Hover|Exclusive with High capacity electrical grid.|(*)}}
+| energy_infrastructure
+| 1
+| Shared
+|- id="industrial_infrastructure"
+| [[File:High capacity electrical grid.png]]
+| High capacity electrical grid{{Hover|Exclusive with Reinforced electrical grid.|(*)}}
+| industrial_infrastructure
+| 1
+| Shared
+|}
+Note that while railways and supply nodes are buildings, not all traditional building operations apply to them. Their starting level is defined [[Map_modding#Supply_nodes_and_railways|outside of state history]] and [[Effect#build_railway|a separate effect]] must be used to construct railways mid-game, with the default [[Effect#add_building_construction|add_building_construction]] or other building-related effects crashing the game.
+
+== References ==
+<references />
+
+{{Modding navbox}}
+[[Category:Modding]]

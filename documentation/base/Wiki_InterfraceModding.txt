@@ -1,0 +1,338 @@
+{{Version|Timeless}}
+The graphical user interface elements are defined within {{path|interface/*.gui}} files, as typical code formatting. The files only decide on the positions of how elements are arranged, [[Scripted GUI modding|scripted GUI]] is used to assign effects to newly-created interface elements.
+
+== Overview ==
+The interface consists of [[#Containers|container windows (or containers)]] and elements within them. Each element, other than containers, must reside in a container. Containers can be nested in other elements to organise their positions. Gridboxes are used to clone the same container several times, with different details specified for each one. Newly-added elements can have their effects defined in [[Scripted GUI modding|scripted GUI]], while the effects of base game's GUI are hard-coded, that is, it's impossible to modify what it does directly.
+
+The elements are shown in the order that they are defined in the file: what's placed later will be shown on top of what's placed earlier. The files are contained within a <code>guiTypes = { ... }</code> block overarching the entire file. 
+
+== Constants ==
+{{Hatnote|This section is transcluded from [[Data structures#Constants|Data structures § Constants]]}}
+{{#section-h:Data structures|Constants}}
+== Containers ==
+{{anchor|ContainerWindowType}}
+Containers are used to group together elements and associate them with an internal function, written as a <code>containerWindowType = { ... }</code> block. 
+
+New containers that are independent (not inside of any other container) will not show up in-game by default. For one to show up, it is required for it to be tied to a function, such as [[Scripted GUI modding|scripted GUI]], which decides where it should show and when. In some cases, new containers can be created for the internally-defined functions, such as [[Technology modding#Graphical user interface|new technology folders]] or [[Music modding#Radio stations|getting a music station to show up]]. In most cases, however, a scripted GUI would be required to make a new container show up. 
+
+If a container is defined within another container, it will appear at the same time as the window containing it unless more information is defined within the function. A scripted GUI cannot be assigned to such a container, however. In some cases, it's not necessary for a container to be visible to be useful, for example, an empty container can be used as an anchor, that is, used as the [[Scripted GUI modding#Parent Window Token|parent window name]] for Scripted GUI to place another container on the same place as the anchor is defined. This can allow placing containers with higher precision than normally possible with <code>parent_window_name</code>, allowing the parent window to have elements drawn on top of the scripted GUI.
+
+=== Arguments ===
+The following attributes are commonly used:
+* <code>name = "my_container"</code> – The name of the container, used to tie a function to the container. Independent containers must have unique names. While nested containers may have name overlap when defined in different independent containers, it's still preferable to avoid overlap, such as to ensure unambiguity when using <code>parent_window_name</code> in scripted GUI.
+* <code>size = { height = 300 width = 100%% }</code> – The bounding box for the container. If this container is placed inside of another one, either directly or through a gridbox, then only this size is used to create the scrollbar, without taking into account elements inside. This boundary also sets the size that the scrollbar must use. Either in pixels or in percentages relative to the size of the parent container (the entire screen if independent).
+* <code>background = { ... }</code> – The background of the container. This is required for a scrollbar to work, as otherwise the boundaries will get ignored. There are the following arguments inside:
+** <code>name = "Background"</code> – The name for handling the background in other functions. Commonly just set to "Background".
+** <code>spriteType = "GFX_tiled_window"</code> or <code>quadTextureSprite = "GFX_tiled_window_transparent"</code> – Refers to a [[Graphical asset modding#corneredTileSpriteType|corneredTileSpriteType]] definition that would automatically get resized to fit the container's set size.
+* <code>clipping = yes</code> – If true (and if a background exists), the elements inside of the container will not be able to go outside of the boundary box, and what doesn't fit will get cropped. Defaults to true. This being true is mandatory for a scrollbar to work.
+* <code>position = { x = 100 y = 100 }</code> – The position of the container in pixels relative to the set orientation and set origo.
+* <code>orientation = center</code> – Sets the origin that the position is measured relative to, such as <code>upper_left</code>, <code>center_down</code>, or <code>lower_right</code> for the screen.
+* <code>origo = center</code> – Sets the origin that the position is measured relative to, such as <code>upper_left</code>, <code>center_down</code>, or <code>lower_right</code> for the element.
+* <code>moveable = yes</code> – If set, the container can be moved by the player with their cursor.
+* <code>fullScreen = yes</code> – If set, the container will be considered to cover the entire screen.
+
+Animation can be assigned to containers with these attributes:
+* <code>show_position = { x = 300 y = 100 }</code> – The screen position where the container will show up to the player after the 'show' animation finishes.
+* <code>hide_position = { x = 100 y = 100 }</code> – The screen position the container aims for during the 'hide' animation.
+* <code>show_animation_type = linear</code> – The animation type used to show the container (<code>decelerated</code> or <code>linear</code>).
+* <code>hide_animation_type = accelerated</code> – The animation type used to hide the container (<code>accelerated</code> or <code>linear</code>).
+* <code>animation_type = decelerated</code> – The animation if both show and hide animations are supposed to be the same (<code>accelerated</code>, <code>decelerated</code>, or <code>linear</code>).
+* <code>animation_time = 1000</code> – The animation time in milliseconds.
+* <code>show_sound = menu_open_window</code> – The [[Sound modding|sound]] to play during the 'show' animation.
+* <code>hide_sound = menu_close_window</code> – The [[Sound modding|sound]] to play during the 'hide' animation.
+* <code>fade_time = 300</code> – The time it takes for the container to fade in, in milliseconds.
+* <code>fade_type = linear</code> – The type of fade in: either <code>accelerated</code> or <code>linear</code>.
+
+=== Scrolling ===
+Scrolling can be done via scrollbars. If scrollbars are enabled, it's also possible to enabled it with dragging the screen. Since the game has to know what should be inside of the container, there are some attributes which must be used in the container. <code>size = { ... }</code> has to be defined using pixels instead of percentage values (for directions where scrolling is enabled) to ensure that it doesn't stretch to fit all elements. <code>clipping = yes</code> should be true (or unset, making it default to true). A <code>background = { ... }</code> also has to be defined for the container, since it establishes the boundaries.
+
+Scrollbars use [[#extendedScrollbarType|extendedScrollbarType]] definitions. If this definition is inside of a container, in which case it will be automatically assigned to the container without needing to assign it manually, however it can't be used for any other container. If the definition is entirely independent, it will not be assigned to any by default, but can be re-used in multiple containers.
+
+In particular, these arguments enable scrolling, assuming the conditions are fulfilled:
+* <code>verticalScrollbar = scrollbar_name</code> assigns an external ExtendedScrollbarType to act as the vertical scrollbar. The scrollbar can't have <code>horizontal = yes</code> in its definition.
+* <code>horizontalScrollbar = scrollbar_name</code> assigns an external ExtendedScrollbarType to act as the horizontal scrollbar. The scrollbar must have <code>horizontal = yes</code> in its definition.
+* <code>drag_scroll = { left middle right }</code> enables drag scrolling. The drag scrolling will only work if there exists a scrollbar for the same axis. The direction represent the mouse button that the scrolling can be done with, however only <code>left</code> seems to work in-game. If there's only one button, it can be shortened as <code>drag_scroll = left</code>.
+
+In addition, there are optional attributes that can be used to refine the scrollbar:
+* <code>margin = { top = 10 bottom = 10 left = 20 right = 20 }</code> is used to determine the margins of the container. These areas will be taken as the border of the window, unaffected by the scrollbar; only what's inside of the margin's border will be modified by the scrollbar.
+* <code>autohide_scrollbars = no</code> – By default, a scrollbar will not appear if it isn't necessary due to all elements being inside of the container's <code>size</code>. If this is set to false, then it will always appear.
+* <code>scroll_wheel_factor = 40</code> determines how much a single mouse scroll will affect the scrollbar.
+* <code>smooth_scrolling = yes</code> enables a smoother scrolling animation.
+
+== scrollbarType ==
+The '''scrollbarType''' is used to define which elements a scrollbar is composed of.
+
+The following attributes are used:
+* '''name''' - The scrollbar name. 
+* '''slider''' - The button element to use as the scrollbar slider.
+* '''track''' - The button element to use as the scrollbar tracker.
+* '''leftbutton''' - The button element to use as the scrollbar left increment button.
+* '''rightbutton''' - The button element to use as the scrollbar right increment button.
+* '''position''' - The screen position of the scrollbar.
+* '''size''' - The bounding box for the scrollbar.
+* '''priority''' - The priority the scrollbar has over other elements.
+* '''borderSize''' - The bounding box for border of the scrollbar.
+* '''maxValue''' - The maximum value the scrollbar moves to (used to control the increments).
+* '''minValue''' - The minimum value the scrollbar moves to (used to control the increments).
+* '''stepSize''' - The size of increments using the increment button.
+* '''startValue''' - The initial size the slider for the scrollbar starts at.
+* '''horizontal''' - Sets whether the scrollbar is horizontal (1) or vertical (0).
+
+== Elements ==
+There are multiple element types used within containers. All elements must be used within containers, they will not work outside of one.
+
+Elements will inherit the orientation of the containers they are located in unless the orientation is specified for the element itself.
+
+The following elements can be freely added and are usable with scripted GUIs.
+* '''iconType''' - Used for static images.
+* '''instantTextBoxType''' - Used for text.
+* '''buttonType''' - Used for buttons
+
+The following elements do rely on internal code. You can add new elements, they will not be populated with data.
+* '''smoothListboxType''' - Used for smooth scrollable lists.
+* '''listboxType''' - Used for scrollable lists.
+* '''checkboxType''' - Used for checkboxes.
+* '''OverlappingElementsBoxType''' - Used for overlapping many elements.
+* '''editBoxType''' - Used for editable textboxes.
+* '''shieldtype''' - Used for to display country flags.
+
+The following elements are legacy:
+* '''guiButtonType''' - Same as ''buttonType''.
+* '''textBoxType''' - Same as ''instantTextBoxType''.
+* '''eu3dialogtype''' - Same as ''windowType''.
+* '''shieldtype''' - Only used within ''eu3dialogtype''. Different elements are used for flags in more recent files.
+
+== iconType ==
+The ''iconType'' element is used to add images to the interface. It's usage overlaps with ''buttonType'', which is similar but operates as a button.
+
+The following attributes are used:
+* '''name''' - The icon name.
+* '''position''' - The screen position of the icon.
+* '''orientation''' - Sets the orientation origin for the ''position'' attribute.
+* '''spriteType''' - The image to use for the icon. Refers to a ''spriteType'' definition.
+* '''quadTextureSprite''' - The image to use for the icon. Refers to a dynamic ''spriteType'' definitions (i.e. flags) or multi-frame ''spriteType'' definitions.
+* '''frame''' - Which frame to use for the icon when using a multi-frame image.
+* '''alwaystransparent''' - Forces the icon to allow click through, i.e. clicking on an element behind another element.
+* '''hint_tag''' - Set the hint key the icon uses to display a hint tooltip with when hovered over.
+* '''pdx_tooltip''' - The tooltip that is shown when hovering over the button.
+* '''pdx_tooltip_delayed''' - Sets the delayed tooltip to display to the player. Takes a localization key.
+* '''centerposition''' - Sets whether the position is from the center of the icon.
+
+== instantTextBoxType ==
+The ''instantTextBoxType'' element is used to add text to the interface. In some instances, the text for the element is generated internally (i.e. ''regiment_count''). In these instances you cannot edit the text unless it is exposed in an localized string.
+
+The following attributes are used:
+* '''name''' - The textbox name.
+* '''position''' - The screen position of the textbox.
+* '''orientation''' - Sets the orientation origin for the ''position'' attribute.
+* '''text''' - The text displayed by the textbox.
+* '''font''' - The font to use for the text.
+* '''maxWidth''' - The total width in pixels at which text is displayed.
+* '''maxHeight''' - The total height in pixels at which text is displayed.
+* '''format''' - How the text is aligned. 
+* '''fixedsize''' - Whether the textbox should truncate text that exceeds its limits.
+* '''borderSize''' - The bounding box for the border of the textbox.
+* '''alwaystransparent''' - Forces the text to allow click through, i.e. clicking on an element behind another element.
+* '''scrollbarType''' - which kind of scrollbar to use (for example standardtext_slider)
+* '''pdx_tooltip''' - Sets the tooltip to display to the player. Takes a localization key.
+* '''pdx_tooltip_delayed''' - Sets the delayed tooltip to display to the player. Takes a localization key.
+
+The following attributes are rarely or never used:
+* '''textureFile''' - Never used for anything.
+
+Valid ''format'' values:
+* left
+* center
+* right
+
+== buttonType ==
+The ''guiButtonType''' element is used to add buttons to the interface. Buttons are composed of an image and text, so they operate in a similar manner to ''iconType'' and ''instantTextBoxType''.
+
+The following attributes are used:
+* '''name''' - The button name.
+* '''position''' - The screen position of the button.
+* '''orientation''' - Sets the orientation origin for the ''position'' attribute.
+* '''spriteType''' - The image to use for the button. Refers to a ''spriteType'' definition.
+* '''quadTextureSprite''' - The image to use for the button. Refers to a dynamic ''spriteType'' definitions (i.e. flags) or multi-frame ''spriteType'' definitions.
+* '''frame''' - Which frame to use for the button when using a multi-frame image.
+* '''alwaystransparent''' - Forces the button to allow click through, i.e. clicking on an element behind another element.
+* '''buttonText''' - The text displayed by the button. 
+* '''buttonFont''' - The font to display the button text in.
+* '''shortcut''' - The shortcut to add for this button.
+* '''clicksound''' - The sound to use when clicked.
+* '''oversound''' - The sound to play when hovered over.
+* '''hint_tag''' - Set the hint key the icon uses to display a hint tooltip with when hovered over.
+* '''pdx_tooltip''' - The tooltip that is shown when hovering over the button.
+* '''pdx_tooltip_delayed''' - Sets the delayed tooltip to display to the player. Takes a localization key.
+* '''scale''' - Scales the button size.
+* '''web_link''' - URL to open in browser
+
+The following attributes are rarely or never used:
+* '''tooltip''' - Never used.
+* '''tooltipText''' - Never used.
+* '''delayedTooltipText''' - Never used.
+
+== smoothListboxType ==
+The ''smoothListboxType'' element is used to define a listbox, which is a scrollable list that is populated with entries. Typically these elements are internally linked with another container, which composes the actual entry used in the list box.
+
+The following attributes are used:
+* '''name''' - The listbox name.
+* '''position''' - The screen position of the listbox.
+* '''orientation''' - Sets the orientation origin for the ''position'' attribute.
+* '''size''' - The bounding box for the listbox.
+* '''spacing''' - The spacing to use between listbox entries.
+* '''horizontal''' - Whether the listbox is horizontal (1) or vertical (0).
+* '''scrollbartype''' - The scrollbar to use for the listbox.
+* '''bordersize''' - The bounding box for the border for the listbox.
+* '''alwaystransparent''' - Forces the listbox to allow click through, i.e. clicking on an element behind another element.
+
+The following attributes are rarely or never used:
+* '''background''' - Never used.
+
+== listboxType ==
+The ''listboxType '' element is used to define a listbox, which is a scrollable list that is populated with entries. Typically these elements are internally linked with another container, which composes the actual entry used in the list box.
+
+The following attributes are used:
+* '''name''' - The listbox name.
+* '''position''' - The screen position of the listbox.
+* '''orientation''' - Sets the orientation origin for the ''position'' attribute.
+* '''size''' - The bounding box for the listbox.
+* '''spacing''' - The spacing to use between listbox entries.
+* '''horizontal''' - Whether the listbox is horizontal (1) or vertical (0).
+* '''scrollbartype''' - The scrollbar to use for the listbox.
+* '''bordersize''' - The bounding box for the border for the listbox.
+* '''alwaystransparent''' - Forces the listbox to allow click through, i.e. clicking on an element behind another element.
+
+The following attributes are rarely or never used:
+* '''background''' - Never used.
+
+== checkboxType ==
+The ''checkboxType '' element is used to add checkboxes to the interface. The actual effect of the checkbox is defined internally.
+
+The following attributes are used:
+* '''name''' - The checkbox name.
+* '''position''' - The screen position of the checkbox.
+* '''orientation''' - Sets the orientation origin for the ''position'' attribute.
+* '''spriteType''' - The image to use for the checkbox. Refers to a ''spriteType'' definition.
+* '''quadTextureSprite''' - The image to use for the checkbox. Refers to a dynamic ''spriteType'' definitions (i.e. flags) or multi-frame ''spriteType'' definitions.
+* '''frame''' - Which frame to use for the checkbox when using a multi-frame image.
+* '''alwaystransparent''' - Forces the checkbox to allow click through, i.e. clicking on an element behind another element.
+* '''buttonText''' - The text displayed by the checkbox. 
+* '''buttonFont''' - The font to display the checkbox text in.
+* '''shortcut''' - The shortcut to add for this checkbox.
+* '''clicksound''' - The sound to use when clicked.
+* '''hint_tag''' - Set the hint key the checkbox uses to display a hint tooltip with when hovered over.
+* '''pdx_tooltip''' - Set the short tooltip this checkbox uses. 
+* '''pdx_tooltip_delayed''' - Set the full tooltip this checkbox uses. 
+* '''scale''' - Scales the checkbox size.
+
+The following attributes are rarely or never used:
+* '''tooltip''' - Never used.
+* '''tooltipText''' - Never used.
+* '''delayedTooltipText''' - Never used.
+
+== editBoxType ==
+The ''editBoxType'' element is used to add editable textboxes to the interface.
+
+The following attributes are used:
+* '''name''' - The textbox name.
+* '''position''' - The screen position of the textbox.
+* '''orientation''' - Sets the orientation origin for the ''position'' attribute.
+* '''text''' - The text displayed by the textbox.
+* '''font''' - The font to use for the text.
+* '''maxWidth''' - The total width in pixels at which text is displayed.
+* '''maxHeight''' - The total height in pixels at which text is displayed.
+* '''format''' - How the text is aligned. 
+* '''fixedsize''' - Whether the textbox should truncate text that exceeds its limits.
+* '''borderSize''' - The bounding box for the border of the textbox.
+* '''alwaystransparent''' - Forces the text to allow click through, i.e. clicking on an element behind another element.
+* '''ignore_tab_navigation''' - Makes the element ignore tab navigation.
+
+== OverlappingElementsBoxType ==
+The ''OverlappingElementsBoxType'' element is used to define a special kind of listbox that dynamically overlaps sub-elements within itself. 
+
+The following attributes are used:
+* '''name''' - The listbox name.
+* '''position''' - The screen position of the listbox.
+* '''orientation''' - Sets the orientation origin for the ''position'' attribute.
+* '''size''' - The bounding box for the listbox.
+* '''spacing''' - The spacing to use between listbox entries.
+* '''horizontal''' - Whether the listbox is horizontal (1) or vertical (0).
+* '''bordersize''' - The bounding box for the border for the listbox.
+* '''alwaystransparent''' - Forces the listbox to allow click through, i.e. clicking on an element behind another element.
+
+The following attributes are rarely or never used:
+* '''textureFile''' - Never used for anything.
+
+Valid ''format'' values:
+* left
+* center
+* right
+
+== Position and orientation ==
+The <code>orientation</code> attribute sets the anchor point of an element. As example, <code>orientation = UPPER_LEFT</code> sets <code>position = { x = 0 y = 0 }</code> to be in the top left corner of the screen or container, and <code>orientation = LOWER_RIGHT</code> sets it to be the bottom right instead.
+
+The <code>position</code> attribute sets the position of an element relatively to its orientation. For example, <code>position = { x = 120 y = 100 }</code> with <code>orientation = UPPER_LEFT</code> will result in the element being 120 pixels to the right and 100 pixels to the bottom relatively to the upper left corner of its container, while <code>orientation = LOWER_RIGHT</code> will result in it being 120 pixels to the left and 100 pixels to the top from the lower right corner.
+
+Valid <code>orientation</code> values (case-insensitive):
+* <code>CENTER</code>
+* <code>CENTER_UP</code> (possibly interchangeable with <code>CENTER_UPPER</code>)
+* <code>CENTER_DOWN</code> (possibly interchangeable with <code>CENTER_LOWER</code>)
+* <code>CENTER_LEFT</code>
+* <code>CENTER_RIGHT</code>
+* <code>UPPER_LEFT</code>
+* <code>LOWER_LEFT</code>
+* <code>UPPER_RIGHT</code>
+* <code>LOWER_RIGHT</code>
+
+== Fonts ==
+''See also: [[Font modding]]''
+
+The following fonts are usable in Hearts of Iron IV:
+* Arial12
+* Arial12_bold
+* cg_16b
+* cg_18b
+* garamond_12
+* garamond_14
+* garamond_14_bold
+* garamond_16
+* garamond_16_bold
+* garamond_24
+* hoi_16mbs
+* hoi_16tooltip3
+* hoi_16typewriter
+* hoi_18
+* hoi_18b
+* hoi_18mbs
+* hoi_20b
+* hoi_20bs
+* hoi_22tech
+* hoi_22typewriter
+* hoi_24header
+* hoi_26mbs
+* hoi_30header
+* hoi_33
+* hoi_36header
+* hoi4_typewriter16
+* hoi4_typewriter22
+* hoi_mapfont4
+* hoi_arrow_font
+* newsfeed_body
+* newsfeed_title
+* standard
+* standard_18
+* standard_22
+* tahoma_20_bold
+* vic_18
+* vic_18_grey
+* vic_18s
+* vic_22
+* vic_22_bl
+* vic_22s
+* vic_36
+* vic_36s
+
+
+{{Modding navbox}}
+[[Category:Modding]]

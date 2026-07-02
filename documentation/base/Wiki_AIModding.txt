@@ -1,0 +1,1536 @@
+{{version|1.11}}
+
+The artificial intelligence controlling countries in Hearts of Iron IV can be changed in many different aspects. This includes changing the focuses or technologies it pursues, changing how many units or buildings it should produce and of which type, where it should focus forces, which templates or variants it should aim for, and so on.
+
+__TOC__
+
+== MTTH blocks ==
+{{anchor|ai_will_do}}
+{{anchor|AI_will_do}}
+{{anchor|AI_chance}}
+{{SVersion|Timeless}}
+MTTH blocks, named in the game within {{path|common/mtth/}}, are a way to assign a dynamic value to some block, whether it's a [[National focus modding#Focus tree|country = { ... } in a focus tree to assign which countries can get it]], a dynamically-changing variable value (as in {{path|common/mtth/}}), a [[Event modding#Triggering|mean-time-to-happen value for an event]], et cetera. As MTTH blocks are spread throughout the entire game, it's incredibly important to know how one works. Its most common application, however, is assigning a base AI weight to a database entry such as a national focus or a technology.
+
+In most cases, marked with ai_will_do, the approach taken by the game is generating a decimal number between 0 and the value of the ai_will_do block, and picking the entry with the highest value. There can be other modifiers applied after the ai_will_do value, such as the ones applied within [[#AI strategy plans|AI strategy plans]] towards focuses and research or {{hover|When modifying defines, never copy over the entire 00_defines.lua file, but use overrides as specified within the corresponding article. Otherwise may lead to crashes, as even 'minor' updates commonly add new defines which'll not be in the mod if the entire file is copied.|the ones that get defined within [[Defines]]}}, which'll multiply the value you get. This can include different ai_will_do values such as what's done with country leader traits and with ideas or characters that use them.<br/>
+Event options, instead, use ai_chance, which uses [[wp:Sampling_(statistics)#Probability-proportional-to-size_sampling|probability-proportional-to-size sampling]] with a virtual roll of d00 being the final deciding factor. Due to that, in the end, an event option cannot have a probability which isn't a multiple of 1/100 to be picked, although the total sum of each option's weights can be vastly different from 100. In other words, if one option has a value of 1, while the other has a value of 999, the probability for the first option to be picked will be 1% rather than 0.1%.
+
+A MTTH block begins with an assumed value of 1. Further manipulations are done from that value as a starting point. There are 3 value-modifying arguments that can be done, <code>add</code>, <code>base</code>, and <code>factor</code>, done like <code>factor = 0.3</code>, <code>base = 10</code>, or <code>add = 5</code>. <code>add</code> adds the specified argument to the value, <code>factor</code> ''multiplies'' it, and <code>base</code>, typically done in the start before any changes, sets it to a different number entirely, akin to multiplying by 0 and adding the number.<br/>
+In order for an operation to apply conditionally, a <code>modifier = { ... }</code> block is used. This also functions as a [[conditions|trigger block]], with the default scope (thus also ROOT) being the country for which the MTTH block is evaluated. Depending on the MTTH block, [[Decision modding#Targeted decisions|there may be additional scopes marked with FROM]] [[#AI peace|or FROM.FROM other than the default.]] The value-modifying arguments function as regular arguments, they can be put in anywhere directly within the <code>modifier = { ... }</code> block with almost no difference, whether it's in the end, the beginning, or between triggers.
+
+[[Variables]] can be used within the value-modifying arguments as well. If using a temporary variable that is defined within the <code>modifier = { ... }</code> trigger block, then the value-modifying argument of the modifier has to be after the definition of the variable in order for the variable to apply as defined. Variables can also be used outside of the <code>modifier = { ... }</code> block and directly inside of the MTTH block itself.
+
+=== Example ===
+<pre>
+ai_will_do = {
+    base = 10.5
+
+    # If the country is Germany, set the value to 0,
+    # causing an early end of the evaluation.
+    modifier = { tag = GER factor = 0 }
+    modifier = { is_major = yes add = 1 }
+    modifier = {
+        factor = 3
+        add = 2.5
+        tag = FRA
+    }
+    factor = 2
+
+    modifier = {
+        set_temp_variable = { t = num_of_civilian_factories }
+        add_to_temp_variable = { t = num_of_military_factories }
+        divide_temp_variable = { t = 10 }
+        round_temp_variable = t
+        add = t
+    }
+}</pre>
+Assuming that GER and FRA are major countries, the result is
+* 0 for GER: <math>10.5 \cdot 0 = 0</math>
+* 74 for FRA: <math>((10.5 + 1) \cdot 3 + 2.5) \cdot 2 = 74</math>
+* 23 for other majors: <math>(10.5 + 1) \cdot 2 = 23</math>
+* 21 for minors: <math>10.5 \cdot 2 = 21</math>
+After calculating that value, the total number of civilian and military factories within the country, divided by 10 and rounded, will get added to the score. If FRA has a total of 43 civilian and military factories as it does in base game, then this will result in 4 being added to the prior 74 for a total of 78, for example.
+
+== AI strategies ==
+{{SVersion|1.11}}
+AI strategies are used in order to pursue AI to do or avoid something. This includes diplomatic actions the AI will do, where and how exactly AI should focus and use its land army and the navy, the production lines for buildings and equipment, how AI should handle the intelligence system within the {{icon|lar|1}} DLC.<br/>
+A value within an AI strategy can be either positive or negative, and it being negative will make AI desire to do it less.
+
+Regular AI strategies are stored in {{path|common/ai_strategy/*.txt}} files, however, AI strategies may be defined outside of that file. The [[Effect#add_ai_strategy|add_ai_strategy effect]] can add a permament AI strategy within any effect block, and [[#AI strategy plans|AI strategy plans]] can also include AI strategies defined within of themselves. Overall, {{path|common/ai_strategy/*.txt}} files describe AI strategies that would enable and disable themselves automatically.<br/>
+Each entry within a {{path|common/ai_strategy/*.txt}} file is a block with the name of the AI strategy. This name can be anything, even allowing overlap between them: this will only appear in AI dumps and the player will never see it. If an AI strategy modifies the chance for AI to pick a diplomatic option with the player, it will be seen as <code>COUNTRY has strategic reasons to be ...</code> to the player when hovering over the option. This is an example of an AI strategy with the name of BHR_invade_qatar:
+<pre>BHR_invade_qatar = {
+    allowed = {
+        original_tag = BHR
+    }
+    enable = {
+        country_exists = QAT
+    }
+    abort = {
+        has_war_with = QAT
+    }
+    abort_when_not_enabled = yes
+    ai_strategy = {
+        type = invade
+        id = QAT
+        value = 200
+    }
+}</pre>
+
+=== Arguments ===
+These in particular are arguments for {{path|common/ai_strategy/*.txt}} entries, rather for AI strategy entries within them.
+
+<code>allowed = { ... }</code> is a trigger block that's '''checked only before the game's start''', permamently allowing or disallowing an AI strategy. Typically, only used for country checks (such as <code>tag = OMA</code>) or DLC checks that can never be unfulfilled once they are met.
+
+<code>enable = { ... }</code> is a trigger block that must be met in order to enable the AI strategy. By default, this being unmet will ''not'' cancel the AI strategy. However, <code>abort_when_not_enabled = yes</code> can be used as a separate argument in order to make that be no longer the case. Unlike allowed, this is checked continuously.
+
+<code>abort = { ... }</code> is a trigger block that must be met in order to ''remove'' the AI strategy. It being unmet also prevents it from being added in the first place.
+
+<code>ai_strategy = { ... }</code> is, itself, the AI strategy that would be applied. The only argument shared for every AI strategy is <code>type = <AI strategy type></code>. [[#Types|The rest depends on the AI strategy]].
+
+In addition, reversed AI strategies exist. These are used with AI strategies that use <code>id = TAG</code> to target towards a specific country to swap it around: that strategy will be enabled for TAG towards the country which meets <code>enable = { ... }</code>. In order to mark the AI strategy as reversed, <code>reversed = yes</code> is used. <code>enable_reverse = { ... }</code> is an additional trigger block required to ''enable'' this AI strategy. It does not have a default scope, so scoping into a country is required.<br/>
+An example of a reversed AI strategy is the following:
+<pre>BHR_support_neutrals = {
+    allowed = {
+        NOT = { original_tag = BHR }
+    }
+    enable = {
+        has_government = neutrality
+    }
+    enable_reverse = {
+        BHR = { has_government = neutrality }
+    }
+    reversed = yes
+    abort_when_not_enabled = yes
+    ai_strategy = {
+        type = support
+        id = BHR
+        value = 100
+    }
+}</pre>Without <code>reversed = yes</code>, this would make every {{icon|non-aligned|1}} country support BHR. Due to that argument, the strategy is reversed: instead, BHR supports every {{icon|non-aligned|1}} country.
+
+=== Types ===
+{{SVersion|1.11}}
+This list may be outdated. A list of every AI strategy can be found within base game's {{path|common/ai_strategy/documentation.info}} file.<br/>
+{| class="wikitable sortable mw-collapsible mw-collapsed" style="display: inline-block; padding: 5px" width="100%"
+|+ style="text-align: center;" width = "100%" |{{nowrap|AI strategies related to diplomatic actions:}}
+! width="10%" |Name
+! width="25%" |Parameters
+! width="25%" |Examples
+! width="20%" |Description
+! width="20%" |Notes
+|-id="alliance"
+|alliance
+|<code>value = <int></code><br/>The weight of the strategy.<br/>
+<code>id = <country></code><br/>The target of the strategy.
+|<pre>ai_strategy = {
+    type = alliance
+    id = USA
+    value = -100
+}</pre>
+|Pursues AI to ally with a country, joining the same faction if possible.
+|
+|-id="antagonize"
+|antagonize
+|<code>value = <int></code><br/>The weight of the strategy.<br/>
+<code>id = <country></code><br/>The target of the strategy.
+|<pre>ai_strategy = {
+    type = antagonize
+    id = USA
+    value = -100
+}</pre>
+|Pursues AI to antagonize a country, refusing most diplomatic actions with them.
+|
+|-id="asking_foreign_garrison"
+|asking_foreign_garrison
+|<code>value = <int></code><br/>The weight of the strategy.<br/>
+<code>id = <country></code><br/>The target of the strategy.
+|<pre>ai_strategy = {
+    type = asking_foreign_garrison
+    id = USA
+    value = 100
+}</pre>
+|Pursues AI to ask for foreign manpower to fulfill garrisons, from a specific country if specified.
+|If <code>id</code> is not specified, will apply towards every other country.
+|-id="befriend"
+|befriend
+|<code>value = <int></code><br/>The weight of the strategy.<br/>
+<code>id = <country></code><br/>The target of the strategy.
+|<pre>ai_strategy = {
+    type = befriend
+    id = USA
+    value = 100
+}</pre>
+|Pursues AI to befriend a country, accepting most diplomatic actions with them.
+|
+|-id="conquer"
+|conquer
+|<code>value = <int></code><br/>The weight of the strategy.<br/>
+<code>id = <country></code><br/>The target of the strategy.
+|<pre>ai_strategy = {
+    type = conquer
+    id = USA
+    value = 100
+}</pre>
+|Pursues AI to conquer a country, being more likely to declare war and justify wargoals.
+|This does ''not'' change how the AI will control frontlines when at war with that country.
+|-id="consider_weak"
+|consider_weak
+|<code>value = <int></code><br/>The weight of the strategy.<br/>
+<code>id = <country></code><br/>The target of the strategy.
+|<pre>ai_strategy = {
+    type = consider_weak
+    id = USA
+    value = 100
+}</pre>
+|Pursues AI to consider a country more weak, decreasing hesitation for declaration of war or making alliance less likely.
+|
+|-id="contain"
+|contain
+|<code>value = <int></code><br/>The weight of the strategy.<br/>
+<code>id = <country></code><br/>The target of the strategy.
+|<pre>ai_strategy = {
+    type = contain
+    id = USA
+    value = 100
+}</pre>
+|Pursues AI to contain a country, protecting any countries that it would try to antagonize or invade.
+|
+|-id="declare_war"
+|declare_war
+|<code>value = <int></code><br/>The weight of the strategy.<br/>
+<code>id = <country></code><br/>The target of the strategy.
+|<pre>ai_strategy = {
+    type = declare_war
+    id = USA
+    value = 100
+}</pre>
+|Pursues AI to declare war on a country if a wargoal already exists.
+|
+|-id="diplo_action_acceptance"
+|diplo_action_acceptance
+|<code>value = <int></code><br/>The weight of the strategy.<br/>
+<code>id = <country></code><br/>The target of the strategy.<br/>
+<code>target = <diplomatic action></code><br/>The diplomatic action to modify.
+|<pre>ai_strategy = {
+    type = diplo_action_acceptance
+    id = USA
+    value = 100
+    target = join_allies
+}</pre>
+|Pursues AI to accept a diplomatic action if a different country requests it.
+|AI will not be more likely to propose the diplomatic action in question. Names of diplomatic actions can usually be found from localisation keys used for the title, most of the time yet not always in the {{path|localisation/english/diplomacy_l_english.yml}} file: <code>DIPLOMACY_SEND_VOLUNTEERS_TITLE:0 "Send Volunteers"</code> means that the name of the diplomatic action for sending volunteers is <code>send_volunteers</code>.
+|-id="diplo_action_desire"
+|diplo_action_desire
+|<code>value = <int></code><br/>The weight of the strategy.<br/>
+<code>id = <country></code><br/>The target of the strategy.<br/>
+<code>target = <diplomatic action></code><br/>The diplomatic action to modify.
+|<pre>ai_strategy = {
+    type = diplo_action_desire
+    id = USA
+    value = 100
+    target = call_allies
+}</pre>
+|Pursues AI to request a diplomatic action towards the specified country.
+|AI will not be more likely to accept the diplomatic action in question if it gets proposed to them. Names of diplomatic actions can usually be found from localisation keys used for the title, most of the time yet not always in the {{path|localisation/english/diplomacy_l_english.yml}} file: <code>DIPLOMACY_SEND_VOLUNTEERS_TITLE:0 "Send Volunteers"</code> means that the name of the diplomatic action for sending volunteers is <code>send_volunteers</code>.
+|-id="dont_join_wars_with"
+|dont_join_wars_with
+|<code>value = <int></code><br/>The weight of the strategy.<br/>
+<code>id = <country></code><br/>The target of the strategy.<br/>
+<code>target_country = <country></code><br/>The country against whom the war is joined.
+|<pre>ai_strategy = {
+    type = dont_join_wars_with
+    id = USA
+    value = 100
+    target_country = BHR
+}</pre>
+|Pursues AI to be less likely to join a war together with a specified country against a specific one.
+|Does not make AI less likely to join a war together with a ''different'' country against target_country, even if it'll result in fighting against target_country together with the specified country.
+|-id="ignore"
+|ignore
+|<code>value = <int></code><br/>The weight of the strategy.<br/>
+<code>id = <country></code><br/>The target of the strategy.
+|<pre>ai_strategy = {
+    type = ignore
+    id = USA
+    value = 100
+}</pre>
+|Pursues AI to be less likely to accept or desire any sort of diplomatic action with this country.
+|
+|-id="ignore_claim"
+|ignore_claim
+|<code>value = <int></code><br/>The weight of the strategy.<br/>
+<code>id = <country></code><br/>The target of the strategy.
+|<pre>ai_strategy = {
+    type = ignore_claim
+    id = USA
+    value = 1
+}</pre>
+|Pursues AI to ignore any claims that it has on the specified country.
+|The value is boolean, just set to be 1.
+|-id="protect"
+|protect
+|<code>value = <int></code><br/>The weight of the strategy.<br/>
+<code>id = <country></code><br/>The target of the strategy.
+|<pre>ai_strategy = {
+    type = protect
+    id = USA
+    value = 100
+}</pre>
+|Pursues AI to protect a certain country, guaranteeing them or adding to the same faction.
+|A negative total value (taking every AI strategy into consideration) results in AI never guaranteeing that country.
+|-id="support"
+|support
+|<code>value = <int></code><br/>The weight of the strategy.<br/>
+<code>id = <country></code><br/>The target of the strategy.
+|<pre>ai_strategy = {
+    type = support
+    id = USA
+    value = 100
+}</pre>
+|Pursues AI to support a certain country within wars, sending lend lease, volunteers, or expeditionary forces.
+|
+|-id="send_lend_lease_desire"
+|send_lend_lease_desire
+|<code>value = <int></code><br/>The weight of the strategy.<br/>
+<code>id = <country></code><br/>The target of the strategy.
+|<pre>ai_strategy = {
+    type = send_lend_lease_desire
+    id = USA
+    value = 100
+}</pre>
+|Pursues AI to lend-lease equipment to the specified country.
+|
+|-id="send_volunteers_desire"
+|send_volunteers_desire
+|<code>value = <int></code><br/>The weight of the strategy.<br/>
+<code>id = <country></code><br/>The target of the strategy.
+|<pre>ai_strategy = {
+    type = send_volunteers_desire
+    id = USA
+    value = 100
+}</pre>
+|Pursues AI to send volunteers to the specified country.
+|
+|}
+{| class="wikitable sortable mw-collapsible mw-collapsed" style="display: inline-block; padding: 5px" width="100%"
+|+ style="text-align: center;" width = "100%" |{{nowrap|AI strategies related to land army management:}}
+! width="10%" |Name
+! width="25%" |Parameters
+! width="25%" |Examples
+! width="20%" |Description
+! width="20%" |Notes
+|-id="invade"
+|invade
+|<code>value = <int></code><br/>The weight of the strategy.<br/>
+<code>id = <country></code><br/>The target of the strategy.
+|<pre>ai_strategy = {
+    type = invade
+    id = USA
+    value = -100
+}</pre>
+|Pursues AI to do naval invasions against the specified country.
+|
+|-id="naval_invasion_focus"
+|naval_invasion_focus
+|<code>value = <int></code><br/>The weight of the strategy.
+|<pre>ai_strategy = {
+    type = naval_invasion_focus
+    value = 100
+}</pre>
+|Pursues AI to launch naval invasions.
+|-id="prepare_for_war"
+|prepare_for_war
+|<code>value = <int></code><br/>The weight of the strategy.<br/>
+<code>id = <country></code><br/>The target of the strategy.
+|<pre>ai_strategy = {
+    type = prepare_for_war
+    id = USA
+    value = 100
+}</pre>
+|Pursues AI to prepare for a war against a specified country, moving troops to their border.
+|
+|-id="area_priority"
+|area_priority
+|<code>value = <int></code><br/>The weight of the strategy.<br/>
+<code>id = <AI area></code><br/>The [[#AI areas|AI area]] to prioritise.
+|<pre>ai_strategy = {
+    type = area_priority
+    id = europe
+    value = 100
+}</pre>
+|Pursues AI to put more units within the specified AI area.
+|
+|-
+|strategic_air_importance
+|<code>id = <strategic_region></code><br />The [[strategic region]] to consider
+<code>value = <int></code><br />The score added or substracted.<br />
+|<pre>ai_strategy = {
+    type = strategic_air_importance
+    id = 18 #English Channel
+    value = -30000
+}</pre>
+|Modifies the total 'Strategic Importance' score of the specified [[Strategic region|region]] that the AI uses to prioritize where to perform [[Air missions|Air Missions]].
+|
+* ID of the strategic regions can be found [[Strategic region|here]], in {{path|map/strategicregions/*.txt}} files, or alternatively in the game using [[Console commands|console command]] ''tdebug'' and hovering a mouse over the specific region while in the 'Default' map mode.
+* Current 'Strategic Importance' AI score can be found in the game using [[Console commands|console command]] ''aiview'' , while in the 'observe mode' and hovering a mouse over the desired air zone, while using the 'Strategic Air' map mode. The score shown is for the currently selected TAG. AI wants to do air missions in the regions with the highest scores, and none in the regions with low or negative score.
+* AI score numbers are large, in higher dozens of thousands or lower hundreds of thousands, so appropriate values need to be used to have any visible effect on the AI.
+|-id="dont_defend_ally_borders"
+|dont_defend_ally_borders
+|<code>value = <int></code><br/>The weight of the strategy.<br/>
+<code>id = <country></code><br/>The target of the strategy.
+|<pre>ai_strategy = {
+    type = dont_defend_ally_borders
+    id = POL
+    value = 10
+}</pre>
+|Makes AI never put troops on the border between the specified country and countries that are at war with it.
+|Strictly binary. If the total value (taking every AI strategy into consideration) is positive, AI will never put any troops on the border.
+|-id="force_defend_ally_borders"
+|force_defend_ally_borders
+|<code>value = <int></code><br/>The weight of the strategy.<br/>
+<code>id = <country></code><br/>The target of the strategy.
+|<pre>ai_strategy = {
+    type = force_defend_ally_borders
+    id = FRA
+    value = 100
+}</pre>
+|Pursues AI to put troops on the border between the specified country and countries that are at war with it.
+|Also accepts [[#AI areas|AI areas]] within <code>id</code>.
+|-id="front_armor_score"
+|front_armor_score
+|<code>value = <int></code><br/>The weight of the strategy.<br/>
+<code>id = <country></code><br/>The target of the strategy.
+|<pre>ai_strategy = {
+    type = front_armor_score
+    id = POL
+    value = 100
+}</pre>
+|Pursues AI to put more tank units for invading the specified country.
+|
+|-id="front_control"
+|front_control
+|<code>state = <state></code><br/>The state to target.<br/>
+<code>tag = <country></code><br/>The country to target.<br/>
+<code>strategic_region = <ID></code><br/>The strategic region to target.<br/>
+<code>area = <area></code><br/>The [[#AI areas|AI area]] to target.<br/>
+<code>country_trigger = { ... }</code><br/>Trigger block checked for states to have them as a target.<br/>
+<code>state_trigger = { ... }</code><br/>Trigger block checked for countries to have them as a target.
+
+<code>ratio = <decimal></code><br/>How much of a frontline ratio the specified front must have '''as a requirement to enable the strategy'''. Defaults to 0.<br/>
+<code>priority = <integer></code><br/>Sets the priority of this front control strategy. If there are contradictory front control strategies, the one with a higher priority is followed.<br/>
+<code>ordertype = <front|invasion></code><br/>If set, this will make the AI strategy only apply on land frontlines or naval invasions respectively.<br/>
+<code>execution_type = <careful|balanced|rush|rush_weak></code><br/>If set, this pursues AI to make the frontline plans have the set execution type. Only for front.<br/>
+<code>execute_order = <bool></code><br/>If set, makes AI to either force execute the frontline order or force it being never executed.<br/>
+<code>manual_attack = <bool></code><br/>If set to false, prevents AI from doing small engagements that are not a part of a frontline plan. Defaults to true, only for front.
+|<pre>ai_strategy = {
+    type = front_control
+    state_trigger = {
+        industrial_complex > 1
+        is_owned_by = ENG
+    }
+    ratio = 0.1
+    ordertype = front
+    execution_type = rush
+    manual_attack = no
+}</pre>
+<pre>ai_strategy = {
+    type = front_control
+    area = suez
+    priority = 1
+    ratio = 0.2
+    ordertype = invasion
+    execute_order = yes
+}</pre>
+|Modifies the orders that AI would give to divisions on a specified frontline.
+|More than one target type can be used at a time, in which case each one must be met. This only changes the orders assigned to an already-existing frontline, this will not change the amount of units assigned to any particular front or force any to be created.
+|-
+|force_concentration_front_factor
+|<code>tag = <country></code><br />The country to target. Multiple can be specified.
+<code>state = <state></code><br />The state to target. Multiple can be specified.<br /><code>strategic_region = <ID></code><br />The strategic region to target. Multiple can be specified.<br /><code>area = <area></code><br />The [[#AI areas|AI area]] to target. Multiple can be specified.<br /><code>country_trigger = { ... }</code><br />Trigger block checked for countries.
+Scope is enemy country, FROM scope is our country.<br /><code>state_trigger = { ... }</code><br />Trigger block checked for states. 
+
+Scope is state. FROM scope is enemy country FROM.FROM scope is our country.
+
+<code>ratio = <decimal></code><br />The strategy is enabled only if ratio of the front covered by this strategy's targets is greater than this ratio.<br /><code>value = <int></code><br />Factor for the normal priority. 40 means +40 %, -60 means -60 %.
+|<pre>ai_strategy = {
+    type = force_concentration_front_factor
+
+    tag = CZE
+    state = 9
+    strategic_region = 22
+    ratio = 0.2
+
+    value = 40
+}</pre>
+|Used for increasing/decreasing priority score for AI force concentration on specified fronts.
+|All the arguments are optional, only one needs to be specified.
+AI primarily assigns units with 'armor' , 'heavy_armor' and 'mechanized_assault' unit roles to the attack.
+|-
+|force_concentration_factor
+|<code>value = <int></code><br />The percentage value added or substracted.
+|<pre>ai_strategy = {
+    type = force_concentration_factor
+    value = 20
+}</pre>
+|Factor added on top of the default force concentration ratio.
+Value of 20 means +20 %, so if the base define is 15 % the result would be 35 %.
+|See FORCE_CONCENTRATION_UNIT_RATIO_BASE in the [[defines]].
+A large negative value stops AI from using Force Concentration anywhere.
+|-
+|force_concentration_target_weight
+|<code>tag = <country></code><br />The country to target. Multiple can be specified.
+<code>state = <state></code><br />The state to target. Multiple can be specified.<br /><code>strategic_region = <ID></code><br />The strategic region to target. Multiple can be specified.<br /><code>area = <area></code><br />The [[#AI areas|AI area]] to target. Multiple can be specified.<br /><code>country_trigger = { ... }</code><br />Trigger block checked for countries.
+Scope is enemy country, FROM scope is our country.<br /><code>state_trigger = { ... }</code><br />Trigger block checked for states. 
+
+Scope is state. FROM scope is enemy country FROM.FROM scope is our country.
+
+<br /><code>value = <int></code><br />Factor for the normal priority. 40 means +40 %, -60 means -60 %.
+|<pre>ai_strategy = {
+# As Germany - Avoid attacking the areas behind the Maginot line
+    type = force_concentration_target_weight
+    state = 18 # Champagne
+    state = 17 # Franche-Comte
+    state = 28 # Alsace-Lorraine
+    state = 27 # Bourgogne
+
+    value = -60
+}</pre>
+|Affects the score for offensive targets for AI Force Concentration.
+|All the arguments are optional, only one needs to be specified.
+|-id="front_unit_request"
+|front_unit_request
+|<code>state = <state></code><br/>The state to target.<br/>
+<code>tag = <country></code><br/>The state to target.<br/>
+<code>strategic_region = <ID></code><br/>The strategic region to target.<br/>
+<code>area = <state></code><br/>The [[#AI areas|AI area]] to target.<br/>
+<code>country_trigger = { ... }</code><br/>Trigger block checked for states to have them as a target.<br/>
+<code>state_trigger = { ... }</code><br/>Trigger block checked for countries to have them as a target.
+
+<code>value = <int></code><br/>The weight of the strategy.
+|<pre>ai_strategy = {
+    type = front_unit_request
+    tag = POL
+    value = 100
+}</pre>
+<pre>ai_strategy = {
+    type = front_unit_request
+    country_trigger = {
+        original_tag = SPR
+        has_government = fascism
+    }
+    value = 100
+}</pre>
+|Pursues AI to put more (or less - if negative value is used) units on a specified land frontline.
+|More than one target type can be used at a time, in which case each one must be met.
+|-id="invasion_unit_request"
+|invasion_unit_request
+|<code>state = <state></code><br/>The state to target.<br/>
+<code>tag = <country></code><br/>The state to target.<br/>
+<code>strategic_region = <ID></code><br/>The strategic region to target.<br/>
+<code>area = <state></code><br/>The [[#AI areas|AI area]] to target.<br/>
+<code>country_trigger = { ... }</code><br/>Trigger block checked for states to have them as a target.<br/>
+<code>state_trigger = { ... }</code><br/>Trigger block checked for countries to have them as a target.
+
+<code>value = <int></code><br/>The weight of the strategy.
+|<pre>ai_strategy = {
+    type = invasion_unit_request
+    state = 123
+    value = 100
+}</pre>
+<pre>ai_strategy = {
+    type = invasion_unit_request
+    strategic_region = 42
+    value = 100
+}</pre>
+|Pursues AI to put more units on a naval invasion with the specified target.
+|More than one target type can be used at a time, in which case each one must be met.
+|-id="garrison"
+|garrison
+|<code>value = <int></code><br/>The weight of the strategy.
+|<pre>ai_strategy = {
+    type = garrison
+    value = 10
+}</pre>
+|Controls the amount of units spent on defending the victory points and ports rather than being active on the frontline.
+|
+|-id="garrison_reinforcement_priority"
+|garrison_reinforcement_priority
+|<code>value = <int></code><br/>The weight of the strategy.
+|<pre>ai_strategy = {
+    type = garrison_reinforcement_priority
+    value = 100
+}</pre>
+|Pursues AI to reinforce units that are put on garrisons, protecting victory points and naval bases, with higher priority.
+|
+|-id="ignore_army_incompetence"
+|ignore_army_incompetence
+|<code>value = <int></code><br/>The weight of the strategy.
+|<pre>ai_strategy = {
+    type = ignore_army_incompetence
+    value = 100
+}</pre>
+|Pursues AI to ignore the modifier given by the lack of experience of divisions in calculations.
+|
+|-id="put_unit_buffers"
+|put_unit_buffers
+|<code>ratio = <decimal></code><br/>The amount of units to buffer.<br/>
+<code>order_id = 2</code><br/> If two put_unit_buffers strategies use the same ID, the ratio used for them will be shared rather than them being added together.<br/>
+<code>states = { ... }</code><br/> List of states where to buffer units<br/>
+<code>area = <AI area></code><br/> The AI area where to buffer units.<br/>
+<code>subtract_invasions_from_need = yes</code><br/> If true, naval invasions within the area will not count towards the ratio. Defaults to false.<br/>
+<code>subtract_fronts_from_need = yes</code><br/> If true, land frontlines within the area will not count towards the ratio. Defaults to false.
+|<pre>ai_strategy = {
+    type = put_unit_buffers
+    ratio = 0.2
+    states = {
+        123
+        124
+        125
+        126
+    }
+    subtract_fronts_from_need = yes
+}</pre>
+|Pursues AI to keep a certain ratio of divisions on garrison duty in the specified area.
+|
+|-id="spare_unit_factor"
+|spare_unit_factor
+|<code>value = <int></code><br/>The weight of the strategy.
+|<pre>ai_strategy = {
+    type = spare_unit_factor
+    value = 100
+}</pre>
+|Pursues AI to spare more units towards defending allies.
+|-id="theatre_distribution_demand_increase"
+|theatre_distribution_demand_increase
+|<code>value = <int></code><br/>The weight of the strategy.<br/>
+<code>id = <state></code><br/>The target of the strategy.<br/>
+|<pre>ai_strategy = {
+    type = theatre_distribution_demand_increase
+    value = 10
+    id = 123
+}</pre>
+|Pursues AI to put more units in the specified state's theater.
+|A value of 1 translates to 1 unit.
+|}
+{| class="wikitable sortable mw-collapsible mw-collapsed" style="display: inline-block; padding: 5px" width="100%"
+|+ style="text-align: center;" width = "100%" |{{nowrap|AI strategies related to navy management:}}
+! width="10%" |Name
+! width="25%" |Parameters
+! width="25%" |Examples
+! width="20%" |Description
+! width="20%" |Notes
+|-id="naval_avoid_region"
+|naval_avoid_region
+|<code>value = <int></code><br/>The weight of the strategy.<br/>
+<code>id = <strategic region></code><br/>The target of the strategy.
+|<pre>ai_strategy = {
+    type = naval_avoid_region
+    id = 23
+    value = 100
+}</pre>
+|Pursues AI to avoid a specific strategic region with its ships.
+|
+|-id="naval_convoy_raid_region"
+|naval_convoy_raid_region
+|<code>value = <int></code><br/>The weight of the strategy.<br/>
+<code>id = <strategic region></code><br/>The target of the strategy.
+|<pre>ai_strategy = {
+    type = naval_convoy_raid_region
+    id = 23
+    value = 100
+}</pre>
+|Pursues AI to raid convoys within the specified strategic region.
+|
+|-id="naval_mission_threshold"
+|naval_mission_threshold
+|<code>value = <int></code><br/>The weight of the strategy.<br/>
+<code>id = <mission></code><br/>The mission to change the threshold of.
+|<pre>ai_strategy = {
+    type = naval_mission_threshold
+    id = MISSION_CONVOY_RAIDING
+    value = -100
+}</pre>
+|Makes AI have a higher threshold for its desire to do a naval mission.
+|A higher value means AI is less likely to do the mission. Names of missions can be found in {{path|localisation/english/core_l_english.yml}}, where a localisation key of <code>NAVAL_MISSION_NAME_CONVOY_RAIDING</code> means the mission is called <code>MISSION_CONVOY_RAIDING</code>
+|-id="strike_force_home_base"
+|strike_force_home_base
+|<code>value = <int></code><br/>The weight of the strategy.<br/>
+<code>id = <strategic region></code><br/>The target of the strategy.
+|<pre>ai_strategy = {
+    type = strike_force_home_base
+    id = 18
+    value = 70
+}</pre>
+|Pursues AI to do the strike force mission within the specified strategic region.
+|
+|}
+{| class="wikitable sortable mw-collapsible mw-collapsed" style="display: inline-block; padding: 5px" width="100%"
+|+ style="text-align: center;" width = "100%" |{{nowrap|AI strategies related to intelligence:}}
+! width="10%" |Name
+! width="25%" |Parameters
+! width="25%" |Examples
+! width="20%" |Description
+! width="20%" |Notes
+|-id="agency_ai_base_num_factories_factor"
+|agency_ai_base_num_factories_factor
+|<code>value = <int></code><br/>The weight of the strategy.
+|<pre>ai_strategy = {
+    type = agency_ai_base_num_factories_factor
+    value = 70
+}</pre>
+|Changes the baseline used in the calculation of AI doing agency upgrades.
+|A value of 1 equals to a 1% increase over the baseline in [[Defines]].
+|-id="agency_ai_per_upgrade_factories_factor"
+|agency_ai_per_upgrade_factories_factor
+|<code>value = <int></code><br/>The weight of the strategy.
+|<pre>ai_strategy = {
+    type = agency_ai_per_upgrade_factories_factor
+    value = 70
+}</pre>
+|Modifies the needed amount of factories used in the calculation of AI doing agency upgrades.
+|A value of 1 equals to a 1% increase over the baseline in [[Defines]].
+|-id="intelligence_agency_branch_desire_factor"
+|intelligence_agency_branch_desire_factor
+|<code>value = <int></code><br/>The weight of the strategy.<br/>
+<code>id = <branch></code><br/>The target of the strategy.
+|<pre>ai_strategy = {
+    type = intelligence_agency_branch_desire_factor
+    id = branch_crypto
+    value = 70
+}</pre>
+|Modifies the needed amount of factories used in the calculation of AI doing agency upgrades.
+|Branches are defined in {{path|common/intelligence_agency_upgrades/*.txt}} files.
+|-id="intelligence_agency_usable_factories"
+|intelligence_agency_usable_factories
+|<code>value = <int></code><br/>The weight of the strategy.
+|<pre>ai_strategy = {
+    type = intelligence_agency_usable_factories
+    value = 8
+}</pre>
+|Modifies the amount of factories that AI would use for intelligence agencies.
+|
+|-id="operation_equipment_priority"
+|operation_equipment_priority
+|<code>value = <int></code><br/>The weight of the strategy.
+|<pre>ai_strategy = {
+    type = operation_equipment_priority
+    value = 80
+}</pre>
+|Pursues the AI to prioritise equipment for funding operations over other usages.
+|
+|-id="operative_mission"
+|operative_mission
+|<code>value = <int></code><br/>The weight of the strategy.<br/>
+<code>mission = <mission></code><br/>The mission to prioritise<br/>
+<code>mission_target = <country></code><br/>The country to target<br/>
+<code>state = <state></code><br/>The state to prioritise within the target country if valid. Optional.<br/>
+<code>priority = <int></code><br/>If contradictory AI strategies are defined, the one with the highest priority is picked.
+|<pre>ai_strategy = {
+    type = operative_mission
+    value = 80
+    mission = quiet_intel_network
+    state = 123
+    state = 321
+    mission_target = ENG
+}</pre>
+|Pursues the AI to do the specified mission over the target.
+|Multiple states can be defined, leading to one of them being prioritised. Mission names can be seen in {{path|localisation/english/operatives_l_english.yml}}. For example, <code>OPERATIVE_MISSION_BOOST_IDEOLOGY_TITLE:0 "Boost Ideology"</code> means that boosting ideology is boost_ideology.
+|-id="operative_operation"
+|operative_operation
+|<code>value = <int></code></code><br/>The weight of the strategy.<br/>
+<code>operation = <mission></code><br/>The mission to prioritise<br/>
+<code>operation_target = <country></code><br/>The country to target<br/>
+<code>state = <state></code><br/>The state to prioritise within the target country if valid. Optional.<br/>
+<code>region = <strategic region></code><br/>The strategic region to prioritise within the target country if valid. Optional.<br/>
+<code>priority = <int></code><br/>If contradictory AI strategies are defined, the one with the highest priority is picked.
+|<pre>ai_strategy = {
+    type = operative_operation
+    value = 80
+    operation = heavy_water_raid
+    operation_target = ENG
+}</pre>
+|Pursues the AI to do the specified operation over the target.
+|Multiple states can be defined, leading to one of them being prioritised. Operations are defined within {{path|common/operations/*.txt}} files.
+|-id="become_spymaster"
+|become_spymaster
+|<code>value = <int></code><br/>The weight of the strategy.
+|<pre>ai_strategy = {
+    type = become_spymaster
+    value = 30
+}</pre>
+|Used to set weight for a faction leader to become spymaster if not already a spymaster
+|Weight value for pp spend to become spymaster. Added in 1.15.2
+|}
+{| class="wikitable sortable mw-collapsible mw-collapsed" style="display: inline-block; padding: 5px" width="100%"
+|+ style="text-align: center;" width = "100%" |{{nowrap|AI strategies related to production, construction, and recruitment:}}
+! width="10%" |Name
+! width="25%" |Parameters
+! width="25%" |Examples
+! width="20%" |Description
+! width="20%" |Notes
+|-id="added_military_to_civilian_factory_ratio"
+|added_military_to_civilian_factory_ratio
+|<code>value = <int></code><br/>The weight of the strategy.
+|<pre>ai_strategy = {
+    type = added_military_to_civilian_factory_ratio
+    value = 50
+}</pre>
+|Modifies the ratio of military to civilian factories that the AI desires to keep.
+|A positive value means more military factories.
+|-id="air_factory_balance"
+|air_factory_balance
+|<code>value = <int></code><br/>The weight of the strategy.
+|<pre>ai_strategy = {
+    type = air_factory_balance
+    value = 50
+}</pre>
+|Modifies the ratio of airforce to factories that the AI desires to keep.
+|A positive value means more airforce.
+|-id="dockyard_to_military_factory_ratio"
+|dockyard_to_military_factory_ratio
+|<code>value = <int></code><br/>The weight of the strategy.
+|<pre>ai_strategy = {
+    type = dockyard_to_military_factory_ratio
+    value = 50
+}</pre>
+|Modifies the ratio of dockyards to military factories that the AI desires to keep.
+|A positive value means more dockyards.
+|-id="railway_gun_divisions_ratio"
+|railway_gun_divisions_ratio
+|<code>value = <int></code><br/>The weight of the strategy.
+|<pre>ai_strategy = {
+    type = railway_gun_divisions_ratio
+    value = 5
+}</pre>
+|Modifies the ratio of railway guns to divisions that the AI desires to keep.
+|Base ratio is RAILWAY_GUN_PRODUCTION_BASE_DIVISIONS_RATIO_PERCENT in [[Defines]], by default 0. This gets added to it, on the 0-100 scale.
+|-id="build_building"
+|build_building
+|<code>value = <int></code><br/>The weight of the strategy.<br/>
+<code>id = <building></code><br/>The target of the strategy.<br/>
+<code>target = <state> (OR) <province></code><br/>The state (or province) where to build.
+|<pre>ai_strategy = {
+    type = build_building
+    id = industrial_complex
+    target = 803
+    value = 1
+}</pre>
+|Pursues AI to construct a specific building within the specified state (or a specified province, if the building is province based).
+If no target is specified, AI selects a random location.
+|Value is an AI weight, used for weighted random selection of what to build. The AI gathers all build_building strategies (including the ones created dynamically) with non-zero values, and selects one of them.
+Strategy is ignored if the specified building is already being constructed.
+|-id="building_target"
+|building_target
+|<code>value = <int></code><br/>The weight of the strategy.<br/>
+<code>id = <building></code><br/>A [[Buildings|building]] to consider.
+|<pre>ai_strategy = {
+    type = building_target
+    id = industrial_complex
+    value = 30
+}</pre>
+|Makes AI keep a minimum amount of the specified buildings.
+|The AI will construct the specified building until it reaches the target value (prioritizing it over other construction). 
+'''Note:''' The AI uses 'total' amount of buildings. So in this specific case it will check, if it has a total of 30 Civilian Factories in its own states, in the occupied states AND from trade and received from subjects!
+|-id="factory_build_score_factor"
+|factory_build_score_factor
+|<code>value = <int></code><br/>The weight of the strategy.<br/>
+<code>target = <state></code><br/>The state where to build.
+|<pre>ai_strategy = {
+    type = factory_build_score_factor
+    target = 365
+    value = 1
+}</pre>
+|Pursues AI to construct buildings within the specified state.
+|
+|-id="equipment_production_factor"
+|equipment_production_factor
+|<code>value = <int></code><br/>The weight of the strategy.<br/>
+<code>id = <equipment archetype type></code><br/>The target of the strategy.
+|<pre>ai_strategy = {
+    type = equipment_production_factor
+    id = armor
+    value = 30
+}</pre>
+|Pursues AI to produce equipment types of the specified type.
+|Types are defined for each equipment archetype in {{path|common/units/equipment/*.txt}} files within <code>types = { ... }</code>.
+|-id="equipment_production_min_factories"
+|equipment_production_min_factories
+|<code>value = <int></code><br/>The weight of the strategy.<br/>
+<code>id = <equipment type></code><br/>The target of the strategy.
+|<pre>ai_strategy = {
+    type = equipment_production_min_factories
+    id = artillery
+    value = 3
+}</pre>
+|Pursues AI to keep a minimum amount of factories on the production lines for the equipment of the specified '''type'''.
+If multiple strategies are used at once, they stack.
+|A value of 1 corresponds to 1 military factory. Types are defined for each equipment archetype in {{path|common/units/equipment/*.txt}} files within <code>types = { ... }</code>.
+'''Note:''' Multiple variants of the same 'type' of equipment may exist. 
+This specific strategy will for example make AI have 3 lines of Artillery AND 3 lines of Rocket Artillery AND 3 lines of Motorized Rocket Artillery.
+|-
+|equipment_production_min_factories_archetype
+|<code>value = <int></code><br />The weight of the strategy.<br />
+<code>id = <equipment archetype></code><br />The target of the strategy.
+|<pre>ai_strategy = {
+    type = equipment_production_min_factories_archetype
+    id = artillery_equipment
+    value = 4
+}</pre>
+|Pursues AI to keep a minimum amount of factories on the production lines for the equipment of the specified '''archetype'''.
+If multiple strategies are used at once, they stack.
+|A value of 1 corresponds to 1 military factory. Archetypes are defined in each file in {{path|common/units/equipment/*.txt}} with <code>is_archetype = yes</code> argument.
+|-id="equipment_variant_production_factor"
+|equipment_variant_production_factor
+|<code>value = <int></code><br/>The weight of the strategy.<br/>
+<code>id = <equipment archetype></code><br/>The target of the strategy.
+|<pre>ai_strategy = {
+    type = equipment_variant_production_factor
+    id = light_tank_chassis
+    value = -100
+}</pre>
+|Pursues AI to produce more of the specified equipment archetype.
+|Equipment archetypes are defined in {{path|common/units/equipment/*.txt}} files.
+|-id="equipment_stockpile_surplus_ratio"
+|equipment_stockpile_surplus_ratio
+|<code>value = <int></code><br/>The weight of the strategy.
+|<pre>ai_strategy = {
+    type = equipment_stockpile_surplus_ratio
+    value = 30
+}</pre>
+|Changes the ratio of equipment that AI would hold in stockpile rather than immediately using.
+|
+|-id="build_army"
+|build_army
+|<code>value = <int></code><br/>The weight of the strategy.<br/>
+<code>id = <unit role></code><br/>The target of the strategy.
+|<pre>ai_strategy = {
+    type = build_army
+    id = infantry
+    value = 200
+}</pre>
+|Modifies the desired division amount for AI.
+|The used target is roles within [[#AI templates|AI templates]].
+This example would make the AI want exactly 200 divisions with 'infantry' role.
+|-id="force_build_armies"
+|force_build_armies
+|<code>value = <int></code><br/>The weight of the strategy.
+|<pre>ai_strategy = {
+    type = force_build_armies
+    value = 30
+}</pre>
+|Forces AI to build divisions above the desired amount.
+|
+|-id="production_upgrade_desire_offset"
+|production_upgrade_desire_offset
+|<code>value = <int></code><br/>The weight of the strategy.<br/>
+<code>id = <equipment type></code><br/>The target of the strategy.
+|<pre>ai_strategy = {
+    type = production_upgrade_desire_offset
+    id = artillery_equipment_2
+    value = -50
+}</pre>
+|Pursues AI to upgrade production lines to the specified equipment type.
+|Equipment types are defined in {{path|common/units/equipment/*.txt}} files.
+|-id="role_ratio"
+|role_ratio
+|<code>value = <int></code><br/>The weight of the strategy.<br/>
+<code>id = <role></code><br/>The target of the strategy.
+|<pre>ai_strategy = {
+    type = role_ratio
+    id = paratroopers
+    value = 30
+}</pre>
+|Modifies the amount of templates that the AI makes for the specified role.
+|Roles are defined within [[#AI templates|AI templates]] for unit templates and [[#AI equipment|AI equipment]] for ship and tank variants.
+|-id="unit_ratio"
+|unit_ratio
+|<code>value = <int></code><br/>The weight of the strategy.<br/>
+<code>id = <unit></code><br/>The target of the strategy.
+|<pre>ai_strategy = {
+    type = unit_ratio
+    id = cas
+    value = 30
+}</pre>
+|Modifies the amount of templates that the AI makes with the specified unit.
+|Units are defined in {{path|common/units/*.txt}} files. This includes the airforce and navy alongside land army.
+|-id="min_wanted_supply_trains"
+|min_wanted_supply_trains
+|<code>value = <int></code><br/>The weight of the strategy.
+|<pre>ai_strategy = {
+    type = min_wanted_supply_trains
+    value = 300
+}</pre>
+|Overrides the minimum amount of supply trains wanted by AI.
+|
+|-id="min_wanted_supply_trucks"
+|min_wanted_supply_trucks
+|<code>value = <int></code><br/>The weight of the strategy.
+|<pre>ai_strategy = {
+    type = min_wanted_supply_trucks
+    value = 30
+}</pre>
+|Overrides the minimum amount of supply trucks wanted by AI.
+|
+|}
+{| class="wikitable sortable mw-collapsible mw-collapsed" style="display: inline-block; padding: 5px" width="100%"
+|+ style="text-align: center;" width = "100%" |{{nowrap|Other AI strategies:}}
+! width="10%" |Name
+! width="25%" |Parameters
+! width="25%" |Examples
+! width="20%" |Description
+! width="20%" |Notes
+|-id="scorched_earth_prio"
+|scorched_earth_prio
+|<code>value = <int></code><br/>The weight of the strategy.<br/>
+<code>id = <country></code><br/>The owner of the states where to use scorched earth.<br/>
+<code>states = { ... }</code><br/> List of states where to use scorched earth.
+|<pre>ai_strategy = {
+    type = scorched_earth_prio
+    value = 100
+    id = ENG
+    states = {
+        123
+        124
+        125
+        126
+    }
+}</pre>
+|Pursues AI to use scorched earth within the specified states.
+|
+|-id="land_xp_spend_priority"
+|land_xp_spend_priority
+|<code>value = <int></code><br/>The weight of the strategy.<br/>
+<code>id = <type></code><br/>The target of the strategy.
+|<pre>ai_strategy = {
+    type = land_xp_spend_priority
+    id = division_template
+    value = 30
+}</pre>
+|Modifies the priority for AI to spend land experience.
+|Base game usages include <code>division_template</code> and <code>upgrade_xp_cutoff</code>.
+|-id="pp_spend_amount"
+|pp_spend_amount
+|<code>value = <int></code><br/>The weight of the strategy.<br/>
+<code>id = <type></code><br/>The target of the strategy.
+|<pre>ai_strategy = {
+    type = pp_spend_amount
+    id = idea
+    value = 100
+}</pre>
+|Modifies the political power that AI should preserve for the specified purpose.
+|Base game usages include <code>idea</code> and <code>decision</code>.
+|-id="pp_spend_priority"
+|pp_spend_priority
+|<code>value = <int></code><br/>The weight of the strategy.<br/>
+<code>id = <type></code><br/>The target of the strategy.
+|<pre>ai_strategy = {
+    type = pp_spend_priority
+    id = relation
+    value = 100
+}</pre>
+|Modifies where AI should prioritise spending political power.
+|Base game usages include the following:
+* <code>admiral</code>
+* <code>guarantee</code>
+* <code>relation</code>
+* <code>decision</code>
+|-id="research_weight_factor"
+|research_weight_factor
+|<code>value = <int></code><br/>The weight of the strategy.<br/>
+<code>id = <type></code><br/>The target of the strategy.
+|<pre>ai_strategy = {
+    type = research_weight_factor
+    id = radio_detection
+    value = 2000
+}</pre>
+|Modifies the AI weight (score) of a specific technology.
+|value = 50 means 50% increase, -30 means 30% decrease, etc.
+|}
+
+== AI areas ==
+{{SVersion|1.11}}
+AI areas are defined within {{path|common/ai_areas/*.txt}} files. These are ''only'' used in a variety of previously-listed AI strategies, such as [[#area_priority|area_priority]]. A province may be in several AI areas and it may be in none. Hovering over a province with the debug mode turned on will provide information in which AI areas the province is, if any.
+
+Each AI area is a separate block within the file, with the name of the block being the name of the area. Within these blocks, 2 things can be added:<br/>
+<code>continents = { ... }</code> is a list of continents that make up the AI area. Continents are defined within {{path|map/continent.txt}} and assigned to provinces within [[Map modding#Provinces|their definitions]] in {{path|map/definition.csv}}. The full name of the continent should be used within the AI area's definition, rather than the ID used in the province definition.<br/>
+<code>strategic_regions = { ... }</code> is a list of strategic regions that make up the AI area, by their ID number.
+
+If there are multiple defined, the province has to be in ''any'' of them.
+
+An example of an AI area is the following:
+<pre>my_ai_area = {
+    continents = {
+        europe
+        africa
+    }
+    strategic_regions = {
+        53  # Caribbean
+        189 # Burma
+    }
+}</pre>
+
+== AI focuses ==
+{{Main|AI focuses}}
+AI focuses, defined within {{path|common/ai_focuses/*.txt}} files, are used to tell the game which technology categories and focuses the AI should pick depending on its currently-pursued focuses.
+
+
+== AI peace ==
+{{SVersion|1.14}}
+{{VisibleCollapse|1=
+The peace conference behaviour for AI is defined within {{path|common/peace_conference/ai_peace/*.txt}} files.<br/>
+When defining the peace conference AI that would be used by the country, the AI will take into account all blocks for which the enable condition is true.
+
+When evaluating the peace conference, <code>ROOT</code> (the default scope) is used to represent the currently-evaluated winner, <code>FROM</code> is the country which will undergo the selected peace action, this can be a previously  non-existent country that will now be liberated or puppeted, or even a different winner country when liberating, finally <code>FROM.FROM.FROM</code> can be used to set conditions on the specific state that the peace action is taken on.
+
+The <code>enable {{=}} { ... }</code> trigger block is used to determine whether the AI should be enabled, and finally an <code>ai_desire {{=}} ...</code> block determines the priority of the defined strategy: a value of -1000 would make AI never pursue the selected peace action if the conditions are met, while a value of 1000 would make the action their top priority.
+
+The following peace options are used in the game:
+* <code>liberate</code> - The country FROM gets liberated by ROOT.
+* <code>puppet</code> - The country FROM gets puppeted by ROOT.
+* <code>take_states</code> - The state FROM.FROM.FROM, previously owned by FROM, gets annexed by ROOT.
+* <code>force_government</code> - The country FROM gets its ideology forcefully changed by ROOT.
+* <code>take_navy</code> - No AI modding supported, cost modifiers can still be applied for players in games with {{icon|bba|1}} enabled.
+When evaluating peace conferences, the controller of a given state is the same one that occupied it before the start of the conference while the owner is the original owner.
+
+Example:{{Collapse|
+<pre>peace_ai_desires = {
+    dont_puppet_warlord_countries = {
+        peace_action_type = { puppet liberate force_government }    #all but take states
+        enable = {
+            FROM = {
+                OR = {
+                    tag = SIK
+                    tag = PRC
+                    tag = GXC
+                    tag = YUN
+                    tag = SHX
+                    tag = XSM
+                    tag = MAN
+                    tag = MEN
+                }
+            }
+        }
+        ai_desire = -1000
+    }
+}
+</pre>}}|2=AI peace since 1.12}}
+
+
+{{SVersion|1.11}}
+{{VisibleCollapse|1=
+The peace conference behaviour for AI is defined within {{path|common/ai_peace/*.txt}} files.<br/>
+When defining the peace conference AI that would be used by the country, the game picks the first-defined one that meets the prerequisites. In this case, files are loaded sorted by their filename using [[wp:ASCII#Printable characters|ASCII character IDs]].
+
+When evaluating the peace conference, ROOT (the default scope) is used to represent the currently-evaluated winner and FROM is used to represent the currently-evaluated loser. Additionally, the following [[Variables|temporary variables]] exist within:
+* taken_states@TAG is an array of states that are annexed by the country TAG as a part of the peace conference.
+* taken_by@123 is the country that took the specified state, in this case 123.
+* current_states@TAG is an array of states that aren't decided upon yet in the peace conference and are under the control of TAG that lost the war.
+* subject_states@TAG is an array of states that are, within the peace conference, set to be transferred to countries that are subjected by TAG.
+* subject_countries@TAG is an array of countries that are, within the peace conference, set to be subjected by TAG.
+* subjected_by@123 is the overlord of the country that is set to have the specified state in the peace conference, in this case 123.
+* subjected_by@TAG is an array of countries that have TAG as their overlord.
+* liberate_states@TAG is an array of states that are going to countries that have been liberated by TAG.
+* liberate_countries@TAG is an array of countries that have been liberated by TAG.
+
+The <code>enable {{=}} { ... }</code> trigger block is used to determine whether the AI should be enabled. If true and no other previously-loaded peace conference AI is true, this AI will be chosen.
+
+There are the following peace options that are used in the game:
+* annex - The country FROM gets entirely annexed by ROOT. This only evaluates the countries.
+* liberate - The country FROM gets liberated by ROOT.
+* puppet - The country FROM gets puppeted by ROOT.
+* puppet_all - The country FROM gets puppeted by ROOT ''and'' is able to retain all of its states.
+* puppet_state - The state ROOT gets transferred to FROM.FROM, which became a subject of FROM within the peace conference.
+* take_states - The state FROM gets annexed by ROOT.
+* force_government - The country FROM gets its ideology forcefully changed by ROOT.
+When evaluating peace conferences, the controller of a given state is the same one that occupied it before the start of the conference while the owner is the original owner.
+
+Each peace conference option is a [[#MTTH blocks|MTTH block]] within the file's definition.
+Example:{{Collapse|
+<pre>my_peace_conference = {
+    enable = {
+        has_government = my_ideology_group
+    }
+    annex = {
+        base = 500
+        modifier = {
+            factor = 0
+            any_allied_country = {
+                any_state = {
+                    is_owned_by = FROM
+                    is_core_of = PREV
+                    NOT = {
+                        is_core_of = ROOT
+                        is_claimed_by = ROOT
+                    }
+                }
+            }
+        }
+    }
+    puppet = {
+        base = 100
+        modifier = {
+            factor = 0
+            FROM = { tag = QAT }
+        }
+    }
+    puppet_all = {
+        base = 0
+    }
+    puppet_state = {
+        base = 100
+        modifier = {
+            factor = 0
+            FROM.FROM = { tag = QAT }
+        }
+        modifier = {
+            factor = 0
+            any_allied_country = {
+                ROOT = {
+                    is_core_of = PREV
+                    NOT = {
+                        is_core_of = FROM.FROM
+                        is_claimed_by = FROM.FROM
+                    }
+                }
+            }
+        }
+    }
+    take_states = {
+        base = 100
+        modifier = {
+            factor = 0
+            any_allied_country = {
+                FROM = {
+                    is_core_of = PREV
+                    NOT = {
+                        is_core_of = ROOT
+                        is_claimed_by = ROOT
+                    }
+                }
+            }
+        }
+    }
+}</pre>}}|2=Pre-1.12 AI peace}}
+
+== AI strategy plans ==
+{{SVersion|1.11}}
+AI strategy plans to tell AI what to prioritise depending on circumstances: which advisors to pick, which technologies to research, which AI strategies to apply, which focuses to pick, etc. These are more detailed than general AI strategies, primarily intended to be activated for most of the game to tell the overall plan of a country. Multiple AI strategy plans can be defined and executed at the same time for a country.
+
+AI strategy plans are defined within {{path|common/ai_strategy_plans/*.txt}} files. Within these files, a new strategy plan is done as a new block, the name of which must be the same as the internal ID of the plan.
+
+Within that plan, <code>name = "AI plan's name"</code> and <code>desc = "AI plan's description"</code> decide the name and the description of the strategy plan. ''This is never intended to be shown to the player'', so localising it into different languages is never needed. Instead, this is used within the <code>aiview</code> console command, which tells info to the developer about what AI wants to prioritise.
+
+<code>allowed = { ... }</code> is, similarly to decisions or ideas, is a trigger block '''checked only at the game's start'''. This is primarily used to tell which country and DLCs to restrict the strategy plan to.
+
+<code>enable = { ... }</code> is checked each day if the allowed is met. If <code>enable = { ... }</code> is met, then the AI strategy plan will be assigned to the AI regardless of whether <code>enable = { ... }</code> turns false later or not. Commonly, [[Triggers#has_game_rule]] is used to make it work with custom game rules deciding what path the AI will pick. [[Triggers#is_historical_focus_on|is_historical_focus_on]] is commonly used with the default AI game rule, and country flags can be used for randomisation, by setting up an [[On actions|on_startup]] to set a random one using [[Scopes#random_list|random_list]]
+
+<code>abort = { ... }</code> is checked every day in order to make the AI ''stop'' using this AI strategy plan if <code>enable = { ... }</code> is met. Additionally, it must be false in order for the AI strategy plan to be possible to be picked.
+
+<code>ai_national_focuses = { TAG_focus_name_1 TAG_focus_name_2 }</code> is a list of national focuses, separated by whitespaces, in the order that the AI should take them. In this example, the AI will try to take TAG_focus_name_1 first if possible. If it's already taken or TAG_focus_name_1 is impossible to take, then AI will try to take TAG_focus_name_2. If both of the focuses are impossible to take due to being completed or unavailable, then it will move on to other focuses, taking <code>ai_will_do = { ... }</code> into consideration. While following a focus order, it ignores <code>ai_will_do = { ... }</code> values.
+
+<code>focus_factors = { ... }</code> assigns a multiplier to ai_will_do values of the specified focus. An entry in this block looks like <code>TAG_focus_name = 3</code>. In this case, this will make the ai_will_do value of the focus be multiplied by 3, assuming AI strategy plan's weight of 1. If the focus has an ai_will_do value of 4 after applying modifiers, it'll become 12 if AI is following this strategy plan, and get treated as such. And, of course, a factor of 0 will make the focus be never picked without specification in ai_national_focuses. This can serve as a faster-to-write or a more randomised way to make AI follow a political path by making focuses it should never pick have a value of 0.
+
+<code>research = { ... }</code> assigns a multiplier to ai_will_do values of the specified research categories. An entry in this block looks like <code>artillery = 3</code>. In this case, this will make the ai_will_do value of every technology within the category be multiplied by 3, assuming AI strategy plan's weight of 1. Other built-in modifiers still apply, but this will increase the likelihood.
+
+Other blocks that also assign bonuses are <code>ideas = { ... }</code> and <code>traits = { ... }</code>, with the similar formatting. The ideas block is used for individual ideas (such as laws or designers) or advisors (using the idea_token in the entry), while traits are for country leader traits that are assigned to the ideas/advisors.
+
+<code>ai_strategy = { ... }</code> allows an [[#AI strategies|AI strategy]] to apply when the strategy plan is turned on.
+
+<code>weight = { ... }</code> is a [[#MTTH blocks|MTTH block]] assigning an overall weight to the plan. This multiplies each factor within the AI strategy plan by the weight before applying them. A weight of 1.25 will turn a focus factor of 4 into 5 before applying it, for instance. This can be used to make the AI follow the strategy plan more strictly in some cases and less strictly in others.
+
+=== Example ===
+{{Collapse|
+<pre>BHR_historical = {
+    name = "Historical plan for BHR"
+    desc = "4 focuses in a specific order"
+    allowed = {
+        tag = BHR
+    }
+    enable = {
+        OR = {
+            AND = {
+                is_historical_focus_on = yes
+                has_game_rule = {
+                    rule = BHR_ai_behavior
+                    option = DEFAULT
+                }
+            }
+            has_country_flag = BHR_AI_RANDOM_HISTORICAL # Randomly set in on_actions if BHR_ai_behavior is set to RANDOM. Make sure to set that up!
+            has_game_rule = {
+                rule = BHR_ai_behavior
+                option = HISTORICAL
+            }
+        }
+    }
+    abort = {
+        OMA = {
+            OR = {
+                has_government = fascism
+                has_government = communism
+            }
+        }
+    }
+    ai_national_focuses = {
+        BHR_focus_name_1
+        BHR_focus_name_2
+        BHR_focus_name_3
+        BHR_focus_name_4
+    }
+    ideas = {
+        BHR_advisor = 3
+    }
+    traits = {
+        fascist_demagouge = 0
+    }
+    ai_strategy = {
+        type = invade
+        id = OMA
+        value = 200
+    }
+}
+BHR_alternate = {
+    name = "Alternative plan for BHR"
+    desc = "AI is just set to never do BHR_focus_name_2 and be more likely to do BHR_focus_name_5, especially if after 1937"
+    enable = {
+        OR = {
+            has_country_flag = BHR_AI_RANDOM_ALTERNATE # Randomly set in on_actions if BHR_ai_behavior is set to RANDOM. Make sure to set that up!
+            has_game_rule = {
+                rule = BHR_ai_behavior
+                option = ALTERNATE
+            }
+        }
+    }
+    focus_factors = {
+        BHR_focus_name_2 = 0
+        BHR_focus_name_5 = 2
+    }
+    weight = {
+        modifier = {
+            factor = 2
+            date > 1937.1.1
+        }
+    }
+    research = {
+        artillery = 2
+    }
+}</pre>}}
+
+== AI templates ==
+{{SVersion|1.11}}
+Scripters/modders are able to specify so called "target templates" that the AI try to reach when upgrading division templates.
+
+Target templates are defined on a "role" level, and it's possible to define a number of different target templates for a specific role. The AI then chooses one of those target templates (based on scripted priorities) and aims for that.
+
+For each role, the AI will select one target template based on the <code>prio</code>, <code>enable</code>, and <code>replace_with</code> parameters. This is referred to as the "currently targeted template".
+
+The AI will then compare the existing division templates it has to find which one best matches the targeted template. This is referred to as the "best match" and the "match score"/"match" refers to how well it matches (100 % match = 1.0).
+
+When the AI decides to upgrade a division template, it will make a copy of the best matching template and modify it so it gets a higher match score (i.e. looks more like the target template). (Note that the AI actually never does in-place modification of templates, it just makes a copy and modifies the copy instead.)
+
+The AI strategy `role_ratio` determines how many divisions the AI wants for each role.
+
+Role arguments:
+
+* <code>role =</code> the role token that this role-level template entry targets. These tokens are defined by script and are targeted by the 'role_ratio' AI strategy.
+* <code>blocked_for = { ... }</code> Determines which countries will use this role-level template entry. Both 'blocked_for' and 'available_for' are possible to use. Use one or the other, if you use neither or both, the resulting behavior is undefined. Generally you want to make sure that each country has max one role-level template entry targeting a role. So if you add custom AI templates for e.g. Germany you should make sure that only Germany is allowed for it, and you should also block Germany from using the generic AI templates for the same role.
+* <code>upgrade_prio = { ... }</code> An [[AI modding|MTTH style]] block used for weighted-random selection when the AI chooses which role to upgrade templates for. Set it to zero to prevent the AI from spending XP on upgrading templates for this role. Example: If three role-level templates [A, B, C] have upgrade prio [1, 2, 1] respectively, then the probabilities for upgrading each template is [25%, 50%, 25%] respectively.
+* <code>enable = { ... }</code> Optional: Whether to evaluate this target template at all. Trigger with country scope. If false, the AI will pretend this target template doesn't exist.
+
+Target template arguments:
+
+* <code>reinforce_prio =</code> Optional: Determines the reinforcement prio of the resulting template. For example, garrison templates should use 0 (low prio) while elite templates should use 2 (high prio). Default 1 (normal prio).
+* <code>custom_icon =</code> Optional: Determines whether to use a custom icon for resulting template.
+* <code>division_names_group =</code> Optional: Specifies the division name group to use. By default uses the name group of the template "branched off" from.
+* <code>upgrade_prio = { ... }</code> The priority of this target template. This is used to determine (deterministically, no randomness involved) which of the target templates is the "currently targeted template".
+* <code>enable = { ... }</code> Optional: Whether to evaluate this target template at all. Trigger with country scope. If false, the AI will pretend this target template doesn't exist.
+* <code>can_upgrade_in_field = { ... }</code> Optional: Whether to allow upgrading divisions in the field. Trigger with country scope. If false, the AI will not field-upgrade divisions matching this target template. If true, the AI will consider field-upgrading divisions matching this target template to the target template defined by 'replace_with' (assuming they have enough manpower and equipment for it).
+* <code>target_template = { ... }</code> The "meat" of the target template: the actual template contents.
+** <code>support = { ... }</code> The desired support companies. The AI will try to add them to the template if allowed by research etc.
+** <code>regiments = { ... }</code> The desired line regiments. The AI will try to add them to the template if allowed by research etc.
+
+In addition, the optional replace-with chain. If the match score is at least 'replace_at_match', then replace the currently targeted template with 'replace_with', as long as the match score between best matching template and the next target template is at least 'target_min_match':
+
+* <code>replace_at_match =</code> Optional: Match score of this target template.
+* <code>replace_with =</code> Optional: Other target template to replace currently targeted template with. Also affects fielded divisions when upgrading in the field.
+* <code>target_min_match =</code> Optional: Match score between the best matching template and the target template defined by 'replace_with' has to be at least this high in order for the switch to happen.
+
+=== Example ===
+{{Collapse|<pre>infantry_generic = {
+    blocked_for = {
+        GER
+        JAP
+    }
+
+    role = infantry
+
+    upgrade_prio = {
+        factor = 1
+
+        modifier = {
+            factor = 5
+        }
+    }
+
+    # In this example, the AI will first try to reach a 6-inf (+support) template, before upgrading it to a 9-inf 2-arty (+support) template.
+    # Since the 'upgrade_prio' is higher for the first template, that one will be targeted. And when the match score is good enough it will use the 'replace_with' to switch over to the larger template.
+    # If two target templates have the same 'upgrade_prio', the first one will be preferred (so order matters in those cases).
+
+    # Target template 1 (the smaller infantry template)
+    infantry_1 = {
+        reinforce_prio = 0
+        custom_icon = 7
+        division_names_group = GER_MEC_01
+
+        upgrade_prio = {
+            factor = 1
+
+            modifier = {
+                factor = 1.5
+            }
+        }
+
+        enable = {
+            date < 1940.3.14
+        }
+
+        can_upgrade_in_field = {
+            has_equipment = { infantry_equipment > 3000 }
+        }
+
+        target_template = {
+            support = {
+                engineer = 1
+                anti_air = 1
+                artillery = 1
+            }
+            regiments = {
+                infantry = 6
+            }
+        }
+
+        replace_at_match = 0.9
+        replace_with = infantry_2
+        target_min_match = 0.9
+    }
+
+    # Target template 2 (the larger infantry template)
+    infantry_2 = {
+        upgrade_prio = {
+            factor = 1
+
+            modifier = {
+                factor = 1
+            }
+        }
+
+        target_template = {
+
+            support = {
+                engineer = 1
+                recon = 1
+                field_hospital = 1
+                anti_air = 1
+                anti_tank = 1
+            }
+
+            regiments = {
+                infantry = 9
+                artillery_brigade = 2
+            }
+        }
+    }
+}</pre>}}
+== AI equipment ==
+{{SVersion|1.11}}
+{{path|common/ai_equipment/*.txt}} files are used in order to define the equipment variants that the AI should aim for when assigning modules to tank or ship variants.
+
+A role template is defined as a block within any file in the folder with the name of the block being the same as the name of the role template.<br/>
+These arguments are used for role templates themselves:
+* <code>category = <land|naval|air></code> decides whether the template is used for tanks, ships or planes respectively.
+* <code>roles = { ... }</code> is a list of roles that the templates would have. These can be anything, getting used for the [[#role_ratio|role_ratio AI strategy]]. AI will try to have one variant for each role it has.
+* <code>available_for = { ... }</code> restricts the countries that use this role template to the tags in the list. If unspecified, every country uses them.
+* <code>blocked_for = { ... }</code> restricts the countries that use this role template from being the tags in the list. This is only needed if there is no <code>available_for = { ... }</code> block.
+* <code>priority = { ... }</code> is a [[#MTTH blocks|MTTH block]] that decides the 'importance' of the role template compared to other role templates for spending experience on improving. If there are several role templates with the same roles, the one with the highest priority gets used, otherwise this decides likelihood compared to role templates with different roles.
+
+Additionally, within role templates each individual design is defined as a block with the name of the design being the name of the block. It may be anything, as long as there is no overlap.<br/>
+These arguments are used within a design definition:
+* <code>name = angry_speedboat</code> required to enable the equipment to be used as preset. If not defined, for example German <code>light_tank_artillery_2</code> will use <code>GER_light_tank_artillery_equipment_2_short</code> localization if defined.
+* <code>role_icon_index = 2</code> is used to assign a specific role icon to a ''ship''. This does not work within land equipment. The icons are defined as a part of <code>naval_equipment_role = { ... }</code> within {{path|gfx/army_icons/army_icons.txt}}.
+* <code>priority = { ... }</code> is a [[#MTTH blocks|MTTH block]] that decides the 'importance' of the design compared to other templates within the role template for spending experience on improving.
+* <code>enable = { ... }</code> is a trigger block that decides when AI should aim towards the design.
+* <code>allowed_types = { ... }</code> is a list of sub-units that the AI can add to the design. If one is omitted, then the AI would never add it. This can be used to make AI not put units of different varieties in the design, such as putting infantry in a mobile light tank division, slowing it down.
+* <code>target_variant = { ... }</code> assigns the variant that AI should aim for. In particular, these arguments go inside of it:
+** <code>match_value = 5000</code> is a value that decides how much the template is worth to AI if it's matched.
+** <code>type = light_tank_chassis_0</code> is the specific equipment type that must be used by the design.
+** <code>modules = { ... }</code> is a list of modules that the equipment should have, in particular:
+*** <code>main_armament_slot = tank_flamethrower</code> decides requirements for a specified module slot, in first place. The requirement may be a module category, a specific module, or the word <code>empty</code>. If specifying a module, the greater-than or lesser-than signs can be used in order to require greater or lesser modules: this is decided by the year defined within the module. If lesser is specified, AI aims towards oldest modules, if greater is specified, AI aims towards newest modules. If specifying empty, greater than can be used to ensure it's ''not'' empty.
+*** <code>main_armament_slot = { ... }</code> allows specifying more details for a module slot:
+**** <code>module = tank_flamethrower</code> decides a module requirement for the slot. This is the exact same formatting as previous <code>main_armament_slot = tank_flamethrower</code>: module categories, modules, or empty are allowed, and the equality signs can be used in the same way.
+**** <code>any_of = { ... }</code> is a list of modules or module categories. The module slot must have at least one of them.
+**** <code>upgrade = current</code> ensures that, when upgrading a variant to match this design, it must use the same one as on the existing equipment. If the 'greater than' sign is used (>), then it would require AI to upgrade this slot as well.
+** <code>upgrades = { ... }</code> is a list of upgrades that the design should have, in particular:
+*** <code>tank_nsb_engine_upgrade = 3</code> decides the AI priority that the specified upgrade should have to a fixed number.
+*** <code>tank_nsb_engine_upgrade = { ... }</code> is a [[#MTTH blocks|MTTH block]] that assigns the AI priority to the specified upgrade dynamically.
+* <code>requirements = { ... }</code> is a list of modules that the AI ''must'' have. This follows the same formatting as a specified module slot within a target variant's modules block: <code>module = tank_flamethrower</code>, <code>any_of = { ... }</code>, etc. However, this is not tied to a specific slot.
+* <code>allowed_modules = { ... }</code> is a list of modules that the AI can use after the requirements in the target variant are met. If a module isn't here, it'll never be picked. The modules specified first take priority over the later ones.
+
+=== Example ===
+{{Collapse|
+<pre>BHR_light_tanks = {
+    category = land
+
+    available_for = {BHR}
+
+    roles = {
+        land_light_tank
+    }
+
+    priority = {
+        factor = 1000
+    }
+
+    great_war_tank_default = {
+        priority = {
+            factor = 1
+            modifier = {
+                has_tech = basic_light_tank_chassis
+                factor = 0 #let's not waste XP here
+            }
+        }
+
+        target_variant = {
+            match_value = 1000
+            type = light_tank_chassis_0
+            modules = {
+                main_armament_slot = tank_heavy_machine_gun
+                turret_type_slot = tank_light_one_man_tank_turret
+                suspension_type_slot = tank_bogie_suspension
+                armor_type_slot = tank_riveted_armor
+                engine_type_slot = tank_gasoline_engine
+                special_type_slot_1 = empty
+                special_type_slot_2 = empty
+                special_type_slot_3 = empty
+                special_type_slot_4 = empty
+            }
+            upgrades = {
+                tank_nsb_engine_upgrade = 3
+                tank_nsb_armor_upgrade = {
+                    base = 1
+                    modifier = {
+                        add = 1
+                        has_war = yes
+                    }
+                }
+            }
+        }
+
+        allowed_modules = {
+            tank_heavy_machine_gun
+            tank_light_one_man_tank_turret
+            tank_bogie_suspension
+            tank_riveted_armor
+            tank_gasoline_engine
+        }
+    }
+}</pre>}}
+{{Modding navbox}}
+[[Category:Modding]]

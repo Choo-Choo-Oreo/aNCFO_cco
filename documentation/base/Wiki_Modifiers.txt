@@ -1,0 +1,4764 @@
+{{Version|1.13}}
+A modifier is essentially a variable used in internal calculations. However, unlike [[Defines]], modifiers are dynamically changeable within any modifier block. In general, modifiers are typically used to create a consistent and long-lasting effect that can be easily reversed.<br/>
+Each modifier has the exact same layout: <code>modifier_name = 0.1</code>. This adds the specified value to the modifier's total value for the scope where it is applied.{{cref|a}} For example, assuming that there are no other modifiers changing that to the country, having <code>political_power_gain = 0.2</code> and <code>political_power_gain = -0.05</code> applied to the country (potentially in different modifier blocks) will result in a total of {{green|+0.15}} political power gain above the base gain. Due to how modifiers work, '''a modifier with the value of 0 will always do nothing.''' This also means that negative modifiers will always work and have the opposite effect of positive modifiers.<br/>
+A modifier's current total value can be received as a variable by reading <code>modifier@modifier_name</code>, such as <code>set_variable = { my_var = modifier@political_power_gain }</code>. This works for countries and states, but for unit leaders, <code>unit_modifier@modifier_name</code> and <code>leader_modifier@modifier_name</code> is used instead.
+__TOC__
+The following are ''not'' modifiers, even if they are similar:
+* Research bonuses allowing to grant a boost to a specific technology category. This is, instead, [[Idea modding#Modifiers|an argument within ideas]], which can be applied in the same way for advisors, but not elsewhere.
+* Equipment bonuses, such as decreasing the cost to build an equipment archetype. Similarly, this is [[Idea modding#Modifiers|an argument within ideas]], which can be applied in the same way for advisors and country leader traits, but not elsewhere.
+* Opinion modifiers, which can be applied to change the opinion (including trade influence) within countries, defined in {{path|common/opinion_modifiers/*.txt}} files.
+
+== Applying a modifier ==
+There are a large variety of ways to apply modifiers, but these are the primary ones:
+* [[Idea modding|Ideas]] - This primarily includes but is not limited to national spirits and hidden ideas. '''These are the simplest way to add a modifier to a country''' by using an [[Effect|effect block]], such as a national focus reward, by using [[Effect#add_ideas|add_ideas]] or [[Effect#add_timed_idea|add_timed_idea]]. These only work for countries.
+* [[#Dynamic modifiers|Dynamic modifiers]] - This is similar to ideas (Showing up in the same screen for countries), but they accept [[variables]] and can also be applied on states and unit leaders. '''These are the primary way to add modifiers to a state.'''
+* Traits: 
+** [[Character modding#Country leader traits|Country leader traits]] - These can be added to ideas (including advisors which function similarly) and country leaders, which'll apply on the country.
+** [[Character modding#Unit leader traits|Unit leader traits]] - These can be added to unit leaders and apply effects on the leaders themselves or their units. These are the primary way to add a modifier to a unit leader.
+* [[#Static modifiers|Static modifiers]]:
+** [[#Global modifiers|Global modifiers]] - These are entirely hard-coded on ''when'' they apply, such as those used for stability and war support bonuses. However, these can be changed in ''what'' they apply.
+** [[#Province modifiers|Provincial modifiers]] - These are the primary if not the only way to apply a modifier towards a specific province.
+** [[#Relation modifiers|Relation modifiers]] - These are the only way to apply a targeted modifier from one country towards the other without needing to specify a specific country tag within the targeted modifier block.
+
+Each modifier follows the same structure of being assigned a number, such as the following formatting within many blocks '''that support modifiers''', such as anything listed above:
+<pre>modifier = { # While this is present in, for example, ideas or decisions, it's equally likely to see is modifier = { ... } being omitted entirely in other entries, such as country leader traits.
+    political_power_gain = 0.1
+    disabled_ideas = 1
+}</pre>
+No modifiers can have a non-numeric value, including boolean ones that must be 1 to have any effect.
+Note that '''modifiers do not support if statements'''. The closest replica possible of one are [[#Dynamic modifiers|dynamic modifiers]], which allow using variables.
+=== Tooltip modification ===
+Modifier blocks support, within them, the <code>hidden_modifier = { ... }</code> block, which can be used to provent the modifiers within from showing up in the tooltip. Additionally, <code>custom_modifier_tooltip = localisation_key_tt</code> can be used to add a custom localisation string to appear within the localisation as one of the modifiers. In combination, this will look like the following:
+<pre>modifier = {
+    hidden_modifier = {
+        political_power_gain = 0.1
+    }
+    custom_modifier_tooltip = political_power_gain_tt
+}</pre>
+Custom modifier tooltips ''do not'' support dynamic commands, which includes anything that uses square brackets.
+
+== Dynamic modifiers ==
+{{Hatnote|If you want to apply a consistent modifier to a country, [[Idea modding|it's easier to use ideas instead.]]}}
+Dynamic modifiers, defined in {{path|common/dynamic_modifiers/*.txt}} files, are a type to apply modifiers that accept variables. The modifiers are updated daily, unless the [[Effect#force_update_dynamic_modifier|force_update_dynamic_modifier effect]] is used to forcefully refresh the impact of modifiers. They can be applied to both countries and states, in case of the latter, the variable must be defined for the state, not for the country-owner or controller. They can also be applied to unit leaders.
+
+Unlike ideas, '''there is no way to reload definitions of dynamic modifiers''' via debug mode or console, any changes to their definitions require a game restart to apply in-game. Additionally, due to the daily refresh of the variable check, these are more poorly optimised than ideas are. Due to this, when it's feasible to not use variables for a country-scoped dynamic modifier, it's both easier and more optimised [[Idea modding|to use national spirits instead.]]
+
+The dynamic modifiers are evaluated daily for each scope. The process consists of the following:
+* At the beginning of each day, each variable modifier value for each dynamic modifier is temporarily reset to 0, even if the null-coalescing operator is used to assume a different number as the default. Constant values do not get reset.
+* Dynamic modifiers are then evaluated in the order that they were given to the scope with <code>add_dynamic_modifier</code>.
+* The variable values inside of a dynamic modifier are assumed to be 0 until every variable inside is calculated. This includes those that rely on other modifiers, which includes the <code>modifier@modifier_name</code> [[game variable]] or [[Variables#MTTH variables|MTTH variables]] that utilise that game variable.
+* After the variables are calculated for a single dynamic modifier, the modifiers apply to the scope with the dynamic modifier and the game moves onto the next dynamic modifier added to the current scope until each one is calculated.
+=== Arguments ===
+* '''icon''' decides what is the icon used for the dynamic modifier. The icon uses a sprite defined in any {{path|interface/*.gfx}} file. If the icon is not specified, it will be hidden. 
+* '''enable''' decides when exactly the dynamic modifier's modifiers apply. If the dynamic modifier is set, but the country or state it's set to does not fulfill the requirements, its effects will not apply. Optional.
+* '''remove_trigger''' will automatically remove the dynamic modifier upon the triggers being met. Optional.
+* '''attacker_modifier''' will, if set to true within a state-scoped dynamic modifier, additionally makes the modifier apply to divisions that, while not being present in the state with the dynamic modifier, are attacking an enemy located on that state. Optional, defaults to false.
+Modifiers are put directly inside the dynamic modifier as a list. Non-modifier idea attributes such as <code>equipment_bonus</code> or <code>research_bonus</code> are impossible to use inside of dynamic modifiers.
+=== Example ===
+<pre>dynamic_modifier_name = {
+    icon = GFX_idea_unknown
+    enable = { always = yes }
+    remove_trigger = {
+        NOT = {
+            has_variable = var_name
+        }
+    }
+    political_power_gain = var_name # Variable value
+    weekly_manpower = 1000 # Constant value
+    stability_factor = GER.stability_var # Checks specifically GER's variable, regardless of where the modifier is applied
+}</pre>
+
+=== Adding a dynamic modifier ===
+Dynamic modifiers are added via the [[Effect#add_dynamic_modifier|add_dynamic_modifier effect]]. A typical addition of a dynamic modifier looks like the following: 
+<pre>add_dynamic_modifier = { modifier = dynamic_modifier_name }</pre>
+Since dynamic modifiers do not have assigned scopes, the same modifier can be assigned to either a country, a state, a unit leader, or several at once &ndash; this is decided only by where the <code>add_dynamic_modifier</code> effect is executed.
+
+Within GUI, a dynamic modifier will take up these places if visible:
+* For a country, a dynamic modifier will show up in the list of national spirits, appearing after the regular spirits.
+* For a state, a dynamic modifier will show up in the special section for them in the bottom of the selected state view, marked with <code>dynamic_modifiers_grid</code> in {{path|interface/countrystateview.gui}}.
+
+When adding a dynamic modifier, it is also possible to make it be timed or make it use a different scope as the variable's base. For example, the following code will apply dynamic_modifier_name to GER for 30 days, but the variables will be read off POL:
+<pre>GER = {
+    add_dynamic_modifier = {
+        modifier = dynamic_modifier_name
+        scope = POL  # The modifier itself will be applied to GER, but the variables will be read off POL.
+        days = 30
+    }
+}</pre>In particular, assuming that dynamic_modifier_name is the example dynamic modifier created previously, if you do <code>set_variable = { POL.var_name = 0.3 }</code>, then the dynamic modifier assigned to GER as the result of this effect will give 0.3 daily political power gain. However, if the dynamic modifier scopes into ROOT for the variable as <code>political_power_gain = ROOT.var_name</code>, then <code>set_variable = { GER.var_name = 0.3 }</code> would be done.
+
+A dynamic modifier is removed via [[Effect#remove_dynamic_modifier|remove_dynamic_modifier]], phrased similarly to add_dynamic_modifier: <code>remove_dynamic_modifier = { modifier = dynamic_modifier_name }</code>. If, when added, the dynamic modifier had a scope assigned to it, the scope will have to be specified when removing it as well.
+
+'''Modifiers that use variables will not show up in the tooltip of add_dynamic_modifier''', while those that are set to a static value will. While this may make the dynamic modifier appear broken when only reading the tooltip, this will not be actually the case once it gets added. In this case, [[Effect#custom_effect_tooltip|the tooltip of the effect can be changed]], with [[Scopes#hidden_effect|the effect adding the dynamic modifier hidden]].
+
+== Static modifiers ==
+Static modifiers are stored in {{path|common/modifiers/*.txt}} files, where each code block within is a modifier block with the name being the ID of the static modifier. There are 5 main categories of static modifiers:
+
+=== Global modifiers ===
+Global modifiers are applied by the hard-coded game features. Their names mustn't be changed, as the code uses them internally, but their effects can be edited. Examples of global modifiers are the penalty for non-core states or the effects of stability and war support.
+
+=== Difficulty modifiers ===
+These are applied within {{path|common/difficulty_settings/*.txt}} files. This is used in the menu to strengthen specific countries at the game's start within game rules. If there are no difficulty settings defined, the menu will not be possible to open.<br/>
+Each difficulty setting is defined as a <code>difficulty_setting = { ... }</code> block, which must lie within an overarching <code>difficulty_settings = { ... }</code> block. The following arguments can go into difficulty settings:
+* <code>key = localisation_key</code> is the [[localisation]] key used as the name of the difficulty setting as it shows up in the game rules menu/
+* <code>modifier = static_modifier</code> sets the static modifier to be used by this difficulty setting.
+* <code>countries = { ... }</code> is a whitespace-separated list of country tags for which the difficulty setting applies.
+* <code>multiplier = 2.0</code> is a value by which the static modifier gets multiplied at the max value. As there are 5 levels for each difficulty rule, including 0, this gets split into quarters for each level, with the second being a quarter, the third being a half, and the fourth being three quarters.
+An example of a difficulty setting file is the following:
+<pre>difficulty_settings = {
+    difficulty_setting = {
+        key = difficulty_weaken_GER
+        modifier = weaken_country
+        countries = { GER }
+        multiplier = 2.0
+    }
+    difficulty_setting = {
+        key = difficulty_weaken_SOV
+        modifier = weaken_country
+        countries = { SOV UKR BLR }
+        multiplier = 2.0
+    }
+}</pre>
+=== Relation modifiers ===
+Not to be confused with opinion modifiers. The relation modifiers apply a targeted modifier from one country towards an another one, automatically removed when the trigger is met. ROOT is the country that the modifier is applied to and FROM is the target. An example would be:
+<pre>test_relation_modifier = {
+    valid_relation_trigger = {
+        FROM = {
+            has_government = ROOT       # same ruling party as ROOT
+        }
+    }
+    compliance_gain = 0.2               # FROM's states have 20% more compliance gain when controlled by ROOT
+}</pre>They can be added by the add_relation_modifier effect, used as such:
+<pre>add_relation_modifier = {
+    target = TAG
+    modifier = test_relation_modifier
+}</pre>remove_relation_modifier, which works similarly, can remove them.
+
+=== Province modifiers ===
+Province modifiers apply a modifier to a specific province rather than a state. They can be applied via the add_province_modifier effect, and removed with remove_province_modifier. More info on how to use these can be seen in the [[Effects|effects]] page.<br/>An example definition looks like<pre>mod_modifier = { 
+    army_speed_factor = -0.5
+    army_defence_factor = 0.5
+    dig_in_speed_factor = 0.5
+}</pre>Many state-scope modifiers will work in province scope as well. In order to make the GFX in GUI, you first need to edit {{path|interface/countrystateview.gui}}. The icon must be defined inside custom_icon_container, similarly to other examples. An example definition looks like
+<pre>iconType = {
+    name = "<modifier name>_icon"
+    spriteType = "GFX_modifiers_<modifier name>_icon"
+    position = { x = 0 y = 0 }
+    Orientation = "UPPER_LEFT"          
+}</pre>The spriteType you have defined needs to be defined in {{path|interface/*.gfx}} similarly to this example:
+<pre>spriteType = {
+    name = "GFX_modifiers_<modifier name>_icon"
+    textureFile = "gfx/interface/modifiers_<modifier name>_icon.dds"
+}</pre>
+=== Balance of power modifiers ===
+Balance of power modifiers typically include within of themselves the [[#power_balance_daily|power_balance_daily]] and/or [[#power_balance_weekly|power_balance_weekly]] modifiers in order to gradually tip the balance towards one side. For example,
+<pre>my_bop_modifier = {
+    power_balance_weekly = -0.01 # Changes by 1% each week to the left, in the range of -1 to 1.
+}</pre>
+Balance of power modifiers are added via [[Effect#add_power_balance_modifier|the add_power_balance_modifier effect]] as such:
+<pre>add_power_balance_modifier = {
+    id = my_bop    # The ID of the balance of power
+    modifier = my_bop_modifier # The modifier to add
+}</pre>[[Effect#remove_power_balance_modifier|The remove_power_balance_modifier effect]], with the same syntax, or [[Effect#remove_all_power_balance_modifiers|remove_all_power_balance_modifiers]] can be used to remove these from the country.
+
+== Modifier definitions ==
+Modifier definitions allow the creation of a custom modifier, which can be accessed as a variable when you wish to use it. After being defined, they function entirely like a new variable, being possible to read as a variable with the same <code>modifier@modifier_name</code> procedure. They will not have any effect by default and function only as a way to change the variable's value in an additive way with modifier blocks.<br/>
+Each modifier token is defined within {{path|common/modifier_definitions/*.txt}} files as a separate code block, where the name of the code block serves as the ID of the modifier definition. There are the following arguments that can go inside of it:
+* <code>color_type = good</code> decides the colour of the modifier's value itself. There are three values, <code>good</code>, <code>bad</code>, and <code>neutral</code>. <code>neutral</code> is permamently yellow, while <code>good</code> turns the positive values {{green|green}} and negative values {{red|red}}. <code>bad</code> is the reversal of <code>good</code>.
+* <code>value_type = percentage</code> decides the way the number will show up in the tooltip. There are the following values this argument can be set to:
+** <code>number</code> will make the exact value of the modifier show up. 0.02 will show up like "Modifier definition: 0.02". 
+** <code>percentage</code> will make the modifier show up as a percentage on the scale from 0 to 1. 0.2 will show up like "Modifier token: 20%". 
+** <code>percentage_in_hundred</code> will make the modifier show up as a percentage on the scale from 0 to 100. 10 will show up like "Modifier token: 10%".
+** <code>yes_no</code> shows up as a boolean: anything larger than 1 will shows up as <code>yes</code>, while 0 will show up as <code>no</code>.
+* <code>precision = 1</code> decides how many numbers will be shown after the period in the tooltip. For example, if it is set to 1, the tooltip will show 0.341 as if it was 0.3. Note that the game inherently does not support more than 3 decimal numbers, so it cannot be larger than 3.
+* <code>postfix</code> decides what will be added after the value of the modifier in the tooltip. Allowed values are 'none' (Default), 'days', 'hours', and 'daily'.
+* <code>category</code> decides on the category of the modifier. By default, the category is 'all', which makes it be in every single category. Certain tooltips will only show modifiers if they belong to a certain category. It is possible to set multiple categories for the same modifier definition by defining them one after another.
+: The allowed values are 'none', 'all', 'country', 'state', 'unit_leader', 'army', 'naval', 'air', 'peace', 'politics', 'ai', 'defensive', 'aggressive', 'war_production', 'military_advancements', 'military_equipment', 'autonomy', 'government_in_exile', and 'intelligence_agency'.
+
+The modifier definition's ID is also used as the [[localisation]] key needed to change the name of the modifier depending on the currently turned on language.
+=== Examples ===
+<pre>modifier_definition_example = {
+    color_type = good
+    value_type = number
+    precision = 1
+    postfix = daily
+    
+    category = country
+    category = state
+}
+modifier_definition_example_2 = {
+    color_type = bad
+    value_type = percentage
+}</pre>
+=== Using in variables ===
+The function of modifier definitions is to modify the value of a game variable, which can be read by other variables. You can set a variable to be equal to the sum of all values of the same modifier token in the current scope by doing <code>set_variable = { var_name = modifier@modifier_token_name }</code>. This example will set var_name to be equal to the total value of modifier_token_name.
+
+Note that, unlike countries and states, unit leaders use leader_modifier@modifier_definition_name or unit_modifier@modifier_definition_name in their scopes.
+
+Example usage of making a modifier token create civilian factories in random core states monthly, in any [[on action]] file:
+{{VisibleCollapse|
+<pre>on_actions = {
+    on_monthly = {
+        effect = {
+            if = {
+                limit = {
+                    check_variable = { modifier@modifier_definition_example > 0 }
+                }
+                for_loop_effect = {
+                    start = 0
+                    end = modifier@modifier_definition_example
+                    random_owned_controlled_state = {
+                        limit = {
+                            is_core_of = ROOT
+                            free_building_slots = {
+                                building = industrial_complex
+                                size > 0
+                                include_locked = no
+                            }
+                        }
+                        add_building_construction = {
+                            type = industrial_complex
+                            level = 1
+                            instant_build = yes
+                        }
+                    }
+                }
+            }
+        }
+    }
+}</pre>|Example}}
+
+== Opinion modifiers ==
+Despite their name, opinion modifiers are not related to modifiers in any way, instead they are used to modify the diplomatic or economic relations between a pair of countries.
+
+The opinion modifiers are made in any {{path|common/opinion_modifiers/*.txt}} file as an entry in the <code>opinion_modifiers = { ... }</code> block, with the name of the entry being the ID of the opinion modifier. In case of there being several entries with the same ID, the one that was [[Modding#Loading files|evaluated later based on the filename and order in files]] will take priority, meaning that copying a base game file is never necessary in a mod.
+
+There are the following attributes that are used in opinion modifiers:
+* <code>trade = yes</code> is used to decide whether the opinion modifier changes the diplomatic relations or the trade opinion from one country to another. If unset, defaults to being false making it diplomatic.
+* <code>value = -10</code> is the value of the modifier that decides by how much the diplomatic or trade opinion should change once the opinion modifier is added.
+* <code>decay = 1</code> details the speed at which the opinion modifier trends towards zero monthly. Optional, defaults to the modifier not changing if unset.
+* <code>days = 10</code> | <code>months = 2</code> | <code>years = 1</code> decides the time for how much the opinion modifier should last before it will get automatically removed. A month is interpreted as exactly 30 days, while a year is 365. Optional, the modifier will be permanent if neither is set.
+* <code>min_trust = 10</code> | <code>max_trust = -10</code> detail the minimum and maximum value that the opinion modifier can change to. As the only non-hardcoded way to change the value of an existing opinion modifier is through decay, this can be used to limit how far it can apply.
+
+The [[localisation]] is created in any {{path|localisation/english/*_l_english.yml}} file encoded in UTF-8 using the byte order mark (aka UTF-8-BOM), with the localisation key being the name of the modifier.
+=== Examples ===
+Inside of a new {{path|common/opinion_modifiers/*.txt}} file:
+<pre>opinion_modifiers = {
+    test_trade_modifier = {
+        trade = yes
+        value = -100    # Provides -100 trade opinion for 2 months
+        months = 2
+    }
+    test_diplomatic_modifier = {
+        value = 20      # Provides +20 diplomatic opinion that decays by 0.5 per month
+        decay = 0.5
+    }
+}</pre>
+Inside of a new {{path|localisation/english/*_l_english.yml}} file:
+<pre>l_english:
+ test_trade_modifier: "Testing trade modifier"
+ test_diplomatic_modifier: "Testing diplomatic modifier"</pre>
+=== Implementation ===
+New opinion modifiers can only be added using the [[Effect#add_opinion_modifier|add_opinion_modifier effect]] (or the similar [[Effect#reverse_add_opinion_modifier|reverse_add_opinion_modifier]]) in any effect block, such as a [[National focus modding#Effects|focus reward]], a [[Country creation#Country history|country history file]], or an idea's [[Idea modding#Effects|on_add and on_remove]]. Similarly, already applied new opinion modifiers can only be removed with [[Effect#remove_opinion_modifier|remove_opinion_modifier]]. When <code>add_opinion_modifier</code> is used to apply an opinion modifier, only the country where the effect is executed will change its opinion towards the target. 
+
+There is no way to use a modifier block to directly apply an opinion modifier, but it can be simulated by adding or removing an opinion modifier at the same time the modifier block's effects are. For example, this national spirit would simulate applying an opinion modifier towards every other country that has the idea:
+{{VisibleCollapse|
+<pre>ideas = {
+    country = {
+        idea_opinion_modifier = {
+            on_add = { # Note: Doesn't work if the idea is added within country history or a bookmark's effect.
+                every_other_country = { # If it's added in country history, then replicate the effects there as well.
+                    limit = {
+                        has_idea = idea_opinion_modifier
+                    }
+                    add_opinion_modifier = {
+                        target = ROOT
+                        modifier = test_diplomatic_modifier
+                    }
+                    reverse_add_opinion_modifier = {
+                        target = ROOT
+                        modifier = test_diplomatic_modifier 
+                    }
+                }
+            }
+            on_remove = {
+                every_other_country = {
+                    limit = {
+                        has_idea = idea_opinion_modifier
+                    }
+                    remove_opinion_modifier = {
+                        target = ROOT
+                        modifier = test_diplomatic_modifier
+                    }
+                    ROOT = {
+                        remove_opinion_modifier = {
+                            target = PREV
+                            modifier = test_diplomatic_modifier 
+                        }
+                    }
+                }
+            }
+            modifier = {
+                custom_modifier_tooltip = add_opinion_modifier_tt # Since on_add/on_remove aren't shown to the player
+            }
+        }
+    }
+}</pre>
+|Example code of a national spirit that uses opinion modifiers}}
+== List of modifiers ==
+The list of modifiers may be outdated. A complete, but unsorted, list of modifiers can be found in {{path|documentation/modifiers_documentation.html}} or {{path|documentation/modifiers_documentation.md}}.
+<!-- These are present in modifiers_documentation, but don't have any usage in-game and aren't clear on what they do in localisation:
+-armor_factor. Localised as "Armor". Categories: army, defensive.
+-ground_attack. Localised as "Ground Attack". Categories: air, aggressive. Not to be confused with ground_attack_factor.
+-training_time_army. Localised as "Division training time", identical to training_time_army_factor. Categories: army, war_production
+!-->
+
+=== Country scope ===
+
+==== General ====
+{{SVersion|1.13}}
+
+{| class="wikitable sortable mw-collapsible" style="display: inline-block; padding: 5px" width="100%"
+|+ style="text-align: center;" width = "100%" |{{nowrap|General country-scoped modifiers:}}<br/>
+! width="10%" | Name
+! width="25%" | Effects
+! width="25%" | Examples
+! width="20%" | Modifier type
+! width="15%" | Notes
+! width="5%" | Version added
+|-id="monthly_population"
+|monthly_population
+|Changes the monthly population gain in states owned by the country.
+|<pre>monthly_population = 0.5</pre>
+|Percentual.
+|Does not work with states.
+|1.0
+|-id="nuclear_production"
+|nuclear_production
+|Enables the production of nukes.
+|<pre>nuclear_production = 1</pre>
+|Boolean (only 1).
+|
+|1.0
+|-id="nuclear_production_factor"
+|nuclear_production_factor
+|Changes speed at which nukes are produced.
+|<pre>nuclear_production_factor = 0.5</pre>
+|Percentual.
+|Works in state scope, in which case it'll apply to the owner.
+|1.0
+|-id="research_sharing_per_country_bonus"
+|research_sharing_per_country_bonus
+|Changes the bonus in research speed per country when technology sharing.
+|<pre>research_sharing_per_country_bonus = 0.5</pre>
+|Flat.
+|
+|1.3
+|-id="research_sharing_per_country_bonus_factor"
+|research_sharing_per_country_bonus_factor
+|Changes the bonus in research speed per country when technology sharing by a percentage.
+|<pre>research_sharing_per_country_bonus_factor = 0.5</pre>
+|Percentual.
+|
+|1.3
+|-id="research_speed_factor"
+|research_speed_factor
+|Changes the research speed.
+|<pre>research_speed_factor = 0.5</pre>
+|Percentual.
+|
+|1.0
+|-id="local_resources_factor"
+|local_resources_factor
+|Resource extraction efficiency. Modifies the amount of available resources.
+|<pre>local_resources_factor = 0.3</pre>
+|Percentual.
+|
+|1.0
+|-id="surrender_limit"
+|surrender_limit
+|Changes the percentage of victory points the country needs to lose control of to capitulate.
+|<pre>surrender_limit = 0.1</pre>
+|Percentual.
+|The larger, the more victory points are needed to capitulate a country.
+|1.0
+|-id="max_surrender_limit_offset"
+|max_surrender_limit_offset
+|Controls the maximum surrender progress of a nation.
+|<pre>max_surrender_limit_offset = 0.3</pre>
+|Flat.
+|For example, 0.4 means that the country cannot require more than 60% victory points to capitulate, no matter the surrender_limit.
+|1.9
+|-id="forced_surrender_limit"
+|forced_surrender_limit
+|Changes the percentage of victory points the country needs to lose control of to capitulate, bypassing the minimum or maximum.
+|<pre>forced_surrender_limit = 0.1</pre>
+|Percentual.
+|The larger, the more victory points are needed to capitulate a country. Applied after the minimum and maximum are applied, leading to making it possible to have it below {{hover|MIN_SURRENDER_LIMIT &#61; 0.2 in common/defines/00_defines.lua|20%}} or above the maximum defined with max_surrender_limit_offset.
+|1.0
+|-id="country_resource_<resource>"
+|country_resource_<resource>
+|Directly modifies the country's resource stockpile.
+|<pre>country_resource_oil = 10</pre>
+|Flat.
+|Can also go into country scope.
+|1.0
+|-id="country_resource_cost_<resource>"
+|country_resource_cost_<resource>
+|Directly modifies the country's resource stockpile.
+|<pre>country_resource_cost_aluminium = 10</pre>
+|Flat.
+|Can also go into country scope.
+|1.0
+|-
+|factory_energy_consumption
+|Directly modifies the country's energy usage per factory
+|<syntaxhighlight>
+factory_energy_consumption = 0.1
+</syntaxhighlight>
+|Percentual
+|
+|1.17
+|}
+
+==== Politics ====
+{{SVersion|1.13}}
+
+{| class="wikitable sortable mw-collapsible" style="display: inline-block; padding: 5px" width="100%"
+|+ style="text-align: center;" width = "100%" |{{nowrap|Political country-scoped modifiers:}}<br/>
+! width="10%" | Name
+! width="25%" | Effects
+! width="25%" | Examples
+! width="20%" | Modifier type
+! width="15%" | Notes
+! width="5%" | Version added
+|-id="min_export"
+|min_export
+|Changes the amount of resources to market.
+|<pre>min_export = 0.5</pre>
+|Flat.
+|
+|1.0
+|-id="trade_opinion_factor"
+|trade_opinion_factor
+|Makes AI more likely to purchase resources from this country.
+|<pre>trade_opinion_factor = 0.5</pre>
+|Percentual.
+|
+|1.0
+|-id="defensive_war_stability_factor"
+|defensive_war_stability_factor
+|Changes the penalty to the stability invoked by participating in a defensive war.
+|<pre>defensive_war_stability_factor = 0.5</pre>
+|Percentual.
+|
+|1.0
+|-id="disabled_ideas"
+|disabled_ideas
+|Disables manually changing ideas (including ministers and laws).
+|<pre>disabled_ideas = 1</pre>
+|Boolean (only 1).
+|
+|1.9
+|-id="idea_cost_factor"
+|<idea&#124;character slot>_cost_factor
+|Changes the cost in political power to add an idea or character within the specified slot.
+|<pre>political_advisor_cost_factor = 0.5</pre>
+|Percentual.
+|Idea slots can be found in common/idea_tags. [[Idea_modding#Modifying_cost_of_a_category|Requires an idea or a character of that category to be present in an earlier-evaluated file.]]
+|1.4
+|-id="idea_type_cost_factor"
+|<idea category type>_category_type_cost_factor
+|Changes the cost in political power to add an idea within any of the categories with the specified type.
+|<pre>air_spirit_category_type_cost_factor = 0.5</pre>
+|Percentual.
+|Idea category definitions can be found in {{path|common/idea_tags/*.txt}} files, a type is assigned with <code>type = army_spirit</code>.
+|1.10
+|-id="<ledger>_advisor_cost_factor"
+|<ledger>_advisor_cost_factor
+|Changes the cost in political power to add an advisor assigned the specified military ledger.
+|<pre>air_advisor_cost_factor = 0.5</pre>
+|Percentual.
+|Ledgers are assigned to categories and characters in common/idea_tags and common/ideas. Modifier works with air, army, and navy.
+|1.11
+|-id="unit_leader_as_advisor_cp_cost_factor"
+|unit_leader_as_advisor_cp_cost_factor
+|Changes the cost in command power to turn a unit leader into an advisor.
+|<pre>unit_leader_as_advisor_cp_cost_factor = 0.5</pre>
+|Percentual.
+|
+|1.11
+|-id="improve_relations_maintain_cost_factor"
+|improve_relations_maintain_cost_factor
+|Changes the cost in political power to maintain improvement of relations.
+|<pre>improve_relations_maintain_cost_factor = 0.5</pre>
+|Percentual.
+|
+|1.4
+|-id="female_random_country_leader_chance"
+|female_random_country_leader_chance
+|Changes the chance for a randomly-generated country leader to be female.
+|<pre>female_random_country_leader_chance = 0.3</pre>
+|Percentual.
+|
+|1.0
+|-id="offensive_war_stability_factor"
+|offensive_war_stability_factor
+|Modifies the stability penalty received from participating in an offensive war.
+|<pre>offensive_war_stability_factor = 0.3</pre>
+|Percentual.
+|
+|1.0
+|-id="party_popularity_stability_factor"
+|party_popularity_stability_factor
+|Modifies the stability gained by the popularity of the ruling party.
+|<pre>party_popularity_stability_factor = 0.3</pre>
+|Percentual.
+|
+|1.0
+|-id="political_power_cost"
+|political_power_cost
+|Daily cost in political power.
+|<pre>political_power_cost = 0.3</pre>
+|Flat.
+|
+|1.0
+|-id="political_power_gain"
+|political_power_gain
+|Modifies daily gain in political power.
+|<pre>political_power_gain = 0.3</pre>
+|Flat.
+|
+|1.0
+|-id="political_power_factor"
+|political_power_factor
+|Modifies daily gain in political power by a percentage.
+|<pre>political_power_factor = 0.3</pre>
+|Percentual.
+|
+|1.0
+|-id="stability_factor"
+|stability_factor
+|Modifies stability of the country.
+|<pre>stability_factor = 0.3</pre>
+|Flat.
+|
+|1.0
+|-id="stability_weekly"
+|stability_weekly
+|Modifies weekly stability gain of the country.
+|<pre>stability_weekly = 0.01</pre>
+|Flat.
+|
+|1.0
+|-id="stability_weekly_factor"
+|stability_weekly_factor
+|Modifies weekly stability gain of the country by a percentage.
+|<pre>stability_weekly_factor = 0.3</pre>
+|Percentual.
+|
+|1.0
+|-id="war_stability_factor"
+|war_stability_factor
+|Modifies the stability loss caused by being at war.
+|<pre>war_stability_factor = 0.3</pre>
+|Percentual.
+|
+|1.0
+|-id="war_support_factor"
+|war_support_factor
+|Modifies war support of the country.
+|<pre>war_support_factor = 0.3</pre>
+|Flat.
+|
+|1.0
+|-id="war_support_weekly"
+|war_support_weekly
+|Modifies weekly war support gain of the country.
+|<pre>war_support_weekly = 0.01</pre>
+|Flat.
+|
+|1.0
+|-id="war_support_weekly_factor"
+|war_support_weekly_factor
+|Modifies weekly war support gain of the country by a percentage.
+|<pre>war_support_weekly_factor = 0.3</pre>
+|Percentual.
+|
+|1.0
+|-id="weekly_casualties_war_support"
+|weekly_casualties_war_support
+|Modifies weekly war support gain of the country depending on the casualties suffered by it.
+|<pre>weekly_casualties_war_support = 0.006</pre>
+|Percentual.
+|
+|1.12
+|-id="weekly_convoys_war_support"
+|weekly_convoys_war_support
+|Modifies weekly war support gain of the country depending on the amount of its convoys that have been sunk.
+|<pre>weekly_convoys_war_support = 0.006</pre>
+|Percentual.
+|
+|1.12
+|-id="weekly_bombing_war_support"
+|weekly_bombing_war_support
+|Modifies weekly war support gain of the country depending on the enemy bombing of its states.
+|<pre>weekly_bombing_war_support = 0.006</pre>
+|Percentual.
+|
+|1.12
+|-id="drift_defence_factor"
+|drift_defence_factor
+|Ideology drift defense.
+|<pre>drift_defence_factor = 0.3</pre>
+|Percentual.
+|
+|1.0
+|-id="power_balance_daily"
+|power_balance_daily
+|Pushes the power balance by a specified amount on each day.
+|<pre>power_balance_daily = 0.01</pre>
+|Flat.
+|Positive values result in it being pushed right, while negatives result in it being pushed left.
+|1.12
+|-id="power_balance_weekly"
+|power_balance_weekly
+|Pushes the power balance by a specified amount on each week.
+|<pre>power_balance_weekly = 0.01</pre>
+|Flat.
+|Positive values result in it being pushed right, while negatives result in it being pushed left.
+|1.12
+|-id="ideology_drift"
+|<ideology>_drift
+|Daily gain of the specified ideology.
+|<pre>communism_drift = 0.03</pre>
+|Flat.
+|
+|1.0
+|-id="ideology_acceptance"
+|<ideology>_acceptance
+|Likelihood of AI to accept offers from countries of the specified ideology.
+|<pre>fascism_acceptance = 50</pre>
+|Flat.
+|
+|1.0
+|}
+
+==== Diplomacy ====
+{{SVersion|1.13}}
+
+{| class="wikitable sortable mw-collapsible" style="display: inline-block; padding: 5px" width="100%"
+|+ style="text-align: center;" width = "100%" |{{nowrap|Diplomatic country-scoped modifiers:}}<br/>
+! width="10%" | Name
+! width="25%" | Effects
+! width="25%" | Examples
+! width="20%" | Modifier type
+! width="15%" | Notes
+! width="5%" | Version added
+|-id="civil_war_involvement_tension"
+|civil_war_involvement_tension
+|Changes the world tension amount necessary to intervene in an ally's civil war.
+|<pre>civil_war_involvement_tension = 0.5</pre>
+|Flat.
+|
+|1.0
+|-id="enemy_declare_war_tension"
+|enemy_declare_war_tension
+|Changes the world tension required for an enemy to justify a wargoal on us.
+|<pre>enemy_declare_war_tension = 0.5</pre>
+|Flat.
+|
+|1.0
+|-id="enemy_justify_war_goal_time"
+|enemy_justify_war_goal_time
+|Changes the time required for an enemy to justify a wargoal on us.
+|<pre>enemy_justify_war_goal_time = 0.5</pre>
+|Percentual.
+|This also modifies the cost in political power.
+|1.0
+|-id="faction_trade_opinion_factor"
+|faction_trade_opinion_factor
+|Changes the opinion gain gained by trade between faction members.
+|<pre>faction_trade_opinion_factor = 0.5</pre>
+|Percentual.
+|
+|1.0
+|-id="generate_wargoal_tension"
+|generate_wargoal_tension
+|Changes the necessary tension for us to generate a wargoal.
+|<pre>generate_wargoal_tension = 0.3</pre>
+|Flat.
+|
+|1.0
+|-id="guarantee_cost"
+|guarantee_cost
+|Cost in political power for the country to guarantee an another country.
+|<pre>guarantee_cost = 0.3</pre>
+|Percentual.
+|
+|1.4
+|-id="guarantee_tension"
+|guarantee_tension
+|Necessary world tension for the country to guarantee an another country.
+|<pre>guarantee_tension = 0.3</pre>
+|Flat.
+|
+|1.0
+|-id="join_faction_tension"
+|join_faction_tension
+|Necessary world tension for the country to join a faction.
+|<pre>join_faction_tension = 0.3</pre>
+|Flat.
+|
+|1.0
+|-id="justify_war_goal_time"
+|justify_war_goal_time
+|The amount of time necessary to justify a wargoal.
+|<pre>justify_war_goal_time = 0.3</pre>
+|Percentual.
+|This also modifies the cost in political power.
+|1.0
+|-id="justify_war_goal_when_in_major_war_time"
+|justify_war_goal_when_in_major_war_time
+|The amount of time necessary to justify a wargoal when in a war with a major country.
+|<pre>justify_war_goal_when_in_major_war_time = 0.3</pre>
+|Percentual.
+|This also modifies the cost in political power.
+|1.0
+|-id="lend_lease_tension"
+|lend_lease_tension
+|Necessary world tension for the country to lend-lease.
+|<pre>lend_lease_tension = 0.3</pre>
+|Flat.
+|
+|1.0
+|-id="lend_lease_tension_with_overlord"
+|lend_lease_tension_with_overlord
+|Necessary world tension for the country to lend-lease to its overlord.
+|<pre>lend_lease_tension_with_overlord = 0.3</pre>
+|Flat.
+|
+|1.13
+|-id="opinion_gain_monthly"
+|opinion_gain_monthly
+|Changes opinion gain from the 'Improve relations' diplomatic action.
+|<pre>opinion_gain_monthly = 5</pre>
+|Flat.
+|
+|1.0
+|-id="opinion_gain_monthly_factor"
+|opinion_gain_monthly_factor
+|Changes opinion gain from the 'Improve relations' diplomatic action by a percentage.
+|<pre>opinion_gain_monthly_factor = 0.3</pre>
+|Percentual.
+|
+|1.0
+|-id="opinion_gain_monthly_same_ideology"
+|opinion_gain_monthly_same_ideology
+|Changes opinion gain from the 'Improve relations' diplomatic action for countries of the same ideology.
+|<pre>opinion_gain_monthly_same_ideology = 5</pre>
+|Flat.
+|
+|1.0
+|-id="opinion_gain_monthly_same_ideology_factor"
+|opinion_gain_monthly_same_ideology_factor
+|Changes opinion gain from the 'Improve relations' diplomatic action for countries of the same ideology by a percentage.
+|<pre>opinion_gain_monthly_same_ideology_factor = 0.3</pre>
+|Percentual.
+|
+|1.0
+|-id="request_lease_tension"
+|request_lease_tension
+|Necessary world tension for the country to request lend-lease.
+|<pre>request_lease_tension = 0.3</pre>
+|Percentual.
+|
+|1.9
+|-id="annex_cost_factor"
+|annex_cost_factor
+|Modifies the cost in victory points to annex states in peace deals.
+|<pre>annex_cost_factor = 0.1</pre>
+|Percentual.
+|
+|1.0
+|-id="puppet_cost_factor"
+|puppet_cost_factor
+|Modifies the cost in victory points per state to puppet countries in peace deals.
+|<pre>puppet_cost_factor = 0.1</pre>
+|Percentual.
+|
+|1.0
+|-id="send_volunteer_divisions_required"
+|send_volunteer_divisions_required
+|Changes the number of divisions needed to send volunteers.
+|<pre>send_volunteer_divisions_required = -0.3</pre>
+|Percentual.
+|
+|1.0
+|-id="send_volunteer_factor"
+|send_volunteer_factor
+|Changes the number of divisions the country can send as volunteers by a percentage.
+|<pre>send_volunteer_factor = 0.3</pre>
+|Percentual.
+|
+|1.0
+|-id="send_volunteer_size"
+|send_volunteer_size
+|Changes the number of divisions the country can send as volunteers.
+|<pre>send_volunteer_size = 5</pre>
+|Flat.
+|
+|1.0
+|-id="send_volunteers_tension"
+|send_volunteers_tension
+|Changes the world tension necessary for the country to send volunteers.
+|<pre>send_volunteers_tension = -0.1</pre>
+|Percentual.
+|
+|1.0
+|-id="air_volunteer_cap"
+|air_volunteer_cap
+|Changes the amount of airforce you can send as volunteers.
+|<pre>air_volunteer_cap = 100</pre>
+|Flat.
+|
+|1.5
+|-id="embargo_threshold_factor"
+|embargo_threshold_factor
+|Changes the necessary world tension level in order to be able to embargo a country.
+|<pre>embargo_threshold_factor = 0.2</pre>
+|Percentual.
+|
+|1.12
+|-id="embargo_cost_factor"
+|embargo_cost_factor
+|Changes the cost in political power to send an embargo.
+|<pre>embargo_cost_factor = 0.3</pre>
+|Percentual.
+|
+|1.12
+|}
+
+==== Autonomy ====
+{{SVersion|1.13}}
+
+{| class="wikitable sortable mw-collapsible" style="display: inline-block; padding: 5px" width="100%"
+|+ style="text-align: center;" width = "100%" |{{nowrap|Autonomy-related country-scoped modifiers:}}<br/>
+! width="10%" | Name
+! width="25%" | Effects
+! width="25%" | Examples
+! width="20%" | Modifier type
+! width="15%" | Notes
+! width="5%" | Version added
+|-id="autonomy_gain"
+|autonomy_gain
+|Daily gain of autonomy.
+|<pre>autonomy_gain = 0.5</pre>
+|Flat.
+|A positive number increase total autonomy, meaning the SUBJECT can be free faster. A negative number decrease total autonomy, meaning the OVERLORD can annex the manpower-slaves faster.
+|1.3
+|-id="autonomy_gain_global_factor"
+|autonomy_gain_global_factor
+|Modifies all gain of autonomy by a subject.
+|<pre>autonomy_gain_global_factor = 0.5</pre>
+|Percentual.
+|
+|1.4
+|-id="subjects_autonomy_gain"
+|subjects_autonomy_gain
+|Daily gain of autonomy in our subjects.
+|<pre>subjects_autonomy_gain = 0.5</pre>
+|Flat.
+|
+|1.3
+|-id="autonomy_gain_ll_to_overlord"
+|autonomy_gain_ll_to_overlord
+|Modifies gain of autonomy from lend-leasing to the overlord.
+|<pre>autonomy_gain_ll_to_overlord = 0.5</pre>
+|Flat.
+|
+|1.3
+|-id="autonomy_gain_ll_to_overlord_factor"
+|autonomy_gain_ll_to_overlord_factor
+|Modifies gain of autonomy from lend-leasing to the overlord by a percentage.
+|<pre>autonomy_gain_ll_to_overlord_factor = 0.5</pre>
+|Percentual.
+|
+|1.3
+|-id="autonomy_gain_ll_to_subject"
+|autonomy_gain_ll_to_subject
+|Modifies loss of autonomy from lend-leasing to the subject.
+|<pre>autonomy_gain_ll_to_subject = 0.5</pre>
+|Flat.
+|
+|1.3
+|-id="autonomy_gain_ll_to_subject_factor"
+|autonomy_gain_ll_to_subject_factor
+|Modifies loss of autonomy from lend-leasing to the subject by a percentage.
+|<pre>autonomy_gain_ll_to_subject_factor = 0.5</pre>
+|Percentual.
+|
+|1.3
+|-id="autonomy_gain_trade"
+|autonomy_gain_trade
+|Modifies gain of autonomy from the overlord trading with the subject.
+|<pre>autonomy_gain_trade = 0.5</pre>
+|Flat.
+|
+|1.3
+|-id="autonomy_gain_trade_factor"
+|autonomy_gain_trade_factor
+|Modifies gain of autonomy from the overlord trading with the subject by a percentage.
+|<pre>autonomy_gain_trade_factor = 0.5</pre>
+|Percentual.
+|
+|1.3
+|-id="autonomy_gain_warscore"
+|autonomy_gain_warscore
+|Modifies gain of autonomy from the subject gaining warscore.
+|<pre>autonomy_gain_warscore = 0.5</pre>
+|Flat.
+|
+|1.3
+|-id="autonomy_gain_warscore_factor"
+|autonomy_gain_warscore_factor
+|Modifies gain of autonomy from the subject gaining warscore by a percentage.
+|<pre>autonomy_gain_warscore_factor = 0.5</pre>
+|Percentual.
+|
+|1.3
+|-id="autonomy_manpower_share"
+|autonomy_manpower_share
+|Modifies the amount of manpower the overlord can use from the subject.
+|<pre>autonomy_manpower_share = 0.5</pre>
+|Percentual.
+|
+|1.3
+|-id="can_master_build_for_us"
+|can_master_build_for_us
+|Makes the overlord be able to build in the subject.
+|<pre>can_master_build_for_us = 1</pre>
+|Boolean (only 1).
+|
+|1.3
+|-id="cic_to_overlord_factor"
+|cic_to_overlord_factor
+|Modifies the amount of the subject's civilian industry that goes to the overlord.
+|<pre>cic_to_overlord_factor = 0.3</pre>
+|Percentual.
+|
+|1.3
+|-id="mic_to_overlord_factor"
+|mic_to_overlord_factor
+|Modifies the amount of the subject's military industry that goes to the overlord.
+|<pre>mic_to_overlord_factor = 0.3</pre>
+|Percentual.
+|
+|1.3
+|-id="extra_trade_to_overlord_factor"
+|extra_trade_to_overlord_factor
+|Modifies the amount of the subject's resources that the overlord can receive via trade.
+|<pre>extra_trade_to_overlord_factor = 0.3</pre>
+|Percentual.
+|
+|1.3
+|-id="license_subject_master_purchase_cost"
+|license_subject_master_purchase_cost
+|Modifies the cost of licensed production from the overlord.
+|<pre>license_subject_master_purchase_cost = 0.3</pre>
+|Percentual.
+|
+|1.4
+|-id="master_build_autonomy_factor"
+|master_build_autonomy_factor
+|Modifies loss of autonomy from the overlord building in subject's states by a percentage.
+|<pre>master_build_autonomy_factor = 0.3</pre>
+|Percentual.
+|
+|1.3
+|-id="master_ideology_drift"
+|master_ideology_drift
+|Changes daily gain of the overlord's ideology in the country.
+|<pre>master_ideology_drift = 0.03</pre>
+|Flat.
+|
+|1.6
+|-id="overlord_trade_cost_factor"
+|overlord_trade_cost_factor
+|Modifies the cost of trade between the overlord and the subject in civilian factories.
+|<pre>overlord_trade_cost_factor = -0.3</pre>
+|Percentual.
+|
+|1.3
+|}
+
+==== Governments in exile ====
+{{SVersion|1.13}}
+
+{| class="wikitable sortable mw-collapsible" style="display: inline-block; padding: 5px" width="100%"
+|+ style="text-align: center;" width = "100%" |{{nowrap|Government-in-exile-related country-scoped modifiers:}}<br/>
+! width="10%" | Name
+! width="25%" | Effects
+! width="25%" | Examples
+! width="20%" | Modifier type
+! width="15%" | Notes
+! width="5%" | Version added
+|-id="dockyard_donations"
+|dockyard_donations
+|Amount of dockyards donated.
+|<pre>dockyard_donations = 2</pre>
+|Flat.
+|
+|1.6
+|-id="industrial_factory_donations"
+|industrial_factory_donations
+|Amount of civilian factories donated.
+|<pre>industrial_factory_donations = 2</pre>
+|Flat.
+|
+|1.6
+|-id="military_factory_donations"
+|military_factory_donations
+|Amount of military factories donated.
+|<pre>military_factory_donations = 2</pre>
+|Flat.
+|
+|1.6
+|-id="exile_manpower_factor"
+|exile_manpower_factor
+|Amount of manpower given to the host country.
+|<pre>exile_manpower_factor = 0.5</pre>
+|Percentual.
+|
+|1.6
+|-id="exiled_government_weekly_manpower"
+|exiled_government_weekly_manpower
+|Amount of weekly manpower given to the host country.
+|<pre>exiled_government_weekly_manpower = 100</pre>
+|Percentual.
+|
+|1.11
+|-id="legitimacy_daily"
+|legitimacy_daily
+|Changes the amount of legitimacy gained daily.
+|<pre>legitimacy_daily = 1</pre>
+|Flat.
+|
+|1.6
+|-id="legitimacy_gain_factor"
+|legitimacy_gain_factor
+|Changes the amount of legitimacy gained daily by a percentage.
+|<pre>legitimacy_gain_factor = 1</pre>
+|Percentual.
+|
+|1.9
+|}
+
+==== Equipment ====
+{{SVersion|1.13}}
+
+{| class="wikitable sortable mw-collapsible" style="display: inline-block; padding: 5px" width="100%"
+|+ style="text-align: center;" width = "100%" |{{nowrap|Equipment-related country-scoped modifiers:}}<br/>
+! width="10%" | Name
+! width="25%" | Effects
+! width="25%" | Examples
+! width="20%" | Modifier type
+! width="15%" | Notes
+! width="5%" | Version added
+|-id="equipment_capture"
+|equipment_capture
+|Changes the combat equipment capture ratio.
+|<pre>equipment_capture = 0.2</pre>
+|Flat.
+|
+|1.0
+|-id="equipment_capture_factor"
+|equipment_capture_factor
+|Modifies the combat equipment capture ratio.
+|<pre>equipment_capture_factor = 0.5 </pre>
+|Percentual.
+|
+|1.0
+|-id="equipment_conversion_speed"
+|equipment_conversion_speed
+|Changes the speed at which equipment is converted.
+|<pre>equipment_conversion_speed = 0.5 </pre>
+|Percentual.
+|
+|1.0
+|-id="equipment_upgrade_xp_cost"
+|equipment_upgrade_xp_cost
+|Changes the experience cost to upgrade military equipment.
+|<pre>equipment_upgrade_xp_cost = 0.5 </pre>
+|Percentual.
+|
+|1.0
+|-id="license_purchase_cost"
+|license_purchase_cost
+|Changes the cost of licensed equipment by a percentage.
+|<pre>license_purchase_cost = 0.5 </pre>
+|Percentual.
+|Can be used as a targeted modifier.
+|1.4
+|-id="license_<equipment type>_cost_factor"
+|license_purchase_cost_factor
+|Changes the cost of licensed equipment by a percentage.
+|<pre>license_purchase_cost_factor = 0.5 </pre>
+|Percentual.
+|Allowed equipment types are anti_tank_eq, artillery_eq, infantry_eq, and light_tank_eq. Can be used as a targeted modifier.
+|1.4
+|-id="license_<category>_purchase_cost"
+|license_purchase_cost_factor
+|Changes the cost of licensed equipment by a percentage.
+|<pre>license_purchase_cost_factor = 0.5 </pre>
+|Percentual.
+|Allowed categories are air, armor, infantry, and naval. Can be used as a targeted modifier.
+|1.4
+|-id="license_tech_difference_speed"
+|license_tech_difference_speed
+|Changes the production penalty of licensed equipment by tech difference by a percentage.
+|<pre>license_tech_difference_speed = 0.5 </pre>
+|Percentual.
+|Also allows specifying category as license_<category>_tech_difference_speed_factor. Allowed categories are anti_tank_eq, artillery_eq, infantry_eq, and light_tank_eq. That's added in 1.6. Can be used as a targeted modifier.
+|1.4
+|-id="license_production_speed"
+|license_production_speed
+|Changes the production speed of licensed equipment by a percentage.
+|<pre>license_production_speed = 0.5 </pre>
+|Percentual.
+|Can be used as a targeted modifier.
+|1.4
+|-id="license_<category>_production_speed_factor"
+|license_<category>_production_speed_factor
+|Changes the production speed of licensed equipment by a percentage.
+|<pre>license_infantry_eq_production_speed_factor = 0.5 </pre>
+|Percentual.
+|Allowed categories are anti_tank_eq, artillery_eq, infantry_eq, and light_tank_eq. Can be used as a targeted modifier.
+|1.6
+|-id="production_cost_max_<ship type>"
+|production_cost_max_<ship type>
+|Modifies the maximum cost of the ship type.
+|<pre>production_cost_max_ship_hull_light = 0.3</pre>
+|Percentual.
+|Allowed ship types in base game: convoy, ship_hull_carrier, ship_hull_cruiser, ship_hull_heavy, ship_hull_light, ship_hull_submarine
+|1.6
+|-id="production_factory_efficiency_gain_factor"
+|production_factory_efficiency_gain_factor
+|Production efficiency growth.
+|<pre>production_factory_efficiency_gain_factor = 0.5 </pre>
+|Percentual.
+|
+|1.0
+|-id="production_factory_max_efficiency_factor"
+|production_factory_max_efficiency_factor
+|Production efficiency cap.
+|<pre>production_factory_max_efficiency_factor = 0.5 </pre>
+|Percentual.
+|
+|1.0
+|-id="production_factory_start_efficiency_factor"
+|production_factory_start_efficiency_factor
+|Production efficiency base.
+|<pre>production_factory_start_efficiency_factor = 0.5 </pre>
+|Percentual.
+|
+|1.0
+|-id="line_change_production_efficiency_factor"
+|line_change_production_efficiency_factor
+|Production efficiency retention.
+|<pre>line_change_production_efficiency_factor = 0.3</pre>
+|Percentual.
+|
+|1.0
+|-id="production_lack_of_resource_penalty_factor"
+|production_lack_of_resource_penalty_factor
+|Lack of resources penalty.
+|<pre>production_lack_of_resource_penalty_factor = 0.5 </pre>
+|Percentual.
+|
+|1.0
+|-id="floating_harbor_duration"
+|floating_harbor_duration
+|Modifies the duration of floating harbours.
+|<pre>floating_harbor_duration = 2</pre>
+|Flat.
+|
+|1.11
+|-id="floating_harbor_range"
+|floating_harbor_range
+|Modifies the range of floating harbours.
+|<pre>floating_harbor_range = 2</pre>
+|Flat.
+|
+|1.11
+|-id="floating_harbor_supply"
+|floating_harbor_supply
+|Modifies the supply of floating harbours.
+|<pre>floating_harbor_supply = 2</pre>
+|Flat.
+|
+|1.11
+|-id="railway_gun_bombardment_factor"
+|railway_gun_bombardment_factor
+|Modifies the bombardment of railway guns.
+|<pre>railway_gun_bombardment_factor = 0.3</pre>
+|Percentual.
+|
+|1.11
+|}
+
+==== Fuel and supply ====
+{{SVersion|1.13}}
+
+{| class="wikitable sortable mw-collapsible" style="display: inline-block; padding: 5px" width="100%"
+|+ style="text-align: center;" width = "100%" |{{nowrap|Supply-related country-scoped modifiers:}}<br/>
+! width="10%" | Name
+! width="25%" | Effects
+! width="25%" | Examples
+! width="20%" | Modifier type
+! width="15%" | Notes
+! width="5%" | Version added
+|-id="base_fuel_gain"
+|base_fuel_gain
+|Changes base daily gain of fuel.
+|<pre>base_fuel_gain = 100</pre>
+|Flat.
+|
+|1.6
+|-id="base_fuel_gain_factor"
+|base_fuel_gain_factor
+|Changes base daily gain of fuel by a percentage.
+|<pre>base_fuel_gain_factor = 0.5</pre>
+|Percentual.
+|
+|1.6
+|-id="fuel_cost"
+|fuel_cost
+|Changes hourly cost of fuel.
+|<pre>fuel_cost = 100</pre>
+|Flat.
+|
+|1.6
+|-id="fuel_gain"
+|fuel_gain
+|Changes daily gain of fuel from our controlled oil.
+|<pre>fuel_gain = 100</pre>
+|Flat.
+|
+|1.6
+|-id="fuel_gain_factor"
+|fuel_gain_factor
+|Changes daily gain of fuel from our controlled oil by a percentage.
+|<pre>fuel_gain_factor = 100</pre>
+|Percentual.
+|
+|1.6
+|-id="fuel_gain_from_states"
+|fuel_gain_from_states
+|Changes daily gain of fuel.
+|<pre>fuel_gain_from_states = 100</pre>
+|Flat.
+|Refineries use this modifier.
+|1.6
+|-id="fuel_gain_factor_from_states"
+|fuel_gain_factor_from_states
+|Changes daily gain of fuel by a percentage.
+|<pre>fuel_gain_factor_from_states = 0.5</pre>
+|Percentual.
+|Modifies fuel gain from refineries.
+|1.6
+|-id="max_fuel"
+|max_fuel
+|Changes maximum amount of fuel you can have.
+|<pre>max_fuel = 100</pre>
+|Flat.
+|
+|1.6
+|-id="max_fuel_factor"
+|max_fuel_factor
+|Changes maximum amount of fuel you can have by a percentage.
+|<pre>max_fuel_factor = 0.3 </pre>
+|Percentual.
+|
+|1.6
+|-id="army_fuel_capacity_factor"
+|army_fuel_capacity_factor
+|Modifies how much fuel a single unit can store before running out.
+|<pre>army_fuel_capacity_factor = 0.3</pre>
+|Percentual.
+|
+|1.6
+|-id="army_fuel_consumption_factor"
+|army_fuel_consumption_factor
+|Modifies the rate at which the army consumes fuel.
+|<pre>army_fuel_consumption_factor = 0.3</pre>
+|Percentual.
+|
+|1.6
+|-id="air_fuel_consumption_factor"
+|air_fuel_consumption_factor
+|Modifies the rate at which the airforce consumes fuel.
+|<pre>air_fuel_consumption_factor = 0.5</pre>
+|Percentual.
+|
+|1.6
+|-id="navy_fuel_consumption_factor"
+|navy_fuel_consumption_factor
+|Modifies the rate at which the navy consumes fuel.
+|<pre>navy_fuel_consumption_factor = 0.3</pre>
+|Percentual.
+|
+|1.6
+|-id="supply_factor"
+|supply_factor
+|Modifies the total amount of supply the military has.
+|<pre>supply_factor = 0.3</pre>
+|Percentual.
+|
+|1.11
+|-id="supply_combat_penalties_on_core_factor"
+|supply_combat_penalties_on_core_factor
+|Modifies the penalty given by low supply when the army is on a core state.
+|<pre>supply_combat_penalties_on_core_factor = 0.3</pre>
+|Percentual.
+|
+|1.11
+|-id="supply_consumption_factor"
+|supply_consumption_factor
+|Modifies the rate at which army consumes supply.
+|<pre>supply_consumption_factor = 0.3</pre>
+|Percentual.
+|
+|1.0
+|-id="no_supply_grace"
+|no_supply_grace
+|Modifies the grace period for units without supply.
+|<pre>no_supply_grace = 120</pre>
+|Flat.
+|
+|1.0
+|-id="out_of_supply_factor"
+|out_of_supply_factor
+|Reduces the penalty that units take when they run out of supplies.
+|<pre>out_of_supply_factor = 0.2</pre>
+|Percentual.
+|
+|1.0
+|-id="attrition"
+|attrition
+|Modifies the army's attrition.
+|<pre>attrition = 0.3</pre>
+|Percentual.
+|Can also be used in states or provinces.
+|1.0
+|-id="unit_upkeep_attrition_factor"
+|unit_upkeep_attrition_factor
+|Modifies the unit upkeep.
+|<pre>unit_upkeep_attrition_factor = 0.3</pre>
+|Percentual.
+|
+|1.0
+|-id="naval_attrition"
+|naval_attrition
+|Modifies attrition suffered by naval units.
+|<pre>naval_attrition = 0.3</pre>
+|Percentual.
+|
+|1.6
+|-id="heat_attrition"
+|heat_attrition
+|Changes the attrition due to heat.
+|<pre>heat_attrition = 0.5</pre>
+|Flat.
+|
+|1.3
+|-id="heat_attrition_factor"
+|heat_attrition_factor
+|Changes the attrition due to heat by a percentage.
+|<pre>heat_attrition_factor = 0.5</pre>
+|Percentual.
+|
+|1.3
+|-id="winter_attrition"
+|winter_attrition
+|Changes the attrition due to winter.
+|<pre>winter_attrition = 0.5</pre>
+|Flat.
+|
+|1.3
+|-id="winter_attrition_factor"
+|winter_attrition_factor
+|Changes the attrition due to winter by a percentage.
+|<pre>winter_attrition_factor = 0.5</pre>
+|Percentual.
+|
+|1.3
+|-id="extra_marine_supply_grace"
+|extra_marine_supply_grace
+|Changes the supply grace given to marines.
+|<pre>extra_marine_supply_grace = 96</pre>
+|Flat.
+|
+|1.0
+|-id="extra_paratrooper_supply_grace"
+|extra_paratrooper_supply_grace
+|Changes the supply grace given to paratroopers.
+|<pre>extra_paratrooper_supply_grace = 96</pre>
+|Flat.
+|
+|1.0
+|-id="special_forces_no_supply_grace"
+|special_forces_no_supply_grace
+|Changes the supply grace period for special forces.
+|<pre>special_forces_no_supply_grace = 120</pre>
+|Flat.
+|
+|1.0
+|-id="special_forces_out_of_supply_factor"
+|special_forces_out_of_supply_factor
+|Changes the penalty for special forces out of supply.
+|<pre>special_forces_out_of_supply_factor = 0.3</pre>
+|Percentual.
+|
+|1.0
+|-id="truck_attrition"
+|truck_attrition
+|Changes the attrition supply trucks suffer from.
+|<pre>truck_attrition = 3</pre>
+|Flat.
+|
+|1.11
+|-id="truck_attrition_factor"
+|truck_attrition_factor
+|Modifies the attrition supply trucks suffer from.
+|<pre>truck_attrition_factor = 0.3</pre>
+|Percentual.
+|
+|1.11
+|}
+
+==== Buildings ====
+{{SVersion|1.13}}
+
+{| class="wikitable sortable mw-collapsible" style="display: inline-block; padding: 5px" width="100%"
+|+ style="text-align: center;" width = "100%" |{{nowrap|Building-related country-scoped modifiers:}}<br/>
+! width="10%" | Name
+! width="25%" | Effects
+! width="25%" | Examples
+! width="20%" | Modifier type
+! width="15%" | Notes
+! width="5%" | Version added
+|-id="production_speed_buildings_factor"
+|production_speed_buildings_factor
+|Changes the construction speed of all buildings.
+|<pre>production_speed_buildings_factor = 0.5 </pre>
+|Percentual.
+|
+|1.0
+|-id="production_speed_building_factor"
+|production_speed_<building>_factor
+|Changes the construction speed of a specific building.
+|<pre>production_speed_industrial_complex_factor = 0.5 </pre>
+|Percentual.
+|
+|1.0
+|-id="production_cost_building_factor"
+|production_cost_<building>_factor
+|Changes the base cost of a specific building.
+|<pre>production_cost_industrial_complex_factor = -0.1</pre>
+|Percentual.
+|Localization is missing and must be added yourself.
+|Unknown
+|-id="civilian_factory_use"
+|civilian_factory_use
+|Uses the specified amount of civilian factory as a special project.
+|<pre>civilian_factory_use = 3</pre>
+|Flat.
+|
+|1.5
+|-id="consumer_goods_factor"
+|consumer_goods_factor
+|Modifies the percentage of factories used for consumer goods.
+|<pre>consumer_goods_factor = 0.1</pre>
+|Multiplicative.
+|The modifier adds multiplicatively. For example, <code>consumer_goods_factor = 0.5</code> and <code>consumer_goods_factor = -0.5</code> will, in total, multiply the consumer goods value by <math>(1 - 0.5)(1 + 0.5) = 0.5\cdot 1.5 = 0.75</math>.
+|1.0
+|-id="consumer_goods_expected_value"
+|consumer_goods_expected_value
+|Sets the baseline percentage of expected consumer goods.
+|<pre>consumer_goods_expected_value = 0.1</pre>
+|Flat.
+|Used to be only updated when the economic law was changed. Now gets updated normaly.
+|1.13
+|-id="conversion_cost_civ_to_mil_factor"
+|conversion_cost_civ_to_mil_factor
+|Changes the cost to convert civilian factories to military factories.
+|<pre>conversion_cost_civ_to_mil_factor = 0.4</pre>
+|Percentual.
+|
+|1.5
+|-id="conversion_cost_mil_to_civ_factor"
+|conversion_cost_mil_to_civ_factor
+|Changes the cost to convert military factories to civilian factories.
+|<pre>conversion_cost_mil_to_civ_factor = 0.4</pre>
+|Percentual.
+|
+|1.5
+|-id="global_building_slots"
+|global_building_slots
+|Changes amount of building slots in our every state.
+|<pre>global_building_slots = 1</pre>
+|Flat.
+|
+|1.0
+|-id="global_building_slots_factor"
+|global_building_slots_factor
+|Changes amount of building slots in our every state by a percentage.
+|<pre>global_building_slots_factor = 0.3</pre>
+|Percentual.
+|
+|1.0
+|-id="industrial_capacity_dockyard"
+|industrial_capacity_dockyard
+|Dockyard output.
+|<pre>industrial_capacity_dockyard = 0.3</pre>
+|Percentual.
+|
+|1.3.3
+|-id="industrial_capacity_factory"
+|industrial_capacity_factory
+|Military factory output.
+|<pre>industrial_capacity_factory = 0.3</pre>
+|Percentual.
+|
+|1.0
+|-id="industry_air_damage_factor"
+|industry_air_damage_factor
+|Amount of damage our factories receive from air bombings.
+|<pre>industry_air_damage_factor = 0.3</pre>
+|Percentual.
+|
+|1.0
+|-id="industry_free_repair_factor"
+|industry_free_repair_factor
+|Changes the speed at which buildings repair themselves without factories assigned.
+|<pre>industry_free_repair_factor = 0.3</pre>
+|Percentual.
+|
+|1.0
+|-id="industry_repair_factor"
+|industry_repair_factor
+|Changes the speed at which buildings are repaired.
+|<pre>industry_repair_factor = 0.3</pre>
+|Percentual.
+|
+|1.0
+|-id="production_oil_factor"
+|production_oil_factor
+|Synthetic oil gain.
+|<pre>production_oil_factor = 0.5 </pre>
+|Percentual.
+|
+|1.0
+|-id="repair_speed_buildingf_factor"
+|repair_speed_<building>_factor
+|Changes the repair speed of a specific building.
+|<pre>repair_speed_arms_factory_factor = 0.5 </pre>
+|Percentual.
+|
+|1.0
+|-id="supply_node_range"
+|supply_node_range
+|Increases the effective range of supply nodes.
+|<pre>supply_node_range = 0.1</pre>
+|Percentual.
+|
+|1.11
+|-id="static_anti_air_damage_factor"
+|static_anti_air_damage_factor
+|Modifies the damage done to planes by the anti-air buildings.
+|<pre>static_anti_air_damage_factor = 0.1</pre>
+|Percentual.
+|
+|1.0
+|-id="static_anti_air_hit_chance_factor"
+|static_anti_air_hit_chance_factor
+|Modifies the chance for the anti-air buildings to hit enemy planes.
+|<pre>static_anti_air_hit_chance_factor = 0.1</pre>
+|Percentual.
+|
+|1.0
+|-id="tech_air_damage_factor"
+|tech_air_damage_factor
+|Modifies the damage done to the country's planes by enemy anti-air buildings.
+|<pre>tech_air_damage_factor = 0.1</pre>
+|Percentual.
+|
+|1.0
+|-id="tech_air_damage_factor"
+|tech_air_damage_factor
+|Modifies the damage done to the country's planes by enemy anti-air buildings.
+|<pre>tech_air_damage_factor = 0.1</pre>
+|Percentual.
+|
+|1.0
+|-id="cic_construction_boost"
+|cic_construction_boost
+|Modifies the base construction speed from civilian factories.
+|<pre>cic_construction_boost = 0.1</pre>
+|Flat.
+|
+|1.13
+|-id="cic_construction_boost_factor"
+|cic_construction_boost_factor
+|Modifies the modifier to the base construction speed from civilian factories.
+|<pre>cic_construction_boost_factor = 0.1</pre>
+|Percentual.
+|
+|1.13
+|-id="land_bunker_effectiveness_factor"
+|land_bunker_effectiveness_factor
+|Modifies the effectiveness of land forts in defence.
+|<pre>land_bunker_effectiveness_factor = 0.1</pre>
+|Percentual.
+|
+|1.13
+|-id="coastal_bunker_effectiveness_factor"
+|coastal_bunker_effectiveness_factor
+|Modifies the effectiveness of coastal forts in defence.
+|<pre>coastal_bunker_effectiveness_factor = 0.1</pre>
+|Percentual.
+|
+|1.13
+|}
+
+==== Resistance and compliance ====
+{{SVersion|1.13}}
+
+{| class="wikitable sortable mw-collapsible" style="display: inline-block; padding: 5px" width="100%"
+|+ style="text-align: center;" width = "100%" |{{nowrap|Resistance-related country-scoped modifiers:}}<br/>
+! width="10%" | Name
+! width="25%" | Effects
+! width="25%" | Examples
+! width="20%" | Modifier type
+! width="15%" | Notes
+! width="5%" | Version added
+|-id="compliance_growth_on_our_occupied_states"
+|compliance_growth_on_our_occupied_states
+|Changes the compliance growth speed on the country's controlled states.
+|<pre>compliance_growth_on_our_occupied_states = 0.5</pre>
+|Percentual.
+|
+|1.9
+|-id="no_compliance_gain"
+|no_compliance_gain
+|Disables the compliance gain on our controlled states.
+|<pre>no_compliance_gain = 1</pre>
+|Boolean (only 1).
+|Can also be used in state scope.
+|1.9
+|-id="required_garrison_factor"
+|required_garrison_factor
+|Changes the required garrison in our occupied states.
+|<pre>required_garrison_factor = 0.5</pre>
+|Percentual.
+|Can also be used in state scope. 
+|1.9
+|-id="resistance_activity"
+|resistance_activity
+|Changes the chance for resistance activity to occur on our occupied states.
+|<pre>resistance_activity = 0.5</pre>
+|Percentual.
+|
+|1.9
+|-id="resistance_damage_to_garrison_on_our_occupied_states"
+|resistance_damage_to_garrison_on_our_occupied_states
+|Changes the resistance damage to the garrison in our occupied states.
+|<pre>resistance_damage_to_garrison_on_our_occupied_states = 0.5</pre>
+|Percentual.
+|
+|1.9
+|-id="resistance_decay_on_our_occupied_states"
+|resistance_decay_on_our_occupied_states
+|Changes the resistance decay in our occupied states.
+|<pre>resistance_decay_on_our_occupied_states = 0.5</pre>
+|Percentual.
+|
+|1.9
+|-id="resistance_growth_on_our_occupied_states"
+|resistance_growth_on_our_occupied_states
+|Changes the resistance growth speed in our occupied states.
+|<pre>resistance_growth_on_our_occupied_states = 0.5</pre>
+|Percentual.
+|
+|1.9
+|-id="resistance_target_on_our_occupied_states"
+|resistance_target_on_our_occupied_states
+|Changes the resistance target in our occupied states.
+|<pre>resistance_target_on_our_occupied_states = 0.5</pre>
+|Percentual.
+|
+|1.9
+|-
+|resistance_target
+|Changes the resistance target in foreign states occupied by us
+|<pre>resistance_target = 0.5</pre>
+|Percentual
+|
+|1.9
+|}
+
+==== Intelligence ====
+{{SVersion|1.13}}
+
+{| class="wikitable sortable mw-collapsible" style="display: inline-block; padding: 5px" width="100%"
+|+ style="text-align: center;" width = "100%" |{{nowrap|Intelligence-related country-scoped modifiers:}}<br/>
+! width="10%" | Name
+! width="25%" | Effects
+! width="25%" | Examples
+! width="20%" | Modifier type
+! width="15%" | Notes
+! width="5%" | Version added
+|-id="agency_upgrade_time"
+|agency_upgrade_time
+|Changes the time it takes to upgrade the agency
+|<pre>agency_upgrade_time = 0.5</pre>
+|Percentual.
+|
+|1.9
+|-id="decryption"
+|decryption
+|Changes the decription capability of the country.
+|<pre>decryption = 1</pre>
+|Flat.
+|Only works with the {{icon|lar|1}} DLC disabled.
+|1.0
+|-id="decryption_factor"
+|decryption_factor
+|Changes the decription capability of the country by a percentage.
+|<pre>decryption_factor = 0.5</pre>
+|Percentual.
+|Only works with the {{icon|lar|1}} DLC disabled.
+|1.0
+|-id="encryption"
+|encryption
+|Changes the encryption capability of the country.
+|<pre>encryption = 1</pre>
+|Flat.
+|Only works with the {{icon|lar|1}} DLC disabled.
+|1.0
+|-id="encryption_factor"
+|encryption_factor
+|Changes the encryption capability of the country by a percentage.
+|<pre>encryption_factor = 0.5</pre>
+|Percentual.
+|Only works with the {{icon|lar|1}} DLC disabled.
+|1.0
+|-id="<type>_intel_decryption_bonus"
+|<type>_intel_decryption_bonus
+|Adds a cipher bonus to the specified intel.
+|<pre>civilian_intel_decryption_bonus = 0.5</pre>
+|Percentual.
+|Types are: airforce, army, civilian, navy.
+|1.9
+|-id="<type>_intel_factor"
+|<type>_intel_factor
+|Modifies the intelligence you receive of the specified type.
+|<pre>navy_intel_factor = 0.5</pre>
+|Percentual.
+|Types are: airforce, army, civilian, navy.
+|1.9
+|-id="<type>_intel_to_others"
+|<type>_intel_to_others
+|Changes the amount of intel other countries will receive of the specified type.
+|<pre>civilian_intel_to_others = 0.5</pre>
+|Percentual.
+|Types are: airforce, army, civilian, navy.
+|1.9
+|-id="female_random_operative_chance"
+|female_random_operative_chance
+|Changes the chance for a randomly-generated operative to be female.
+|<pre>female_random_operative_chance = 0.3</pre>
+|Percentual.
+|
+|1.9.1
+|-id="foreign_subversive_activites"
+|foreign_subversive_activites
+|Changes efficiency of foreign subversive activities.
+|<pre>foreign_subversive_activites = 0.3</pre>
+|Percentual.
+|
+|1.9
+|-id="intel_network_gain"
+|intel_network_gain
+|Changes gain of intel network strength.
+|<pre>intel_network_gain = 1</pre>
+|Flat.
+|Can also be used in state scope.
+|1.9
+|-id="intel_network_gain_factor"
+|intel_network_gain_factor
+|Changes gain of intel network strength by a percentage.
+|<pre>intel_network_gain_factor = 0.5</pre>
+|Percentual.
+|Can also be used in state scope.
+|1.9
+|-id="subversive_activites_upkeep"
+|subversive_activites_upkeep
+|Changes the cost of subversive activities.
+|<pre>subversive_activites_upkeep = 0.5</pre>
+|Percentual.
+|
+|1.0
+|-id="operation_cost"
+|operation_cost
+|Changes the cost of operations.
+|<pre>operation_cost = 0.5</pre>
+|Percentual.
+|Dynamically created by operations with the <code>cost_modifiers = { ... }</code> block. This one is used by each base game operation to modify the operation cost.
+|1.9
+|-id="operation_outcome"
+|operation_outcome
+|Changes the efficiency of operations.
+|<pre>operation_outcome = 0.5</pre>
+|Percentual.
+|Dynamically created by operations with the <code>outcome_modifiers = { ... }</code> block. This one is used by {{hover|As of 1.11.10, operation_targeted_sabotage_industry and operation_targeted_sabotage_infrastructure use operation_risk to modify the outcome chance and operation_outcome to modify the risk rather than the other way around|each base game operation}} to modify the operation's outcome chance.
+|1.9
+|-id="operation_risk"
+|operation_risk
+|Changes the risk of operations.
+|<pre>operation_risk = 0.5</pre>
+|Percentual.
+|Dynamically created by operations with the <code>risk_modifiers = { ... }</code> block. This one is used by {{hover|As of 1.11.10, operation_targeted_sabotage_industry and operation_targeted_sabotage_infrastructure use operation_risk to modify the outcome chance and operation_outcome to modify the risk rather than the other way around|each base game operation}} to modify the operation risk.
+|1.9
+|-id="<operation>_cost"
+|<operation>_cost
+|Changes the cost of the specified operation.
+|<pre>operation_infiltrate_cost = 0.5</pre>
+|Percentual.
+|Operations are defined in {{path|common/operations/*.txt}}. Dynamically created by operations with the <code>cost_modifiers = { ... }</code> block.
+|1.9
+|-id="<operation>_outcome"
+|<operation>_outcome
+|Changes the efficiency of the specified operation.
+|<pre>operation_coup_government_outcome = 0.5</pre>
+|Percentual.
+|Operations are defined in {{path|common/operations/*.txt}}. Dynamically created by operations with the <code>outcome_modifiers = { ... }</code> block. Note that target_sabotage uses target_sabotage_factor rather than target_sabotage_outcome.
+|1.9
+|-id="<operation>_risk"
+|<operation>_risk
+|Changes the risk of the specified operation.
+|<pre>operation_make_resistance_contacts_risk = 0.5</pre>
+|Percentual.
+|Operations are defined in {{path|common/operations/*.txt}}. Dynamically created by operations with the <code>risk_modifiers = { ... }</code> block.
+|1.9
+|-id="<mission>_factor"
+|<mission>_factor
+|Modifies the effect of the specified mission.
+|<pre>boost_ideology_mission_factor = 0.5</pre>
+|Percentual.
+|Types are: boost_ideology_mission, boost_resistance, control_trade_mission, diplomatic_pressure_mission, propaganda_mission, root_out_resistance_effectiveness.
+|1.9
+|-id="commando_trait_chance_factor"
+|commando_trait_chance_factor
+|Modifies the chance for an operative to get the commando trait when hired.
+|<pre>commando_trait_chance_factor = 0.5</pre>
+|Percentual.
+|
+|1.9
+|-id="crypto_department_enabled"
+|crypto_department_enabled
+|Enables the crypto department.
+|<pre>crypto_department_enabled = 1</pre>
+|Boolean (only 1).
+|
+|1.9
+|-id="crypto_strength"
+|crypto_strength
+|Modifies the cryptology level.
+|<pre>crypto_strength = 1</pre>
+|Flat.
+|{{icon|lar|1}} DLC enabled.
+|1.9
+|-id="decryption_power"
+|decryption_power
+|Modifies the decryption power.
+|<pre>decryption_power = 1</pre>
+|Flat.
+|{{icon|lar|1}} DLC enabled.
+|1.9
+|-id="decryption_power_factor"
+|decryption_power_factor
+|Modifies the decryption power by a percentage.
+|<pre>decryption_power_factor = 0.3</pre>
+|Percentual.
+|{{icon|lar|1}} DLC enabled.
+|1.9
+|-id="defense_impact_on_blueprint_stealing"
+|defense_impact_on_blueprint_stealing
+|Modifies the impact of enemy defense on the blueprint stealing operation.
+|<pre>defense_impact_on_blueprint_stealing = 0.3</pre>
+|Percentual.
+|
+|1.9
+|-id="intel_from_combat_factor"
+|intel_from_combat_factor
+|Modifies the intelligence gained from combat.
+|<pre>intel_from_combat_factor = 0.3</pre>
+|Percentual.
+|
+|1.9
+|-id="intel_from_operatives_factor"
+|intel_from_operatives_factor
+|Modifies the intelligence gained from operatives and infiltrated assets.
+|<pre>intel_from_operatives_factor = 0.3</pre>
+|Percentual.
+|
+|1.9
+|-id="intel_network_gain"
+|intel_network_gain
+|Modifies the intelligence network gain.
+|<pre>intel_network_gain = 0.3</pre>
+|Flat.
+|
+|1.9
+|-id="intel_network_gain_factor"
+|intel_network_gain_factor
+|Modifies the intelligence network gain by a percentage.
+|<pre>intel_network_gain_factor = 0.3</pre>
+|Percentual.
+|
+|1.9
+|-id="intelligence_agency_defense"
+|intelligence_agency_defense
+|Modifies the counter intelligence.
+|<pre>intelligence_agency_defense = 0.3</pre>
+|Flat.
+|
+|1.9
+|-id="root_out_resistance_effectiveness_factor"
+|root_out_resistance_effectiveness_factor
+|Modifies the effectiveness of rooting out resistance.
+|<pre>root_out_resistance_effectiveness_factor = 0.3</pre>
+|Percentual.
+|
+|1.9
+|}
+
+==== Operatives ====
+These can be used in both the country scope and operative scope, such as traits, unless specified otherwise.
+{| class="wikitable sortable mw-collapsible" style="display: inline-block; padding: 5px" width="100%"
+|+ style="text-align: center;" width = "100%" |{{nowrap|Operative-related country-scoped modifiers:}}<br/>
+! width="10%" | Name
+! width="25%" | Effects
+! width="25%" | Examples
+! width="20%" | Modifier type
+! width="15%" | Notes
+! width="5%" | Version added
+|-id="own_operative_capture_chance_factor"
+|own_operative_capture_chance_factor
+|Changes the chance for our operatives to be captured.
+|<pre>own_operative_capture_chance_factor = 0.5</pre>
+|Percentual.
+|
+|1.9
+|-id="own_operative_detection_chance"
+|own_operative_detection_chance
+|Changes the chance for our operatives to be detected.
+|<pre>own_operative_detection_chance = 10</pre>
+|Flat.
+|
+|1.9
+|-id="own_operative_detection_chance_factor"
+|own_operative_detection_chance_factor
+|Changes the chance for our operatives to be detected by a percentage.
+|<pre>own_operative_detection_chance_factor = 0.5</pre>
+|Percentual.
+|
+|1.9
+|-id="own_operative_forced_into_hiding_time_factor"
+|own_operative_forced_into_hiding_time_factor
+|Changes the chance for our operatives to be forced into hiding by a percentage.
+|<pre>own_operative_forced_into_hiding_time_factor = 0.5</pre>
+|Percentual.
+|
+|1.9
+|-id="own_operative_harmed_time_factor"
+|own_operative_harmed_time_factor
+|Changes the chance for our operatives to be harmed by a percentage.
+|<pre>own_operative_harmed_time_factor = 0.5</pre>
+|Percentual.
+|
+|1.9
+|-id="own_operative_intel_extraction_rate"
+|own_operative_intel_extraction_rate
+|Changes the rate at which our operatives extract enemy intel.
+|<pre>own_operative_intel_extraction_rate = 0.5</pre>
+|Percentual.
+|
+|1.9
+|-id="enemy_operative_capture_chance_factor"
+|enemy_operative_capture_chance_factor
+|Changes the chance for an enemy operative to be captured.
+|<pre>enemy_operative_capture_chance_factor = 0.5</pre>
+|Percentual.
+|
+|1.9
+|-id="enemy_operative_detection_chance"
+|enemy_operative_detection_chance
+|Changes the chance for an enemy operative to be detected.
+|<pre>enemy_operative_detection_chance = 10</pre>
+|Flat.
+|
+|1.9
+|-id="enemy_operative_detection_chance_factor"
+|enemy_operative_detection_chance_factor
+|Changes the chance for an enemy operative to be detected by a percentage.
+|<pre>enemy_operative_detection_chance_factor = 0.5</pre>
+|Percentual.
+|
+|1.9
+|-id="enemy_operative_forced_into_hiding_time_factor"
+|enemy_operative_forced_into_hiding_time_factor
+|Changes the chance for an enemy operative to be forced into hiding by a percentage.
+|<pre>enemy_operative_forced_into_hiding_time_factor = 0.5</pre>
+|Percentual.
+|
+|1.9
+|-id="enemy_operative_harmed_time_factor"
+|enemy_operative_harmed_time_factor
+|Changes the chance for an enemy operative to be harmed by a percentage.
+|<pre>enemy_operative_harmed_time_factor = 0.5</pre>
+|Percentual.
+|
+|1.9
+|-id="enemy_operative_intel_extraction_rate"
+|enemy_operative_intel_extraction_rate
+|Changes the rate at which the enemy operatives extract our intel.
+|<pre>enemy_operative_intel_extraction_rate = 0.5</pre>
+|Percentual.
+|
+|1.9
+|-id="enemy_spy_negative_status_factor"
+|enemy_spy_negative_status_factor
+|Changes the chance an enemy spy can receive a negative status.
+|<pre>enemy_spy_negative_status_factor = 0.5</pre>
+|Percentual.
+|
+|1.9
+|-id="enemy_operative_recruitment_chance"
+|enemy_operative_recruitment_chance
+|Modifies the chance to recruit an enemy operative.
+|<pre>enemy_operative_recruitment_chance = 0.3</pre>
+|Percentual.
+|Cannot be used in operative scope.
+|1.9
+|-id="new_operative_slot_bonus"
+|new_operative_slot_bonus
+|Modifies the operative recruitment choices.
+|<pre>new_operative_slot_bonus = 1</pre>
+|Flat.
+|Cannot be used in operative scope.
+|1.9
+|-id="occupied_operative_recruitment_chance"
+|occupied_operative_recruitment_chance
+|Modifies the chance to get an operative from occupied territory.
+|<pre>occupied_operative_recruitment_chance = 0.3</pre>
+|Percentual.
+|Cannot be used in operative scope.
+|1.9
+|-id="operative_death_on_capture_chance"
+|operative_death_on_capture_chance
+|Modifies the chance for the country's operative to die on being captured.
+|<pre>operative_death_on_capture_chance = 0.3</pre>
+|Percentual.
+|Cannot be used in operative scope.
+|1.9
+|-id="operative_slot"
+|operative_slot
+|Modifies the amount of operative slots.
+|<pre>operative_slot = 1</pre>
+|Flat.
+|Cannot be used in operative scope.
+|1.9
+|}
+
+==== AI ====
+{{SVersion|1.13}}
+
+{| class="wikitable sortable mw-collapsible" style="display: inline-block; padding: 5px" width="100%"
+|+ style="text-align: center;" width = "100%" |{{nowrap|AI-related country-scoped modifiers:}}<br/>
+! width="10%" | Name
+! width="25%" | Effects
+! width="25%" | Examples
+! width="20%" | Modifier type
+! width="15%" | Notes
+! width="5%" | Version added
+|-id="ai_badass_factor"
+|ai_badass_factor
+|AI's threat perception.
+|<pre>ai_badass_factor = 0.5</pre>
+|Percentual.
+|
+|1.0
+|-id="ai_call_ally_desire_factor"
+|ai_call_ally_desire_factor
+|Chance for AI to call allies.
+|<pre>ai_call_ally_desire_factor = 0.5</pre>
+|Percentual.
+|
+|1.0
+|-id="ai_desired_divisions_factor"
+|ai_desired_divisions_factor
+|The amount of divisions AI seeks to produce.
+|<pre>ai_desired_divisions_factor = 0.5</pre>
+|Percentual.
+|
+|1.0
+|-id="ai_focus_aggressive_factor"
+|ai_focus_aggressive_factor
+|AI's focus on offense.
+|<pre>ai_focus_aggressive_factor = 0.5</pre>
+|Percentual.
+|
+|1.0
+|-id="ai_focus_defense_factor"
+|ai_focus_defense_factor
+|AI's focus on defense.
+|<pre>ai_focus_defense_factor = 0.5</pre>
+|Percentual.
+|
+|1.0
+|-id="ai_focus_aviation_factor"
+|ai_focus_aviation_factor
+|AI's focus on aviation.
+|<pre>ai_focus_aviation_factor = 0.5</pre>
+|Percentual.
+|
+|1.0
+|-id="ai_focus_military_advancements_factor"
+|ai_focus_military_advancements_factor
+|AI's focus on advanced military technologies.
+|<pre>ai_focus_military_advancements_factor = 0.5</pre>
+|Percentual.
+|
+|1.0
+|-id="ai_focus_military_equipment_factor"
+|ai_focus_military_equipment_factor
+|AI's focus on advanced military equipment.
+|<pre>ai_focus_military_equipment_factor = 0.5</pre>
+|Percentual.
+|
+|1.0
+|-id="ai_focus_naval_air_factor"
+|ai_focus_naval_air_factor
+|AI's focus on building naval airforce.
+|<pre>ai_focus_naval_air_factor = 0.5</pre>
+|Percentual.
+|
+|1.0
+|-id="ai_focus_naval_factor"
+|ai_focus_naval_factor
+|AI's focus on building a navy.
+|<pre>ai_focus_naval_factor = 0.5</pre>
+|Percentual.
+|
+|1.0
+|-id="ai_focus_peaceful_factor"
+|ai_focus_peaceful_factor
+|AI's focus on peaceful research and policies.
+|<pre>ai_focus_peaceful_factor = 0.5</pre>
+|Percentual.
+|
+|1.0
+|-id="ai_focus_war_production_factor"
+|ai_focus_war_production_factor
+|AI's focus on wartime production.
+|<pre>ai_focus_war_production_factor = 0.5</pre>
+|Percentual.
+|
+|1.0
+|-id="ai_get_ally_desire_factor"
+|ai_get_ally_desire_factor
+|AI's desire to be in or expand a faction.
+|<pre>ai_get_ally_desire_factor = 0.5</pre>
+|Percentual.
+|
+|1.0
+|-id="ai_join_ally_desire_factor"
+|ai_join_ally_desire_factor
+|AI's desire to join the wars led by allies.
+|<pre>ai_join_ally_desire_factor = 0.5</pre>
+|Percentual.
+|
+|1.0
+|-id="ai_license_acceptance"
+|ai_license_acceptance
+|AI's chance to agree licensing equipment.
+|<pre>ai_license_acceptance = 0.5</pre>
+|Percentual.
+|Can be used as a targeted modifier.
+|1.4
+|}
+
+==== Military outside of combat ====
+{{SVersion|1.13}}
+
+{| class="wikitable sortable mw-collapsible" style="display: inline-block; padding: 5px" width="100%"
+|+ style="text-align: center;" width = "100%" |{{nowrap|Military-related country-scoped modifiers:}}<br/>
+! width="10%" | Name
+! width="25%" | Effects
+! width="25%" | Examples
+! width="20%" | Modifier type
+! width="15%" | Notes
+! width="5%" | Version added
+|-id="command_power_gain"
+|command_power_gain
+|Changes the daily gain of command power.
+|<pre>command_power_gain = 0.5</pre>
+|Flat.
+|
+|1.5
+|-id="command_power_gain_mult"
+|command_power_gain_mult
+|Changes the daily gain of command power by a percentage.
+|<pre>command_power_gain_mult = 0.5</pre>
+|Percentual.
+|
+|1.5
+|-id="conscription"
+|conscription
+|Changes the recruitable percentage of the total population.
+|<pre>conscription = 0.02</pre>
+|Flat.
+|
+|1.0
+|-id="conscription_factor"
+|conscription_factor
+|Changes the recruitable percentage of the total population by a percent.
+|<pre>conscription_factor = 0.3</pre>
+|Percentual.
+|
+|1.0
+|-id="experience_gain_army"
+|experience_gain_army
+|Modifies the daily gain of army experience.
+|<pre>experience_gain_army = 0.5</pre>
+|Flat.
+|
+|1.0
+|-id="experience_gain_army_factor"
+|experience_gain_army_factor
+|Modifies the gain of army experience by a percentage.
+|<pre>experience_gain_army_factor = 0.5</pre>
+|Percentual.
+|
+|1.0
+|-id="experience_gain_navy"
+|experience_gain_navy
+|Modifies the daily gain of naval experience.
+|<pre>experience_gain_navy = 0.02</pre>
+|Flat.
+|
+|1.0
+|-id="experience_gain_navy_factor"
+|experience_gain_navy_factor
+|Modifies the gain of naval experience by a percentage.
+|<pre>experience_gain_navy_factor = 0.3</pre>
+|Percentual.
+|
+|1.0
+|-id="experience_gain_air"
+|experience_gain_air
+|Modifies the daily gain of air experience.
+|<pre>experience_gain_air = 0.05</pre>
+|Flat.
+|
+|1.0
+|-id="experience_gain_air_factor"
+|experience_gain_air_factor
+|Modifies the daily gain of air experience by a percentage.
+|<pre>experience_gain_air_factor = 0.5</pre>
+|Percentual.
+|
+|1.0
+|-id="land_equipment_upgrade_xp_cost"
+|land_equipment_upgrade_xp_cost
+|Changes the experience cost to upgrade land army equipment.
+|<pre>land_equipment_upgrade_xp_cost = 0.3</pre>
+|Percentual.
+|
+|1.0
+|-id="land_reinforce_rate"
+|land_reinforce_rate
+|Changes the rate at which reinforcements to divisions arrive.
+|<pre>land_reinforce_rate = 0.3</pre>
+|Percentual.
+|
+|1.0
+|-id="max_command_power"
+|max_command_power
+|Changes maximum command power.
+|<pre>max_command_power = 20</pre>
+|Flat.
+|
+|1.5
+|-id="max_command_power_mult"
+|max_command_power_mult
+|Changes maximum command power by a percentage.
+|<pre>max_command_power_mult = 0.3 </pre>
+|Percentual.
+|
+|1.5
+|-id="weekly_manpower"
+|weekly_manpower
+|Amount of manpower gained each week.
+|<pre>weekly_manpower = 1000 </pre>
+|Flat.
+|
+|1.6
+|-id="naval_equipment_upgrade_xp_cost"
+|naval_equipment_upgrade_xp_cost
+|Changes the naval experience cost to upgrade equipment.
+|<pre>naval_equipment_upgrade_xp_cost = 0.3</pre>
+|Percentual.
+|
+|1.0
+|-id="refit_ic_cost"
+|refit_ic_cost
+|The IC cost to refit naval equipment.
+|<pre>refit_ic_cost = 20</pre>
+|Flat.
+|
+|1.6
+|-id="refit_speed"
+|refit_speed
+|The speed at which naval equipment is refitted.
+|<pre>refit_speed = 0.5</pre>
+|Percentual.
+|
+|1.6
+|-id="air_equipment_upgrade_xp_cost"
+|air_equipment_upgrade_xp_cost
+|Changes the air experience cost to upgrade equipment.
+|<pre>air_equipment_upgrade_xp_cost = 0.5</pre>
+|Percentual.
+|
+|1.0
+|-id="training_time_factor"
+|training_time_factor
+|Modifies the training time for both army and navy.
+|<pre>training_time_factor = 0.3</pre>
+|Percentual.
+|
+|1.0
+|-id="minimum_training_level"
+|minimum_training_level
+|Changes training level necessary for the unit to deploy.
+|<pre>minimum_training_level = 0.3 </pre>
+|Percentual.
+|
+|1.0
+|-id="max_training"
+|max_training
+|Modifies the required experience to achieve full training.
+|<pre>max_training = -0.3</pre>
+|Percentual.
+|<!--Please test this in-game!-->
+|1.0
+|-id="training_time_army_factor"
+|training_time_army_factor
+|Modifies the training time for the army.
+|<pre>training_time_army_factor = 0.3</pre>
+|Percentual.
+|
+|1.0
+|-id="special_forces_training_time_factor"
+|special_forces_training_time_factor
+|Changes the time it takes to train special forces.
+|<pre>special_forces_training_time_factor = 0.3</pre>
+|Percentual.
+|
+|1.0
+|-id="land_air_naval_doctrine_cost_factor"
+|<land/air/naval>_doctrine_cost_factor
+|Changes the cost of buying a new doctrine of the specified type.
+|<pre>land_doctrine_cost_factor = -0.05</pre>
+|Percentual.
+|
+|1.11
+|-id="doctrine_cost_factor"
+|<doctrine category>_cost_factor
+|Modifies the cost of buying a new doctrine of the specified category.
+|<pre>cat_mobile_warfare_cost_factor = 0.3</pre>
+|Percentual.
+|Doctrines are defined in {{path|common/technologies/*.txt}}.
+|1.11
+|-
+|<land/air/naval>_mastery_gain_factor
+|Modifies the speed at which mastery in a given doctrine folder is gained.
+|<code>land_mastery_gain_factor = 0.15</code>
+|Percentual.
+|Doctrine tracks are defined in <code>/Hearts of Iron IV/common/doctrines/folders</code>.
+|
+|-
+|<doctrine track>_track_mastery_gain_factor
+|Modifies the speed at which mastery of a given track is gained.
+|<code>operations_track_mastery_gain_factor = 0.1</code>
+|Percentual.
+|Doctrine tracks are defined in <code>/Hearts of Iron IV/common/doctrines/tracks</code>.
+currently existing tracks are
+Army:
+<code>infantry</code>,<code>combat_support</code>,<code>armor</code>and<code>operations</code>
+
+Air:
+<code>fighter_aircraft</code>,<code>strike_aircraft</code>,<code>medium_aircraft</code>and<code>heavy_aircraft</code>
+
+Navy:
+<code>capital_ships</code>,<code>carriers</code>,<code>screens</code>and<code>submarines</code>
+|1.17
+|-id="choose_preferred_tactics_cost"
+|choose_preferred_tactics_cost
+|Changes the cost to choose a preferred tactic.
+|<pre>choose_preferred_tactics_cost = 5</pre>
+|Flat.
+|
+|1.11
+|-id="command_abilities_cost_factor"
+|command_abilities_cost_factor
+|Changes the cost to choose a command ability.
+|<pre>command_abilities_cost_factor = -0.3</pre>
+|Percentual.
+|
+|1.11
+|-id="transport_capacity"
+|transport_capacity
+|Modifies how many convoys units require to be transported over sea.
+|<pre>transport_capacity = 0.3</pre>
+|Percentual.
+|
+|1.0
+|-id="paratroopers_special_forces_contribution_factor"
+|paratroopers_special_forces_contribution_factor
+|Modifies how much paratroopers contribute to the limit of special forces on a template.
+|<pre>paratroopers_special_forces_contribution_factor = 0.3</pre>
+|Percentual.
+|
+|1.13
+|-id="marines_special_forces_contribution_factor"
+|marines_special_forces_contribution_factor
+|Modifies how much marines contribute to the limit of special forces on a template.
+|<pre>marines_special_forces_contribution_factor = 0.3</pre>
+|Percentual.
+|
+|1.13
+|-id="mountaineers_special_forces_contribution_factor"
+|mountaineers_special_forces_contribution_factor
+|Modifies how much mountaineers contribute to the limit of special forces on a template.
+|<pre>mountaineers_special_forces_contribution_factor = 0.3</pre>
+|Percentual.
+|
+|1.13
+|-id="rangers_special_forces_contribution_factor"
+|rangers_special_forces_contribution_factor
+|Modifies how much rangers contribute to the limit of special forces on a template.
+|<pre>rangers_special_forces_contribution_factor = 0.3</pre>
+|Percentual.
+|
+|1.17
+|-id="special_forces_cap_flat"
+|special_forces_cap_flat
+|Modifies how many special forces sub-units can be put into a single template.
+|<pre>special_forces_cap_flat = 10</pre>
+|Percentual.
+|
+|1.13
+|-id="additional_brigade_column_size"
+|additional_brigade_column_size
+|Changes the amount of maximum unlocked slots on each brigade column in division templates.
+|<pre>additional_brigade_column_size = 1</pre>
+|Flat.
+|
+|1.13
+|-id="unit_design_cost_factor"
+|unit_<unit type>_design_cost_factor
+|Modifies how much experience it costs to add a brigade of the specified type to a template.
+|<pre>unit_artillery_brigade_design_cost_factor = 0.3</pre>
+|Percentual.
+|Brigades are defined in {{path|common/units/*.txt}}
+|1.11
+|-id="equipment_design_cost_factor"
+|<equipment archetype>_design_cost_factor
+|Modifies how much experience it costs to add upgrades or modules to a specified equipment archetype.
+|<pre>strat_bomber_equipment_design_cost_factor = 0.3</pre><pre>ship_hull_heavy_design_cost_factor = -0.2</pre>
+|Percentual.
+|Equipment archetypes are defined in {{path|common/units/equipment/*.txt}}
+|1.11
+|-id="module_design_cost_factor"
+|module_<module type>_design_cost_factor
+|Modifies how much experience it costs to add a module of the specified type to equipment.
+|<pre>module_tank_torsion_bar_suspension_design_cost_factor = 0.3</pre>
+|Percentual.
+|Modules are defined in {{path|common/units/equipment/modules/*.txt}}
+|1.11
+|}
+
+==== MIOs ====
+{{SVersion|1.13}}
+These are modifiers related to [[military industrial organisation]]s.
+
+{| class="wikitable sortable mw-collapsible" style="display: inline-block; padding: 5px" width="100%"
+|+ style="text-align: center;" width = "100%" |{{nowrap|MIO-related country-scoped modifiers:}}<br/>
+! width="10%" | Name
+! width="25%" | Effects
+! width="25%" | Examples
+! width="20%" | Modifier type
+! width="15%" | Notes
+! width="5%" | Version added
+|-id="military_industrial_organization_research_bonus"
+|military_industrial_organization_research_bonus
+|Modifies the research bonus granted by MIOs.
+|<pre>military_industrial_organization_research_bonus = 0.3</pre>
+|Percentual.
+|
+|1.13
+|-id="military_industrial_organization_design_team_assign_cost"
+|military_industrial_organization_design_team_assign_cost
+|Modifies the political power cost to assign a design team.
+|<pre>military_industrial_organization_design_team_assign_cost = 30</pre>
+|Flat.
+|
+|1.13
+|-id="military_industrial_organization_design_team_change_cost"
+|military_industrial_organization_design_team_change_cost
+|Modifies the political power cost to change a design team.
+|<pre>military_industrial_organization_design_team_change_cost = 20</pre>
+|Flat.
+|
+|1.13
+|-id="military_industrial_organization_industrial_manufacturer_assign_cost"
+|military_industrial_organization_industrial_manufacturer_assign_cost
+|Modifies the political power cost to assign an industrial manufacturer.
+|<pre>military_industrial_organization_industrial_manufacturer_assign_cost = 10</pre>
+|Flat.
+|
+|1.13
+|-id="military_industrial_organization_task_capacity"
+|military_industrial_organization_task_capacity
+|Modifies the amount of tasks possible to assign to the MIO.
+|<pre>military_industrial_organization_task_capacity = 2</pre>
+|Flat.
+|
+|1.13
+|-id="military_industrial_organization_size_up_requirement"
+|military_industrial_organization_size_up_requirement
+|Modifies the requirement to size up a MIO.
+|<pre>military_industrial_organization_size_up_requirement = 2</pre>
+|Flat.
+|
+|1.13
+|-id="military_industrial_organization_funds_gain"
+|military_industrial_organization_funds_gain
+|Modifies the amount of funds gained by the MIO.
+|<pre>military_industrial_organization_funds_gain = 0.3</pre>
+|Percentual.
+|
+|1.13
+|-id="military_industrial_organization_policy_cost"
+|military_industrial_organization_policy_cost
+|Modifies the political power cost to assign a MIO policy.
+|<pre>military_industrial_organization_policy_cost = 20</pre>
+|Flat.
+|
+|1.13
+|-id="military_industrial_organization_policy_cooldown"
+|military_industrial_organization_policy_cooldown
+|Modifies the cooldown between how often it's possible to change policies.
+|<pre>military_industrial_organization_policy_cooldown = 5</pre>
+|Flat.
+|
+|1.13
+|}
+
+==== Unit leaders ====
+{{SVersion|1.13}}
+These are modifiers related to unit leaders in the country scope, rather than being in the unit leader scope.
+
+{| class="wikitable sortable mw-collapsible" style="display: inline-block; padding: 5px" width="100%"
+|+ style="text-align: center;" width = "100%" |{{nowrap|Unit leader-related country-scoped modifiers:}}<br/>
+! width="10%" | Name
+! width="25%" | Effects
+! width="25%" | Examples
+! width="20%" | Modifier type
+! width="15%" | Notes
+! width="5%" | Version added
+|-id="female_random_army_leader_chance"
+|female_random_army_leader_chance
+|Changes the chance for a randomly-generated army leader to be female.
+|<pre>female_random_army_leader_chance = 0.3</pre>
+|Percentual.
+|
+|1.9.1
+|-id="assign_army_leader_cp_cost"
+|assign_army_leader_cp_cost
+|Modifies the cost to assign an army leader to an army.
+|<pre>assign_army_leader_cp_cost = -5</pre>
+|Flat.
+|
+|1.11
+|-id="army_leader_cost_factor"
+|army_leader_cost_factor
+|The cost in political power to recruit an unit leader for the land army.
+|<pre>army_leader_cost_factor = 0.5 </pre>
+|Percentual.
+|
+|1.3
+|-id="army_leader_start_level"
+|army_leader_start_level
+|Bonus to the starting level of generic unit leaders.
+|<pre>army_leader_start_level = 1 </pre>
+|Flat.
+|
+|1.5
+|-id="army_leader_start_attack_level"
+|army_leader_start_attack_level
+|Bonus to the starting level of attack in generic unit leaders.
+|<pre>army_leader_start_attack_level = 1 </pre>
+|Flat.
+|
+|1.5
+|-id="army_leader_start_defense_level"
+|army_leader_start_defense_level
+|Bonus to the starting level of defense in generic unit leaders.
+|<pre>army_leader_start_defense_level = 1 </pre>
+|Flat.
+|
+|1.5
+|-id="army_leader_start_logistics_level"
+|army_leader_start_logistics_level
+|Bonus to the starting level of logistics in generic unit leaders.
+|<pre>army_leader_start_logistics_level = 1 </pre>
+|Flat.
+|
+|1.5
+|-id="army_leader_start_planning_level"
+|army_leader_start_planning_level
+|Bonus to the starting level of planning in generic unit leaders.
+|<pre>army_leader_start_planning_level = 1 </pre>
+|Flat.
+|
+|1.5
+|-id="military_leader_cost_factor"
+|military_leader_cost_factor
+|The cost in political power to recruit an unit leader.
+|<pre>military_leader_cost_factor = 0.5 </pre>
+|Percentual.
+|
+|1.3
+|-id="female_random_admiral_chance"
+|female_random_admiral_chance
+|Changes the chance for a randomly-generated admiral to be female.
+|<pre>female_random_admiral_chance = 0.3</pre>
+|Percentual.
+|
+|1.9.1
+|-id="assign_navy_leader_cp_cost"
+|assign_navy_leader_cp_cost
+|Modifies the cost to assign a navy leader to a navy.
+|<pre>assign_navy_leader_cp_cost = -5</pre>
+|Flat.
+|
+|1.11
+|-id="navy_leader_cost_factor"
+|navy_leader_cost_factor
+|The cost in political power to recruit an unit leader for the land navy.
+|<pre>navy_leader_cost_factor = 0.5 </pre>
+|Percentual.
+|
+|1.3
+|-id="navy_leader_start_level"
+|navy_leader_start_level
+|Bonus to the starting level of generic unit leaders.
+|<pre>navy_leader_start_level = 1 </pre>
+|Flat.
+|
+|1.9
+|-id="navy_leader_start_attack_level"
+|navy_leader_start_attack_level
+|Bonus to the starting level of attack in generic unit leaders.
+|<pre>navy_leader_start_attack_level = 1 </pre>
+|Flat.
+|
+|1.9
+|-id="navy_leader_start_coordination_level"
+|navy_leader_start_coordination_level
+|Bonus to the starting level of coordination in generic unit leaders.
+|<pre>navy_leader_start_coordination_level = 1 </pre>
+|Flat.
+|
+|1.9
+|-id="navy_leader_start_defense_level"
+|navy_leader_start_defense_level
+|Bonus to the starting level of defense in generic unit leaders.
+|<pre>navy_leader_start_defense_level = 1 </pre>
+|Flat.
+|
+|1.9
+|-id="navy_leader_start_maneuvering_level"
+|navy_leader_start_maneuvering_level
+|Bonus to the starting level of maneuvering in generic unit leaders.
+|<pre>navy_leader_start_maneuvering_level = 1 </pre>
+|Flat.
+|
+|1.9
+|-id="grant_medal_cost_factor"
+|grant_medal_cost_factor
+|Changes the cost in command power to grant a medal to a division commander.
+|<pre>grant_medal_cost_factor = 0.2</pre>
+|Percentual.
+|
+|1.12
+|-id="field_officer_promotion_penalty"
+|field_officer_promotion_penalty
+|Changes the experience penalty applied to the divisions when a commander is promoted to a field marshal.
+|<pre>field_officer_promotion_penalty = 0.2</pre>
+|Percentual.
+|
+|1.12
+|-id="female_divisional_commander_chance"
+|female_divisional_commander_chance
+|Changes the chance to get a female divisional commander.
+|<pre>female_divisional_commander_chance = 0.2</pre>
+|Flat.
+|If no generic female portraits are defined within {{path|portraits/*.txt}} files, there will be a silhouette.
+|1.12
+|}
+
+==== General combat ====
+{{SVersion|1.13}}
+Note that most of these modifiers are not only in country scope but also in unit leader and navy leader scopes.
+
+{| class="wikitable sortable mw-collapsible" style="display: inline-block; padding: 5px" width="100%"
+|+ style="text-align: center;" width = "100%" |{{nowrap|Combat-related country-scoped modifiers:}}<br/>
+! width="10%" | Name
+! width="25%" | Effects
+! width="25%" | Examples
+! width="20%" | Modifier type
+! width="15%" | Notes
+! width="5%" | Version added
+|-id="offence"
+|offence
+|Modifies the attack value of our military, navy, and airforce.
+|<pre>offence = 0.5</pre>
+|Percentual.
+|Does not work in country scope, use army_attack_factor instead.
+|1.0
+|-id="defence"
+|defence
+|Modifies the defence value of our military, navy, and airforce.
+|<pre>defence = 0.5</pre>
+|Percentual.
+|Does not work in country scope, use army_defence_factor instead.
+|1.0
+|-id="tactic_preferred_weight_factor"
+|<Tactic>_preferred_weight_factor
+|Modifies the chance for a commander to choose the specified tactic.
+|<pre>tactic_ambush_preferred_weight_factor = 0.3</pre>
+|Percentual.
+|Combat tactics are defined in {{path|common/combat_tactics.txt}}.
+|1.6
+|}
+
+==== Land combat ====
+{{SVersion|1.13}}
+Note that most of these modifiers are not only in country scope but also in unit leader scope.
+
+{| class="wikitable sortable mw-collapsible" style="display: inline-block; padding: 5px" width="100%"
+|+ style="text-align: center;" width = "100%" |{{nowrap|Land combat-related country-scoped modifiers:}}<br/>
+! width="10%" | Name
+! width="25%" | Effects
+! width="25%" | Examples
+! width="20%" | Modifier type
+! width="15%" | Notes
+! width="5%" | Version added
+|-id="acclimatization_cold_climate_gain_factor"
+|acclimatization_cold_climate_gain_factor
+|Cold acclimatization gain factor.
+|<pre>acclimatization_cold_climate_gain_factor = 0.5</pre>
+|Percentual.
+|
+|1.0
+|-id="acclimatization_hot_climate_gain_factor"
+|acclimatization_hot_climate_gain_factor
+|Hot acclimatization gain factor.
+|<pre>acclimatization_hot_climate_gain_factor = 0.5</pre>
+|Percentual.
+|
+|1.0
+|-id="air_superiority_bonus_in_combat"
+|air_superiority_bonus_in_combat
+|The bonus in combat given from having air superiority.
+|<pre>air_superiority_bonus_in_combat = 0.5</pre>
+|Percentual.
+|
+|1.0
+|-id="army_attack_factor"
+|army_attack_factor
+|The bonus to land army's attack.
+|<pre>army_attack_factor = 0.5</pre>
+|Percentual.
+|
+|1.0
+|-id="army_core_attack_factor"
+|army_core_attack_factor
+|The bonus to land army's attack on core territory.
+|<pre>army_core_attack_factor = 0.1</pre>
+|Percentual.
+|
+|1.0
+|-id="army_attack_against_major_factor"
+|army_attack_against_major_factor
+|The bonus to land army's attack against a major country.
+|<pre>army_attack_against_major_factor = 0.5</pre>
+|Percentual.
+|
+|1.11
+|-id="army_attack_against_minor_factor"
+|army_attack_against_minor_factor
+|The bonus to land army's attack against a non-major country.
+|<pre>army_attack_against_minor_factor = 0.5</pre>
+|Percentual.
+|
+|1.11
+|-id="army_attack_speed_factor"
+|army_attack_speed_factor
+|The bonus to speed at which the land army attacks.
+|<pre>army_attack_speed_factor = 0.5</pre>
+|Percentual.
+|
+|1.0
+|-id="army_breakthrough_against_major_factor"
+|army_breakthrough_against_major_factor
+|The bonus to land army's breakthrough against a major country.
+|<pre>army_breakthrough_against_major_factor = 0.5</pre>
+|Percentual.
+|
+|1.11
+|-id="army_breakthrough_against_minor_factor"
+|army_breakthrough_against_minor_factor
+|The bonus to land army's breakthrough against a non-major country.
+|<pre>army_breakthrough_against_minor_factor = 0.5</pre>
+|Percentual.
+|
+|1.11
+|-id="army_defence_factor"
+|army_defence_factor
+|The bonus to land army's defence.
+|<pre>army_defence_factor = 0.5</pre>
+|Percentual.
+|
+|1.0
+|-id="army_defence_against_major_factor"
+|army_defence_against_major_factor
+|The bonus to land army's defence against a major country.
+|<pre>army_defence_against_major_factor = 0.5</pre>
+|Percentual.
+|
+|1.11
+|-id="army_defence_against_minor_factor"
+|army_defence_against_minor_factor
+|The bonus to land army's defence against a non-major country.
+|<pre>army_defence_against_minor_factor = 0.5</pre>
+|Percentual.
+|
+|1.11
+|-id="army_core_defence_factor"
+|army_core_defence_factor
+|The bonus to land army's defence on core territory.
+|<pre>army_core_defence_factor = 0.1</pre>
+|Percentual.
+|
+|1.0
+|-id="army_speed_factor"
+|army_speed_factor
+|The bonus to land army's speed.
+|<pre>army_speed_factor = 0.5</pre>
+|Percentual.
+|
+|1.0
+|-id="army_strength_factor"
+|army_strength_factor
+|The bonus to land army's strength.
+|<pre>army_strength_factor = 0.5</pre>
+|Percentual.
+|
+|1.11
+|-id="<unit type>_attack_factor"
+|<unit type>_attack_factor
+|The bonus to specified unit type's attack.
+|<pre>cavalry_attack_factor = 0.5</pre>
+|Percentual.
+|Allowed unit types are army_armor, army_artillery, army_infantry, cavalry, mechanized, motorized, special_forces
+|1.0
+|-id="<unit type>_defence_factor"
+|<unit type>_defence_factor
+|The bonus to the specified unit type's defence.
+|<pre>army_artillery_defence_factor = 0.5</pre>
+|Percentual.
+|Allowed unit types are army_armor, army_artillery, army_infantry, cavalry, mechanized, motorized, special_forces
+|1.0
+|-id="<unit type>_speed_factor"
+|<unit type>_speed_factor
+|The bonus to specified unit type's speed.
+|<pre>army_armor_speed_factor = 0.5</pre>
+|Percentual.
+|Allowed unit types are army_armor and cavalry. Cavalry_speed_factor is currently broken and not recognized by the game.
+|1.0
+|-id="army_morale"
+|army_morale
+|Modifies the division recovery rate.
+|<pre>army_morale = 10</pre>
+|Flat.
+|
+|1.0
+|-id="army_morale_factor"
+|army_morale_factor
+|Modifies the division recovery rate by a percentage.
+|<pre>army_morale_factor = 0.3</pre>
+|Percentual.
+|
+|1.0
+|-id="army_org"
+|army_org
+|Modifies the army's organisation.
+|<pre>army_org = 10</pre>
+|Flat.
+|
+|1.0
+|-id="army_org_factor"
+|army_org_factor
+|Modifies the army's organisation by a percentage.
+|<pre>army_org_factor = 0.3</pre>
+|Percentual.
+|
+|1.0
+|-id="army_org_regain"
+|army_org_regain
+|Modifies the army's organisation regain speed by a percentage.
+|<pre>army_org_regain = 0.3</pre>
+|Percentual.
+|
+|1.5.1
+|-id="breakthrough_factor"
+|breakthrough_factor
+|Modifies the army's breakthrough.
+|<pre>breakthrough_factor = 0.3</pre>
+|Percentual.
+|
+|1.0
+|-id="cas_damage_reduction"
+|cas_damage_reduction
+|Reduces the damage dealt by close air support.
+|<pre>cas_damage_reduction = 0.3</pre>
+|Percentual.
+|
+|1.0
+|-id="combat_width_factor"
+|combat_width_factor
+|Changes our own combat width.
+|<pre>combat_width_factor = 0.3</pre>
+|Percentual.
+|
+|1.0
+|-id="coordination_bonus"
+|coordination_bonus
+|Changes the bonus to coordination, that is how much damage is done to the primary target instead of being spread out.
+|<pre>coordination_bonus = 0.3</pre>
+|Percentual.
+|
+|1.11
+|-id="dig_in_speed"
+|dig_in_speed
+|Changes entrenchment speed.
+|<pre>dig_in_speed = 2</pre>
+|Flat.
+|
+|1.0
+|-id="dig_in_speed_factor"
+|dig_in_speed_factor
+|Changes entrenchment speed by a percentage.
+|<pre>dig_in_speed_factor = 0.5</pre>
+|Percentual.
+|
+|1.0
+|-id="experience_gain_army_unit"
+|experience_gain_army_unit
+|Changes experience gain by the army divisions.
+|<pre>experience_gain_army_unit = 0.5</pre>
+|Flat.
+|
+|1.0
+|-id="experience_gain_army_unit_factor"
+|experience_gain_army_unit_factor
+|Changes experience gain by the army divisions by a percentage.
+|<pre>experience_gain_army_unit_factor = 0.5</pre>
+|Percentual.
+|
+|1.0
+|-id="experience_loss_factor"
+|experience_loss_factor
+|Changes the loss in divisions' experience in combat.
+|<pre>experience_loss_factor = 0.3</pre>
+|Percentual.
+|
+|1.0
+|-id="initiative_factor"
+|initiative_factor
+|Modifies the initiative.
+|<pre>initiative_factor = 0.3</pre>
+|Percentual.
+|
+|1.11
+|-id="land_night_attack"
+|land_night_attack
+|Changes the penalty due to attacking at night.
+|<pre>land_night_attack = 0.5</pre>
+|Percentual.
+|
+|1.0
+|-id="max_dig_in"
+|max_dig_in
+|Changes the maximum entrenchment.
+|<pre>max_dig_in = 20</pre>
+|Flat.
+|Can also apply in state scope.
+|1.0
+|-id="max_dig_in_factor"
+|max_dig_in_factor
+|Changes the maximum entrenchment by a percentage.
+|<pre>max_dig_in_factor = 0.5</pre>
+|Percentual.
+|Can also apply in state scope.
+|1.0
+|-id="max_planning"
+|max_planning
+|Changes the maximum planning.
+|<pre>max_planning = 20</pre>
+|Flat.
+|
+|1.0
+|-id="max_planning_factor"
+|max_planning_factor
+|Changes the maximum planning by a percentage.
+|<pre>max_planning_factor = 0.5</pre>
+|Percentual.
+|
+|1.9
+|-id="pocket_penalty"
+|pocket_penalty
+|Reduces the penalty that troops take when they are encircled.
+|<pre>pocket_penalty = 0.2</pre>
+|Percentual.
+|
+|1.0
+|-id="recon_factor"
+|recon_factor
+|Changes reconnaisance.
+|<pre>recon_factor = 0.2</pre>
+|Percentual.
+|
+|1.0
+|-id="recon_factor_while_entrenched"
+|recon_factor_while_entrenched
+|Changes reconnaisance for entrenched divisions.
+|<pre>recon_factor_while_entrenched = 0.2</pre>
+|Percentual.
+|
+|1.0
+|-id="special_forces_cap"
+|special_forces_cap
+|Changes the maximum amount of special forces by a percentage.
+|<pre>special_forces_cap = 0.5</pre>
+|Percentual.
+|
+|1.0
+|-id="special_forces_min"
+|special_forces_min
+|Changes the minimum amount of special forces.
+|<pre>special_forces_min = 250</pre>
+|Flat.
+|
+|1.0
+|-id="terrain_penalty_reduction"
+|terrain_penalty_reduction
+|Decreases the penalties given by terrain.
+|<pre>terrain_penalty_reduction = 0.3</pre>
+|Percentual.
+|Only works in the unit_leader scope despite the modifier being present in vanilla national spirits at the time of writing.
+|1.0
+|-id="org_loss_at_low_org_factor"
+|org_loss_at_low_org_factor
+|Modifies the organisation loss for units when they have low organisation.
+|<pre>org_loss_at_low_org_factor = 0.2</pre>
+|Percentual.
+|
+|1.0
+|-id="org_loss_when_moving"
+|org_loss_when_moving
+|Modifies the organisation loss for units when they are moving.
+|<pre>org_loss_when_moving = 0.2</pre>
+|Percentual.
+|
+|1.0
+|-id="planning_speed"
+|planning_speed
+|Modifies the planning speed.
+|<pre>planning_speed = 0.2</pre>
+|Percentual.
+|Works in state scope.
+|1.0
+|-id="experience_gain_unit_combat_factor"
+|experience_gain_<unit type>_combat_factor
+|Modifies the experience gain in combat for the unit type.
+|<pre>experience_gain_artillery_combat_factor = 0.3</pre>
+|Percentual.
+|Units are defined in {{path|common/units/*.txt}} files.
+|1.11
+|-id="experience_gain_unit_training_factor"
+|experience_gain_<unit type>_training_factor
+|Modifies the experience gain in training for the unit type.
+|<pre>experience_gain_destroyer_training_factor = 0.3</pre>
+|Percentual.
+|Units are defined in {{path|common/units/*.txt}} files.
+|1.11
+|}
+
+==== Naval invasions ====
+{| class="wikitable sortable mw-collapsible" style="display: inline-block; padding: 5px" width="100%"
+|+ style="text-align: center;" width = "100%" |{{nowrap|Invasion-related country-scoped modifiers:}}<br/>
+! width="10%" | Name
+! width="25%" | Effects
+! width="25%" | Examples
+! width="20%" | Modifier type
+! width="15%" | Notes
+! width="5%" | Version added
+|-id="naval_invasion_prep_speed"
+|naval_invasion_prep_speed
+|Modifies the speed at which a naval invasion is prepared.
+|<pre>naval_invasion_prep_speed = 10</pre>
+|Flat.
+|Can be a targeted modifier or in unit leader scope.
+|1.0
+|-id="naval_invasion_capacity"
+|naval_invasion_capacity
+|Modifies the amount of divisions that can have a naval invasion plan going on at the same time.
+|<pre>naval_invasion_capacity = 10</pre>
+|Flat.
+|
+|1.0
+|-id="naval_invasion_penalty"
+|naval_invasion_penalty
+|Modifies the penalty for naval invasions.
+|<pre>naval_invasion_penalty = 0.3</pre>
+|Percentual.
+|Is the opposite of amphibious_invasion_defence. Can also apply in state scope.
+|1.0
+|-id="naval_invasion_planning_bonus_speed"
+|naval_invasion_planning_bonus_speed
+|Modifies the speed at which the planning bonus is accumulated during a naval invasion preparation.
+|<pre>naval_invasion_planning_bonus_speed = 0.3</pre>
+|Percentual.
+|
+|1.11
+|-id="amphibious_invasion"
+|amphibious_invasion
+|Modifies the speed of units during naval invasions.
+|<pre>amphibious_invasion = 0.5</pre>
+|Percentual.
+|
+|1.6
+|-id="amphibious_invasion_defence"
+|amphibious_invasion_defence
+|Modifies the penalty given by naval invasions.
+|<pre>amphibious_invasion_defence = 0.5</pre>
+|Percentual.
+|Is the opposite of naval_invasion_penalty. Can also apply in state scope.
+|1.6
+|-id="invasion_preparation"
+|invasion_preparation
+|Modifies the required preparation needed to execute a naval invasion.
+|<pre>invasion_preparation = 0.3</pre>
+|Percentual.
+|Is the opposite of naval_invasion_prep_speed. Can be used in unit leader scope.
+|1.6
+|}
+
+==== Naval combat ====
+{{SVersion|1.13}}
+Note that most of these modifiers are not only in country scope but also in navy leader scope as well as within equipment modules.
+
+{| class="wikitable sortable mw-collapsible" style="display: inline-block; padding: 5px" width="100%"
+|+ style="text-align: center;" width = "100%" |{{nowrap|Naval combat-related country-scoped modifiers:}}<br/>
+! width="10%" | Name
+! width="25%" | Effects
+! width="25%" | Examples
+! width="20%" | Modifier type
+! width="15%" | Notes
+! width="5%" | Version added
+|-id="convoy_escort_efficiency"
+|convoy_escort_efficiency
+|Modifies the efficiency of the convoy escort mission.
+|<pre>convoy_escort_efficiency = 0.5</pre>
+|Percentual.
+|
+|1.6
+|-id="convoy_raiding_efficiency_factor"
+|convoy_raiding_efficiency_factor
+|Modifies the efficiency of the convoy raiding mission.
+|<pre>convoy_raiding_efficiency_factor = 0.5</pre>
+|Percentual.
+|
+|1.6
+|-id="convoy_retreat_speed"
+|convoy_retreat_speed
+|Modifies the speed of convoys retreating.
+|<pre>convoy_retreat_speed = 0.5</pre>
+|Percentual.
+|
+|1.6
+|-id="critical_receive_chance"
+|critical_receive_chance
+|Changes the chance for the enemy to get a critical hit on us in naval combat.
+|<pre>critical_receive_chance = 0.5</pre>
+|Percentual.
+|
+|1.6
+|-id="experience_gain_navy_unit"
+|experience_gain_navy_unit
+|Modifies the daily gain of experience by the ships.
+|<pre>experience_gain_navy_unit = 0.02</pre>
+|Flat.
+|
+|1.6
+|-id="experience_gain_navy_unit_factor"
+|experience_gain_navy_unit_factor
+|Modifies the gain of experience by the ships by a percentage.
+|<pre>experience_gain_navy_unit_factor = 0.3</pre>
+|Percentual.
+|
+|1.6
+|-id="mines_planting_by_fleets_factor"
+|mines_planting_by_fleets_factor
+|Modifies the efficiency of the mine planting mission.
+|<pre>mines_planting_by_fleets_factor = 0.3</pre>
+|Percentual.
+|
+|1.6
+|-id="mines_sweeping_by_fleets_factor"
+|mines_sweeping_by_fleets_factor
+|Modifies the efficiency of the mine sweeping mission.
+|<pre>mines_sweeping_by_fleets_factor = 0.3</pre>
+|Percentual.
+|
+|1.6
+|-id="naval_accidents_chance"
+|naval_accidents_chance
+|Modifies the chance for a ship to be accidentally sunk or damaged.
+|<pre>naval_accidents_chance = 0.3</pre>
+|Percentual.
+|
+|1.6
+|-id="navy_anti_air_attack"
+|navy_anti_air_attack
+|Modifies the attack against enemy airplanes for the country's ships.
+|<pre>navy_anti_air_attack = 5</pre>
+|Flat.
+|
+|1.6
+|-id="navy_anti_air_attack_factor"
+|navy_anti_air_attack_factor
+|Modifies the attack against enemy airplanes for the country's ships by a percentage.
+|<pre>navy_anti_air_attack_factor = 0.3</pre>
+|Percentual.
+|
+|1.6
+|-id="naval_coordination"
+|naval_coordination
+|Modifies how quickly the fleet can gather or disperse when a target is found or when switching missions.
+|<pre>naval_coordination = 0.3</pre>
+|Percentual.
+|
+|1.6
+|-id="naval_critical_effect_factor"
+|naval_critical_effect_factor
+|Modifies the effects of sustained critical hits on our ships.
+|<pre>naval_critical_effect_factor = 0.3</pre>
+|Percentual.
+|
+|1.6
+|-id="naval_critical_score_chance_factor"
+|naval_critical_score_chance_factor
+|Modifies the chance for us to get a critical hit on the enemy in naval combat.
+|<pre>naval_critical_score_chance_factor = 0.3</pre>
+|Percentual.
+|
+|1.6
+|-id="naval_damage_factor"
+|naval_damage_factor
+|Modifies the damage dealt by our ships.
+|<pre>naval_damage_factor = 0.3</pre>
+|Percentual.
+|
+|1.6
+|-id="naval_defense_factor"
+|naval_defense_factor
+|Modifies the damage received by our ships.
+|<pre>naval_defense_factor = 0.3</pre>
+|Percentual.
+|
+|1.6
+|-id="naval_detection"
+|naval_detection
+|Modifies the chance for our ships to detect submarines.
+|<pre>naval_detection = 0.3</pre>
+|Percentual.
+|
+|1.6
+|-id="naval_enemy_fleet_size_ratio_penalty_factor"
+|naval_enemy_fleet_size_ratio_penalty_factor
+|Modifies the penalty the enemy receives for having a larger amount of ships than us.
+|<pre>naval_enemy_fleet_size_ratio_penalty_factor = 0.3</pre>
+|Percentual.
+|
+|1.6
+|-id="naval_enemy_positioning_in_initial_attack"
+|naval_enemy_positioning_in_initial_attack
+|Modifies the positioning of the enemy during the initial naval attack.
+|<pre>naval_enemy_positioning_in_initial_attack = 3</pre>
+|Flat.
+|
+|1.11
+|-id="naval_enemy_retreat_chance"
+|naval_enemy_retreat_chance
+|Modifies the chance for the enemy to retreat.
+|<pre>naval_enemy_retreat_chance = 0.3</pre>
+|Percentual.
+|
+|1.6
+|-id="naval_has_potf_in_combat_attack"
+|naval_has_potf_in_combat_attack
+|Modifies the attack of the navy when fighting together with the pride of the fleet.
+|<pre>naval_has_potf_in_combat_attack = 0.3</pre>
+|Percentual.
+|
+|1.6
+|-id="naval_has_potf_in_combat_defense"
+|naval_has_potf_in_combat_defense
+|Modifies the defense of the navy when fighting together with the pride of the fleet.
+|<pre>naval_has_potf_in_combat_defense = 0.3</pre>
+|Percentual.
+|
+|1.6
+|-id="naval_hit_chance"
+|naval_hit_chance
+|Modifies the chance for the naval attacks to land.
+|<pre>naval_hit_chance = 0.3</pre>
+|Percentual.
+|
+|1.6
+|-id="naval_mine_hit_chance"
+|naval_mine_hit_chance
+|Modifies the chance for a naval mine to hit.
+|<pre>naval_mine_hit_chance = 0.3</pre>
+|Percentual.
+|
+|1.6
+|-id="naval_mines_damage_factor"
+|naval_mines_damage_factor
+|Modifies the damage naval mines deal to enemy ships.
+|<pre>naval_mines_damage_factor = 0.3</pre>
+|Percentual.
+|
+|1.6
+|-id="naval_mines_effect_reduction"
+|naval_mines_effect_reduction
+|Modifies the damage enemy naval mines deal.
+|<pre>naval_mines_effect_reduction = 0.3</pre>
+|Percentual.
+|
+|1.6
+|-id="naval_morale"
+|naval_morale
+|Modifies the navy recovery rate.
+|<pre>naval_morale = 15</pre>
+|Flat.
+|
+|1.6
+|-id="naval_morale_factor"
+|naval_morale_factor
+|Modifies the navy recovery rate by a percentage.
+|<pre>naval_morale_factor = 0.3</pre>
+|Percentual.
+|
+|1.6
+|-id="naval_night_attack"
+|naval_night_attack
+|Modifies the damage dealt by the country's ships at night.
+|<pre>naval_night_attack = 0.3</pre>
+|Percentual.
+|
+|1.11
+|-id="naval_retreat_chance"
+|naval_retreat_chance
+|Modifies the chance for the country's ships to retreat.
+|<pre>naval_retreat_chance = 0.3</pre>
+|Percentual.
+|
+|1.6
+|-id="naval_retreat_chance_after_initial_combat"
+|naval_retreat_chance_after_initial_combat
+|Modifies the chance for the country's ships to retreat after initial combat.
+|<pre>naval_retreat_chance_after_initial_combat = 0.3</pre>
+|Percentual.
+|
+|1.11
+|-id="naval_retreat_speed"
+|naval_retreat_speed
+|Modifies the speed at which the country's ships retreat.
+|<pre>naval_retreat_speed = 0.3</pre>
+|Percentual.
+|
+|1.6
+|-id="naval_retreat_speed_after_initial_combat"
+|naval_retreat_speed_after_initial_combat
+|Modifies the speed at which the country's ships to retreat after initial combat.
+|<pre>naval_retreat_speed_after_initial_combat = 0.3</pre>
+|Percentual.
+|
+|1.11
+|-id="naval_speed_factor"
+|naval_speed_factor
+|Modifies the speed of the country's ships.
+|<pre>naval_speed_factor = 0.3</pre>
+|Percentual.
+|
+|1.6
+|-id="navy_org"
+|navy_org
+|Modifies the navy's organisation.
+|<pre>navy_org = 10</pre>
+|Flat.
+|
+|1.0
+|-id="navy_org_factor"
+|navy_org_factor
+|Modifies the navy's organisation by a percentage.
+|<pre>navy_org_factor = 0.3</pre>
+|Percentual.
+|
+|1.0
+|-id="navy_max_range"
+|navy_max_range
+|Modifies the navy's maximum range.
+|<pre>navy_max_range = 10</pre>
+|Flat.
+|
+|1.0
+|-id="navy_max_range_factor"
+|navy_max_range_factor
+|Modifies the navy's maximum range by a percentage.
+|<pre>navy_max_range_factor = 0.3</pre>
+|Percentual.
+|
+|1.0
+|-id="naval_torpedo_cooldown_factor"
+|naval_torpedo_cooldown_factor
+|Modifies the rate at which the country's ships can fire torpedos.
+|<pre>naval_torpedo_cooldown_factor = 0.3</pre>
+|Percentual.
+|
+|1.6
+|-id="naval_torpedo_hit_chance_factor"
+|naval_torpedo_hit_chance_factor
+|Modifies the likelihood for country's torpedos to hit enemy ships.
+|<pre>naval_torpedo_hit_chance_factor = 0.3</pre>
+|Percentual.
+|
+|1.6
+|-id="naval_torpedo_reveal_chance_factor"
+|naval_torpedo_reveal_chance_factor
+|Modifies the chance that the country's submarines reveal themselves when firing torpedos.
+|<pre>naval_torpedo_reveal_chance_factor = 0.3</pre>
+|Percentual.
+|
+|1.6
+|-id="naval_torpedo_screen_penetration_factor"
+|naval_torpedo_screen_penetration_factor
+|Modifies the rate at which the country's torpedos penalise enemy screening.
+|<pre>naval_torpedo_screen_penetration_factor = 0.3</pre>
+|Percentual.
+|
+|1.6
+|-id="naval_torpedo_damage_reduction_factor"
+|naval_torpedo_damage_reduction_factor
+|Modifies the damage at which enemy torpedos damage the country's ships.
+|<pre>naval_torpedo_damage_reduction_factor = 0.3</pre>
+|Percentual.
+|
+|1.12
+|-id="naval_torpedo_enemy_critical_chance_factor"
+|naval_torpedo_enemy_critical_chance_factor
+|Modifies the chance for an enemy torpedo to get a cricical hit against the country's ships.
+|<pre>naval_torpedo_enemy_critical_chance_factor = 0.3</pre>
+|Percentual.
+|
+|1.12
+|-id="naval_light_gun_hit_chance_factor"
+|naval_light_gun_hit_chance_factor
+|Modifies the chance for the country's naval light guns to hit enemy ships.
+|<pre>naval_light_gun_hit_chance_factor = 0.3</pre>
+|Percentual.
+|
+|1.12
+|-id="naval_heavy_gun_hit_chance_factor"
+|naval_heavy_gun_hit_chance_factor
+|Modifies the chance for the country's naval heavy guns to hit enemy ships.
+|<pre>naval_heavy_gun_hit_chance_factor = 0.3</pre>
+|Percentual.
+|
+|1.12
+|-id="navy_capital_ship_attack_factor"
+|navy_capital_ship_attack_factor
+|Modifies the attack of the country's capital ships.
+|<pre>navy_capital_ship_attack_factor = 0.3</pre>
+|Percentual.
+|
+|1.6
+|-id="navy_capital_ship_defence_factor"
+|navy_capital_ship_defence_factor
+|Modifies the defence of the country's capital ships.
+|<pre>navy_capital_ship_defence_factor = 0.3</pre>
+|Percentual.
+|
+|1.6
+|-id="navy_screen_attack_factor"
+|navy_screen_attack_factor
+|Modifies the attack of the country's screening ships.
+|<pre>navy_screen_attack_factor = 0.3</pre>
+|Percentual.
+|
+|1.6
+|-id="navy_screen_defence_factor"
+|navy_screen_defence_factor
+|Modifies the defence of the country's screening ships.
+|<pre>navy_screen_defence_factor = 0.3</pre>
+|Percentual.
+|
+|1.6
+|-id="navy_submarine_attack_factor"
+|navy_submarine_attack_factor
+|Modifies the attack of the country's submarines.
+|<pre>navy_submarine_attack_factor = 0.3</pre>
+|Percentual.
+|
+|1.6
+|-id="navy_submarine_defence_factor"
+|navy_submarine_defence_factor
+|Modifies the defence of the country's submarines.
+|<pre>navy_submarine_defence_factor = 0.3</pre>
+|Percentual.
+|
+|1.6
+|-id="navy_submarine_detection_factor"
+|navy_submarine_detection_factor
+|Modifies the country's detection of enemy submarines.
+|<pre>navy_submarine_detection_factor = 0.3</pre>
+|Percentual.
+|
+|1.6
+|-id="navy_visibility"
+|navy_visibility
+|Modifies the visibility of the country's navy.
+|<pre>navy_visibility = 0.3</pre>
+|Percentual.
+|
+|1.6
+|-id="navy_weather_penalty"
+|navy_weather_penalty
+|Modifies the penalty the country's navy gets during poor weather.
+|<pre>navy_weather_penalty = 0.3</pre>
+|Percentual.
+|
+|1.11
+|-id="night_spotting_chance"
+|night_spotting_chance
+|Modifies the chance for the country's navy to spot the enemy at night.
+|<pre>night_spotting_chance = 0.3</pre>
+|Percentual.
+|
+|1.11
+|-id="positioning"
+|positioning
+|Modifies the positioning of the country's navy.
+|<pre>positioning = 0.3</pre>
+|Percentual.
+|
+|1.6
+|-id="repair_speed_factor"
+|repair_speed_factor
+|Modifies the speed at which the dockyards repair the navy.
+|<pre>repair_speed_factor = 0.3</pre>
+|Percentual.
+|
+|1.6
+|-id="screening_efficiency"
+|screening_efficiency
+|Modifies the efficiency screen ships operate.
+|<pre>screening_efficiency = 0.3</pre>
+|Percentual.
+|
+|1.6
+|-id="screening_without_screens"
+|screening_without_screens
+|Modifies the base screening without any screen ships assigned.
+|<pre>screening_without_screens = 0.3</pre>
+|Percentual.
+|
+|1.11
+|-id="ships_at_battle_start"
+|ships_at_battle_start
+|Modifies the number of ships at first contact.
+|<pre>ships_at_battle_start = 0.3</pre>
+|Percentual.
+|
+|1.6
+|-id="spotting_chance"
+|spotting_chance
+|Modifies the chance to spot enemy ships.
+|<pre>spotting_chance = 0.3</pre>
+|Percentual.
+|
+|1.6
+|-id="strike_force_movement_org_loss"
+|strike_force_movement_org_loss
+|Modifies the organisation loss from movement during the strike force mission.
+|<pre>strike_force_movement_org_loss = 0.3</pre>
+|Percentual.
+|
+|1.6
+|-id="sub_retreat_speed"
+|sub_retreat_speed
+|Modifies the retreat speed of submarines.
+|<pre>sub_retreat_speed = 0.3</pre>
+|Percentual.
+|
+|1.6
+|-id="submarine_attack"
+|submarine_attack
+|Modifies the attack of submarines.
+|<pre>submarine_attack = 0.3</pre>
+|Percentual.
+|
+|1.6
+|}
+
+==== Carriers and their planes ====
+{{SVersion|1.13}}
+
+{| class="wikitable sortable mw-collapsible" style="display: inline-block; padding: 5px" width="100%"
+|+ style="text-align: center;" width = "100%" |{{nowrap|Carrier-related country-scoped modifiers:}}<br/>
+! width="10%" | Name
+! width="25%" | Effects
+! width="25%" | Examples
+! width="20%" | Modifier type
+! width="15%" | Notes
+! width="5%" | Version added
+|-id="navy_carrier_air_agility_factor"
+|navy_carrier_air_agility_factor
+|Modifies the agility of airplanes executing tasks from carriers.
+|<pre>navy_carrier_air_agility_factor = 0.3</pre>
+|Percentual.
+|
+|1.6
+|-id="navy_carrier_air_attack_factor"
+|navy_carrier_air_attack_factor
+|Modifies the attack of airplanes executing tasks from carriers.
+|<pre>navy_carrier_air_attack_factor = 0.3</pre>
+|Percentual.
+|
+|1.6
+|-id="navy_carrier_air_targetting_factor"
+|navy_carrier_air_targetting_factor
+|Modifies the targeting of airplanes executing tasks from carriers.
+|<pre>navy_carrier_air_targetting_factor = 0.3</pre>
+|Percentual.
+|
+|1.6
+|-id="air_carrier_night_penalty_reduction_factor"
+|air_carrier_night_penalty_reduction_factor
+|Modifies the reduction of the night penalty for air carriers.
+|<pre>air_carrier_night_penalty_reduction_factor = 0.5</pre>
+|Percentual.
+|
+|1.0
+|-id="carrier_capacity_penalty_reduction"
+|carrier_capacity_penalty_reduction
+|Modifies the penalty given by overcrowding a carrier with planes.
+|<pre>carrier_capacity_penalty_reduction = 0.5</pre>
+|Percentual.
+|
+|1.6
+|-id="carrier_traffic"
+|carrier_traffic
+|Modifies the traffic of carriers.
+|<pre>carrier_traffic = 0.5</pre>
+|Percentual.
+|
+|1.6
+|-id="sortie_efficiency"
+|sortie_efficiency
+|Modifies the speed when refueling and rearming planes on the carrier during the battle.
+|<pre>sortie_efficiency = 0.3</pre>
+|Percentual.
+|
+|1.6
+|-id="carrier_sortie_hours_delay"
+|carrier_sortie_hours_delay
+|Modifies the delay in hours for refueling and rearming planes on the carrier.
+|<pre>carrier_sortie_hours_delay = 2</pre>
+|Flat.
+|
+|1.12
+|-id="carrier_night_traffic"
+|carrier_night_traffic
+|Modifies the traffic of carriers at night.
+|<pre>carrier_night_traffic = 0.5</pre>
+|Percentual.
+|
+|1.11
+|-id="fighter_sortie_efficiency"
+|fighter_sortie_efficiency
+|Modifies the speed when refueling and rearming fighter planes on the carrier during the battle.
+|<pre>fighter_sortie_efficiency = 0.3</pre>
+|Percentual.
+|
+|1.6
+|}
+
+==== Air combat ====
+{{SVersion|1.13}}
+Note that most of these modifiers are not only in country scope but also in ace scope.
+
+{| class="wikitable sortable mw-collapsible" style="display: inline-block; padding: 5px" width="100%"
+|+ style="text-align: center;" width = "100%" |{{nowrap|Air-related country-scoped modifiers:}}<br/>
+! width="10%" | Name
+! width="25%" | Effects
+! width="25%" | Examples
+! width="20%" | Modifier type
+! width="15%" | Notes
+! width="5%" | Version added
+|-id="air_accidents_factor"
+|air_accidents_factor
+|Modifies the chance for air accidents to happen.
+|<pre>air_accidents_factor = 0.5</pre>
+|Percentual.
+|
+|1.0
+|-id="air_ace_bonuses_factor"
+|air_ace_bonuses_factor
+|Modifies the bonuses the aces grant.
+|<pre>air_ace_bonuses_factor = 0.5</pre>
+|Percentual.
+|
+|1.11
+|-id="air_ace_generation_chance_factor"
+|air_ace_generation_chance_factor
+|Modifies the chance for aces to appear.
+|<pre>air_ace_generation_chance_factor = 0.5</pre>
+|Percentual.
+|
+|1.11
+|-id="ace_effectiveness_factor"
+|ace_effectiveness_factor
+|Modifies the effectiveness of aces
+|<pre>ace_effectiveness_factor = 0.5</pre>
+|Percentual.
+|
+|1.0
+|-id="air_agility_factor"
+|air_agility_factor
+|Modifies the agility of the country's airplanes.
+|<pre>air_agility_factor = 0.5</pre>
+|Percentual.
+|
+|1.0
+|-id="air_attack_factor"
+|air_attack_factor
+|Modifies the attack of the country's airplanes.
+|<pre>air_attack_factor = 0.5</pre>
+|Percentual.
+|
+|1.0
+|-id="air_defence_factor"
+|air_defence_factor
+|Modifies the defence of the country's airplanes.
+|<pre>air_defence_factor = 0.5</pre>
+|Percentual.
+|
+|1.0
+|-id="air_interception_detect_factor"
+|air_interception_detect_factor
+|Modifies the chance of detecting an enemy plane while on interception mission.
+|<pre>air_interception_detect_factor = 0.5</pre>
+|Percentual.
+|
+|1.0
+|-id="naval_strike_targetting_factor"
+|naval_strike_targetting_factor
+|Modifies the ability of planes to target their objectives when executing naval strikes.
+|<pre>naval_strike_targetting_factor = 0.5</pre>
+|Percentual.
+|
+|1.0
+|-id="port_strike"
+|port_strike
+|Modifies the damage done by planes on the port strike mission.
+|<pre>port_strike = 0.5</pre>
+|Percentual.
+|
+|1.0
+|-id="air_close_air_support_org_damage_factor"
+|air_close_air_support_org_damage_factor
+|Modifies the damage to division organisation by planes on the close air support mission.
+|<pre>air_close_air_support_org_damage_factor = 0.5</pre>
+|Percentual.
+|
+|1.11
+|-id="air_bombing_targetting"
+|air_bombing_targetting
+|Modifies targetting for ground bombing.
+|<pre>air_bombing_targetting = 0.5</pre>
+|Percentual.
+|
+|1.0
+|-id="air_cas_efficiency"
+|air_cas_efficiency
+|Modifies efficiency of close-air-support.
+|<pre>air_cas_efficiency = 0.5</pre>
+|Percentual.
+|
+|1.0
+|-id="air_cas_present_factor"
+|air_cas_present_factor
+|Modifies impact of close-air-support in land combat.
+|<pre>air_cas_present_factor = 0.5</pre>
+|Percentual.
+|
+|1.0
+|-id="air_escort_efficiency"
+|air_escort_efficiency
+|Modifies ability of planes in dogfights.
+|<pre>air_escort_efficiency = 0.5</pre>
+|Percentual.
+|
+|1.0
+|-id="air_home_defence_factor"
+|air_home_defence_factor
+|Modifies the defence of airplanes when defending states in the home region (Connected to the country's capital by land)
+|<pre>air_home_defence_factor = 0.5</pre>
+|Percentual.
+|
+|1.11
+|-id="air_intercept_efficiency"
+|air_intercept_efficiency
+|Modifies the efficiency of air interception.
+|<pre>air_intercept_efficiency = 0.5</pre>
+|Percentual.
+|
+|1.0
+|-id="air_manpower_requirement_factor"
+|air_manpower_requirement_factor
+|Modifies the manpower required to deploy an airplane.
+|<pre>air_manpower_requirement_factor = -0.5</pre>
+|Percentual.
+|
+|1.11
+|-id="air_maximum_speed_factor"
+|air_maximum_speed_factor
+|Modifies the maximum speed of the airforce.
+|<pre>air_maximum_speed_factor = 0.5</pre>
+|Percentual.
+|
+|1.0
+|-id="air_mission_efficiency"
+|air_mission_efficiency
+|Modifies the efficiency of airplanes in missions.
+|<pre>air_mission_efficiency = 0.5</pre>
+|Percentual.
+|
+|1.0
+|-id="air_mission_xp_gain_factor"
+|air_mission_xp_gain_factor
+|Modifies the experience gain for airplanes for doing missions.
+|<pre>air_mission_xp_gain_factor = 0.5</pre>
+|Percentual.
+|
+|1.0
+|-id="air_nav_efficiency"
+|air_nav_efficiency
+|Modifies the efficiency of airplanes doing port strike and naval bombing missions.
+|<pre>air_nav_efficiency = 0.5</pre>
+|Percentual.
+|
+|1.0
+|-id="air_night_penalty"
+|air_night_penalty
+|Modifies the penalty the airforce receives while at night.
+|<pre>air_night_penalty = 0.5</pre>
+|Percentual.
+|
+|1.0
+|-id="air_power_projection_factor"
+|air_power_projection_factor
+|Modifies the power projection given out by the airplanes.
+|<pre>air_power_projection_factor = 0.5</pre>
+|Percentual.
+|
+|1.0
+|-id="air_range_factor"
+|air_range_factor
+|Modifies the range of the airplanes.
+|<pre>air_range_factor = 0.5</pre>
+|Percentual.
+|
+|1.0
+|-id="air_strategic_bomber_bombing_factor"
+|air_strategic_bomber_bombing_factor
+|Modifies the efficiency of the strategic bombing mission.
+|<pre>air_strategic_bomber_bombing_factor = 0.5</pre>
+|Percentual.
+|
+|1.0
+|-id="air_strategic_bomber_night_penalty"
+|air_strategic_bomber_night_penalty
+|Modifies the penalty for the strategic bombing mission while at night.
+|<pre>air_strategic_bomber_night_penalty = 0.5</pre>
+|Percentual.
+|
+|1.0
+|-id="air_superiority_detect_factor"
+|air_superiority_detect_factor
+|Modifies the chance to detect enemy planes while on the air superiority mission. Displays as Fighter Detection.
+|<pre>air_superiority_detect_factor = 0.5</pre>
+|Percentual.
+|
+|1.0
+|-id="air_superiority_efficiency"
+|air_superiority_efficiency
+|Modifies the efficiency of the air superiority mission.
+|<pre>air_superiority_efficiency = 0.5</pre>
+|Percentual.
+|
+|1.0
+|-id="air_training_xp_gain_factor"
+|air_training_xp_gain_factor
+|Modifies the air experience gain from training.
+|<pre>air_training_xp_gain_factor = 0.5</pre>
+|Percentual.
+|
+|1.6
+|-id="air_untrained_pilots_penalty_factor"
+|air_untrained_pilots_penalty_factor
+|Modifies the penalty given to airplanes which don't have enough experience.
+|<pre>air_untrained_pilots_penalty_factor = 0.5</pre>
+|Percentual.
+|
+|1.6
+|-id="air_weather_penalty"
+|air_weather_penalty
+|Modifies the penalty the airplanes receive because of weather.
+|<pre>air_weather_penalty = 0.5</pre>
+|Percentual.
+|
+|1.0
+|-id="air_wing_xp_loss_when_killed_factor"
+|air_wing_xp_loss_when_killed_factor
+|Modifies the experience loss of airplanes due to airplanes being shot down.
+|<pre>air_wing_xp_loss_when_killed_factor = 0.5</pre>
+|Percentual.
+|
+|1.0
+|-id="army_bonus_air_superiority_factor"
+|army_bonus_air_superiority_factor
+|Modifies the bonus to land combat from air superiority.
+|<pre>army_bonus_air_superiority_factor = 0.5</pre>
+|Percentual.
+|
+|1.0
+|-id="enemy_army_bonus_air_superiority_factor"
+|enemy_army_bonus_air_superiority_factor
+|Modifies the effect to land combat from enemy air superiority.
+|<pre>enemy_army_bonus_air_superiority_factor = 0.5</pre>
+|Percentual.
+|
+|1.0
+|-id="ground_attack_factor"
+|ground_attack_factor
+|Modifies the bonus to airplane attack on enemy divisions by a percentage.
+|<pre>ground_attack_factor = 0.5</pre>
+|Percentual.
+|
+|1.0
+|-id="mines_planting_by_air_factor"
+|mines_planting_by_air_factor
+|Modifies efficiency of airplanes planting mines.
+|<pre>mines_planting_by_air_factor = 0.5</pre>
+|Percentual.
+|
+|1.0
+|-id="mines_sweeping_by_air_factor"
+|mines_sweeping_by_air_factor
+|Modifies efficiency of airplanes sweeping mines.
+|<pre>mines_sweeping_by_air_factor = 0.5</pre>
+|Percentual.
+|
+|1.0
+|-id="strategic_bomb_visibility"
+|strategic_bomb_visibility
+|Modifies the chance for the enemy to detect our strategic bombers.
+|<pre>strategic_bomb_visibility = 0.5</pre>
+|Percentual.
+|
+|1.0
+|-id="rocket_attack_factor"
+|rocket_attack_factor
+|Modifies the attack given to rockets.
+|<pre>rocket_attack_factor = 0.5</pre>
+|Percentual.
+|
+|1.0
+|}
+
+==== Targeted modifiers ====
+{{SVersion|1.13}}
+These modifiers are targeted, meaning that they must be used in a block for targeted modifiers rather than regular modifiers. These include <code>targeted_modifier = { ... }</code> in ideas, traits, advisors, and decisions; [[#Relation modifiers|relation modifiers]].<br/>
+A <code>targeted_modifier</code> block is structured as such:
+<pre>targeted_modifier = {
+    tag = FROM    # this can also take a variable that stores a scope
+    attack_bonus_against = 0.1
+    defense_bonus_against = 0.1
+}</pre>'''This is a completely separate block from <code>modifier = { ... }</code>''' in ideas, advisors, and decisions; as such it will not work when it's put inside of <code>modifier = { ... }</code>.
+{| class="wikitable sortable mw-collapsible" style="display: inline-block; padding: 5px" width="100%"
+|+ style="text-align: center;" width = "100%" |{{nowrap|Targeted modifiers:}}<br/>
+! width="10%" | Name
+! width="25%" | Effects
+! width="25%" | Examples
+! width="20%" | Modifier type
+! width="15%" | Notes
+! width="5%" | Version added
+|-id="extra_trade_to_target_factor"
+|extra_trade_to_target_factor
+|Adds extra produced resources available for trade to target country.
+|<pre>extra_trade_to_target_factor = 0.5</pre>
+|Percentual.
+|
+|1.5
+|-id="generate_wargoal_tension_against"
+|generate_wargoal_tension_against
+|Changes world tension necessary for us to justify against the target country.
+|<pre>generate_wargoal_tension_against = 0.5</pre>
+|Flat.
+|
+|1.5
+|-id="cic_to_target_factor"
+|cic_to_target_factor
+|Gives a portion of the country's civilian industry to the specified target.
+|<pre>cic_to_target_factor = 0.5</pre>
+|Percentual.
+|
+|1.5
+|-id="mic_to_target_factor"
+|mic_to_target_factor
+|Gives a portion of the country's military industry to the specified target.
+|<pre>mic_to_target_factor = 0.5</pre>
+|Percentual.
+|
+|1.5
+|-id="trade_cost_for_target_factor"
+|trade_cost_for_target_factor
+|The cost for the targeted country to purchase this country's resources.
+|<pre>trade_cost_for_target_factor = 0.5</pre>
+|Percentual.
+|
+|1.5
+|-id="targeted_legitimacy_daily"
+|targeted_legitimacy_daily
+|Changes daily gain of legitimacy of the target country.
+|<pre>targeted_legitimacy_daily = 0.5</pre>
+|Flat.
+|
+|1.6
+|-id="attack_bonus_against"
+|attack_bonus_against
+|Gives an attack bonus against the armies of the specified country.
+|<pre>attack_bonus_against = 0.5</pre>
+|Percentual.
+|Due to a bug, this will not apply to units that are defending.
+|1.5
+|-id="attack_bonus_against_cores"
+|attack_bonus_against_cores
+|Gives an attack bonus against the armies of the specified country on its core territory.
+|<pre>attack_bonus_against_cores = 0.5</pre>
+|Percentual.
+|
+|1.5
+|-id="breakthrough_bonus_against"
+|breakthrough_bonus_against
+|Gives a breakthrough bonus against the armies of the specified country.
+|<pre>breakthrough_bonus_against = 0.5</pre>
+|Percentual.
+|
+|1.5
+|-id="defense_bonus_against"
+|defense_bonus_against
+|Gives a defense bonus against the armies of the specified country.
+|<pre>defense_bonus_against = 0.5</pre>
+|Percentual.
+|Due to a bug, this will not apply to units that are attacking.
+|1.5
+|}
+
+=== State scope ===
+Several country-scoped modifiers (such as a portion of those in the [[#Land combat|land combat section]]) unlisted here can go into state scope. A large portion of state-scoped modifiers can go into province scope.
+{| class="wikitable sortable mw-collapsible" style="display: inline-block; padding: 5px" width="100%"
+|+ style="text-align: center;" width = "100%" |{{nowrap|State-scoped modifiers:}}<br/>
+! width="10%" | Name
+! width="25%" | Effects
+! width="25%" | Examples
+! width="20%" | Modifier type
+! width="15%" | Notes
+! width="5%" | Version added
+|-id="army_speed_factor_for_controller"
+|army_speed_factor_for_controller
+|Changes the division speed for the controller of the state.
+|<pre>army_speed_factor_for_controller = 0.5</pre>
+|Percentual.
+|
+|1.0
+|-id="attrition_for_controller"
+|attrition_for_controller
+|Changes the attrition for the controller of the state.
+|<pre>attrition_for_controller = 0.5</pre>
+|Percentual.
+|
+|1.0
+|-id="equipment_capture_for_controller"
+|equipment_capture_for_controller
+|Changes the equipment capture ratio by the state's controller.
+|<pre>equipment_capture_for_controller = 0.3</pre>
+|Flat.
+|
+|1.13
+|-id="equipment_capture_factor_for_controller"
+|equipment_capture_factor_for_controller
+|Modifies the equipment capture ratio by the state's controller.
+|<pre>equipment_capture_factor_for_controller = 0.3</pre>
+|Percentual.
+|
+|1.13
+|-id="enemy_army_speed_factor"
+|enemy_army_speed_factor
+|Modifies the speed of divisions at war with the state's owner.
+|<pre>enemy_army_speed_factor = 0.3</pre>
+|Percentual.
+|
+|1.13
+|-id="enemy_local_supplies"
+|enemy_local_supplies
+|Modifies the supply of divisions at war with the state's owner.
+|<pre>enemy_local_supplies = 0.3</pre>
+|Percentual.
+|
+|1.13
+|-id="enemy_attrition"
+|enemy_attrition
+|Modifies the attrition of divisions at war with the state's owner.
+|<pre>enemy_attrition = 0.3</pre>
+|Percentual.
+|
+|1.13
+|-id="enemy_truck_attrition_factor"
+|enemy_truck_attrition_factor
+|Modifies the truck attrition of divisions at war with the state's owner.
+|<pre>enemy_truck_attrition_factor = 0.3</pre>
+|Percentual.
+|
+|1.13
+|-id="compliance_gain"
+|compliance_gain
+|Changes the compliance gain in the current state.
+|<pre>compliance_gain = 0.01</pre>
+|Flat.
+|Can also go into country scope. Can also be used as a targeted modifier.
+|1.9
+|-id="compliance_growth"
+|compliance_growth
+|Changes the compliance growth speed in the current state.
+|<pre>compliance_growth = 0.5</pre>
+|Percentual.
+|Can also go into country scope.
+|1.9
+|-id="disable_strategic_redeployment"
+|disable_strategic_redeployment
+|Disables strategic redeployment in the state.
+|<pre>disable_strategic_redeployment = 1</pre>
+|Boolean (only 1).
+|
+|1.9
+|-id="disable_strategic_redeployment_for_controller"
+|disable_strategic_redeployment_for_controller
+|Disables strategic redeployment in the state for the controller.
+|<pre>disable_strategic_redeployment_for_controller = 1</pre>
+|Boolean (only 1).
+|
+|1.9
+|-id="enemy_intel_network_gain_factor_over_occupied_tag"
+|enemy_intel_network_gain_factor_over_occupied_tag
+|Modifies enemy intel network strength gain.
+|<pre>enemy_intel_network_gain_factor_over_occupied_tag = 0.3</pre>
+|Percentual.
+|
+|1.9
+|-id="local_building_slots"
+|local_building_slots
+|Modifies amount of building slots.
+|<pre>local_building_slots = 2</pre>
+|Flat.
+|
+|1.9
+|-id="local_building_slots_factor"
+|local_building_slots_factor
+|Modifies amount of building slots by a percentage.
+|<pre>local_building_slots_factor = 0.3</pre>
+|Percentual.
+|
+|1.9
+|-id="local_factories"
+|local_factories
+|Modifies amount of available factories in the state.
+|<pre>local_factories = 0.3</pre>
+|Percentual.
+|
+|1.9
+|-
+|-id="local_factory_energy_consumption"
+|local_factory_energy_consumption
+|Modifies amount of energy consumed by factories in the state.
+|<pre>local_factory_energy_consumption = 0.2</pre>
+|Percentual
+|The game file documentation incorrectly labels this as a number with zero decimals, yet the code itself uses a decimal,
+|1.17
+|-
+|-id="local_factory_energy_consumption_per_infrastructure"
+|local_factory_energy_consumption_per_infrastructure
+|Modifies amount of energy consumed by factories depending on the infrastructure of the state.
+|<pre>local_factory_energy_consumption_per_infrastructure = 0.2</pre>
+|Percentual
+|
+|1.17.3
+|-
+|-id="local_factory_sabotage"
+|local_factory_sabotage
+|Modifies chance for factory sabotage.
+|<pre>local_factory_sabotage = 0.3</pre>
+|Percentual.
+|
+|1.9
+|-
+|-id="local_intel_to_enemies"
+|local_intel_to_enemies
+|Modifies amount of intel to enemies.
+|<pre>local_intel_to_enemies = 0.3</pre>
+|Percentual.
+|
+|1.9
+|-id="local_manpower"
+|local_manpower
+|Modifies amount of available manpower.
+|<pre>local_manpower = 0.3</pre>
+|Percentual.
+|
+|1.4
+|-id="local_non_core_manpower"
+|local_non_core_manpower
+|Modifies amount of available non-core manpower.
+|<pre>local_non_core_manpower = 0.3</pre>
+|Percentual.
+|
+|1.3.3
+|-id="local_org_regain"
+|local_org_regain
+|Modifies how much organisation is regained after combat.
+|<pre>local_org_regain = -0.3</pre>
+|Percentual.
+|Can be used in provinces and strategic regions.
+|1.0
+|-id="local_resource_gain_efficiency_per_infrastructure"
+|local_resource_gain_efficiency_per_infrastructure
+|Modifies amount of available resources gained depending on the infrastructure of the state.
+|<pre>local_resource_gain_efficiency_per_infrastructure = 0.3</pre>
+|Percentual.
+|
+|1.17.3
+|-id="local_resources"
+|local_resources
+|Modifies amount of available resources.
+|<pre>local_resources = 0.3</pre>
+|Flat.
+|
+|1.9
+|-id="local_supplies"
+|local_supplies
+|Modifies amount of available supplies.
+|<pre>local_supplies = 0.3</pre>
+|Percentual.
+|
+|1.9
+|-id="local_supplies_for_controller"
+|local_supplies_for_controller
+|Modifies amount of available supplies for the controller.
+|<pre>local_supplies_for_controller = 0.3</pre>
+|Percentual.
+|
+|1.9
+|-id="local_supply_impact_factor"
+|local_supply_impact_factor
+|Modifies the impact that the state's local supplies have.
+|<pre>local_supply_impact_factor = 0.3</pre>
+|Percentual.
+|
+|1.12
+|-id="local_non_core_supply_impact_factor"
+|local_non_core_supply_impact_factor
+|Modifies the impact that the state's local supplies have if the state is not cored by the controller of provinces within.
+|<pre>local_non_core_supply_impact_factor = 0.3</pre>
+|Percentual.
+|
+|1.12
+|-id="mobilization_speed"
+|mobilization_speed
+|Modifies the mobilisation speed.
+|<pre>mobilization_speed = 0.3</pre>
+|Percentual.
+|
+|1.9
+|-id="non_core_manpower"
+|non_core_manpower
+|Modifies the amount of recruited non-core manpower.
+|<pre>non_core_manpower = 0.3</pre>
+|Percentual.
+|
+|1.9
+|-id="max_fuel_building"
+|max_fuel_building
+|Modifies the amount of fuel capacity, in thousands, given to the state controller from the building.
+|<pre>max_fuel_building = 1500</pre>
+|Percentual.
+|Does not have to be in a building.
+|1.0
+|-id="recruitable_population"
+|recruitable_population
+|Modifies the amount of recruited manpower.
+|<pre>recruitable_population = 0.03</pre>
+|Flat.
+|
+|1.9
+|-id="recruitable_population_factor"
+|recruitable_population_factor
+|Modifies the amount of recruited manpower by a percentage.
+|<pre>recruitable_population_factor = 0.3</pre>
+|Percentual.
+|
+|1.9
+|-id="resistance_damage_to_garrison"
+|resistance_damage_to_garrison
+|Modifies the amount of resistance damage to the garrison.
+|<pre>resistance_damage_to_garrison = 0.3</pre>
+|Percentual.
+|
+|1.9
+|-id="resistance_decay"
+|resistance_decay
+|Modifies the speed of resistance decay.
+|<pre>resistance_decay = 0.3</pre>
+|Percentual.
+|
+|1.9
+|-id="resistance_garrison_penetration_chance"
+|resistance_garrison_penetration_chance
+|Modifies the chance for the garrison to be penetrated.
+|<pre>resistance_garrison_penetration_chance = 0.3</pre>
+|Percentual.
+|
+|1.9
+|-id="resistance_growth"
+|resistance_growth
+|Modifies the speed of the resistance growth.
+|<pre>resistance_growth = 0.3</pre>
+|Percentual.
+|
+|1.9
+|-id="resistance_target"
+|resistance_target
+|Modifies the target of the resistance growth.
+|<pre>resistance_target = 0.3</pre>
+|Percentual.
+|
+|1.9
+|-id="starting_compliance"
+|starting_compliance
+|Modifies the base compliance value.
+|<pre>starting_compliance = 0.3</pre>
+|Percentual.
+|
+|1.9
+|-
+|state_bunker_max_level_terrain_limit
+|Modifies the amount of available bunker building slots
+in the state.
+|<pre>state_bunker_max_level_terrain_limit = 6</pre>
+|Flat.
+|
+|
+|-
+|state_coastal_bunker_max_level_terrain_limit
+|Modifies the amount of available coastal bunker building slots
+in the state.
+|<pre>state_coastal_bunker_max_level_terrain_limit = 6</pre>
+|Flat.
+|
+|
+|-id="state_production_speed_<building>_factor"
+|state_production_speed_<building>_factor
+|Modifies the building speed of the specified building in the state.
+|<pre>state_production_speed_industrial_complex_factor = 0.3</pre>
+|Percentual.
+|Use state_production_speed_buildings_factor for it to apply to all buildings. (added in 1.9)
+|1.9.1
+|-id="state_repair_speed_<building>_factor"
+|state_repair_speed_<building>_factor
+|Modifies the repair speed of the specified building in the state.
+|<pre>state_repair_speed_industrial_complex_factor = 0.3</pre>
+|Percentual.
+|
+|1.9.1
+|-id="state_resource_<resource>"
+|state_resource_<resource>
+|Modifies the amount of the specified resource in the state.
+|<pre>state_resource_oil = 5</pre>
+|Flat.
+|
+|1.0
+|-id="state_resources_factor"
+|state_resources_factor
+|Modifies the amount of resources in a state.
+|<pre>state_resources_factor = 0.2</pre>
+|Percentual.
+|
+|1.9
+|-id="state_resource_cost_<resource>"
+|state_resource_cost_<resource>
+|Modifies the amount of the specified resource in the state.
+|<pre>state_resource_cost_rubber = 5</pre>
+|Flat.
+|
+|1.9
+|-id="temporary_state_resource_<resource>"
+|temporary_state_resource_<resource>
+|Modifies the amount of the specified resource in the state as an added modifier after the base one.
+|<pre>temporary_state_resource_tungsten = 5</pre>
+|Flat.
+|
+|1.0
+|-id="enemy_operative_detection_chance_over_occupied_tag"
+|enemy_operative_detection_chance_over_occupied_tag
+|Offsets the chance for an enemy operative to be detected for the tag that occupies this state.
+|<pre>enemy_operative_detection_chance_over_occupied_tag = 5</pre>
+|Flat.
+|
+|1.9
+|-id="enemy_operative_detection_chance_factor_over_occupied_tag"
+|enemy_operative_detection_chance_factor_over_occupied_tag
+|Modifies the chance for an enemy operative to be detected for the tag that occupies this state.
+|<pre>enemy_operative_detection_chance_factor_over_occupied_tag = 0.5</pre>
+|Percentual.
+|
+|1.9
+|}
+
+=== Unit leader scope ===
+
+Note that most modifiers in land and naval combat sections also apply.
+
+{| class="wikitable sortable mw-collapsible" style="display: inline-block; padding: 5px" width="100%"
+|+ style="text-align: center;" width = "100%" |{{nowrap|Unit leader-scoped modifiers:}}<br/>
+! width="10%" | Name
+! width="25%" | Effects
+! width="25%" | Examples
+! width="20%" | Modifier type
+! width="15%" | Notes
+! width="5%" | Version added
+|-id="cannot_use_abilities"
+|cannot_use_abilities
+|Disables using abilities.
+|<pre>cannot_use_abilities = 1</pre>
+|Boolean (only 1).
+|
+|1.5
+|-id="dont_lose_dig_in_on_attack"
+|dont_lose_dig_in_on_attack
+|Disables losing the entrechment bonus during attack.
+|<pre>dont_lose_dig_in_on_attack = 1</pre>
+|Boolean (only 1).
+|
+|1.5
+|-id="exiled_divisions_attack_factor"
+|exiled_divisions_attack_factor
+|Modifies the attack of divisions led by this unit leader if they're exiled.
+|<pre>exiled_divisions_attack_factor = 0.4</pre>
+|Percentual.
+|
+|1.6
+|-id="exiled_divisions_defense_factor"
+|exiled_divisions_defense_factor
+|Modifies the defence of divisions led by this unit leader if they're exiled.
+|<pre>exiled_divisions_defense_factor = 0.4</pre>
+|Percentual.
+|
+|1.6
+|-id="own_exiled_divisions_attack_factor"
+|own_exiled_divisions_attack_factor
+|Modifies the attack of divisions led by this unit leader if they're exiled and belong to the same country.
+|<pre>own_exiled_divisions_attack_factor = 0.4</pre>
+|Percentual.
+|
+|1.6
+|-id="own_exiled_divisions_defense_factor"
+|own_exiled_divisions_defense_factor
+|Modifies the defence of divisions led by this unit leader if they're exiled and belong to the same country.
+|<pre>own_exiled_divisions_defense_factor = 0.4</pre>
+|Percentual.
+|
+|1.6
+|-id="experience_gain_factor"
+|experience_gain_factor
+|Modifies the experience gained by the unit leader.
+|<pre>experience_gain_factor = 0.1</pre>
+|Percentual.
+|
+|1.5
+|-id="fortification_collateral_chance"
+|fortification_collateral_chance
+|Chance for combat to damage enemy forts.
+|<pre>fortification_collateral_chance = 0.4</pre>
+|Percentual.
+|
+|1.5
+|-id="fortification_damage"
+|fortification_damage
+|Damage enemy forts receive from combat.
+|<pre>fortification_damage = 0.4</pre>
+|Percentual.
+|
+|1.5
+|-id="max_commander_army_size"
+|max_commander_army_size
+|Modifies amount of divisions that can be led by the army leader without penalty.
+|<pre>max_commander_army_size = 12</pre>
+|Flat.
+|
+|1.5
+|-id="max_army_group_size"
+|max_army_group_size
+|Modifies amount of army groups that can be led by the field marshal without penalty.
+|<pre>max_army_group_size = 1</pre>
+|Flat.
+|
+|1.5
+|-id="paradrop_organization_factor"
+|paradrop_organization_factor
+|The amount of organisation paratroopers will have after paradropping.
+|<pre>paradrop_organization_factor = 0.5</pre>
+|Percentual.
+|
+|1.5
+|-id="paratrooper_aa_defense"
+|paratrooper_aa_defense
+|The strength of anti-air against paratroopers.
+|<pre>paratrooper_aa_defense = 0.5</pre>
+|Percentual.
+|
+|1.5
+|-id="paratrooper_weight_factor"
+|paratrooper_weight_factor
+|Paratrooper transport space factor.
+|<pre>paratrooper_weight_factor = 0.5</pre>
+|Percentual.
+|Can also be used in country scope.
+|1.13
+|-id="promote_cost_factor"
+|promote_cost_factor
+|The cost to promote the unit leader.
+|<pre>promote_cost_factor = 0.5</pre>
+|Percentual.
+|
+|1.5
+|-id="reassignment_duration_factor"
+|reassignment_duration_factor
+|The length of the reassignment penalty.
+|<pre>reassignment_duration_factor = 0.5</pre>
+|Percentual.
+|
+|1.5
+|-id="river_crossing_factor"
+|river_crossing_factor
+|The effects of the river crossing penalty.
+|<pre>river_crossing_factor = 0.5</pre>
+|Percentual.
+|
+|1.5
+|-id="sickness_chance"
+|sickness_chance
+|The chance for the unit leader to get sick.
+|<pre>sickness_chance = 0.5</pre>
+|Percentual.
+|
+|1.5
+|-id="skill_bonus_factor"
+|skill_bonus_factor
+|The bonus the unit leader receives from their skillset.
+|<pre>skill_bonus_factor = 0.5</pre>
+|Percentual.
+|
+|1.5
+|-id="trait_xp_gain_factor"
+|trait_<trait>_xp_gain_factor
+|Modifies the experience gain towards the specified trait.
+|<pre>trait_infantry_leader_xp_gain_factor = 0.5</pre>
+|Percentual.
+|
+|1.11
+|-id="terrain_trait_xp_gain_factor"
+|terrain_trait_xp_gain_factor
+|Modifies the experience gain towards all terrain traits (With the type of either basic_terrain_trait or assignable_terrain_trait).
+|<pre>terrain_trait_xp_gain_factor = 0.5</pre>
+|Percentual.
+|
+|1.5
+|-id="wounded_chance_factor"
+|wounded_chance_factor
+|The chance for the unit leader to get wounded.
+|<pre>wounded_chance_factor = 0.5</pre>
+|Percentual.
+|
+|1.5
+|-id="shore_bombardment_bonus"
+|shore_bombardment_bonus
+|Modifies the penalty given by the shore bombardment on divisions.
+|<pre>shore_bombardment_bonus = 0.5</pre>
+|Percentual.
+|Can apply to both army and navy leaders.
+|1.5
+|}
+
+=== Scientists scope ===
+{| class="wikitable"
+|+{{nowrap|Scientist-scoped modifiers:}}
+!Name
+!Effects
+!Examples
+!Modifier type
+!Notes
+!Version added
+|-
+|female_random_scientist_chance
+|The chance of spawn female scientist
+|<pre>female_random_scientist_chance = 0.05</pre>
+|Percentual.
+|
+|1.15
+|-
+|scientist_breakthrough_bonus_factor
+|Modifiers scientist breakthrough bonus for special projects
+|<pre>scientist_breakthrough_bonus_factor = -0.25</pre>
+|Percentual.
+|
+|1.15
+|-
+|scientist_research_bonus_factor
+|Modifiers scientist research bonus for special projects
+|<pre>scientist_research_bonus_factor = 0.15</pre>
+|Percentual.
+|
+|1.15
+|-
+|scientist_xp_gain_factor
+|Modifiers scientist gain xp
+|<pre>scientist_xp_gain_factor = 0.02</pre>
+|Percentual.
+|
+|1.15
+|}
+
+=== Strategic region scope ===
+
+This is limited to [[#static modifiers|static modifiers]] defined for weather.
+
+{| class="wikitable sortable mw-collapsible" style="display: inline-block; padding: 5px" width="100%"
+|+ style="text-align: center;" width = "100%" |{{nowrap|Strategic region-scoped modifiers:}}<br/>
+! width="10%" | Name
+! width="25%" | Effects
+! width="25%" | Examples
+! width="20%" | Modifier type
+! width="15%" | Notes
+! width="5%" | Version added
+|-id="air_accidents"
+|air_accidents
+|Base chance for an air accident to happen.
+|<pre>air_accidents = 0.3</pre>
+|Flat.
+|
+|1.0
+|-id="air_detection"
+|air_detection
+|Base chance for air detection.
+|<pre>air_detection = -0.1</pre>
+|Flat.
+|
+|1.0
+|-id="naval_strike"
+|naval_strike
+|Base efficiency for naval strikes.
+|<pre>naval_strike = -0.1</pre>
+|Flat.
+|
+|1.0
+|-id="navy_casualty_on_sink"
+|navy_casualty_on_sink
+|Modifies the casualties when ships are sunk in this region.
+|<pre>navy_casualty_on_sink = -0.1</pre>
+|Percentual.
+|
+|1.6
+|-id="navy_casualty_on_hit"
+|navy_casualty_on_hit
+|Modifies the casualties when ships are damaged in this region.
+|<pre>navy_casualty_on_hit = -0.1</pre>
+|Percentual.
+|
+|1.6
+|}
+== Notes and references ==
+{{cnote|a|2=A few modifiers, such as [[#consumer_goods_factor|consumer_goods_factor]], instead get added in a multiplicative fashion.<ref>[[forum:1593911|Developer Diary {{!}} Small Features #1]], 1.13 [[developer diary]].</ref> What this means is that, for example, <code>consumer_goods_factor = 0.1</code> and <code>consumer_goods_factor = 0.2</code> as separate ideas don't sum up to a 0.3 bonus, but instead multiply the consumer goods by <math>(1 + 0.1)(1 + 0.2) = 1.1 \cdot 1.2 = 1.32</math>, resulting in a 32% increase instead of 30%.}}
+<references/>
+{{Modding navbox}}
+[[Category:Modding]]
