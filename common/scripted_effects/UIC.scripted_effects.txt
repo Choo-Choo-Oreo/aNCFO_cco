@@ -1,15 +1,38 @@
-# Unique Ideological Colors
+# Unique Ideology Cosmetic (UIC)
+#
+# aNCFO_uic_subject_effects: fixed lookup of known subject/overlord pairs. Not generic, a subject relationship outside the listed pairs sets nothing.
+#
+# aNCFO_uic_effects: entry point. Per tag block: IF is_subject, route to aNCFO_uic_subject_effects; ELSE_IF handles the logical points. This is to ensure complete uniquness. Below is some but not all LIMIT's:
+#	"has_cosmetic_tag" and "original_tag" should be treated as exclusive.
+#	We can have ideologies clump like that of "pluralism" and "semidemocracy" for example.
+#	Custom content lock, you can use this to have a unique color tier sytem using "Roman Numeral"
+#
+# UIC Tag types:
+#	UIC_[Tag]_ideocos_[Ideology]
+#	UIC_[Tag]_ideocos_[Ideology]_[Roman Numeral]
+# UIC Cosmetic Tag types:
+#	UIC_[Cosmetic Tag Name]_ideocos_[Ideology]
+#	UIC_[Cosmetic Tag Name]_ideocos_[Ideology]_[Roman Numeral]
+# UIC Subject Tag types:
+#	UIC_subject_[Tag 1]_ideocos_[Ideology]_master_[Tag 2]
+#
+# Colors in cosmetic.txt are not always unique per new tag added, reusing default country color is expected practice.
+# When using the UIC Subject Tag types, its expect for the Subject to have a complementary color of the Master. Look at the Ideology of the master in colors.txt if a UIC type doesnt exist in cosmetic.txt.
+#
+# The block below marked # Template uses literal tag ZZZ, which never matches a real country. It never fires as written. It exists as a copy paste starting point for adding a new tag to this system, not as functioning logic.
+
 aNCFO_uic_subject_effects = {
-	IF = {
-		limit = {
-			ROOT = {
-				original_tag = CPF
-				has_government = theocratism
-				is_subject_of = MJU
-			}
-		}
-		set_cosmetic_tag = UIC_CPF_ideocos_MJU_subject
-	}
+# === Original Tags (A-Z) ===
+	#IF = { # MJU uses CPF_uic_for_MJU_subject, update in the future to be dynamic.
+	#	limit = {
+	#		ROOT = {
+	#			original_tag = CPF
+	#			has_government = authoritarianism
+	#			is_subject_of = MJU
+	#		}
+	#	}
+	#	set_cosmetic_tag = UIC_subject_CPF_ideocos_authoritarianism_master_MJU
+	#}
 
 	IF = {
 		limit = {
@@ -19,7 +42,7 @@ aNCFO_uic_subject_effects = {
 				is_subject_of = HHE
 			}
 		}
-		set_cosmetic_tag = UIC_MJU_ideocos_HHE_subject
+		set_cosmetic_tag = UIC_subject_MJU_ideocos_theocratism_master_HHE
 	}
 
 	IF = {
@@ -30,7 +53,7 @@ aNCFO_uic_subject_effects = {
 				is_subject_of = HHE
 			}
 		}
-		set_cosmetic_tag = UIC_SDP_ideocos_HHE_subject
+		set_cosmetic_tag = UIC_subject_SDP_ideocos_theocratism_master_HHE
 	}
 
 	IF = {
@@ -41,12 +64,27 @@ aNCFO_uic_subject_effects = {
 				is_subject_of = HHE
 			}
 		}
-		set_cosmetic_tag = UIC_MRC_ideocos_HHE_subject
+		set_cosmetic_tag = UIC_subject_MRC_ideocos_theocratism_master_HHE
 	}
+
+
+# === Cosmetic Tags (A-Z) ===
+	#IF = {
+	#	limit = {
+	#		ROOT = {
+	#			original_tag = ZZZ
+	#			has_government = theocratism
+	#			is_subject_of = ZZZ
+	#		}
+	#	}
+	#	set_cosmetic_tag = UIC_ZZZ_ideocos_ZZZ_subject
+	#}
 }
 
-aNCFO_uic_effects = { # Unique Idelogy Cosmetic (UIC)
-	IF = { # Template
+aNCFO_uic_effects = {
+# === Original Tags (A-Z) ===
+	# Template
+	IF = {
 		limit = {
 			ROOT = {
 				original_tag = ZZZ
@@ -110,88 +148,8 @@ aNCFO_uic_effects = { # Unique Idelogy Cosmetic (UIC)
 		}
 		set_cosmetic_tag = UIC_ZZZ_ideocos_unitism
 	}
-
-	IF = { # Ursprung Elven Kingdom
-		limit = {
-			ROOT = {
-				original_tag = UEK
-				is_subject = yes
-			}
-		}
-		aNCFO_uic_subject_effects = yes
-	}
-
-	ELSE_IF = {
-		limit = {
-			ROOT = {
-				original_tag = UEK
-				OR = {
-					has_government = pluralism
-					has_government = semidemocracy
-					has_government = unitism
-				}
-				NOT = {
-					has_cosmetic_tag = UNIFIED_WUM_HIGH_KINGDOM
-					has_cosmetic_tag = UIC_UNI_ideocos_WUM_HIGH_KINGDOM_for_zakariah
-				}
-			}
-		}
-		set_cosmetic_tag = UIC_UEK_ideocos_zakariah
-	}
-
-	ELSE_IF = {
-		limit = {
-			ROOT = {
-				original_tag = UEK
-				OR = {
-					has_government = theocratism
-					has_government = authoritarianism
-				}
-				NOT = {
-					has_cosmetic_tag = UNIFIED_WUM_HIGH_KINGDOM
-					has_cosmetic_tag = UIC_UNI_ideocos_WUM_HIGH_KINGDOM_for_zakariah
-				}
-			}
-		}
-		set_cosmetic_tag = UIC_UEK_ideocos_authoritarianism
-	}
-
-	ELSE_IF = {
-		limit = {
-			ROOT = {
-				original_tag = UEK
-				OR = {
-					has_government = pluralism
-					has_government = semidemocracy
-					has_government = unitism
-				}
-				OR = {
-					has_cosmetic_tag = UNIFIED_WUM_HIGH_KINGDOM
-					has_cosmetic_tag = UIC_UNI_ideocos_WUM_HIGH_KINGDOM_for_zakariah
-				}
-			}
-		}
-		set_cosmetic_tag = UIC_UNI_ideocos_WUM_HIGH_KINGDOM_for_zakariah
-	}
-
-	ELSE_IF = {
-		limit = {
-			ROOT = {
-				original_tag = UEK
-				OR = {
-					has_government = theocratism
-					has_government = authoritarianism
-				}
-				OR = {
-					has_cosmetic_tag = UNIFIED_WUM_HIGH_KINGDOM
-					has_cosmetic_tag = UIC_UNI_ideocos_WUM_HIGH_KINGDOM_for_zakariah
-				}
-			}
-		}
-		set_cosmetic_tag = UNIFIED_WUM_HIGH_KINGDOM
-	}
-
-	IF = { # Castravia Peoples Republic
+	# Castravia Peoples Republic
+	IF = {
 		limit = {
 			ROOT = {
 				original_tag = CPF
@@ -247,8 +205,8 @@ aNCFO_uic_effects = { # Unique Idelogy Cosmetic (UIC)
 		}
 		set_cosmetic_tag = UIC_CPF_ideocos_unitism
 	}
-
-	IF = { # Military Junta
+	# Military Junta
+	IF = {
 		limit = {
 			ROOT = {
 				original_tag = MJU
@@ -303,6 +261,7 @@ aNCFO_uic_effects = { # Unique Idelogy Cosmetic (UIC)
 				AND = {
 					has_government = authoritarianism
 					# MONARCHIST
+					has_country_leader_ideology = sub_monarchy
 				}
 				#NOT = { has_cosmetic_tag = TAG_cosmetic_name }
 			}
@@ -323,8 +282,8 @@ aNCFO_uic_effects = { # Unique Idelogy Cosmetic (UIC)
 		}
 		set_cosmetic_tag = UIC_MJU_ideocos_unitism
 	}
-
-	IF = { # Duan People
+	# Duan People
+	IF = {
 		limit = {
 			ROOT = {
 				original_tag = SDP
@@ -333,8 +292,8 @@ aNCFO_uic_effects = { # Unique Idelogy Cosmetic (UIC)
 		}
 		aNCFO_uic_subject_effects = yes
 	}
-
-	IF = { # Merchant-Republica - Most be worked on and extended in the future.
+	# Merchant-Republica - Most be worked on and extended in the future.
+	IF = {
 		limit = {
 			ROOT = {
 				original_tag = MRC
@@ -397,5 +356,84 @@ aNCFO_uic_effects = { # Unique Idelogy Cosmetic (UIC)
 			}
 		}
 		set_cosmetic_tag = UIC_MRC_ideocos_unitism
+	}
+
+
+# === Cosmetic Tags (A-Z) ===
+	# Ursprung Elven Kingdom
+	IF = {
+		limit = {
+			ROOT = {
+				original_tag = UEK
+				is_subject = yes
+			}
+		}
+		aNCFO_uic_subject_effects = yes
+	}
+
+	ELSE_IF = {
+		limit = {
+			ROOT = {
+				OR = {
+					has_government = pluralism
+					has_government = semidemocracy
+					has_government = unitism
+				}
+				NOT = {
+					has_cosmetic_tag = UNIFIED_WUM_HIGH_KINGDOM
+					has_cosmetic_tag = UIC_UNI_ideocos_WUM_HIGH_KINGDOM_for_zakariah
+				}
+			}
+		}
+		set_cosmetic_tag = UIC_UEK_ideocos_zakariah
+	}
+
+	ELSE_IF = {
+		limit = {
+			ROOT = {
+				OR = {
+					has_government = theocratism
+					has_government = authoritarianism
+				}
+				NOT = {
+					has_cosmetic_tag = UNIFIED_WUM_HIGH_KINGDOM
+					has_cosmetic_tag = UIC_UNI_ideocos_WUM_HIGH_KINGDOM_for_zakariah
+				}
+			}
+		}
+		set_cosmetic_tag = UIC_UEK_ideocos_authoritarianism
+	}
+
+	ELSE_IF = {
+		limit = {
+			ROOT = {
+				OR = {
+					has_government = pluralism
+					has_government = semidemocracy
+					has_government = unitism
+				}
+				OR = {
+					has_cosmetic_tag = UNIFIED_WUM_HIGH_KINGDOM
+					has_cosmetic_tag = UIC_UNI_ideocos_WUM_HIGH_KINGDOM_for_zakariah
+				}
+			}
+		}
+		set_cosmetic_tag = UIC_UNI_ideocos_WUM_HIGH_KINGDOM_for_zakariah
+	}
+
+	ELSE_IF = {
+		limit = {
+			ROOT = {
+				OR = {
+					has_government = theocratism
+					has_government = authoritarianism
+				}
+				OR = {
+					has_cosmetic_tag = UNIFIED_WUM_HIGH_KINGDOM
+					has_cosmetic_tag = UIC_UNI_ideocos_WUM_HIGH_KINGDOM_for_zakariah
+				}
+			}
+		}
+		set_cosmetic_tag = UNIFIED_WUM_HIGH_KINGDOM
 	}
 }
