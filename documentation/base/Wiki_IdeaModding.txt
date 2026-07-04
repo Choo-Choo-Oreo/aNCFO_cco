@@ -1,0 +1,324 @@
+{{Version|1.11}}
+
+[[Ideas]] are a static way to apply modifiers to a country, notably including [[National spirit|national spirits]], laws, designers, [[Officer corps#Spirits|officer corps spirits]], and hidden ideas. Ideas themselves are defined in {{path|common/ideas/*.txt}}, while idea categories are defined in {{path|common/idea_tags/*.txt}}
+
+__TOC__
+
+== National spirit creation ==
+Spirits are created in {{path|common/ideas/*.txt}}. An example of a file with empty spirits, without modifiers yet still applicable if added via <code>add_ideas = idea_name</code>, is 
+<pre>ideas = {
+    country = {
+        my_idea_1 = {
+        }
+        my_idea_2 = {
+        }
+    }
+}</pre>In this case, <code>ideas = { ... }</code> encompasses each idea in the file, necessary to include due to the engine consraints. Meanwhile, <code>country = {}</code> is an idea category, which is why the game would recognise <code>my_idea_1</code> and <code>my_idea_2</code> as spirits rather than laws or designers, which are also ideas.
+
+=== Localisation ===
+Localisation for ideas is defined in any {{path|localisation/english/*_l_english.yml}} file '''encoded in UTF-8-BOM''', assuming the English language. If an idea does not have a name, the game uses the country's name-list in {{path|common/names}} to create a random name. This, however, does not apply to national spirits, where it uses the idea's ID. An idea can have both a name and a description that appears when hovering over it. Their localisation entries are defined as such, taking ZZZ_example_idea as an example:
+<syntaxhighlight lang="yaml">l_english:
+ ZZZ_example_idea: "Idea's name"
+ ZZZ_example_idea_desc: "Idea's description"</syntaxhighlight>
+<code>name = new_idea_name</code> assigns the idea's name to use a different localisation key. This can be useful if you plan to modify an idea by swapping it multiple times, ensuring that you needn't create a duplicate localisation entry for every instance of the idea. This will get defined in a localisation file similarly:
+<syntaxhighlight lang="yaml">l_english:
+ new_idea_name: "New idea's name"
+ new_idea_name_desc: "New idea's description"</syntaxhighlight>
+=== Picture ===
+{{Sprite overview}}
+By default, an idea uses a sprite that is the same as the idea's name, but with <code>GFX_idea_</code> prepended in the beginning. For example, an idea with the name of <code>my_idea_1</code> will use the sprite with the name of <code>GFX_idea_my_idea_1</code>.
+
+This is possible to change using the <code>picture = my_sprite</code> attribute within the idea ('''The game still checks for GFX_idea_ideaname and will use it if it finds it, even if a <code>picture =</code> argument is used'''). '''The game still inserts a prefix of <code>GFX_idea_</code> to the argument''' to decide the sprite that should be used, e.g. <code>picture = XYZ</code> leads to <code>GFX_idea_XYZ</code> being used as the sprite. If the game cannot find a sprite with the name it expects, the [[File:unknown.png|29px]] default icon will be used instead.<br/>
+The prefix being inserted means that, most of the time, <code>picture = GFX_XYZ</code> (which makes <code>GFX_idea_GFX_XYZ</code> get used as the sprite) or <code>picture = idea_XYZ</code> (which makes <code>GFX_idea_idea_XYZ</code> get used as the sprite) will lead to the game expecting a sprite that doesn't exist and that sprites that do not follow the <code>GFX_idea_XYZ</code> naming pattern cannot be used as idea pictures.
+
+If the <code>texturefile</code> within the sprite is incorrect, the idea will be invisible in the country politics view, yet still apply the modifiers. Ensure that the idea is stored with the same folder path location, the same filename (including the extension), and that the right folder separator is used.
+
+It is also possible to make the picture depend on the <code>graphical_culture_2d</code> of the country, defined in the {{path|common/countries/*.txt}} file. This is done by appending the name after the picture's name, separated by an underscore. For example, a sprite with the name of <code>GFX_idea_my_picture_middle_eastern_2d</code> in its definition will show up instead of <code>GFX_idea_my_picture</code> for countries that have the <code>middle_eastern_2d</code> 2D graphical culture.
+
+=== Implementation ===
+A spirit can only be added manually, using an [[effect]]. <code>add_ideas = idea_name</code> within an effect block (Such a focus completion reward), while <code>remove_ideas = idea_name</code> will remove it.
+
+In order to swap two ideas and have the game show the modifiers, <code>swap_ideas</code> is used. '''There is no way to directly modify an idea''', however in case the 2 swapped spirits have the same name in localisation, this will show up in-game as modifying the idea.  <code>swap_ideas</code> is used as the following:
+<pre>swap_ideas = {
+    remove_idea = old_idea
+    add_idea = new_idea
+}</pre>
+In most cases, it's enough to create multiple ideas and swap between them, such as if there's a direct progression of several stages ([[Scripted effects]] can be used to create one series of conditional statements and re-use them each time it's needed). If creating multiple ideas is too infeasible, such as if there are several progressions that would need to be modified, [[dynamic modifiers]] allow variable modifier values, but they only accept modifiers (not unrelated attributes such as research or equipment bonuses) and are harder to work with due to no hot-reloading.
+
+In order for a spirit to last for a period of time, the <code>add_timed_idea</code> effect is used as such:
+<pre>add_timed_idea = {
+    idea = my_timed_idea
+    days = 365
+}</pre>[[Effect#modify_timed_idea|modify_timed_idea]] can be used to extend or speed up the timer as needed. 
+
+In order for a country to start with the idea, the file in {{path|history/countries/}} for that country serves as an effect block that decides the starting historical information. Using [[Effect#add_ideas|add_ideas]], usually in the expanded form to assign multiple ideas at once, in there will enforce it starting with the idea. In order for the idea to show up in country selection, the [[Bookmark modding|bookmark is edited]] to include the idea within its <code>ideas = { ... }</code> block for the country's entry.
+
+=== Modifiers ===
+[[Modifiers]] are applied continuously as long as the spirit is applied to a country. Alongside modifiers, the spirit can also add a bonus to a technology category or modify an equipment archetype. The spirit can only apply modifiers towards the country that has the spirit, there is no way to scope into a different country. '''Each of these attributes is entirely separate within the idea''' and so each one should be located directly inside of the idea. For example, defining <code>research_bonus</code> inside of <code>modifier = { ... }</code> is erroneous, since <code>research_bonus</code> is an attribute of the idea rather than a modifier.
+
+<code>modifier = { ... }</code> stores the regular modifiers, applied to the country with the spirit. A modifier block can list multiple modifiers, and negatives are also allowed. '''Variables do not work in this section''': instead, use [[dynamic modifiers]]. A typical example of a modifier block is the following:
+<pre>modifier = {
+    political_power_cost = 0.1
+    stability_factor = -0.2
+}</pre>
+
+<code>targeted_modifier = { ... }</code> is for using [[Modifiers#Targeted_modifiers|modifiers targeted towards a different country]]. The target is specified as <code>tag = ABC</code>, where ABC represents the target's tag. These are still applied towards the country with the spirit, but their effect is targeted towards a different country. For example, the following block will give the country with the idea a 10% attack bonus against {{flag|Afghanistan}}:
+<pre>targeted_modifier = {
+    tag = AFG
+    attack_bonus_against = 0.1
+}</pre>
+
+<code>research_bonus = { ... }</code> grants the country a boost to researching a specific technology category. An unsorted list of technology categories can be found in {{path|common/technology_tags/}} or, if desiring to know which technologies exactly are assigned to each category, individual technologies can be checked in {{path|common/technologies/}}. The following example would provide a +10% bonus to researching destroyers and a -20% bonus to artillery:
+<pre>research_bonus = {
+    dd_tech = 0.1
+    artillery = -0.2
+}</pre>
+
+<code>equipment_bonus = { ... }</code> applies the bonuses towards an equipment archetype or a type of equipment archetypes. By default, the bonus is not granted immediately, but rather requiring to research a new tech first, which is how it's done within designer ideas. This can be prevented by adding <code>instant = yes</code> inside of the equipment archetype within the equipment bonus. Equipment archetypes are defined in {{path|common/units/equipment/*.txt}}, which is where you can also find what can be applied to them. The name of the block within the {{path|common/units/equipment/*.txt}} file would be the archetype, while <code>type = { ... }</code> or <code>type = archetype_type</code> provides the types that the equipment archetype has. The following example will modify the cost to produce equipment within the <code>artillery</code> type (including artillery, rocket artillery, and tank artillery) by -20%, applying immediately, as well as increasing soft attack of any infantry equipment researched after the spirit was added by 10%:
+<pre>equipment_bonus = {
+    artillery = {
+        instant = yes
+        build_cost_ic = -0.2
+    }
+    infantry_equipment = {
+        soft_attack = 0.1
+    }
+}</pre>
+
+<code>rule</code> modifies the set of rules that decide what the country is allowed to do. This usually includes diplomatic options (such as peace conference options or being called to war). They show up in the tooltip only if the rule differs from the value without the idea, e.g. <code>can_create_factions = no</code> will usually not appear in the tooltip as countries are already unable to create a faction by default.
+{| style="float: left; width:50%"
+|<pre>rule = {
+    can_join_factions = no
+    can_send_volunteers = yes
+}</pre>
+|}
+{| style="float: right; width:50%"
+| {{Game rule list|width=100%}}
+|}
+{{clear}}
+
+=== Effects ===
+A spirit can be set to apply [[effects]] when added or removed. This is done, respectively, with <code>on_add</code> and <code>on_remove</code> effect blocks, looking like the following example:
+<pre>on_add = {
+    add_stability = 0.1
+}
+on_remove = {
+    add_political_power = -50
+}</pre>
+The effects will only get executed if the idea is added after the game has already started: if done via a history file or a bookmark's <code>effect = { ... }</code> block, the effects will not be executed. In that case, it's needed to replicate the effects given when adding the idea within the same effect block that adds the idea.
+
+=== Cancellation ===
+A spirit can be set to automatically cancel itself once a set of [[triggers]] is met. This is done with the <code>cancel</code> block. A cancellation will also trigger the <code>on_remove</code> effect block in the idea if one is present. This will look like the following:
+<pre>cancel = {
+    has_political_power > 50 
+}</pre>
+=== Additional arguments ===
+Another trigger block that can go into an idea is <code>allowed_civil_war = { ... }</code>. When starting a civil war, this is evaluated for each side, and the spirit will only appear for sides where this is true. For instance, a <code>has_government = democratic</code> will ensure that only the {{Icon|Democratic|1}} side in a civil war will obtain the spirit. '''By default, always false, leading to the spirits disappearing when a civil war starts.''' [[Conditions#always|Setting it to be always true]] can be preferred over the default, making it appear for both sides.
+
+<code>do_effect = { ... }</code> is a trigger block that assigns the necessary conditions for the idea to apply its modifiers. If false, the modifiers (including research and equipment bonuses) will not apply, but the idea will not be removed.
+
+
+=== Full idea file example ===
+<pre>
+ideas = {
+    country = { # Necessary for the game to consider them spirits rather than a different idea type.
+        my_spirit = {
+            picture = my_picture        # Using GFX_idea_my_picture
+            modifier = {
+                training_time_factor = -0.1
+            }
+            targeted_modifier = {
+                tag = QAT
+                defense_bonus_against = 0.2
+            }
+            research_bonus = {
+                infantry = 0.1
+            }
+            equipment_bonus = {
+                infantry_equipment = {
+                    instant = yes
+                    defense = 0.2
+                }
+            }
+            rule = {
+                can_join_factions = no
+            }
+        }
+        my_spirit_2 = {        # Using GFX_idea_my_spirit_2
+            allowed_civil_war = {
+                has_government = democratic         # Only appear in a civil war for the democratic side.
+            }
+            cancel = {
+                democratic > 0.6
+            }
+            on_add = {
+                add_popularity = {
+                    ideology = democratic
+                    popularity = 0.2
+                }
+            }
+            on_remove = {
+                if = {
+                    limit = {
+                        democratic > 0.6
+                    }
+                    start_civil_war = {
+                        ideology = democratic
+                        size = 0.6
+                    }
+                }
+            }
+            do_effect = {
+                NOT = {
+                    has_government = democratic
+                }
+            }
+            modifier = {
+                democratic_drift = 0.005
+            }
+        }
+    }
+}</pre>
+
+== Other idea categories ==
+Non-spirit ideas can use everything that can be within spirits, however there are more arguments that make sense to be added in them that do not do anything in spirits or don't have any reason to be added.
+
+=== Hidden ideas ===
+Hidden idea are exactly the same as regular spirits in every aspect in regards to creation, except for the fact that they have to be defined within the <code>hidden_ideas</code> idea category instead of using <code>country</code>. This will ensure that the idea will be hidden and not show up in the spirit container. However, it can still make sense to create localisation for them: If a hidden idea cancels automatically, the pop-up will show up, and hovering over certain elements (Such as the stability counter or research speed) will show each idea that modifies it. 
+
+=== Idea category arguments ===
+These arguments are used within the idea category within the {{path|common/ideas/*.txt}} file.
+
+<code>designer = yes</code> marks the entire category as designer ideas. This is primarily used for AI.<br/>
+<code>law = yes</code> marks the entire category as laws. This is primarily used for AI.<br/>
+<code>use_list_view = yes</code> marks the entire category to use a list view for selecting the idea, akin to how the base game treats laws.
+
+These will look in the idea file like the following:
+<pre>ideas = {
+    my_law_category = {
+        law = yes
+        use_list_view = yes
+        my_law_1 = {
+        }
+        my_law_2 = {
+        }
+    }
+}</pre>
+
+=== Additional arguments ===
+This assumes that the idea is of the type that can be selected in-game, such as a law or a designer.
+
+<code>allowed</code> is a [[trigger]] block that checks only at the game's start or when loading a save, primarily used to restrict an idea to a country (As <code>tag = BHR</code> or <code>original_tag = POL</code>) and/or a DLC (As <code>has_dlc = "One Step Back"</code>). If an idea's allowed is unfulfilled, it will never appear within the selection unless it becomes true on the save being reloaded; however, manual assignment via <code>add_ideas</code> bypasses the check. If left out, assumes to be always allowed. '''This only checks once!'''
+
+<code>allowed_to_remove</code> is a trigger block that details when exactly you can remove the idea, changing it to a different one in the category. This is checked continuously, unlike <code>allowed</code>.
+
+<code>visible</code> is a trigger block that continuously checks every frame if allowed was met, required to make the idea be visible in the decision selection screen. It is preferable to put country or DLC checks into allowed instead.
+
+<code>available</code> is a trigger block that continuously checks every frame if visible was met, required to be possible to actually take the idea. If false, the idea will remain visible, but will be greyed out and be impossible to take. This is applied on top of the political power cost.
+
+<code>cost = 123</code> is the price in political power it takes to add the idea. This becomes 150 political power if not set{{cref|a}}.
+
+<code>removal_cost = 123</code> is the price in political power it takes to remove the idea. If set to -1, the idea cannot be removed manually. Defaults to 0 if not set.
+
+<code>level = 2</code> is used in ideas to create the escalating price, akin to the recruitment laws. If you have the law with the level of 1, changing to level 3 will require the cost of the idea with the level 2 in addition to the level 3, and vise-versa.
+
+<code>traits</code> is a block of traits that are assigned to this idea, defined in {{path|common/country_leader/*.txt}}, also granting a static modifier and showing up near the idea.
+
+<code>ledger</code> decides which intelligence ledger the idea will be assigned to. This is primarily a leftover now applying to the [[Character modding|character]] system, but this can still be used in officer corps spirits. Possible values are <code>army</code>, <code>air</code>, <code>navy</code>, <code>military</code> (Appearing on each of the prior ledgers), <code>civilian</code>, <code>all</code>, and <code>hidden</code>.
+
+=== Example ===
+<pre>ideas = {
+    law_category = {
+        law = yes
+        use_list_view = yes 
+        my_law = {
+            allowed_to_remove = {
+                num_of_civilian_factories > 10
+            }
+            removal_cost = 100
+            cost = 100
+            level = 3
+            modifier = {
+                production_speed_industrial_complex_factor = 0.2
+            }
+        }
+    }
+    designer_category = {
+        designer = yes
+        my_designer = {        # No cost is defined, defaults to 150
+            allowed = {
+                tag = QAT
+            }
+            visible = {
+                has_tech = infantry_weapons1
+            }
+            available = {
+                has_equipment = {
+                    infantry_equipment > 1000
+                }
+            }
+            traits = { infantry_equipment_manufacturer }
+        }
+    }
+}</pre>
+
+==Categories==
+Idea categories are defined in any {{path|common/idea_tags/*.txt}} file. All categories will be contained in the <code>idea_categories</code> top element and can contain the following arguments:
+* <code>slot</code> is a proper idea category slot. This is what shows up in the GUI in the politics view menu, and this is what ideas have to have as their category in their definition.
+* <code>character_slot</code> is a [[Character modding|character]] slot. Ideas can also be defined to use this slot and it will show up in the GUI like a regular idea slot, however.
+* <code>cost</code> is the default price in political power to add an idea within one of the slots of this category. This is applied if the idea doesn't have one.
+* <code>removal_cost</code> is the default price in political power to remove an idea within one of the slots of this category.
+* <code>ledger</code> is the intelligence ledger defined to ideas in this category, unless overridden within the slot, idea, or character. Possible values are <code>army</code>, <code>air</code>, <code>navy</code>, <code>military</code> (Appearing on each of the prior ledgers), <code>civilian</code>, <code>all</code>, and <code>hidden</code>. Additionally, <code>invalid</code> can be used, forcing the ledger to be defined one level lower.
+* <code>hidden</code> is a boolean value making this category not show up in the GUI. Optional, defaults to no.
+* <code>politics_tab</code> is a boolean value making this category show up in the politics tab. Optional, defaults to yes.
+
+This will look like the following:
+<pre>idea_categories = {
+    my_category = {
+        slot = my_slot
+        character_slot = my_character_slot
+        cost = 30
+        removal_cost = 10
+        ledger = hidden
+    }
+}</pre>
+
+The category will then be used by the idea via the slot (which allows mapping an idea to a category)<br/>
+The file also includes slot_ledgers, which distributes idea slots to intelligence ledgers individually, which will take priority over the idea category's ledger. An example of it being used is
+<pre>slot_ledgers = {
+    XXX_idea_slot = civilian
+    ZZZ_idea_slot = invalid
+}</pre> Invalid will require specification in each idea individually.<br/>
+===GFX and GUI===
+{{See also|Interface modding}}
+Each idea category represents a row in the country politics view, while each slot represents a slot under that row.<br/>
+The <code>country_politics_idea_category_entry</code> container window within the {{path|interface/countrypoliticsview.gui}} file decides the user inteface information about each row. The most important thing here is the gridbox, as it decides the following:
+* The size of each idea slot within the category, by default 80 by width and 64 by height. This is used for distances between slots.
+* The max amount of slots, '''by default 7 horizontally and 1 vertically.''' If not adjusted, it'd be impossible to have more than 7 idea slots in a category.
+* The format of the gridbox, deciding in which direction the idea slots are added.
+The idea category's icon, shown on the left of the category's row, is decided by the GFX_idea_categories sprite. The sprite is split into multiple frames horizontally, and each category is assigned a part of it depending on its order defined in {{path|common/idea_tags/*.txt}}. The sprite is defined in {{path|interface/countrypoliticsview.gfx}} and its definition in the base game consists of the following:
+<pre>   spriteType = {
+        name = "GFX_idea_categories"
+        texturefile = "gfx/interface/idea_categories.dds"
+        noOfFrames = 6
+    }</pre>When adding a new category, make sure to update the sprite and the amount of frames accordingly.<br/>
+An icon can be defined for idea slots, which will be used for them if there is no idea assigned to that slot. This definition in any {{path|interface/*.gfx}} file, taking XXX_idea_slot as an example, is done the following way:
+<pre>   spriteType = {
+        name = GFX_idea_slot_XXX_idea_slot
+        textureFile = gfx/interface/filename.dds
+    }</pre>In other words, the sprite must have the same name as the idea slot but with <code>GFX_idea_slot_</code> prepended in the beginning.
+
+== Modifying cost of a slot ==
+{{anchor|Modifying cost of a category}}
+The <code><idea slot>_cost_factor</code> modifier can be used to modify the price in political power for adding ideas or characters in this slot. However, there is a restriction on that modifier. In order for it to work, the idea slot  needs to have any ideas or characters defined beforehand.
+
+The files in the {{path|common/ideas/*.txt}} folder are loaded in the order of the Unicode character IDs, which put capital letters before underscores, which are put before lowercase letters. For example, this means that a file with the filename of <code>TAG.txt</code> is loaded before <code>_economy.txt</code> or <code>_manpower.txt</code> (the base game's locations of laws), which would get loaded before <code>country.txt</code>. Due to the above quirk, this means that an idea with the modifier affecting a price of a law, for instance, <code>economy_cost_factor = -0.10</code>, '''will throw an error if the filename starts with an uppercase character''' unless the laws are stored from files  different from base game.
+
+There are two primary ways to fix this. The first one is to simply change the filename of the country's idea file, changing it from, for instance, <code>GER.txt</code> to<code>germany.txt</code>. In case you have to keep the filename the same to overwrite a file, a new file can be created instead. Alternatively, [[Modding#Mod_definition|assuming that you have a replace_path to the ideas folder]], you could rename the files storing the laws to begin with a character with a smaller ID, for instance, to <code>00_economy.txt</code>, which would get loaded prior to <code>TAG.txt</code>.
+
+Additionally, this also means that there have to be ideas defined within character slots for the modifier to work, such as <code>political_advisor_cost_factor = 0.1</code>. This is because characters are loaded later than ideas or country leader traits, so they're not loaded yet when evaluating the modifier, causing the error. This can be bypassed by creating ideas for the character slots in {{path|common/ideas/*.txt}} files. These will never appear for the countries as these are character slots rather than idea slots, but an idea that was loaded beforehand will correct the error.
+
+== Notes ==
+{{Cnote|a|Depends on the value in the {{path|common/idea_tags/*.txt}} file, which is always 150 in base game}}
+{{Modding navbox}}
+[[Category:Modding]]
