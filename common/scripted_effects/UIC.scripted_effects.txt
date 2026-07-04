@@ -16,7 +16,7 @@
 # UIC Subject Tag types:
 #	UIC_subject_[Tag 1]_ideocos_[Ideology]_master_[Tag 2]
 #
-# Colors in cosmetic.txt are not always unique per new tag added, reusing default country color is expected practice.
+# Colors in cosmetic.txt are not always unique per new tag added, reusing default country color is expected practice. Typically for UIC Tag types, if a country starts as Ideology X then they wont have a color for Ideology X.
 # When using the UIC Subject Tag types, its expect for the Subject to have a complementary color of the Master. Look at the Ideology of the master in colors.txt if a UIC type doesnt exist in cosmetic.txt.
 #
 # The block below marked # Template uses literal tag ZZZ, which never matches a real country. It never fires as written. It exists as a copy paste starting point for adding a new tag to this system, not as functioning logic.
@@ -246,9 +246,11 @@ aNCFO_uic_effects = {
 		limit = {
 			ROOT = {
 				original_tag = MJU
-				has_government = authoritarianism
-				#NOT = { has_cosmetic_tag = TAG_cosmetic_name }
-				#NOT MONARCHIST
+				AND = { # NOT MONARCHIST
+					has_government = authoritarianism
+					#NOT = { has_cosmetic_tag = TAG_cosmetic_name }
+				}
+				NOT = { has_country_leader_ideology = sub_monarchy }
 			}
 		}
 		set_cosmetic_tag = UIC_MJU_ideocos_authoritarianism
@@ -258,9 +260,8 @@ aNCFO_uic_effects = {
 		limit = {
 			ROOT = {
 				original_tag = MJU
-				AND = {
+				AND = { # MONARCHIST
 					has_government = authoritarianism
-					# MONARCHIST
 					has_country_leader_ideology = sub_monarchy
 				}
 				#NOT = { has_cosmetic_tag = TAG_cosmetic_name }
@@ -307,7 +308,7 @@ aNCFO_uic_effects = {
 		limit = {
 			ROOT = {
 				original_tag = MRC
-				has_government = pluralism 
+				has_government = pluralism
 				NOT = { has_cosmetic_tag = MRC_deplutocratization }
 			}
 		}
@@ -329,7 +330,7 @@ aNCFO_uic_effects = {
 		limit = {
 			ROOT = {
 				original_tag = MRC
-				has_government = theocratism 
+				has_government = theocratism
 				NOT = { has_cosmetic_tag = MRC_deplutocratization }
 			}
 		}
@@ -357,9 +358,6 @@ aNCFO_uic_effects = {
 		}
 		set_cosmetic_tag = UIC_MRC_ideocos_unitism
 	}
-
-
-# === Cosmetic Tags (A-Z) ===
 	# Ursprung Elven Kingdom
 	IF = {
 		limit = {
@@ -374,6 +372,7 @@ aNCFO_uic_effects = {
 	ELSE_IF = {
 		limit = {
 			ROOT = {
+				original_tag = UEK
 				OR = {
 					has_government = pluralism
 					has_government = semidemocracy
@@ -391,6 +390,7 @@ aNCFO_uic_effects = {
 	ELSE_IF = {
 		limit = {
 			ROOT = {
+				original_tag = UEK
 				OR = {
 					has_government = theocratism
 					has_government = authoritarianism
@@ -404,7 +404,10 @@ aNCFO_uic_effects = {
 		set_cosmetic_tag = UIC_UEK_ideocos_authoritarianism
 	}
 
-	ELSE_IF = {
+
+# === Cosmetic Tags (A-Z) ===
+	# [UNIFIED_WUM_HIGH_KINGDOM Name]
+	IF = {
 		limit = {
 			ROOT = {
 				OR = {
