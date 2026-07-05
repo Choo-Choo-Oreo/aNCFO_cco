@@ -6,6 +6,7 @@
 #	"has_cosmetic_tag" and "original_tag" should be treated as exclusive.
 #	We can have ideologies clump like that of "pluralism" and "semidemocracy" for example.
 #	Custom content lock, you can use this to have a unique color tier sytem using "Roman Numeral"
+#	NOT = { UIC_has_formable = yes } Limits original tags so that formable UICs function.
 #
 # UIC Tag types:
 #	UIC_[Tag]_ideocos_[Ideology]
@@ -23,1323 +24,1397 @@
 
 aNCFO_uic_subject_effects = {
 # === Original Tags (A-Z) ===
-	#IF = { # MJU uses CPF_uic_for_MJU_subject, update in the future to be dynamic.
-	#	limit = {
-	#		ROOT = {
-	#			original_tag = CPF
-	#			has_government = authoritarianism
-	#			is_subject_of = MJU
-	#		}
-	#	}
-	#	set_cosmetic_tag = UIC_subject_CPF_ideocos_authoritarianism_master_MJU
-	#}
-
 	IF = {
-		limit = {
-			ROOT = {
-				original_tag = MJU
-				has_government = theocratism
-				is_subject_of = HHE
-			}
-		}
-		set_cosmetic_tag = UIC_subject_MJU_ideocos_theocratism_master_HHE
-	}
+		LIMIT = { always = yes }
+		#IF = { # MJU uses CPF_uic_for_MJU_subject, update in the future to be dynamic.
+		#	limit = {
+		#		ROOT = {
+		#			original_tag = CPF
+		#			has_government = authoritarianism
+		#			is_subject_of = MJU
+		#		}
+		#	}
+		#	set_cosmetic_tag = UIC_subject_CPF_ideocos_authoritarianism_master_MJU
+		#}
 
-	IF = {
-		limit = {
-			ROOT = {
-				original_tag = SDP
-				has_government = theocratism
-				is_subject_of = HHE
+		IF = {
+			limit = {
+				ROOT = {
+					original_tag = MJU
+					has_government = theocratism
+					is_subject_of = HHE
+				}
 			}
+			set_cosmetic_tag = UIC_subject_MJU_ideocos_theocratism_master_HHE
 		}
-		set_cosmetic_tag = UIC_subject_SDP_ideocos_theocratism_master_HHE
-	}
 
-	IF = {
-		limit = {
-			ROOT = {
-				original_tag = MRC
-				has_government = theocratism
-				is_subject_of = HHE
+		IF = {
+			limit = {
+				ROOT = {
+					original_tag = SDP
+					has_government = theocratism
+					is_subject_of = HHE
+				}
 			}
+			set_cosmetic_tag = UIC_subject_SDP_ideocos_theocratism_master_HHE
 		}
-		set_cosmetic_tag = UIC_subject_MRC_ideocos_theocratism_master_HHE
+
+		IF = {
+			limit = {
+				ROOT = {
+					original_tag = MRC
+					has_government = theocratism
+					is_subject_of = HHE
+				}
+			}
+			set_cosmetic_tag = UIC_subject_MRC_ideocos_theocratism_master_HHE
+		}
 	}
 
 
 # === Cosmetic Tags (A-Z) ===
-	#IF = {
-	#	limit = {
-	#		ROOT = {
-	#			original_tag = ZZZ
-	#			has_government = theocratism
-	#			is_subject_of = ZZZ
-	#		}
-	#	}
-	#	set_cosmetic_tag = UIC_ZZZ_ideocos_ZZZ_subject
-	#}
+	IF = {
+		LIMIT = { always = yes }
+		#IF = {
+		#	limit = {
+		#		ROOT = {
+		#			original_tag = ZZZ
+		#			has_government = theocratism
+		#			is_subject_of = ZZZ
+		#		}
+		#	}
+		#	set_cosmetic_tag = UIC_ZZZ_ideocos_ZZZ_subject
+		#}
+	}
 }
 
 aNCFO_uic_effects = {
 # === Original Tags (A-Z) ===
-	# Template
 	IF = {
-		limit = {
-			ROOT = {
-				original_tag = ZZZ
-				is_subject = yes
-			}
-		}
-		aNCFO_uic_subject_effects = yes
-	}
-
-	ELSE_IF = {
-		limit = {
-			ROOT = {
-				original_tag = ZZZ
-				has_government = pluralism
-				#NOT = { has_cosmetic_tag = TAG_cosmetic_name }
-			}
-		}
-		set_cosmetic_tag = UIC_ZZZ_ideocos_pluralism
-	}
-
-	ELSE_IF = {
-		limit = {
-			ROOT = {
-				original_tag = ZZZ
-				has_government = semidemocracy
-				#NOT = { has_cosmetic_tag = TAG_cosmetic_name }
-			}
-		}
-		set_cosmetic_tag = UIC_ZZZ_ideocos_semidemocracy
-	}
-
-	ELSE_IF = {
-		limit = {
-			ROOT = {
-				original_tag = ZZZ
-				has_government = theocratism
-				#NOT = { has_cosmetic_tag = TAG_cosmetic_name }
-			}
-		}
-		set_cosmetic_tag = UIC_ZZZ_ideocos_theocratism
-	}
-
-	ELSE_IF = {
-		limit = {
-			ROOT = {
-				original_tag = ZZZ
-				has_government = authoritarianism
-				#NOT = { has_cosmetic_tag = TAG_cosmetic_name }
-			}
-		}
-		set_cosmetic_tag = UIC_ZZZ_ideocos_authoritarianism
-	}
-
-	ELSE_IF = {
-		limit = {
-			ROOT = {
-				original_tag = ZZZ
-				has_government = unitism
-				#NOT = { has_cosmetic_tag = TAG_cosmetic_name }
-			}
-		}
-		set_cosmetic_tag = UIC_ZZZ_ideocos_unitism
-	}
-	# Castravia Peoples Republic
-	IF = {
-		limit = {
-			ROOT = {
-				original_tag = CPF
-				is_subject = yes
-			}
-		}
-		aNCFO_uic_subject_effects = yes
-	}
-
-	ELSE_IF = {
-		limit = {
-			ROOT = {
-				original_tag = CPF
-				OR = {
-					has_government = pluralism
-					has_government = semidemocracy
+		LIMIT = { always = yes }
+		# Template
+		IF = {
+			limit = {
+				ROOT = {
+					original_tag = ZZZ
+					is_subject = yes
+					NOT = { UIC_has_formable = yes }
 				}
-				#NOT = { has_cosmetic_tag = TAG_cosmetic_name }
 			}
+			aNCFO_uic_subject_effects = yes
 		}
-		set_cosmetic_tag = UIC_CPF_ideocos_pluralism
-	}
 
-	ELSE_IF = {
-		limit = {
-			ROOT = {
-				original_tag = CPF
-				has_government = theocratism 
-				#NOT = { has_cosmetic_tag = TAG_cosmetic_name }
-			}
-		}
-		set_cosmetic_tag = UIC_CPF_ideocos_theocratism
-	}
-
-	ELSE_IF = {
-		limit = {
-			ROOT = {
-				original_tag = CPF
-				has_government = authoritarianism
-				#NOT = { has_cosmetic_tag = TAG_cosmetic_name }
-			}
-		}
-		set_cosmetic_tag = UIC_CPF_ideocos_authoritarianism
-	}
-
-	ELSE_IF = {
-		limit = {
-			ROOT = {
-				original_tag = CPF
-				has_government = unitism
-				#NOT = { has_cosmetic_tag = TAG_cosmetic_name }
-			}
-		}
-		set_cosmetic_tag = UIC_CPF_ideocos_unitism
-	}
-	# Military Junta
-	IF = {
-		limit = {
-			ROOT = {
-				original_tag = MJU
-				is_subject = yes
-			}
-		}
-		aNCFO_uic_subject_effects = yes
-	}
-
-	ELSE_IF = {
-		limit = {
-			ROOT = {
-				original_tag = MJU
-				OR = {
+		ELSE_IF = {
+			limit = {
+				ROOT = {
+					original_tag = ZZZ
 					has_government = pluralism
-					has_government = semidemocracy
-					has_country_leader = { character = MJU_renuevo_solaris ruling_only = yes }
-				}
-				#NOT = { has_cosmetic_tag = TAG_cosmetic_name }
-			}
-		}
-		set_cosmetic_tag = UIC_MJU_ideocos_pluralism
-	}
-
-	ELSE_IF = {
-		limit = {
-			ROOT = {
-				original_tag = MJU
-				has_government = theocratism
-				#NOT = { has_cosmetic_tag = TAG_cosmetic_name }
-			}
-		}
-		set_cosmetic_tag = UIC_MJU_ideocos_theocratism
-	}
-
-	ELSE_IF = {
-		limit = {
-			ROOT = {
-				original_tag = MJU
-				AND = { # NOT MONARCHIST
-					has_government = authoritarianism
+					NOT = { UIC_has_formable = yes }
 					#NOT = { has_cosmetic_tag = TAG_cosmetic_name }
 				}
-				NOT = { has_country_leader_ideology = sub_monarchy }
 			}
+			set_cosmetic_tag = UIC_ZZZ_ideocos_pluralism
 		}
-		set_cosmetic_tag = UIC_MJU_ideocos_authoritarianism
-	}
 
-	ELSE_IF = {
-		limit = {
-			ROOT = {
-				original_tag = MJU
-				AND = { # MONARCHIST
-					has_government = authoritarianism
-					has_country_leader_ideology = sub_monarchy
-				}
-				#NOT = { has_cosmetic_tag = TAG_cosmetic_name }
-			}
-		}
-		set_cosmetic_tag = UIC_MJU_ideocos_monarchist
-	}
-
-	ELSE_IF = {
-		limit = {
-			ROOT = {
-				original_tag = MJU
-				AND = {
-					has_government = unitism
-					has_country_leader = { character = MJU_mando_ferrum ruling_only = yes }
-				}
-				#NOT = { has_cosmetic_tag = TAG_cosmetic_name }
-			}
-		}
-		set_cosmetic_tag = UIC_MJU_ideocos_unitism
-	}
-	# Duan People
-	IF = {
-		limit = {
-			ROOT = {
-				original_tag = SDP
-				is_subject = yes
-			}
-		}
-		aNCFO_uic_subject_effects = yes
-	}
-	# Merchant-Republica - Most be worked on and extended in the future.
-	IF = {
-		limit = {
-			ROOT = {
-				original_tag = MRC
-				is_subject = yes
-			}
-		}
-		aNCFO_uic_subject_effects = yes
-	}
-
-	ELSE_IF = {
-		limit = {
-			ROOT = {
-				original_tag = MRC
-				has_government = pluralism
-				NOT = { has_cosmetic_tag = MRC_deplutocratization }
-			}
-		}
-		set_cosmetic_tag = UIC_MRC_ideocos_pluralism
-	}
-
-	ELSE_IF = {
-		limit = {
-			ROOT = {
-				original_tag = MRC
-				has_government = semidemocracy
-				NOT = { has_cosmetic_tag = MRC_deplutocratization }
-			}
-		}
-		set_cosmetic_tag = UIC_MRC_ideocos_semidemocracy
-	}
-
-	ELSE_IF = {
-		limit = {
-			ROOT = {
-				original_tag = MRC
-				has_government = theocratism
-				NOT = { has_cosmetic_tag = MRC_deplutocratization }
-			}
-		}
-		set_cosmetic_tag = UIC_MRC_ideocos_theocratism
-	}
-
-	ELSE_IF = {
-		limit = {
-			ROOT = {
-				original_tag = MRC
-				has_government = authoritarianism
-				NOT = { has_cosmetic_tag = MRC_deplutocratization }
-			}
-		}
-		set_cosmetic_tag = UIC_MRC_ideocos_authoritarianism
-	}
-
-	ELSE_IF = {
-		limit = {
-			ROOT = {
-				original_tag = MRC
-				has_government = unitism
-				NOT = { has_cosmetic_tag = MRC_deplutocratization }
-			}
-		}
-		set_cosmetic_tag = UIC_MRC_ideocos_unitism
-	}
-	# Ursprung Elven Kingdom
-	IF = {
-		limit = {
-			ROOT = {
-				original_tag = UEK
-				is_subject = yes
-			}
-		}
-		aNCFO_uic_subject_effects = yes
-	}
-
-	ELSE_IF = {
-		limit = {
-			ROOT = {
-				original_tag = UEK
-				OR = {
-					has_government = pluralism
+		ELSE_IF = {
+			limit = {
+				ROOT = {
+					original_tag = ZZZ
 					has_government = semidemocracy
-					has_government = unitism
-				}
-				NOT = {
-					has_cosmetic_tag = UNIFIED_WUM_HIGH_KINGDOM
-					has_cosmetic_tag = UIC_UNI_ideocos_WUM_HIGH_KINGDOM_for_zakariah
+					NOT = { UIC_has_formable = yes }
+					#NOT = { has_cosmetic_tag = TAG_cosmetic_name }
 				}
 			}
+			set_cosmetic_tag = UIC_ZZZ_ideocos_semidemocracy
 		}
-		set_cosmetic_tag = UIC_UEK_ideocos_zakariah
-	}
 
-	ELSE_IF = {
-		limit = {
-			ROOT = {
-				original_tag = UEK
-				OR = {
+		ELSE_IF = {
+			limit = {
+				ROOT = {
+					original_tag = ZZZ
 					has_government = theocratism
-					has_government = authoritarianism
-				}
-				NOT = {
-					has_cosmetic_tag = UNIFIED_WUM_HIGH_KINGDOM
-					has_cosmetic_tag = UIC_UNI_ideocos_WUM_HIGH_KINGDOM_for_zakariah
+					NOT = { UIC_has_formable = yes }
+					#NOT = { has_cosmetic_tag = TAG_cosmetic_name }
 				}
 			}
+			set_cosmetic_tag = UIC_ZZZ_ideocos_theocratism
 		}
-		set_cosmetic_tag = UIC_UEK_ideocos_authoritarianism
+
+		ELSE_IF = {
+			limit = {
+				ROOT = {
+					original_tag = ZZZ
+					has_government = authoritarianism
+					NOT = { UIC_has_formable = yes }
+					#NOT = { has_cosmetic_tag = TAG_cosmetic_name }
+				}
+			}
+			set_cosmetic_tag = UIC_ZZZ_ideocos_authoritarianism
+		}
+
+		ELSE_IF = {
+			limit = {
+				ROOT = {
+					original_tag = ZZZ
+					has_government = unitism
+					NOT = { UIC_has_formable = yes }
+					#NOT = { has_cosmetic_tag = TAG_cosmetic_name }
+				}
+			}
+			set_cosmetic_tag = UIC_ZZZ_ideocos_unitism
+		}
+		# Castravia Peoples Republic
+		IF = {
+			limit = {
+				ROOT = {
+					original_tag = CPF
+					is_subject = yes
+					NOT = { UIC_has_formable = yes }
+				}
+			}
+			aNCFO_uic_subject_effects = yes
+		}
+
+		ELSE_IF = {
+			limit = {
+				ROOT = {
+					original_tag = CPF
+					OR = {
+						has_government = pluralism
+						has_government = semidemocracy
+					}
+					NOT = { UIC_has_formable = yes }
+					#NOT = { has_cosmetic_tag = TAG_cosmetic_name }
+				}
+			}
+			set_cosmetic_tag = UIC_CPF_ideocos_pluralism
+		}
+
+		ELSE_IF = {
+			limit = {
+				ROOT = {
+					original_tag = CPF
+					has_government = theocratism
+					NOT = { UIC_has_formable = yes }
+					#NOT = { has_cosmetic_tag = TAG_cosmetic_name }
+				}
+			}
+			set_cosmetic_tag = UIC_CPF_ideocos_theocratism
+		}
+
+		ELSE_IF = {
+			limit = {
+				ROOT = {
+					original_tag = CPF
+					has_government = authoritarianism
+					NOT = { UIC_has_formable = yes }
+					#NOT = { has_cosmetic_tag = TAG_cosmetic_name }
+				}
+			}
+			set_cosmetic_tag = UIC_CPF_ideocos_authoritarianism
+		}
+
+		ELSE_IF = {
+			limit = {
+				ROOT = {
+					original_tag = CPF
+					has_government = unitism
+					NOT = { UIC_has_formable = yes }
+					#NOT = { has_cosmetic_tag = TAG_cosmetic_name }
+				}
+			}
+			set_cosmetic_tag = UIC_CPF_ideocos_unitism
+		}
+		# Military Junta
+		IF = {
+			limit = {
+				ROOT = {
+					original_tag = MJU
+					is_subject = yes
+					NOT = { UIC_has_formable = yes }
+				}
+			}
+			aNCFO_uic_subject_effects = yes
+		}
+
+		ELSE_IF = {
+			limit = {
+				ROOT = {
+					original_tag = MJU
+					OR = {
+						has_government = pluralism
+						has_government = semidemocracy
+						has_country_leader = { character = MJU_renuevo_solaris ruling_only = yes }
+					}
+					NOT = { UIC_has_formable = yes }
+					#NOT = { has_cosmetic_tag = TAG_cosmetic_name }
+				}
+			}
+			set_cosmetic_tag = UIC_MJU_ideocos_pluralism
+		}
+
+		ELSE_IF = {
+			limit = {
+				ROOT = {
+					original_tag = MJU
+					has_government = theocratism
+					NOT = { UIC_has_formable = yes }
+					#NOT = { has_cosmetic_tag = TAG_cosmetic_name }
+				}
+			}
+			set_cosmetic_tag = UIC_MJU_ideocos_theocratism
+		}
+
+		ELSE_IF = {
+			limit = {
+				ROOT = {
+					original_tag = MJU
+					AND = { # NOT MONARCHIST
+						has_government = authoritarianism
+						#NOT = { has_cosmetic_tag = TAG_cosmetic_name }
+					}
+					NOT = { has_country_leader_ideology = sub_representative_monarchy has_country_leader_ideology = sub_monarchy }
+					NOT = { UIC_has_formable = yes }
+				}
+			}
+			set_cosmetic_tag = UIC_MJU_ideocos_authoritarianism
+		}
+
+		ELSE_IF = {
+			limit = {
+				ROOT = {
+					original_tag = MJU
+					AND = { # MONARCHIST
+						has_government = authoritarianism
+						OR = { has_country_leader_ideology = sub_representative_monarchy has_country_leader_ideology = sub_monarchy }
+					}
+					NOT = { UIC_has_formable = yes }
+					#NOT = { has_cosmetic_tag = TAG_cosmetic_name }
+				}
+			}
+			set_cosmetic_tag = UIC_MJU_ideocos_monarchist
+		}
+
+		ELSE_IF = {
+			limit = {
+				ROOT = {
+					original_tag = MJU
+					AND = {
+						has_government = unitism
+						has_country_leader = { character = MJU_mando_ferrum ruling_only = yes }
+					}
+					NOT = { UIC_has_formable = yes }
+					#NOT = { has_cosmetic_tag = TAG_cosmetic_name }
+				}
+			}
+			set_cosmetic_tag = UIC_MJU_ideocos_unitism
+		}
+		# Duan People
+		IF = {
+			limit = {
+				ROOT = {
+					original_tag = SDP
+					is_subject = yes
+					NOT = { UIC_has_formable = yes }
+				}
+			}
+			aNCFO_uic_subject_effects = yes
+		}
+		# Merchant-Republica - Most be worked on and extended in the future.
+		IF = {
+			limit = {
+				ROOT = {
+					original_tag = MRC
+					is_subject = yes
+					NOT = { UIC_has_formable = yes }
+				}
+			}
+			aNCFO_uic_subject_effects = yes
+		}
+
+		ELSE_IF = {
+			limit = {
+				ROOT = {
+					original_tag = MRC
+					has_government = pluralism
+					NOT = { has_cosmetic_tag = MRC_deplutocratization }
+					NOT = { UIC_has_formable = yes }
+				}
+			}
+			set_cosmetic_tag = UIC_MRC_ideocos_pluralism
+		}
+
+		ELSE_IF = {
+			limit = {
+				ROOT = {
+					original_tag = MRC
+					has_government = semidemocracy
+					NOT = { has_cosmetic_tag = MRC_deplutocratization }
+					NOT = { UIC_has_formable = yes }
+				}
+			}
+			set_cosmetic_tag = UIC_MRC_ideocos_semidemocracy
+		}
+
+		ELSE_IF = {
+			limit = {
+				ROOT = {
+					original_tag = MRC
+					has_government = theocratism
+					NOT = { has_cosmetic_tag = MRC_deplutocratization }
+					NOT = { UIC_has_formable = yes }
+				}
+			}
+			set_cosmetic_tag = UIC_MRC_ideocos_theocratism
+		}
+
+		ELSE_IF = {
+			limit = {
+				ROOT = {
+					original_tag = MRC
+					has_government = authoritarianism
+					NOT = { has_cosmetic_tag = MRC_deplutocratization }
+					NOT = { UIC_has_formable = yes }
+				}
+			}
+			set_cosmetic_tag = UIC_MRC_ideocos_authoritarianism
+		}
+
+		ELSE_IF = {
+			limit = {
+				ROOT = {
+					original_tag = MRC
+					has_government = unitism
+					NOT = { has_cosmetic_tag = MRC_deplutocratization }
+					NOT = { UIC_has_formable = yes }
+				}
+			}
+			set_cosmetic_tag = UIC_MRC_ideocos_unitism
+		}
+		# Ursprung Elven Kingdom
+		IF = {
+			limit = {
+				ROOT = {
+					original_tag = UEK
+					is_subject = yes
+					NOT = { UIC_has_formable = yes }
+				}
+			}
+			aNCFO_uic_subject_effects = yes
+		}
+
+		ELSE_IF = {
+			limit = {
+				ROOT = {
+					original_tag = UEK
+					OR = {
+						has_government = pluralism
+						has_government = semidemocracy
+						has_government = unitism
+					}
+					NOT = { UIC_has_formable = yes }
+				}
+			}
+			set_cosmetic_tag = UIC_UEK_ideocos_zakariah
+		}
+
+		ELSE_IF = {
+			limit = {
+				ROOT = {
+					original_tag = UEK
+					OR = {
+						has_government = theocratism
+						has_government = authoritarianism
+					}
+					NOT = { UIC_has_formable = yes }
+				}
+			}
+			set_cosmetic_tag = UIC_UEK_ideocos_authoritarianism
+		}
 	}
 
 
 # === Cosmetic Tags (A-Z) ===
-	# [UNIFIED_WUM_HIGH_KINGDOM Name]
 	IF = {
-		limit = {
-			ROOT = {
-				OR = {
-					has_government = pluralism
-					has_government = semidemocracy
-					has_government = unitism
-				}
-				OR = {
-					has_cosmetic_tag = UNIFIED_WUM_HIGH_KINGDOM
-					has_cosmetic_tag = UIC_UNI_ideocos_WUM_HIGH_KINGDOM_for_zakariah
-				}
-			}
-		}
-		set_cosmetic_tag = UIC_UNI_ideocos_WUM_HIGH_KINGDOM_for_zakariah
-	}
-
-	ELSE_IF = {
-		limit = {
-			ROOT = {
-				OR = {
-					has_government = theocratism
-					has_government = authoritarianism
-				}
-				OR = {
-					has_cosmetic_tag = UNIFIED_WUM_HIGH_KINGDOM
-					has_cosmetic_tag = UIC_UNI_ideocos_WUM_HIGH_KINGDOM_for_zakariah
+		LIMIT = { always = yes }
+		# [UNIFIED_WUM_HIGH_KINGDOM Name]
+		IF = {
+			limit = {
+				ROOT = {
+					OR = {
+						has_government = pluralism
+						has_government = semidemocracy
+						has_government = unitism
+					}
+					OR = {
+						has_cosmetic_tag = UNIFIED_WUM_HIGH_KINGDOM
+						has_cosmetic_tag = UIC_UNI_ideocos_WUM_HIGH_KINGDOM_for_zakariah
+					}
 				}
 			}
+			set_cosmetic_tag = UIC_UNI_ideocos_WUM_HIGH_KINGDOM_for_zakariah
 		}
-		set_cosmetic_tag = UNIFIED_WUM_HIGH_KINGDOM
-	}
 
-	# === Formable Continents ===
-	# --- HARMONEEMA ---
-	IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_illuminism UIC_is_harmoneema_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_HARMONEEMA_ideocos_sub_illuminism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_pluralism UIC_is_harmoneema_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_HARMONEEMA_ideocos_sub_pluralism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_constitutionalism UIC_is_harmoneema_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_HARMONEEMA_ideocos_sub_constitutionalism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_conservatism UIC_is_harmoneema_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_HARMONEEMA_ideocos_sub_conservatism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_liberalism UIC_is_harmoneema_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_HARMONEEMA_ideocos_sub_liberalism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_progressivism UIC_is_harmoneema_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_HARMONEEMA_ideocos_sub_progressivism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_populism UIC_is_harmoneema_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_HARMONEEMA_ideocos_sub_populism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_obscurism UIC_is_harmoneema_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_HARMONEEMA_ideocos_sub_obscurism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_transitional_democracy UIC_is_harmoneema_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_HARMONEEMA_ideocos_sub_transitional_democracy
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_traditionalism UIC_is_harmoneema_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_HARMONEEMA_ideocos_sub_traditionalism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_mercantile_republicism UIC_is_harmoneema_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_HARMONEEMA_ideocos_sub_mercantile_republicism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_socialism UIC_is_harmoneema_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_HARMONEEMA_ideocos_sub_socialism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_illiberalism UIC_is_harmoneema_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_HARMONEEMA_ideocos_sub_illiberalism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_reformed_harmonainism UIC_is_harmoneema_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_HARMONEEMA_ideocos_sub_reformed_harmonainism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_pullusism UIC_is_harmoneema_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_HARMONEEMA_ideocos_sub_pullusism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_thalassaus UIC_is_harmoneema_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_HARMONEEMA_ideocos_sub_thalassaus
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_ager_montis UIC_is_harmoneema_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_HARMONEEMA_ideocos_sub_ager_montis
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_animaekin UIC_is_harmoneema_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_HARMONEEMA_ideocos_sub_animaekin
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_crownfather UIC_is_harmoneema_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_HARMONEEMA_ideocos_sub_crownfather
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_monarchy UIC_is_harmoneema_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_HARMONEEMA_ideocos_sub_monarchy
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_authoritarian UIC_is_harmoneema_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_HARMONEEMA_ideocos_sub_authoritarian
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_stratocracy UIC_is_harmoneema_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_HARMONEEMA_ideocos_sub_stratocracy
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_oligarchy UIC_is_harmoneema_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_HARMONEEMA_ideocos_sub_oligarchy
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_auth_harmonainism UIC_is_harmoneema_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_HARMONEEMA_ideocos_sub_auth_harmonainism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_ultra_nationalism UIC_is_harmoneema_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_HARMONEEMA_ideocos_sub_ultra_nationalism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_national_unitism UIC_is_harmoneema_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_HARMONEEMA_ideocos_sub_national_unitism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_unitism UIC_is_harmoneema_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_HARMONEEMA_ideocos_sub_unitism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_syndicalism UIC_is_harmoneema_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_HARMONEEMA_ideocos_sub_syndicalism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_fascism UIC_is_harmoneema_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_HARMONEEMA_ideocos_sub_fascism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_harmonization UIC_is_harmoneema_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_HARMONEEMA_ideocos_sub_harmonization
-	}
+		ELSE_IF = {
+			limit = {
+				ROOT = {
+					OR = {
+						has_government = theocratism
+						has_government = authoritarianism
+					}
+					OR = {
+						has_cosmetic_tag = UNIFIED_WUM_HIGH_KINGDOM
+						has_cosmetic_tag = UIC_UNI_ideocos_WUM_HIGH_KINGDOM_for_zakariah
+					}
+				}
+			}
+			set_cosmetic_tag = UNIFIED_WUM_HIGH_KINGDOM
+		}
 
-	# --- BITU ---
-	IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_illuminism UIC_is_bitu_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_BITU_ideocos_sub_illuminism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_pluralism UIC_is_bitu_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_BITU_ideocos_sub_pluralism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_constitutionalism UIC_is_bitu_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_BITU_ideocos_sub_constitutionalism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_conservatism UIC_is_bitu_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_BITU_ideocos_sub_conservatism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_liberalism UIC_is_bitu_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_BITU_ideocos_sub_liberalism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_progressivism UIC_is_bitu_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_BITU_ideocos_sub_progressivism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_populism UIC_is_bitu_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_BITU_ideocos_sub_populism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_obscurism UIC_is_bitu_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_BITU_ideocos_sub_obscurism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_transitional_democracy UIC_is_bitu_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_BITU_ideocos_sub_transitional_democracy
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_traditionalism UIC_is_bitu_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_BITU_ideocos_sub_traditionalism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_mercantile_republicism UIC_is_bitu_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_BITU_ideocos_sub_mercantile_republicism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_socialism UIC_is_bitu_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_BITU_ideocos_sub_socialism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_illiberalism UIC_is_bitu_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_BITU_ideocos_sub_illiberalism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_harmonainism UIC_is_bitu_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_BITU_ideocos_sub_harmonainism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_radical_harmonainism UIC_is_bitu_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_BITU_ideocos_sub_radical_harmonainism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_reformed_harmonainism UIC_is_bitu_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_BITU_ideocos_sub_reformed_harmonainism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_pullusism UIC_is_bitu_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_BITU_ideocos_sub_pullusism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_thalassaus UIC_is_bitu_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_BITU_ideocos_sub_thalassaus
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_ager_montis UIC_is_bitu_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_BITU_ideocos_sub_ager_montis
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_animaekin UIC_is_bitu_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_BITU_ideocos_sub_animaekin
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_crownfather UIC_is_bitu_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_BITU_ideocos_sub_crownfather
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_monarchy UIC_is_bitu_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_BITU_ideocos_sub_monarchy
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_authoritarian UIC_is_bitu_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_BITU_ideocos_sub_authoritarian
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_stratocracy UIC_is_bitu_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_BITU_ideocos_sub_stratocracy
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_oligarchy UIC_is_bitu_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_BITU_ideocos_sub_oligarchy
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_auth_harmonainism UIC_is_bitu_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_BITU_ideocos_sub_auth_harmonainism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_ultra_nationalism UIC_is_bitu_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_BITU_ideocos_sub_ultra_nationalism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_national_unitism UIC_is_bitu_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_BITU_ideocos_sub_national_unitism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_unitism UIC_is_bitu_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_BITU_ideocos_sub_unitism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_syndicalism UIC_is_bitu_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_BITU_ideocos_sub_syndicalism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_fascism UIC_is_bitu_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_BITU_ideocos_sub_fascism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_harmonization UIC_is_bitu_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_BITU_ideocos_sub_harmonization
-	}
+		# === Formable Continents ===
+		# --- HARMONEEMA ---
+		IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_illuminism UIC_is_harmoneema_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_HARMONEEMA_ideocos_sub_illuminism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_pluralism UIC_is_harmoneema_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_HARMONEEMA_ideocos_sub_pluralism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_constitutionalism UIC_is_harmoneema_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_HARMONEEMA_ideocos_sub_constitutionalism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_conservatism UIC_is_harmoneema_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_HARMONEEMA_ideocos_sub_conservatism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_liberalism UIC_is_harmoneema_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_HARMONEEMA_ideocos_sub_liberalism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_progressivism UIC_is_harmoneema_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_HARMONEEMA_ideocos_sub_progressivism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_populism UIC_is_harmoneema_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_HARMONEEMA_ideocos_sub_populism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_obscurism UIC_is_harmoneema_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_HARMONEEMA_ideocos_sub_obscurism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_transitional_democracy UIC_is_harmoneema_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_HARMONEEMA_ideocos_sub_transitional_democracy
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_traditionalism UIC_is_harmoneema_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_HARMONEEMA_ideocos_sub_traditionalism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_mercantile_republicanism UIC_is_harmoneema_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_HARMONEEMA_ideocos_sub_mercantile_republicanism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_socialism UIC_is_harmoneema_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_HARMONEEMA_ideocos_sub_socialism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_illiberalism UIC_is_harmoneema_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_HARMONEEMA_ideocos_sub_illiberalism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_harmonainism UIC_is_harmoneema_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_HARMONEEMA_ideocos_sub_harmonainism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_radical_harmonainism UIC_is_harmoneema_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_HARMONEEMA_ideocos_sub_radical_harmonainism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_reformed_harmonainism UIC_is_harmoneema_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_HARMONEEMA_ideocos_sub_reformed_harmonainism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_pullusism UIC_is_harmoneema_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_HARMONEEMA_ideocos_sub_pullusism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_thalassaus UIC_is_harmoneema_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_HARMONEEMA_ideocos_sub_thalassaus
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_ager_montis UIC_is_harmoneema_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_HARMONEEMA_ideocos_sub_ager_montis
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_animaekin UIC_is_harmoneema_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_HARMONEEMA_ideocos_sub_animaekin
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_crownfather UIC_is_harmoneema_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_HARMONEEMA_ideocos_sub_crownfather
+		}
+		ELSE_IF = {
+			limit = {
+				ROOT = {
+					OR = { has_country_leader_ideology = sub_representative_monarchy has_country_leader_ideology = sub_monarchy }
+					UIC_is_harmoneema_formed = yes
+				}
+			}
+			set_cosmetic_tag = UIC_FORM_HARMONEEMA_ideocos_sub_monarchy
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_authoritarian UIC_is_harmoneema_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_HARMONEEMA_ideocos_sub_authoritarian
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_stratocracy UIC_is_harmoneema_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_HARMONEEMA_ideocos_sub_stratocracy
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_oligarchy UIC_is_harmoneema_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_HARMONEEMA_ideocos_sub_oligarchy
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_auth_harmonainism UIC_is_harmoneema_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_HARMONEEMA_ideocos_sub_auth_harmonainism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_ultra_nationalism UIC_is_harmoneema_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_HARMONEEMA_ideocos_sub_ultra_nationalism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_national_unitism UIC_is_harmoneema_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_HARMONEEMA_ideocos_sub_national_unitism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_unitism UIC_is_harmoneema_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_HARMONEEMA_ideocos_sub_unitism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_syndicalism UIC_is_harmoneema_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_HARMONEEMA_ideocos_sub_syndicalism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_fascism UIC_is_harmoneema_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_HARMONEEMA_ideocos_sub_fascism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_harmonization UIC_is_harmoneema_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_HARMONEEMA_ideocos_sub_harmonization
+		}
 
-	# --- ARTEMUM ---
-	IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_illuminism UIC_is_artemum_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_ARTEMUM_ideocos_sub_illuminism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_pluralism UIC_is_artemum_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_ARTEMUM_ideocos_sub_pluralism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_constitutionalism UIC_is_artemum_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_ARTEMUM_ideocos_sub_constitutionalism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_conservatism UIC_is_artemum_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_ARTEMUM_ideocos_sub_conservatism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_liberalism UIC_is_artemum_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_ARTEMUM_ideocos_sub_liberalism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_progressivism UIC_is_artemum_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_ARTEMUM_ideocos_sub_progressivism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_populism UIC_is_artemum_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_ARTEMUM_ideocos_sub_populism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_obscurism UIC_is_artemum_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_ARTEMUM_ideocos_sub_obscurism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_transitional_democracy UIC_is_artemum_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_ARTEMUM_ideocos_sub_transitional_democracy
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_traditionalism UIC_is_artemum_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_ARTEMUM_ideocos_sub_traditionalism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_mercantile_republicism UIC_is_artemum_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_ARTEMUM_ideocos_sub_mercantile_republicism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_socialism UIC_is_artemum_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_ARTEMUM_ideocos_sub_socialism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_illiberalism UIC_is_artemum_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_ARTEMUM_ideocos_sub_illiberalism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_harmonainism UIC_is_artemum_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_ARTEMUM_ideocos_sub_harmonainism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_radical_harmonainism UIC_is_artemum_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_ARTEMUM_ideocos_sub_radical_harmonainism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_reformed_harmonainism UIC_is_artemum_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_ARTEMUM_ideocos_sub_reformed_harmonainism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_pullusism UIC_is_artemum_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_ARTEMUM_ideocos_sub_pullusism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_thalassaus UIC_is_artemum_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_ARTEMUM_ideocos_sub_thalassaus
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_ager_montis UIC_is_artemum_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_ARTEMUM_ideocos_sub_ager_montis
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_animaekin UIC_is_artemum_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_ARTEMUM_ideocos_sub_animaekin
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_crownfather UIC_is_artemum_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_ARTEMUM_ideocos_sub_crownfather
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_monarchy UIC_is_artemum_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_ARTEMUM_ideocos_sub_monarchy
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_authoritarian UIC_is_artemum_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_ARTEMUM_ideocos_sub_authoritarian
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_stratocracy UIC_is_artemum_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_ARTEMUM_ideocos_sub_stratocracy
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_oligarchy UIC_is_artemum_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_ARTEMUM_ideocos_sub_oligarchy
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_auth_harmonainism UIC_is_artemum_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_ARTEMUM_ideocos_sub_auth_harmonainism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_ultra_nationalism UIC_is_artemum_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_ARTEMUM_ideocos_sub_ultra_nationalism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_national_unitism UIC_is_artemum_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_ARTEMUM_ideocos_sub_national_unitism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_unitism UIC_is_artemum_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_ARTEMUM_ideocos_sub_unitism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_syndicalism UIC_is_artemum_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_ARTEMUM_ideocos_sub_syndicalism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_fascism UIC_is_artemum_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_ARTEMUM_ideocos_sub_fascism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_harmonization UIC_is_artemum_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_ARTEMUM_ideocos_sub_harmonization
-	}
+		# --- BITU ---
+		IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_illuminism UIC_is_bitu_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_BITU_ideocos_sub_illuminism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_pluralism UIC_is_bitu_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_BITU_ideocos_sub_pluralism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_constitutionalism UIC_is_bitu_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_BITU_ideocos_sub_constitutionalism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_conservatism UIC_is_bitu_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_BITU_ideocos_sub_conservatism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_liberalism UIC_is_bitu_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_BITU_ideocos_sub_liberalism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_progressivism UIC_is_bitu_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_BITU_ideocos_sub_progressivism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_populism UIC_is_bitu_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_BITU_ideocos_sub_populism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_obscurism UIC_is_bitu_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_BITU_ideocos_sub_obscurism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_transitional_democracy UIC_is_bitu_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_BITU_ideocos_sub_transitional_democracy
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_traditionalism UIC_is_bitu_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_BITU_ideocos_sub_traditionalism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_mercantile_republicanism UIC_is_bitu_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_BITU_ideocos_sub_mercantile_republicanism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_socialism UIC_is_bitu_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_BITU_ideocos_sub_socialism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_illiberalism UIC_is_bitu_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_BITU_ideocos_sub_illiberalism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_harmonainism UIC_is_bitu_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_BITU_ideocos_sub_harmonainism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_radical_harmonainism UIC_is_bitu_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_BITU_ideocos_sub_radical_harmonainism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_reformed_harmonainism UIC_is_bitu_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_BITU_ideocos_sub_reformed_harmonainism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_pullusism UIC_is_bitu_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_BITU_ideocos_sub_pullusism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_thalassaus UIC_is_bitu_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_BITU_ideocos_sub_thalassaus
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_ager_montis UIC_is_bitu_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_BITU_ideocos_sub_ager_montis
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_animaekin UIC_is_bitu_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_BITU_ideocos_sub_animaekin
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_crownfather UIC_is_bitu_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_BITU_ideocos_sub_crownfather
+		}
+		ELSE_IF = {
+			limit = {
+				ROOT = {
+					OR = { has_country_leader_ideology = sub_representative_monarchy has_country_leader_ideology = sub_monarchy }
+					UIC_is_harmoneema_formed = yes
+				}
+			}
+			set_cosmetic_tag = UIC_FORM_BITU_ideocos_sub_monarchy
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_authoritarian UIC_is_bitu_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_BITU_ideocos_sub_authoritarian
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_stratocracy UIC_is_bitu_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_BITU_ideocos_sub_stratocracy
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_oligarchy UIC_is_bitu_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_BITU_ideocos_sub_oligarchy
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_auth_harmonainism UIC_is_bitu_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_BITU_ideocos_sub_auth_harmonainism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_ultra_nationalism UIC_is_bitu_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_BITU_ideocos_sub_ultra_nationalism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_national_unitism UIC_is_bitu_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_BITU_ideocos_sub_national_unitism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_unitism UIC_is_bitu_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_BITU_ideocos_sub_unitism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_syndicalism UIC_is_bitu_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_BITU_ideocos_sub_syndicalism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_fascism UIC_is_bitu_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_BITU_ideocos_sub_fascism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_harmonization UIC_is_bitu_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_BITU_ideocos_sub_harmonization
+		}
 
-	# --- TYENREN ---
-	IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_illuminism UIC_is_tyenren_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_TYENREN_ideocos_sub_illuminism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_pluralism UIC_is_tyenren_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_TYENREN_ideocos_sub_pluralism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_constitutionalism UIC_is_tyenren_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_TYENREN_ideocos_sub_constitutionalism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_conservatism UIC_is_tyenren_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_TYENREN_ideocos_sub_conservatism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_liberalism UIC_is_tyenren_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_TYENREN_ideocos_sub_liberalism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_progressivism UIC_is_tyenren_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_TYENREN_ideocos_sub_progressivism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_populism UIC_is_tyenren_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_TYENREN_ideocos_sub_populism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_obscurism UIC_is_tyenren_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_TYENREN_ideocos_sub_obscurism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_transitional_democracy UIC_is_tyenren_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_TYENREN_ideocos_sub_transitional_democracy
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_traditionalism UIC_is_tyenren_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_TYENREN_ideocos_sub_traditionalism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_mercantile_republicism UIC_is_tyenren_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_TYENREN_ideocos_sub_mercantile_republicism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_socialism UIC_is_tyenren_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_TYENREN_ideocos_sub_socialism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_illiberalism UIC_is_tyenren_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_TYENREN_ideocos_sub_illiberalism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_harmonainism UIC_is_tyenren_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_TYENREN_ideocos_sub_harmonainism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_radical_harmonainism UIC_is_tyenren_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_TYENREN_ideocos_sub_radical_harmonainism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_reformed_harmonainism UIC_is_tyenren_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_TYENREN_ideocos_sub_reformed_harmonainism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_pullusism UIC_is_tyenren_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_TYENREN_ideocos_sub_pullusism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_thalassaus UIC_is_tyenren_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_TYENREN_ideocos_sub_thalassaus
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_ager_montis UIC_is_tyenren_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_TYENREN_ideocos_sub_ager_montis
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_animaekin UIC_is_tyenren_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_TYENREN_ideocos_sub_animaekin
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_crownfather UIC_is_tyenren_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_TYENREN_ideocos_sub_crownfather
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_monarchy UIC_is_tyenren_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_TYENREN_ideocos_sub_monarchy
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_authoritarian UIC_is_tyenren_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_TYENREN_ideocos_sub_authoritarian
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_stratocracy UIC_is_tyenren_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_TYENREN_ideocos_sub_stratocracy
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_oligarchy UIC_is_tyenren_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_TYENREN_ideocos_sub_oligarchy
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_auth_harmonainism UIC_is_tyenren_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_TYENREN_ideocos_sub_auth_harmonainism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_ultra_nationalism UIC_is_tyenren_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_TYENREN_ideocos_sub_ultra_nationalism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_national_unitism UIC_is_tyenren_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_TYENREN_ideocos_sub_national_unitism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_unitism UIC_is_tyenren_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_TYENREN_ideocos_sub_unitism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_syndicalism UIC_is_tyenren_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_TYENREN_ideocos_sub_syndicalism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_fascism UIC_is_tyenren_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_TYENREN_ideocos_sub_fascism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_harmonization UIC_is_tyenren_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_TYENREN_ideocos_sub_harmonization
-	}
+		# --- ARTEMUM ---
+		IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_illuminism UIC_is_artemum_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_ARTEMUM_ideocos_sub_illuminism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_pluralism UIC_is_artemum_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_ARTEMUM_ideocos_sub_pluralism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_constitutionalism UIC_is_artemum_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_ARTEMUM_ideocos_sub_constitutionalism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_conservatism UIC_is_artemum_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_ARTEMUM_ideocos_sub_conservatism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_liberalism UIC_is_artemum_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_ARTEMUM_ideocos_sub_liberalism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_progressivism UIC_is_artemum_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_ARTEMUM_ideocos_sub_progressivism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_populism UIC_is_artemum_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_ARTEMUM_ideocos_sub_populism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_obscurism UIC_is_artemum_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_ARTEMUM_ideocos_sub_obscurism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_transitional_democracy UIC_is_artemum_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_ARTEMUM_ideocos_sub_transitional_democracy
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_traditionalism UIC_is_artemum_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_ARTEMUM_ideocos_sub_traditionalism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_mercantile_republicanism UIC_is_artemum_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_ARTEMUM_ideocos_sub_mercantile_republicanism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_socialism UIC_is_artemum_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_ARTEMUM_ideocos_sub_socialism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_illiberalism UIC_is_artemum_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_ARTEMUM_ideocos_sub_illiberalism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_harmonainism UIC_is_artemum_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_ARTEMUM_ideocos_sub_harmonainism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_radical_harmonainism UIC_is_artemum_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_ARTEMUM_ideocos_sub_radical_harmonainism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_reformed_harmonainism UIC_is_artemum_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_ARTEMUM_ideocos_sub_reformed_harmonainism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_pullusism UIC_is_artemum_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_ARTEMUM_ideocos_sub_pullusism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_thalassaus UIC_is_artemum_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_ARTEMUM_ideocos_sub_thalassaus
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_ager_montis UIC_is_artemum_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_ARTEMUM_ideocos_sub_ager_montis
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_animaekin UIC_is_artemum_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_ARTEMUM_ideocos_sub_animaekin
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_crownfather UIC_is_artemum_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_ARTEMUM_ideocos_sub_crownfather
+		}
+		ELSE_IF = {
+			limit = {
+				ROOT = {
+					OR = { has_country_leader_ideology = sub_representative_monarchy has_country_leader_ideology = sub_monarchy }
+					UIC_is_harmoneema_formed = yes
+				}
+			}
+			set_cosmetic_tag = UIC_FORM_ARTEMUM_ideocos_sub_monarchy
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_authoritarian UIC_is_artemum_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_ARTEMUM_ideocos_sub_authoritarian
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_stratocracy UIC_is_artemum_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_ARTEMUM_ideocos_sub_stratocracy
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_oligarchy UIC_is_artemum_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_ARTEMUM_ideocos_sub_oligarchy
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_auth_harmonainism UIC_is_artemum_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_ARTEMUM_ideocos_sub_auth_harmonainism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_ultra_nationalism UIC_is_artemum_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_ARTEMUM_ideocos_sub_ultra_nationalism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_national_unitism UIC_is_artemum_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_ARTEMUM_ideocos_sub_national_unitism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_unitism UIC_is_artemum_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_ARTEMUM_ideocos_sub_unitism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_syndicalism UIC_is_artemum_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_ARTEMUM_ideocos_sub_syndicalism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_fascism UIC_is_artemum_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_ARTEMUM_ideocos_sub_fascism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_harmonization UIC_is_artemum_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_ARTEMUM_ideocos_sub_harmonization
+		}
 
-	# --- FOUNDLANDS ---
-	IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_illuminism UIC_is_foundlands_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_FOUNDLANDS_ideocos_sub_illuminism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_pluralism UIC_is_foundlands_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_FOUNDLANDS_ideocos_sub_pluralism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_constitutionalism UIC_is_foundlands_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_FOUNDLANDS_ideocos_sub_constitutionalism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_conservatism UIC_is_foundlands_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_FOUNDLANDS_ideocos_sub_conservatism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_liberalism UIC_is_foundlands_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_FOUNDLANDS_ideocos_sub_liberalism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_progressivism UIC_is_foundlands_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_FOUNDLANDS_ideocos_sub_progressivism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_populism UIC_is_foundlands_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_FOUNDLANDS_ideocos_sub_populism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_obscurism UIC_is_foundlands_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_FOUNDLANDS_ideocos_sub_obscurism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_transitional_democracy UIC_is_foundlands_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_FOUNDLANDS_ideocos_sub_transitional_democracy
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_traditionalism UIC_is_foundlands_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_FOUNDLANDS_ideocos_sub_traditionalism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_mercantile_republicism UIC_is_foundlands_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_FOUNDLANDS_ideocos_sub_mercantile_republicism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_socialism UIC_is_foundlands_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_FOUNDLANDS_ideocos_sub_socialism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_illiberalism UIC_is_foundlands_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_FOUNDLANDS_ideocos_sub_illiberalism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_harmonainism UIC_is_foundlands_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_FOUNDLANDS_ideocos_sub_harmonainism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_radical_harmonainism UIC_is_foundlands_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_FOUNDLANDS_ideocos_sub_radical_harmonainism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_reformed_harmonainism UIC_is_foundlands_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_FOUNDLANDS_ideocos_sub_reformed_harmonainism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_pullusism UIC_is_foundlands_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_FOUNDLANDS_ideocos_sub_pullusism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_thalassaus UIC_is_foundlands_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_FOUNDLANDS_ideocos_sub_thalassaus
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_ager_montis UIC_is_foundlands_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_FOUNDLANDS_ideocos_sub_ager_montis
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_animaekin UIC_is_foundlands_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_FOUNDLANDS_ideocos_sub_animaekin
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_crownfather UIC_is_foundlands_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_FOUNDLANDS_ideocos_sub_crownfather
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_monarchy UIC_is_foundlands_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_FOUNDLANDS_ideocos_sub_monarchy
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_authoritarian UIC_is_foundlands_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_FOUNDLANDS_ideocos_sub_authoritarian
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_stratocracy UIC_is_foundlands_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_FOUNDLANDS_ideocos_sub_stratocracy
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_oligarchy UIC_is_foundlands_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_FOUNDLANDS_ideocos_sub_oligarchy
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_auth_harmonainism UIC_is_foundlands_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_FOUNDLANDS_ideocos_sub_auth_harmonainism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_ultra_nationalism UIC_is_foundlands_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_FOUNDLANDS_ideocos_sub_ultra_nationalism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_national_unitism UIC_is_foundlands_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_FOUNDLANDS_ideocos_sub_national_unitism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_unitism UIC_is_foundlands_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_FOUNDLANDS_ideocos_sub_unitism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_syndicalism UIC_is_foundlands_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_FOUNDLANDS_ideocos_sub_syndicalism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_fascism UIC_is_foundlands_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_FOUNDLANDS_ideocos_sub_fascism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_harmonization UIC_is_foundlands_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_FOUNDLANDS_ideocos_sub_harmonization
-	}
+		# --- TYENREN ---
+		IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_illuminism UIC_is_tyenren_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_TYENREN_ideocos_sub_illuminism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_pluralism UIC_is_tyenren_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_TYENREN_ideocos_sub_pluralism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_constitutionalism UIC_is_tyenren_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_TYENREN_ideocos_sub_constitutionalism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_conservatism UIC_is_tyenren_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_TYENREN_ideocos_sub_conservatism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_liberalism UIC_is_tyenren_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_TYENREN_ideocos_sub_liberalism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_progressivism UIC_is_tyenren_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_TYENREN_ideocos_sub_progressivism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_populism UIC_is_tyenren_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_TYENREN_ideocos_sub_populism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_obscurism UIC_is_tyenren_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_TYENREN_ideocos_sub_obscurism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_transitional_democracy UIC_is_tyenren_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_TYENREN_ideocos_sub_transitional_democracy
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_traditionalism UIC_is_tyenren_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_TYENREN_ideocos_sub_traditionalism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_mercantile_republicanism UIC_is_tyenren_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_TYENREN_ideocos_sub_mercantile_republicanism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_socialism UIC_is_tyenren_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_TYENREN_ideocos_sub_socialism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_illiberalism UIC_is_tyenren_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_TYENREN_ideocos_sub_illiberalism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_harmonainism UIC_is_tyenren_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_TYENREN_ideocos_sub_harmonainism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_radical_harmonainism UIC_is_tyenren_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_TYENREN_ideocos_sub_radical_harmonainism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_reformed_harmonainism UIC_is_tyenren_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_TYENREN_ideocos_sub_reformed_harmonainism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_pullusism UIC_is_tyenren_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_TYENREN_ideocos_sub_pullusism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_thalassaus UIC_is_tyenren_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_TYENREN_ideocos_sub_thalassaus
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_ager_montis UIC_is_tyenren_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_TYENREN_ideocos_sub_ager_montis
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_animaekin UIC_is_tyenren_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_TYENREN_ideocos_sub_animaekin
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_crownfather UIC_is_tyenren_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_TYENREN_ideocos_sub_crownfather
+		}
+		ELSE_IF = {
+			limit = {
+				ROOT = {
+					OR = { has_country_leader_ideology = sub_representative_monarchy has_country_leader_ideology = sub_monarchy }
+					UIC_is_harmoneema_formed = yes
+				}
+			}
+			set_cosmetic_tag = UIC_FORM_TYENREN_ideocos_sub_monarchy
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_authoritarian UIC_is_tyenren_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_TYENREN_ideocos_sub_authoritarian
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_stratocracy UIC_is_tyenren_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_TYENREN_ideocos_sub_stratocracy
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_oligarchy UIC_is_tyenren_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_TYENREN_ideocos_sub_oligarchy
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_auth_harmonainism UIC_is_tyenren_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_TYENREN_ideocos_sub_auth_harmonainism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_ultra_nationalism UIC_is_tyenren_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_TYENREN_ideocos_sub_ultra_nationalism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_national_unitism UIC_is_tyenren_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_TYENREN_ideocos_sub_national_unitism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_unitism UIC_is_tyenren_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_TYENREN_ideocos_sub_unitism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_syndicalism UIC_is_tyenren_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_TYENREN_ideocos_sub_syndicalism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_fascism UIC_is_tyenren_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_TYENREN_ideocos_sub_fascism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_harmonization UIC_is_tyenren_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_TYENREN_ideocos_sub_harmonization
+		}
 
-	# --- HEARTLANDS ---
-	IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_illuminism UIC_is_heartlands_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_HEARTLANDS_ideocos_sub_illuminism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_pluralism UIC_is_heartlands_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_HEARTLANDS_ideocos_sub_pluralism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_constitutionalism UIC_is_heartlands_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_HEARTLANDS_ideocos_sub_constitutionalism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_conservatism UIC_is_heartlands_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_HEARTLANDS_ideocos_sub_conservatism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_liberalism UIC_is_heartlands_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_HEARTLANDS_ideocos_sub_liberalism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_progressivism UIC_is_heartlands_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_HEARTLANDS_ideocos_sub_progressivism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_populism UIC_is_heartlands_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_HEARTLANDS_ideocos_sub_populism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_obscurism UIC_is_heartlands_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_HEARTLANDS_ideocos_sub_obscurism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_transitional_democracy UIC_is_heartlands_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_HEARTLANDS_ideocos_sub_transitional_democracy
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_traditionalism UIC_is_heartlands_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_HEARTLANDS_ideocos_sub_traditionalism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_mercantile_republicism UIC_is_heartlands_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_HEARTLANDS_ideocos_sub_mercantile_republicism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_socialism UIC_is_heartlands_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_HEARTLANDS_ideocos_sub_socialism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_illiberalism UIC_is_heartlands_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_HEARTLANDS_ideocos_sub_illiberalism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_harmonainism UIC_is_heartlands_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_HEARTLANDS_ideocos_sub_harmonainism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_radical_harmonainism UIC_is_heartlands_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_HEARTLANDS_ideocos_sub_radical_harmonainism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_reformed_harmonainism UIC_is_heartlands_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_HEARTLANDS_ideocos_sub_reformed_harmonainism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_pullusism UIC_is_heartlands_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_HEARTLANDS_ideocos_sub_pullusism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_thalassaus UIC_is_heartlands_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_HEARTLANDS_ideocos_sub_thalassaus
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_ager_montis UIC_is_heartlands_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_HEARTLANDS_ideocos_sub_ager_montis
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_animaekin UIC_is_heartlands_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_HEARTLANDS_ideocos_sub_animaekin
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_crownfather UIC_is_heartlands_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_HEARTLANDS_ideocos_sub_crownfather
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_monarchy UIC_is_heartlands_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_HEARTLANDS_ideocos_sub_monarchy
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_authoritarian UIC_is_heartlands_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_HEARTLANDS_ideocos_sub_authoritarian
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_stratocracy UIC_is_heartlands_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_HEARTLANDS_ideocos_sub_stratocracy
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_oligarchy UIC_is_heartlands_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_HEARTLANDS_ideocos_sub_oligarchy
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_auth_harmonainism UIC_is_heartlands_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_HEARTLANDS_ideocos_sub_auth_harmonainism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_ultra_nationalism UIC_is_heartlands_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_HEARTLANDS_ideocos_sub_ultra_nationalism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_national_unitism UIC_is_heartlands_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_HEARTLANDS_ideocos_sub_national_unitism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_unitism UIC_is_heartlands_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_HEARTLANDS_ideocos_sub_unitism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_syndicalism UIC_is_heartlands_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_HEARTLANDS_ideocos_sub_syndicalism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_fascism UIC_is_heartlands_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_HEARTLANDS_ideocos_sub_fascism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_harmonization UIC_is_heartlands_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_HEARTLANDS_ideocos_sub_harmonization
-	}
+		# --- FOUNDLANDS ---
+		IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_illuminism UIC_is_foundlands_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_FOUNDLANDS_ideocos_sub_illuminism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_pluralism UIC_is_foundlands_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_FOUNDLANDS_ideocos_sub_pluralism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_constitutionalism UIC_is_foundlands_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_FOUNDLANDS_ideocos_sub_constitutionalism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_conservatism UIC_is_foundlands_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_FOUNDLANDS_ideocos_sub_conservatism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_liberalism UIC_is_foundlands_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_FOUNDLANDS_ideocos_sub_liberalism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_progressivism UIC_is_foundlands_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_FOUNDLANDS_ideocos_sub_progressivism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_populism UIC_is_foundlands_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_FOUNDLANDS_ideocos_sub_populism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_obscurism UIC_is_foundlands_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_FOUNDLANDS_ideocos_sub_obscurism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_transitional_democracy UIC_is_foundlands_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_FOUNDLANDS_ideocos_sub_transitional_democracy
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_traditionalism UIC_is_foundlands_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_FOUNDLANDS_ideocos_sub_traditionalism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_mercantile_republicanism UIC_is_foundlands_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_FOUNDLANDS_ideocos_sub_mercantile_republicanism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_socialism UIC_is_foundlands_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_FOUNDLANDS_ideocos_sub_socialism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_illiberalism UIC_is_foundlands_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_FOUNDLANDS_ideocos_sub_illiberalism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_harmonainism UIC_is_foundlands_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_FOUNDLANDS_ideocos_sub_harmonainism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_radical_harmonainism UIC_is_foundlands_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_FOUNDLANDS_ideocos_sub_radical_harmonainism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_reformed_harmonainism UIC_is_foundlands_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_FOUNDLANDS_ideocos_sub_reformed_harmonainism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_pullusism UIC_is_foundlands_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_FOUNDLANDS_ideocos_sub_pullusism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_thalassaus UIC_is_foundlands_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_FOUNDLANDS_ideocos_sub_thalassaus
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_ager_montis UIC_is_foundlands_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_FOUNDLANDS_ideocos_sub_ager_montis
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_animaekin UIC_is_foundlands_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_FOUNDLANDS_ideocos_sub_animaekin
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_crownfather UIC_is_foundlands_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_FOUNDLANDS_ideocos_sub_crownfather
+		}
+		ELSE_IF = {
+			limit = {
+				ROOT = {
+					OR = { has_country_leader_ideology = sub_representative_monarchy has_country_leader_ideology = sub_monarchy }
+					UIC_is_harmoneema_formed = yes
+				}
+			}
+			set_cosmetic_tag = UIC_FORM_FOUNDLANDS_ideocos_sub_monarchy
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_authoritarian UIC_is_foundlands_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_FOUNDLANDS_ideocos_sub_authoritarian
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_stratocracy UIC_is_foundlands_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_FOUNDLANDS_ideocos_sub_stratocracy
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_oligarchy UIC_is_foundlands_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_FOUNDLANDS_ideocos_sub_oligarchy
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_auth_harmonainism UIC_is_foundlands_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_FOUNDLANDS_ideocos_sub_auth_harmonainism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_ultra_nationalism UIC_is_foundlands_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_FOUNDLANDS_ideocos_sub_ultra_nationalism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_national_unitism UIC_is_foundlands_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_FOUNDLANDS_ideocos_sub_national_unitism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_unitism UIC_is_foundlands_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_FOUNDLANDS_ideocos_sub_unitism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_syndicalism UIC_is_foundlands_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_FOUNDLANDS_ideocos_sub_syndicalism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_fascism UIC_is_foundlands_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_FOUNDLANDS_ideocos_sub_fascism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_harmonization UIC_is_foundlands_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_FOUNDLANDS_ideocos_sub_harmonization
+		}
 
-	# --- NOVUSAIGA ---
-	IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_illuminism UIC_is_novusaiga_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_NOVUSAIGA_ideocos_sub_illuminism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_pluralism UIC_is_novusaiga_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_NOVUSAIGA_ideocos_sub_pluralism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_constitutionalism UIC_is_novusaiga_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_NOVUSAIGA_ideocos_sub_constitutionalism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_conservatism UIC_is_novusaiga_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_NOVUSAIGA_ideocos_sub_conservatism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_liberalism UIC_is_novusaiga_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_NOVUSAIGA_ideocos_sub_liberalism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_progressivism UIC_is_novusaiga_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_NOVUSAIGA_ideocos_sub_progressivism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_populism UIC_is_novusaiga_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_NOVUSAIGA_ideocos_sub_populism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_obscurism UIC_is_novusaiga_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_NOVUSAIGA_ideocos_sub_obscurism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_transitional_democracy UIC_is_novusaiga_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_NOVUSAIGA_ideocos_sub_transitional_democracy
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_traditionalism UIC_is_novusaiga_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_NOVUSAIGA_ideocos_sub_traditionalism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_mercantile_republicism UIC_is_novusaiga_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_NOVUSAIGA_ideocos_sub_mercantile_republicism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_socialism UIC_is_novusaiga_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_NOVUSAIGA_ideocos_sub_socialism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_illiberalism UIC_is_novusaiga_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_NOVUSAIGA_ideocos_sub_illiberalism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_harmonainism UIC_is_novusaiga_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_NOVUSAIGA_ideocos_sub_harmonainism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_radical_harmonainism UIC_is_novusaiga_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_NOVUSAIGA_ideocos_sub_radical_harmonainism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_reformed_harmonainism UIC_is_novusaiga_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_NOVUSAIGA_ideocos_sub_reformed_harmonainism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_pullusism UIC_is_novusaiga_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_NOVUSAIGA_ideocos_sub_pullusism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_thalassaus UIC_is_novusaiga_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_NOVUSAIGA_ideocos_sub_thalassaus
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_ager_montis UIC_is_novusaiga_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_NOVUSAIGA_ideocos_sub_ager_montis
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_animaekin UIC_is_novusaiga_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_NOVUSAIGA_ideocos_sub_animaekin
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_crownfather UIC_is_novusaiga_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_NOVUSAIGA_ideocos_sub_crownfather
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_monarchy UIC_is_novusaiga_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_NOVUSAIGA_ideocos_sub_monarchy
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_authoritarian UIC_is_novusaiga_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_NOVUSAIGA_ideocos_sub_authoritarian
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_stratocracy UIC_is_novusaiga_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_NOVUSAIGA_ideocos_sub_stratocracy
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_oligarchy UIC_is_novusaiga_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_NOVUSAIGA_ideocos_sub_oligarchy
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_auth_harmonainism UIC_is_novusaiga_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_NOVUSAIGA_ideocos_sub_auth_harmonainism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_ultra_nationalism UIC_is_novusaiga_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_NOVUSAIGA_ideocos_sub_ultra_nationalism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_national_unitism UIC_is_novusaiga_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_NOVUSAIGA_ideocos_sub_national_unitism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_unitism UIC_is_novusaiga_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_NOVUSAIGA_ideocos_sub_unitism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_syndicalism UIC_is_novusaiga_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_NOVUSAIGA_ideocos_sub_syndicalism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_fascism UIC_is_novusaiga_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_NOVUSAIGA_ideocos_sub_fascism
-	}
-	ELSE_IF = {
-		limit = { ROOT = { has_country_leader_ideology = sub_harmonization UIC_is_novusaiga_formed = yes } }
-		set_cosmetic_tag = UIC_FORM_NOVUSAIGA_ideocos_sub_harmonization
+		# --- HEARTLANDS ---
+		IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_illuminism UIC_is_heartlands_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_HEARTLANDS_ideocos_sub_illuminism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_pluralism UIC_is_heartlands_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_HEARTLANDS_ideocos_sub_pluralism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_constitutionalism UIC_is_heartlands_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_HEARTLANDS_ideocos_sub_constitutionalism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_conservatism UIC_is_heartlands_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_HEARTLANDS_ideocos_sub_conservatism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_liberalism UIC_is_heartlands_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_HEARTLANDS_ideocos_sub_liberalism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_progressivism UIC_is_heartlands_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_HEARTLANDS_ideocos_sub_progressivism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_populism UIC_is_heartlands_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_HEARTLANDS_ideocos_sub_populism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_obscurism UIC_is_heartlands_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_HEARTLANDS_ideocos_sub_obscurism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_transitional_democracy UIC_is_heartlands_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_HEARTLANDS_ideocos_sub_transitional_democracy
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_traditionalism UIC_is_heartlands_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_HEARTLANDS_ideocos_sub_traditionalism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_mercantile_republicanism UIC_is_heartlands_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_HEARTLANDS_ideocos_sub_mercantile_republicanism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_socialism UIC_is_heartlands_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_HEARTLANDS_ideocos_sub_socialism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_illiberalism UIC_is_heartlands_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_HEARTLANDS_ideocos_sub_illiberalism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_harmonainism UIC_is_heartlands_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_HEARTLANDS_ideocos_sub_harmonainism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_radical_harmonainism UIC_is_heartlands_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_HEARTLANDS_ideocos_sub_radical_harmonainism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_reformed_harmonainism UIC_is_heartlands_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_HEARTLANDS_ideocos_sub_reformed_harmonainism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_pullusism UIC_is_heartlands_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_HEARTLANDS_ideocos_sub_pullusism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_thalassaus UIC_is_heartlands_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_HEARTLANDS_ideocos_sub_thalassaus
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_ager_montis UIC_is_heartlands_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_HEARTLANDS_ideocos_sub_ager_montis
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_animaekin UIC_is_heartlands_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_HEARTLANDS_ideocos_sub_animaekin
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_crownfather UIC_is_heartlands_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_HEARTLANDS_ideocos_sub_crownfather
+		}
+		ELSE_IF = {
+			limit = {
+				ROOT = {
+					OR = { has_country_leader_ideology = sub_representative_monarchy has_country_leader_ideology = sub_monarchy }
+					UIC_is_harmoneema_formed = yes
+				}
+			}
+			set_cosmetic_tag = UIC_FORM_HEARTLANDS_ideocos_sub_monarchy
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_authoritarian UIC_is_heartlands_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_HEARTLANDS_ideocos_sub_authoritarian
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_stratocracy UIC_is_heartlands_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_HEARTLANDS_ideocos_sub_stratocracy
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_oligarchy UIC_is_heartlands_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_HEARTLANDS_ideocos_sub_oligarchy
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_auth_harmonainism UIC_is_heartlands_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_HEARTLANDS_ideocos_sub_auth_harmonainism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_ultra_nationalism UIC_is_heartlands_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_HEARTLANDS_ideocos_sub_ultra_nationalism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_national_unitism UIC_is_heartlands_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_HEARTLANDS_ideocos_sub_national_unitism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_unitism UIC_is_heartlands_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_HEARTLANDS_ideocos_sub_unitism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_syndicalism UIC_is_heartlands_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_HEARTLANDS_ideocos_sub_syndicalism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_fascism UIC_is_heartlands_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_HEARTLANDS_ideocos_sub_fascism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_harmonization UIC_is_heartlands_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_HEARTLANDS_ideocos_sub_harmonization
+		}
+
+		# --- NOVUSAIGA ---
+		IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_illuminism UIC_is_novusaiga_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_NOVUSAIGA_ideocos_sub_illuminism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_pluralism UIC_is_novusaiga_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_NOVUSAIGA_ideocos_sub_pluralism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_constitutionalism UIC_is_novusaiga_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_NOVUSAIGA_ideocos_sub_constitutionalism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_conservatism UIC_is_novusaiga_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_NOVUSAIGA_ideocos_sub_conservatism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_liberalism UIC_is_novusaiga_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_NOVUSAIGA_ideocos_sub_liberalism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_progressivism UIC_is_novusaiga_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_NOVUSAIGA_ideocos_sub_progressivism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_populism UIC_is_novusaiga_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_NOVUSAIGA_ideocos_sub_populism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_obscurism UIC_is_novusaiga_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_NOVUSAIGA_ideocos_sub_obscurism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_transitional_democracy UIC_is_novusaiga_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_NOVUSAIGA_ideocos_sub_transitional_democracy
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_traditionalism UIC_is_novusaiga_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_NOVUSAIGA_ideocos_sub_traditionalism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_mercantile_republicanism UIC_is_novusaiga_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_NOVUSAIGA_ideocos_sub_mercantile_republicanism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_socialism UIC_is_novusaiga_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_NOVUSAIGA_ideocos_sub_socialism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_illiberalism UIC_is_novusaiga_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_NOVUSAIGA_ideocos_sub_illiberalism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_harmonainism UIC_is_novusaiga_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_NOVUSAIGA_ideocos_sub_harmonainism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_radical_harmonainism UIC_is_novusaiga_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_NOVUSAIGA_ideocos_sub_radical_harmonainism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_reformed_harmonainism UIC_is_novusaiga_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_NOVUSAIGA_ideocos_sub_reformed_harmonainism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_pullusism UIC_is_novusaiga_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_NOVUSAIGA_ideocos_sub_pullusism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_thalassaus UIC_is_novusaiga_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_NOVUSAIGA_ideocos_sub_thalassaus
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_ager_montis UIC_is_novusaiga_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_NOVUSAIGA_ideocos_sub_ager_montis
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_animaekin UIC_is_novusaiga_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_NOVUSAIGA_ideocos_sub_animaekin
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_crownfather UIC_is_novusaiga_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_NOVUSAIGA_ideocos_sub_crownfather
+		}
+		ELSE_IF = {
+			limit = {
+				ROOT = {
+					OR = { has_country_leader_ideology = sub_representative_monarchy has_country_leader_ideology = sub_monarchy }
+					UIC_is_harmoneema_formed = yes
+				}
+			}
+			set_cosmetic_tag = UIC_FORM_NOVUSAIGA_ideocos_sub_monarchy
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_authoritarian UIC_is_novusaiga_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_NOVUSAIGA_ideocos_sub_authoritarian
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_stratocracy UIC_is_novusaiga_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_NOVUSAIGA_ideocos_sub_stratocracy
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_oligarchy UIC_is_novusaiga_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_NOVUSAIGA_ideocos_sub_oligarchy
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_auth_harmonainism UIC_is_novusaiga_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_NOVUSAIGA_ideocos_sub_auth_harmonainism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_ultra_nationalism UIC_is_novusaiga_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_NOVUSAIGA_ideocos_sub_ultra_nationalism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_national_unitism UIC_is_novusaiga_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_NOVUSAIGA_ideocos_sub_national_unitism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_unitism UIC_is_novusaiga_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_NOVUSAIGA_ideocos_sub_unitism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_syndicalism UIC_is_novusaiga_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_NOVUSAIGA_ideocos_sub_syndicalism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_fascism UIC_is_novusaiga_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_NOVUSAIGA_ideocos_sub_fascism
+		}
+		ELSE_IF = {
+			limit = { ROOT = { has_country_leader_ideology = sub_harmonization UIC_is_novusaiga_formed = yes } }
+			set_cosmetic_tag = UIC_FORM_NOVUSAIGA_ideocos_sub_harmonization
+		}
 	}
 }
