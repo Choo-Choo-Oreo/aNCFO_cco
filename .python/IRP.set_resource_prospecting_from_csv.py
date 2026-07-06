@@ -41,7 +41,7 @@ def generate_decisions():
         tier = determine_tier(dec_id, decisions)
         base_id = get_base_id(dec_id, decisions)
 
-        current_flag = f"state_{state_id}_{res_type}_developed_{tier}"
+        current_flag = f"IRP_state_{state_id}_{res_type}_developed_{tier}"
         prev_flag_cond = ""
         if tier > 1:
             prev_flag = f"state_{state_id}_{res_type}_developed_{tier-1}"
