@@ -2,6 +2,9 @@
 import csv
 import os
 
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+DECISIONS_DIR = os.path.join(SCRIPT_DIR, '..', 'common', 'decisions')
+
 def determine_tier(decision_id, decisions_dict):
     req_id = decisions_dict[decision_id].get('Required_Decision_ID', '').strip()
     if not req_id:
@@ -15,9 +18,9 @@ def get_base_id(decision_id, decisions_dict):
     return get_base_id(req_id, decisions_dict)
 
 def generate_decisions():
-    csv_file = 'IRP.resource_prospecting.csv'
-    output_file = 'IRP.resource_prospecting.txt'
-    
+    csv_file = os.path.join(SCRIPT_DIR, 'IRP.resource_prospecting.csv')
+    output_file = os.path.join(DECISIONS_DIR, 'IRP.resource_prospecting.txt')
+
     if not os.path.exists(csv_file):
         print(f"Error: {csv_file} not found.")
         return
@@ -29,7 +32,7 @@ def generate_decisions():
             decisions[row['Decision_ID'].strip()] = row
 
     output = ["prospect_for_resources = {\n"]
-    
+
     for dec_id, row in decisions.items():
         state_id = row['State_ID']
         res_type = row['Resource_Type']
@@ -37,13 +40,13 @@ def generate_decisions():
         tech = row['Required_Tech']
         tier = determine_tier(dec_id, decisions)
         base_id = get_base_id(dec_id, decisions)
-        
-        current_flag = f"state_{state_id}_{res_type}_developed_{tier}"
+
+        current_flag = f"IRP_state_{state_id}_{res_type}_developed_{tier}"
         prev_flag_cond = ""
         if tier > 1:
             prev_flag = f"state_{state_id}_{res_type}_developed_{tier-1}"
             prev_flag_cond = f"\n\t\t\t\thas_state_flag = {prev_flag}"
-        
+
         name_line = f"\n\t\tname = {base_id}" if tier > 1 else ""
 
         block = f"""
