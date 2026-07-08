@@ -292,13 +292,111 @@ focus_tree = {
 	}
 }
 # Reclaiming the Liming Lands
-shared_focus = { # Reunification
-	id = LIN_focus_reunification
-	icon = GFX_
-	#prerequisite = { focus = LIN_focus_eastern_reconquest }
-	#relative_position_id = LIN_focus_eastern_reconquest
+shared_focus = { # Outwards Preperation
+	id = LIN_focus_outward_preparation
+	icon = GFX_focus_unknown_political
+	#prerequisite = { focus = LIN_focus_ }
+	#mutually_exclusive = { focus =  }
+	#relative_position_id = LIN_focus_
 	x = 13
 	y = 3
+
+	cost = 10
+
+	available = {
+	}
+	bypass = {
+	}
+
+	ai_will_do = { 
+		factor = 5
+	}
+
+	completion_reward = {
+		log = "[GetDateText]: [Root.GetName]: Focus LIN_focus_reunification"
+		IF = {
+			LIMIT = {
+				OR = {
+					has_idea = LIN_idea_warlord_era_0
+					has_idea = LIN_idea_warlord_era_1
+					has_idea = LIN_idea_warlord_era_2
+					has_idea = LIN_idea_warlord_era_3
+				}
+			}
+			swap_ideas = {
+				remove_idea = LIN_idea_warlord_era_3
+				add_idea = LIN_idea_warlord_era_2
+			}
+		}
+	}
+}
+
+shared_focus = { # Install Loyal Bureaucrats
+	id = LIN_focus_install_loyal_bureaucrats
+	icon = GFX_focus_unknown_political
+	prerequisite = { focus = LIN_focus_outward_preparation }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = LIN_focus_outward_preparation
+	x = -1
+	y = 1
+
+	cost = 10
+
+	available = {
+	}
+	bypass = {
+	}
+
+	ai_will_do = { 
+		factor = 5
+	}
+
+	completion_reward = {
+		log = "[GetDateText]: [Root.GetName]: Focus LIN_focus_install_loyal_bureaucrats"
+		swap_ideas = {
+			remove_idea = LIN_idea_warlord_disconnected_bureaucracy_1
+			add_idea = LIN_idea_warlord_disconnected_bureaucracy_0
+		}
+	}
+}
+
+shared_focus = { # Purge Corrupt Officials
+	id = LIN_focus_purge_corrupt_officials
+	icon = GFX_focus_unknown_political
+	prerequisite = { focus = LIN_focus_outward_preparation }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = LIN_focus_outward_preparation
+	x = 1
+	y = 1
+
+	cost = 10
+
+	available = {
+	}
+	bypass = {
+	}
+
+	ai_will_do = { 
+		factor = 5
+	}
+
+	completion_reward = {
+		log = "[GetDateText]: [Root.GetName]: Focus LIN_focus_purge_corrupt_officials"
+		swap_ideas = {
+			remove_idea = LIN_idea_government_corruption_1
+			add_idea = LIN_idea_government_corruption_0
+		}
+	}
+}
+
+shared_focus = { # Reunification
+	id = LIN_focus_reunification
+	icon = GFX_focus_unknown_political
+	prerequisite = { focus = LIN_focus_outward_preparation }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = LIN_focus_outward_preparation
+	x = 0
+	y = 2
 
 	cost = 10
 
@@ -330,25 +428,124 @@ shared_focus = { # Reunification
 
 	completion_reward = {
 		log = "[GetDateText]: [Root.GetName]: Focus LIN_focus_reunification"
+		IF = {
+			LIMIT = {
+				OR = {
+					has_idea = LIN_idea_warlord_era_0
+					has_idea = LIN_idea_warlord_era_1
+					has_idea = LIN_idea_warlord_era_2
+					has_idea = LIN_idea_warlord_era_3
+				}
+			}
+			swap_ideas = {
+				remove_idea = LIN_idea_warlord_era_2
+				add_idea = LIN_idea_warlord_era_1
+			}
+		}
 		every_country = {
 			limit = {
 				is_linsong_leader_nation = yes
 				NOT = { is_subject_of = EPY }
 			}
 			PREV = {
-				create_wargoal = { target = PREV type = annex_everything expire = 36 }
+				create_wargoal = { target = PREV type = annex_everything expire = 60 }
 			}
 		}
 	}
 }
 
-shared_focus = { # The last Reconquest
-	id = LMN_reconquest
-	icon = GFX_
+shared_focus = { # Reunification Governance
+	id = LIN_focus_reunification_governance
+	icon = GFX_focus_unknown_political
 	prerequisite = { focus = LIN_focus_reunification }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = LIN_focus_reunification
+	x = -1
+	y = 1
+
+	cost = 10
+
+	available = {
+	}
+	bypass = {
+	}
+
+	ai_will_do = { 
+		factor = 5
+		modifier = { 
+			add = 1.0
+			DRC = { is_ai = no }
+		}
+		modifier = { 
+			add = 1.0
+			LMN = { is_ai = no }
+		}
+		modifier = { 
+			add = 1.0
+			LPR = { is_ai = no }
+		}
+		modifier = { 
+			add = 1.0
+			EPC = { is_ai = no }
+		}
+	}
+
+	completion_reward = {
+		log = "[GetDateText]: [Root.GetName]: Focus LIN_focus_reunification"
+		remove_ideas = LIN_idea_warlord_disconnected_bureaucracy_0
+	}
+}
+
+shared_focus = { # Anti-Curruption Praction
+	id = LIN_focus_anti_corruption_practice
+	icon = GFX_focus_unknown_political
+	prerequisite = { focus = LIN_focus_reunification }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = LIN_focus_reunification
+	x = 1
+	y = 1
+
+	cost = 10
+
+	available = {
+	}
+	bypass = {
+	}
+
+	ai_will_do = { 
+		factor = 5
+		modifier = { 
+			add = 1.0
+			DRC = { is_ai = no }
+		}
+		modifier = { 
+			add = 1.0
+			LMN = { is_ai = no }
+		}
+		modifier = { 
+			add = 1.0
+			LPR = { is_ai = no }
+		}
+		modifier = { 
+			add = 1.0
+			EPC = { is_ai = no }
+		}
+	}
+
+	completion_reward = {
+		log = "[GetDateText]: [Root.GetName]: Focus LIN_focus_reunification"
+		remove_ideas = LIN_idea_government_corruption_0
+	}
+}
+
+shared_focus = { # The last Reconquest
+	id = LIN_focus_reconquest
+	icon = GFX_focus_unknown_political
+	prerequisite = { focus = LIN_focus_reunification }
+	#mutually_exclusive = { focus =  }
 	relative_position_id = LIN_focus_reunification
 	x = 0
-	y = 1
+	y = 2
 
 	cost = 10
 
@@ -380,16 +577,86 @@ shared_focus = { # The last Reconquest
 
 	completion_reward = {
 		log = "[GetDateText]: [Root.GetName]: Focus LIN_focus_reconquest"
+		IF = {
+			LIMIT = {
+				OR = {
+					has_idea = LIN_idea_warlord_era_0
+					has_idea = LIN_idea_warlord_era_1
+					has_idea = LIN_idea_warlord_era_2
+					has_idea = LIN_idea_warlord_era_3
+				}
+			}
+			swap_ideas = {
+				remove_idea = LIN_idea_warlord_era_1
+				add_idea = LIN_idea_warlord_era_0
+			}
+		}
 		every_country = {
 			limit = {
 				is_linsong_nation = yes
 				NOT = { is_subject_of = EPY }
 			}
 			PREV = {
-				create_wargoal = { target = PREV type = annex_everything expire = 36 }
+				create_wargoal = { target = PREV type = annex_everything expire = 60 }
 			}
 		}
 		declare_war_on = { target = EPC type = annex_everything }
-		create_wargoal = { target = EPY type = annex_everything expire = 36 }
+		create_wargoal = { target = EPY type = annex_everything expire = 60 }
+	}
+}
+
+shared_focus = { # Unification within Reach
+	id = LIN_focus_unification_within_reach
+	icon = GFX_focus_unknown_political
+	prerequisite = { focus = LIN_focus_reconquest }
+	#mutually_exclusive = { focus =  }
+	relative_position_id = LIN_focus_reconquest
+	x = 0
+	y = 1
+
+	cost = 10
+
+	available = {
+	}
+	bypass = {
+	}
+
+	ai_will_do = { 
+		factor = 5
+		modifier = { 
+			add = 1.0
+			DRC = { is_ai = no }
+		}
+		modifier = { 
+			add = 1.0
+			LMN = { is_ai = no }
+		}
+		modifier = { 
+			add = 1.0
+			LPR = { is_ai = no }
+		}
+		modifier = { 
+			add = 1.0
+			EPC = { is_ai = no }
+		}
+	}
+
+	completion_reward = {
+		log = "[GetDateText]: [Root.GetName]: Focus LIN_focus_unification_within_reach"
+		IF = {
+			LIMIT = {
+				OR = {
+					has_idea = LIN_idea_warlord_era_0
+					has_idea = LIN_idea_warlord_era_1
+					has_idea = LIN_idea_warlord_era_2
+					has_idea = LIN_idea_warlord_era_3
+				}
+			}
+			remove_ideas = LIN_idea_warlord_era_0
+		}
+		IF = {
+			LIMIT = { has_idea = LIN_idea_warlord_autonomy }
+			remove_ideas = LIN_idea_warlord_autonomy
+		}
 	}
 }
