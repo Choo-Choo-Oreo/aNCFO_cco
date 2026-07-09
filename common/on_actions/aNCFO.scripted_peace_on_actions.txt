@@ -15,7 +15,7 @@ on_actions = {
 			IF = { # HPV Start Wars
 				limit = {
 					date < 1727.1.1
-					ROOT = { tag = HPV }
+					ROOT = { tag = HPV has_war_with = FROM }
 				}
 				ROOT = { white_peace = { tag = FROM } transfer_navy = { target = FROM } }
 				FROM = { annex_country = { target = ROOT } }
@@ -24,7 +24,7 @@ on_actions = {
 			IF = { # SFG Start Wars
 				limit = {
 					date < 1727.1.1
-					ROOT = { tag = SFG }
+					ROOT = { tag = SFG has_war_with = FROM }
 				}
 				ROOT = { white_peace = { tag = FROM } transfer_navy = { target = FROM } }
 				FROM = { annex_country = { target = ROOT } }
@@ -33,7 +33,7 @@ on_actions = {
 			IF = { # SLA Start Wars
 				limit = {
 					date < 1727.1.1
-					ROOT = { tag = SLA }
+					ROOT = { tag = SLA has_war_with = FROM }
 				}
 				ROOT = { white_peace = { tag = FROM } transfer_navy = { target = FROM } }
 				FROM = { annex_country = { target = ROOT } }
@@ -42,7 +42,7 @@ on_actions = {
 			IF = { # SRA Start Wars
 				limit = {
 					date < 1727.1.1
-					ROOT = { tag = SRA }
+					ROOT = { tag = SRA has_war_with = FROM }
 				}
 				ROOT = { white_peace = { tag = FROM } transfer_navy = { target = FROM } }
 				FROM = { annex_country = { target = ROOT } }
@@ -56,7 +56,7 @@ on_actions = {
 						has_global_flag = HHE_warmonger_civil_war_first
 						has_global_flag = HHE_warmonger_civil_war_final
 					}
-					ROOT = { tag = HBB }
+					ROOT = { tag = HBB has_war_with = FROM }
 				}
 				ROOT = { 
 					remove_decision = mission_HHE_collapse_of_the_nation_civil_war
@@ -74,7 +74,7 @@ on_actions = {
 						has_global_flag = HHE_warmonger_civil_war_first
 						has_global_flag = HHE_warmonger_civil_war_final
 					}
-					ROOT = { tag = HCR }
+					ROOT = { tag = HCR has_war_with = FROM }
 				}
 				ROOT = { 
 					remove_decision = mission_HHE_collapse_of_the_nation_civil_war
@@ -92,7 +92,7 @@ on_actions = {
 						has_global_flag = HHE_warmonger_civil_war_first
 						has_global_flag = HHE_warmonger_civil_war_final
 					}
-					ROOT = { tag = HER }
+					ROOT = { tag = HER has_war_with = FROM }
 				}
 				ROOT = { 
 					remove_decision = mission_HHE_collapse_of_the_nation_civil_war
@@ -110,7 +110,7 @@ on_actions = {
 						has_global_flag = HHE_warmonger_civil_war_first
 						has_global_flag = HHE_warmonger_civil_war_final
 					}
-					ROOT = { tag = HET }
+					ROOT = { tag = HET has_war_with = FROM }
 				}
 				ROOT = { 
 					remove_decision = mission_HHE_collapse_of_the_nation_civil_war
@@ -128,7 +128,7 @@ on_actions = {
 						has_global_flag = HHE_warmonger_civil_war_first
 						has_global_flag = HHE_warmonger_civil_war_final
 					}
-					ROOT = { tag = HHE }
+					ROOT = { tag = HHE has_war_with = FROM }
 				}
 				ROOT = { 
 					remove_decision = mission_HHE_collapse_of_the_nation_civil_war
@@ -146,7 +146,7 @@ on_actions = {
 						has_global_flag = HHE_warmonger_civil_war_first
 						has_global_flag = HHE_warmonger_civil_war_final
 					}
-					ROOT = { tag = HLF }
+					ROOT = { tag = HLF has_war_with = FROM }
 				}
 				ROOT = { 
 					remove_decision = mission_HHE_collapse_of_the_nation_civil_war
@@ -164,7 +164,7 @@ on_actions = {
 						has_global_flag = HHE_warmonger_civil_war_first
 						has_global_flag = HHE_warmonger_civil_war_final
 					}
-					ROOT = { tag = HNO }
+					ROOT = { tag = HNO has_war_with = FROM }
 				}
 				ROOT = { 
 					remove_decision = mission_HHE_collapse_of_the_nation_civil_war
@@ -182,7 +182,7 @@ on_actions = {
 						has_global_flag = HHE_warmonger_civil_war_first
 						has_global_flag = HHE_warmonger_civil_war_final
 					}
-					ROOT = { tag = HPP }
+					ROOT = { tag = HPP has_war_with = FROM }
 				}
 				ROOT = { 
 					remove_decision = mission_HHE_collapse_of_the_nation_civil_war
@@ -222,7 +222,7 @@ on_actions = {
 							has_global_flag = HHE_warmonger_civil_war_first
 							has_global_flag = HHE_warmonger_civil_war_final
 						}
-						ROOT = { tag = HRF }
+						ROOT = { tag = HRF has_war_with = FROM }
 					}
 					ROOT = { 
 						remove_decision = mission_HHE_collapse_of_the_nation_civil_war
@@ -252,8 +252,14 @@ on_actions = {
 					remove_decision = mission_HHE_collapse_of_the_nation_civil_war_regional
 					remove_decision = mission_HHE_collapse_of_the_nation_civil_war_full
 					# transfer_navy = { target = FROM }
-					white_peace = { tag = HFF } # message = lost_during_civil_war_tt
-					white_peace = { tag = HFR } # message = lost_during_civil_war_tt
+					if = {
+						limit = { has_war_with = HFF }
+						white_peace = { tag = HFF } # message = lost_during_civil_war_tt
+					}
+					if = {
+						limit = { has_war_with = HFR }
+						white_peace = { tag = HFR } # message = lost_during_civil_war_tt
+					}
 				}
 				HFF = { transfer_state = 106 transfer_state = 110 transfer_state = 111 transfer_state = 112 transfer_state = 447 transfer_state = 451 }
 				#HFR = { transfer_state = 11 transfer_state = 96 transfer_state = 107 transfer_state = 108 transfer_state = 448 transfer_state = 449 transfer_state = 450 }
@@ -265,7 +271,7 @@ on_actions = {
 							has_global_flag = HHE_warmonger_civil_war_first
 							has_global_flag = HHE_warmonger_civil_war_final
 						}
-						ROOT = { tag = HSP }
+						ROOT = { tag = HSP has_war_with = FROM }
 					}
 					ROOT = { 
 						remove_decision = mission_HHE_collapse_of_the_nation_civil_war
@@ -284,7 +290,7 @@ on_actions = {
 						has_global_flag = HHE_warmonger_civil_war_first
 						has_global_flag = HHE_warmonger_civil_war_final
 					}
-					ROOT = { tag = HST }
+					ROOT = { tag = HST has_war_with = FROM }
 				}
 				ROOT = { 
 					remove_decision = mission_HHE_collapse_of_the_nation_civil_war
@@ -302,7 +308,7 @@ on_actions = {
 						has_global_flag = HHE_warmonger_civil_war_first
 						has_global_flag = HHE_warmonger_civil_war_final
 					}
-					ROOT = { tag = HTP }
+					ROOT = { tag = HTP has_war_with = FROM }
 				}
 				ROOT = { 
 					remove_decision = mission_HHE_collapse_of_the_nation_civil_war
@@ -320,7 +326,7 @@ on_actions = {
 						has_global_flag = HHE_warmonger_civil_war_first
 						has_global_flag = HHE_warmonger_civil_war_final
 					}
-					ROOT = { tag = HUM }
+					ROOT = { tag = HUM has_war_with = FROM }
 				}
 				ROOT = { 
 					remove_decision = mission_HHE_collapse_of_the_nation_civil_war
@@ -338,7 +344,7 @@ on_actions = {
 						has_global_flag = HHE_warmonger_civil_war_first
 						has_global_flag = HHE_warmonger_civil_war_final
 					}
-					ROOT = { tag = HUP }
+					ROOT = { tag = HUP has_war_with = FROM }
 				}
 				ROOT = { 
 					remove_decision = mission_HHE_collapse_of_the_nation_civil_war
@@ -356,7 +362,7 @@ on_actions = {
 						has_global_flag = HHE_warmonger_civil_war_first
 						has_global_flag = HHE_warmonger_civil_war_final
 					}
-					ROOT = { tag = HWA }
+					ROOT = { tag = HWA has_war_with = FROM }
 				}
 				ROOT = { 
 					remove_decision = mission_HHE_collapse_of_the_nation_civil_war
@@ -374,7 +380,7 @@ on_actions = {
 						has_global_flag = HHE_warmonger_civil_war_first
 						has_global_flag = HHE_warmonger_civil_war_final
 					}
-					ROOT = { tag = HAN }
+					ROOT = { tag = HAN has_war_with = FROM }
 				}
 				ROOT = { 
 					remove_decision = mission_HHE_collapse_of_the_nation_civil_war
@@ -392,7 +398,7 @@ on_actions = {
 						has_global_flag = HHE_warmonger_civil_war_first
 						has_global_flag = HHE_warmonger_civil_war_final
 					}
-					ROOT = { tag = HAP }
+					ROOT = { tag = HAP has_war_with = FROM }
 				}
 				ROOT = { 
 					remove_decision = mission_HHE_collapse_of_the_nation_civil_war
@@ -410,7 +416,7 @@ on_actions = {
 						has_global_flag = HHE_warmonger_civil_war_first
 						has_global_flag = HHE_warmonger_civil_war_final
 					}
-					ROOT = { tag = HAW }
+					ROOT = { tag = HAW has_war_with = FROM }
 				}
 				ROOT = { 
 					remove_decision = mission_HHE_collapse_of_the_nation_civil_war
@@ -428,7 +434,7 @@ on_actions = {
 						has_global_flag = HHE_warmonger_civil_war_first
 						has_global_flag = HHE_warmonger_civil_war_final
 					}
-					ROOT = { tag = HCO }
+					ROOT = { tag = HCO has_war_with = FROM }
 				}
 				ROOT = { 
 					remove_decision = mission_HHE_collapse_of_the_nation_civil_war
@@ -446,7 +452,7 @@ on_actions = {
 						has_global_flag = HHE_warmonger_civil_war_first
 						has_global_flag = HHE_warmonger_civil_war_final
 					}
-					ROOT = { tag = HDW }
+					ROOT = { tag = HDW has_war_with = FROM }
 				}
 				ROOT = { 
 					remove_decision = mission_HHE_collapse_of_the_nation_civil_war
@@ -464,7 +470,7 @@ on_actions = {
 						has_global_flag = HHE_warmonger_civil_war_first
 						has_global_flag = HHE_warmonger_civil_war_final
 					}
-					ROOT = { tag = HFF }
+					ROOT = { tag = HFF has_war_with = FROM }
 				}
 				ROOT = { 
 					remove_decision = mission_HHE_collapse_of_the_nation_civil_war
@@ -482,7 +488,7 @@ on_actions = {
 						has_global_flag = HHE_warmonger_civil_war_first
 						has_global_flag = HHE_warmonger_civil_war_final
 					}
-					ROOT = { tag = HFR }
+					ROOT = { tag = HFR has_war_with = FROM }
 				}
 				ROOT = { 
 					remove_decision = mission_HHE_collapse_of_the_nation_civil_war
@@ -500,7 +506,7 @@ on_actions = {
 						has_global_flag = HHE_warmonger_civil_war_first
 						has_global_flag = HHE_warmonger_civil_war_final
 					}
-					ROOT = { tag = HFS }
+					ROOT = { tag = HFS has_war_with = FROM }
 				}
 				ROOT = { 
 					remove_decision = mission_HHE_collapse_of_the_nation_civil_war
@@ -518,7 +524,7 @@ on_actions = {
 						has_global_flag = HHE_warmonger_civil_war_first
 						has_global_flag = HHE_warmonger_civil_war_final
 					}
-					ROOT = { tag = HJU }
+					ROOT = { tag = HJU has_war_with = FROM }
 				}
 				ROOT = { 
 					remove_decision = mission_HHE_collapse_of_the_nation_civil_war
@@ -536,7 +542,7 @@ on_actions = {
 						has_global_flag = HHE_warmonger_civil_war_first
 						has_global_flag = HHE_warmonger_civil_war_final
 					}
-					ROOT = { tag = HPG }
+					ROOT = { tag = HPG has_war_with = FROM }
 				}
 				ROOT = { 
 					remove_decision = mission_HHE_collapse_of_the_nation_civil_war
@@ -554,7 +560,7 @@ on_actions = {
 						has_global_flag = HHE_warmonger_civil_war_first
 						has_global_flag = HHE_warmonger_civil_war_final
 					}
-					ROOT = { tag = HUF }
+					ROOT = { tag = HUF has_war_with = FROM }
 				}
 				ROOT = { 
 					remove_decision = mission_HHE_collapse_of_the_nation_civil_war
