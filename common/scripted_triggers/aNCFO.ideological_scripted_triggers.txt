@@ -1,33 +1,6 @@
-basic_conversion_democracy = {
-	OR = {
-		has_government = pluralism
-		has_government = semidemocracy
-	}
-}
-
-basic_conversion_communism = {
-	OR = {
-		has_government = unitism
-	}
-}
-
-basic_conversion_fascism = {
-	OR = {
-		has_government = theocratism
-		has_government = authoritarianism
-		has_government = unitism
-	}
-}
-
-basic_conversion_neutrality = {
-	OR = {
-		has_government = semidemocracy
-		has_government = authoritarianism
-	}
-}
-
 is_similar_to_democracy = {
 	OR = {
+		has_country_leader_ideology = sub_illuminism
 		has_country_leader_ideology = sub_pluralism
 		has_country_leader_ideology = sub_spiritual_democracy
 		has_country_leader_ideology = sub_constitutionalism
@@ -43,7 +16,6 @@ is_similar_to_democracy = {
 
 is_similar_to_communism = {
 	OR = {
-		has_country_leader_ideology = sub_illuminism
 		has_country_leader_ideology = sub_socialism
 		has_country_leader_ideology = sub_unitism
 		has_country_leader_ideology = sub_syndicalism
@@ -53,6 +25,8 @@ is_similar_to_communism = {
 is_similar_to_fascism = {
 	OR = {
 		has_country_leader_ideology = sub_illiberalism
+		has_country_leader_ideology = sub_radical_harmonainism
+		has_country_leader_ideology = sub_auth_harmonainism
 		has_country_leader_ideology = sub_ultra_nationalism
 		has_country_leader_ideology = sub_national_unitism
 		has_country_leader_ideology = sub_fascism
@@ -66,7 +40,6 @@ is_similar_to_neutrality = {
 		has_country_leader_ideology = sub_transitional_democracy
 		has_country_leader_ideology = sub_traditionalism
 		has_country_leader_ideology = sub_harmonainism
-		has_country_leader_ideology = sub_radical_harmonainism
 		has_country_leader_ideology = sub_pullusism
 		has_country_leader_ideology = sub_thalassaus
 		has_country_leader_ideology = sub_ager_montis
@@ -77,71 +50,35 @@ is_similar_to_neutrality = {
 		has_country_leader_ideology = sub_technocracy
 		has_country_leader_ideology = sub_stratocracy
 		has_country_leader_ideology = sub_oligarchy
-		has_country_leader_ideology = sub_auth_harmonainism
 	}
 }
 
 is_enemy_ideology = {
 	OR = {
 		AND = {
-			has_government = pluralism
+			is_similar_to_communism = yes
 			ROOT = {
 				OR = {
-					has_government = theocratism
-					has_government = authoritarianism
-					has_government = unitism
-					hidden_trigger = {
-						NOT = {
-							tag = UFS
-						}
-					}
+					is_similar_to_fascism = yes
+					is_similar_to_democracy = yes
 				}
 			}
 		}
 		AND = {
-			has_government = semidemocracy
+			is_similar_to_democracy = yes
 			ROOT = {
 				OR = {
-					has_government = theocratism
-					has_government = unitism
+					is_similar_to_communism = yes
+					is_similar_to_fascism = yes
 				}
 			}
 		}
 		AND = {
-			has_government = theocratism
+			is_similar_to_fascism = yes
 			ROOT = {
 				OR = {
-					has_government = pluralism
-					has_government = semidemocracy
-					has_government = unitism
-					hidden_trigger = {
-						NOT = {
-							tag = UFS
-						}
-					}
-				}
-			}
-		}
-		AND = {
-			has_government = authoritarianism
-			ROOT = {
-				OR = {
-					has_government = pluralism
-					has_government = semidemocracy
-					hidden_trigger = {
-						NOT = {
-							tag = UFS
-						}
-					}
-				}
-			}
-		}
-		AND = {
-			has_government = unitism
-			ROOT = {
-				OR = {
-					has_government = pluralism
-					has_government = semidemocracy
+					is_similar_to_democracy = yes
+					is_similar_to_communism = yes
 				}
 			}
 		}
