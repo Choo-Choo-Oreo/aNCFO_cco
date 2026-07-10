@@ -8,25 +8,27 @@ fast_battleship_primacy = {
     xp_type = navy
 
     available = {
-        always = yes
+        OR = {
+            has_doctrine = new_fleet_in_being
+            has_doctrine = new_base_strike
+        }
+        has_navy_size = {
+            archetype = ship_hull_heavy
+            size > 3
+        }
     }
 
     ai_will_do = { 
         base = 1
         modifier = {
             factor = 75
-            OR = {
-                original_tag = ENG
-                original_tag = USA
-                original_tag = JAP
-                original_tag = ITA
-                original_tag = SOV
-            }
+            OR = { is_primarily_coastal = yes is_colonial_empire = yes }
         }
     }
 
     # EFFECTS
 	strike_force_movement_org_loss = -0.1
+    naval_enemy_retreat_chance = -0.1
 
     rewards = {
         fast_squad = {
@@ -112,23 +114,43 @@ battlecruiser_supremacy = {
     xp_type = navy
 
     available = {
-        always = yes
+        OR = {
+            has_doctrine = new_fleet_in_being
+            has_doctrine = new_convoy_raiding
+            has_doctrine = new_base_strike
+        }
+        has_navy_size = {
+            unit = battle_cruiser
+            size > 1
+        }
+        has_navy_size = {
+            unit = battleship
+            size > 1
+        }
     }
 
     ai_will_do = { 
         base = 1
         modifier = {
             factor = 75
-            original_tag = FRA
+            is_primarily_coastal = yes
         }
     }
 
     # EFFECTS
-	navy_max_range_factor = 0.1
+	equipment_bonus = {
+        capital_ship = {
+            naval_range = 0.1
+            instant = yes
+        }
+    }
     strike_force_movement_org_loss = -0.05
 
     rewards = {
         scouting_fleet = {
+            SH_battleship = {
+                max_organisation = 5
+            }
             battleship = {
                 max_organisation = 10
             }
@@ -143,6 +165,9 @@ battlecruiser_supremacy = {
 			}
         }
         coordinated_communication = {
+            SH_battleship = {
+                naval_heavy_gun_hit_chance_factor = 0.05
+            }
 			battleship = {
                 naval_heavy_gun_hit_chance_factor = 0.05
             }
@@ -154,6 +179,9 @@ battlecruiser_supremacy = {
             }
             medium_cruiser = {
                 surface_detection = 0.1
+            }
+            modifier = {
+                positioning = 0.05
             }
         }
         assualt_operation = {
@@ -179,6 +207,9 @@ battlecruiser_supremacy = {
             }
         }
         decoy_tactics = {
+            SH_battleship = {
+                max_organisation = 5
+            }
             battleship = {
                 max_organisation = 10
             }
@@ -211,96 +242,119 @@ armored_raiders = {
     xp_type = navy
 
     available = {
-        always = yes
+        OR = {
+            has_doctrine = new_convoy_raiding
+            has_doctrine = new_littoral_defense
+        }
+        has_navy_size = {
+            archetype = ship_hull_heavy
+            size > 0
+        }
     }
 
     ai_will_do = { 
         base = 1
         modifier = {
             factor = 50
-            original_tag = GER
+            is_primarily_coastal = yes
         }
     }
 
     # EFFECTS
 	screening_without_screens = 0.10
-    navy_max_range_factor = 0.05
+    equipment_bonus = {
+        vnr_ship_hull_cruiser_panzerschiff = {
+            instant = yes
+            naval_range = 0.2
+        }
+    }
+    ships_at_battle_start = -0.1
+    effect = {
+        add_tech_bonus = {
+            bonus = 0.5
+            uses = 1
+            technology = panzerschiffe
+            name = SUBDOCTRINE_ARMORED_RAIDERS
+        }
+    }
 
     rewards = {
         expert_reconnaissance = {
             battle_cruiser = {
-                surface_detection = 0.05
+                surface_detection = 0.1
             }
 			battleship = {
-				surface_detection = 0.05
+				surface_detection = 0.1
 			}
             heavy_cruiser = {
-                surface_detection = 0.05
+                surface_detection = 0.1
             }
             medium_cruiser = {
-                surface_detection = 0.05
+                surface_detection = 0.1
             }
         }
         speed_trials = {
-            equipment_bonus = {
-                capital_ship = {
-                    naval_range = 0.10
-                    instant = yes
-                }
-            }
+            naval_retreat_chance = 0.1
+            naval_retreat_speed = 0.05
+            positioning = 0.05
         }
         modernized_officer_education = {
             battle_cruiser= {
                 max_organisation = 5
+                surface_visibility = -0.05
             }
 			battleship = {
 				max_organisation = 5
+                surface_visibility = -0.05
 			}
             heavy_cruiser = {
                 max_organisation = 5
+                surface_visibility = -0.05
             }
             medium_cruiser = {
                 max_organisation = 5
+                surface_visibility = -0.05
             }
         }
         capital_raiders = {
             battleship = {
 				max_organisation = 5
-				convoy_raiding_coordination = 0.15
-				surface_detection = 0.1
+				convoy_raiding_coordination = 0.1
 			}
 			battle_cruiser = {
 				max_organisation = 5
-				convoy_raiding_coordination = 0.15
-				surface_detection = 0.1
+				convoy_raiding_coordination = 0.1
 			}
 			heavy_cruiser = {
-				max_organisation = 5
-                convoy_raiding_coordination = 0.15
-                surface_detection = 0.1
+				max_organisation = 10
+                convoy_raiding_coordination = 0.1
 			}
             medium_cruiser = {
-				max_organisation = 5
-                convoy_raiding_coordination = 0.15
-                surface_detection = 0.1
+				max_organisation = 10
+                convoy_raiding_coordination = 0.1
 			}
-        }
-        crisis_management = {
-            battleship = {
-                reliability = 0.1
-            }
-            battle_cruiser = {
-                reliability = 0.1
-            }
-            heavy_cruiser = {
-                reliability = 0.1
-            }
-            medium_cruiser = {
-                reliability = 0.1
-            }
             modifier = {
-				navy_casualty_on_hit = -0.1
-				navy_casualty_on_sink = -0.1
+                positioning = 0.05
+            }
+        }
+        trade_route_sabotage = {
+            equipment_bonus = {
+                capital_ship = {
+                    naval_range = 0.1
+                    instant = yes
+                }
+            }
+            battleship = {
+				convoy_raiding_coordination = 0.1
+			}
+			battle_cruiser = {
+				convoy_raiding_coordination = 0.1
+			}
+			heavy_cruiser = {
+                convoy_raiding_coordination = 0.1
+			}
+            medium_cruiser = {
+                convoy_raiding_coordination = 0.1
 			}
         }
     }
@@ -315,10 +369,25 @@ coastal_defence_fleet = {
     xp_cost = 50
     xp_type = navy
 
-    ai_will_do = { }
+    available = {
+        OR = {
+            has_doctrine = new_fleet_in_being
+            has_doctrine = new_littoral_defense
+            has_doctrine = new_convoy_raiding
+        }
+    }
+
+    ai_will_do = {
+        factor = 0.5
+    }
 
 	naval_supply_consumption_factor = -0.15
-	navy_max_range_factor = -0.25
+	equipment_bonus = {
+        capital_ship = {
+            instant = yes
+            naval_range = -0.15
+        }
+    }
 
     rewards = {
         mixed_squad = {
@@ -361,6 +430,7 @@ coastal_defence_fleet = {
         spare_part_logistics = {
             modifier = {
 				refit_ic_cost = -0.15
+                repair_speed_factor = 0.1
 			}
         }
     }
@@ -372,14 +442,23 @@ naval_gunfire_support = {
     description = SUBDOCTRINE_NAVAL_GUNFIRE_SUPPORT_DESC
     icon = GFX_doctrine_naval_gunfire_support_medium 
 
-    xp_cost = 100
+    xp_cost = 75
     xp_type = navy
 
-    available = {
-        always = yes
+    visible = {
+        has_dlc = "No Compromise, No Surrender"
     }
 
-    ai_will_do = { }
+    available = {
+        OR = {
+            has_doctrine = new_fleet_in_being
+            has_doctrine = new_littoral_defense
+        }
+    }
+
+    ai_will_do = {
+        factor = 0
+    }
 
 	shore_bombardment_bonus = 0.25
     navy_capital_ship_attack_factor = -0.1
@@ -393,8 +472,11 @@ naval_gunfire_support = {
         }
 
         inshore_aa_screen = {
-			modifier = {
-                navy_anti_air_attack_factor = 0.1
+			heavy_cruiser = {
+                anti_air_attack = 0.1
+            }
+            medium_cruiser = {
+                anti_air_attack = 0.1
             }
         }
 
@@ -419,7 +501,7 @@ naval_gunfire_support = {
                 max_organisation = 5
             }
             modifier = {
-    			convoy_escort_efficiency = 0.1
+    			shore_bombardment_collateral_damage_factor = 0.15
         	}
         }
 
@@ -448,14 +530,24 @@ battleship_antiair_screen = {
     xp_type = navy
 
     available = {
-        always = yes
+        has_doctrine = new_base_strike
+        has_navy_size = {
+            archetype = ship_hull_heavy
+            size > 3
+        }
+        has_tech = aviation_dawn
     }
 
-    visible = {
-    	has_dlc = "No Compromise, No Surrender"
+    ai_will_do = {
+        factor = 1
+        modifier = {
+            factor = 100
+            is_primarily_coastal = yes
+        }
     }
 
     navy_anti_air_attack_factor = 0.1
+    naval_retreat_chance_after_initial_combat = 0.1
 
     rewards = {
 
