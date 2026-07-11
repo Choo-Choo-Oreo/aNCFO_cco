@@ -12,8 +12,8 @@ adjacencies.csv holds ONLY exceptions (sea straits, canal / tunnel passages, and
 impassable borders); it never contains standard land borders, which is why land
 adjacency has to be read off the bitmap pixels.
 
-These modules live in the mod's root-level .python/ folder. All input paths are
-resolved from this file's own location (mod root = the parent of .python/), so
+These modules live in the mod's root-level tools/ folder. All input paths are
+resolved from this file's own location (mod root = the parent of tools/), so
 the tools work no matter what directory they are invoked from.
 
 Requires: Pillow, numpy.

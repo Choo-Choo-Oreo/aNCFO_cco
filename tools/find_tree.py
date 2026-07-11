@@ -3,7 +3,7 @@
 
 General-purpose rebuild of localisation/_find_tree.py: instead of dumping the
 directory it happens to live in, it takes --root (default: the mod project
-root, i.e. the parent of .python/), supports ignore patterns and a depth cap,
+root, i.e. the parent of tools/), supports ignore patterns and a depth cap,
 and writes to stdout or --output.
 
 Output format is kept from the original:

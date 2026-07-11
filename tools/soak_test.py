@@ -12,7 +12,7 @@ are snapshotted to a timestamped run folder every --snapshot-interval minutes
 DURING the run, not just at the end -- transient mid-run errors survive.
 
 If a new hoi4_* crash folder appears under crashes/, the run stops and hands
-off to .python/crash_triage.py (it is not re-implemented here).
+off to tools/crash_triage.py (it is not re-implemented here).
 
 At the end (crash, duration reached, or Ctrl+C) a summary is written covering
 errors seen across ALL interval snapshots: each unique normalized error line,

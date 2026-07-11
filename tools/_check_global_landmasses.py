@@ -18,15 +18,15 @@ isolated one-province island (no land neighbour) still appears as its own
 landmass. A land province defined but absent from the bitmap would likewise
 show up as a lone singleton, which is worth noticing as a data issue.
 
-This script lives in the mod's root-level .python/ folder and resolves all input
+This script lives in the mod's root-level tools/ folder and resolves all input
 files from its own location, so it runs from any working directory. Output is
 written to the current working directory.
 
 Usage (from anywhere):
 
-    python /path/to/mod/.python/_check_global_landmasses.py [--conn 4|8]
+    python /path/to/mod/tools/_check_global_landmasses.py [--conn 4|8]
 
-or from the .python/ folder:
+or from the tools/ folder:
 
     python _check_global_landmasses.py [--conn 4|8]
 
@@ -78,7 +78,7 @@ def main():
         for prob in root_problems:
             print(f"  - {prob}")
         print(
-            "  This script must stay inside <mod_root>/.python/. Move it back or "
+            "  This script must stay inside <mod_root>/tools/. Move it back or "
             "adjust MOD_ROOT."
         )
         sys.exit(1)

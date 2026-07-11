@@ -17,16 +17,16 @@ centroid (capital read from history/countries/<TAG>). This is STRAIGHT LINE
 distance only -- it does not account for terrain, sea routes, or actual travel
 difficulty, so it measures physical proximity, not reachability.
 
-This script lives in the mod's root-level .python/ folder. All input files are
+This script lives in the mod's root-level tools/ folder. All input files are
 resolved relative to the script's own location (mod root = the parent of the
-.python/ folder), so it can be invoked from any working directory. Output CSV /
+tools/ folder), so it can be invoked from any working directory. Output CSV /
 JSON files are written to the current working directory.
 
 Usage (from anywhere):
 
-    python /path/to/mod/.python/_check_connectivity.py TAG [--json] [--conn 4|8]
+    python /path/to/mod/tools/_check_connectivity.py TAG [--json] [--conn 4|8]
 
-or from the .python/ folder:
+or from the tools/ folder:
 
     python _check_connectivity.py TAG [--json] [--conn 4|8]
 
@@ -90,7 +90,7 @@ def main():
         for prob in root_problems:
             print(f"  - {prob}")
         print(
-            "  This script must stay inside <mod_root>/.python/. Move it back or "
+            "  This script must stay inside <mod_root>/tools/. Move it back or "
             "adjust MOD_ROOT."
         )
         sys.exit(1)
