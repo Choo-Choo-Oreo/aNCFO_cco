@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Script Profiler Workbench — HOI4 / Clausewitz</title>
+<style>
+  :root{
+    --bg:#12151b; --panel:#1a1f27; --panel2:#20262f; --line:#2b323d;
+    --ink:#d8dde5; --muted:#8a93a1; --faint:#5c6572;
+    --accent:#7fb4c9; --accent-ink:#0d2530;
+    --match:#66d9c2;
+    --heat0:#3d4654; --heat1:#8a6d33; --heat2:#d99a3d; --heat3:#e0633a; --heat4:#d43d3d;
+    --mono:ui-monospace,"Cascadia Mono","JetBrains Mono",Consolas,"Liberation Mono",monospace;
+    --sans:system-ui,"Segoe UI",Roboto,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:13px;overflow:hidden;
+    display:flex;flex-direction:column}
+  button{font-family:var(--sans);cursor:pointer}
+  ::-webkit-scrollbar{width:10px;height:10px}
+  ::-webkit-scrollbar-thumb{background:#333c48;border-radius:5px}
+  ::-webkit-scrollbar-track{background:transparent}
+
+  /* ---------- command bar ---------- */
+  #bar{display:flex;align-items:center;gap:14px;padding:8px 14px;background:var(--panel);border-bottom:1px solid var(--line);flex-wrap:wrap}
+  #wordmark{font-family:var(--mono);font-size:12px;letter-spacing:.22em;color:var(--muted);text-transform:uppercase;white-space:nowrap}
+  #wordmark b{color:var(--ink);font-weight:600}
+  .btn{background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:4px;padding:5px 12px;font-size:12.5px}
+  .btn:hover{border-color:var(--accent);color:var(--accent)}
+  .btn:focus-visible,.trow:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+  .btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:600}
+  .btn.primary:hover{filter:brightness(1.08);color:var(--accent-ink)}
+  .btn.on{background:#274d43;border-color:var(--match);color:var(--match)}
+  #filestats{font-family:var(--mono);font-size:11.5px;color:var(--muted);white-space:nowrap}
+  #filestats b{color:var(--ink);font-weight:600}
+  #search{margin-left:auto;background:var(--panel2);border:1px solid var(--line);border-radius:4px;color:var(--ink);
+    font-family:var(--mono);font-size:12.5px;padding:6px 10px;width:280px}
+  #search:focus{outline:none;border-color:var(--match)}
+  #search::placeholder{color:var(--faint)}
+
+  /* ---------- section strip (signature) ---------- */
+  #strip{display:flex;height:26px;border-bottom:1px solid var(--line);background:var(--panel);user-select:none}
+  #strip .seg{position:relative;height:100%;min-width:2px;border-right:1px solid rgba(0,0,0,.45);cursor:pointer;overflow:hidden}
+  #strip .seg:hover{filter:brightness(1.25)}
+  #strip .seg span{position:absolute;inset:0;display:flex;align-items:center;padding:0 6px;font-family:var(--mono);
+    font-size:10.5px;color:rgba(0,0,0,.75);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  #striplabel{font-family:var(--mono);font-size:10px;color:var(--faint);padding:0 14px;display:flex;align-items:center;
+    border-bottom:1px solid var(--line);background:var(--panel);height:20px;gap:16px;overflow:hidden;white-space:nowrap}
+
+  /* ---------- tabs ---------- */
+  #tabs{display:flex;gap:2px;padding:6px 14px 0;background:var(--bg)}
+  .tab{background:transparent;border:1px solid transparent;border-bottom:none;color:var(--muted);
+    padding:7px 16px;font-size:12.5px;border-radius:6px 6px 0 0;letter-spacing:.03em}
+  .tab.active{background:var(--panel);border-color:var(--line);color:var(--ink)}
+  .tab:hover:not(.active){color:var(--ink)}
+
+  #main{position:relative;flex:1;min-height:0;background:var(--panel);border-top:1px solid var(--line)}
+  .view{position:absolute;inset:0;display:none;flex-direction:column}
+  .view.active{display:flex}
+
+  /* ---------- generic table cells ---------- */
+  .num{font-family:var(--mono);text-align:right;white-space:nowrap}
+  .heatcell{position:relative}
+  .heatcell .ub{position:absolute;left:6px;right:6px;bottom:2px;height:2px;border-radius:1px;background:var(--heat0);overflow:hidden}
+  .heatcell .ub i{display:block;height:100%}
+  .dim{color:var(--muted)} .faint{color:var(--faint)}
+
+  /* ---------- tree ---------- */
+  #treehead,#hothead{display:grid;gap:0;padding:0 14px;background:var(--panel2);border-bottom:1px solid var(--line);
+    font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;user-select:none}
+  #treehead{grid-template-columns:minmax(300px,1fr) 110px 64px 110px 64px 96px 90px 46px}
+  #treehead div,#hothead div{padding:7px 6px}
+  #treebody{overflow:auto;flex:1;font-family:var(--mono);font-size:12px}
+  .trow{display:grid;grid-template-columns:minmax(300px,1fr) 110px 64px 110px 64px 96px 90px 46px;
+    padding:0 14px;border-bottom:1px solid #1f242d;cursor:pointer;align-items:center}
+  .trow:hover{background:#222935}
+  .trow>div{padding:4px 6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .trow .name{display:flex;align-items:center;gap:2px}
+  .caret{width:14px;flex:none;color:var(--faint);text-align:center}
+  .caret.open{color:var(--accent)}
+  .leafdot{width:14px;flex:none;text-align:center;color:#333c48;font-size:8px}
+  .jump{flex:none;visibility:hidden;background:none;border:none;color:var(--accent);font-size:11px;padding:0 4px}
+  .trow:hover .jump{visibility:visible}
+  .more{color:var(--accent);padding:4px 14px 4px 0;font-family:var(--mono);font-size:11.5px;cursor:pointer;
+    border-bottom:1px solid #1f242d;display:block;width:100%;text-align:left;background:none;border-top:none;border-left:none;border-right:none}
+  .more:hover{text-decoration:underline}
+  .flash{animation:flash 1.6s ease-out}
+  @keyframes flash{0%{background:#3d5a52}100%{background:transparent}}
+  @media (prefers-reduced-motion:reduce){.flash{animation:none;background:#3d5a52}}
+
+  /* ---------- flame ---------- */
+  #flamecrumbs{display:flex;align-items:center;gap:6px;padding:8px 14px;font-family:var(--mono);font-size:11.5px;
+    color:var(--muted);border-bottom:1px solid var(--line);flex-wrap:wrap;min-height:34px}
+  #flamecrumbs .crumb{color:var(--accent);cursor:pointer;background:none;border:none;font-family:var(--mono);font-size:11.5px;padding:0}
+  #flamecrumbs .crumb:hover{text-decoration:underline}
+  #flamecrumbs .sep{color:var(--faint)}
+  #flamewrap{flex:1;overflow:auto;position:relative}
+  #flame{display:block;cursor:pointer}
+  #flamehelp{padding:5px 14px;font-size:11px;color:var(--faint);border-top:1px solid var(--line);font-family:var(--mono)}
+
+  /* ---------- hotspots ---------- */
+  #hothead{grid-template-columns:minmax(260px,1fr) 130px 130px 90px 110px 90px}
+  #hothead .sortable{cursor:pointer}
+  #hothead .sortable:hover{color:var(--ink)}
+  #hotbody{overflow:auto;flex:1;font-family:var(--mono);font-size:12px}
+  .hrow{display:grid;grid-template-columns:minmax(260px,1fr) 130px 130px 90px 110px 90px;padding:0 14px;
+    border-bottom:1px solid #1f242d;cursor:pointer;align-items:center}
+  .hrow:hover{background:#222935}
+  .hrow>div{padding:5px 6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .sites{background:#161a21;border-bottom:1px solid var(--line);padding:6px 14px 10px 30px}
+  .site{display:flex;gap:10px;align-items:baseline;padding:3px 0;font-size:11.5px;border-bottom:1px dashed #232a34}
+  .site .num{flex:none}
+  .site .path{color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;direction:rtl;text-align:left}
+  .site .path bdi{unicode-bidi:plaintext}
+  .site .path b{color:var(--ink);font-weight:600}
+  .site .act{flex:none;background:none;border:1px solid var(--line);border-radius:3px;color:var(--accent);
+    font-size:10.5px;padding:1px 7px;font-family:var(--mono)}
+  .site .act:hover{border-color:var(--accent)}
+  .siteshdr{font-size:10.5px;color:var(--faint);text-transform:uppercase;letter-spacing:.08em;padding:4px 0}
+
+  /* ---------- footer ---------- */
+  #foot{height:34px;display:flex;align-items:center;gap:20px;padding:0 14px;background:var(--panel);
+    border-top:1px solid var(--line);font-family:var(--mono);font-size:11px;color:var(--faint);overflow:hidden;white-space:nowrap}
+
+  /* ---------- tooltip ---------- */
+  #tip{position:fixed;z-index:50;pointer-events:none;display:none;max-width:560px;background:#0e1116;
+    border:1px solid var(--line);border-radius:6px;padding:9px 12px;font-family:var(--mono);font-size:11.5px;
+    box-shadow:0 6px 24px rgba(0,0,0,.5)}
+  #tip .t-name{color:var(--ink);font-weight:600;font-size:12.5px;margin-bottom:5px;word-break:break-all}
+  #tip .t-row{display:flex;justify-content:space-between;gap:18px;color:var(--muted)}
+  #tip .t-row b{color:var(--ink);font-weight:500}
+  #tip .t-path{margin-top:6px;padding-top:6px;border-top:1px solid #232a34;color:var(--faint);word-break:break-all;max-height:110px;overflow:hidden}
+
+  /* ---------- empty / loading / drop ---------- */
+  #empty{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;padding:30px}
+  #empty h1{font-family:var(--mono);font-weight:600;font-size:20px;letter-spacing:.14em;text-transform:uppercase;margin:0}
+  #empty h1 em{font-style:normal;color:var(--heat2)}
+  #empty p{color:var(--muted);max-width:560px;line-height:1.6;margin:0}
+  #empty code{background:var(--panel2);border:1px solid var(--line);border-radius:3px;padding:1px 6px;font-family:var(--mono);font-size:12px;color:var(--heat2)}
+  #loading{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:16px;background:rgba(18,21,27,.94);z-index:40}
+  #loadmsg{font-family:var(--mono);color:var(--muted);font-size:12.5px;letter-spacing:.08em}
+  #loadbarwrap{width:340px;height:6px;background:var(--panel2);border-radius:3px;overflow:hidden}
+  #loadbar{height:100%;width:0;background:linear-gradient(90deg,var(--heat2),var(--heat3));transition:width .15s linear}
+  #drop{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(18,21,27,.85);
+    border:3px dashed var(--heat2);z-index:60;font-family:var(--mono);font-size:18px;letter-spacing:.12em;color:var(--heat2)}
+</style>
+</head>
+<body>
+
+<div id="bar">
+  <span id="wordmark"><b>Script&nbsp;Profiler</b>&nbsp;Workbench</span>
+  <button class="btn primary" id="openbtn">Open profiler.log</button>
+  <button class="btn" id="watchbtn" title="Re-read the same file automatically whenever the game rewrites it (needs the file to be opened with the picker, not drag-and-drop)." hidden>Watch file: off</button>
+  <span id="filestats"></span>
+  <input id="search" type="search" placeholder="filter names — highlights flame, filters hotspots" spellcheck="false" autocomplete="off">
+</div>
+
+<div id="strip" hidden></div>
+<div id="striplabel" hidden></div>
+
+<div id="tabs" hidden>
+  <button class="tab active" data-tab="flame">Flame graph</button>
+  <button class="tab" data-tab="tree">Hierarchy</button>
+  <button class="tab" data-tab="hot">Hotspots by name</button>
+</div>
+
+<div id="main">
+  <div id="empty">
+    <h1>Script <em>Profiler</em> Workbench</h1>
+    <p>Drop a Clausewitz script-profiler log anywhere on this page, or open one with the button above.
+       As the game's own visualizer notes, the <code>profile</code> console command writes
+       <code>profiler.log</code> into the game's <code>logs</code> folder.</p>
+    <p class="faint" style="font-size:12px">Handles multi-hundred-MB logs and names the base game's strict JSON
+       parser rejects (focus names with embedded line breaks, etc). Everything runs locally in this tab —
+       nothing is uploaded.</p>
+    <button class="btn primary" id="openbtn2">Open profiler.log</button>
+  </div>
+
+  <div class="view" id="view-flame">
+    <div id="flamecrumbs"></div>
+    <div id="flamewrap"><canvas id="flame"></canvas></div>
+    <div id="flamehelp">click: zoom into block · right-click: reveal in hierarchy · empty space at a block's right edge ≈ its self time (plus children too small to draw) · search box highlights matches</div>
+  </div>
+
+  <div class="view" id="view-tree">
+    <div id="treehead">
+      <div>name</div><div class="num">total</div><div class="num">% run</div>
+      <div class="num">self</div><div class="num">% run</div>
+      <div class="num">calls</div><div class="num">avg/call</div>
+      <div class="num" title="'profiled' field as reported by the game (shown as p: in the PDX visualizer)">p%</div>
+    </div>
+    <div id="treebody"></div>
+  </div>
+
+  <div class="view" id="view-hot">
+    <div id="hothead">
+      <div>name</div>
+      <div class="num sortable" data-k="self">self Σ ▾</div>
+      <div class="num sortable" data-k="total" title="Inclusive time, counted once per outermost occurrence of the name (nested same-name blocks are not double-counted). Parallel sections can push this past 100% of the run.">total Σ</div>
+      <div class="num sortable" data-k="nodes" title="Number of distinct places in the script tree where this name appears">sites</div>
+      <div class="num sortable" data-k="calls">calls Σ</div>
+      <div class="num">avg/call</div>
+    </div>
+    <div id="hotbody"></div>
+  </div>
+
+  <div id="loading">
+    <div id="loadmsg">reading file…</div>
+    <div id="loadbarwrap"><div id="loadbar"></div></div>
+  </div>
+</div>
+
+<div id="foot"></div>
+<div id="tip"></div>
+<div id="drop">drop profiler.log</div>
+<input type="file" id="fileinput" hidden>
+
+<script>
+"use strict";
+/* ================= parser (runs inside a Worker; kept as a page-level
+   function so its source can be serialized into the worker blob) ============ */
+function parseProfilerLog(u8, onProgress) {
+  const n = u8.length;
+  let i = 0;
+  let cap = 1 << 20;
+  let nameId = new Int32Array(cap), parent = new Int32Array(cap),
+      firstChild = new Int32Array(cap), lastChild = new Int32Array(cap),
+      nextSib = new Int32Array(cap);
+  let duration = new Float64Array(cap), entry = new Float64Array(cap);
+  let profiled = new Int16Array(cap);
+  let count = 0;
+  function grow() {
+    cap *= 2;
+    const g = (o, T) => { const a = new T(cap); a.set(o); return a; };
+    nameId = g(nameId, Int32Array); parent = g(parent, Int32Array);
+    firstChild = g(firstChild, Int32Array); lastChild = g(lastChild, Int32Array);
+    nextSib = g(nextSib, Int32Array);
+    duration = g(duration, Float64Array); entry = g(entry, Float64Array);
+    profiled = g(profiled, Int16Array);
+  }
+  const names = [], nameMap = new Map();
+  const td = new TextDecoder();
+  function internName(start, end) {
+    let s = start;
+    while (s < end && u8[s] >= 48 && u8[s] <= 57) s++;
+    if (s < end && u8[s] === 95 && s > start) s++; else s = start;
+    let str, ascii = true;
+    for (let k = s; k < end; k++) { if (u8[k] > 126 || u8[k] < 32) { ascii = false; break; } }
+    if (ascii && end - s <= 128) {
+      str = '';
+      for (let k = s; k < end; k++) str += String.fromCharCode(u8[k]);
+    } else {
+      str = td.decode(u8.subarray(s, end)).replace(/[\r\n\t]+/g, ' ');
+    }
+    let id = nameMap.get(str);
+    if (id === undefined) { id = names.length; names.push(str); nameMap.set(str, id); }
+    return id;
+  }
+  function newNode(nid, par) {
+    if (count >= cap) grow();
+    const idx = count++;
+    nameId[idx] = nid; parent[idx] = par;
+    firstChild[idx] = -1; lastChild[idx] = -1; nextSib[idx] = -1;
+    duration[idx] = 0; entry[idx] = 0; profiled[idx] = -1;
+    if (par >= 0) {
+      if (firstChild[par] === -1) firstChild[par] = idx;
+      else nextSib[lastChild[par]] = idx;
+      lastChild[par] = idx;
+    }
+    return idx;
+  }
+  function skipWs() { while (i < n) { const b = u8[i]; if (b === 32 || b === 9 || b === 13 || b === 10) i++; else break; } }
+  function parseKey() { // lenient: key ends at '"' whose next non-ws byte is ':'
+    i++;
+    const start = i;
+    while (i < n) {
+      if (u8[i] === 34) {
+        let j = i + 1;
+        while (j < n) { const b = u8[j]; if (b === 32 || b === 9 || b === 13 || b === 10) j++; else break; }
+        if (j >= n || u8[j] === 58) { const end = i; i++; return [start, end]; }
+      }
+      i++;
+    }
+    return [start, n];
+  }
+  function parseNumber() {
+    let neg = false;
+    if (u8[i] === 45) { neg = true; i++; }
+    let v = 0, sawDot = false, frac = 0, fdiv = 1;
+    while (i < n) {
+      const b = u8[i];
+      if (b >= 48 && b <= 57) { if (sawDot) { frac = frac * 10 + (b - 48); fdiv *= 10; } else v = v * 10 + (b - 48); i++; }
+      else if (b === 46) { sawDot = true; i++; }
+      else break;
+    }
+    if (sawDot) v += frac / fdiv;
+    return neg ? -v : v;
+  }
+  const meta = { type: 0, start: 0, duration_in_ms: 0, num_threads: 0 };
+  const STEP = 4 << 20;
+  let nextP = STEP;
+  function parseObject(nodeIdx, isRoot) {
+    i++;
+    for (;;) {
+      skipWs();
+      if (i >= n) return;
+      if (u8[i] === 125) { i++; return; }
+      if (u8[i] === 44) { i++; continue; }
+      if (u8[i] !== 34) { i++; continue; }
+      const [ks, ke] = parseKey();
+      skipWs(); if (u8[i] === 58) i++;
+      skipWs();
+      if (u8[i] === 123) {
+        parseObject(newNode(internName(ks, ke), nodeIdx), false);
+      } else {
+        const v = parseNumber();
+        let prop = '';
+        if (ke - ks <= 16) for (let k = ks; k < ke; k++) prop += String.fromCharCode(u8[k]);
+        if (prop === 'duration') duration[nodeIdx] = v;
+        else if (prop === 'entry') entry[nodeIdx] = v;
+        else if (prop === 'profiled') profiled[nodeIdx] = v;
+        else if (isRoot) {
+          if (prop === 'type') meta.type = v;
+          else if (prop === 'start') meta.start = v;
+          else if (prop === 'duration_in_ms') meta.duration_in_ms = v;
+        } else if (prop === 'num_threads' && !meta.num_threads) meta.num_threads = v;
+      }
+      if (onProgress && i >= nextP) { onProgress(i / n); nextP = i + STEP; }
+    }
+  }
+  const ROOT_NAME = (names.push('(run)'), nameMap.set('(run)', 0), 0);
+  const root = newNode(ROOT_NAME, -1);
+  const sessions = [];
+  skipWs();
+  while (i < n) {
+    if (u8[i] === 123) {
+      let snid = nameMap.get('session');
+      if (snid === undefined) { snid = names.length; names.push('session'); nameMap.set('session', snid); }
+      const s = newNode(snid, root);
+      sessions.push(s);
+      parseObject(s, true);
+    } else i++;
+    skipWs();
+  }
+  for (const s of sessions) {
+    if (!duration[s]) { let d = 0; for (let c = firstChild[s]; c !== -1; c = nextSib[c]) d += duration[c]; duration[s] = d; }
+  }
+  if (sessions.length === 1) {
+    const s = sessions[0];
+    firstChild[root] = firstChild[s]; lastChild[root] = lastChild[s];
+    duration[root] = duration[s]; entry[root] = entry[s]; profiled[root] = profiled[s];
+    for (let c = firstChild[s]; c !== -1; c = nextSib[c]) parent[c] = root;
+    firstChild[s] = -1;
+  } else {
+    let d = 0; for (const s of sessions) d += duration[s];
+    duration[root] = d;
+  }
+  const self = new Float64Array(count);
+  for (let k = 0; k < count; k++) self[k] = duration[k];
+  for (let k = 1; k < count; k++) { const p = parent[k]; if (p >= 0) self[p] -= duration[k]; }
+  for (let k = 0; k < count; k++) if (self[k] < 0) self[k] = 0;
+  return {
+    count,
+    nameId: nameId.slice(0, count), parent: parent.slice(0, count),
+    firstChild: firstChild.slice(0, count), nextSib: nextSib.slice(0, count),
+    duration: duration.slice(0, count), entry: entry.slice(0, count),
+    profiled: profiled.slice(0, count), self,
+    names, meta,
+    msPerTick: (meta.duration_in_ms && duration[root]) ? meta.duration_in_ms / duration[root] : 1e-4,
+    sessions: sessions.length,
+  };
+}
+
+/* ================= worker bootstrap ================= */
+const workerSrc = parseProfilerLog.toString() + `
+self.onmessage = async (e) => {
+  try {
+    const file = e.data.file;
+    const size = file.size;
+    const u8 = new Uint8Array(size);
+    const reader = file.stream().getReader();
+    let off = 0;
+    for (;;) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      u8.set(value, off); off += value.length;
+      self.postMessage({ t: 'progress', phase: 'reading file', f: off / size });
+    }
+    self.postMessage({ t: 'progress', phase: 'parsing', f: 0 });
+    const P = parseProfilerLog(u8, f => self.postMessage({ t: 'progress', phase: 'parsing', f }));
+    const buffers = [P.nameId.buffer, P.parent.buffer, P.firstChild.buffer,
+                     P.nextSib.buffer, P.duration.buffer, P.entry.buffer,
+                     P.profiled.buffer, P.self.buffer];
+    self.postMessage({ t: 'done', P }, buffers);
+  } catch (err) {
+    self.postMessage({ t: 'error', msg: String(err && err.stack || err) });
+  }
+};`;
+const worker = new Worker(URL.createObjectURL(new Blob([workerSrc], { type: 'text/javascript' })));
+
+/* ================= state ================= */
+let P = null;                 // parsed profile
+let sortedKids = new Map();   // node -> Int32Array of children sorted by duration desc
+let expanded = new Set();     // tree expansion
+let childCap = new Map();     // node -> how many children to show
+let pinned = new Set();       // nodes that must stay visible in capped lists
+let flameRoot = 0;            // current flame zoom
+let flameRects = [];          // per-row arrays of {x,w,node} for hit testing
+let agg = null;               // hotspot aggregation
+let hotSort = { k: 'self', dir: -1 };
+let hotOpen = new Set();      // expanded hotspot names
+let fileHandle = null, watchTimer = null, lastMod = 0, lastSize = 0;
+let currentFileName = '';
+
+const $ = id => document.getElementById(id);
+const tip = $('tip');
+
+/* ================= formatting & color ================= */
+function fmtT(ticks) {
+  const ms = ticks * (P ? P.msPerTick : 1e-4);
+  if (ms >= 60000) return (ms / 60000).toFixed(2) + '\u2009min';
+  if (ms >= 1000) return (ms / 1000).toFixed(2) + '\u2009s';
+  if (ms >= 1) return ms.toFixed(2) + '\u2009ms';
+  return (ms * 1000).toFixed(1) + '\u2009µs';
+}
+function fmtPct(x) { return x >= 0.1 ? x.toFixed(1) + '%' : x >= 0.01 ? x.toFixed(2) + '%' : x > 0 ? '<0.01%' : '0%'; }
+function fmtN(x) { return x.toLocaleString('en-US'); }
+function esc(s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+function heatColor(frac) { // frac of run, log-ish ramp
+  const t = Math.min(1, Math.pow(Math.max(0, frac), 0.35));
+  const stops = [[61,70,84],[138,109,51],[217,154,61],[224,99,58],[212,61,61]];
+  const x = t * (stops.length - 1), a = Math.min(stops.length - 2, Math.floor(x)), f = x - a;
+  const c = stops[a].map((v, k) => Math.round(v + (stops[a + 1][k] - v) * f));
+  return `rgb(${c[0]},${c[1]},${c[2]})`;
+}
+function nameHash(s) { let h = 2166136261; for (let k = 0; k < s.length; k++) { h ^= s.charCodeAt(k); h = Math.imul(h, 16777619); } return (h >>> 0) / 4294967296; }
+function flameColor(nid, dimmed, hot) {
+  const r1 = nameHash(P.names[nid]), r2 = nameHash(P.names[nid] + '·');
+  const hue = 16 + r1 * 40, sat = dimmed ? 8 : (hot ? 85 : 52 + r2 * 22), lit = dimmed ? 22 : 38 + r2 * 12;
+  return `hsl(${hue},${sat}%,${lit}%)`;
+}
+function heatBar(cell, frac) {
+  return `<div class="${cell}"><span>${arguments[2]}</span><div class="ub"><i style="width:${Math.min(100, frac * 100).toFixed(2)}%;background:${heatColor(frac)}"></i></div></div>`;
+}
+
+/* ================= data helpers ================= */
+function kidsOf(node) {
+  let a = sortedKids.get(node);
+  if (a) return a;
+  const tmp = [];
+  for (let c = P.firstChild[node]; c !== -1; c = P.nextSib[c]) tmp.push(c);
+  tmp.sort((x, y) => P.duration[y] - P.duration[x]);
+  a = Int32Array.from(tmp);
+  sortedKids.set(node, a);
+  return a;
+}
+function pathOf(node) {
+  const chain = [];
+  for (let x = node; x !== -1; x = P.parent[x]) chain.push(x);
+  return chain.reverse(); // root..node
+}
+function pathText(node, skipRoot = true) {
+  return pathOf(node).slice(skipRoot ? 1 : 0).map(x => P.names[P.nameId[x]]).join(' › ');
+}
+function runT() { return P.duration[0] || 1; }
+
+/* ================= loading ================= */
+function loadFile(file) {
+  currentFileName = file.name;
+  $('loading').style.display = 'flex';
+  $('loadmsg').textContent = 'reading file…';
+  $('loadbar').style.width = '0%';
+  worker.postMessage({ file });
+}
+worker.onmessage = (e) => {
+  const m = e.data;
+  if (m.t === 'progress') {
+    $('loadmsg').textContent = m.phase + '…';
+    $('loadbar').style.width = (m.f * 100).toFixed(1) + '%';
+  } else if (m.t === 'error') {
+    $('loading').style.display = 'none';
+    alert('Could not parse this file as a script-profiler log.\n\n' + m.msg);
+  } else if (m.t === 'done') {
+    onLoaded(m.P);
+  }
+};
+
+function onLoaded(newP) {
+  // try to carry view state across reloads by name-path
+  const keepTab = document.querySelector('.tab.active')?.dataset.tab || 'flame';
+  const oldFlamePath = P ? pathOf(flameRoot).slice(1).map(x => P.names[P.nameId[x]]) : null;
+  const oldExpanded = P ? [...expanded].slice(0, 800).map(id => pathOf(id).slice(1).map(x => P.names[P.nameId[x]])) : null;
+
+  P = newP;
+  sortedKids = new Map(); childCap = new Map(); pinned = new Set();
+  expanded = new Set([0]); flameRoot = 0; hotOpen = new Set();
+  buildAggregation();
+
+  if (oldExpanded) for (const p of oldExpanded) { const id = resolvePath(p); if (id >= 0) expanded.add(id); }
+  if (oldFlamePath) { const id = resolvePath(oldFlamePath); if (id >= 0) flameRoot = id; }
+
+  $('loading').style.display = 'none';
+  $('empty').style.display = 'none';
+  $('tabs').hidden = false; $('strip').hidden = false; $('striplabel').hidden = false;
+  $('watchbtn').hidden = !fileHandle;
+
+  const wall = fmtT(runT());
+  $('filestats').innerHTML =
+    `<b>${esc(currentFileName)}</b> · <b>${fmtN(P.count)}</b> nodes · <b>${fmtN(P.names.length)}</b> names · run <b>${wall}</b>` +
+    (P.meta.num_threads ? ` · ${P.meta.num_threads} threads` : '') +
+    (P.sessions > 1 ? ` · ${P.sessions} sessions` : '');
+  $('foot').textContent =
+    `1 tick ≈ ${(P.msPerTick * 1e6).toFixed(1)} ns · percentages are of the whole run (${wall}) · ` +
+    `parallel sections can sum past 100% · "non_assigned" holds the engine's wall-clock rollups; the detailed script trees are its sibling sections`;
+
+  buildStrip();
+  setTab(keepTab);
+  renderAll();
+}
+
+function resolvePath(namePath) {
+  let node = 0;
+  for (const nm of namePath) {
+    let best = -1, bestD = -1;
+    for (let c = P.firstChild[node]; c !== -1; c = P.nextSib[c]) {
+      if (P.names[P.nameId[c]] === nm && P.duration[c] > bestD) { bestD = P.duration[c]; best = c; }
+    }
+    if (best === -1) return -1;
+    node = best;
+  }
+  return node;
+}
+
+/* ================= section strip ================= */
+function buildStrip() {
+  const strip = $('strip');
+  strip.innerHTML = '';
+  const kids = kidsOf(0);
+  let total = 0;
+  for (const c of kids) total += P.duration[c];
+  total = total || 1;
+  for (const c of kids) {
+    const frac = P.duration[c] / total;
+    if (frac < 0.001) continue;
+    const seg = document.createElement('div');
+    seg.className = 'seg';
+    seg.style.flex = String(Math.max(frac, 0.015));
+    seg.style.background = heatColor(P.duration[c] / runT());
+    seg.innerHTML = `<span>${esc(P.names[P.nameId[c]])}</span>`;
+    seg.title = `${P.names[P.nameId[c]]} — ${fmtT(P.duration[c])} (${fmtPct(100 * P.duration[c] / runT())} of run). Click to zoom the flame graph here.`;
+    seg.onclick = () => { flameRoot = c; setTab('flame'); renderFlame(); };
+    strip.appendChild(seg);
+  }
+  $('striplabel').innerHTML =
+    `<span>top-level sections · width ∝ recorded time (threads overlap, so sections sum past wall time)</span>`;
+}
+
+/* ================= tabs ================= */
+function setTab(name) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === name));
+  document.querySelectorAll('.view').forEach(v => v.classList.toggle('active', v.id === 'view-' + name));
+  if (name === 'flame') renderFlame();
+}
+document.querySelectorAll('.tab').forEach(t => t.onclick = () => setTab(t.dataset.tab));
+function renderAll() {
+  renderTree(); renderHot(); renderFlame();
+}
+
+/* ================= tree ================= */
+const DEFAULT_CAP = 60;
+function renderTree() {
+  if (!P) return;
+  const body = $('treebody');
+  const frag = document.createDocumentFragment();
+  const run = runT();
+  function row(node, depth) {
+    const kids = P.firstChild[node] !== -1;
+    const nm = P.names[P.nameId[node]];
+    const d = P.duration[node], s = P.self[node], en = P.entry[node], pf = P.profiled[node];
+    const el = document.createElement('div');
+    el.className = 'trow';
+    el.dataset.id = node;
+    el.tabIndex = 0;
+    el.innerHTML =
+      `<div class="name" style="padding-left:${6 + depth * 16}px">` +
+        (kids ? `<span class="caret ${expanded.has(node) ? 'open' : ''}">${expanded.has(node) ? '▾' : '▸'}</span>` : `<span class="leafdot">●</span>`) +
+        `<span title="${esc(pathText(node))}">${esc(nm)}</span>` +
+        `<button class="jump" data-act="flame" title="Zoom the flame graph to this block">🔥</button></div>` +
+      heatBar('num heatcell', d / run, fmtT(d)) +
+      `<div class="num dim">${fmtPct(100 * d / run)}</div>` +
+      heatBar('num heatcell', s / run, s > 0 ? fmtT(s) : '<span class="faint">—</span>') +
+      `<div class="num dim">${s > 0 ? fmtPct(100 * s / run) : '—'}</div>` +
+      `<div class="num dim">${en ? fmtN(en) : '—'}</div>` +
+      `<div class="num dim">${en ? fmtT(d / en) : '—'}</div>` +
+      `<div class="num faint">${pf >= 0 ? pf : ''}</div>`;
+    frag.appendChild(el);
+    if (kids && expanded.has(node)) {
+      const list = kidsOf(node);
+      const cap = childCap.get(node) || DEFAULT_CAP;
+      let shown = 0;
+      const extra = [];
+      for (let k = 0; k < list.length; k++) {
+        if (shown < cap) { row(list[k], depth + 1); shown++; }
+        else if (pinned.has(list[k])) extra.push(list[k]);
+      }
+      for (const x of extra) row(x, depth + 1);
+      if (list.length > shown + extra.length) {
+        const more = document.createElement('button');
+        more.className = 'more';
+        more.style.paddingLeft = (26 + (depth + 1) * 16) + 'px';
+        more.textContent = `… show ${fmtN(Math.min(200, list.length - shown))} more of ${fmtN(list.length - shown)} (sorted by total time)`;
+        more.onclick = (ev) => { ev.stopPropagation(); childCap.set(node, cap + 200); renderTree(); };
+        frag.appendChild(more);
+      }
+    }
+  }
+  row(0, 0);
+  body.replaceChildren(frag);
+}
+$('treebody').addEventListener('click', (e) => {
+  const jump = e.target.closest('.jump');
+  const r = e.target.closest('.trow');
+  if (!r) return;
+  const id = +r.dataset.id;
+  if (jump) { flameRoot = id; setTab('flame'); return; }
+  if (P.firstChild[id] === -1) return;
+  if (expanded.has(id)) expanded.delete(id); else expanded.add(id);
+  renderTree();
+});
+$('treebody').addEventListener('keydown', (e) => {
+  if (e.key !== 'Enter' && e.key !== ' ') return;
+  const r = e.target.closest('.trow'); if (!r) return;
+  e.preventDefault();
+  const id = +r.dataset.id;
+  if (P.firstChild[id] === -1) return;
+  if (expanded.has(id)) expanded.delete(id); else expanded.add(id);
+  renderTree();
+});
+function revealInTree(node) {
+  const chain = pathOf(node);
+  for (const x of chain) { pinned.add(x); if (P.firstChild[x] !== -1 && x !== node) expanded.add(x); }
+  setTab('tree');
+  renderTree();
+  const el = document.querySelector(`.trow[data-id="${node}"]`);
+  if (el) { el.scrollIntoView({ block: 'center' }); el.classList.add('flash'); setTimeout(() => el.classList.remove('flash'), 1700); }
+}
+
+/* ================= flame graph ================= */
+const ROW_H = 19, MIN_PX = 0.6;
+function renderFlame() {
+  if (!P || !document.getElementById('view-flame').classList.contains('active')) return;
+  const wrap = $('flamewrap'), cv = $('flame');
+  const W = Math.max(300, wrap.clientWidth - 2);
+  const q = (document.getElementById('search').value || '').toLowerCase().trim();
+  flameRects = [];
+  let maxDepth = 0;
+
+  // layout+draw in one pass; first size canvas to worst case, then trim via CSS height
+  const dpr = window.devicePixelRatio || 1;
+  const MAXROWS = 60;
+  cv.width = W * dpr; cv.height = MAXROWS * ROW_H * dpr;
+  cv.style.width = W + 'px';
+  const ctx = cv.getContext('2d');
+  ctx.scale(dpr, dpr);
+  ctx.font = '11px ' + getComputedStyle(document.body).getPropertyValue('--mono');
+  ctx.textBaseline = 'middle';
+
+  const rootD = P.duration[flameRoot] || 1;
+  function draw(node, x, w, depth) {
+    if (w < MIN_PX || depth >= MAXROWS) return;
+    if (depth > maxDepth) maxDepth = depth;
+    const nid = P.nameId[node];
+    const nm = P.names[nid];
+    const match = q && nm.toLowerCase().includes(q);
+    ctx.fillStyle = flameColor(nid, q && !match, match);
+    ctx.fillRect(x, depth * ROW_H, Math.max(w - 0.5, MIN_PX), ROW_H - 1);
+    if (match) { ctx.strokeStyle = 'rgba(102,217,194,.9)'; ctx.strokeRect(x + 0.5, depth * ROW_H + 0.5, Math.max(w - 1.5, 1), ROW_H - 2); }
+    if (w > 34) {
+      ctx.fillStyle = 'rgba(0,0,0,.78)';
+      ctx.save();
+      ctx.beginPath(); ctx.rect(x + 2, depth * ROW_H, w - 6, ROW_H); ctx.clip();
+      ctx.fillText(nm, x + 4, depth * ROW_H + ROW_H / 2);
+      ctx.restore();
+    }
+    (flameRects[depth] || (flameRects[depth] = [])).push({ x, w, node });
+    let cx = x;
+    const list = kidsOf(node);
+    // parallel sections: children (thread time) can sum past the parent's wall
+    // time — normalize so blocks never overflow their parent's span
+    let kidsSum = 0;
+    for (let k = 0; k < list.length; k++) kidsSum += P.duration[list[k]];
+    const denom = Math.max(P.duration[node] || 1, kidsSum);
+    for (let k = 0; k < list.length; k++) {
+      const c = list[k];
+      const cw = w * P.duration[c] / denom;
+      if (cw < MIN_PX) break; // sorted desc: the rest are narrower
+      draw(c, cx, cw, depth + 1);
+      cx += cw;
+    }
+  }
+  draw(flameRoot, 0, W, 0);
+  cv.style.height = ((maxDepth + 1) * ROW_H) + 'px';
+
+  // breadcrumbs
+  const crumbs = $('flamecrumbs');
+  crumbs.innerHTML = '';
+  const chain = pathOf(flameRoot);
+  chain.forEach((x, k) => {
+    if (k) { const s = document.createElement('span'); s.className = 'sep'; s.textContent = '›'; crumbs.appendChild(s); }
+    const b = document.createElement('button');
+    b.className = 'crumb';
+    b.textContent = P.names[P.nameId[x]];
+    b.onclick = () => { flameRoot = x; renderFlame(); };
+    crumbs.appendChild(b);
+  });
+  const info = document.createElement('span');
+  info.style.marginLeft = 'auto';
+  info.textContent = `${fmtT(P.duration[flameRoot])} · ${fmtPct(100 * P.duration[flameRoot] / runT())} of run`;
+  crumbs.appendChild(info);
+}
+function flameHit(ev) {
+  const cv = $('flame');
+  const r = cv.getBoundingClientRect();
+  const x = ev.clientX - r.left, y = ev.clientY - r.top;
+  const depth = Math.floor(y / ROW_H);
+  const row = flameRects[depth];
+  if (!row) return null;
+  // rects per row are x-ascending
+  let lo = 0, hi = row.length - 1, found = null;
+  while (lo <= hi) {
+    const mid = (lo + hi) >> 1, R = row[mid];
+    if (x < R.x) hi = mid - 1;
+    else if (x > R.x + R.w) lo = mid + 1;
+    else { found = R; break; }
+  }
+  return found;
+}
+$('flame').addEventListener('mousemove', (ev) => {
+  const hit = flameHit(ev);
+  if (!hit) { tip.style.display = 'none'; return; }
+  showTip(ev, hit.node);
+});
+$('flame').addEventListener('mouseleave', () => tip.style.display = 'none');
+$('flame').addEventListener('click', (ev) => {
+  const hit = flameHit(ev);
+  if (hit && hit.node !== flameRoot) { flameRoot = hit.node; renderFlame(); }
+});
+$('flame').addEventListener('contextmenu', (ev) => {
+  ev.preventDefault();
+  const hit = flameHit(ev);
+  if (hit) { tip.style.display = 'none'; revealInTree(hit.node); }
+});
+function showTip(ev, node) {
+  const d = P.duration[node], s = P.self[node], en = P.entry[node], pf = P.profiled[node];
+  const par = P.parent[node];
+  const pd = par >= 0 ? (P.duration[par] || 1) : d;
+  tip.innerHTML =
+    `<div class="t-name">${esc(P.names[P.nameId[node]])}</div>` +
+    `<div class="t-row"><span>total</span><b>${fmtT(d)} · ${fmtPct(100 * d / runT())} of run · ${fmtPct(100 * d / pd)} of parent</b></div>` +
+    `<div class="t-row"><span>self</span><b>${s > 0 ? fmtT(s) + ' · ' + fmtPct(100 * s / runT()) + ' of run' : '—'}</b></div>` +
+    `<div class="t-row"><span>calls</span><b>${en ? fmtN(en) + ' · ' + fmtT(d / en) + ' avg' : '—'}</b></div>` +
+    (pf >= 0 ? `<div class="t-row"><span>profiled</span><b>${pf}%</b></div>` : '') +
+    `<div class="t-path">${esc(pathText(node))}</div>`;
+  tip.style.display = 'block';
+  const tw = tip.offsetWidth, th = tip.offsetHeight;
+  let tx = ev.clientX + 14, ty = ev.clientY + 14;
+  if (tx + tw > innerWidth - 8) tx = ev.clientX - tw - 10;
+  if (ty + th > innerHeight - 8) ty = ev.clientY - th - 10;
+  tip.style.left = tx + 'px'; tip.style.top = ty + 'px';
+}
+
+/* ================= hotspots ================= */
+function buildAggregation() {
+  const NN = P.names.length;
+  agg = {
+    self: new Float64Array(NN), total: new Float64Array(NN),
+    calls: new Float64Array(NN), nodes: new Float64Array(NN),
+  };
+  const onStack = new Int32Array(NN);
+  const stack = [[0, false]];
+  while (stack.length) {
+    const top = stack[stack.length - 1];
+    const node = top[0];
+    if (!top[1]) {
+      top[1] = true;
+      const nid = P.nameId[node];
+      agg.self[nid] += P.self[node];
+      agg.calls[nid] += P.entry[node];
+      agg.nodes[nid]++;
+      if (onStack[nid] === 0) agg.total[nid] += P.duration[node];
+      onStack[nid]++;
+      for (let c = P.firstChild[node]; c !== -1; c = P.nextSib[c]) stack.push([c, false]);
+    } else {
+      onStack[P.nameId[node]]--;
+      stack.pop();
+    }
+  }
+}
+function renderHot() {
+  if (!P || !agg) return;
+  const q = (document.getElementById('search').value || '').toLowerCase().trim();
+  const NN = P.names.length;
+  const ids = [];
+  for (let k = 0; k < NN; k++) {
+    if (k === P.nameId[0]) continue;
+    if (agg.nodes[k] === 0) continue;
+    if (q && !P.names[k].toLowerCase().includes(q)) continue;
+    ids.push(k);
+  }
+  const key = agg[hotSort.k];
+  ids.sort((a, b) => (key[b] - key[a]) * -hotSort.dir);
+  document.querySelectorAll('#hothead .sortable').forEach(h => {
+    const base = h.textContent.replace(/ [▾▴]$/, '');
+    h.textContent = base + (h.dataset.k === hotSort.k ? (hotSort.dir === -1 ? ' ▾' : ' ▴') : '');
+  });
+  const run = runT();
+  const frag = document.createDocumentFragment();
+  const LIMIT = 400;
+  for (let k = 0; k < Math.min(ids.length, LIMIT); k++) {
+    const id = ids[k];
+    const row = document.createElement('div');
+    row.className = 'hrow';
+    row.dataset.nid = id;
+    row.innerHTML =
+      `<div title="${esc(P.names[id])}">${esc(P.names[id]) || '<span class="faint">(unnamed)</span>'}</div>` +
+      heatBar('num heatcell', agg.self[id] / run, fmtT(agg.self[id])) +
+      heatBar('num heatcell', agg.total[id] / run, fmtT(agg.total[id])) +
+      `<div class="num dim">${fmtN(agg.nodes[id])}</div>` +
+      `<div class="num dim">${agg.calls[id] ? fmtN(agg.calls[id]) : '—'}</div>` +
+      `<div class="num dim">${agg.calls[id] ? fmtT(agg.total[id] / agg.calls[id]) : '—'}</div>`;
+    frag.appendChild(row);
+    if (hotOpen.has(id)) frag.appendChild(buildSites(id));
+  }
+  if (ids.length > LIMIT) {
+    const note = document.createElement('div');
+    note.className = 'faint';
+    note.style.padding = '8px 14px';
+    note.textContent = `${fmtN(ids.length - LIMIT)} more names hidden — narrow them down with the filter box.`;
+    frag.appendChild(note);
+  }
+  $('hotbody').replaceChildren(frag);
+}
+function buildSites(nid) {
+  // scan all nodes with this name, keep top 80 by duration
+  const TOP = 80;
+  const best = [];
+  for (let k = 1; k < P.count; k++) {
+    if (P.nameId[k] !== nid) continue;
+    if (best.length < TOP) { best.push(k); if (best.length === TOP) best.sort((a, b) => P.duration[b] - P.duration[a]); }
+    else if (P.duration[k] > P.duration[best[TOP - 1]]) {
+      best[TOP - 1] = k;
+      for (let j = TOP - 1; j > 0 && P.duration[best[j]] > P.duration[best[j - 1]]; j--) { const t = best[j]; best[j] = best[j - 1]; best[j - 1] = t; }
+    }
+  }
+  if (best.length < TOP) best.sort((a, b) => P.duration[b] - P.duration[a]);
+  const box = document.createElement('div');
+  box.className = 'sites';
+  const run = runT();
+  const hdr = document.createElement('div');
+  hdr.className = 'siteshdr';
+  hdr.textContent = `heaviest call sites of "${P.names[nid]}" — ${fmtN(agg.nodes[nid])} sites total, showing top ${best.length} (path reads left→right; end truncates first)`;
+  box.appendChild(hdr);
+  for (const node of best) {
+    const el = document.createElement('div');
+    el.className = 'site';
+    const chain = pathOf(node).slice(1);
+    const pathHtml = chain.map((x, i) =>
+      i === chain.length - 1 ? `<b>${esc(P.names[P.nameId[x]])}</b>` : esc(P.names[P.nameId[x]])
+    ).join(' › ');
+    el.innerHTML =
+      `<span class="num" style="width:86px;color:${heatColor(P.duration[node] / run)}">${fmtT(P.duration[node])}</span>` +
+      `<span class="num dim" style="width:56px">${fmtPct(100 * P.duration[node] / run)}</span>` +
+      `<span class="num dim" style="width:96px">${P.entry[node] ? fmtN(P.entry[node]) + '×' : '—'}</span>` +
+      `<span class="path" title="${esc(pathText(node))}"><bdi>${pathHtml}</bdi></span>` +
+      `<button class="act" data-act="tree" data-node="${node}">tree</button>` +
+      `<button class="act" data-act="flame" data-node="${node}">flame</button>`;
+    box.appendChild(el);
+  }
+  return box;
+}
+$('hotbody').addEventListener('click', (e) => {
+  const act = e.target.closest('.act');
+  if (act) {
+    const node = +act.dataset.node;
+    if (act.dataset.act === 'tree') revealInTree(node);
+    else { flameRoot = node; setTab('flame'); }
+    return;
+  }
+  const row = e.target.closest('.hrow');
+  if (!row) return;
+  const nid = +row.dataset.nid;
+  if (hotOpen.has(nid)) hotOpen.delete(nid); else hotOpen.add(nid);
+  renderHot();
+});
+document.querySelectorAll('#hothead .sortable').forEach(h => h.onclick = () => {
+  const k = h.dataset.k;
+  if (hotSort.k === k) hotSort.dir *= -1; else hotSort = { k, dir: -1 };
+  renderHot();
+});
+
+/* ================= search ================= */
+let searchTimer = null;
+$('search').addEventListener('input', () => {
+  clearTimeout(searchTimer);
+  searchTimer = setTimeout(() => { renderHot(); renderFlame(); }, 180);
+});
+
+/* ================= file opening / watching ================= */
+async function openViaPicker() {
+  if (window.showOpenFilePicker) {
+    try {
+      const [h] = await window.showOpenFilePicker({
+        types: [{ description: 'Profiler log', accept: { 'text/plain': ['.log', '.json', '.txt'] } }],
+      });
+      fileHandle = h;
+      const f = await h.getFile();
+      lastMod = f.lastModified; lastSize = f.size;
+      loadFile(f);
+      return;
+    } catch (err) { if (err && err.name === 'AbortError') return; }
+  }
+  $('fileinput').click();
+}
+$('openbtn').onclick = openViaPicker;
+$('openbtn2').onclick = openViaPicker;
+$('fileinput').addEventListener('change', (e) => {
+  const f = e.target.files[0];
+  if (f) { fileHandle = null; stopWatch(); loadFile(f); }
+  e.target.value = '';
+});
+function stopWatch() {
+  if (watchTimer) clearInterval(watchTimer);
+  watchTimer = null;
+  $('watchbtn').textContent = 'Watch file: off';
+  $('watchbtn').classList.remove('on');
+}
+$('watchbtn').onclick = () => {
+  if (watchTimer) { stopWatch(); return; }
+  if (!fileHandle) return;
+  $('watchbtn').textContent = 'Watch file: on';
+  $('watchbtn').classList.add('on');
+  watchTimer = setInterval(async () => {
+    try {
+      const f = await fileHandle.getFile();
+      if (f.lastModified !== lastMod || f.size !== lastSize) {
+        lastMod = f.lastModified; lastSize = f.size;
+        loadFile(f);
+      }
+    } catch (_) { stopWatch(); }
+  }, 1500);
+};
+
+/* drag & drop */
+let dragDepth = 0;
+window.addEventListener('dragenter', (e) => { e.preventDefault(); dragDepth++; $('drop').style.display = 'flex'; });
+window.addEventListener('dragleave', (e) => { e.preventDefault(); if (--dragDepth <= 0) { dragDepth = 0; $('drop').style.display = 'none'; } });
+window.addEventListener('dragover', (e) => e.preventDefault());
+window.addEventListener('drop', (e) => {
+  e.preventDefault();
+  dragDepth = 0; $('drop').style.display = 'none';
+  const f = e.dataTransfer.files && e.dataTransfer.files[0];
+  if (f) { fileHandle = null; stopWatch(); loadFile(f); }
+});
+
+window.addEventListener('resize', () => renderFlame());
+</script>
+</body>
+</html>
