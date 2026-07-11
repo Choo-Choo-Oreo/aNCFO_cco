@@ -56,7 +56,7 @@ Contributions are tracked in one of the following formats:
   ["Reworked Air Designer"](https://steamcommunity.com/sharedfiles/filedetails/?id=2948174914) | *Reworked Designer: Air Continued*
 
 - **MrPunk Mod** – *Fully Integrated*
-  ["Vanilla Navy Rework"](https://steamcommunity.com/sharedfiles/filedetails/?id=2993766165) | *16 Nov 2024* | *Version 1.15*
+  ["Vanilla Navy Rework"](https://steamcommunity.com/sharedfiles/filedetails/?id=2993766165) | *10 Jul 2026* | *Version 2.11 "Tokyo Bay Finale"*
 
 - **Ringwraith Mod** – *Partially Integrated*
   ["Extended Tech Tree 1960"](https://steamcommunity.com/sharedfiles/filedetails/?id=1778255798) | *Pre‑Götterdämmerung*

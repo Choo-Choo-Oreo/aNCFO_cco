@@ -1,0 +1,1083 @@
+ [UMA], 
+Blue — 26-Mar-26 12:51 AM
+If this is just to display the heritage of a state then you don't need the SEH_temp_heritage part.
+Scars — 26-Mar-26 12:51 AM
+located in common/scripted_triggers/
+Blue — 26-Mar-26 12:52 AM
+You'd only need use SEH_temp_heritage if you want to make a tooltip for the effect to change a state's heritage.
+Scars — 26-Mar-26 12:52 AM
+This is part of their script, set_temp_variable = { var = SEH_temp_heritage value = 4 tooltip = SetSEH_heritage }, tooltip
+i think
+Blue — 26-Mar-26 12:53 AM
+Oh, didn't see that.
+I wonder if you can use $LEFT$ and $RIGHT$ through scripted loc. I kind of doubt it but it would make the tooltip universal. Now I want to go test it.
+Eh, the more I think about it the less possible it seems.
+Choo_Choo_Oreo [UMA], 
+OP
+ — 26-Mar-26 12:56 AM
+Its for effects in decisions or focuses too.
+Blue — 26-Mar-26 01:02 AM
+Yeah that didn't work at all lol.
+Scars — 26-Mar-26 01:03 AM
+LEFT and RIGHT are purely numbers yeah so idk how that would work 💀
+ [UMA], 
+Blue — 26-Mar-26 01:03 AM
+It should work then
+Blue — 26-Mar-26 01:04 AM
+This message took a solid 30 seconds for discord to send :arj:
+Blue — 26-Mar-26 01:05 AM
+I was hoping I could do some stupid shit with nested strings. Basically
+$var_SEH_heritage.$LEFT$$
+But no, PDX hates fun and didn't account for nested nested strings
+Scars — 26-Mar-26 01:05 AM
+💀
+They are generous enough to allow us with dynamic scripted loc
+That was a nightmare before
+Choo_Choo_Oreo [UMA], 
+OP
+ — 26-Mar-26 01:09 AM
+Now I gotta make the ability to core states with compliance AND write decisions for the acceptances. Ill get back with you guys when it works/I fuck up.
+Prob going to need help with localization
+Scars — 26-Mar-26 01:13 AM
+With this?
+Choo_Choo_Oreo [UMA], 
+OP
+ — 26-Mar-26 01:13 AM
+You telling me there was a time where we didn’t have that?!
+ [UMA], 
+Scars — 26-Mar-26 01:13 AM
+Yep.
+Choo_Choo_Oreo [UMA], 
+OP
+ — 26-Mar-26 01:14 AM
+That’s awful
+Scars — 26-Mar-26 01:14 AM
+Image
+Choo_Choo_Oreo [UMA], 
+OP
+ — 26-Mar-26 01:16 AM
+Maybe, since I do need to make the ethnos and species variant and get the localization to show correctly
+Scars — 26-Mar-26 01:16 AM
+localization of the trigger?
+Choo_Choo_Oreo [UMA], 
+OP
+ — 26-Mar-26 01:16 AM
+Oh gosh you only could have done it that way?
+Choo_Choo_Oreo [UMA], 
+OP
+ — 26-Mar-26 01:17 AM
+Maybe, I’ll get back to you tmr since it’s late and my brain is a bit foggy
+Scars — 26-Mar-26 01:17 AM
+alright
+Choo_Choo_Oreo [UMA], 
+OP
+ — 26-Mar-26 08:50 AM
+Invalid trigger 'clear_variable' in common/scripted_triggers/SEH.scripted_triggers.txt line : 3
+Error: "Unknown trigger-type: clear_variable, near line: 3" in file: "common/scripted_triggers/SEH.scripted_triggers.txt" near line: 10
+
+Should that be a temp clear?
+Scars — 26-Mar-26 08:50 AM
+oh
+ [UMA], 
+Scars — 26-Mar-26 08:51 AM
+change that line to set_temp_variable = { temp_owned_states_count = 0 } 
+Choo_Choo_Oreo [UMA], 
+OP
+ — 28-Mar-26 07:49 PM
+How would I tooltip the scripted trigger?
+Choo_Choo_Oreo [UMA], 
+OP
+ — 28-Mar-26 07:52 PM
+ROOT = {
+    set_temp_variable = { temp_min_proportion = 0.5 }
+    set_temp_variable = { temp_heritage_check = 2 }
+    count_proportion_owned_heritage = yes
+}
+
+If I understand this correctly this should check if you own 50% of ID 2?
+Scars — 28-Mar-26 07:59 PM
+@Blue you wanna take this? I'm busy today
+Blue — 28-Mar-26 08:03 PM
+Sure
+ [UMA], 
+Blue — 28-Mar-26 08:04 PM
+Yep
+ [UMA], 
+Blue — 28-Mar-26 08:10 PM
+You'd need to put that last variable check inside a custom_trigger_tooltip
+# args: temp_min_proportion, temp_heritage_check
+count_proportion_owned_heritage = {
+    clear_variable = temp_owned_states_count # for multiple uses of this scripted trigger
+    all_of_scopes = {
+        array = global.SEH_heritage_states_@var:temp_heritage_check
+        if = {
+            limit = {
+                is_owned_by = PREV
+                is_core_of = PREV
+            }
+            add_to_temp_variable = { temp_owned_states_count = 1 }
+        }
+    }
+    set_temp_variable = { proportion = temp_owned_states_count }
+    divide_temp_variable = { proportion = global.SEH_heritage_states_@var:temp_heritage_check^num }
+    custom_trigger_tooltip = {
+        tooltip = count_proportion_owned_heritage_tt
+        check_variable = { var = proportion value = temp_min_proportion compare = greater_than_or_equals }
+    }
+}
+
+Then localize count_proportion_owned_heritage_tt
+count_proportion_owned_heritage_tt: "Owns and controlls at least [?temp_min_proportion|%] of [GetSEH_Heritage_temp] states."
+
+
+Then for GetSEH_Heritage_temp you'd need to define a scripted loc function similar to the one here ⁠modding-help⁠Var counting % from states. (or you could reuse it and add temp_heritage_check as one of the possible variables). 
+Choo_Choo_Oreo [UMA], 
+OP
+ — 28-Mar-26 09:09 PM
+SEH_heritage_up = {
+    icon = generic_prepare_civil_war
+    #target_array = global.SEH_species_states_
+    #target_non_existing = yes
+    cost = 1000
+    visible = {
+        any_owned_state = { check_variable = { SEH_heritage = 2 } }
+    }
+    # in any trigger block
+    available = {
+        ROOT = {
+            set_temp_variable = { temp_min_proportion = 0.5 }
+            set_temp_variable = { temp_heritage_check = 2 }
+            count_proportion_owned_heritage = yes
+        }
+    }
+    complete_effect = {
+    }
+    ai_will_do = {
+        factor = 1
+    }
+}
+
+Did I make a mistake? I thought I placed all of it in correctly, and on the map I own all the states since I am playing the main country who already owns 80+% of the states
+Image
+ [UMA], 
+Blue — 28-Mar-26 09:11 PM
+What you could do is modify the tooltip to be 
+count_proportion_owned_heritage_tt: "Owns and controlls at least [?temp_min_proportion|%] of [GetSEH_Heritage_temp] states, currently [?proportion|%]"
+
+That'll show you the current proportion. 
+Choo_Choo_Oreo [UMA], 
+OP
+ — 28-Mar-26 09:11 PM
+Huh
+Image
+That isnt true since the country I am playing as owns majority of those states.
+Blue — 28-Mar-26 09:17 PM
+Hmm, are the arrays being properly initialized? What happens if you type get_var global.SEH_heritage_states_@2^num into the console?
+Choo_Choo_Oreo [UMA], 
+OP
+ — 28-Mar-26 09:18 PM
+Image
+Blue — 28-Mar-26 09:19 PM
+Is initiate_heritage_array being run at the start of the game?
+Choo_Choo_Oreo [UMA], 
+OP
+ — 28-Mar-26 09:19 PM
+on_startup = {
+    effect = {
+        # Apply the Variables to States.
+        every_country = {
+            limit = { is_ai = no }
+            SEH_species_effect  = yes
+            SEH_ethnos_effect   = yes
+            SEH_heritage_effect = yes
+        }
+        initiate_species_array  = yes
+        initiate_ethnos_array   = yes
+        initiate_heritage_array = yes
+...
+initiate_heritage_array = {
+    every_state = {
+        add_to_array = { global.SEH_heritage_states_@var:SEH_heritage = THIS }
+    }
+}
+
+I did set up your array correctly or no? 
+Blue — 28-Mar-26 09:19 PM
+And this is a new save right?
+Choo_Choo_Oreo [UMA], 
+OP
+ — 28-Mar-26 09:19 PM
+Yes
+Do you need anything else?
+Blue — 28-Mar-26 09:24 PM
+This is a bit confusing. Add this line to initiate_heritage_array.
+initiate_heritage_array = {
+    every_state = {
+        add_to_array = { global.SEH_heritage_states_@var:SEH_heritage = THIS }
+        log = "Added state [THIS.GetID] to heritage array [?SEH_heritage]. Array length: [?global.SEH_heritage_states_@var:SEH_heritage^num]"
+    }
+}
+Start a new game then open game.log and post its contents.
+Choo_Choo_Oreo [UMA], 
+OP
+ — 28-Mar-26 09:24 PM
+Ok, ill restart and send you the log
+there was nothin in the game log.
+Blue — 28-Mar-26 09:32 PM
+?
+That means this effect isn't even running.
+Choo_Choo_Oreo [UMA], 
+OP
+ — 28-Mar-26 09:32 PM
+Yes
+Blue — 28-Mar-26 09:32 PM
+What does the whole on_actions file look like?
+Choo_Choo_Oreo [UMA], 
+OP
+ — 28-Mar-26 09:33 PM
+on_actions = {
+    on_startup = {
+        effect = {
+            # Apply the Variables to States.
+            every_country = {
+                limit = { is_ai = no }
+
+SEH.on_actions.txt
+2 KB
+rather simple
+could be cleaned up but everything else works
+Blue — 28-Mar-26 09:34 PM
+What if you put log = "ON_STARTUP FIRED!" right at the top of the on_startup effect block?
+Choo_Choo_Oreo [UMA], 
+OP
+ — 28-Mar-26 09:34 PM
+Well it would fire, but ill test it for you
+[21:35:14][1724.01.01.12][effectbase.cpp:1798]: [21:35:14][1724.01.01.12][effectbase.cpp:1782]: ON_STARTUP FIRED!
+Blue — 28-Mar-26 09:36 PM
+Is there anything in your error log?
+Choo_Choo_Oreo [UMA], 
+OP
+ — 28-Mar-26 09:36 PM
+[21:35:14][1724.01.01.12][effect.cpp:553]: common/on_actions/SEH.on_actions.txt:13: initiate_species_array: Invalid Scope, supported: State|Country|Character|Combatant|Ace|StrategicRegion|Operation|Unit|Military Industrial Organisation|Purchase Contract|Raid Instance|Special Project|Faction, provided: None
+[21:35:14][1724.01.01.12][effect.cpp:553]: common/on_actions/SEH.on_actions.txt:14: initiate_ethnos_array: Invalid Scope, supported: State|Country|Character|Combatant|Ace|StrategicRegion|Operation|Unit|Military Industrial Organisation|Purchase Contract|Raid Instance|Special Project|Faction, provided: None
+[21:35:14][1724.01.01.12][effect.cpp:553]: common/on_actions/SEH.on_actions.txt:15: initiate_heritage_array: Invalid Scope, supported: State|Country|Character|Combatant|Ace|StrategicRegion|Operation|Unit|Military Industrial Organisation|Purchase Contract|Raid Instance|Special Project|Faction, provided: None
+ 
+[21:35:14][1724.01.01.12][effect.cpp:553]: common/on_actions/SEH.on_actions.txt:15: initiate_heritage_array: Invalid Scope, supported: State|Country|Character|Combatant|Ace|StrategicRegion|Operation|Unit|Military Industrial Organisation|Purchase Contract|Raid Instance|Special Project|Faction, provided: None
+Blue — 28-Mar-26 09:37 PM
+Bruh, I guess scripted effects can't be called directly from on_startup. Scope into a country first.
+Doesn't matter which
+Choo_Choo_Oreo [UMA], 
+OP
+ — 28-Mar-26 09:38 PM
+Lol, well I placed it in the every_country part then? Or you have something else in mind?
+Blue — 28-Mar-26 09:38 PM
+Don't put it there, cause then it'll run as many times as there are countries.
+We only want it to run once.
+Choo_Choo_Oreo [UMA], 
+OP
+ — 28-Mar-26 09:39 PM
+The limit = { is_ai = no } make it only runs for player's, though I'd be happy if we can find a better way.
+Since its a problem for MP
+Blue — 28-Mar-26 09:39 PM
+Oh, I missed that part.
+Just pick a specific country tag
+Choo_Choo_Oreo [UMA], 
+OP
+ — 28-Mar-26 09:39 PM
+Do they need to exist on the map?
+Blue — 28-Mar-26 09:39 PM
+GER = {
+    #stuff
+}
+ [UMA], 
+Blue — 28-Mar-26 09:39 PM
+no
+Choo_Choo_Oreo [UMA], 
+OP
+ — 28-Mar-26 09:40 PM
+ZZZ = {
+    SEH_species_effect  = yes
+    SEH_ethnos_effect   = yes
+    SEH_heritage_effect = yes
+    initiate_species_array  = yes
+    initiate_ethnos_array   = yes
+    initiate_heritage_array = yes
+}
+Blue — 28-Mar-26 09:40 PM
+If ZZZ is a tag in your mod then that'll work.
+Choo_Choo_Oreo [UMA], 
+OP
+ — 28-Mar-26 09:41 PM
+[21:40:18][1724.01.01.12][effectbase.cpp:1798]: [21:40:18][1724.01.01.12][effectbase.cpp:1782]: ON_STARTUP FIRED!
+[21:40:18][1724.01.01.12][effectbase.cpp:1798]: [21:40:18][1724.01.01.12][effectbase.cpp:1782]: Added state 1 to heritage array 1. Array length: 1
+[21:40:18][1724.01.01.12][effectbase.cpp:1798]: [21:40:18][1724.01.01.12][effectbase.cpp:1782]: Added state 2 to heritage array 1. Array length: 2
+
+It runs correctly now but that minor current isn't working.
+Image
+Image
+  count_proportion_owned_heritage_tt: "Owns and controlls at least [?temp_min_proportion|Y1%] of §Y[GetSEH_Heritage]§! states, currently [?proportion|Y1%]."
+Blue — 28-Mar-26 09:46 PM
+This is ridiculous.
+The trigger on the left says it's fulfilled. So is the trigger at least working correctly even if the text isn't'?
+Choo_Choo_Oreo [UMA], 
+OP
+ — 28-Mar-26 09:46 PM
+Seems fun to fix lol
+Blue — 28-Mar-26 09:47 PM
+Huh?
+Choo_Choo_Oreo [UMA], 
+OP
+ — 28-Mar-26 09:47 PM
+# args: temp_min_proportion, temp_heritage_check
+count_proportion_owned_heritage = {
+    set_temp_variable = { temp_owned_states_count = 0 } # for multiple uses of this scripted trigger
+    all_of_scopes = {
+        array = global.SEH_heritage_states_@var:temp_heritage_check
+        IF = {
+            limit = {
+                is_owned_by = PREV
+                is_core_of = PREV
+            }
+            add_to_temp_variable = { temp_owned_states_count = 1 }
+        }
+    }
+    set_temp_variable = { proportion = temp_owned_states_count }
+    divide_temp_variable = { proportion = global.SEH_heritage_states_@var:temp_heritage_check^num }
+    set_temp_variable = { SEH_temp_heritage = temp_heritage_check }
+    custom_trigger_tooltip = {
+        tooltip = count_proportion_owned_heritage_tt
+        check_variable = { var = proportion value = temp_min_proportion compare = greater_than_or_equals }
+    }
+}
+This is what I have, I added the set_temp_variable = { SEH_temp_heritage = temp_heritage_check } for [GetSEH_Heritage] so that could be it?
+Either way I kept it overall the same from what Scars sent.
+Blue — 28-Mar-26 09:49 PM
+No this should work fine.
+ [UMA], 
+Blue — 28-Mar-26 09:49 PM
+But as I asked above, the trigger in the left screenshot says it's fulfilled but the one on the right doesn't. Does the trigger itself work?
+Choo_Choo_Oreo [UMA], 
+OP
+ — 28-Mar-26 09:51 PM
+Seems like it.
+I switch over to another country better for the test.
+Image
+Image
+Blue — 28-Mar-26 09:52 PM
+Also just realized, the limit is
+            limit = {
+                is_owned_by = PREV
+                is_core_of = PREV
+            }
+
+Is the is_core_of part intended?
+Choo_Choo_Oreo [UMA], 
+OP
+ — 28-Mar-26 09:52 PM
+Yes, you must have it core first before you can change acceptance.
+Blue — 28-Mar-26 09:52 PM
+Alright
+ [UMA], 
+Choo_Choo_Oreo [UMA], 
+OP
+ — 28-Mar-26 09:52 PM
+These people own and have cores of all their states thus should work. BUT do own the majority of ID 45
+ [UMA], 
+Blue — 28-Mar-26 09:53 PM
+I guess you could try logging it again.
+Putting this just below the all_of_scopes block.
+log = "temp_owned_states_count: [?temp_owned_states_count]"
+log = "proportion: [?proportion]"
+Or wait
+You want the log = "proportion: [?proportion]" at the end of the trigger
+Choo_Choo_Oreo [UMA], 
+OP
+ — 28-Mar-26 09:54 PM
+In decision or script trigger?
+Blue — 28-Mar-26 09:55 PM
+In the scripted trigger
+Choo_Choo_Oreo [UMA], 
+OP
+ — 28-Mar-26 09:55 PM
+[21:55:00][1724.01.01.12][triggerbase.cpp:1317]: [21:55:00][1724.01.01.12][triggerbase.cpp:1299]: proportion: 0.66666
+[21:55:00][1724.01.01.12][triggerbase.cpp:1317]: [21:55:00][1724.01.01.12][triggerbase.cpp:1299]: proportion: 0.66666
+[21:55:00][1724.01.01.12][triggerbase.cpp:1317]: [21:55:00][1724.01.01.12][triggerbase.cpp:1299]: proportion: 0.66666
+It spits stuff out though idk for what
+Blue — 28-Mar-26 09:55 PM
+So yeah, it's working. Why the hell isn't it displaying properly?
+Choo_Choo_Oreo [UMA], 
+OP
+ — 28-Mar-26 09:58 PM
+I see nothing in the error log after restart
+Blue — 28-Mar-26 10:00 PM
+What if you set another temp variable and use it instead?
+set_temp_variable = { proportion = temp_owned_states_count }
+divide_temp_variable = { proportion = global.SEH_heritage_states_@var:temp_heritage_check^num }
+set_temp_variable = { proportion_display = proportion }
+
+
+  count_proportion_owned_heritage_tt: "Owns and controlls at least [?temp_min_proportion|Y1%] of §Y[GetSEH_Heritage]§! states, currently [?proportion_display|Y1%]."
+ 
+Idk, I'm just trying stuff lol
+Choo_Choo_Oreo [UMA], 
+OP
+ — 28-Mar-26 10:02 PM
+No
+Blue — 28-Mar-26 10:04 PM
+Wait, I think I know the issue. I just need to confirm something.
+Blue — 28-Mar-26 10:13 PM
+Indeed, because all_of_scopes doesn't have a tooltip, the game doesn't do any temp variable calculations when generating the tooltip.
+Fantastic, thanks so much PDX
+@Scars see above
+Scars — 28-Mar-26 10:13 PM
+:arj:
+Choo_Choo_Oreo [UMA], 
+OP
+ — 28-Mar-26 10:17 PM
+Is there a tooltip work around? Or can we highlight the states that the player needs to take instead
+Blue — 28-Mar-26 10:20 PM
+Okay, this is so dumb. You can get it to do the temp variable calculations for the tooltip, but only by assigning a tooltip to the all_of_scopes. So put tooltip = " " inside the all_of_scopes block. Then put the entire all_of_scopes block into a hidden_trigger block.
+count_proportion_owned_heritage = {
+    set_temp_variable = { temp_owned_states_count = 0 } # for multiple uses of this scripted trigger
+    hidden_trigger = {
+        all_of_scopes = {
+            array = global.SEH_heritage_states_@var:temp_heritage_check
+            tooltip = " "
+            IF = {
+                limit = {
+                    is_owned_by = PREV
+                    is_core_of = PREV
+                }
+                add_to_temp_variable = { temp_owned_states_count = 1 }
+            }
+        }
+    }
+    set_temp_variable = { proportion = temp_owned_states_count }
+    divide_temp_variable = { proportion = global.SEH_heritage_states_@var:temp_heritage_check^num }
+    set_temp_variable = { SEH_temp_heritage = temp_heritage_check }
+    custom_trigger_tooltip = {
+        tooltip = count_proportion_owned_heritage_tt
+        check_variable = { var = proportion value = temp_min_proportion compare = greater_than_or_equals }
+    }
+}
+Choo_Choo_Oreo [UMA], 
+OP
+ — 28-Mar-26 10:22 PM
+Ah, I love voodoo code
+Blue — 28-Mar-26 10:23 PM
+Welcome to esoteric Hoi4 scripting :sunglassesThumbsup:
+Choo_Choo_Oreo [UMA], 
+OP
+ — 28-Mar-26 10:27 PM
+Image
+Image
+At less it shows up now 
+Blue — 28-Mar-26 10:28 PM
+Okay, but it's completely inaccurate lol.
+Choo_Choo_Oreo [UMA], 
+OP
+ — 28-Mar-26 10:28 PM
+Tiny steps
+ [UMA], 
+Blue — 28-Mar-26 10:29 PM
+Do these logs still say the same thing?
+Well, assuming they weren't deleted.
+Choo_Choo_Oreo [UMA], 
+OP
+ — 28-Mar-26 10:31 PM
+Imma readd them for you rq 
+[22:32:02][1724.01.01.12][effectbase.cpp:1798]: [22:32:08][1724.01.01.12][triggerbase.cpp:1299]: proportion: 0.66666
+[22:32:08][1724.01.01.12][triggerbase.cpp:1317]: [22:32:08][1724.01.01.12][triggerbase.cpp:1299]: proportion: 0.66666
+[22:32:08][1724.01.01.12][triggerbase.cpp:1317]: [22:32:09][1724.01.01.12][triggerbase.cpp:1299]: proportion: 0.66666
+[22:32:09][1724.01.01.12][triggerbase.cpp:1317]: [22:32:09][1724.01.01.12][triggerbase.cpp:1299]: proportion: 0.66666
+...
+Blue — 28-Mar-26 10:35 PM
+What about the log = "temp_owned_states_count: [?temp_owned_states_count]"?
+Scars — 28-Mar-26 10:36 PM
+oh by the way should change the is_owned_by and is_core_of should be changed to is_owned_and_controlled_by
+according to your tooltip
+Choo_Choo_Oreo [UMA], 
+OP
+ — 28-Mar-26 10:36 PM
+Will do
+Choo_Choo_Oreo [UMA], 
+OP
+ — 28-Mar-26 10:37 PM
+[22:37:19][1724.01.01.12][effectbase.cpp:1798]: [22:37:20][1724.01.01.12][triggerbase.cpp:1299]: temp_owned_states_count: 18
+[22:37:20][1724.01.01.12][triggerbase.cpp:1317]: [22:37:20][1724.01.01.12][triggerbase.cpp:1299]: proportion: 0.66666
+[22:37:20][1724.01.01.12][triggerbase.cpp:1317]: [22:37:20][1724.01.01.12][triggerbase.cpp:1299]: temp_owned_states_count: 18
+[22:37:20][1724.01.01.12][triggerbase.cpp:1317]: [22:37:20][1724.01.01.12][triggerbase.cpp:1299]: proportion: 0.66666
+[22:37:20][1724.01.01.12][triggerbase.cpp:1317]: [22:37:21][1724.01.01.12][triggerbase.cpp:1299]: temp_owned_states_count: 18
+[22:37:21][1724.01.01.12][triggerbase.cpp:1317]: [22:37:21][1724.01.01.12][triggerbase.cpp:1299]: proportion: 0.66666
+[22:37:21][1724.01.01.12][triggerbase.cpp:1317]: [22:37:21][1724.01.01.12][triggerbase.cpp:1299]: temp_owned_states_count: 18
+[22:37:21][1724.01.01.12][triggerbase.cpp:1317]: [22:37:21][1724.01.01.12][triggerbase.cpp:1299]: proportion: 0.66666
+Forgot to readd that one but its here now
+Blue — 28-Mar-26 10:41 PM
+What's the number you get from typing get_var global.SEH_heritage_states_@2^num?
+Just want to know the total number of states with that heritage.
+Choo_Choo_Oreo [UMA], 
+OP
+ — 28-Mar-26 10:42 PM
+Image
+Blue — 28-Mar-26 10:43 PM
+Now that doesn't make any sense lol. According to that proportion should be 0.72
+ [UMA], 
+Blue — 28-Mar-26 10:43 PM
+These logs are for heritage 2 right?
+Choo_Choo_Oreo [UMA], 
+OP
+ — 28-Mar-26 10:43 PM
+This should be getting heritage with the ID of 2 number of states?
+Blue — 28-Mar-26 10:43 PM
+Yes
+Choo_Choo_Oreo [UMA], 
+OP
+ — 28-Mar-26 10:44 PM
+Techniclly 3 and 45?
+But it didnt got 3 45 or 2
+Blue — 28-Mar-26 10:44 PM
+Oh, nevermind
+Choo_Choo_Oreo [UMA], 
+OP
+ — 28-Mar-26 10:44 PM
+Image
+Blue — 28-Mar-26 10:44 PM
+Okay, that's accurate now
+What do these decisions' available blocks look like? 
+Choo_Choo_Oreo [UMA], 
+OP
+ — 28-Mar-26 10:45 PM
+SEH_heritage_up_3 = {
+        icon = generic_prepare_civil_war
+        #target_array = global.SEH_species_states_
+        #target_non_existing = yes
+
+        cost = 1000
+
+        visible = {
+            any_owned_state = { check_variable = { SEH_heritage = 3 } }
+        }
+
+        # in any trigger block
+        available = {
+            ROOT = {
+                set_temp_variable = { temp_min_proportion = 0.5 }
+                set_temp_variable = { temp_heritage_check = 3 }
+                count_proportion_owned_heritage = yes
+            }
+        }
+
+        complete_effect = {
+
+        }
+
+        ai_will_do = {
+            factor = 1
+        }
+}
+SEH_heritage_up_45 = {
+        icon = generic_prepare_civil_war
+        #target_array = global.SEH_species_states_
+        #target_non_existing = yes
+
+        cost = 1000
+
+        visible = {
+            any_owned_state = { check_variable = { SEH_heritage = 45 } }
+        }
+
+        # in any trigger block
+        available = {
+            ROOT = {
+                set_temp_variable = { temp_min_proportion = 0.5 }
+                set_temp_variable = { temp_heritage_check = 45 }
+                count_proportion_owned_heritage = yes
+            }
+        }
+
+        complete_effect = {
+
+        }
+
+        ai_will_do = {
+            factor = 1
+        }
+}
+100% chance we can do this dynamically instead of me making one for all 48 heritages, but this is what I have currently. 
+Blue — 28-Mar-26 10:49 PM
+What if you add temp_owned_states_count to the tooltip? Just to test
+  count_proportion_owned_heritage_tt: "Owns and controlls at least [?temp_min_proportion|Y1%] of §Y[GetSEH_Heritage]§! states, currently [?proportion|Y1%].\ntemp_owned_states_count: [?temp_owned_states_count]"
+Choo_Choo_Oreo [UMA], 
+OP
+ — 28-Mar-26 10:50 PM
+Image
+Image
+Blue — 28-Mar-26 10:50 PM
+wtf
+Image
+I'm at a bit of a loss. Trying to diagnose something like this through someone else is pretty tough and time consuming. If you're comfortable with it, you could send me your entire mod and I could look at it myself. 
+Choo_Choo_Oreo [UMA], 
+OP
+ — 28-Mar-26 10:55 PM
+Ofc im comfortable, its public (on the workshop after all)
+Blue — 28-Mar-26 10:55 PM
+Oh, I didn't know that lol
+Choo_Choo_Oreo [UMA], 
+OP
+ — 28-Mar-26 10:55 PM
+I have it on github, can I have your git or do you want me to change its settings?
+Choo_Choo_Oreo [UMA], 
+OP
+ — 28-Mar-26 10:55 PM
+Makes sense since I never said so till now
+ [UMA], 
+Blue — 28-Mar-26 10:57 PM
+My github is testsubjectblue2
+Choo_Choo_Oreo [UMA], 
+OP
+ — 28-Mar-26 10:58 PM
+I invited you
+Hope you do not mind the rando errors I havnt fix yet
+Blue — 28-Mar-26 11:13 PM
+No worries, your error log is shockingly clean for a total conversion with a custom map.
+Choo_Choo_Oreo [UMA], 
+OP
+ — 28-Mar-26 11:17 PM
+How is it shocking 🙀 
+I thought its normal to have a clean log
+Blue — 28-Mar-26 11:18 PM
+Not in this server lmao
+Most total conversions are done by noob modders and have thousands of errors. 
+ [UMA], 
+Choo_Choo_Oreo [UMA], 
+OP
+ — 28-Mar-26 11:44 PM
+Also I am wondering if we can make the decision creation dynamic of must I make a decision for every heritage type (Plus species and ethnos later)?
+Blue — 28-Mar-26 11:51 PM
+@Choo_Choo_Oreo Found the issue, it is absolutly baffling. For some reason, the line set_temp_variable = { temp_owned_states_count = 0 } at the top of the scripted trigger is causing it. Deleting it makes it work perfectly. So, just delete it ig and make sure not to use it multiple times within the same trigger block.
+ [UMA], 
+Blue — 28-Mar-26 11:54 PM
+You can, it'll just require some shenanigans. You'll need to hijack state targeted decisions.
+As in, you'll need to make state targeted decisions and disguise them to look like they're targeted at the heritages.
+Choo_Choo_Oreo [UMA], 
+OP
+ — 28-Mar-26 11:59 PM
+Would it be worth it for performance? Or should I simply copy paste?
+Blue — 29-Mar-26 12:01 AM
+It's not really a performance issue. More of a "do you want to create individual decisions for 45 heritages and create new ones if you ever add more" issue.
+If this were my mod I'd to the targeted decision method.
+Choo_Choo_Oreo [UMA], 
+OP
+ — 29-Mar-26 12:02 AM
+I have 48 total heritages so maybe a dynamic one MIGHT be easier
+Choo_Choo_Oreo [UMA], 
+OP
+ — 29-Mar-26 12:03 AM
+I agree but now how  would I even do that
+Plus not having it update for every country in the game.
+Blue — 29-Mar-26 12:06 AM
+It shouldn't be too complicated. You make the targeted decision have a target_array. Then on_startup you add as many states to that array as you have heritages. In each state you set a variable, could be called SEH_heritage_decision_target or something like that. Set it to the heritage that state/decision is supposed to target.
+You know what, I'll just do it real quick. Shouldn't take very long.
+Blue — 29-Mar-26 12:18 AM
+@Choo_Choo_Oreo Here
+You run this scripted effect on_startup
+initiate_heritage_states = {
+    for_loop_effect = {
+        end = 48 #Total number of heritages
+        value = v
+        
+        add_to_array = { global.heritage_decision_states = global.states^v }
+        var:global.states^v = {
+            set_variable = { SEH_heritage_decision_target = v }
+        }
+    }
+}
+
+
+Then your decision looks like this.
+    SEH_heritage_up = {
+        icon = generic_prepare_civil_war
+        target_array = global.heritage_decision_states
+        state_target = yes
+
+        cost = 1000
+
+        visible = {
+            any_owned_state = { check_variable = { SEH_heritage = FROM.SEH_heritage_decision_target } }
+        }
+
+        # in any trigger block
+        available = {
+            ROOT = {
+                set_temp_variable = { temp_min_proportion = 0.5 }
+                set_temp_variable = { temp_heritage_check = FROM.SEH_heritage_decision_target }
+                count_proportion_owned_heritage = yes
+            }
+        }
+
+        complete_effect = {
+
+        }
+
+        ai_will_do = {
+            factor = 1
+        }
+    }
+To get the heritage the decision is targeting you just use FROM.SEH_heritage_decision_target 
+Choo_Choo_Oreo [UMA], 
+OP
+ — 29-Mar-26 12:27 AM
+Minor bug is that it seemingly target random states but understands what the target is
+Blue — 29-Mar-26 12:28 AM
+What do you mean?
+Choo_Choo_Oreo [UMA], 
+OP
+ — 29-Mar-26 12:29 AM
+Also is this right? SEH_heritage_up: "Move Heritage Acceptance: [FROM.SEH_heritage_decision_target]"
+Blue — 29-Mar-26 12:29 AM
+FROM.SEH_heritage_decision_target is a variable
+You'll need to use scripted loc to get the actual name.
+Choo_Choo_Oreo [UMA], 
+OP
+ — 29-Mar-26 12:29 AM
+Ah
+Ill make one rq
+Wait could I update this one?
+defined_text = {
+    name = GetSEH_Heritage
+    text = {
+        trigger = { check_variable = { SEH_temp_heritage > 0 } }
+        localization_key = "var_SEH_heritage.[?SEH_temp_heritage]"
+    }
+    text = {
+        localization_key = "var_SEH_heritage.[?SEH_heritage]"
+    }
+}
+Or must I make a new one
+Blue — 29-Mar-26 12:30 AM
+Hmm, it should be fine.
+Choo_Choo_Oreo [UMA], 
+OP
+ — 29-Mar-26 12:33 AM
+Image
+Image
+ [UMA], 
+Choo_Choo_Oreo [UMA], 
+OP
+ — 29-Mar-26 12:33 AM
+    text = {
+        trigger = { check_variable = { FROM.SEH_heritage_decision_target > 0 } }
+        localization_key = "var_SEH_heritage.[?FROM.SEH_heritage_decision_target]"
+    }
+
+Added this to the top
+Could I just make it only appear in decision and that be a fix?
+Blue — 29-Mar-26 12:35 AM
+Yep, add on_map_mode = decision_view_only to the decision definition.
+Forgot to do that
+Choo_Choo_Oreo [UMA], 
+OP
+ — 29-Mar-26 12:36 AM
+Still makes it target the state if you rightclick but it doesnt show up
+Ah and the % doesnt update even after annexing a country
+Image
+Blue — 29-Mar-26 12:38 AM
+Wait a day
+Choo_Choo_Oreo [UMA], 
+OP
+ — 29-Mar-26 12:38 AM
+I did
+Blue — 29-Mar-26 12:38 AM
+Targeted decisions are evaluated every day.
+Hmm, okay
+I'll check it out
+ [UMA], 
+Blue — 29-Mar-26 12:39 AM
+I legit had no idea you could even do that with targeted decisions lol.
+Choo_Choo_Oreo [UMA], 
+OP
+ — 29-Mar-26 12:39 AM
+I push the changes if needed.
+I also need to add a check for visible. I dont want you to accept a fully accepted group after all.
+ABL = {
+    # Initialize Species Arrays
+    add_to_array = { array = SEH_accepted_species_full value = 4 }
+    # Initialize Ethnos Arrays
+    add_to_array = { array = SEH_accepted_ethnos_full value = 9 }
+    # Initialize Heritage Arrays
+    add_to_array = { array = SEH_accepted_heritage_full value = 29 }
+}
+is_in_array = {
+    array = SEH_accepted_heritage_full
+    value = FROM.SEH_heritage_decision_target
+}
+
+Would it be this?
+ [UMA], 
+Blue — 29-Mar-26 12:43 AM
+Yep
+Choo_Choo_Oreo [UMA], 
+OP
+ — 29-Mar-26 12:48 AM
+complete_effect = {
+    set_temp_variable = { SEH_temp_heritage = FROM.SEH_heritage_decision_target }
+    IF = {
+        LIMIT = {
+            is_in_array = { array = SEH_accepted_heritage_partial value = 
+FROM.SEH_heritage_decision_target }
+        }
+        SEH_add_accepted_heritage_full = yes
+        ELSE = {
+            SEH_add_accepted_heritage_partial = yes
+        }
+    }
+}
+I think this would work too
+ [UMA], 
+Blue — 29-Mar-26 12:53 AM
+This is because of the is_core_of = PREV in the trigger. You own the state but you don't have it cored.
+Choo_Choo_Oreo [UMA], 
+OP
+ — 29-Mar-26 12:54 AM
+AH forgot that step
+Blue — 29-Mar-26 12:54 AM
+But there's another issue. For some reason the tooltip and only the tooltip is counting exactly 1 extra state.
+I'm gonna loose my mind.
+This shitty fucking engine. This isn't the first time I've had trouble with temp variables and triggers.
+Choo_Choo_Oreo [UMA], 
+OP
+ — 29-Mar-26 12:55 AM
+Huh
+Image
+Blue — 29-Mar-26 12:55 AM
+Yep, that's what I mean
+Choo_Choo_Oreo [UMA], 
+OP
+ — 29-Mar-26 12:56 AM
+Can we use some ducktap and do -1 at the end or is that not possable?
+Blue — 29-Mar-26 12:58 AM
+That's what I'm trying right now
+Okay, yes
+This seems to work
+count_proportion_owned_heritage = {
+    hidden_trigger = {
+        all_of_scopes = {
+            array = global.SEH_heritage_states_@var:temp_heritage_check
+            tooltip = " "
+            IF = {
+                limit = {
+                    is_owned_and_controlled_by = PREV
+                    is_core_of = PREV
+                }
+                add_to_temp_variable = { temp_owned_states_count = 1 }
+            }
+        }
+    }
+    set_temp_variable = { proportion = temp_owned_states_count }
+    divide_temp_variable = { proportion = global.SEH_heritage_states_@var:temp_heritage_check^num }
+    
+    set_temp_variable = { proportion_display = temp_owned_states_count }
+    subtract_from_temp_variable = { proportion_display = 1 }
+    divide_temp_variable = { proportion_display = global.SEH_heritage_states_@var:temp_heritage_check^num }
+    
+    set_temp_variable = { SEH_temp_heritage = temp_heritage_check }
+    custom_trigger_tooltip = {
+        tooltip = count_proportion_owned_heritage_tt
+        check_variable = { var = proportion value = temp_min_proportion compare = greater_than_or_equals }
+    }
+}
+ 
+Then you set the tooltip to use proportion_display instead of proportion
+Choo_Choo_Oreo [UMA], 
+OP
+ — 29-Mar-26 01:04 AM
+Thank you so much, I THINK that is everything
+I would of never figure this out
+FYI I feel bad bc how many hours I made you guys help me
+Blue — 29-Mar-26 01:06 AM
+No problem, I usually enjoy the more esoteric coding stuff. Well, when I'm not fighting the game every step of the way that is.
+Blue — 29-Mar-26 01:07 AM
+You got off so easy this time lol
+I thought this was just gonna be a simple tooltip.
+But Hoi4 had other ideas.
+Choo_Choo_Oreo [UMA], 
+OP
+ — 29-Mar-26 01:09 AM
+I thought this be easy since it was easy setting up the state data
+Scars — 29-Mar-26 01:20 AM
+😭 😭 😭
+thank you for your service
+Choo_Choo_Oreo [UMA], 
+OP
+ — 29-Mar-26 01:31 AM
+Pains me to see how laggy they are for updates RIP
+Image
+Image
+Image
+Image
+As much as this is solved, is there a way we can cut down that near 1m of update time per year? 
+Blue — 29-Mar-26 01:43 AM
+That's... admittedly not great.
+Try changing visible to target_trigger. While I'm pretty sure they behave about the same in a targeted decision, may as well try.
+Choo_Choo_Oreo [UMA], 
+OP
+ — 29-Mar-26 01:44 AM
+Since it was a dynamic decision I was thinking to move the lightest check into the category and have each dynamic decision to have their own category.
+But I will try the target_trigger
+Blue — 29-Mar-26 01:44 AM
+If that doesn't improve things, then there is one more trick you can do. The activate_targeted_decision is interesting in that rather than immediately activating the decision, it makes a targeted decision appear in the decision tab. This basically lets you manually do the visible block's job. Every time a state changes ownership you check to see if any owned states have a certain heritage and make its targeted decision visible. 
+And with that approach you'd set all the decisions to allowed = { always = no }
+ [UMA], 
+Blue — 29-Mar-26 01:46 AM
+That could help too. Could also put them in target_root_trigger. It would do roughly the same thing.
+Choo_Choo_Oreo [UMA], 
+OP
+ — 29-Mar-26 01:57 AM
+So with a activate_targeted_decision I place that in the on_state_control_changed? How would I do that, plus some of them already have state to change accept at start of game.
+Blue — 29-Mar-26 01:58 AM
+You'd need to calculate which decisions should be visible on_startup too.
+Tbh, I'm a bit too tired to walk you through the whole thing.
+Choo_Choo_Oreo [UMA], 
+OP
+ — 29-Mar-26 01:59 AM
+We can do it another time, you need a break lol
+Blue — 29-Mar-26 02:00 AM
+But the basic idea is whenever a state changes ownership you
+Get the heritage of the state.
+Check if the new owner already has the decision for that heritage visible. If not, then you make is visible.
+Check if the old owner has any other states of this heritage. If not, then you make this decision not visible for them (using remove_targeted_decision)
+ 
+Choo_Choo_Oreo [UMA], 
+OP
+ — 29-Mar-26 02:05 AM
+Also for target_root_trigger, it it a replacement for target_trigger?
+Blue — 29-Mar-26 02:05 AM
+No, it has different behavior
+target_trigger checks for every possible target.
+target_root_trigger only checks once for the ROOT scope.
+So in target_root_trigger you'd put things that unlock the entire decision.
+Rather than stuff that unlocks it for one specific target.
+Choo_Choo_Oreo [UMA], 
+OP
+ — 29-Mar-26 02:08 AM
+target_trigger for
+any_owned_state = { check_variable = { SEH_species = FROM.SEH_species_decision_target } }
+
+target_root_trigger for 
+NOT = {
+    is_in_array = { array = SEH_accepted_species_full value = FROM.SEH_species_decision_target }
+}
+
+I do not fully understand it, either way I think Ill do your idea of remove/adding the decision. 
+Blue — 29-Mar-26 02:09 AM
+They'd both go in target_trigger because they both reference stuff from the target. target_root_trigger can't reference anything from the target.
+Because it only runs once in the root scope.
+Which means it's great for performance, but limited.
+Choo_Choo_Oreo [UMA], 
+OP
+ — 29-Mar-26 02:10 AM
+So in this case I wouldnt use target_root_trigger.
+Blue — 29-Mar-26 02:11 AM
+No, not unless you have some other condition that unlocks the decisions. Like the country needs to do a focus or something.
+That's the kind of stuff you put in target_root_trigger
+Choo_Choo_Oreo [UMA], 
+OP
+ — 29-Mar-26 02:21 AM
+Is this right?
+IF = {
+    LIMIT = { FROM.FROM = { check_variable = { SEH_heritage = 
+FROM.SEH_heritage_decision_target } } }
+    ROOT = {
+        LIMIT = { NOT = { has_decision = SEH_heritage_up } }
+        activate_targeted_decision = SEH_heritage_up
+    }
+    FROM = {
+        LIMIT = { any_owned_state = { check_variable = { SEH_heritage = 
+FROM.SEH_heritage_decision_target } } }
+        remove_targeted_decision = SEH_heritage_up
+    }
+}
+
+And then add allowed = { always = no } to the decisions?
+Blue — 29-Mar-26 02:23 AM
+No, FROM.SEH_heritage_decision_target specifically has to do with the targeted decision. You can't really use it outside that. You also can't use limit like that outside of specific effects. They need to go in an if block.
+That's also not how you use those effects
+https://hoi4.paradoxwikis.com/Effect#activate_targeted_decision
+https://hoi4.paradoxwikis.com/Effect#remove_targeted_decision
+Choo_Choo_Oreo [UMA], 
+OP
+ — 29-Mar-26 02:24 AM
+Ah was thinking it was activate_decision for some reason
+IF = {
+    LIMIT = {
+        NOT = { is_in_array = { array = SEH_accepted_heritage_full value = 
+FROM.FROM.SEH_heritage } }
+    }
+    IF = {
+        LIMIT = {
+            ROOT = { NOT = { has_decision = SEH_heritage_up } }
+        }
+        activate_targeted_decision = {
+            target = ROOT
+            decision = SEH_heritage_up
+        }
+    }
+    
+    IF = {
+        LIMIT = {
+            FROM = { any_owned_state = { check_variable = { SEH_heritage = 
+FROM.SEH_heritage_decision_target } } }
+        }
+        remove_targeted_decision = {
+            target = FROM
+            decision = SEH_heritage_up
+        }
+    }
+}
+ 
+Choo_Choo_Oreo [UMA], 
+OP
+ — 29-Mar-26 02:32 AM
+I don't think I did it right by just looking at what you said and what I did
+Blue — 29-Mar-26 02:34 AM
+has_decision won't work in this context. Your best bet is probably using targeted variables to keep track of what decisions a country has visible. Also the target for activate_targeted_decision should be the specific state that's used as the target for that heritage.
+And you're still using FROM.SEH_heritage_decision_target
+Choo_Choo_Oreo [UMA], 
+OP
+ — 29-Mar-26 02:35 AM
+OH missed that one
+Choo_Choo_Oreo [UMA], 
+OP
+ — 29-Mar-26 07:22 PM
+Also is this fine? Its due to having cores owned by another country well also having said culture in your country that isnt accepted?
+Image
+Choo_Choo_Oreo [UMA], 
+OP
+ — 29-Mar-26 07:49 PM
+I can figure out the one to work for gameplay on losing/gaining a state. But I got the start up one working. Took me a hot minute to figure out the whole targeted variables.
+every_controlled_state = {
+    set_temp_variable = { heritage_idx = SEH_heritage }
+    PREV = {
+        IF = {
+            LIMIT = {
+                NOT = { is_in_array = { array = SEH_accepted_heritage_full value = heritage_idx } }
+            }
+            activate_targeted_decision = {
+                target = var:global.heritage_decision_states^heritage_idx
+                decision = SEH_heritage_up
+            }
+        }
+    }
+}
+Choo_Choo_Oreo [UMA], 
+OP
+ — 29-Mar-26 08:01 PM
+[20:01:06][1724.01.01.12][effectimplementation.cpp:14529]: common/scripted_effects/SEH.scripted_effects.txt:274: activate_targeted_decision: target is not set
+I do get this error once in the error log
+No clue why but it seems not to hurt most nations? Probably something specific causing the issue
+Blue — 29-Mar-26 09:07 PM
+I'm a bit burnt out from this tbh. As much as I love helping people, designing a whole system for a mod I don't work on is a bit much. I'm happy to give tips. But for now at least I'm done. 
+Choo_Choo_Oreo [UMA], 
+OP
+ — 29-Mar-26 09:59 PM
+Your guidance was very appreciated

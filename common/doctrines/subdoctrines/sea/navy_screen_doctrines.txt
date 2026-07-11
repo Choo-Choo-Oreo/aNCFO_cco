@@ -8,14 +8,22 @@ convoy_escort = {
     xp_type = navy
 
     available = {
-        always = yes
+		OR = {
+			has_doctrine = new_fleet_in_being
+			has_doctrine = new_base_strike
+			has_doctrine = new_convoy_raiding
+		}
+        has_navy_size = {
+			type = screen_ship
+			size > 9
+		}
     }
 
     ai_will_do = { 
         base = 1
         modifier = {
             factor = 95
-            original_tag = ENG
+            is_primarily_coastal = yes
         }
     }
 
@@ -37,16 +45,22 @@ convoy_escort = {
 				max_organisation = 10
 			}
 			light_cruiser = {
-				max_organisation = 5
+				max_organisation = 10
 			}
 			convoy_escort_efficiency = 0.05
 		}
 		sweeping_duty = {
+			light_cruiser = {
+				mines_sweeping = 0.25
+			}
+			destroyer = {
+				mines_sweeping = 0.25
+			}
 			mines_sweeping_by_fleets_factor = 0.15
 		}
 		creeping_attack = {
 			destroyer = {
-				sub_detection = 0.10
+				surface_detection = 0.1
 				lg_attack = 0.05
 			}
 			light_cruiser = {
@@ -55,12 +69,14 @@ convoy_escort = {
 		}
 		as_below_so_above = {
 			destroyer = {
-				anti_air_attack = 0.15
+				max_organisation = 10
+				anti_air_attack = 0.1
 			}
 			light_cruiser = {
-				anti_air_attack = 0.15
+				max_organisation = 10
+				anti_air_attack = 0.1
 			}
-			convoy_escort_efficiency = 0.05
+			convoy_escort_efficiency = 0.1
 		}
     }
 }
@@ -75,32 +91,50 @@ support_integrated_operations = {
     xp_type = navy
 
     available = {
-        always = yes
+		OR = {
+			has_doctrine = new_fleet_in_being
+			has_doctrine = new_base_strike
+			has_doctrine = new_convoy_raiding
+		}
+        has_navy_size = {
+			unit = light_cruiser
+			size > 3
+		}
+		has_navy_size = {
+			unit = destroyer
+			size > 9
+		}
     }
 
     ai_will_do = { 
         base = 1
         modifier = {
             factor = 95
-            original_tag = USA
+            is_primarily_coastal = yes
         }
         modifier = {
             factor = 95
-            original_tag = ITA
+            is_primarily_coastal = yes
         }
     }
 
     # EFFECTS
-	screening_efficiency = 0.05
+	convoy_escort_efficiency = 0.1
+	equipment_bonus = {
+		screen_ship = {
+			naval_range = 0.15
+			instant = yes
+		}
+	}
 	
     rewards = {
         first_line_of_defense = {
 			destroyer = {
-				max_organisation = 5
+				max_organisation = 10
 				anti_air_attack = 0.1
 			}
 			modifier = {
-				convoy_retreat_speed = 0.1
+				naval_retreat_speed = 0.1
 			}
 		}
 		first_line_of_attack = {
@@ -113,6 +147,7 @@ support_integrated_operations = {
 			modifier = {
 				navy_casualty_on_hit = -0.2
 				navy_casualty_on_sink = -0.35
+				naval_accidents_chance = -0.15
 			}
 		}
 		fleet_coordination = {
@@ -124,16 +159,18 @@ support_integrated_operations = {
 				max_organisation = 5
 				sub_detection = 0.1
 			}
-			screening_efficiency = 0.10
+			modifier = {
+				screening_efficiency = 0.10
+			}
 		}
 		early_warning = {
 			destroyer = {
-				max_organisation = 5
+				max_organisation = 10
 				anti_air_attack = 0.1
 				surface_detection = 0.10
 			}
 			light_cruiser = {
-				max_organisation = 5
+				max_organisation = 10
 				anti_air_attack = 0.1
 				surface_detection = 0.10
 			}
@@ -151,32 +188,40 @@ hunter_killers = {
     xp_type = navy
 
     available = {
-    
+		OR = {
+			has_doctrine = new_fleet_in_being
+			has_doctrine = new_base_strike
+		}
+		has_navy_size = {
+			type = screen_ship
+			size > 9
+		}
+		has_tech = sonar
     }
 
     ai_will_do = { 
         base = 1
         modifier = {
             factor = 95
-            OR = {
-            	original_tag = FRA
-            	original_tag = SOV
-            }
+            OR = { is_primarily_coastal = yes is_colonial_empire = yes }
         }
     }
 
     # EFFECTS
-	naval_coordination = 0.10 
+	naval_coordination = 0.10
+	naval_torpedo_enemy_critical_chance_factor = -0.1
 	
     rewards = {
 		search_and_destroy = {
 			destroyer = {
-				sub_detection = 0.1
+				max_organisation = 5
+				sub_detection = 0.15
 			}
 		}
 		flotilla_leader = {
 			light_cruiser = {
-				sub_detection = 0.1
+				max_organisation = 5
+				sub_detection = 0.15
 			}
 		}
 		group_operations = {
@@ -197,11 +242,11 @@ hunter_killers = {
 		}
 		light_force = {
 			light_cruiser = {
-				max_organisation = 5
+				max_organisation = 10
 				sub_detection = 0.05
 			}
 			destroyer = {
-				max_organisation = 5
+				max_organisation = 10
 				sub_detection = 0.05
 			}
 			modifier = {
@@ -221,21 +266,30 @@ torpedo_primacy = {
     xp_type = navy
 
     ai_will_do = { 
-        base = 0
+        base = 1
         modifier = {
             factor = 95
-            original_tag = JAP
+            is_primarily_coastal = yes
         }
     }
     available = {
-   		always = yes
+		OR = {
+			has_doctrine = new_fleet_in_being
+			has_doctrine = new_base_strike
+			has_doctrine = new_littoral_defense
+		}
+   		has_navy_size = {
+			type = screen_ship
+			size > 9
+		}
+		has_tech = basic_torpedo
     }
     naval_torpedo_hit_chance_factor = 0.1
-	convoy_raiding_efficiency_factor = 0.05
+	naval_torpedo_cooldown_factor = -0.125
 
     rewards = {
 
-    	modern_broadsides = {
+    	efficient_torpedo_fuze = {
     		destroyer = {
     			torpedo_attack = 0.2
     		}
@@ -243,6 +297,7 @@ torpedo_primacy = {
     	coordinated_fire_patterns = {
     		destroyer = {
     			max_organisation = 10
+				naval_torpedo_hit_chance_factor = 0.05
     		}
     	}	
     	dedicated_torpedo_task_forces = {
@@ -252,15 +307,26 @@ torpedo_primacy = {
 			}
     	}
     	torpedo_rearming = {
+			light_cruiser = {
+				max_organisation = 5
+			}
+			destroyer = {
+				max_organisation = 5
+			}
     		modifier = {
-				naval_torpedo_cooldown_factor = -0.25
+				naval_torpedo_cooldown_factor = -0.125
 			}
     	}
     	night_combat_training = {
-			naval_night_attack = 0.1
-    		night_spotting_chance = 0.1
 			heavy_cruiser = {
 				torpedo_attack = 0.1
+			}
+			medium_cruiser = {
+				torpedo_attack = 0.1
+			}
+			modifier = {
+				naval_night_attack = 0.1
+    			night_spotting_chance = 0.1
 			}
     	}
     }
@@ -275,46 +341,144 @@ jeune_ecole = {
     xp_type = navy
 
     available = {
-    	#TODO: special project
-   		always = yes
+		OR = {
+			has_doctrine = new_convoy_raiding
+			has_doctrine = new_littoral_defense
+		}
+    	has_navy_size = {
+			type = screen_ship
+			size > 9
+		}
+		has_tech = basic_torpedo
     }
+	ai_will_do = {
+		factor = 1
+	}
 
-    convoy_raiding_efficiency_factor = 0.1
 	destroyer = {
+		convoy_raiding_coordination = 0.1
 		torpedo_attack = 0.1
 	}
 	light_cruiser = {
+		convoy_raiding_coordination = 0.1
 		torpedo_attack = 0.1
 	}
 
     rewards = {
-
+		coastal_patrol = {
+    		modifier = {
+				mines_planting_by_fleets_factor = 0.2
+				naval_mines_damage_factor = 0.1
+				naval_enemy_fleet_size_ratio_penalty_factor = 0.1
+			}
+    	}
+		convoy_escort = {
+    		modifier = {
+				convoy_escort_efficiency = 0.1
+				convoy_retreat_speed = 0.1
+			}
+    	}
     	commerce_raiding_priority = {
     		light_cruiser = {
     			convoy_raiding_coordination = 0.05
     			max_organisation = 10
     		}
+			destroyer = {
+				convoy_raiding_coordination = 0.05
+				max_organisation = 10
+			}
     	}
     	long_range_torpedo = {
     		modifier = {
 				naval_torpedo_screen_penetration_factor = 0.1
+				naval_enemy_fleet_size_ratio_penalty_factor = 0.05
 			}
     	}
     	total_economic_warfare = {
     		destroyer = {
-    			convoy_raiding_coordination = 0.05
     			max_organisation = 10
+				naval_torpedo_hit_chance_factor = 0.1
+				convoy_raiding_coordination = 0.05
     		}
     	}
-    	convoy_escort = {
-    		modifier = {
-				convoy_escort_efficiency = 0.1
-			}
-    	}
-    	coastal_patrol = {
-    		modifier = {
-				mines_planting_by_fleets_factor = 0.2
-			}
-    	}
     }
+}
+
+# VNR 2.11 addition (dependency refresh, see documentation/dependency_update_2.11_log.md)
+mosquito_fleet = {
+	track = screens
+    name = SUBDOCTRINE_SCREEN_MOSQUITO_FLEET
+    description = SUBDOCTRINE_SCREEN_MOSQUITO_FLEET_DESC
+    icon = GFX_doctrine_mosquito_fleet_medium
+
+    xp_cost = 25
+    xp_type = navy
+
+	available = {
+		has_doctrine = new_littoral_defense
+		has_tech = basic_torpedo
+	}
+	ai_will_do = {
+		factor = 0
+	}
+
+	screening_efficiency = -0.50
+	equipment_bonus = {
+		ship_hull_light = {
+			build_cost_ic = -0.15
+			instant = yes
+		}
+	}
+	
+	rewards = {
+		concealment_measure = {
+			destroyer = {
+				surface_visibility = -0.15
+				max_organisation = -10
+			}
+			modifier = {
+				navy_screen_attack_factor = -0.5
+				naval_torpedo_screen_penetration_factor = 0.1
+			}
+		}
+		mini_hull = {
+			equipment_bonus = {
+				ship_hull_light = {
+					build_cost_ic = -0.15
+					max_strength = -0.5
+					instant = yes
+				}
+			}
+			destroyer = {
+				max_organisation = -10
+				fuel_consumption = -0.25
+			}
+		}
+		high_speed_maneuver = {
+			modifier = {
+				naval_enemy_fleet_size_ratio_penalty_factor = 0.1
+				naval_retreat_speed = 0.25
+			}
+		}
+		echelon_salvo = {
+			destroyer = {
+				naval_torpedo_hit_chance_factor = 0.1
+				torpedo_attack = 0.1
+			}
+			destroyer = {
+				max_organisation = -10
+			}
+			modifier = {
+				naval_retreat_chance = 0.15
+			}
+		}
+		swarm_attack = {
+			modifier = {
+				ships_at_battle_start = 0.25
+				naval_torpedo_cooldown_factor = -0.25
+				naval_torpedo_screen_penetration_factor = 0.1
+				screening_efficiency = -0.25
+			}
+		}
+	}
 }

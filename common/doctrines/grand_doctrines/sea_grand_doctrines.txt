@@ -5,7 +5,10 @@ new_fleet_in_being = {
     description = GRAND_DOCTRINE_FLEET_IN_BEING_DESC
     icon = GFX_doctrine_fleet_in_being_medium
     available = {
-        always = yes
+        has_navy_size = {
+            type = capital_ship
+            size > 3
+        }
     }
 
     xp_cost = 100
@@ -20,9 +23,13 @@ new_fleet_in_being = {
         screens
         carriers
         capital_ships
+        naval_logistics
     }
 
     # EFFECTS
+    effect = {
+        custom_effect_tooltip = new_fleet_in_being_sub_tt
+    }
     SH_battleship = {
         max_organisation = 5
     }
@@ -55,8 +62,8 @@ new_fleet_in_being = {
         }
 		{
             #Screens
-			navy_anti_air_attack_factor = 0.10
-            screening_efficiency = 0.05
+			convoy_escort_efficiency = 0.10
+            convoy_retreat_speed = 0.1
             effect = {
                 if = {
                     limit = {
@@ -73,8 +80,11 @@ new_fleet_in_being = {
         }
         {
             #Carriers
-	        sortie_efficiency = 0.1
-            navy_anti_air_attack_factor = 0.1
+	        carrier = {
+                surface_detection = 0.1
+                sub_detection = 0.05
+            }
+            fighter_sortie_efficiency = 0.1
             effect = {
                 if = {
                     limit = {
@@ -91,7 +101,7 @@ new_fleet_in_being = {
         }
         {
             #Capital Ships
-			positioning = 0.1
+			navy_capital_ship_attack_factor = 0.1
             strike_force_movement_org_loss = -0.1
             effect = {
                 if = {
@@ -107,6 +117,25 @@ new_fleet_in_being = {
                 }
             }
         }
+        {
+            #Naval Logistics
+			naval_accidents_chance = -0.1
+            naval_torpedo_damage_reduction_factor = 0.05
+            critical_receive_chance = -0.05
+            effect = {
+                if = {
+                    limit = {
+                        NOT = {
+                            has_variable = naval_logistics_milestone_var
+                        }
+                    }
+                    set_variable = { naval_logistics_milestone_var = 1 }
+                }
+                else = {
+                    add_to_variable = { naval_logistics_milestone_var = 1 }
+                }
+            }
+        }
     }
 }
 
@@ -117,7 +146,15 @@ new_convoy_raiding = {
     description = GRAND_DOCTRINE_CONVOY_RAIDING_DESC
     icon = GFX_doctrine_trade_interdiction_medium
     available = {
-        always = yes
+        has_tech = basic_torpedo
+        has_navy_size = {
+            type = screen_ship
+            size > 3
+        }
+        has_navy_size = {
+            type = submarine
+            size > 3
+        }
     }
 
     xp_cost = 100
@@ -137,23 +174,28 @@ new_convoy_raiding = {
         screens
         carriers
         capital_ships
+        naval_logistics
     }
 
     # EFFECTS
 	
-	
+	effect = {
+        custom_effect_tooltip = new_convoy_raiding_sub_tt
+    }
 	submarine = {
 		max_organisation = 10
-		surface_detection = 0.10
+        convoy_raiding_coordination = 0.05
 	}
-	convoy_raiding_efficiency_factor = 0.05
+	convoy_raiding_efficiency_factor = 0.1
 	
     milestones = {
 		{
             #Submarines
 	        naval_torpedo_reveal_chance_factor = -0.1
-			convoy_raiding_efficiency_factor = 0.1
-            navy_submarine_attack_factor = 0.1
+			submarine = {
+                convoy_raiding_coordination = 0.05
+                sub_visibility = -0.1
+            }
             effect = {
                 if = {
                     limit = {
@@ -170,8 +212,8 @@ new_convoy_raiding = {
         }
 		{
             #Screens
-			screening_efficiency = 0.05
-            convoy_escort_efficiency = 0.1
+            mines_planting_by_fleets_factor = 0.1
+            naval_enemy_retreat_chance = -0.05
             effect = {
                 if = {
                     limit = {
@@ -188,7 +230,10 @@ new_convoy_raiding = {
         }
         {
             #Carriers
-	        sortie_efficiency = 0.1
+	        carrier = {
+                surface_detection = 0.1
+                sub_detection = 0.1
+            }
             effect = {
                 if = {
                     limit = {
@@ -205,8 +250,19 @@ new_convoy_raiding = {
         }
         {
             #Capital Ships
-			navy_max_range_factor = 0.1
-            naval_enemy_fleet_size_ratio_penalty_factor = 0.1
+			battleship = {
+                surface_visibility = -0.05
+            }
+            battle_cruiser = {
+                surface_visibility = -0.05
+            }
+            heavy_cruiser = {
+                surface_visibility = -0.05
+            }
+            medium_cruiser = {
+                surface_visibility = -0.05
+            }
+            screening_without_screens = 0.1
             effect = {
                 if = {
                     limit = {
@@ -221,6 +277,24 @@ new_convoy_raiding = {
                 }
             }
         }
+        {
+            #Naval Logistics
+			navy_max_range_factor = 0.1
+            navy_fuel_consumption_factor = -0.1
+            effect = {
+                if = {
+                    limit = {
+                        NOT = {
+                            has_variable = naval_logistics_milestone_var
+                        }
+                    }
+                    set_variable = { naval_logistics_milestone_var = 1 }
+                }
+                else = {
+                    add_to_variable = { naval_logistics_milestone_var = 1 }
+                }
+            }
+        }
     }
 }
 
@@ -231,7 +305,10 @@ new_base_strike = {
     description = GRAND_DOCTRINE_BASE_STRIKE_DESC
     icon = GFX_doctrine_base_strike_medium
     available = {
-        always = yes
+        has_navy_size = {
+            type = carrier
+            size > 0
+        }
     }
 
     xp_cost = 100
@@ -246,11 +323,14 @@ new_base_strike = {
         screens
         carriers
         capital_ships
+        naval_logistics
     }
 
     # EFFECTS
 	
-	
+	effect = {
+        custom_effect_tooltip = new_base_strike_sub_tt
+    }
 	carrier = {
 		max_organisation = 10
 	}
@@ -259,8 +339,11 @@ new_base_strike = {
     milestones = {
 		{
             #Submarines
-	        naval_torpedo_reveal_chance_factor = -0.05
-			convoy_raiding_efficiency_factor = 0.1
+	        submarine = {
+                surface_detection = 0.05
+                convoy_raiding_coordination = 0.05
+            }
+            naval_torpedo_screen_penetration_factor = 0.05
             effect = {
                 if = {
                     limit = {
@@ -277,9 +360,8 @@ new_base_strike = {
         }
 		{
             #Screens
-			convoy_escort_efficiency = 0.1
-            screening_efficiency = 0.05
-            naval_retreat_speed = 0.05
+			screening_efficiency = 0.1
+            naval_retreat_chance = 0.1
             effect = {
                 if = {
                     limit = {
@@ -298,6 +380,10 @@ new_base_strike = {
             #Carriers
 	        carrier_capacity_penalty_reduction = -0.1
 			sortie_efficiency = 0.1
+            carrier = {
+                surface_detection = 0.05
+                sub_detection = 0.05
+            }
             effect = {
                 if = {
                     limit = {
@@ -314,8 +400,8 @@ new_base_strike = {
         }
         {
             #Capital Ships
-			navy_anti_air_attack_factor = 0.15
-            positioning = 0.05
+			navy_anti_air_attack_factor = 0.1
+            positioning = 0.1
             effect = {
                 if = {
                     limit = {
@@ -327,6 +413,154 @@ new_base_strike = {
                 }
                 else = {
                     add_to_variable = { capital_ships_milestone_var = 1 }
+                }
+            }
+        }
+        {
+            #Naval Logistics
+            critical_receive_chance = -0.05
+            naval_critical_effect_factor = -0.05
+            carrier = {
+                supply_consumption = -0.02
+            }
+            effect = {
+                if = {
+                    limit = {
+                        NOT = {
+                            has_variable = naval_logistics_milestone_var
+                        }
+                    }
+                    set_variable = { naval_logistics_milestone_var = 1 }
+                }
+                else = {
+                    add_to_variable = { naval_logistics_milestone_var = 1 }
+                }
+            }
+        }
+    }
+}
+# VNR 2.11 addition (dependency refresh, see documentation/dependency_update_2.11_log.md)
+new_littoral_defense = {
+    folder = naval
+
+    name = GRAND_DOCTRINE_LITTORAL_DEFENSE
+    description = GRAND_DOCTRINE_LITTORAL_DEFENSE_DESC
+    icon = GFX_doctrine_littoral_defense_medium
+    available = {
+        always = yes
+    }
+
+    xp_cost = 75
+    xp_type = navy
+
+    ai_will_do = {
+        base = 0
+    }
+
+    tracks = {
+        submarines
+        screens
+        carriers
+        capital_ships
+        naval_logistics
+    }
+
+    # EFFECTS
+	effect = {
+        custom_effect_tooltip = new_littoral_defense_sub_tt
+    }
+	navy_max_range_factor = -0.5
+    navy_visibility = -0.1
+	
+    milestones = {
+		{
+            #Submarines
+	        submarine = {
+                surface_detection = 0.05
+            }
+            naval_torpedo_reveal_chance_factor = -0.1
+            effect = {
+                if = {
+                    limit = {
+                        NOT = {
+                            has_variable = submarines_milestone_var
+                        }
+                    }
+                    set_variable = { submarines_milestone_var = 1 }
+                }
+                else = {
+                    add_to_variable = { submarines_milestone_var = 1 }
+                }
+            }
+        }
+		{
+            #Screens
+			naval_retreat_chance = 0.1
+            night_spotting_chance = 0.05
+            effect = {
+                if = {
+                    limit = {
+                        NOT = {
+                            has_variable = screens_milestone_var
+                        }
+                    }
+                    set_variable = { screens_milestone_var = 1 }
+                }
+                else = {
+                    add_to_variable = { screens_milestone_var = 1 }
+                }
+            }
+        }
+        {
+            #Carriers
+	        navy_carrier_air_agility_factor = 0.1
+            effect = {
+                if = {
+                    limit = {
+                        NOT = {
+                            has_variable = carriers_milestone_var
+                        }
+                    }
+                    set_variable = { carriers_milestone_var = 1 }
+                }
+                else = {
+                    add_to_variable = { carriers_milestone_var = 1 }
+                }
+            }
+        }
+        {
+            #Capital Ships
+			naval_retreat_speed_after_initial_combat = 0.1
+            naval_night_attack = 0.05
+            effect = {
+                if = {
+                    limit = {
+                        NOT = {
+                            has_variable = capital_ships_milestone_var
+                        }
+                    }
+                    set_variable = { capital_ships_milestone_var = 1 }
+                }
+                else = {
+                    add_to_variable = { capital_ships_milestone_var = 1 }
+                }
+            }
+        }
+        {
+            #Naval Logistics
+			naval_accidents_chance = -0.05
+            repair_speed_dockyard_factor = 0.1
+            effect = {
+                if = {
+                    limit = {
+                        NOT = {
+                            has_variable = naval_logistics_milestone_var
+                        }
+                    }
+                    set_variable = { naval_logistics_milestone_var = 1 }
+                }
+                else = {
+                    add_to_variable = { naval_logistics_milestone_var = 1 }
                 }
             }
         }

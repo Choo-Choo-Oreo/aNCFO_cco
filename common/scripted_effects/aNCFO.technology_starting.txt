@@ -3,7 +3,6 @@ basic_starting_naval_techs = {
 	IF = {
 		limit = { has_dlc = "Man the Guns" }
 		set_technology = {
-    		vnr_less_fuel_consumption = 1
     		basic_port_facility = 1
 			early_ship_hull_light = 1
 			early_ship_hull_cruiser = 1
@@ -28,10 +27,8 @@ mediocre_starting_naval_techs = {
 	IF = {
 		limit = { has_dlc = "Man the Guns" }
 		set_technology = {
-			incremental_armor_scheme = 1
 			early_ship_hull_heavy = 1
 			pre_dreadnoughts = 1
-			basic_torpedo_defense = 1
 			prototype_airplane_launcher = 1
 			# Support
 			mtg_transport = 1
@@ -52,7 +49,6 @@ improved_starting_naval_techs = {
 	IF = {
 		limit = { has_dlc = "Man the Guns" }
 		set_technology = {
-    		vnr_less_fuel_consumption = 1
 			basic_depth_charges = 1
 			early_cruiser_armor = 1
 			harvey_steel = 1
@@ -60,9 +56,6 @@ improved_starting_naval_techs = {
 			early_carrier_study = 1
 			# Support
 			basic_light_battery = 1
-			basic_medium_battery = 1
-			damage_control_1 = 1
-			fire_control_methods_1 = 1
 			basic_naval_mines = 1
 		}
 
@@ -86,12 +79,9 @@ advanced_starting_naval_techs = {
 			early_ship_hull_cruiser = 1
 			coastal_defense_ships = 1
 			searchlight = 1
-			incremental_armor_scheme = 1
 			early_ship_hull_heavy = 1
 			pre_dreadnoughts = 1
-			basic_torpedo_defense = 1
 			enhanced_horizontal_defense = 1
-			mixed_armor_scheme = 1
 			krupp_steel = 1
 			prototype_airplane_launcher = 1
 			early_ship_hull_carrier = 1
@@ -105,7 +95,6 @@ advanced_starting_naval_techs = {
 			naval_combat_support = 1
 			logistic_system_redundancy_ncns = 1
 			hospital_ship = 1
-			submarine_mine_laying = 1
 		}
 
 		ELSE = {
@@ -771,7 +760,6 @@ HHE_naval_equipment_MTG = {
 			fixed_ship_engine_slot = sub_ship_engine_1
 			fixed_ship_armor_slot = pressure_hull_1
 			fixed_ship_extra_secondaries_slot = empty
-			mid_1_custom_slot = sub_ship_periscope_0
 			rear_1_custom_slot = empty
 		}
 	}
@@ -786,7 +774,6 @@ HHE_naval_equipment_MTG = {
 			fixed_ship_engine_slot = sub_ship_engine_1
 			fixed_ship_armor_slot = pressure_hull_1
 			fixed_ship_extra_secondaries_slot = empty
-			mid_1_custom_slot = sub_ship_periscope_0
 			rear_1_custom_slot = ship_torpedo_sub_1
 		}
 	}
@@ -1433,9 +1420,9 @@ MJU_starting_techs = {
 			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
 			fixed_ship_radar_slot = ship_mast_1
 			fixed_ship_role_slot = ship_hull_cruiser_role_mo
-			fixed_ship_secondaries_slot = ship_secondaries_1
+			fixed_ship_secondaries_slot = ship_secondaries_1_light
 			mid_1_custom_slot = ship_light_medium_battery_1_double
-			mid_2_custom_slot = ship_secondaries_1
+			mid_2_custom_slot = ship_light_medium_battery_1_double
 			rear_1_custom_slot = ship_light_medium_battery_1_double
 			rear_2_custom_slot = ship_light_medium_battery_1_double
 		}
@@ -1465,6 +1452,10 @@ MRC_starting_techs = {
 	advanced_starting_techs = yes
 	IF = {
 		limit = { has_dlc = "Man the Guns" }
+		# VNR 2.11: conversion hulls moved behind the hidden bb_conversion_carrier
+		# tech (decision-unlocked); MRC starts with Portitorem-class conversion
+		# carriers, so it gets the tech at start like the dependency's majors.
+		set_technology = { bb_conversion_carrier = 1 popup = no }
 		# Auxiliaries
 		create_equipment_variant = {
 			name = "Auxiliary Class"
@@ -1492,7 +1483,6 @@ MRC_starting_techs = {
 				fixed_ship_engine_slot = sub_ship_engine_1
 				fixed_ship_armor_slot = pressure_hull_1
 				fixed_ship_extra_secondaries_slot = empty
-				mid_1_custom_slot = sub_ship_periscope_0
 				rear_1_custom_slot = empty
 			}
 		}

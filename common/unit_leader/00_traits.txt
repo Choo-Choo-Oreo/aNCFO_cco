@@ -1903,7 +1903,7 @@ leader_traits = {
 		type = navy
 		cost = 500
 		gain_xp = {
-			#gains XP when running away
+			fastest_unit > 3.7
 		}
 		modifier = {
 			naval_retreat_chance = 0.2
@@ -1919,7 +1919,7 @@ leader_traits = {
 		gui_column = 0
 	}
 
-	seawolf = {
+	seawolf = { 
 		type = navy
 		gain_xp = {
 			submarine > 0.8 # at least 80% subs
@@ -1932,9 +1932,9 @@ leader_traits = {
 		custom_gain_xp_trigger_tooltip = SEAWOLF_TRIGGER_TT
 		
 		slot = high_command
-		specialist_advisor_trait = navy_anti_submarine_1
-		expert_advisor_trait = navy_anti_submarine_2
-		genius_advisor_trait = navy_anti_submarine_3
+		specialist_advisor_trait = vnr_navy_anti_submarine_1
+		expert_advisor_trait = vnr_navy_anti_submarine_2
+		genius_advisor_trait = vnr_navy_anti_submarine_3
 		
 		ai_will_do = {
 			factor = 1
@@ -1975,9 +1975,9 @@ leader_traits = {
 		}
 		
 		slot = high_command
-		specialist_advisor_trait = navy_screen_1
-		expert_advisor_trait = navy_screen_2
-		genius_advisor_trait = navy_screen_3
+		specialist_advisor_trait = vnr_navy_screen_1
+		expert_advisor_trait = vnr_navy_screen_2
+		genius_advisor_trait = vnr_navy_screen_3
 		
 		ai_will_do = {
 			factor = 1
@@ -1986,22 +1986,22 @@ leader_traits = {
 		gui_column = 0
 	}
 
-	superior_tactician = {
+	superior_tactician = { 
 		type = navy
 		gain_xp = {
 			is_winning = yes
 		}
 		cost = 500
 		modifier = {
-			positioning = 0.25
+			positioning = 0.1
             navy_org = 5
 		}
 		custom_gain_xp_trigger_tooltip = SUPERIOR_TACTICIAN_TRIGGER_TT
 		
 		slot = navy_chief
-		specialist_advisor_trait = navy_chief_maneuver_1
-		expert_advisor_trait = navy_chief_maneuver_2
-		genius_advisor_trait = navy_chief_maneuver_3
+		specialist_advisor_trait = vnr_navy_chief_maneuver_1
+		expert_advisor_trait = vnr_navy_chief_maneuver_2
+		genius_advisor_trait = vnr_navy_chief_maneuver_3
 		
 		ai_will_do = {
 			factor = 1
@@ -2067,7 +2067,7 @@ leader_traits = {
 ##################################
 # naval assignable traits
 ##################################
-	concealment_expert = {
+	concealment_expert = { 
 		type = navy
 		modifier = {
 			navy_visibility = -0.05
@@ -2076,15 +2076,15 @@ leader_traits = {
 		ai_will_do = {
 			factor = 0
 			modifier = {
-				check_variable = { num_ships > 50 }
+				owner = { has_navy_size = { size > 50 } }  # owner-wrapped: leader scope lacks has_navy_size (upstream VNR bug)
 				add = 1
 			}
 		}
 		
 		slot = navy_chief
-		specialist_advisor_trait = navy_chief_commerce_raiding_1
-		expert_advisor_trait = navy_chief_commerce_raiding_2
-		genius_advisor_trait = navy_chief_commerce_raiding_3
+		specialist_advisor_trait = vnr_navy_chief_commerce_raiding_1
+		expert_advisor_trait = vnr_navy_chief_commerce_raiding_2
+		genius_advisor_trait = vnr_navy_chief_commerce_raiding_3
 		
 		trait_type = assignable_trait
 		any_parent = {
@@ -2094,7 +2094,7 @@ leader_traits = {
 		gui_column = 1
 	}
 
-	lone_wolf = {
+	lone_wolf = { 
 		type = navy
 		modifier = {
 			naval_enemy_fleet_size_ratio_penalty_factor = 0.1
@@ -2104,7 +2104,7 @@ leader_traits = {
 		ai_will_do = {
 			factor = 0
 			modifier = {
-				check_variable = { num_ships > 50 }
+				owner = { has_navy_size = { size > 50 } }  # owner-wrapped: leader scope lacks has_navy_size (upstream VNR bug)
 				add = 1
 			}
 		}
@@ -2118,11 +2118,15 @@ leader_traits = {
 	silent_hunter = { 
 		type = navy
 		modifier = {
-			naval_torpedo_reveal_chance_factor = -0.15
+			naval_torpedo_reveal_chance_factor = -0.1
 		}
 
 		ai_will_do = {
 			factor = 0
+			modifier = {
+				add = 1
+				owner = { has_navy_size = { type = submarine size > 50 } }  # owner-wrapped: leader scope lacks has_navy_size (upstream VNR bug)
+			}
 		}
 
 		trait_type = assignable_trait
@@ -2135,15 +2139,15 @@ leader_traits = {
 	lancer = {
 		type = navy
 		modifier = {
-			naval_torpedo_screen_penetration_factor = 0.25
+			naval_torpedo_screen_penetration_factor = 0.1
 		}
 				
 		ai_will_do = {
-			factor = 0
+			factor = 1
 		}
 		
 		trait_type = assignable_trait
-		any_parent = { seawolf spotter fleet_protector superior_tactician }
+		any_parent = { seawolf spotter fleet_protector superior_tactician } 
 		mutually_exclusive = silent_hunter
 		
 		gui_row = 3
@@ -2153,11 +2157,11 @@ leader_traits = {
 	search_pattern_expert = {
 		type = navy
 		modifier = {
-			 spotting_chance = 0.2
+			 spotting_chance = 0.15
 		}
 				
 		ai_will_do = {
-			factor = 0
+			factor = 1
 		}
 		
 		trait_type = assignable_trait
@@ -2169,23 +2173,16 @@ leader_traits = {
 
     destroyer_leader = {
 		type = navy
-		modifier = {
-			#destroyer = {
-			#	units = {
-			#		attack = 0.1
-			#		defence = 0.1
-			#	}
-			#}
-		}
+
 		sub_unit_modifiers = {
 			destroyer = {
 				naval_damage_factor = 0.05
 				naval_torpedo_hit_chance_factor = 0.1
 				navy_visibility = -0.05
 			}
-		}
+		}	
 		ai_will_do = {
-			factor = 0
+			factor = 1
 		}
 		
 		trait_type = assignable_trait
@@ -2197,9 +2194,7 @@ leader_traits = {
 
     cruiser_captain = { 
 		type = navy
-		modifier = {
-			
-		}
+
 		sub_unit_modifiers = {
 			light_cruiser = {
 				naval_damage_factor = 0.05
@@ -2213,9 +2208,9 @@ leader_traits = {
 				naval_damage_factor = 0.05
 				naval_speed_factor = 0.05
 			}
-		}
+		}	
 		ai_will_do = {
-			factor = 0
+			factor = 1
 		}
 		
 		trait_type = assignable_trait
@@ -2250,12 +2245,16 @@ leader_traits = {
 		}
 		
 		slot = high_command
-		specialist_advisor_trait = navy_carrier_1
-		expert_advisor_trait = navy_carrier_2
-		genius_advisor_trait = navy_carrier_3
+		specialist_advisor_trait = vnr_navy_carrier_1
+		expert_advisor_trait = vnr_navy_carrier_2
+		genius_advisor_trait = vnr_navy_carrier_3
 		
 		ai_will_do = {
-			factor = 0
+			factor = 1
+			modifier = {
+				factor = 5
+				owner = { has_navy_size = { type = carrier size > 5 } }  # owner-wrapped: leader scope lacks has_navy_size (upstream VNR bug)
+			}
 		}
 		
 		trait_type = assignable_trait
@@ -2273,7 +2272,7 @@ leader_traits = {
 		}
 				
 		ai_will_do = {
-			factor = 0
+			factor = 0.5
 		}
 		
 		trait_type = assignable_trait
@@ -2286,16 +2285,16 @@ leader_traits = {
 	big_guns_expert = { 
 		type = navy
 		modifier = {
-			navy_capital_ship_attack_factor = 0.15
+			navy_capital_ship_attack_factor = 0.1
 		}
 				
 		slot = high_command
-		specialist_advisor_trait = navy_capital_ship_1
-		expert_advisor_trait = navy_capital_ship_2
-		genius_advisor_trait = navy_capital_ship_3
+		specialist_advisor_trait = vnr_navy_capital_ship_1
+		expert_advisor_trait = vnr_navy_capital_ship_2
+		genius_advisor_trait = vnr_navy_capital_ship_3
 		
 		ai_will_do = {
-			factor = 0
+			factor = 1
 		}
 		
 		trait_type = assignable_trait
@@ -2308,16 +2307,16 @@ leader_traits = {
 	safety_first = { 
 		type = navy
 		modifier = {
-			critical_receive_chance = -0.25
+			critical_receive_chance = -0.15
 		}
 		
 		slot = navy_chief
-		specialist_advisor_trait = navy_chief_reform_1
-		expert_advisor_trait = navy_chief_reform_2
-		genius_advisor_trait = navy_chief_reform_3
+		specialist_advisor_trait = vnr_navy_chief_reform_1
+		expert_advisor_trait = vnr_navy_chief_reform_2
+		genius_advisor_trait = vnr_navy_chief_reform_3
 		
 		ai_will_do = {
-			factor = 0
+			factor = 1
 		}
 		
 		trait_type = assignable_trait
@@ -2327,7 +2326,7 @@ leader_traits = {
 		gui_column = 1
 	}
 
-	smoke_screen_expert = {
+	smoke_screen_expert = { 
 		type = navy
 		modifier = {
 			naval_retreat_chance = 0.25
@@ -2337,7 +2336,7 @@ leader_traits = {
 		ai_will_do = {
 			factor = 0
 			modifier = {
-				check_variable = { num_ships > 50 }
+				owner = { has_navy_size = { size > 50 } }  # owner-wrapped: leader scope lacks has_navy_size (upstream VNR bug)
 				add = 1
 			}
 		}
@@ -2358,12 +2357,12 @@ leader_traits = {
 		}
 		
 		slot = high_command
-		specialist_advisor_trait = navy_submarine_1
-		expert_advisor_trait = navy_submarine_2
-		genius_advisor_trait = navy_submarine_3
+		specialist_advisor_trait = vnr_navy_submarine_1
+		expert_advisor_trait = vnr_navy_submarine_2
+		genius_advisor_trait = vnr_navy_submarine_3
 		
 		ai_will_do = {
-			factor = 0
+			factor = 1
 		}
 
 		trait_type = assignable_trait
@@ -2375,11 +2374,11 @@ leader_traits = {
 	loading_drill_master = { 
 		type = navy
 		modifier = {
-			naval_torpedo_cooldown_factor = -0.25
+			naval_torpedo_cooldown_factor = -0.125
 		}
 				
 		ai_will_do = {
-			factor = 0
+			factor = 1
 		}
 		
 		trait_type = assignable_trait
@@ -2392,7 +2391,7 @@ leader_traits = {
 		gui_column = 2
 	}
 
-	hunter_killer = {
+	hunter_killer = { 
 		type = navy
 		modifier = {
 			navy_submarine_attack_factor = 0
@@ -2402,7 +2401,7 @@ leader_traits = {
 		ai_will_do = {
 			factor = 0
 			modifier = {
-				check_variable = { num_ships > 50 }
+				owner = { has_navy_size = { size > 50 } }  # owner-wrapped: leader scope lacks has_navy_size (upstream VNR bug)
 				add = 1
 			}
 		}
@@ -2424,9 +2423,9 @@ leader_traits = {
 		any_parent = { cruiser_captain destroyer_leader }
 		
 		slot = high_command
-		specialist_advisor_trait = navy_naval_air_defense_1
-		expert_advisor_trait = navy_naval_air_defense_2
-		genius_advisor_trait = navy_naval_air_defense_3
+		specialist_advisor_trait = vnr_navy_naval_air_defense_1
+		expert_advisor_trait = vnr_navy_naval_air_defense_2
+		genius_advisor_trait = vnr_navy_naval_air_defense_3
 		
 		ai_will_do = {
 			factor = 1
@@ -2442,7 +2441,7 @@ leader_traits = {
 		}
 				
 		ai_will_do = {
-			factor = 0
+			factor = 1
 		}
 		
 		trait_type = assignable_trait
@@ -2454,23 +2453,23 @@ leader_traits = {
 		gui_column = 2
 	}
 
-    dive_bomber = {
+    dive_bomber = { 
 		type = navy
 		sub_unit_modifiers = {
 			cv_cas = {
-				naval_strike_attack_factor = 0.05
+				naval_strike_attack_factor = 0.1
 				air_nav_efficiency = 0.1
-				naval_strike_targetting_factor = 0.1
+				naval_strike_targetting_factor = 0.05
 			}
 		}	
 		ai_will_do = {
-			factor = 0
+			factor = 1
 		}
 		
 		slot = navy_chief
-		specialist_advisor_trait = navy_chief_naval_aviation_1
-		expert_advisor_trait = navy_chief_naval_aviation_2
-		genius_advisor_trait = navy_chief_naval_aviation_3
+		specialist_advisor_trait = vnr_navy_chief_naval_aviation_1
+		expert_advisor_trait = vnr_navy_chief_naval_aviation_2
+		genius_advisor_trait = vnr_navy_chief_naval_aviation_3
 		
 		trait_type = assignable_trait
 		mutually_exclusive = fighter_director
@@ -2492,12 +2491,12 @@ leader_traits = {
 		}	
 
 		slot = high_command
-		specialist_advisor_trait = air_naval_strike_1
-		expert_advisor_trait = air_naval_strike_2
-		genius_advisor_trait = air_naval_strike_3
+		specialist_advisor_trait = vnr_air_naval_strike_1
+		expert_advisor_trait = vnr_air_naval_strike_2
+		genius_advisor_trait = vnr_air_naval_strike_3
 		
 		ai_will_do = {
-			factor = 0
+			factor = 1
 		}
 		
 		trait_type = assignable_trait
@@ -2509,21 +2508,21 @@ leader_traits = {
 		gui_column = 2
 	}
 
-	marksman = {
+	marksman = { 
 		type = navy
 		modifier = {
-			naval_critical_score_chance_factor = 0.2
+			naval_critical_score_chance_factor = 0.1
 		}
 		
 		slot = navy_chief
-		specialist_advisor_trait = navy_chief_decisive_battle_1
-		expert_advisor_trait = navy_chief_decisive_battle_2
-		genius_advisor_trait = navy_chief_decisive_battle_3
+		specialist_advisor_trait = vnr_navy_chief_decisive_battle_1
+		expert_advisor_trait = vnr_navy_chief_decisive_battle_2
+		genius_advisor_trait = vnr_navy_chief_decisive_battle_3
 		
 		ai_will_do = {
 			factor = 0
 			modifier = {
-				check_variable = { num_ships > 50 }
+				owner = { has_navy_size = { size > 50 } }  # owner-wrapped: leader scope lacks has_navy_size (upstream VNR bug)
 				add = 10
 			}
 		}
@@ -2536,17 +2535,17 @@ leader_traits = {
 		gui_column = 2
 	}
 
-	crisis_magician = {
+	crisis_magician = { 
 		type = navy
 		modifier = {
-			naval_critical_effect_factor = -0.5
+			naval_critical_effect_factor = -0.35
             naval_morale_factor = 0.1
 		}
 				
 		ai_will_do = {
 			factor = 0
 			modifier = {
-				check_variable = { num_ships > 50 }
+				owner = { has_navy_size = { size > 50 } }  # owner-wrapped: leader scope lacks has_navy_size (upstream VNR bug)
 				add = 5
 			}
 		}
@@ -2574,7 +2573,7 @@ leader_traits = {
 		}
 
 		ai_will_do = {
-			factor = 0
+			factor = 1
 		}
 
 		trait_type = basic_terrain_trait
@@ -2667,15 +2666,7 @@ leader_traits = {
 			experience_gain_factor = -0.25 
 		}
 		new_commander_weight = {
-			factor = 1  
-			modifier = {
-				FROM = { has_idea = best_of_the_best_naval_academy_spirit }
-				factor = 0
-			}
-			modifier = {
-				FROM = { has_idea = naval_academy_scholarships_spirit }
-				factor = 0
-			}
+			factor = 0
 		}
 		ai_will_do = {
 			factor = 1
@@ -2691,15 +2682,7 @@ leader_traits = {
 			navy_org = 5
 		}
 		new_commander_weight = {
-			factor = 1  
-			modifier = {
-				FROM = { has_idea = best_of_the_best_naval_academy_spirit }
-				factor = 0
-			}
-			modifier = {
-				FROM = { has_idea = naval_academy_scholarships_spirit }
-				factor = 0
-			}
+			factor = 1
 		}
 		ai_will_do = {
 			factor = 1
@@ -2717,22 +2700,14 @@ leader_traits = {
 			ironside = 0.5     #+100%
 		}
 		new_commander_weight = {
-			factor = 1  
-			modifier = {
-				FROM = { has_idea = best_of_the_best_naval_academy_spirit }
-				factor = 0
-			}
-			modifier = {
-				FROM = { has_idea = naval_academy_scholarships_spirit }
-				factor = 0
-			}
+			factor = 1
 		}
 		ai_will_do = {
 			factor = 1
 		}
 	}
 
-	cuts_corners = {
+	cuts_corners = { 
 		type = navy
 		trait_type = personality_trait
 		
@@ -2742,22 +2717,14 @@ leader_traits = {
             navy_org = -5
 		}
 		new_commander_weight = {
-			factor = 1  
-			modifier = {
-				FROM = { has_idea = best_of_the_best_naval_academy_spirit }
-				factor = 0
-			}
-			modifier = {
-				FROM = { has_idea = naval_academy_scholarships_spirit }
-				factor = 0
-			}
+			factor = 1
 		}
 		ai_will_do = {
 			factor = 1
 		}
 	}
 
-	chief_engineer = {
+	chief_engineer = { 
 		type = navy
 		trait_type = personality_trait
 		
@@ -2765,22 +2732,14 @@ leader_traits = {
 			critical_receive_chance = -0.1
 		}
 		new_commander_weight = {
-			factor = 1  
-			modifier = {
-				FROM = { has_idea = best_of_the_best_naval_academy_spirit }
-				factor = 0
-			}
-			modifier = {
-				FROM = { has_idea = naval_academy_scholarships_spirit }
-				factor = 0
-			}
+			factor = 1
 		}
 		ai_will_do = {
 			factor = 1
 		}
 	}
 
-	navy_media_personality = {
+	navy_media_personality = { 
 		type = navy
 		trait_type = personality_trait
 		
@@ -2789,22 +2748,14 @@ leader_traits = {
 			naval_has_potf_in_combat_defense = 0.05
 		}
 		new_commander_weight = {
-			factor = 1  
-			modifier = {
-				FROM = { has_idea = best_of_the_best_naval_academy_spirit }
-				factor = 0
-			}
-			modifier = {
-				FROM = { has_idea = naval_academy_scholarships_spirit }
-				factor = 0
-			}
+			factor = 1
 		}
 		ai_will_do = {
 			factor = 1
 		}
 	}
 
-	bold = {
+	bold = { 
 		type = navy
 		trait_type = personality_trait
 	
@@ -2813,15 +2764,7 @@ leader_traits = {
 			naval_speed_factor = 0.05
 		}
 		new_commander_weight = {
-			factor = 1  
-			modifier = {
-				FROM = { has_idea = best_of_the_best_naval_academy_spirit }
-				factor = 0
-			}
-			modifier = {
-				FROM = { has_idea = naval_academy_scholarships_spirit }
-				factor = 0
-			}
+			factor = 1
 		}
 		ai_will_do = {
 			factor = 1
@@ -2836,15 +2779,7 @@ leader_traits = {
 			experience_gain_factor = 0.1	
 		}
 		new_commander_weight = {
-			factor = 1  
-			modifier = {
-				FROM = { has_idea = best_of_the_best_naval_academy_spirit }
-				factor = 0
-			}
-			modifier = {
-				FROM = { has_idea = naval_academy_scholarships_spirit }
-				factor = 0
-			}
+			factor = 1
 		}
 		ai_will_do = {
 			factor = 1
@@ -2856,19 +2791,11 @@ leader_traits = {
 		trait_type = personality_trait
 	
 		modifier = {
-			navy_capital_ship_attack_factor = 0.1
+			navy_capital_ship_attack_factor = 0.05
 			navy_anti_air_attack_factor = -0.2	
 		}
 		new_commander_weight = {
-			factor = 1  
-			modifier = {
-				FROM = { has_idea = best_of_the_best_naval_academy_spirit }
-				factor = 0
-			}
-			modifier = {
-				FROM = { has_idea = naval_academy_scholarships_spirit }
-				factor = 0
-			}
+			factor = 1
 		}
 		ai_will_do = {
 			factor = 1
@@ -2886,15 +2813,7 @@ leader_traits = {
 			air_controller = 0.5     #+100%
 		}
 		new_commander_weight = {
-			factor = 1  
-			modifier = {
-				FROM = { has_idea = best_of_the_best_naval_academy_spirit }
-				factor = 0
-			}
-			modifier = {
-				FROM = { has_idea = naval_academy_scholarships_spirit }
-				factor = 0
-			}
+			factor = 1
 		}
 		ai_will_do = {
 			factor = 1
@@ -2906,25 +2825,18 @@ leader_traits = {
 		trait_type = personality_trait
 		
 		modifier = {
-			ships_at_battle_start = -0.25
+			ships_at_battle_start = -0.15
+			naval_retreat_chance = 0.1
 		}
 		new_commander_weight = {
-			factor = 1  
-			modifier = {
-				FROM = { has_idea = best_of_the_best_naval_academy_spirit }
-				factor = 0
-			}
-			modifier = {
-				FROM = { has_idea = naval_academy_scholarships_spirit }
-				factor = 0
-			}
+			factor = 1
 		}
 		ai_will_do = {
 			factor = 1
 		}
 	}
 
-	craven = {
+	craven = { 
 		type = navy
 		trait_type = personality_trait
 	
@@ -2933,15 +2845,7 @@ leader_traits = {
 			naval_damage_factor = -0.05 
 		}
 		new_commander_weight = {
-			factor = 1  
-			modifier = {
-				FROM = { has_idea = best_of_the_best_naval_academy_spirit }
-				factor = 0
-			}
-			modifier = {
-				FROM = { has_idea = naval_academy_scholarships_spirit }
-				factor = 0
-			}
+			factor = 1
 		}
 		ai_will_do = {
 			factor = 1
@@ -2953,19 +2857,11 @@ leader_traits = {
 		trait_type = personality_trait
 		
 		modifier = {
-			naval_retreat_chance = -0.25
-			ships_at_battle_start = 0.25
+			naval_retreat_chance = -0.1
+			ships_at_battle_start = 0.15
 		}
 		new_commander_weight = {
-			factor = 1  
-			modifier = {
-				FROM = { has_idea = best_of_the_best_naval_academy_spirit }
-				factor = 0
-			}
-			modifier = {
-				FROM = { has_idea = naval_academy_scholarships_spirit }
-				factor = 0
-			}
+			factor = 1
 		}
 		ai_will_do = {
 			factor = 1
@@ -3358,4 +3254,5 @@ leader_traits = {
 			factor = 0  
 		}
 	}
+
 }
