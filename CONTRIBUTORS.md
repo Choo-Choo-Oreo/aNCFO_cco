@@ -14,11 +14,11 @@ This document tracks the Direct Team members who assist in the development of th
 | **[Name/Alias]** | Collaborator 2 | Joint Systems | Naval rework logic, 3D Unit Models. |
 |
 | **[dw104c]** | Assistants | Localization & Data | Sinicize the region of Linsong. |
-| **[dw104c]** | Artist | Graphical Assets | Custom Flags for [QGW], and [XIF]. |
+| **[dw104c]** | Artist | Graphical Assets | Custom Flags for [LQI], and [LBE]. |
 | **[ajtak_cz8]** | Artist | Graphical Assets | Custom Flags for [ATL], [ATL_authoritarianism], [ATL_semidemocracy], [ATL_unitism], [BHK], [BHK_authoritarianism], [ATL_pluralism], and [NLL]. |
-| **[CameraCraft]** | Artist | Graphical Assets | Custom Flags for [DRC], [LPR], and [TAM]. |
-| **[swordfish3790]** | Artist | Graphical Assets | Custom Flags for [ABL], [ATL_pluralism], [CUL_authoritarianism], [ERP], [DTP], [HYP], [LEE], [LLD], [LMC], [MLB], [KGK], [KSA], [SEK], [TRI], [TPD], [WGK], [OAK_unitism], [UNIFIED_WUM_HIGH_KINGDOM], [LCF], [RPG], [FDL], [LCS], [FGJ], [QDT], [RDN] |
-| **[Anthonanon]** | Collaborator | Graphical Assets & Content | Custom Flags for [UNIFIED_LINSONG_EMPIRE], [DVC], [LMC_authoritarianism]. Content for [LMN] |
+| **[CameraCraft]** | Artist | Graphical Assets | Custom Flags for [LNL], [LPR], and [TAM]. |
+| **[swordfish3790]** | Artist | Graphical Assets | Custom Flags for [ABL], [ATL_pluralism], [CUL_authoritarianism], [ERP], [DTP], [HYP], [LEE], [LLD], [LMC], [MLB], [KGK], [KSA], [SEK], [TRI], [TPD], [WGK], [OAK_unitism], [UNIFIED_WUM_HIGH_KINGDOM], [LDG], [LGR], [LSZ], [LZH], [LFH], [QDT], [DNC] |
+| **[Anthonanon]** | Collaborator | Graphical Assets & Content | Custom Flags for [UNIFIED_LINSONG_EMPIRE], [LWS], [LMC_authoritarianism]. Content for [LMN] |
 | Pencildude (kirbyfan228) | Commissioned Artist | Graphical Assets | Character portraits: Lucas Actius, Archardus Vladarus, Isabella Delphina. Commissioned work, copyright held by Author per Section 3.6. |
 
 ---

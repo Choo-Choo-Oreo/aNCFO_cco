@@ -1206,6 +1206,22 @@ Countries documented: **171** across **6** regions.
 
 ### Tyenren
 
+#### Béidao Clique (`LBE`)
+
+| Category | Full acceptance | Partial acceptance |
+|----------|-----------------|--------------------|
+| Species | Human (`1`) | — |
+| Ethnos | Linsongese (`5`) | — |
+| Heritage | Shanglin (`50`) | — |
+
+#### Dongyuánye Confederacy (`LDG`)
+
+| Category | Full acceptance | Partial acceptance |
+|----------|-----------------|--------------------|
+| Species | Human (`1`) | — |
+| Ethnos | Linsongese (`5`) | — |
+| Heritage | — | Wanying (`13`), Soumin (`15`), Shanglin (`50`) |
+
 #### Dwarven Smithhauhatad (`DVE`)
 
 | Category | Full acceptance | Partial acceptance |
@@ -1214,13 +1230,13 @@ Countries documented: **171** across **6** regions.
 | Ethnos | Grundvergen (`11`) | — |
 | Heritage | Koenigvergen (`33`) | — |
 
-#### Dōngyuányě Confederacy (`LCF`)
+#### Dúkou Clique (`LDK`)
 
 | Category | Full acceptance | Partial acceptance |
 |----------|-----------------|--------------------|
 | Species | Human (`1`) | — |
 | Ethnos | Linsongese (`5`) | — |
-| Heritage | — | Wanying (`13`), Soumin (`15`), Shanglin (`50`) |
+| Heritage | Xilin (`49`) | — |
 
 #### Emperor's Empyrean (`EPY`)
 
@@ -1238,45 +1254,13 @@ Countries documented: **171** across **6** regions.
 | Ethnos | Dekkanese (`6`) | Linsongese (`5`) |
 | Heritage | — | Namu (`16`), Hinozoku (`17`), Heukin (`18`), Jiaying (`51`) |
 
-#### Fascist Directorate of the Linsong (`FDL`)
-
-| Category | Full acceptance | Partial acceptance |
-|----------|-----------------|--------------------|
-| Species | Human (`1`) | — |
-| Ethnos | Linsongese (`5`) | — |
-| Heritage | Soumin (`15`) | — |
-
-#### Fenghuang Junta (`FGJ`)
+#### Fenghuang Junta (`LFH`)
 
 | Category | Full acceptance | Partial acceptance |
 |----------|-----------------|--------------------|
 | Species | Human (`1`) | — |
 | Ethnos | Linsongese (`5`) | — |
 | Heritage | Jiaying (`51`) | — |
-
-#### Fulguribeng Clique (`FUL`)
-
-| Category | Full acceptance | Partial acceptance |
-|----------|-----------------|--------------------|
-| Species | Elf (`4`) | — |
-| Ethnos | Linsongese (`5`) | — |
-| Heritage | Suolinvaeki (`32`) | — |
-
-#### Gahndzow Clique (`GHN`)
-
-| Category | Full acceptance | Partial acceptance |
-|----------|-----------------|--------------------|
-| Species | Human (`1`) | — |
-| Ethnos | Linsongese (`5`) | — |
-| Heritage | Qizu (`14`) | — |
-
-#### Gongyoo Clique (`GNG`)
-
-| Category | Full acceptance | Partial acceptance |
-|----------|-----------------|--------------------|
-| Species | Human (`1`) | — |
-| Ethnos | Linsongese (`5`) | — |
-| Heritage | Qizu (`14`) | — |
 
 #### Heukin Wang-guk (`HEU`)
 
@@ -1294,7 +1278,7 @@ Countries documented: **171** across **6** regions.
 | Ethnos | Dekkanese (`6`) | — |
 | Heritage | Hinozoku (`17`) | — |
 
-#### Igniswei Clique (`IWE`)
+#### Jokiváeki Clique (`JOK`)
 
 | Category | Full acceptance | Partial acceptance |
 |----------|-----------------|--------------------|
@@ -1302,13 +1286,13 @@ Countries documented: **171** across **6** regions.
 | Ethnos | Linsongese (`5`) | — |
 | Heritage | Suolinvaeki (`32`) | — |
 
-#### Jongjyehn Clique (`JJY`)
+#### Kiviváeki Clique (`KIV`)
 
 | Category | Full acceptance | Partial acceptance |
 |----------|-----------------|--------------------|
-| Species | Human (`1`) | — |
+| Species | Elf (`4`) | — |
 | Ethnos | Linsongese (`5`) | — |
-| Heritage | Xilin (`49`) | — |
+| Heritage | Suolinvaeki (`32`) | — |
 
 #### Linsong Mandate (`LMN`)
 
@@ -1318,14 +1302,6 @@ Countries documented: **171** across **6** regions.
 | Ethnos | Linsongese (`5`) | — |
 | Heritage | Jinglin (`12`) | Xilin (`49`) |
 
-#### Linsongese Custodianship (`LCS`)
-
-| Category | Full acceptance | Partial acceptance |
-|----------|-----------------|--------------------|
-| Species | Human (`1`) | — |
-| Ethnos | Linsongese (`5`) | — |
-| Heritage | Soumin (`15`) | — |
-
 #### Linsongese Mercenary Company (`LMC`)
 
 | Category | Full acceptance | Partial acceptance |
@@ -1334,7 +1310,7 @@ Countries documented: **171** across **6** regions.
 | Ethnos | Linsongese (`5`) | — |
 | Heritage | Wanying (`13`) | Jinglin (`12`), Jiaying (`51`) |
 
-#### Linsongese National Liberation Army (`DRC`)
+#### Linsongese National Liberation Army (`LNL`)
 
 | Category | Full acceptance | Partial acceptance |
 |----------|-----------------|--------------------|
@@ -1342,7 +1318,7 @@ Countries documented: **171** across **6** regions.
 | Ethnos | Linsongese (`5`) | — |
 | Heritage | Shanglin (`50`) | — |
 
-#### Monsyu Clique (`MYU`)
+#### Máyuan Supreme Junta (`LMY`)
 
 | Category | Full acceptance | Partial acceptance |
 |----------|-----------------|--------------------|
@@ -1390,15 +1366,7 @@ Countries documented: **171** across **6** regions.
 | Ethnos | Linsongese (`5`) | — |
 | Heritage | Suolinvaeki (`32`) | — |
 
-#### Qiongwa Clique (`QGW`)
-
-| Category | Full acceptance | Partial acceptance |
-|----------|-----------------|--------------------|
-| Species | Human (`1`) | — |
-| Ethnos | Linsongese (`5`) | — |
-| Heritage | Shanglin (`50`) | — |
-
-#### Qizu Shepherdacracy (`RPT`)
+#### Qizu Shepherdacracy (`QIZ`)
 
 | Category | Full acceptance | Partial acceptance |
 |----------|-----------------|--------------------|
@@ -1406,7 +1374,15 @@ Countries documented: **171** across **6** regions.
 | Ethnos | Linsongese (`5`) | — |
 | Heritage | Qizu (`14`) | — |
 
-#### Reminisce of the Dwarven Naval Command (`RDN`)
+#### Qiánhu Clique (`LQI`)
+
+| Category | Full acceptance | Partial acceptance |
+|----------|-----------------|--------------------|
+| Species | Human (`1`) | — |
+| Ethnos | Linsongese (`5`) | — |
+| Heritage | Shanglin (`50`) | — |
+
+#### Reminisce of the Dwarven Naval Command (`DNC`)
 
 | Category | Full acceptance | Partial acceptance |
 |----------|-----------------|--------------------|
@@ -1414,7 +1390,7 @@ Countries documented: **171** across **6** regions.
 | Ethnos | Grundvergen (`11`) | — |
 | Heritage | Koenigvergen (`33`) | — |
 
-#### Republic of the Gulf (`RPG`)
+#### Republic of the Gulf (`LGR`)
 
 | Category | Full acceptance | Partial acceptance |
 |----------|-----------------|--------------------|
@@ -1430,15 +1406,7 @@ Countries documented: **171** across **6** regions.
 | Ethnos | Artemian (`3`) | — |
 | Heritage | Wuhmian (`11`) | — |
 
-#### Shengplana Clique (`SHE`)
-
-| Category | Full acceptance | Partial acceptance |
-|----------|-----------------|--------------------|
-| Species | Elf (`4`) | — |
-| Ethnos | Linsongese (`5`) | — |
-| Heritage | Suolinvaeki (`32`) | — |
-
-#### State of the Supreme Junta (`SSJ`)
+#### Shuzhízhuyi Directorate (`LSZ`)
 
 | Category | Full acceptance | Partial acceptance |
 |----------|-----------------|--------------------|
@@ -1446,7 +1414,15 @@ Countries documented: **171** across **6** regions.
 | Ethnos | Linsongese (`5`) | — |
 | Heritage | Soumin (`15`) | — |
 
-#### Suhnleen Elder Council (`SEC`)
+#### shāyuán Clique (`LSY`)
+
+| Category | Full acceptance | Partial acceptance |
+|----------|-----------------|--------------------|
+| Species | Human (`1`) | — |
+| Ethnos | Linsongese (`5`) | — |
+| Heritage | Qizu (`14`) | — |
+
+#### Suhnleen Elder Council (`SUH`)
 
 | Category | Full acceptance | Partial acceptance |
 |----------|-----------------|--------------------|
@@ -1454,15 +1430,15 @@ Countries documented: **171** across **6** regions.
 | Ethnos | Suovaeki (`10`) | — |
 | Heritage | Suolinvaeki (`32`) | — |
 
-#### Tanpan Clique (`XIF`)
+#### Tuliváeki Clique (`TUL`)
 
 | Category | Full acceptance | Partial acceptance |
 |----------|-----------------|--------------------|
-| Species | Human (`1`) | — |
+| Species | Elf (`4`) | — |
 | Ethnos | Linsongese (`5`) | — |
-| Heritage | Shanglin (`50`) | — |
+| Heritage | Suolinvaeki (`32`) | — |
 
-#### Werksteinir Clique (`DVC`)
+#### Werksteinir Clique (`LWS`)
 
 | Category | Full acceptance | Partial acceptance |
 |----------|-----------------|--------------------|
@@ -1478,6 +1454,22 @@ Countries documented: **171** across **6** regions.
 | Ethnos | Linsongese (`5`) | — |
 | Heritage | Linhoa (`41`) | — |
 
+#### Wányuan Clique (`LWY`)
+
+| Category | Full acceptance | Partial acceptance |
+|----------|-----------------|--------------------|
+| Species | Human (`1`) | — |
+| Ethnos | Linsongese (`5`) | — |
+| Heritage | Soumin (`15`) | — |
+
+#### Xihé Clique (`LXH`)
+
+| Category | Full acceptance | Partial acceptance |
+|----------|-----------------|--------------------|
+| Species | Human (`1`) | — |
+| Ethnos | Linsongese (`5`) | — |
+| Heritage | Qizu (`14`) | — |
+
 #### Xincheng Military Administration (`XIN`)
 
 | Category | Full acceptance | Partial acceptance |
@@ -1485,3 +1477,11 @@ Countries documented: **171** across **6** regions.
 | Species | Human (`1`) | — |
 | Ethnos | Linsongese (`5`) | — |
 | Heritage | Qizu (`14`) | — |
+
+#### Zhou Custodianship (`LZH`)
+
+| Category | Full acceptance | Partial acceptance |
+|----------|-----------------|--------------------|
+| Species | Human (`1`) | — |
+| Ethnos | Linsongese (`5`) | — |
+| Heritage | Soumin (`15`) | — |
