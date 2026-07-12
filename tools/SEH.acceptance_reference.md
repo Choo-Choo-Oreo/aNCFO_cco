@@ -1364,7 +1364,7 @@ Countries documented: **171** across **6** regions.
 |----------|-----------------|--------------------|
 | Species | Elf (`4`) | — |
 | Ethnos | Linsongese (`5`) | — |
-| Heritage | Suolinvaeki (`32`) | — |
+| Heritage | Xilin (`49`) | Suolinvaeki (`32`) |
 
 #### Qizu Shepherdacracy (`QIZ`)
 
@@ -1390,7 +1390,7 @@ Countries documented: **171** across **6** regions.
 | Ethnos | Grundvergen (`11`) | — |
 | Heritage | Koenigvergen (`33`) | — |
 
-#### Republic of the Gulf (`LGR`)
+#### Republic of the North-Eastern Gulf (`LGR`)
 
 | Category | Full acceptance | Partial acceptance |
 |----------|-----------------|--------------------|
