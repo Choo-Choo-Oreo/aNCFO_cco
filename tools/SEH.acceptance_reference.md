@@ -1294,7 +1294,7 @@ Countries documented: **171** across **6** regions.
 | Ethnos | Linsongese (`5`) | — |
 | Heritage | Suolinvaeki (`32`) | — |
 
-#### Linsong Mandate (`LMN`)
+#### Linsong Mandate (`LSM`)
 
 | Category | Full acceptance | Partial acceptance |
 |----------|-----------------|--------------------|
