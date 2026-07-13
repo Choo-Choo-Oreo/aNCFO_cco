@@ -882,7 +882,8 @@ crisis_collapse_of_the_nation = {
 
 		complete_effect = {
 			set_country_flag = collapse_of_the_nation_civil_war_regional
-			IF = { LIMIT = {
+			IF = {
+				LIMIT = {
 					OR = {
 						is_subject_of = HHE
 						is_subject = no
@@ -955,7 +956,8 @@ crisis_collapse_of_the_nation = {
 
 		complete_effect = {
 			set_country_flag = collapse_of_the_nation_civil_war_ignited
-			IF = { LIMIT = {
+			IF = {
+				LIMIT = {
 					OR = {
 						is_subject_of = HHE
 						is_subject = no
@@ -1013,6 +1015,7 @@ crisis_troop_deployer_collapse = {
 
 		target_trigger = {
 			FROM = { NOT = { has_state_flag = HHE_civilwar_recruited_militias } }
+			OWNER = { is_fully_controlled_by = ROOT }
 			hidden_trigger = {
 				FROM = {
 					NOT = {
@@ -1063,20 +1066,26 @@ crisis_troop_deployer_collapse = {
 			# Deployer
 			FROM = { HHE_civilwar_spawn_militia_divisions = yes }
 		}
-		ai_will_do = { factor = 10
-			modifier = { add = 2.5
+		ai_will_do = {
+			factor = 10
+			modifier = {
+				add = 2.5
 				FROM = { has_state_category = city }
 			}
-			modifier = { add = 5
+			modifier = {
+				add = 5
 				FROM = { has_state_category = large_city }
 			}
-			modifier = { add = 7.5
+			modifier = {
+				add = 7.5
 				FROM = { has_state_category = metropolis }
 			}
-			modifier = { add = 10
+			modifier = {
+				add = 10
 				FROM = { has_state_category = megalopolis }
 			}
-			modifier = { factor = 10
+			modifier = {
+				factor = 10
 				command_power > 30
 			}
 		}

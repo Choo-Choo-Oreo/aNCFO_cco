@@ -1,0 +1,51 @@
+last_date = "1736.1.1"
+
+tests = {
+
+	HHE_starts_trilateral_crusade_on_time = {
+		# HHE should have completed HHE_warmonger_trilateral_crusade and declared war on MRC
+		# by mid-1730. This is the exact timing the ai_strategy_plans reorder targets, so no
+		# acceptable_fail_rate slack is given.
+		success = {
+			date < 1730.7.1
+			HHE = { has_war_with = MRC }
+		}
+
+		fail = {
+			date > 1730.7.1
+			NOT = { HHE = { has_war_with = MRC } }
+		}
+
+		run_count = 1
+
+		loggers = {
+			log_equipment_in_field = {
+				country = HHE
+				value = infantry_equipment
+			}
+		}
+	}
+
+	HHE_does_not_capitulate_early = {
+		# HHE should hold out against MRC (and whoever else the crusade drags in) for at
+		# least 4 years past the historical war start, i.e. not capitulate before 1734.
+		success = {
+			date > 1734.1.1
+			HHE = { has_capitulated = no }
+		}
+
+		fail = {
+			HHE = { has_capitulated = yes }
+			date < 1734.1.1
+		}
+
+		run_count = 1
+
+		loggers = {
+			log_equipment_in_field = {
+				country = HHE
+				value = artillery_equipment
+			}
+		}
+	}
+}
