@@ -20,7 +20,6 @@ focus_tree = {
 	#shared_focus = EPY_focus_military_land # Modifers
 	#shared_focus = EPY_focus_military_air # Modifers
 	#shared_focus = EPY_focus_military_sea # Modifers
-	shared_focus = EPY_annex_fenghuang
 
 	#shortcut = {
 	#	name = EPY_focus_mentees_of_the_crownfather_shortcut
@@ -64,6 +63,81 @@ focus_tree = {
 
 		completion_reward = {
 			log = "[GetDateText]: [Root.GetName]: Focus EPY_focus_mentees_of_the_crownfather"
+		}
+	}
+
+	focus = { # Secure Fenghuang
+		id = EPY_focus_secure_fenghuang
+		icon = GFX_focus_unknown_political
+		prerequisite = { focus = EPY_focus_mentees_of_the_crownfather }
+		#mutually_exclusive = { focus =  }
+		relative_position_id = EPY_focus_mentees_of_the_crownfather
+		x = 0
+		y = 3
+	
+		cost = 5
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		available = {
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			factor = 2
+			modifier = {
+				add = 0.10
+				factor = 1.10
+				is_historical_focus_on = yes
+			}
+		}
+
+		will_lead_to_war_with = LFH
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus EPY_focus_secure_fenghuang"
+			declare_war_on = { type = annex_everything target = LFH }
+			create_wargoal = { type = annex_everything target = LFH expire = 36 }
+		}
+	}
+
+	focus = {
+		id = EPY_focus_liming_conquest
+		icon = GFX_focus_unknown_political
+		prerequisite = { focus = EPY_focus_secure_fenghuang }
+		#mutually_exclusive = { focus =  }
+		relative_position_id = EPY_focus_secure_fenghuang
+		x = 0
+		y = 1
+
+		cost = 10
+
+		available = {
+			date > 1728.01.01 # Year Month Day
+			has_war = no
+		}
+		bypass = {
+		}
+
+		ai_will_do = {
+			factor = 5
+		}
+
+		complete_tooltip = {
+		}
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus EPY_focus_liming_conquest"
+			every_country = {
+				limit = {
+					is_linsong_nation = yes
+					NOT = { is_subject_of = EPY }
+				}
+				PREV = {
+					declare_war_on = { type = annex_everything target = PREV }
+					create_wargoal = { type = annex_everything target = PREV expire = 36 }
+				}
+			}
 		}
 	}
 	# Opposition Branch - Shinminirgen says the Hinozuku, who bridge both factions, are the face that unifies it. Not the Heukin or Namu whom both oppose each other more often than the Hinozuku.
@@ -171,7 +245,7 @@ focus_tree = {
 		prerequisite = { focus = EPY_focus_mentees_of_the_crownfather }
 		mutually_exclusive = { focus = EPY_focus_corporate_with_the_zatsirgen }
 		#relative_position_id = 
-		x = 2
+		x = -2
 		y = 1
 	
 		cost = 5
@@ -180,6 +254,7 @@ focus_tree = {
 		available_if_capitulated = no
 
 		available = {
+			is_historical_railroading_on = yes
 		}
 		bypass = {
 		}
@@ -213,7 +288,6 @@ focus_tree = {
 		available_if_capitulated = no
 
 		available = {
-			is_historical_railroading_on = yes
 		}
 		bypass = {
 		}
@@ -231,71 +305,210 @@ focus_tree = {
 			log = "[GetDateText]: [Root.GetName]: Focus EPY_focus_corporate_with_the_zatsirgen"
 		}
 	}
-}
 
-shared_focus = {
-	id = EPY_annex_fenghuang
-	icon = GFX_focus_unknown_political
-	#prerequisite = { focus =  }
-	#mutually_exclusive = { focus =  }
-	#relative_position_id = 
-	x = 16
-	y = 0
+	focus = { # Temp
+		id = EPY_focus_dev_1
+		icon = GFX_focus_unknown_political
+		prerequisite = { focus = EPY_focus_corporate_with_the_zatsirgen }
+		#mutually_exclusive = { focus =  }
+		relative_position_id = EPY_focus_corporate_with_the_zatsirgen
+		x = 0
+		y = 1
+	
+		cost = 5
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
 
-	cost = 10
-
-	available = {
-	}
-	bypass = {
-	}
-
-	ai_will_do = {
-		factor = 5
-	}
-
-	complete_tooltip = {
-	}
-	completion_reward = {
-		log = "[GetDateText]: [Root.GetName]: Focus EPY_liming_conquest"
-		declare_war_on = { type = annex_everything target = LFH }
-		create_wargoal = { type = annex_everything target = LFH expire = 36 }
-	}
-}
-
-shared_focus = {
-	id = EPY_liming_conquest
-	icon = GFX_focus_unknown_political
-	prerequisite = { focus = EPY_annex_fenghuang }
-	#mutually_exclusive = { focus =  }
-	#relative_position_id = 
-	x = 16
-	y = 1
-
-	cost = 10
-
-	available = {
-		date > 1728.01.01 # Year Month Day
-		has_war = no
-	}
-	bypass = {
-	}
-
-	ai_will_do = {
-		factor = 5
-	}
-
-	complete_tooltip = {
-	}
-	completion_reward = {
-		log = "[GetDateText]: [Root.GetName]: Focus EPY_liming_conquest"
-		every_country = {
-			limit = {
-				is_linsong_nation = yes
-				NOT = { is_subject_of = EPY }
+		available = {
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			factor = 2
+			modifier = {
+				add = 0.10
+				factor = 1.10
+				is_historical_focus_on = yes
 			}
-			PREV = {
-				declare_war_on = { type = annex_everything target = PREV }
-				create_wargoal = { type = annex_everything target = PREV expire = 36 }
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus EPY_focus_dev_1"
+			every_core_state = {
+				limit = {
+					impassable = no
+					is_fully_controlled_by = ROOT
+					free_building_slots = {
+						building = industrial_complex
+						size > 0
+						include_locked = yes
+					}
+				}
+				random_select_amount = 3
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+			every_core_state = {
+				limit = {
+					impassable = no
+					is_fully_controlled_by = ROOT
+					free_building_slots = {
+						building = steel_complex
+						size > 0
+						include_locked = yes
+					}
+				}
+				random_select_amount = 3
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = steel_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+	focus = { # Temp
+		id = EPY_focus_dev_2
+		icon = GFX_focus_unknown_political
+		prerequisite = { focus = EPY_focus_dev_1 }
+		#mutually_exclusive = { focus =  }
+		relative_position_id = EPY_focus_dev_1
+		x = 0
+		y = 1
+	
+		cost = 5
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		available = {
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			factor = 2
+			modifier = {
+				add = 0.10
+				factor = 1.10
+				is_historical_focus_on = yes
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus EPY_focus_dev_2"
+			every_core_state = {
+				limit = {
+					impassable = no
+					is_fully_controlled_by = ROOT
+					free_building_slots = {
+						building = industrial_complex
+						size > 0
+						include_locked = yes
+					}
+				}
+				random_select_amount = 3
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+			every_core_state = {
+				limit = {
+					impassable = no
+					is_fully_controlled_by = ROOT
+					free_building_slots = {
+						building = steel_complex
+						size > 0
+						include_locked = yes
+					}
+				}
+				random_select_amount = 3
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = steel_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+	focus = { # Temp
+		id = EPY_focus_dev_3
+		icon = GFX_focus_unknown_political
+		prerequisite = { focus = EPY_focus_dev_2 }
+		#mutually_exclusive = { focus =  }
+		relative_position_id = EPY_focus_dev_2
+		x = 0
+		y = 1
+	
+		cost = 5
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		available = {
+		}
+		bypass = {
+		}
+	
+		ai_will_do = {
+			factor = 2
+			modifier = {
+				add = 0.10
+				factor = 1.10
+				is_historical_focus_on = yes
+			}
+		}
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus EPY_focus_dev_3"
+			every_core_state = {
+				limit = {
+					impassable = no
+					is_fully_controlled_by = ROOT
+					free_building_slots = {
+						building = industrial_complex
+						size > 0
+						include_locked = yes
+					}
+				}
+				random_select_amount = 3
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+			every_core_state = {
+				limit = {
+					impassable = no
+					is_fully_controlled_by = ROOT
+					free_building_slots = {
+						building = steel_complex
+						size > 0
+						include_locked = yes
+					}
+				}
+				random_select_amount = 3
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = steel_complex
+					level = 1
+					instant_build = yes
+				}
 			}
 		}
 	}
