@@ -92,7 +92,9 @@ def take_snapshot(logs_dir: Path, run_dir: Path, label: str,
 
 
 def normalize(line: str) -> str:
-    return STAMP_RE.sub("", line).strip()
+    # Strip a stray BOM/zero-width char so it can't crash the summary print on a
+    # cp1252 console (mod .txt files that carry a BOM leak U+FEFF into log lines).
+    return STAMP_RE.sub("", line).replace("﻿", "").strip()
 
 
 def summarize(run_dir: Path, outcome: str, new_crashes: set[str]) -> None:
@@ -147,7 +149,11 @@ def summarize(run_dir: Path, outcome: str, new_crashes: set[str]) -> None:
                  "content\nthe AI never picks. Those still need the CLAUDE.md "
                  "'user performs the action\nand reports back' workflow.")
     text = "\n".join(lines)
-    print(text, flush=True)
+    try:
+        print(text, flush=True)
+    except UnicodeEncodeError:
+        enc = sys.stdout.encoding or "utf-8"
+        print(text.encode(enc, "replace").decode(enc), flush=True)
     (run_dir / "summary.txt").write_text(text, encoding="utf-8")
     log(f"summary written -> {run_dir / 'summary.txt'}")
 
