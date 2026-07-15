@@ -3,6 +3,12 @@ on_actions = {
 		effect = { # Scripted Triggers Initialization
 			set_global_flag = is_OCfA_enabled
 
+			set_variable = { global.OCfA_quarterly_counter = 3 }
+			log = "GLOBAL LOG: Quarterly Pulse Triggered on [GetDateText]. Variable Reset to 3."
+			
+			set_variable = { global.OCfA_yearly_counter = 12 }
+			log = "GLOBAL LOG: Yearly Pulse Triggered on [GetDateText]. Variable Reset to 12."
+
 			IF = {
 				LIMIT = {
 					has_game_rule = { rule = OCfA_mobilization_scaling_rule option = MOB_ON }
@@ -22,18 +28,6 @@ on_actions = {
 				OCfA_calculate_battalion_capacity_formula = yes
 			}
 		}
-
-		effect = {
-			IF = {
-				LIMIT = { NOT = { has_global_flag = OCfA_global_monthly_done } }
-				set_global_flag = { flag = OCfA_global_monthly_done days = 1 value = 1 }
-				IF = {
-					LIMIT = { is_debug = yes }
-					log = "OCfA effect OCfA_generate_csv_battalion_capacity_data = yes"
-					OCfA_generate_csv_battalion_capacity_data = yes
-				}
-			}
-		}
 	}
 
 	on_weekly = { # on_monthly is to slow for the rapid change of unit's
@@ -47,16 +41,46 @@ on_actions = {
 			OCfA_calculate_battalion_capacity_formula = yes
 		}
 	}
-
-	on_monthly = { # Only for debugging the month on month unit's of countries
+	# Change the `ZZZ` to any confirmed scope.
+	on_monthly = {
 		effect = {
 			IF = {
 				LIMIT = { NOT = { has_global_flag = OCfA_global_monthly_done } }
 				set_global_flag = { flag = OCfA_global_monthly_done days = 1 value = 1 }
+
+				log = "OQLY / OYLY fire on_monthly_TAG"
+				subtract_from_variable = { global.OCfA_quarterly_counter = 1 }
+				subtract_from_variable = { global.OCfA_yearly_counter = 1 }
+
+				# --- ON_QUARTERLY (OCfA) ---
 				IF = {
-					LIMIT = { is_debug = yes }
-					log = "OCfA effect OCfA_generate_csv_battalion_capacity_data = yes"
+					LIMIT = { check_variable = { global.OCfA_quarterly_counter = 0 } }
+					log = "OCfA fire OCfA_generate_csv_battalion_capacity_data = yes"
 					OCfA_generate_csv_battalion_capacity_data = yes
+				}
+
+				# --- ON_YEARLY (OCfA) ---
+
+				# --- ON_QUARTERLY (Country Scoped) ---
+				IF = {
+					LIMIT = { check_variable = { global.OCfA_quarterly_counter = 0 } }
+					
+					# --- ON_QUARTERLY ---
+					log = "GLOBAL LOG: Quarterly Pulse Triggered on [GetDateText]. Variable Reset to 3."
+					
+					# --- RESET ---
+					set_variable = { global.OCfA_quarterly_counter = 3 }
+				}
+				
+				# --- ON_YEARLY (Country Scoped) ---
+				IF = {
+					LIMIT = { check_variable = { global.OCfA_yearly_counter = 0 } }
+					
+					# --- ON_YEARLY ---
+					log = "GLOBAL LOG: Yearly Pulse Triggered on [GetDateText]. Variable Reset to 12."
+					
+					# --- RESET ---
+					set_variable = { global.OCfA_yearly_counter = 12 }
 				}
 			}
 		}
