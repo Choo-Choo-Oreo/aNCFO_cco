@@ -304,819 +304,6 @@ operations = {
 economy_decisions = {
 }
 
-bop_HHE_gabriel_strongheart = {
-}
-
-bop_HHE_isabella_delfina = {
-}
-
-bop_HHE_gaius_divitiis = {
-}
-
-bop_HHE_archard_vladaros = {
-	HHE_mission_archard_vladaros_desire_for_war = {
-
-		allowed = {
-			original_tag = HHE
-		}
-
-		icon = ger_mefo_bills
-		priority = 100
-
-		available = {
-			has_war = yes
-		}
-
-		activation = {
-			has_war = no
-			has_completed_focus = HHE_warmonger_great_victory_parades
-			hidden_trigger = {
-				NOT = {
-					OR = {
-						has_completed_focus = HHE_warmonger_her_disciple_archard_vladaros
-						has_completed_focus = HHE_warmonger_one_faith
-						has_completed_focus = HHE_warmonger_one_nation
-					}
-				}
-			}
-		}
-
-		days_mission_timeout = 30
-		is_good = no
-		fire_only_once = no
-
-		cancel_trigger = {
-			hidden_trigger = {
-				OR = {
-					has_completed_focus = HHE_warmonger_her_disciple_archard_vladaros
-					has_completed_focus = HHE_warmonger_one_faith
-					has_completed_focus = HHE_warmonger_one_nation
-				}
-			}
-		}
-
-		timeout_effect = {
-			activate_mission = HHE_mission_archard_vladaros_desire_for_war
-			IF = {
-				LIMIT = { NOT = { has_completed_focus = HHE_warmonger_vladaros_cult_of_personality } }
-				custom_effect_tooltip = cult_personality_vladaros_one_tt
-				custom_effect_tooltip = generic_skip_one_line_tt # We do this for clearer reading.
-				add_power_balance_value = { id = power_balance_HHE_archard_vladaros value = -0.005 }
-			}
-			ELSE_IF = {
-				LIMIT = { NOT = { has_completed_focus = HHE_warmonger_our_nations_leader } }
-				custom_effect_tooltip = cult_personality_vladaros_two_tt
-				custom_effect_tooltip = generic_skip_one_line_tt # We do this for clearer reading.
-				add_power_balance_value = { id = power_balance_HHE_archard_vladaros value = -0.01 }
-			}
-			ELSE_IF = {
-				custom_effect_tooltip = generic_skip_one_line_tt # We do this for clearer reading.
-				add_power_balance_value = { id = power_balance_HHE_archard_vladaros value = -0.015 }
-			}
-		}
-	}
-
-	HHE_mission_archard_vladaros_single_economy = {
-
-		allowed = {
-			original_tag = HHE
-		}
-
-		icon = ger_mefo_bills
-		priority = 100
-
-		available = {
-			has_idea = HHE_autarky_idea
-			#all_core_state = { is_fully_controlled_by = ROOT }
-			has_resources_in_collection = {
-				collection = collection:country_and_all_subjects
-				resource = oil
-				amount > 299 # This needs to correspond to the Bypass values in the previous focuses
-				extracted = yes
-			}
-			has_resources_in_collection = {
-				collection = collection:country_and_all_subjects
-				resource = coal
-				amount > 799 # This needs to correspond to the Bypass values in the previous focuses
-				extracted = yes
-			}
-			has_resources_in_collection = {
-				collection = collection:country_and_all_subjects
-				resource = aluminium
-				amount > 399 # This needs to correspond to the Bypass values in the previous focuses
-				extracted = yes
-			}
-			has_resources_in_collection = {
-				collection = collection:country_and_all_subjects
-				resource = rubber
-				amount > 99 # This needs to correspond to the Bypass values in the previous focuses
-				extracted = yes
-			}
-			has_resources_in_collection = {
-				collection = collection:country_and_all_subjects
-				resource = tungsten
-				amount > 299 # This needs to correspond to the Bypass values in the previous focuses
-				extracted = yes
-			}
-			has_resources_in_collection = {
-				collection = collection:country_and_all_subjects
-				resource = chromium
-				amount > 299 # This needs to correspond to the Bypass values in the previous focuses
-				extracted = yes
-			}
-			has_resources_in_collection = {
-				collection = collection:country_and_all_subjects
-				resource = steel
-				amount > 1199 # This needs to correspond to the Bypass values in the previous focuses
-				extracted = yes
-			}
-		}
-
-		activation = {
-			has_completed_focus = HHE_warmonger_state_economy
-			hidden_trigger = { NOT = { has_idea = autarkic_economy_improved } }
-		}
-
-		days_mission_timeout = 30
-		is_good = no
-		fire_only_once = no
-
-		cancel_trigger = {
-		}
-
-		complete_effect = {
-			swap_ideas = {
-				remove_idea = autarkic_economy
-				add_idea = autarkic_economy_improved
-			}
-		}
-
-		timeout_effect = {
-			activate_mission = HHE_mission_archard_vladaros_single_economy
-			IF = {
-				LIMIT = {
-					NOT = {
-						OR = {
-							has_completed_focus = HHE_warmonger_autarky
-							has_completed_focus = HHE_warmonger_revisit_rttf
-						}
-					}
-				}
-				add_power_balance_value = { id = power_balance_HHE_archard_vladaros value = -0.005 }
-				ELSE = {
-					LIMIT = {
-						OR = {
-							has_completed_focus = HHE_warmonger_autarky
-							has_completed_focus = HHE_warmonger_revisit_rttf
-						}
-						NOT = {
-							has_completed_focus = HHE_warmonger_autarky
-							has_completed_focus = HHE_warmonger_revisit_rttf
-						}
-					}
-					add_power_balance_value = { id = power_balance_HHE_archard_vladaros value = -0.01 }
-					ELSE = {
-						add_power_balance_value = { id = power_balance_HHE_archard_vladaros value = -0.015 }
-					}
-				}
-			}
-		}
-	}
-
-	HHE_mission_archard_vladaros_wartime_economy = {
-
-		allowed = {
-			original_tag = HHE
-		}
-
-		icon = ger_mefo_bills
-		priority = 100
-
-		available = {
-			FROM = {
-				custom_trigger_tooltip = { tooltip = HHE_mission_archard_vladaros_wartime_economy_tt }
-				set_temp_variable = { total_industry = building_level@arms_factory }
-				add_to_temp_variable = { total_industry = building_level@dockyard }
-				check_variable = { var = total_industry value = industrial_complex_level compare = less_than }
-			}
-		}
-
-		activation = {
-			has_completed_focus = HHE_warmonger_marco_economy
-			hidden_trigger = {
-				FROM = {
-					check_variable = { ROOT.num_of_civilian_factories > ROOT.num_of_military_factories }
-				}
-			}
-		}
-
-		days_mission_timeout = 30
-		is_good = no
-		fire_only_once = no
-
-		cancel_trigger = {
-			hidden_trigger = {
-				FROM = {
-					check_variable = { ROOT.num_of_civilian_factories < ROOT.num_of_military_factories }
-				}
-			}
-		}
-
-		timeout_effect = {
-			activate_mission = HHE_mission_archard_vladaros_wartime_economy
-			IF = {
-				LIMIT = {
-					NOT = {
-						OR = {
-							has_completed_focus = HHE_warmonger_national_economy
-							has_completed_focus = HHE_warmonger_trilateral_preparations
-						}
-					}
-				}
-				add_power_balance_value = { id = power_balance_HHE_archard_vladaros value = -0.005 }
-				ELSE = {
-					LIMIT = {
-						OR = {
-							has_completed_focus = HHE_warmonger_national_economy
-							has_completed_focus = HHE_warmonger_trilateral_preparations
-						}
-						NOT = {
-							has_completed_focus = HHE_warmonger_national_economy
-							has_completed_focus = HHE_warmonger_trilateral_preparations
-						}
-					}
-					add_power_balance_value = { id = power_balance_HHE_archard_vladaros value = -0.01 }
-					ELSE = {
-						add_power_balance_value = { id = power_balance_HHE_archard_vladaros value = -0.015 }
-					}
-				}
-			}
-		}
-	}
-
-	DEBUG_deactivate_bop_HHE_archard_vladaros = {
-		priority = 91
-		visible = { AND = { is_debug = yes is_ai = no } }
-		complete_effect = {
-			remove_power_balance = { id = power_balance_HHE_archard_vladaros }
-		}
-	}
-
-	DEBUG_left_test_bop_HHE_archard_vladaros_failure = {
-		visible = { AND = { is_debug = yes is_ai = no } }
-		complete_effect = {
-			add_power_balance_value = { id = power_balance_HHE_archard_vladaros value = -2.0 }
-		}
-	}
-
-	DEBUG_left_test_bop_HHE_archard_vladaros = {
-		visible = { AND = { is_debug = yes is_ai = no } }
-		complete_effect = {
-			add_power_balance_value = { id = power_balance_HHE_archard_vladaros value = -0.05 }
-		}
-	}
-
-	DEBUG_right_test_bop_HHE_archard_vladaros = {
-		visible = { AND = { is_debug = yes is_ai = no } }
-		complete_effect = {
-			add_power_balance_value = { id = power_balance_HHE_archard_vladaros value = 0.05 }
-		}
-	}
-
-	pillar_social = {
-		visible = { has_completed_focus = HHE_warmonger_pillar_social }
-		available = {  }
-
-		fire_only_once = no
-		days_re_enable = 30
-		cost = 50
-
-		complete_effect = {
-			add_power_balance_value = { id = power_balance_HHE_archard_vladaros value = 0.05 }
-		}
-
-		ai_will_do = {
-			factor = 10
-			modifier = {
-				factor = 4
-				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
-			}
-			modifier = {
-				factor = 10
-				has_war_support < 0.50
-				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
-			}
-			modifier = {
-				factor = 10
-				has_war_support < 0.25
-				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
-			}
-			modifier = {
-				factor = 10
-				has_war_support < 0.01
-				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
-			}
-		}
-	}
-
-	pillar_civil_liberties_policing = {
-		visible = { has_completed_focus = HHE_warmonger_pillar_civil_liberties }
-		available = { HHE_has_idea_HHE_piller_civil_liberties = yes }
-
-		fire_only_once = no
-		days_re_enable = 30
-		custom_cost_text = decision_cost_stability_5
-		custom_cost_trigger = { has_stability > 0 }
-
-		complete_effect = { hidden_effect = { add_stability = -0.05 }
-			add_popularity = { ideology = theocratism popularity = 0.05 }
-			add_power_balance_value = { id = power_balance_HHE_archard_vladaros value = 0.05 }
-		}
-
-		ai_will_do = {
-			factor = 0
-			modifier = {
-				add = 10
-				has_stability > 0.50 # 0.80 to 0.50 # Since they tend to have a high factor stability.
-			}
-			modifier = {
-				factor = 4
-				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
-			}
-			modifier = {
-				factor = 5
-				has_war_support < 0.50
-				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
-			}
-			modifier = {
-				factor = 5
-				has_war_support < 0.25
-				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
-			}
-			modifier = {
-				factor = 5
-				has_war_support < 0.01
-				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
-			}
-		}
-	}
-
-	pillar_civil_liberties_resources = {
-		visible = { has_completed_focus = HHE_warmonger_pillar_civil_liberties }
-		available = { HHE_has_idea_HHE_piller_civil_liberties = yes }
-
-		fire_only_once = no
-		days_re_enable = 30
-		custom_cost_text = decision_cost_manpower_30
-		custom_cost_trigger = { has_manpower > 29999 }
-
-		complete_effect = { hidden_effect = { add_manpower = -30000 }
-			add_power_balance_value = { id = power_balance_HHE_archard_vladaros value = 0.05 }
-		}
-
-		ai_will_do = {
-			factor = 0
-			modifier = {
-				add = 10
-				has_manpower > 1000000
-			}
-			modifier = {
-				factor = 4
-				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
-			}
-			modifier = {
-				factor = 5
-				has_war_support < 0.50
-				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
-			}
-			modifier = {
-				factor = 5
-				has_war_support < 0.25
-				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
-			}
-			modifier = {
-				factor = 5
-				has_war_support < 0.01
-				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
-			}
-		}
-	}
-
-	pillar_foreign_policy = {
-		visible = { has_completed_focus = HHE_warmonger_pillar_foreign_policy }
-		available = {  }
-
-		fire_only_once = no
-		days_re_enable = 30
-		cost = 50
-
-		complete_effect = {
-			add_power_balance_value = { id = power_balance_HHE_archard_vladaros value = 0.05 }
-		}
-
-		ai_will_do = {
-			factor = 10
-			modifier = {
-				factor = 4
-				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
-			}
-			modifier = {
-				factor = 10
-				has_war_support < 0.50
-				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
-			}
-			modifier = {
-				factor = 10
-				has_war_support < 0.25
-				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
-			}
-			modifier = {
-				factor = 10
-				has_war_support < 0.01
-				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
-			}
-		}
-	}
-
-	pillar_personality = {
-		visible = { has_completed_focus = HHE_warmonger_pillar_personality }
-		available = { has_stability > 0.80 }
-
-		fire_only_once = no
-		days_re_enable = 30
-		cost = 50
-
-		complete_effect = {
-			add_war_support = 0.05
-			add_power_balance_value = { id = power_balance_HHE_archard_vladaros value = 0.05 }
-		}
-
-		ai_will_do = {
-			factor = 10
-			modifier = {
-				factor = 4
-				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
-			}
-			modifier = {
-				factor = 10
-				has_war_support < 0.50
-				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
-			}
-			modifier = {
-				factor = 10
-				has_war_support < 0.25
-				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
-			}
-			modifier = {
-				factor = 10
-				has_war_support < 0.01
-				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
-			}
-		}
-	}
-
-	pillar_governance = {
-		visible = { has_completed_focus = HHE_warmonger_pillar_governance }
-		available = { theocratism > 0.90 }
-
-		fire_only_once = no
-		days_re_enable = 30
-		cost = 50
-
-		complete_effect = {
-			add_power_balance_value = { id = power_balance_HHE_archard_vladaros value = 0.05 }
-		}
-
-		ai_will_do = {
-			factor = 10
-			modifier = {
-				factor = 4
-				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
-			}
-			modifier = {
-				factor = 10
-				has_war_support < 0.50
-				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
-			}
-			modifier = {
-				factor = 10
-				has_war_support < 0.25
-				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
-			}
-			modifier = {
-				factor = 10
-				has_war_support < 0.01
-				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
-			}
-		}
-	}
-
-	pillar_economic_HHE_militarization = {
-		icon = GFX_decision_ger_military_buildup
-		state_target = yes
-		on_map_mode = map_and_decisions_view
-		target_array = core_states
-
-		days_remove = 30
-		fire_only_once = no
-		cost = 50
-
-		modifier = {
-			civilian_factory_use = 5
-			industrial_capacity_factory = -0.075
-			production_speed_buildings_factor = -0.075
-		}
-
-		target_trigger = {
-			FROM = {
-				NOT = { has_state_flag = state_flag_HHE_pillar_economic }
-				OR = {
-					has_state_category = metropolis
-					has_state_category = megalopolis
-					has_state_category = archethnopolis
-					has_state_category = hieropalingenopolis
-					has_state_category = theogennopolis
-				}
-				impassable = no
-				is_owned_by = ROOT
-			}
-		}
-		visible = {
-			has_completed_focus = HHE_warmonger_pillar_economic
-			FROM = {
-				NOT = { has_state_flag = state_flag_HHE_pillar_economic }
-			}
-		}
-		available = {
-			FROM = {
-				hidden_trigger = {
-					OR = {
-						has_state_category = metropolis
-						has_state_category = megalopolis
-						has_state_category = archethnopolis
-						has_state_category = hieropalingenopolis
-						has_state_category = theogennopolis
-					}
-				}
-			}
-		}
-
-		complete_effect = {
-			log = "[GetDateText]: [Root.GetName]: Decision pillar_economic [FROM.state.GetName]"
-		}
-		remove_effect = {
-			log = "[GetDateText]: [Root.GetName]: Decision remove pillar_economic [FROM.state.GetName]"
-			FROM = {
-				set_state_flag = state_flag_HHE_pillar_economic
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = { type = arms_factory level = 1 instant_build = yes }
-				add_building_construction = { type = barracks level = 1 instant_build = yes }
-			}
-			add_power_balance_value = { id = power_balance_HHE_archard_vladaros value = 0.05 }
-		}
-
-		is_good = yes
-		ai_will_do = {
-			factor = 0
-			modifier = {
-				add = 10
-				has_war = yes
-			}
-			modifier = {
-				factor = 5
-				enemies_strength_ratio > 0.10
-			}
-			modifier = {
-				factor = 4
-				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
-			}
-			modifier = {
-				factor = 10
-				has_war_support < 0.50
-				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
-			}
-			modifier = {
-				factor = 10
-				has_war_support < 0.25
-				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
-			}
-			modifier = {
-				factor = 10
-				has_war_support < 0.01
-				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
-			}
-		}
-	}
-
-	pillar_economic_HHE_industrialization = {
-		icon = GFX_decision_generic_factory
-		state_target = yes
-		on_map_mode = map_only
-		target_array = core_states
-
-		days_remove = 60
-		fire_only_once = no
-		cost = industrialize_ppcost
-
-		modifier = {
-			civilian_factory_use = 5
-			industrial_capacity_factory = -0.05
-			production_speed_buildings_factor = -0.05
-		}
-
-		target_trigger = {
-			FROM = {
-				NOT = { has_state_flag = state_flag_HHE_industrialize_the_cities }
-				OR = {
-					has_state_category = city
-					has_state_category = large_city
-					has_state_category = metropolis
-					has_state_category = megalopolis
-					has_state_category = archethnopolis
-					has_state_category = hieropalingenopolis
-					has_state_category = theogennopolis
-				}
-				impassable = no
-				is_owned_by = ROOT
-			}
-		}
-		visible = {
-			original_tag = HHE
-			FROM = {
-				NOT = { has_state_flag = state_flag_HHE_industrialize_the_cities }
-			}
-			OR = {
-				#AND = { is_debug = yes is_ai = no }
-				has_completed_focus = HHE_warmonger_construction_efforts
-			}
-		}
-		available = {
-			FROM = {
-				if = {
-					limit = { has_state_category = city }
-					set_temp_variable = { industrialize_ppcost = 10 }
-					set_temp_variable = { industrialize_civiliancost = 5 }
-					ROOT = { num_of_civilian_factories_available_for_projects > 4 }
-				}
-				else_if = {
-					limit = { has_state_category = large_city }
-					set_temp_variable = { industrialize_ppcost = 20 }
-					set_temp_variable = { industrialize_civiliancost = 7 }
-					ROOT = { num_of_civilian_factories_available_for_projects > 6 }
-				}
-				else_if = {
-					limit = { has_state_category = metropolis }
-					set_temp_variable = { industrialize_ppcost = 30 }
-					set_temp_variable = { industrialize_civiliancost = 10 }
-					ROOT = { num_of_civilian_factories_available_for_projects > 9 }
-				}
-				else_if = {
-					limit = { has_state_category = megalopolis }
-					set_temp_variable = { industrialize_ppcost = 40 }
-					set_temp_variable = { industrialize_civiliancost = 15 }
-					ROOT = { num_of_civilian_factories_available_for_projects > 14 }
-				}
-				else_if = {
-					limit = {
-						OR = {
-							has_state_category = archethnopolis
-							has_state_category = hieropalingenopolis
-							has_state_category = theogennopolis
-						}
-					}
-					set_temp_variable = { industrialize_ppcost = 50 }
-					set_temp_variable = { industrialize_civiliancost = 20 }
-					ROOT = { num_of_civilian_factories_available_for_projects > 19 }
-				}
-				hidden_trigger = {
-					OR = {
-						has_state_category = large_town
-						has_state_category = city
-						has_state_category = large_city
-						has_state_category = metropolis
-						has_state_category = megalopolis
-					}
-				}
-			}
-		}
-
-		complete_effect = {
-			log = "[GetDateText]: [Root.GetName]: Decision state_HHE_industrialization [FROM.state.GetName]"
-		}
-		remove_effect = {
-			log = "[GetDateText]: [Root.GetName]: Decision remove state_HHE_industrialization [FROM.state.GetName]"
-			FROM = {
-				set_state_flag = state_flag_HHE_industrialize_the_cities
-				if = {
-					limit = {
-						has_state_category = city
-					}
-					add_extra_state_shared_building_slots = 1
-					add_building_construction = {
-						type = industrial_complex
-						level = 1
-						instant_build = yes
-					}
-				}
-				else_if = {
-					limit = {
-						has_state_category = large_city
-					}
-					add_extra_state_shared_building_slots = 2
-					add_building_construction = {
-						type = industrial_complex
-						level = 2
-						instant_build = yes
-					}
-				}
-				else_if = {
-					limit = {
-						has_state_category = metropolis
-					}
-					add_extra_state_shared_building_slots = 3
-					add_building_construction = {
-						type = industrial_complex
-						level = 3
-						instant_build = yes
-					}
-				}
-				else_if = {
-					limit = {
-						has_state_category = megalopolis
-					}
-					add_extra_state_shared_building_slots = 4
-					add_building_construction = {
-						type = industrial_complex
-						level = 4
-						instant_build = yes
-					}
-				}
-				else_if = {
-					limit = {
-						OR = {
-							has_state_category = archethnopolis
-							has_state_category = hieropalingenopolis
-							has_state_category = theogennopolis
-						}
-					}
-					add_extra_state_shared_building_slots = 5
-					add_building_construction = {
-						type = industrial_complex
-						level = 5
-						instant_build = yes
-					}
-					add_building_construction = {
-						type = construction_complex
-						level = 1
-						instant_build = yes
-					}
-				}
-			}
-		}
-
-		is_good = yes
-		ai_will_do = {
-			factor = 3.0
-			modifier = {
-				add = 1.5
-				FROM = { has_state_category = large_town }
-			}
-			modifier = {
-				add = 2.0
-				FROM = { has_state_category = city }
-			}
-			modifier = {
-				add = 2.5
-				FROM = { has_state_category = large_city }
-			}
-			modifier = {
-				add = 3.5
-				FROM = { has_state_category = metropolis }
-			}
-			modifier = {
-				add = 5.0
-				FROM = { has_state_category = megalopolis }
-			}
-			modifier = {
-				factor = 0
-				has_political_power < 50
-			}
-			modifier = {
-				factor = 3
-				has_political_power > 50
-			}
-			modifier = {
-				factor = 3
-				has_political_power > 100
-			}
-			modifier = {
-				factor = 3
-				has_political_power > 200
-			}
-		}
-	}
-}
-
 railway_HHE_trans_continental = {
 	railway_HHE_trans_continental_railway = {
 		icon = generic_wreckers
@@ -2583,6 +1770,819 @@ morale_HHE_falling_spirits = {
 		timeout_effect = {
 			add_power_balance_value = { id = power_balance_HHE_archard_vladaros value = -0.075 }
 			activate_mission = HHE_falling_spirits_in_a_failed_war
+		}
+	}
+}
+
+bop_HHE_gabriel_strongheart = {
+}
+
+bop_HHE_isabella_delfina = {
+}
+
+bop_HHE_gaius_divitiis = {
+}
+
+bop_HHE_archard_vladaros = {
+	HHE_mission_archard_vladaros_desire_for_war = {
+
+		allowed = {
+			original_tag = HHE
+		}
+
+		icon = ger_mefo_bills
+		priority = 100
+
+		available = {
+			has_war = yes
+		}
+
+		activation = {
+			has_war = no
+			has_completed_focus = HHE_warmonger_great_victory_parades
+			hidden_trigger = {
+				NOT = {
+					OR = {
+						has_completed_focus = HHE_warmonger_her_disciple_archard_vladaros
+						has_completed_focus = HHE_warmonger_one_faith
+						has_completed_focus = HHE_warmonger_one_nation
+					}
+				}
+			}
+		}
+
+		days_mission_timeout = 30
+		is_good = no
+		fire_only_once = no
+
+		cancel_trigger = {
+			hidden_trigger = {
+				OR = {
+					has_completed_focus = HHE_warmonger_her_disciple_archard_vladaros
+					has_completed_focus = HHE_warmonger_one_faith
+					has_completed_focus = HHE_warmonger_one_nation
+				}
+			}
+		}
+
+		timeout_effect = {
+			activate_mission = HHE_mission_archard_vladaros_desire_for_war
+			IF = {
+				LIMIT = { NOT = { has_completed_focus = HHE_warmonger_vladaros_cult_of_personality } }
+				custom_effect_tooltip = cult_personality_vladaros_one_tt
+				custom_effect_tooltip = generic_skip_one_line_tt # We do this for clearer reading.
+				add_power_balance_value = { id = power_balance_HHE_archard_vladaros value = -0.005 }
+			}
+			ELSE_IF = {
+				LIMIT = { NOT = { has_completed_focus = HHE_warmonger_our_nations_leader } }
+				custom_effect_tooltip = cult_personality_vladaros_two_tt
+				custom_effect_tooltip = generic_skip_one_line_tt # We do this for clearer reading.
+				add_power_balance_value = { id = power_balance_HHE_archard_vladaros value = -0.01 }
+			}
+			ELSE_IF = {
+				custom_effect_tooltip = generic_skip_one_line_tt # We do this for clearer reading.
+				add_power_balance_value = { id = power_balance_HHE_archard_vladaros value = -0.015 }
+			}
+		}
+	}
+
+	HHE_mission_archard_vladaros_single_economy = {
+
+		allowed = {
+			original_tag = HHE
+		}
+
+		icon = ger_mefo_bills
+		priority = 100
+
+		available = {
+			has_idea = HHE_autarky_idea
+			#all_core_state = { is_fully_controlled_by = ROOT }
+			has_resources_in_collection = {
+				collection = collection:country_and_all_subjects
+				resource = oil
+				amount > 299 # This needs to correspond to the Bypass values in the previous focuses
+				extracted = yes
+			}
+			has_resources_in_collection = {
+				collection = collection:country_and_all_subjects
+				resource = coal
+				amount > 799 # This needs to correspond to the Bypass values in the previous focuses
+				extracted = yes
+			}
+			has_resources_in_collection = {
+				collection = collection:country_and_all_subjects
+				resource = aluminium
+				amount > 399 # This needs to correspond to the Bypass values in the previous focuses
+				extracted = yes
+			}
+			has_resources_in_collection = {
+				collection = collection:country_and_all_subjects
+				resource = rubber
+				amount > 99 # This needs to correspond to the Bypass values in the previous focuses
+				extracted = yes
+			}
+			has_resources_in_collection = {
+				collection = collection:country_and_all_subjects
+				resource = tungsten
+				amount > 299 # This needs to correspond to the Bypass values in the previous focuses
+				extracted = yes
+			}
+			has_resources_in_collection = {
+				collection = collection:country_and_all_subjects
+				resource = chromium
+				amount > 299 # This needs to correspond to the Bypass values in the previous focuses
+				extracted = yes
+			}
+			has_resources_in_collection = {
+				collection = collection:country_and_all_subjects
+				resource = steel
+				amount > 1199 # This needs to correspond to the Bypass values in the previous focuses
+				extracted = yes
+			}
+		}
+
+		activation = {
+			has_completed_focus = HHE_warmonger_state_economy
+			hidden_trigger = { NOT = { has_idea = autarkic_economy_improved } }
+		}
+
+		days_mission_timeout = 30
+		is_good = no
+		fire_only_once = no
+
+		cancel_trigger = {
+		}
+
+		complete_effect = {
+			swap_ideas = {
+				remove_idea = autarkic_economy
+				add_idea = autarkic_economy_improved
+			}
+		}
+
+		timeout_effect = {
+			activate_mission = HHE_mission_archard_vladaros_single_economy
+			IF = {
+				LIMIT = {
+					NOT = {
+						OR = {
+							has_completed_focus = HHE_warmonger_autarky
+							has_completed_focus = HHE_warmonger_revisit_rttf
+						}
+					}
+				}
+				add_power_balance_value = { id = power_balance_HHE_archard_vladaros value = -0.005 }
+				ELSE = {
+					LIMIT = {
+						OR = {
+							has_completed_focus = HHE_warmonger_autarky
+							has_completed_focus = HHE_warmonger_revisit_rttf
+						}
+						NOT = {
+							has_completed_focus = HHE_warmonger_autarky
+							has_completed_focus = HHE_warmonger_revisit_rttf
+						}
+					}
+					add_power_balance_value = { id = power_balance_HHE_archard_vladaros value = -0.01 }
+					ELSE = {
+						add_power_balance_value = { id = power_balance_HHE_archard_vladaros value = -0.015 }
+					}
+				}
+			}
+		}
+	}
+
+	HHE_mission_archard_vladaros_wartime_economy = {
+
+		allowed = {
+			original_tag = HHE
+		}
+
+		icon = ger_mefo_bills
+		priority = 100
+
+		available = {
+			FROM = {
+				custom_trigger_tooltip = { tooltip = HHE_mission_archard_vladaros_wartime_economy_tt }
+				set_temp_variable = { total_industry = building_level@arms_factory }
+				add_to_temp_variable = { total_industry = building_level@dockyard }
+				check_variable = { var = total_industry value = industrial_complex_level compare = less_than }
+			}
+		}
+
+		activation = {
+			has_completed_focus = HHE_warmonger_marco_economy
+			hidden_trigger = {
+				FROM = {
+					check_variable = { ROOT.num_of_civilian_factories > ROOT.num_of_military_factories }
+				}
+			}
+		}
+
+		days_mission_timeout = 30
+		is_good = no
+		fire_only_once = no
+
+		cancel_trigger = {
+			hidden_trigger = {
+				FROM = {
+					check_variable = { ROOT.num_of_civilian_factories < ROOT.num_of_military_factories }
+				}
+			}
+		}
+
+		timeout_effect = {
+			activate_mission = HHE_mission_archard_vladaros_wartime_economy
+			IF = {
+				LIMIT = {
+					NOT = {
+						OR = {
+							has_completed_focus = HHE_warmonger_national_economy
+							has_completed_focus = HHE_warmonger_trilateral_preparations
+						}
+					}
+				}
+				add_power_balance_value = { id = power_balance_HHE_archard_vladaros value = -0.005 }
+				ELSE = {
+					LIMIT = {
+						OR = {
+							has_completed_focus = HHE_warmonger_national_economy
+							has_completed_focus = HHE_warmonger_trilateral_preparations
+						}
+						NOT = {
+							has_completed_focus = HHE_warmonger_national_economy
+							has_completed_focus = HHE_warmonger_trilateral_preparations
+						}
+					}
+					add_power_balance_value = { id = power_balance_HHE_archard_vladaros value = -0.01 }
+					ELSE = {
+						add_power_balance_value = { id = power_balance_HHE_archard_vladaros value = -0.015 }
+					}
+				}
+			}
+		}
+	}
+
+	DEBUG_deactivate_bop_HHE_archard_vladaros = {
+		priority = 91
+		visible = { AND = { is_debug = yes is_ai = no } }
+		complete_effect = {
+			remove_power_balance = { id = power_balance_HHE_archard_vladaros }
+		}
+	}
+
+	DEBUG_left_test_bop_HHE_archard_vladaros_failure = {
+		visible = { AND = { is_debug = yes is_ai = no } }
+		complete_effect = {
+			add_power_balance_value = { id = power_balance_HHE_archard_vladaros value = -2.0 }
+		}
+	}
+
+	DEBUG_left_test_bop_HHE_archard_vladaros = {
+		visible = { AND = { is_debug = yes is_ai = no } }
+		complete_effect = {
+			add_power_balance_value = { id = power_balance_HHE_archard_vladaros value = -0.05 }
+		}
+	}
+
+	DEBUG_right_test_bop_HHE_archard_vladaros = {
+		visible = { AND = { is_debug = yes is_ai = no } }
+		complete_effect = {
+			add_power_balance_value = { id = power_balance_HHE_archard_vladaros value = 0.05 }
+		}
+	}
+
+	pillar_social = {
+		visible = { has_completed_focus = HHE_warmonger_pillar_social }
+		available = {  }
+
+		fire_only_once = no
+		days_re_enable = 30
+		cost = 50
+
+		complete_effect = {
+			add_power_balance_value = { id = power_balance_HHE_archard_vladaros value = 0.05 }
+		}
+
+		ai_will_do = {
+			factor = 10
+			modifier = {
+				factor = 4
+				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
+			}
+			modifier = {
+				factor = 10
+				has_war_support < 0.50
+				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
+			}
+			modifier = {
+				factor = 10
+				has_war_support < 0.25
+				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
+			}
+			modifier = {
+				factor = 10
+				has_war_support < 0.01
+				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
+			}
+		}
+	}
+
+	pillar_civil_liberties_policing = {
+		visible = { has_completed_focus = HHE_warmonger_pillar_civil_liberties }
+		available = { HHE_has_idea_HHE_piller_civil_liberties = yes }
+
+		fire_only_once = no
+		days_re_enable = 30
+		custom_cost_text = decision_cost_stability_5
+		custom_cost_trigger = { has_stability > 0 }
+
+		complete_effect = { hidden_effect = { add_stability = -0.05 }
+			add_popularity = { ideology = theocratism popularity = 0.05 }
+			add_power_balance_value = { id = power_balance_HHE_archard_vladaros value = 0.05 }
+		}
+
+		ai_will_do = {
+			factor = 0
+			modifier = {
+				add = 10
+				has_stability > 0.50 # 0.80 to 0.50 # Since they tend to have a high factor stability.
+			}
+			modifier = {
+				factor = 4
+				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
+			}
+			modifier = {
+				factor = 5
+				has_war_support < 0.50
+				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
+			}
+			modifier = {
+				factor = 5
+				has_war_support < 0.25
+				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
+			}
+			modifier = {
+				factor = 5
+				has_war_support < 0.01
+				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
+			}
+		}
+	}
+
+	pillar_civil_liberties_resources = {
+		visible = { has_completed_focus = HHE_warmonger_pillar_civil_liberties }
+		available = { HHE_has_idea_HHE_piller_civil_liberties = yes }
+
+		fire_only_once = no
+		days_re_enable = 30
+		custom_cost_text = decision_cost_manpower_30
+		custom_cost_trigger = { has_manpower > 29999 }
+
+		complete_effect = { hidden_effect = { add_manpower = -30000 }
+			add_power_balance_value = { id = power_balance_HHE_archard_vladaros value = 0.05 }
+		}
+
+		ai_will_do = {
+			factor = 0
+			modifier = {
+				add = 10
+				has_manpower > 1000000
+			}
+			modifier = {
+				factor = 4
+				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
+			}
+			modifier = {
+				factor = 5
+				has_war_support < 0.50
+				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
+			}
+			modifier = {
+				factor = 5
+				has_war_support < 0.25
+				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
+			}
+			modifier = {
+				factor = 5
+				has_war_support < 0.01
+				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
+			}
+		}
+	}
+
+	pillar_foreign_policy = {
+		visible = { has_completed_focus = HHE_warmonger_pillar_foreign_policy }
+		available = {  }
+
+		fire_only_once = no
+		days_re_enable = 30
+		cost = 50
+
+		complete_effect = {
+			add_power_balance_value = { id = power_balance_HHE_archard_vladaros value = 0.05 }
+		}
+
+		ai_will_do = {
+			factor = 10
+			modifier = {
+				factor = 4
+				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
+			}
+			modifier = {
+				factor = 10
+				has_war_support < 0.50
+				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
+			}
+			modifier = {
+				factor = 10
+				has_war_support < 0.25
+				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
+			}
+			modifier = {
+				factor = 10
+				has_war_support < 0.01
+				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
+			}
+		}
+	}
+
+	pillar_personality = {
+		visible = { has_completed_focus = HHE_warmonger_pillar_personality }
+		available = { has_stability > 0.80 }
+
+		fire_only_once = no
+		days_re_enable = 30
+		cost = 50
+
+		complete_effect = {
+			add_war_support = 0.05
+			add_power_balance_value = { id = power_balance_HHE_archard_vladaros value = 0.05 }
+		}
+
+		ai_will_do = {
+			factor = 10
+			modifier = {
+				factor = 4
+				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
+			}
+			modifier = {
+				factor = 10
+				has_war_support < 0.50
+				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
+			}
+			modifier = {
+				factor = 10
+				has_war_support < 0.25
+				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
+			}
+			modifier = {
+				factor = 10
+				has_war_support < 0.01
+				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
+			}
+		}
+	}
+
+	pillar_governance = {
+		visible = { has_completed_focus = HHE_warmonger_pillar_governance }
+		available = { theocratism > 0.90 }
+
+		fire_only_once = no
+		days_re_enable = 30
+		cost = 50
+
+		complete_effect = {
+			add_power_balance_value = { id = power_balance_HHE_archard_vladaros value = 0.05 }
+		}
+
+		ai_will_do = {
+			factor = 10
+			modifier = {
+				factor = 4
+				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
+			}
+			modifier = {
+				factor = 10
+				has_war_support < 0.50
+				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
+			}
+			modifier = {
+				factor = 10
+				has_war_support < 0.25
+				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
+			}
+			modifier = {
+				factor = 10
+				has_war_support < 0.01
+				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
+			}
+		}
+	}
+
+	pillar_economic_HHE_militarization = {
+		icon = GFX_decision_ger_military_buildup
+		state_target = yes
+		on_map_mode = map_and_decisions_view
+		target_array = core_states
+
+		days_remove = 30
+		fire_only_once = no
+		cost = 50
+
+		modifier = {
+			civilian_factory_use = 5
+			industrial_capacity_factory = -0.075
+			production_speed_buildings_factor = -0.075
+		}
+
+		target_trigger = {
+			FROM = {
+				NOT = { has_state_flag = state_flag_HHE_pillar_economic }
+				OR = {
+					has_state_category = metropolis
+					has_state_category = megalopolis
+					has_state_category = archethnopolis
+					has_state_category = hieropalingenopolis
+					has_state_category = theogennopolis
+				}
+				impassable = no
+				is_owned_by = ROOT
+			}
+		}
+		visible = {
+			has_completed_focus = HHE_warmonger_pillar_economic
+			FROM = {
+				NOT = { has_state_flag = state_flag_HHE_pillar_economic }
+			}
+		}
+		available = {
+			FROM = {
+				hidden_trigger = {
+					OR = {
+						has_state_category = metropolis
+						has_state_category = megalopolis
+						has_state_category = archethnopolis
+						has_state_category = hieropalingenopolis
+						has_state_category = theogennopolis
+					}
+				}
+			}
+		}
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision pillar_economic [FROM.state.GetName]"
+		}
+		remove_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision remove pillar_economic [FROM.state.GetName]"
+			FROM = {
+				set_state_flag = state_flag_HHE_pillar_economic
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = { type = arms_factory level = 1 instant_build = yes }
+				add_building_construction = { type = barracks level = 1 instant_build = yes }
+			}
+			add_power_balance_value = { id = power_balance_HHE_archard_vladaros value = 0.05 }
+		}
+
+		is_good = yes
+		ai_will_do = {
+			factor = 0
+			modifier = {
+				add = 10
+				has_war = yes
+			}
+			modifier = {
+				factor = 5
+				enemies_strength_ratio > 0.10
+			}
+			modifier = {
+				factor = 4
+				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
+			}
+			modifier = {
+				factor = 10
+				has_war_support < 0.50
+				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
+			}
+			modifier = {
+				factor = 10
+				has_war_support < 0.25
+				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
+			}
+			modifier = {
+				factor = 10
+				has_war_support < 0.01
+				power_balance_value = { id = power_balance_HHE_archard_vladaros value < 0.50 }
+			}
+		}
+	}
+
+	pillar_economic_HHE_industrialization = {
+		icon = GFX_decision_generic_factory
+		state_target = yes
+		on_map_mode = map_only
+		target_array = core_states
+
+		days_remove = 60
+		fire_only_once = no
+		cost = industrialize_ppcost
+
+		modifier = {
+			civilian_factory_use = 5
+			industrial_capacity_factory = -0.05
+			production_speed_buildings_factor = -0.05
+		}
+
+		target_trigger = {
+			FROM = {
+				NOT = { has_state_flag = state_flag_HHE_industrialize_the_cities }
+				OR = {
+					has_state_category = city
+					has_state_category = large_city
+					has_state_category = metropolis
+					has_state_category = megalopolis
+					has_state_category = archethnopolis
+					has_state_category = hieropalingenopolis
+					has_state_category = theogennopolis
+				}
+				impassable = no
+				is_owned_by = ROOT
+			}
+		}
+		visible = {
+			original_tag = HHE
+			FROM = {
+				NOT = { has_state_flag = state_flag_HHE_industrialize_the_cities }
+			}
+			OR = {
+				#AND = { is_debug = yes is_ai = no }
+				has_completed_focus = HHE_warmonger_construction_efforts
+			}
+		}
+		available = {
+			FROM = {
+				if = {
+					limit = { has_state_category = city }
+					set_temp_variable = { industrialize_ppcost = 10 }
+					set_temp_variable = { industrialize_civiliancost = 5 }
+					ROOT = { num_of_civilian_factories_available_for_projects > 4 }
+				}
+				else_if = {
+					limit = { has_state_category = large_city }
+					set_temp_variable = { industrialize_ppcost = 20 }
+					set_temp_variable = { industrialize_civiliancost = 7 }
+					ROOT = { num_of_civilian_factories_available_for_projects > 6 }
+				}
+				else_if = {
+					limit = { has_state_category = metropolis }
+					set_temp_variable = { industrialize_ppcost = 30 }
+					set_temp_variable = { industrialize_civiliancost = 10 }
+					ROOT = { num_of_civilian_factories_available_for_projects > 9 }
+				}
+				else_if = {
+					limit = { has_state_category = megalopolis }
+					set_temp_variable = { industrialize_ppcost = 40 }
+					set_temp_variable = { industrialize_civiliancost = 15 }
+					ROOT = { num_of_civilian_factories_available_for_projects > 14 }
+				}
+				else_if = {
+					limit = {
+						OR = {
+							has_state_category = archethnopolis
+							has_state_category = hieropalingenopolis
+							has_state_category = theogennopolis
+						}
+					}
+					set_temp_variable = { industrialize_ppcost = 50 }
+					set_temp_variable = { industrialize_civiliancost = 20 }
+					ROOT = { num_of_civilian_factories_available_for_projects > 19 }
+				}
+				hidden_trigger = {
+					OR = {
+						has_state_category = large_town
+						has_state_category = city
+						has_state_category = large_city
+						has_state_category = metropolis
+						has_state_category = megalopolis
+					}
+				}
+			}
+		}
+
+		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision state_HHE_industrialization [FROM.state.GetName]"
+		}
+		remove_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision remove state_HHE_industrialization [FROM.state.GetName]"
+			FROM = {
+				set_state_flag = state_flag_HHE_industrialize_the_cities
+				if = {
+					limit = {
+						has_state_category = city
+					}
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = industrial_complex
+						level = 1
+						instant_build = yes
+					}
+				}
+				else_if = {
+					limit = {
+						has_state_category = large_city
+					}
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = industrial_complex
+						level = 2
+						instant_build = yes
+					}
+				}
+				else_if = {
+					limit = {
+						has_state_category = metropolis
+					}
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = industrial_complex
+						level = 3
+						instant_build = yes
+					}
+				}
+				else_if = {
+					limit = {
+						has_state_category = megalopolis
+					}
+					add_extra_state_shared_building_slots = 4
+					add_building_construction = {
+						type = industrial_complex
+						level = 4
+						instant_build = yes
+					}
+				}
+				else_if = {
+					limit = {
+						OR = {
+							has_state_category = archethnopolis
+							has_state_category = hieropalingenopolis
+							has_state_category = theogennopolis
+						}
+					}
+					add_extra_state_shared_building_slots = 5
+					add_building_construction = {
+						type = industrial_complex
+						level = 5
+						instant_build = yes
+					}
+					add_building_construction = {
+						type = construction_complex
+						level = 1
+						instant_build = yes
+					}
+				}
+			}
+		}
+
+		is_good = yes
+		ai_will_do = {
+			factor = 3.0
+			modifier = {
+				add = 1.5
+				FROM = { has_state_category = large_town }
+			}
+			modifier = {
+				add = 2.0
+				FROM = { has_state_category = city }
+			}
+			modifier = {
+				add = 2.5
+				FROM = { has_state_category = large_city }
+			}
+			modifier = {
+				add = 3.5
+				FROM = { has_state_category = metropolis }
+			}
+			modifier = {
+				add = 5.0
+				FROM = { has_state_category = megalopolis }
+			}
+			modifier = {
+				factor = 0
+				has_political_power < 50
+			}
+			modifier = {
+				factor = 3
+				has_political_power > 50
+			}
+			modifier = {
+				factor = 3
+				has_political_power > 100
+			}
+			modifier = {
+				factor = 3
+				has_political_power > 200
+			}
 		}
 	}
 }
