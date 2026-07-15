@@ -166,21 +166,34 @@ LCfN_calculate_naval_capacity_logistics_hyperbolic = {
 	}
 }
 
-LCfN_calculate_naval_capacity_logistics_debug = {
-	# Promote weight constants for tooltips
-	set_variable = { var = LCfN_num_battle_cruiser	value = num_ships_with_type@battle_cruiser }
-	set_variable = { var = LCfN_num_battleship		value = num_ships_with_type@battleship }
-	set_variable = { var = LCfN_num_carrier			value = num_ships_with_type@carrier }
-	set_variable = { var = LCfN_num_destroyer		value = num_ships_with_type@destroyer }
-	set_variable = { var = LCfN_num_heavy_cruiser	value = num_ships_with_type@heavy_cruiser }
-	set_variable = { var = LCfN_num_light_cruiser	value = num_ships_with_type@light_cruiser }
-	set_variable = { var = LCfN_num_submarine		value = num_ships_with_type@submarine }
-	set_variable = { var = LCfN_num_support_ship		value = num_ships_with_type@support_ship }
+LCfN_generate_csv_naval_capacity_data = {
+	# Log CSV header
+	log = "[GetDateText] Data:Country_Tag,Calculated_Naval_Cap,Total_Ships,ICD_NCD_Value,Consumer_Goods_Total,Log_Efficiency,Num_Battle_Cruisers,Num_Battleships,Num_Carriers,Num_Destroyers,Num_Heavy_Cruisers,Num_Light_Cruisers,Num_Submarines,Num_Support_Ships"
 
-	log = "[Root.GetTag] Naval Cap: [?LCfN_calculated_naval_cap] | Ships: [?num_ships] | Mod: [?LCfN_icd_ncd_value]"
-	log = "    Consumer Goods: [?LCfN_current_cg_total|%Y] | Log Efficiency: [?LCfN_econ_efficiency_factor|%G]"
-	log = "    BC: [?LCfN_num_battle_cruiser] | BB: [?LCfN_num_battleship] | CV: [?LCfN_num_carrier] | DD: [?LCfN_num_destroyer]"
-	log = "    CA: [?LCfN_num_heavy_cruiser] | CL: [?LCfN_num_light_cruiser] | SS: [?LCfN_num_submarine] | Support: [?LCfN_num_support_ship]"
+	# Iterate through all countries
+	every_country = {
+		limit = { NOT = { TAG = ZZZ } }
+
+		# Collect ship counts
+		set_temp_variable = { temp_num_battle_cruiser = num_ships_with_type@battle_cruiser }
+		set_temp_variable = { temp_num_battleship = num_ships_with_type@battleship }
+		set_temp_variable = { temp_num_carrier = num_ships_with_type@carrier }
+		set_temp_variable = { temp_num_destroyer = num_ships_with_type@destroyer }
+		set_temp_variable = { temp_num_heavy_cruiser = num_ships_with_type@heavy_cruiser }
+		set_temp_variable = { temp_num_light_cruiser = num_ships_with_type@light_cruiser }
+		set_temp_variable = { temp_num_submarine = num_ships_with_type@submarine }
+		set_temp_variable = { temp_num_support_ship = num_ships_with_type@support_ship }
+
+		# Collect core metrics
+		set_temp_variable = { temp_calculated_naval_cap = LCfN_calculated_naval_cap }
+		set_temp_variable = { temp_num_ships = num_ships }
+		set_temp_variable = { temp_icd_ncd_value = LCfN_icd_ncd_value }
+		set_temp_variable = { temp_current_cg_total = LCfN_current_cg_total }
+		set_temp_variable = { temp_econ_efficiency_factor = LCfN_econ_efficiency_factor }
+
+		# Log CSV row with country tag and naval logistics data
+		log = "[THIS.GetTag],[?temp_calculated_naval_cap|0],[?temp_num_ships|0],[?temp_icd_ncd_value|4],[?temp_current_cg_total|0%],[?temp_econ_efficiency_factor|0%],[?temp_num_battle_cruiser|0],[?temp_num_battleship|0],[?temp_num_carrier|0],[?temp_num_destroyer|0],[?temp_num_heavy_cruiser|0],[?temp_num_light_cruiser|0],[?temp_num_submarine|0],[?temp_num_support_ship|0]"
+	}
 }
 
 LCfN_calculate_naval_capacity_logistics_formula = {
@@ -401,11 +414,6 @@ LCfN_calculate_naval_capacity_logistics_formula = {
 	set_variable = { var = LCfN_doc_weight_value value = @LCfN_dockyard_weight }
 	set_variable = { var = LCfN_mil_weight_value value = @LCfN_mil_weight }
 	set_variable = { var = LCfN_civ_weight_value value = @LCfN_civ_weight }
-
-	IF = {
-		LIMIT = { is_debug = yes }
-		LCfN_calculate_naval_capacity_logistics_debug = yes
-	}
 }
 
 LCfN_monthly_convoy_simulation = {

@@ -51,26 +51,37 @@ OCfA_calculate_battalion_capacity_linear = {
 	}
 }
 
-OCfA_calculate_battalion_capacity_debug = {
-	set_variable = { var = OCfA_num_infantry		value = num_battalions_with_type@infantry }
-	set_variable = { var = OCfA_num_marine			value = num_battalions_with_type@marine }
-	set_variable = { var = OCfA_num_marine_com		value = num_battalions_with_type@marine_commando }
-	set_variable = { var = OCfA_num_mountaineers	value = num_battalions_with_type@mountaineers }
-	set_variable = { var = OCfA_num_ranger			value = num_battalions_with_type@ranger_battalion }
-	set_variable = { var = OCfA_num_paratrooper		value = num_battalions_with_type@paratrooper }
-	set_variable = { var = OCfA_num_artillery		value = num_battalions_with_type@artillery }
-	set_variable = { var = OCfA_num_anti_tank		value = num_battalions_with_type@anti_tank }
-	set_variable = { var = OCfA_num_anti_air		value = num_battalions_with_type@anti_air }
-	set_variable = { var = OCfA_num_light_armor		value = num_battalions_with_type@light_armor }
-	set_variable = { var = OCfA_num_medium_armor	value = num_battalions_with_type@medium_armor }
-	set_variable = { var = OCfA_num_heavy_armor		value = num_battalions_with_type@heavy_armor }
-	set_variable = { var = OCfA_num_motorized		value = num_battalions_with_type@motorized }
-	set_variable = { var = OCfA_num_mechanized		value = num_battalions_with_type@mechanized }
+OCfA_generate_csv_battalion_capacity_data = {
+	# Log CSV header
+	log = "[GetDateText] Data:Country_Tag,Total_Divisions,Deployed_Army_Manpower_K,Num_Infantry,Num_Marine,Num_Marine_Com,Num_Mountaineers,Num_Ranger,Num_Paratrooper,Num_Artillery,Num_Anti_Tank,Num_Anti_Air,Num_Light_Armor,Num_Medium_Armor,Num_Heavy_Armor,Num_Motorized,Num_Mechanized"
 
-	log = "[Root.GetTag] Army Stats: Total Divisions: [?num_divisions] | Manpower: [?deployed_army_manpower_k]k"
-	log = "    Infantry: [?OCfA_num_infantry] | Artillery: [?OCfA_num_artillery] | AT: [?OCfA_num_anti_tank] | AA: [?OCfA_num_anti_air]"
-	log = "    Marine: [?OCfA_num_marine] | Marine Com: [?OCfA_num_marine_com] | Mount: [?OCfA_num_mountaineers] | Rang: [?OCfA_num_ranger] | Para: [?OCfA_num_paratrooper]"
-	log = "    Light Armor: [?OCfA_num_light_armor] | Med Armor: [?OCfA_num_medium_armor] | OCfA_Heavy Armor: [?OCfA_num_heavy_armor] | Mot: [?OCfA_num_motorized] | Mech: [?OCfA_num_mechanized]"
+	# Iterate through all countries
+	every_country = {
+		limit = { NOT = { TAG = ZZZ } }
+
+		# Collect division and manpower data
+		set_temp_variable = { temp_num_divisions = num_divisions }
+		set_temp_variable = { temp_deployed_manpower = deployed_army_manpower_k }
+
+		# Collect battalion counts
+		set_temp_variable = { temp_num_infantry = num_battalions_with_type@infantry }
+		set_temp_variable = { temp_num_marine = num_battalions_with_type@marine }
+		set_temp_variable = { temp_num_marine_com = num_battalions_with_type@marine_commando }
+		set_temp_variable = { temp_num_mountaineers = num_battalions_with_type@mountaineers }
+		set_temp_variable = { temp_num_ranger = num_battalions_with_type@ranger_battalion }
+		set_temp_variable = { temp_num_paratrooper = num_battalions_with_type@paratrooper }
+		set_temp_variable = { temp_num_artillery = num_battalions_with_type@artillery }
+		set_temp_variable = { temp_num_anti_tank = num_battalions_with_type@anti_tank }
+		set_temp_variable = { temp_num_anti_air = num_battalions_with_type@anti_air }
+		set_temp_variable = { temp_num_light_armor = num_battalions_with_type@light_armor }
+		set_temp_variable = { temp_num_medium_armor = num_battalions_with_type@medium_armor }
+		set_temp_variable = { temp_num_heavy_armor = num_battalions_with_type@heavy_armor }
+		set_temp_variable = { temp_num_motorized = num_battalions_with_type@motorized }
+		set_temp_variable = { temp_num_mechanized = num_battalions_with_type@mechanized }
+
+		# Log CSV row with country tag and army logistics data
+		log = "[THIS.GetTag],[?temp_num_divisions|0],[?temp_deployed_manpower|0],[?temp_num_infantry|0],[?temp_num_marine|0],[?temp_num_marine_com|0],[?temp_num_mountaineers|0],[?temp_num_ranger|0],[?temp_num_paratrooper|0],[?temp_num_artillery|0],[?temp_num_anti_tank|0],[?temp_num_anti_air|0],[?temp_num_light_armor|0],[?temp_num_medium_armor|0],[?temp_num_heavy_armor|0],[?temp_num_motorized|0],[?temp_num_mechanized|0]"
+	}
 }
 
 OCfA_calculate_battalion_capacity_formula = {
