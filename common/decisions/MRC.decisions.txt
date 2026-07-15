@@ -11,6 +11,7 @@ political_actions = {
 		}
 
 		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision SEK_merge_with_MRC"
 			every_country = {
 				LIMIT = { is_in_faction_with = SEK }
 				MRC = { add_to_faction = PREV }
@@ -49,6 +50,7 @@ political_actions = {
 		}
 
 		complete_effect = {
+			log = "[GetDateText]: [Root.GetName]: Decision EPY_prevent_HHE_victory_over_MRC"
 			every_country = {
 				LIMIT = { is_in_faction_with = EPY }
 				MRC = { add_to_faction = PREV }
@@ -64,52 +66,76 @@ political_actions = {
 			}
 		}
 	}
-}
 
-bop_MRC_political_balance = {
-	DEBUG_deactivate_bop_MRC_political_balance = {
-		priority = 91
-		visible = {
-			is_debug = yes
+	MRC_decision_declare_the_league_of_nations = {
+		priority = 100
+
+		allowed = { original_tag = MRC }
+
+		available = {
+			has_war_with = HHE
+			any_country = {
+				has_war_with = HHE
+				NOT = { is_in_faction_with = ROOT }
+			}
 		}
+
+		visible = {
+			has_war_with = HHE
+		}
+
+		cost = 50
+		fire_only_once = yes
+
 		complete_effect = {
-			remove_power_balance = { id = power_balance_MRC_political_balance }
+			log = "[GetDateText]: [Root.GetName]: Decision MRC_decision_declare_the_league_of_nations"
+			every_allied_country = {
+				set_country_flag = MRC_transfer_merchant_ally_to_league_of_nations_ally
+			}
+			create_faction_from_template = {
+				template = faction_template_MRC_league_of_nations
+				name = MRC_league_of_nations
+				icon = GFX_faction_logo_generic_2
+				color = { 12 65 140 }
+			}
+			every_country = {
+				LIMIT = { has_country_flag = MRC_transfer_merchant_ally_to_league_of_nations_ally }
+				ROOT = { add_to_faction = FROM }
+			}
+		}
+
+		ai_will_do = {
+			factor = 1000
 		}
 	}
 
-	DEBUG_left_test_bop_MRC_political_balance_20 = {
-		visible = {
-			is_debug = yes
-		}
-		complete_effect = {
-			add_power_balance_value = { id = power_balance_MRC_political_balance value = -0.20 }
-		}
-	}
+	MRC_decision_invite_to_the_league_of_nations = {
+		priority = 100
 
-	DEBUG_left_test_bop_MRC_political_balance_10 = {
-		visible = {
-			is_debug = yes
-		}
-		complete_effect = {
-			add_power_balance_value = { id = power_balance_MRC_political_balance value = -0.10 }
-		}
-	}
+		allowed = { original_tag = MRC }
 
-	DEBUG_right_test_bop_MRC_political_balance_10 = {
-		visible = {
-			is_debug = yes
+		target_trigger = {
+			has_war_with = HHE
 		}
-		complete_effect = {
-			add_power_balance_value = { id = power_balance_MRC_political_balance value = 0.10 }
-		}
-	}
 
-	DEBUG_right_test_bop_MRC_political_balance_20 = {
-		visible = {
-			is_debug = yes
+		available = {
+			has_war_with = HHE
 		}
+
+		visible = {
+			country_exists = HHE
+		}
+
+		cost = 50
+		fire_only_once = yes
+
 		complete_effect = {
-			add_power_balance_value = { id = power_balance_MRC_political_balance value = 0.20 }
+			log = "[GetDateText]: [Root.GetName]: Decision MRC_decision_invite_to_the_league_of_nations"
+			ROOT = { add_to_faction = FROM }
+		}
+
+		ai_will_do = {
+			factor = 1000
 		}
 	}
 }
@@ -2469,6 +2495,54 @@ MRC_decision_navy_manufacturing_triton = {
 		complete_effect = {
             log = "[GetDateText]: [Root.GetName]: Decision MRC_nmt_blacklisted_off"
             clr_country_flag = MRC_blacklist_declined_triton_flag
+		}
+	}
+}
+
+bop_MRC_political_balance = {
+	DEBUG_deactivate_bop_MRC_political_balance = {
+		priority = 91
+		visible = {
+			is_debug = yes
+		}
+		complete_effect = {
+			remove_power_balance = { id = power_balance_MRC_political_balance }
+		}
+	}
+
+	DEBUG_left_test_bop_MRC_political_balance_20 = {
+		visible = {
+			is_debug = yes
+		}
+		complete_effect = {
+			add_power_balance_value = { id = power_balance_MRC_political_balance value = -0.20 }
+		}
+	}
+
+	DEBUG_left_test_bop_MRC_political_balance_10 = {
+		visible = {
+			is_debug = yes
+		}
+		complete_effect = {
+			add_power_balance_value = { id = power_balance_MRC_political_balance value = -0.10 }
+		}
+	}
+
+	DEBUG_right_test_bop_MRC_political_balance_10 = {
+		visible = {
+			is_debug = yes
+		}
+		complete_effect = {
+			add_power_balance_value = { id = power_balance_MRC_political_balance value = 0.10 }
+		}
+	}
+
+	DEBUG_right_test_bop_MRC_political_balance_20 = {
+		visible = {
+			is_debug = yes
+		}
+		complete_effect = {
+			add_power_balance_value = { id = power_balance_MRC_political_balance value = 0.20 }
 		}
 	}
 }
