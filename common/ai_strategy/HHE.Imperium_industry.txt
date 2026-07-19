@@ -246,3 +246,82 @@ HHE_fight_for_life_9 = {
 
 	ai_strategy = { type = build_building id = arms_factory value = 7.5 }
 }
+
+HHE_MRC_war_industry_1 = {
+	allowed = { original_tag = HHE }
+	enable = {
+		has_war_with = MRC
+		surrender_progress > 0.15
+	}
+	abort = {
+		OR = {
+			surrender_progress < 0.05
+			has_capitulated = yes
+			MRC = { has_capitulated = yes }
+		}
+	}
+
+	ai_strategy = { type = equipment_production_factor id = infantry value = 30 }
+	ai_strategy = { type = equipment_production_factor id = artillery value = 30 }
+	ai_strategy = { type = building_target id = arms_factory value = 40 }
+}
+
+HHE_MRC_war_industry_2 = {
+	allowed = { original_tag = HHE }
+	enable = {
+		has_war_with = MRC
+		surrender_progress > 0.35
+	}
+	abort = {
+		OR = {
+			surrender_progress < 0.20
+			has_capitulated = yes
+			MRC = { has_capitulated = yes }
+		}
+	}
+
+	ai_strategy = { type = equipment_production_factor id = infantry value = 60 }
+	ai_strategy = { type = equipment_production_factor id = artillery value = 60 }
+	ai_strategy = { type = building_target id = arms_factory value = 60 }
+	ai_strategy = { type = added_military_to_civilian_factory_ratio value = 30 }
+}
+
+HHE_MRC_war_industry_3 = {
+	allowed = { original_tag = HHE }
+	enable = {
+		has_war_with = MRC
+		surrender_progress > 0.55
+	}
+	abort = {
+		OR = {
+			surrender_progress < 0.35
+			has_capitulated = yes
+			MRC = { has_capitulated = yes }
+		}
+	}
+
+	ai_strategy = { type = equipment_production_factor id = infantry value = 100 }
+	ai_strategy = { type = equipment_production_factor id = artillery value = 100 }
+	ai_strategy = { type = building_target id = arms_factory value = 80 }
+	ai_strategy = { type = added_military_to_civilian_factory_ratio value = 60 }
+}
+
+
+HHE_post_civil_war_war_economy = {
+	allowed = { original_tag = HHE }
+	enable = {
+		has_completed_focus = HHE_warmonger_great_victory_parades
+		NOT = { has_war_with = MRC }
+	}
+	abort = {
+		OR = {
+			has_capitulated = yes
+			has_war_with = MRC
+		}
+	}
+
+	ai_strategy = { type = equipment_production_factor id = infantry value = 50 }
+	ai_strategy = { type = equipment_production_factor id = artillery value = 40 }
+	ai_strategy = { type = building_target id = arms_factory value = 50 }
+	ai_strategy = { type = added_military_to_civilian_factory_ratio value = 40 }
+}

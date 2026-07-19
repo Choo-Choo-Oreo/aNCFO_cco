@@ -6,16 +6,439 @@ on_actions = { # File only exist to test specific log effects.
 	}
 
 	on_daily = { # 7 per Week
+		effect = {
+			IF = {
+				LIMIT = { tag = HHE }
+				IF = {
+					LIMIT = { 5 = { is_controlled_by = HHE } }
+					log = "[GetDateText]: [Root.GetName]: HHE capital (state 5) held"
+				}
+				ELSE = {
+					log = "[GetDateText]: [Root.GetName]: HHE capital (state 5) LOST"
+				}
+			}
+		}
 	}
 
 	on_weekly = { # 4 per Month
 	}
 
 	on_monthly = { # 12 per Year
-		effect = { # Note to say what the effect does.
+		effect = {
 			IF = {
-				LIMIT = { always = no }
-				log = "What Scope: [THIS.GetID] Example test to look at"
+				LIMIT = { tag = HHE }
+				IF = {
+					LIMIT = { has_war_with = MRC }
+					IF = {
+						LIMIT = { has_capitulated = yes }
+						log = "[GetDateText]: [Root.GetName]: at war with MRC, HHE has capitulated"
+					}
+					ELSE = {
+						log = "[GetDateText]: [Root.GetName]: at war with MRC, not capitulated"
+					}
+				}
+				ELSE = {
+					log = "[GetDateText]: [Root.GetName]: not yet at war with MRC"
+				}
+			}
+		}
+		effect = {
+			IF = {
+				LIMIT = { tag = HHE }
+				IF = {
+					LIMIT = { NOT = { has_global_flag = HHE_warmonger_civil_war_first } }
+					IF = {
+						LIMIT = { has_completed_focus = HHE_warmonger_great_victory_parades }
+						log = "[GetDateText]: [Root.GetName]: CW stage: WON (great_victory_parades complete)"
+					}
+					ELSE = {
+						log = "[GetDateText]: [Root.GetName]: CW stage: not started"
+					}
+				}
+				ELSE = {
+					IF = {
+						LIMIT = { has_country_flag = collapse_of_the_nation_civil_war_ignited }
+						IF = {
+							LIMIT = { has_war = yes }
+							log = "[GetDateText]: [Root.GetName]: CW stage: FULL ignition, at war"
+						}
+						ELSE = {
+							log = "[GetDateText]: [Root.GetName]: CW stage: FULL ignition, at peace (mop-up/waiting on splinters)"
+						}
+					}
+					ELSE = {
+						IF = {
+							LIMIT = { has_country_flag = collapse_of_the_nation_civil_war_regional }
+							IF = {
+								LIMIT = { has_war = yes }
+								log = "[GetDateText]: [Root.GetName]: CW stage: REGIONAL, at war"
+							}
+							ELSE = {
+								log = "[GetDateText]: [Root.GetName]: CW stage: REGIONAL, at peace (full-ignition decision available)"
+							}
+						}
+						ELSE = {
+							IF = {
+								LIMIT = { has_country_flag = collapse_of_the_nation_civil_war_local }
+								IF = {
+									LIMIT = { has_war = yes }
+									log = "[GetDateText]: [Root.GetName]: CW stage: LOCAL, at war"
+								}
+								ELSE = {
+									log = "[GetDateText]: [Root.GetName]: CW stage: LOCAL, at peace (regional decision available)"
+								}
+							}
+							ELSE = {
+								log = "[GetDateText]: [Root.GetName]: CW stage: flags set, pre-local ignition"
+							}
+						}
+					}
+				}
+			}
+		}
+		effect = {
+			IF = {
+				LIMIT = {
+					tag = HHE
+					has_country_flag = collapse_of_the_nation_civil_war_ignited
+					NOT = { has_completed_focus = HHE_warmonger_great_victory_parades }
+				}
+				IF = { LIMIT = { country_exists = HBB HBB = { is_puppet = no } } log = "[GetDateText]: splinter alive: HBB" }
+				IF = { LIMIT = { country_exists = HCR HCR = { is_puppet = no } } log = "[GetDateText]: splinter alive: HCR" }
+				IF = { LIMIT = { country_exists = HER HER = { is_puppet = no } } log = "[GetDateText]: splinter alive: HER" }
+				IF = { LIMIT = { country_exists = HET HET = { is_puppet = no } } log = "[GetDateText]: splinter alive: HET" }
+				IF = { LIMIT = { country_exists = HLF HLF = { is_puppet = no } } log = "[GetDateText]: splinter alive: HLF" }
+				IF = { LIMIT = { country_exists = HST HST = { is_puppet = no } } log = "[GetDateText]: splinter alive: HST" }
+				IF = { LIMIT = { country_exists = HPP HPP = { is_puppet = no } } log = "[GetDateText]: splinter alive: HPP" }
+				IF = { LIMIT = { country_exists = HSP HSP = { is_puppet = no } } log = "[GetDateText]: splinter alive: HSP" }
+				IF = { LIMIT = { country_exists = HTP HTP = { is_puppet = no } } log = "[GetDateText]: splinter alive: HTP" }
+				IF = { LIMIT = { country_exists = HUM HUM = { is_puppet = no } } log = "[GetDateText]: splinter alive: HUM" }
+				IF = { LIMIT = { country_exists = HWA HWA = { is_puppet = no } } log = "[GetDateText]: splinter alive: HWA" }
+				IF = { LIMIT = { country_exists = HAN HAN = { is_puppet = no } } log = "[GetDateText]: splinter alive: HAN" }
+				IF = { LIMIT = { country_exists = HAP HAP = { is_puppet = no } } log = "[GetDateText]: splinter alive: HAP" }
+				IF = { LIMIT = { country_exists = HAW HAW = { is_puppet = no } } log = "[GetDateText]: splinter alive: HAW" }
+				IF = { LIMIT = { country_exists = HCO HCO = { is_puppet = no } } log = "[GetDateText]: splinter alive: HCO" }
+				IF = { LIMIT = { country_exists = HDW HDW = { is_puppet = no } } log = "[GetDateText]: splinter alive: HDW" }
+				IF = { LIMIT = { country_exists = HFF HFF = { is_puppet = no } } log = "[GetDateText]: splinter alive: HFF" }
+				IF = { LIMIT = { country_exists = HFR HFR = { is_puppet = no } } log = "[GetDateText]: splinter alive: HFR" }
+				IF = { LIMIT = { country_exists = HFS HFS = { is_puppet = no } } log = "[GetDateText]: splinter alive: HFS" }
+				IF = { LIMIT = { country_exists = HJU HJU = { is_puppet = no } } log = "[GetDateText]: splinter alive: HJU" }
+				IF = { LIMIT = { country_exists = HNO HNO = { is_puppet = no } } log = "[GetDateText]: splinter alive: HNO" }
+				IF = { LIMIT = { country_exists = HUF HUF = { is_puppet = no } } log = "[GetDateText]: splinter alive: HUF" }
+				IF = { LIMIT = { country_exists = ETF ETF = { is_puppet = no } } log = "[GetDateText]: splinter alive: ETF" }
+			}
+		}
+		effect = {
+			IF = {
+				LIMIT = { tag = HHE has_global_flag = HHE_warmonger_civil_war_first }
+				IF = {
+					LIMIT = { has_country_flag = HHE_collapse_of_the_nation_country_no_more_fixed }
+					log = "[GetDateText]: collapse crisis country_no_more: FIXED"
+				}
+				ELSE = {
+					IF = {
+						LIMIT = { has_country_flag = HHE_collapse_of_the_nation_country_no_more_failed }
+						log = "[GetDateText]: collapse crisis country_no_more: FAILED (states 1/5/237 script-transferred to HNO)"
+					}
+					ELSE = {
+						log = "[GetDateText]: collapse crisis country_no_more: pending"
+					}
+				}
+				IF = {
+					LIMIT = { has_country_flag = HHE_collapse_of_the_nation_nobility_failed }
+					log = "[GetDateText]: collapse crisis nobility: FAILED (HNO rebellion)"
+				}
+				IF = {
+					LIMIT = { has_country_flag = HHE_collapse_of_the_nation_fire_river_failed }
+					log = "[GetDateText]: collapse crisis fire_river: FAILED (HFR rebellion)"
+				}
+				IF = {
+					LIMIT = { has_country_flag = HHE_collapse_of_the_nation_freedom_front_failed }
+					log = "[GetDateText]: collapse crisis freedom_front: FAILED (HFF rebellion)"
+				}
+				IF = {
+					LIMIT = { has_country_flag = HHE_collapse_of_the_nation_peoples_government_failed }
+					log = "[GetDateText]: collapse crisis peoples_government: FAILED (HPG rebellion)"
+				}
+			}
+		}
+		effect = {
+			IF = {
+				LIMIT = { tag = HHE has_global_flag = HHE_warmonger_civil_war_first }
+				IF = {
+					LIMIT = { has_country_flag = form_harmonainus_imperious_flag }
+					log = "[GetDateText]: formable race: HHE has FORMED the Imperious core state"
+				}
+				ELSE = {
+					log = "[GetDateText]: formable race: HHE not formed yet"
+				}
+				IF = {
+					LIMIT = { HNO = { has_country_flag = form_harmonainus_imperious_center_flag } }
+					log = "[GetDateText]: formable race: rival HNO holds the center formation"
+				}
+				IF = {
+					LIMIT = { HLF = { has_country_flag = form_harmonainus_imperious_center_flag } }
+					log = "[GetDateText]: formable race: rival HLF holds the center formation"
+				}
+				IF = {
+					LIMIT = { HBB = { has_country_flag = form_harmonainus_imperious_center_flag } }
+					log = "[GetDateText]: formable race: rival HBB holds the center formation"
+				}
+				IF = {
+					LIMIT = { HUM = { has_country_flag = form_harmonainus_imperious_center_flag } }
+					log = "[GetDateText]: formable race: rival HUM holds the center formation"
+				}
+				IF = {
+					LIMIT = { HST = { has_country_flag = form_harmonainus_imperious_west_flag } }
+					log = "[GetDateText]: formable race: rival HST holds the west formation"
+				}
+			}
+		}
+		effect = {
+			IF = {
+				LIMIT = { tag = HHE }
+				IF = {
+					LIMIT = { has_completed_focus = HHE_warmonger_trilateral_crusade }
+					log = "[GetDateText]: [Root.GetName]: focus path: trilateral_crusade COMPLETE"
+				}
+				ELSE = {
+					IF = {
+						LIMIT = { has_completed_focus = HHE_warmonger_trilateral_preparations }
+						log = "[GetDateText]: [Root.GetName]: focus path: trilateral_preparations complete, crusade pending"
+					}
+					ELSE = {
+						IF = {
+							LIMIT = { has_completed_focus = HHE_warmonger_great_victory_parades }
+							log = "[GetDateText]: [Root.GetName]: focus path: great_victory_parades complete, working toward preparations"
+						}
+					}
+				}
+			}
+		}
+		effect = {
+			IF = {
+				LIMIT = {
+					tag = HHE
+					has_completed_focus = HHE_warmonger_great_victory_parades
+					NOT = { has_completed_focus = HHE_warmonger_trilateral_crusade }
+				}
+				IF = {
+					LIMIT = { NOT = { has_completed_focus = HHE_warmonger_pillar_foreign_policy } }
+					log = "[GetDateText]: chain next: pillar_foreign_policy"
+					IF = {
+						LIMIT = { NOT = { has_completed_focus = HHE_warmonger_replace_with_our_men } }
+						log = "[GetDateText]: chain gate: replace_with_our_men incomplete (blocks pillar_foreign_policy)"
+					}
+				}
+				ELSE = {
+					IF = {
+						LIMIT = { NOT = { has_completed_focus = HHE_warmonger_revenge_of_aktiburg } }
+						log = "[GetDateText]: chain next: revenge_of_aktiburg"
+					}
+					ELSE = {
+						IF = {
+							LIMIT = { NOT = { has_completed_focus = HHE_warmonger_secure_eastern_anatoli } }
+							log = "[GetDateText]: chain next: secure_eastern_anatoli"
+						}
+						ELSE = {
+							IF = {
+								LIMIT = { NOT = { has_completed_focus = HHE_warmonger_reconquer_northern_territories } }
+								log = "[GetDateText]: chain next: reconquer_northern_territories"
+							}
+							ELSE = {
+								IF = {
+									LIMIT = { NOT = { has_completed_focus = HHE_warmonger_conquer_pretender_state } }
+									log = "[GetDateText]: chain next: conquer_pretender_state"
+								}
+								ELSE = {
+									IF = {
+										LIMIT = { NOT = { has_completed_focus = HHE_warmonger_revisit_rttf } }
+										log = "[GetDateText]: chain next: revisit_rttf"
+									}
+									ELSE = {
+										IF = {
+											LIMIT = { NOT = { has_completed_focus = HHE_warmonger_fuel_stockpiling } }
+											log = "[GetDateText]: chain next: fuel_stockpiling"
+										}
+										ELSE = {
+											IF = {
+												LIMIT = { NOT = { has_completed_focus = HHE_warmonger_pillar_economic } }
+												log = "[GetDateText]: chain next: pillar_economic"
+												IF = {
+													LIMIT = { NOT = { has_idea = HHE_mobilize_nobility_industry_0 } }
+													log = "[GetDateText]: chain gate: HHE_mobilize_nobility_industry_0 idea missing (blocks pillar_economic)"
+												}
+											}
+											ELSE = {
+												IF = {
+													LIMIT = { NOT = { has_completed_focus = HHE_warmonger_fuel_industrialization } }
+													log = "[GetDateText]: chain next: fuel_industrialization"
+												}
+												ELSE = {
+													IF = {
+														LIMIT = { NOT = { has_completed_focus = HHE_warmonger_construction_efforts } }
+														log = "[GetDateText]: chain next: construction_efforts"
+													}
+													ELSE = {
+														IF = {
+															LIMIT = { NOT = { has_completed_focus = HHE_warmonger_wartime_extraction } }
+															log = "[GetDateText]: chain next: wartime_extraction"
+														}
+														ELSE = {
+															IF = {
+																LIMIT = { NOT = { has_completed_focus = HHE_warmonger_secure_chromium_deposits } }
+																log = "[GetDateText]: chain next: secure_chromium_deposits"
+															}
+															ELSE = {
+																IF = {
+																	LIMIT = { NOT = { has_completed_focus = HHE_warmonger_trilateral_preparations } }
+																	log = "[GetDateText]: chain next: trilateral_preparations"
+																	IF = {
+																		LIMIT = { has_idea_disjointed_military = yes }
+																		log = "[GetDateText]: chain gate: disjointed military idea still present (blocks trilateral_preparations)"
+																	}
+																}
+																ELSE = {
+																	IF = {
+																		LIMIT = { NOT = { has_completed_focus = HHE_warmonger_trilateral_crusade } }
+																		log = "[GetDateText]: chain next: trilateral_crusade"
+																	}
+																}
+															}
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		effect = {
+			IF = {
+				LIMIT = {
+					tag = HHE
+					has_global_flag = HHE_warmonger_civil_war_first
+					has_war = yes
+				}
+				IF = {
+					LIMIT = { power_balance_value = { id = power_balance_HHE_civil_war value > 0.925 } }
+					log = "[GetDateText]: civil-war BoP band: extremely high (above 0.925)"
+				}
+				ELSE = {
+					IF = {
+						LIMIT = { power_balance_value = { id = power_balance_HHE_civil_war value > 0.75 } }
+						log = "[GetDateText]: civil-war BoP band: very high (0.75-0.925)"
+					}
+					ELSE = {
+						IF = {
+							LIMIT = { power_balance_value = { id = power_balance_HHE_civil_war value > 0.50 } }
+							log = "[GetDateText]: civil-war BoP band: high (0.50-0.75)"
+						}
+						ELSE = {
+							IF = {
+								LIMIT = { power_balance_value = { id = power_balance_HHE_civil_war value > 0.20 } }
+								log = "[GetDateText]: civil-war BoP band: balanced (0.20-0.50)"
+							}
+							ELSE = {
+								log = "[GetDateText]: civil-war BoP band: LOW (below 0.20, army debuffs active)"
+							}
+						}
+					}
+				}
+			}
+		}
+		effect = {
+			IF = {
+				LIMIT = { tag = HHE has_war_with = MRC }
+				IF = {
+					LIMIT = { controls_state = 335 }
+					log = "[GetDateText]: secondary goal: controls state 335"
+				}
+				IF = {
+					LIMIT = { controls_state = 75 }
+					log = "[GetDateText]: secondary goal: controls state 75"
+				}
+				IF = {
+					LIMIT = { controls_state = 97 }
+					log = "[GetDateText]: secondary goal: controls state 97"
+				}
+				IF = {
+					LIMIT = { controls_state = 335 controls_state = 75 controls_state = 97 }
+					log = "[GetDateText]: secondary goal: ALL THREE states held (335+75+97)"
+				}
+			}
+		}
+		effect = {
+			IF = {
+				LIMIT = { tag = HHE is_ai = no }
+				log = "[GetDateText]: [Root.GetName]: player track: PP=[?ROOT.political_power|0] stability=[?ROOT.stability|2] war_support=[?ROOT.has_war_support|2] divisions=[?ROOT.num_divisions|0]"
+			}
+		}
+	}
+	on_weekly = {
+		effect = {
+			IF = {
+				LIMIT = {
+					tag = HHE
+					has_global_flag = HHE_warmonger_civil_war_first
+					NOT = { has_country_flag = collapse_of_the_nation_civil_war_ignited }
+				}
+				log = "[GetDateText]: crisis economy exact: stability=[?ROOT.stability|2] PP=[?ROOT.political_power|0]"
+				IF = {
+					LIMIT = { has_stability > 0.45 }
+					log = "[GetDateText]: crisis economy: stability band ABOVE 0.45 (nobility fixable)"
+				}
+				ELSE = {
+					IF = {
+						LIMIT = { has_stability > 0.33 }
+						log = "[GetDateText]: crisis economy: stability band 0.33-0.45 (fire_river fixable, nobility NOT)"
+					}
+					ELSE = {
+						IF = {
+							LIMIT = { has_stability > 0.25 }
+							log = "[GetDateText]: crisis economy: stability band 0.25-0.33 (freedom_front fixable)"
+						}
+						ELSE = {
+							IF = {
+								LIMIT = { has_stability > 0.20 }
+								log = "[GetDateText]: crisis economy: stability band 0.20-0.25 (peoples_government fixable)"
+							}
+							ELSE = {
+								IF = {
+									LIMIT = { has_stability > 0.17 }
+									log = "[GetDateText]: crisis economy: stability band 0.17-0.20 (only country_no_more fixable)"
+								}
+								ELSE = {
+									log = "[GetDateText]: crisis economy: stability band BELOW 0.17 (nothing fixable)"
+								}
+							}
+						}
+					}
+				}
+				IF = {
+					LIMIT = { has_political_power > 250 }
+					log = "[GetDateText]: crisis economy: PP bank ABOVE 250 (full gauntlet funded)"
+				}
+				ELSE = {
+					IF = {
+						LIMIT = { has_political_power > 100 }
+						log = "[GetDateText]: crisis economy: PP bank 100-250 (critical pair funded)"
+					}
+					ELSE = {
+						IF = {
+							LIMIT = { has_political_power > 50 }
+							log = "[GetDateText]: crisis economy: PP bank 50-100 (one decision funded)"
+						}
+						ELSE = {
+							log = "[GetDateText]: crisis economy: PP bank BELOW 50 (cannot fix anything)"
+						}
+					}
+				}
 			}
 		}
 	}

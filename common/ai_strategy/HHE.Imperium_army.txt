@@ -467,7 +467,7 @@ HHE_make_sure_MRC_is_ganked_before_we_move = {
 	enable = {
 		has_war_with = MRC
 		MRC = { has_capitulated = no }
-		date < 1734.2.1
+		date < 1735.1.1
 	}
 	abort = {
 		OR = {
@@ -484,7 +484,7 @@ HHE_make_sure_MRC_is_ganked_before_we_move = {
 				335 = { CONTROLLER = { has_war_with = ROOT } }
 				337 = { CONTROLLER = { has_war_with = ROOT } }
 			}
-			date > 1734.2.1
+			date > 1735.1.1
 		}
 	}
 
@@ -915,4 +915,109 @@ HHE_normandy_buffer = {
 		id = garrison
 		value = 10
 	}
+}
+
+HHE_MRC_war_army_surge_2 = {
+	allowed = { original_tag = HHE }
+	enable = {
+		has_war_with = MRC
+		surrender_progress > 0.35
+	}
+	abort = {
+		OR = {
+			surrender_progress < 0.20
+			has_capitulated = yes
+			MRC = { has_capitulated = yes }
+		}
+	}
+
+	ai_strategy = { type = force_build_armies value = 100 }
+}
+
+HHE_MRC_war_army_surge_3 = {
+	allowed = { original_tag = HHE }
+	enable = {
+		has_war_with = MRC
+		surrender_progress > 0.55
+	}
+	abort = {
+		OR = {
+			surrender_progress < 0.35
+			has_capitulated = yes
+			MRC = { has_capitulated = yes }
+		}
+	}
+
+	ai_strategy = { type = force_build_armies value = 200 }
+}
+
+HHE_civil_war_army_surge_2 = {
+	allowed = { original_tag = HHE }
+	enable = {
+		has_global_flag = HHE_warmonger_civil_war_first
+		has_global_flag = HHE_warmonger_civil_war_final
+		surrender_progress > 0.3
+	}
+	abort = {
+		OR = {
+			surrender_progress < 0.15
+			has_capitulated = yes
+			NOT = { has_global_flag = HHE_warmonger_civil_war_first }
+		}
+	}
+
+	ai_strategy = { type = force_build_armies value = 100 }
+}
+
+HHE_civil_war_army_surge_3 = {
+	allowed = { original_tag = HHE }
+	enable = {
+		has_global_flag = HHE_warmonger_civil_war_first
+		has_global_flag = HHE_warmonger_civil_war_final
+		surrender_progress > 0.5
+	}
+	abort = {
+		OR = {
+			surrender_progress < 0.30
+			has_capitulated = yes
+			NOT = { has_global_flag = HHE_warmonger_civil_war_first }
+		}
+	}
+
+	ai_strategy = { type = force_build_armies value = 200 }
+}
+
+
+HHE_civil_war_mass_army = {
+	allowed = { original_tag = HHE }
+	enable = {
+		has_global_flag = HHE_warmonger_civil_war_first
+	}
+	abort = {
+		OR = {
+			has_capitulated = yes
+			NOT = { has_global_flag = HHE_warmonger_civil_war_first }
+		}
+	}
+
+	ai_strategy = { type = force_build_armies value = 150 }
+	ai_strategy = { type = build_army id = infantry value = 120 }
+}
+
+
+HHE_post_civil_war_buildup = {
+	allowed = { original_tag = HHE }
+	enable = {
+		has_completed_focus = HHE_warmonger_great_victory_parades
+		NOT = { has_war_with = MRC }
+	}
+	abort = {
+		OR = {
+			has_capitulated = yes
+			has_war_with = MRC
+		}
+	}
+
+	ai_strategy = { type = force_build_armies value = 250 }
+	ai_strategy = { type = build_army id = infantry value = 100 }
 }
