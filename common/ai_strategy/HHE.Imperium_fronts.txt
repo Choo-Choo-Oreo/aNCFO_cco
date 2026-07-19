@@ -469,3 +469,397 @@ HHE_front_management_ignore_foreign = {
         ordertype = front
     }
 }
+
+HHE_MRC_war_last_stand_1 = {
+	allowed = { original_tag = HHE }
+	enable = {
+		has_war_with = MRC
+		surrender_progress > 0.15
+	}
+	abort = {
+		OR = {
+			surrender_progress < 0.05
+			has_capitulated = yes
+			MRC = { has_capitulated = yes }
+		}
+	}
+
+	ai_strategy = {
+		type = front_unit_request
+		state_trigger = { aNCFO_is_contested_home_core_state = yes }
+		value = 150
+	}
+	ai_strategy = { type = spare_unit_factor value = -150 }
+	ai_strategy = { type = garrison value = -150 }
+}
+
+HHE_MRC_war_last_stand_2 = {
+	allowed = { original_tag = HHE }
+	enable = {
+		has_war_with = MRC
+		surrender_progress > 0.35
+	}
+	abort = {
+		OR = {
+			surrender_progress < 0.20
+			has_capitulated = yes
+			MRC = { has_capitulated = yes }
+		}
+	}
+
+	ai_strategy = {
+		type = front_unit_request
+		state_trigger = { aNCFO_is_contested_home_core_state = yes }
+		value = 400
+	}
+	ai_strategy = { type = spare_unit_factor value = -400 }
+	ai_strategy = { type = garrison value = -400 }
+}
+
+HHE_MRC_war_last_stand_3 = {
+	allowed = { original_tag = HHE }
+	enable = {
+		has_war_with = MRC
+		surrender_progress > 0.55
+	}
+	abort = {
+		OR = {
+			surrender_progress < 0.35
+			has_capitulated = yes
+			MRC = { has_capitulated = yes }
+		}
+	}
+
+	ai_strategy = {
+		type = front_unit_request
+		state_trigger = { aNCFO_is_contested_home_core_state = yes }
+		value = 800
+	}
+	ai_strategy = { type = spare_unit_factor value = -800 }
+	ai_strategy = { type = garrison value = -800 }
+}
+
+HHE_civil_war_hold_the_line_1 = {
+	allowed = { original_tag = HHE }
+	enable = {
+		has_global_flag = HHE_warmonger_civil_war_first
+		has_global_flag = HHE_warmonger_civil_war_final
+		surrender_progress > 0.1
+	}
+	abort = {
+		OR = {
+			surrender_progress < 0.05
+			has_capitulated = yes
+			NOT = { has_global_flag = HHE_warmonger_civil_war_first }
+		}
+	}
+
+	ai_strategy = {
+		type = front_unit_request
+		state_trigger = { aNCFO_is_contested_home_core_state = yes }
+		value = 150
+	}
+	ai_strategy = { type = spare_unit_factor value = -150 }
+	ai_strategy = { type = garrison value = -150 }
+}
+
+HHE_civil_war_hold_the_line_2 = {
+	allowed = { original_tag = HHE }
+	enable = {
+		has_global_flag = HHE_warmonger_civil_war_first
+		has_global_flag = HHE_warmonger_civil_war_final
+		surrender_progress > 0.3
+	}
+	abort = {
+		OR = {
+			surrender_progress < 0.15
+			has_capitulated = yes
+			NOT = { has_global_flag = HHE_warmonger_civil_war_first }
+		}
+	}
+
+	ai_strategy = {
+		type = front_unit_request
+		state_trigger = { aNCFO_is_contested_home_core_state = yes }
+		value = 400
+	}
+	ai_strategy = { type = spare_unit_factor value = -400 }
+	ai_strategy = { type = garrison value = -400 }
+}
+
+HHE_civil_war_hold_the_line_3 = {
+	allowed = { original_tag = HHE }
+	enable = {
+		has_global_flag = HHE_warmonger_civil_war_first
+		has_global_flag = HHE_warmonger_civil_war_final
+		surrender_progress > 0.5
+	}
+	abort = {
+		OR = {
+			surrender_progress < 0.30
+			has_capitulated = yes
+			NOT = { has_global_flag = HHE_warmonger_civil_war_first }
+		}
+	}
+
+	ai_strategy = {
+		type = front_unit_request
+		state_trigger = { aNCFO_is_contested_home_core_state = yes }
+		value = 800
+	}
+	ai_strategy = { type = spare_unit_factor value = -800 }
+	ai_strategy = { type = garrison value = -800 }
+}
+
+
+HHE_civil_war_offensive_push = {
+	allowed = { original_tag = HHE }
+	enable = {
+		has_global_flag = HHE_warmonger_civil_war_first
+		has_war = yes
+		has_full_control_of_state = 5
+		NOT = { has_country_flag = form_harmonainus_imperious_flag }
+	}
+	abort = {
+		OR = {
+			has_capitulated = yes
+			NOT = { has_global_flag = HHE_warmonger_civil_war_first }
+			NOT = { has_full_control_of_state = 5 }
+			has_country_flag = form_harmonainus_imperious_flag
+		}
+	}
+
+	ai_strategy = {
+		type = front_control
+		country_trigger = {
+			enemies_strength_ratio < 2.0
+			OR = { original_tag = HBB original_tag = HCR original_tag = HER original_tag = HET original_tag = HLF original_tag = HST original_tag = HPP original_tag = HSP original_tag = HTP original_tag = HUM original_tag = HWA original_tag = HAN original_tag = HAP original_tag = HAW original_tag = HCO original_tag = HDW original_tag = HFF original_tag = HFR original_tag = HFS original_tag = HJU original_tag = HNO original_tag = HUF original_tag = ETF original_tag = HPG }
+		}
+		priority = 170
+		ordertype = front
+		execution_type = rush_weak
+		execute_order = yes
+		manual_attack = yes
+	}
+
+	ai_strategy = {
+		type = front_unit_request
+		country_trigger = {
+			enemies_strength_ratio < 2.0
+			OR = { original_tag = HBB original_tag = HCR original_tag = HER original_tag = HET original_tag = HLF original_tag = HST original_tag = HPP original_tag = HSP original_tag = HTP original_tag = HUM original_tag = HWA original_tag = HAN original_tag = HAP original_tag = HAW original_tag = HCO original_tag = HDW original_tag = HFF original_tag = HFR original_tag = HFS original_tag = HJU original_tag = HNO original_tag = HUF original_tag = ETF original_tag = HPG }
+		}
+		value = 200
+	}
+}
+
+
+HHE_civil_war_guard_the_capital = {
+	allowed = { original_tag = HHE }
+	enable = {
+		has_global_flag = HHE_warmonger_civil_war_first
+	}
+	abort = {
+		OR = {
+			has_capitulated = yes
+			has_country_flag = form_harmonainus_imperious_flag
+			NOT = { has_global_flag = HHE_warmonger_civil_war_first }
+		}
+	}
+
+	ai_strategy = {
+		type = theatre_distribution_demand_increase
+		id = 5
+		value = 10
+	}
+
+	ai_strategy = { type = garrison_reinforcement_priority value = 30 }
+}
+
+
+HHE_civil_war_secure_core_region = {
+	allowed = { original_tag = HHE }
+	enable = {
+		has_global_flag = HHE_warmonger_civil_war_first
+		has_war = yes
+		NOT = { has_country_flag = form_harmonainus_imperious_flag }
+	}
+	abort = {
+		OR = {
+			has_capitulated = yes
+			has_country_flag = form_harmonainus_imperious_flag
+			NOT = { has_global_flag = HHE_warmonger_civil_war_first }
+		}
+	}
+
+	ai_strategy = {
+		type = front_control
+		state = 1
+		state = 5
+		state = 77
+		state = 78
+		state = 80
+		state = 83
+		state = 180
+		state = 236
+		state = 447
+		priority = 190
+		ordertype = front
+		execution_type = rush
+		execute_order = yes
+		manual_attack = yes
+	}
+
+	ai_strategy = {
+		type = force_concentration_target_weight
+		state = 1
+		state = 5
+		state = 77
+		state = 78
+		state = 80
+		state = 83
+		state = 180
+		state = 236
+		state = 447
+		value = 100
+	}
+
+	ai_strategy = {
+		type = front_unit_request
+		state = 1
+		state = 5
+		state = 77
+		state = 78
+		state = 80
+		state = 83
+		state = 180
+		state = 236
+		state = 447
+		value = 400
+	}
+}
+
+
+HHE_civil_war_crush_the_splinters = {
+	allowed = { original_tag = HHE }
+	enable = {
+		has_global_flag = HHE_warmonger_civil_war_first
+		has_country_flag = form_harmonainus_imperious_flag
+		has_war = yes
+	}
+	abort = {
+		OR = {
+			has_capitulated = yes
+			NOT = { has_global_flag = HHE_warmonger_civil_war_first }
+		}
+	}
+
+	ai_strategy = {
+		type = front_control
+		country_trigger = {
+			OR = { original_tag = HBB original_tag = HCR original_tag = HER original_tag = HET original_tag = HLF original_tag = HST original_tag = HPP original_tag = HSP original_tag = HTP original_tag = HUM original_tag = HWA original_tag = HAN original_tag = HAP original_tag = HAW original_tag = HCO original_tag = HDW original_tag = HFF original_tag = HFR original_tag = HFS original_tag = HJU original_tag = HNO original_tag = HUF original_tag = ETF original_tag = HPG }
+		}
+		priority = 185
+		ordertype = front
+		execution_type = rush
+		execute_order = yes
+		manual_attack = yes
+	}
+
+	ai_strategy = {
+		type = front_unit_request
+		country_trigger = {
+			OR = { original_tag = HBB original_tag = HCR original_tag = HER original_tag = HET original_tag = HLF original_tag = HST original_tag = HPP original_tag = HSP original_tag = HTP original_tag = HUM original_tag = HWA original_tag = HAN original_tag = HAP original_tag = HAW original_tag = HCO original_tag = HDW original_tag = HFF original_tag = HFR original_tag = HFS original_tag = HJU original_tag = HNO original_tag = HUF original_tag = ETF original_tag = HPG }
+		}
+		value = 150
+	}
+}
+
+
+HHE_MRC_war_defensive_posture = {
+	allowed = { original_tag = HHE }
+	enable = {
+		has_war_with = MRC
+		MRC = { has_capitulated = no }
+	}
+	abort = {
+		OR = {
+			has_capitulated = yes
+			MRC = { has_capitulated = yes }
+			NOT = { has_war_with = MRC }
+		}
+	}
+
+	ai_strategy = {
+		type = front_control
+		country_trigger = {
+			enemies_strength_ratio > 1.1
+			OR = { original_tag = MRC original_tag = MJU original_tag = UFS }
+		}
+		priority = 210
+		ordertype = front
+		execution_type = careful
+		execute_order = yes
+		manual_attack = no
+	}
+}
+
+
+HHE_MRC_war_secondary_objectives = {
+	allowed = { original_tag = HHE }
+	enable = {
+		has_war_with = MRC
+		surrender_progress < 0.2
+	}
+	abort = {
+		OR = {
+			has_capitulated = yes
+			surrender_progress > 0.3
+			NOT = { has_war_with = MRC }
+		}
+	}
+
+	ai_strategy = {
+		type = front_control
+		state = 335
+		state = 75
+		state = 97
+		priority = 205
+		ordertype = front
+		execution_type = rush
+		execute_order = yes
+		manual_attack = yes
+	}
+
+	ai_strategy = {
+		type = force_concentration_target_weight
+		state = 335
+		state = 75
+		state = 97
+		value = 80
+	}
+
+	ai_strategy = {
+		type = front_unit_request
+		state = 335
+		state = 75
+		state = 97
+		value = 150
+	}
+}
+
+
+HHE_MRC_war_port_garrison = {
+	allowed = { original_tag = HHE }
+	enable = {
+		has_war_with = MRC
+	}
+	abort = {
+		OR = {
+			has_capitulated = yes
+			NOT = { has_war_with = MRC }
+		}
+	}
+
+	ai_strategy = { type = garrison value = 25 }
+	ai_strategy = { type = garrison_reinforcement_priority value = 30 }
+}
