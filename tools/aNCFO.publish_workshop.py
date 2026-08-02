@@ -287,15 +287,20 @@ def copy_repo(dest_parent: Path, excludes: set[str], dest_name: str = "mod") -> 
     return dest
 
 
-def escape_vdf(value: str | Path) -> str:
-    """Escape a string for inclusion in a quoted VDF value."""
-    return (
-        str(value)
-        .replace("\\", "\\\\")
-        .replace('"', '\\"')
-        .replace("\r", "\\r")
-        .replace("\n", "\\n")
-    )
+def escape_vdf(value: str | Path, preserve_newlines: bool = False) -> str:
+    """Escape a string for inclusion in a quoted VDF value.
+
+    preserve_newlines is for the changenote. Steam's KeyValues parser accepts
+    literal newlines inside a quoted value but does NOT interpret a \\n escape,
+    so escaping them ships the two characters backslash-n to the Workshop page
+    instead of a line break. Paths still take the escaped form, where a raw
+    newline would be a malformed path rather than formatting.
+    """
+    text = str(value).replace("\\", "\\\\").replace('"', '\\"')
+    if preserve_newlines:
+        # CRLF would reach the page as a stray carriage return.
+        return text.replace("\r\n", "\n").replace("\r", "\n")
+    return text.replace("\r", "\\r").replace("\n", "\\n")
 
 
 def validate_mod_files(mod_dir: Path) -> None:
@@ -366,7 +371,7 @@ def write_vdf(mod_dir: Path, changenote: str) -> Path:
         f'    "publishedfileid" "{escape_vdf(MOD_ID)}"\n'
         f'    "contentfolder"   "{escape_vdf(mod_dir)}"\n'
         f'    "previewfile"     "{escape_vdf(mod_dir / "thumbnail.png")}"\n'
-        f'    "changenote"      "{escape_vdf(changenote)}"\n'
+        f'    "changenote"      "{escape_vdf(changenote, preserve_newlines=True)}"\n'
         f"}}\n",
         encoding="utf-8",
     )
@@ -690,6 +695,13 @@ def main() -> None:
         help="Change description for the Workshop (default: Update)",
     )
     parser.add_argument(
+        "--changenote-file",
+        metavar="PATH",
+        help="Read the change description from a file instead of --changenote. "
+        "Preferred for multi-line notes, which are awkward to pass as a shell "
+        "argument.",
+    )
+    parser.add_argument(
         "--dry-run",
         action="store_true",
         help="Stage and validate the upload folder, print what would ship, "
@@ -719,6 +731,14 @@ def main() -> None:
     args = parser.parse_args()
 
     check_repo_root()
+
+    if args.changenote_file:
+        note_path = Path(args.changenote_file)
+        if not note_path.is_file():
+            sys.exit(f"ERROR: --changenote-file not found: {note_path}")
+        args.changenote = note_path.read_text(encoding="utf-8-sig").strip()
+        if not args.changenote:
+            sys.exit(f"ERROR: --changenote-file is empty: {note_path}")
 
     stage_to = Path(args.stage_to).resolve() if args.stage_to else None
     if stage_to:
