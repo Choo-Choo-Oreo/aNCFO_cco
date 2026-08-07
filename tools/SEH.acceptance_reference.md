@@ -1138,7 +1138,7 @@ Countries documented: **171** across **6** regions.
 | Ethnos | Archaigan (`1`) | — |
 | Heritage | Pneucian (`6`) | — |
 
-#### United Federation States (`UFS`)
+#### United Federation of States (`UFS`)
 
 | Category | Full acceptance | Partial acceptance |
 |----------|-----------------|--------------------|
