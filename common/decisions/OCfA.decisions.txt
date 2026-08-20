@@ -4,10 +4,6 @@ demobilization_military = {
 
 		visible = { has_active_mission = demobilization_military_mission is_ai = yes }
 
-		available = {
-			check_variable = { OCfA_current_battalion_load > OCfA_calculated_battalion_capacity }
-		}
-
 		cost = 0
 		ai_will_do = {
 			factor = 1
@@ -29,7 +25,7 @@ demobilization_military = {
 				factor = -1
 				OR = {
 					AND = {
-						any_country = { has_wargoal_against = ROOT }
+						has_country_flag = OCfA_wargoal_threat_inbound
 						OR = {
 							has_stability > 0.8
 							has_war_support > 0.8
@@ -71,7 +67,6 @@ demobilization_military = {
 		available = {
 			OCfA_has_war_economy = no
 			OCfA_has_war_conscription = no
-			check_variable = { OCfA_current_battalion_load < OCfA_calculated_battalion_capacity tooltip = demobilization_military_mission_tt }
 		}
 
 		timeout_effect = {
@@ -148,7 +143,7 @@ demobilization_military = {
 				factor = -1
 				OR = {
 					AND = {
-						any_country = { has_wargoal_against = ROOT }
+						has_country_flag = OCfA_wargoal_threat_inbound
 						OR = {
 							has_stability > 0.8
 							has_war_support > 0.8
@@ -194,7 +189,7 @@ demobilization_military = {
 				factor = -1
 				OR = {
 					AND = {
-						any_country = { has_wargoal_against = ROOT }
+						has_country_flag = OCfA_wargoal_threat_inbound
 						OR = {
 							has_stability > 0.8
 							has_war_support > 0.8
@@ -212,12 +207,9 @@ demobilization_military = {
 		visible = { has_active_mission = demobilization_military_mission }
 
 		available = {
-			any_country = {
-				OR = {
-					has_wargoal_against = ROOT
-					ROOT = { has_wargoal_against = PREV }
-				}
-			}
+			# Was any_country = { ... } here, re-scanning every country every tick.
+			# Precomputed weekly by OCfA_update_wargoal_threat_flags.
+			has_country_flag = OCfA_wargoal_threat_either_way
 		}
 
 		cost = var:OCfA_propaganda_delay_cost?50
@@ -238,7 +230,7 @@ demobilization_military = {
 				factor = 10
 				OR = {
 					AND = {
-						any_country = { has_wargoal_against = ROOT }
+						has_country_flag = OCfA_wargoal_threat_inbound
 						OR = {
 							has_stability > 0.8
 							has_war_support > 0.8

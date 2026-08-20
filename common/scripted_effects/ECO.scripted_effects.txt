@@ -2,7 +2,7 @@
 @ECO_trade_penalty_weight = 0.20
 # 0.1 Grams of Gold to Currency ratio, USD = 8.8867
 # 0.1 Grams of Gold to Currency ratio, GSD = 10.0
-@currency_conversion_factor = 8.8867
+@currency_conversion_factor = 10.0
 
 calculate_state_GDP = {
 	# Reset global max trackers each run
@@ -241,6 +241,7 @@ calculate_state_GDP = {
 	set_variable = { state_gdp_correction = country_GDP }
 	divide_variable = { state_gdp_correction = state_gdp_sum }
 	clamp_variable = { var = state_gdp_correction min = 0.5 max = 2.0 }
+
 	every_state = {
 		OWNER = {
 			multiply_variable = { PREV.state_GDP = state_gdp_correction }
@@ -253,12 +254,9 @@ calculate_state_GDP = {
 			multiply_variable = { PREV.state_GDP_per_capita = 1000 }
 			clamp_variable = { var = PREV.state_GDP_per_capita min = 0 }
 		}
-	}
-
-	# -----------------------
-	# Track global max for map mode gradient — globals readable across scope jumps
-	# -----------------------
-	every_state = {
+		# -----------------------
+		# Track global max for map mode gradient — globals readable across scope jumps
+		# -----------------------
 		if = {
 			limit = { check_variable = { state_GDP > global.max_state_GDP } }
 			set_variable = { global.max_state_GDP = state_GDP }
@@ -284,10 +282,8 @@ calculate_GDP = {
 	# -----------------------
 	# CATEGORY FACTOR SECTION
 	# -----------------------
-	every_country = {
-		set_variable = { THIS.country_category_factor = 0 }
-		set_variable = { THIS.country_num_states = THIS.num_core_states }
-	}
+	set_variable = { THIS.country_category_factor = 0 }
+	set_variable = { THIS.country_num_states = THIS.num_core_states }
 
 	every_state = {
 		IF = {

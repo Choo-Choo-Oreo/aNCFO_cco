@@ -51,6 +51,31 @@ OCfA_calculate_battalion_capacity_linear = {
 	}
 }
 
+OCfA_update_wargoal_threat_flags = {
+	IF = {
+		LIMIT = { any_country = { has_wargoal_against = PREV } }
+		set_country_flag = OCfA_wargoal_threat_inbound
+	}
+	ELSE = {
+		clr_country_flag = OCfA_wargoal_threat_inbound
+	}
+
+	IF = {
+		LIMIT = {
+			any_country = {
+				OR = {
+					has_wargoal_against = PREV
+					PREV = { has_wargoal_against = PREV }
+				}
+			}
+		}
+		set_country_flag = OCfA_wargoal_threat_either_way
+	}
+	ELSE = {
+		clr_country_flag = OCfA_wargoal_threat_either_way
+	}
+}
+
 OCfA_generate_csv_battalion_capacity_data = {
 	# Log CSV header
 	log = "[GetDateText] Data:Country_Tag,Total_Divisions,Deployed_Army_Manpower_K,Num_Infantry,Num_Marine,Num_Marine_Com,Num_Mountaineers,Num_Ranger,Num_Paratrooper,Num_Artillery,Num_Anti_Tank,Num_Anti_Air,Num_Light_Armor,Num_Medium_Armor,Num_Heavy_Armor,Num_Motorized,Num_Mechanized"
@@ -85,6 +110,12 @@ OCfA_generate_csv_battalion_capacity_data = {
 }
 
 OCfA_calculate_battalion_capacity_formula = {
+	# Refresh the wargoal-threat flags the demobilisation decisions read. Kept
+	# here so every caller of this formula (on_weekly, on_startup, on_peace, the
+	# demob decisions, the scripted GUI) keeps them in step with the capacity
+	# figures rather than needing a separate hook.
+	OCfA_update_wargoal_threat_flags = yes
+
 	# --- INITIALIZE BASE VARIABLE ---
 	set_variable = { var = OCfA_base_units value = 0 }
 
