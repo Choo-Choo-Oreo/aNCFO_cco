@@ -283,7 +283,6 @@ calculate_GDP = {
 	# CATEGORY FACTOR SECTION
 	# -----------------------
 	set_variable = { THIS.country_category_factor = 0 }
-	set_variable = { THIS.country_num_states = THIS.num_core_states }
 
 	every_state = {
 		IF = {
@@ -316,6 +315,7 @@ calculate_GDP = {
 	set_variable = { THIS.tracking_noncore_manpower_k = THIS.actual_noncore_manpower_k }
 
 	every_country = {
+		set_variable = { THIS.country_num_states = THIS.num_core_states } # Per-country init: THIS shifted from the caller to each iterated country
 		clamp_variable = { var = THIS.country_num_states min = 1 } # Guard: no core/owned states edge case
 		divide_variable = { THIS.country_category_factor = THIS.country_num_states }
 		subtract_from_variable = { country_category_factor = 1 }
