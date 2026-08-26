@@ -5,6 +5,7 @@ on_actions = {
 			# Scoped to a country because a scripted effect cannot be called from
 			# the scopeless on_startup root. Built once; continents never change.
 			ZZZ = { aNCFO_initiate_continent_state_arrays = yes }
+			ZZZ = { aNCFO_initiate_state_impassable_cache = yes }
 
 			# Hegemons
 			HHE = { country_event = aNCFO_introduction_event.0 } # Harmonainus Imperious
@@ -417,6 +418,7 @@ on_actions = {
 			every_country = {
 				update_all_stances = yes
 				country_event = random_event.0
+				aNCFO_divine_right_seed_candidate_states = yes
 				every_state = {
 					LIMIT = { is_coastal = yes is_controlled_by = PREV }
 					PREV = { add_equipment_to_stockpile = { type = convoy amount = 25 } }
@@ -684,7 +686,11 @@ on_actions = {
 	}
 
 	on_state_control_changed = {
-		effect = { # Checking for Major City falling for overnight test.
+		effect = {
+			aNCFO_divine_right_add_candidate_state = yes
+			aNCFO_divine_right_remove_candidate_state = yes
+
+			# Checking for Major City falling for overnight test.
 			if = { # 2
 				limit = {
 					FROM.FROM = { state = 2 }

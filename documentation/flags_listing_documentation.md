@@ -47,11 +47,6 @@ Using Pdn I Gaussian blur'ed then erased 10x to get the distance from land start
 
 * species.dwarf_openness
 * species.dwarf_isolationism
-* divine_right_coring_num0
-* divine_right_coring_num1
-* divine_right_coring_num2
-* divine_right_coring_num3
-* divine_right_coring_num4
 * denied.ally_with_HHE
 * denied.ally_with_OAK
 * denied.ally_with_MRC

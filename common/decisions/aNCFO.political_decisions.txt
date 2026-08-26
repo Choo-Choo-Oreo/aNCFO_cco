@@ -2949,7 +2949,7 @@ political_actions = {
 		icon = generic_construction
 		state_target = yes
 		on_map_mode = map_only
-		target_array = controlled_states # DO NOT REMOVE.
+		target_array = divine_right_candidate_states # DO NOT REMOVE.
 
 		days_remove = 70
 		fire_only_once = no
@@ -2957,32 +2957,31 @@ political_actions = {
 
 		modifier = { political_power_cost = 0.50 }
 
+		target_root_trigger = {
+			check_variable = { divine_right_coring_completions < 5 }
+		}
+
 		target_trigger = {
-			IF = { # Check before checking every state.
-				LIMIT = {
-					NOT = { has_country_flag = divine_right_coring_num4 }
-				}
-				FROM = {
-					impassable = no
-					is_owned_by = ROOT
-					NOT = { is_core_of = ROOT }
-				}
+			FROM = {
+				check_variable = { impassable_cached = 0 }
+				is_owned_by = ROOT
+				NOT = { is_core_of = ROOT }
 			}
 		}
 
 		remove_trigger = { has_war = yes }
 
 		visible = {
-			NOT = { has_country_flag = divine_right_coring_num4 }
+			check_variable = { divine_right_coring_completions < 5 }
 			OR = {
 				has_focus_tree = authoritarianism_divine_right
 			}
 		}
 
 		available = {
-			IF = { # Check before checking every state.
+			IF = {
 				LIMIT = {
-					NOT = { has_country_flag = divine_right_coring_num4 }
+					check_variable = { divine_right_coring_completions < 5 }
 				}
 				FROM = {
 					if = {
@@ -3039,32 +3038,14 @@ political_actions = {
 
         complete_effect = {
             log = "[GetDateText]: [Root.GetName]: Decision divine_right_coring"
-			IF = {
-				LIMIT = { NOT = { has_country_flag = divine_right_coring_num0 } }
-				set_country_flag = divine_right_coring_num0
-				ELSE = {
-					LIMIT = { NOT = { has_country_flag = divine_right_coring_num1 } }
-					set_country_flag = divine_right_coring_num1
-					ELSE = {
-						LIMIT = { NOT = { has_country_flag = divine_right_coring_num2 } }
-						set_country_flag = divine_right_coring_num2
-						ELSE = {
-							LIMIT = { NOT = { has_country_flag = divine_right_coring_num3 } }
-							set_country_flag = divine_right_coring_num3
-							ELSE = {
-								LIMIT = { NOT = { has_country_flag = divine_right_coring_num4 } }
-								set_country_flag = divine_right_coring_num4
-							}
-						}
-					}
-				}
-			}
+			add_to_variable = { divine_right_coring_completions = 1 }
         }
 
 		remove_effect = {
             log = "[GetDateText]: [Root.GetName]: Decision remove divine_right_coring"
 			custom_effect_tooltip = use_5x_tt
 			FROM = { add_core_of = ROOT }
+			remove_from_array = { array = divine_right_candidate_states value = FROM }
 		}
 
 		ai_will_do = {

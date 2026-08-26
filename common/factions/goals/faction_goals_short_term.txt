@@ -308,84 +308,30 @@ faction_goal_ensure_military_r_d = {
 	visible = {
 		OR = {
 			collection_size = {
-				input = {
-					input = game:all_states
-					operators = {
-						limit = {
-							is_controlled_by_ROOT_or_ally = yes 
-							land_facility > 0
-						}
-					}
-					name = COLLECTION_FACTION_LAND_FACILITY
-				}
+				input = collection:faction_controlled_land_facility_states
 				value < 1
 			}
 			collection_size = {
-				input = {
-					input = game:all_states
-					operators = {
-						limit = {
-							is_controlled_by_ROOT_or_ally = yes 
-							naval_facility > 0
-						}
-					}
-					name = COLLECTION_FACTION_NAVAL_FACILITY
-				}
+				input = collection:faction_controlled_naval_facility_states
 				value < 1
 			}
 			collection_size = {
-				input = {
-					input = game:all_states
-					operators = {
-						limit = {
-							is_controlled_by_ROOT_or_ally = yes 
-							air_facility > 0
-						}
-					}
-					name = COLLECTION_FACTION_AIR_FACILITY
-				}
+				input = collection:faction_controlled_air_facility_states
 				value < 1
 			}
 		}
 	}
 	completed = {
 		collection_size = {
-			input = {
-				input = game:all_states
-				operators = {
-					limit = {
-						is_controlled_by_ROOT_or_ally = yes 
-						land_facility > 0
-					}
-				}
-				name = COLLECTION_FACTION_LAND_FACILITY
-			}
+			input = collection:faction_controlled_land_facility_states
 			value > 0
 		}
 		collection_size = {
-			input = {
-				input = game:all_states
-				operators = {
-					limit = {
-						is_controlled_by_ROOT_or_ally = yes 
-						naval_facility > 0
-					}
-				}
-				name = COLLECTION_FACTION_NAVAL_FACILITY
-			}
+			input = collection:faction_controlled_naval_facility_states
 			value > 0
 		}
 		collection_size = {
-			input = {
-				input = game:all_states
-				operators = {
-					limit = {
-						is_controlled_by_ROOT_or_ally = yes 
-						air_facility > 0
-					}
-				}
-				name = COLLECTION_FACTION_AIR_FACILITY
-			}
+			input = collection:faction_controlled_air_facility_states
 			value > 0
 		}
 	}
@@ -504,41 +450,19 @@ faction_goal_military_infrastructure = {
 	visible = {
 		collection_size = {
 			input = {
-				input = game:all_states
+				input = collection:faction_border_states_low_infrastructure
 				operators = {
 					limit = {
 						is_core_of = CONTROLLER
-						is_controlled_by_ROOT_or_ally = yes 
-						any_neighbor_state = {
-							controller = {
-								NOT = { is_in_faction_with = ROOT }
-							}
-						}
-						infrastructure < 5
 					}
 				}
-				name = COLLECTION_FACTION_BORDER_STATES_FULL_INFRASTRUCTURE
 			}
 			value > 0
 		}
 	}
 	completed = {
 		collection_size = {
-			input = {
-				input = game:all_states
-				operators = {
-					limit = {
-						is_controlled_by_ROOT_or_ally = yes 
-						any_neighbor_state = {
-							controller = {
-								NOT = { is_in_faction_with = ROOT }
-							}
-						}
-						infrastructure < 5
-					}
-				}
-				name = COLLECTION_FACTION_BORDER_STATES_FULL_INFRASTRUCTURE
-			}
+			input = collection:faction_border_states_low_infrastructure
 			value < 1
 		}
 	}

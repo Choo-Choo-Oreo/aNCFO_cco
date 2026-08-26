@@ -927,3 +927,50 @@ spawn_militia_divisions = {
 		}
 	}
 }
+
+aNCFO_initiate_state_impassable_cache = {
+	every_state = {
+		IF = {
+			LIMIT = { impassable = yes }
+			set_variable = { impassable_cached = 1 }
+		}
+		ELSE = {
+			set_variable = { impassable_cached = 0 }
+		}
+	}
+}
+
+aNCFO_divine_right_seed_candidate_states = {
+	every_controlled_state = {
+		limit = {
+			check_variable = { impassable_cached = 0 }
+			is_owned_and_controlled_by = PREV
+			NOT = { is_core_of = PREV }
+		}
+		PREV = {
+			add_to_array = { divine_right_candidate_states = PREV }
+		}
+	}
+}
+
+aNCFO_divine_right_add_candidate_state = {
+	FROM.FROM = {
+		if = {
+			limit = {
+				check_variable = { impassable_cached = 0 }
+				is_owned_by = ROOT
+				NOT = { is_core_of = ROOT }
+				NOT = { is_in_array = { PREV.divine_right_candidate_states = THIS } }
+			}
+			PREV = {
+				add_to_array = { divine_right_candidate_states = PREV }
+			}
+		}
+	}
+}
+
+aNCFO_divine_right_remove_candidate_state = {
+	FROM = {
+		remove_from_array = { array = divine_right_candidate_states value = FROM.FROM }
+	}
+}

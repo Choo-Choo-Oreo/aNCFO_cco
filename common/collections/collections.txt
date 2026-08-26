@@ -218,6 +218,60 @@ faction_controlled_non_core_states = {
 	name = COLLECTION_FACTION_CONTROLLED_NON_CORE_STATES
 }
 
+faction_and_subject_controlled_states = {
+	input = game:scope
+	operators = {
+		faction_members
+		country_and_all_subjects
+		controlled_states
+	}
+}
+
+faction_border_states_low_infrastructure = {
+	input = collection:faction_and_subject_controlled_states
+	operators = {
+		limit = {
+			any_neighbor_state = {
+				controller = {
+					NOT = { is_in_faction_with = ROOT }
+				}
+			}
+			infrastructure < 5
+		}
+	}
+	name = COLLECTION_FACTION_BORDER_STATES_FULL_INFRASTRUCTURE
+}
+
+faction_controlled_land_facility_states = {
+	input = collection:faction_and_subject_controlled_states
+	operators = {
+		limit = {
+			land_facility > 0
+		}
+	}
+	name = COLLECTION_FACTION_LAND_FACILITY
+}
+
+faction_controlled_naval_facility_states = {
+	input = collection:faction_and_subject_controlled_states
+	operators = {
+		limit = {
+			naval_facility > 0
+		}
+	}
+	name = COLLECTION_FACTION_NAVAL_FACILITY
+}
+
+faction_controlled_air_facility_states = {
+	input = collection:faction_and_subject_controlled_states
+	operators = {
+		limit = {
+			air_facility > 0
+		}
+	}
+	name = COLLECTION_FACTION_AIR_FACILITY
+}
+
 
 country_and_all_subjects_controlled_non_core_states = {
 	input = game:scope
