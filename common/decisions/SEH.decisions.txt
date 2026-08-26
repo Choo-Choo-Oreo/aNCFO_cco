@@ -30,6 +30,7 @@ SEH_integration_actions = {
 					add_state_core = PREV
 				}
 			}
+			SEH_update_owned_proportions = yes
 		}
 
 		ai_will_do = {
@@ -168,13 +169,14 @@ SEH_integration_actions = {
 
 		cost = 1000
 
-		#allowed = { always = no }
+		allowed = { always = no }
 
 		target_trigger = {
-			any_owned_state = { check_variable = { SEH_species = FROM.SEH_species_decision_target } }
 			NOT = {
 				is_in_array = { array = SEH_accepted_species_full value = FROM.SEH_species_decision_target }
 			}
+			set_temp_variable = { temp_species_target = FROM.SEH_species_decision_target }
+			check_variable = { SEH_species_owned_any@var:temp_species_target > 0 }
 		}
 
 		available = {
@@ -212,13 +214,14 @@ SEH_integration_actions = {
 
 		cost = 1000
 
-		#allowed = { always = no }
+		allowed = { always = no }
 
 		target_trigger = {
-			any_owned_state = { check_variable = { SEH_ethnos = FROM.SEH_ethnos_decision_target } }
 			NOT = {
 				is_in_array = { array = SEH_accepted_ethnos_full value = FROM.SEH_ethnos_decision_target }
 			}
+			set_temp_variable = { temp_ethnos_target = FROM.SEH_ethnos_decision_target }
+			check_variable = { SEH_ethnos_owned_any@var:temp_ethnos_target > 0 }
 		}
 
 		available = {
@@ -256,13 +259,14 @@ SEH_integration_actions = {
 
 		cost = 1000
 
-		#allowed = { always = no }
+		allowed = { always = no }
 
 		target_trigger = {
-			any_owned_state = { check_variable = { SEH_heritage = FROM.SEH_heritage_decision_target } }
 			NOT = {
 				is_in_array = { array = SEH_accepted_heritage_full value = FROM.SEH_heritage_decision_target }
 			}
+			set_temp_variable = { temp_heritage_target = FROM.SEH_heritage_decision_target }
+			check_variable = { SEH_heritage_owned_any@var:temp_heritage_target > 0 }
 		}
 
 		# in any trigger block
