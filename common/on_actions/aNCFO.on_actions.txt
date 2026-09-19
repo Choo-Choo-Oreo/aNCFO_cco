@@ -415,10 +415,12 @@ on_actions = {
 	on_startup = { # Initializing
 		effect = { # Settingi flags and variables for all countries and states
 			set_global_flag = aNCFO_enabled
+			MRC = { MRC_update_HHE_war_league_candidate = yes }
 			every_country = {
 				update_all_stances = yes
 				country_event = random_event.0
 				aNCFO_divine_right_seed_candidate_states = yes
+				aNCFO_update_contested_home_core_state = yes
 				every_state = {
 					LIMIT = { is_coastal = yes is_controlled_by = PREV }
 					PREV = { add_equipment_to_stockpile = { type = convoy amount = 25 } }
@@ -659,6 +661,15 @@ on_actions = {
 				FROM = { country_event = pullus_event.1 }
 			}
 		}
+
+		effect = {
+			ROOT = { aNCFO_update_contested_home_core_state = yes }
+			FROM = { aNCFO_update_contested_home_core_state = yes }
+		}
+
+		effect = {
+			MRC_update_HHE_war_league_candidate = yes
+		}
 	}
 
 	on_war = { # THIS is country that has just gotten into a war.
@@ -669,7 +680,8 @@ on_actions = {
 
 	on_peace = { # THIS is country that is no longer at war.
 		effect = {
-
+			aNCFO_update_contested_home_core_state = yes
+			MRC_update_HHE_war_league_candidate = yes
 		}
 	}
 
@@ -687,6 +699,13 @@ on_actions = {
 
 	on_state_control_changed = {
 		effect = {
+			every_country = {
+				limit = {
+					FROM.FROM = { is_core_of = PREV }
+				}
+				aNCFO_update_contested_home_core_state = yes
+			}
+
 			aNCFO_divine_right_add_candidate_state = yes
 			aNCFO_divine_right_remove_candidate_state = yes
 

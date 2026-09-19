@@ -974,3 +974,18 @@ aNCFO_divine_right_remove_candidate_state = {
 		remove_from_array = { array = divine_right_candidate_states value = FROM.FROM }
 	}
 }
+
+aNCFO_update_contested_home_core_state = {
+	set_variable = { aNCFO_has_contested_home_core_state = 0 }
+	if = {
+		limit = {
+			any_state = {
+				is_core_of = PREV
+				controller = {
+					has_war_with = PREV
+				}
+			}
+		}
+		set_variable = { aNCFO_has_contested_home_core_state = 1 }
+	}
+}
