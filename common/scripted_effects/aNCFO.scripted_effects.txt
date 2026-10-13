@@ -971,7 +971,12 @@ aNCFO_divine_right_add_candidate_state = {
 
 aNCFO_divine_right_remove_candidate_state = {
 	FROM = {
-		remove_from_array = { array = divine_right_candidate_states value = FROM.FROM }
+		if = {
+			limit = {
+				is_in_array = { divine_right_candidate_states = FROM.FROM }
+			}
+			remove_from_array = { array = divine_right_candidate_states value = FROM.FROM }
+		}
 	}
 }
 
