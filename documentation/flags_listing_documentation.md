@@ -61,8 +61,8 @@ Using Pdn I Gaussian blur'ed then erased 10x to get the distance from land start
 * Artificers.GlobalIronSurplus1
 * Artificers.GlobalIronSurplus2
 * grand_canal_purchase_processing
-* death_of_deed
-* reforms_from_deed
+* death_of_actius
+* reforms_from_actius
 * elected_tradition
 * elected_influencer
 * elected_authority
