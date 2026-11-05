@@ -13,7 +13,7 @@ and strategicregions) and of the working tree, then compares per ID:
 
 Usage (run from anywhere):
   python .global_tools/region_id_drift_check.py <mod_dir> [--ref REV]
-        [--max-shift PX] [--min-iou X] [--list N]
+        [--max-shift PX] [--min-iou X] [--list N] [--regions DIR]
 
 Exit code 0 = pass, 1 = at least one violation. Default reference is HEAD, so
 run it BEFORE committing; use --ref <published sha> to measure against a release.
@@ -97,7 +97,7 @@ def main(argv):
         print(__doc__)
         return 2
     mod = Path(argv[0]).resolve()
-    opt = {"--ref": "HEAD", "--max-shift": MAX_SHIFT, "--min-iou": MIN_IOU, "--list": LIST_N}
+    opt = {"--regions": "", "--ref": "HEAD", "--max-shift": MAX_SHIFT, "--min-iou": MIN_IOU, "--list": LIST_N}
     i = 1
     while i < len(argv):
         if argv[i] in opt and i + 1 < len(argv):
@@ -111,7 +111,7 @@ def main(argv):
     new_id = province_ids(mod / "map/provinces.bmp", c_new)
     H, W = new_id.shape
     regs_old = ref_regions(mod, rev)
-    regs_new = parse_regions(p.read_text(encoding="utf-8-sig", errors="ignore") for p in (mod / "map/strategicregions").glob("*.txt"))
+    regs_new = parse_regions(p.read_text(encoding="utf-8-sig", errors="ignore") for p in (Path(opt["--regions"]) if opt["--regions"] else mod / "map/strategicregions").glob("*.txt"))
     Ro = region_raster(old_id, regs_old, max(ty_old) + 1)
     Rn = region_raster(new_id, regs_new, max(ty_new) + 1)
     rows, bad = [], []
