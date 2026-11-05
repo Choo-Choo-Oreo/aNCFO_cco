@@ -120,15 +120,43 @@ def load_definition_provinces(modfs: ModFS) -> dict[str, str]:
     return out
 
 
+def list_strategicregions_files(modfs: ModFS) -> list[tuple[Path, str]]:
+    """[(path, origin)] for map/strategicregions, merged by filename (mod
+    wins over an identically-named vanilla file) -- deliberately NOT using
+    ModFS.list_dir's replace_path exclusion here. Empirically confirmed on
+    New-Horizons (a mod that declares `replace_path="map/strategicregions"`
+    in descriptor.mod): the engine still loaded vanilla's same-id, different-
+    filename `253-Vindhyachal.txt` alongside the mod's differently-named
+    `253-Iwo Jima.txt` and let vanilla's (emptied) definition win, orphaning
+    the mod's provinces -- exactly the MAP_ERROR / IsMapInGoodState:no crash
+    this check exists to catch. So unlike every other directory ModFS reads,
+    a declared replace_path for this one specific path does not appear to be
+    a reliable guarantee that vanilla's contents are excluded; check ids
+    against vanilla regardless of what descriptor.mod claims."""
+    seen: dict[str, tuple[Path, str]] = {}
+    mod_dir = modfs.mod_root / "map/strategicregions"
+    if mod_dir.is_dir():
+        for p in sorted(mod_dir.glob("*.txt")):
+            if p.is_file():
+                seen[p.name] = (p, "mod")
+    vanilla_dir = modfs.vanilla_root / "map/strategicregions"
+    if vanilla_dir.is_dir():
+        for p in sorted(vanilla_dir.glob("*.txt")):
+            if p.is_file() and p.name not in seen:
+                seen[p.name] = (p, "vanilla")
+    return [seen[k] for k in sorted(seen)]
+
+
 def load_strategic_regions(modfs: ModFS):
     """Returns (id_to_files: {id: [(path, origin), ...]}, id_to_provinces:
-    {id: set[str]}) across every file the engine would actually load for
-    map/strategicregions (mod files, plus vanilla files not shadowed by an
-    identically-NAMED mod file -- a differently-named mod file does NOT
-    shadow a same-id vanilla file, which is exactly the trap this catches)."""
+    {id: set[str]}) across every file map/strategicregions makes available
+    (mod files, plus vanilla files not shadowed by an identically-NAMED mod
+    file -- a differently-named mod file does NOT shadow a same-id vanilla
+    file, which is exactly the trap this catches). See
+    list_strategicregions_files for why replace_path is NOT trusted here."""
     id_to_files: dict[str, list[tuple[Path, str]]] = {}
     id_to_provinces: dict[str, set[str]] = {}
-    for path, origin in modfs.list_dir("map/strategicregions"):
+    for path, origin in list_strategicregions_files(modfs):
         text = strip_comments_keep_lines(path.read_text(encoding="utf-8", errors="replace"))
         for block in parse_blocks_list(text, origin_file=path, origin=origin):
             if block.name != "strategic_region":
